@@ -1,0 +1,304 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lazo — invitaciones web de boda</title>
+<meta name="description" content="Invitaciones web para bodas y eventos: apertura animada, enlace único por invitado, confirmación de asistencia y panel para organizar todo.">
+<meta property="og:title" content="Lazo — invitaciones web de boda">
+<meta property="og:description" content="Invitaciones web para bodas y eventos: apertura animada, enlace único por invitado, confirmación de asistencia y panel para organizar todo.">
+<meta name="theme-color" content="#2B3A33">
+<link rel="alternate" hreflang="es" href="/">
+<link rel="alternate" hreflang="en" href="/en/">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%232B3A33'/%3E%3Ctext x='32' y='44' font-family='Georgia,serif' font-style='italic' font-size='34' fill='%23F5F2EA' text-anchor='middle'%3E%26%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&amp;family=Jost:wght@400;500;600&amp;display=swap">
+<style>
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;background:#F5F2EA}
+img{max-width:100%}
+a{color:#2B3A33}a:hover{color:#1B2621}
+details summary{cursor:pointer;list-style:none}
+details summary::-webkit-details-marker{display:none}
+details[open] summary svg{transform:rotate(45deg)}
+summary svg{transition:transform .2s ease;flex-shrink:0}
+.extra{font-family:inherit;text-align:left;cursor:pointer;display:flex;justify-content:space-between;align-items:flex-start;gap:12px;padding:16px 18px;min-height:44px;border-radius:14px;border:1px solid #DED7C8;background:#FFFFFF;color:#22201C;transition:background .15s ease,color .15s ease}
+.extra[aria-pressed="true"]{background:#1C1A17;color:#F5F2EA;border-color:#1C1A17}
+.extra:focus-visible,a:focus-visible,summary:focus-visible{outline:2px solid #6B5444;outline-offset:3px}
+@media (max-width: 720px){
+  h1{font-size:52px !important}
+  h2{font-size:38px !important}
+  section,footer{padding-top:64px !important;padding-bottom:64px !important}
+  nav > div{gap:14px !important;font-size:14px !important}
+}
+</style>
+</head>
+<body>
+<div style="font-family: 'Jost', system-ui, sans-serif; color: #22201C; background: #F5F2EA; width: 100%; min-height: 100vh">
+
+<header style="border-bottom: 1px solid #DED7C8">
+<nav style="max-width: 1200px; margin: 0 auto; padding: 18px 24px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px">
+<a href="#top" aria-label="Lazo, inicio" style="display: flex; align-items: center; gap: 10px; text-decoration: none; color: #2B3A33">
+<span style="width: 40px; height: 40px; border-radius: 50%; border: 1px solid #2B3A33; display: flex; align-items: center; justify-content: center; font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 24px; line-height: 1">&amp;</span>
+<span style="font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 500; font-size: 34px; line-height: 1">lazo</span>
+</a>
+<div style="display: flex; flex-wrap: wrap; align-items: center; gap: 24px; font-size: 15px">
+<a href="#disenos" style="text-decoration: none; color: #22201C">Diseños</a>
+<a href="#incluye" style="text-decoration: none; color: #22201C">Qué incluye</a>
+<a href="#precios" style="text-decoration: none; color: #22201C">Precios</a>
+<a href="#faq" style="text-decoration: none; color: #22201C">Preguntas</a>
+<span style="display: flex; align-items: center; gap: 6px; font-size: 13px; letter-spacing: 1px"><strong style="font-weight: 600">ES</strong><span style="color: #8C8577">/</span><a href="/en/" style="color: #5A5650; text-decoration: none; padding: 12px 4px">EN</a></span>
+<a href="#" style="text-decoration: none; color: #22201C; padding: 12px 6px">Ingresar</a>
+<a href="#precios" style="text-decoration: none; background: #2B3A33; color: #F5F2EA; padding: 13px 24px; border-radius: 999px; font-weight: 500">Crear mi invitación</a>
+</div>
+</nav>
+</header>
+
+<section id="top" style="max-width: 1200px; margin: 0 auto; padding: 88px 24px 96px; display: flex; flex-wrap: wrap; align-items: center; gap: 56px">
+<div style="flex: 1 1 460px; min-width: 0; display: flex; flex-direction: column; gap: 28px">
+<p style="margin: 0; font-size: 13px; font-weight: 500; letter-spacing: 3px; text-transform: uppercase; color: #6B5444">Invitaciones web para bodas</p>
+<h1 style="margin: 0; font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: 80px; line-height: 0.98; letter-spacing: -1px; color: #2B3A33">Una invitación que se abre <span style="font-style: italic; color: #6B5444">como un regalo.</span></h1>
+<p style="margin: 0; font-size: 19px; line-height: 1.6; color: #4A4640; max-width: 520px">Elijan un diseño, escriban su historia y suban sus fotos desde su propio panel. Su web se genera al instante, con un enlace único para cada familia y la confirmación de asistencia lista.</p>
+<div style="display: flex; flex-wrap: wrap; gap: 14px; align-items: center">
+<a href="#precios" style="text-decoration: none; background: #2B3A33; color: #F5F2EA; padding: 17px 32px; border-radius: 999px; font-weight: 500; font-size: 16px">Crear mi invitación</a>
+<a href="#disenos" style="text-decoration: none; color: #22201C; padding: 17px 26px; border-radius: 999px; font-weight: 500; font-size: 16px; border: 1px solid #BFB6A4">Ver diseños</a>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 10px 28px; font-size: 14px; color: #5A5650">
+<span>Pago único</span>
+<span>Sin saber de diseño ni código</span>
+<span>Lista el mismo día</span>
+</div>
+</div>
+<div style="flex: 1 1 480px; min-width: 0; display: flex; justify-content: center; align-items: center; gap: 18px">
+<div style="width: 30%; max-width: 190px; padding: 7px; background: #1C1A17; border-radius: 34px; box-shadow: 0 30px 60px -30px rgba(34,32,28,0.55); transform: translateY(36px)"><img src="/assets/apertura-sobre.png" alt="Apertura tipo sobre con el nombre de la familia invitada" style="display: block; width: 100%; height: auto; aspect-ratio: 350 / 754; object-fit: cover; border-radius: 28px"></div>
+<div style="width: 36%; max-width: 230px; padding: 8px; background: #1C1A17; border-radius: 38px; box-shadow: 0 30px 60px -30px rgba(34,32,28,0.55)"><img src="/assets/clasico-sello.png" alt="Diseño clásico: portada con monograma y sello" style="display: block; width: 100%; height: auto; aspect-ratio: 350 / 754; object-fit: cover; border-radius: 31px"></div>
+<div style="width: 30%; max-width: 190px; padding: 7px; background: #1C1A17; border-radius: 34px; box-shadow: 0 30px 60px -30px rgba(34,32,28,0.55); transform: translateY(36px)"><img src="/assets/panel-moderno.png" alt="Panel de los novios con personas confirmadas" style="display: block; width: 100%; height: auto; aspect-ratio: 350 / 754; object-fit: cover; border-radius: 28px"></div>
+</div>
+</section>
+
+<section id="disenos" style="background: #EAE4D7; padding: 96px 24px">
+<div style="max-width: 1200px; margin: 0 auto; display: flex; flex-direction: column; gap: 48px">
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 24px">
+<div style="display: flex; flex-direction: column; gap: 12px; max-width: 640px">
+<p style="margin: 0; font-size: 13px; font-weight: 500; letter-spacing: 3px; text-transform: uppercase; color: #6B5444">Los diseños</p>
+<h2 style="margin: 0; font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: 56px; line-height: 1.02; color: #2B3A33">Dos estilos, todos los colores que quieran</h2>
+</div>
+<p style="margin: 0; font-size: 16px; line-height: 1.6; color: #4A4640; max-width: 380px">Abran la demo desde el celular: así la verán sus invitados.</p>
+</div>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(340px, 100%), 1fr)); gap: 28px">
+
+<article style="background: #F5F2EA; border-radius: 20px; overflow: hidden; display: flex; flex-direction: column">
+<div style="background: #DCD3C2; padding: 36px 24px 0; display: flex; justify-content: center; align-items: flex-start; gap: 16px; height: 420px; overflow: hidden">
+<div style="width: 210px; flex-shrink: 0; padding: 8px; background: #1C1A17; border-radius: 36px; box-shadow: 0 24px 50px -26px rgba(34,32,28,0.6)"><img src="/assets/clasico-portada.jpg" alt="Diseño clásico: nombres en serif y foto en arco" style="display: block; width: 100%; height: auto; aspect-ratio: 375 / 812; object-fit: cover; border-radius: 29px"></div>
+<div style="width: 170px; flex-shrink: 0; margin-top: 60px; padding: 7px; background: #1C1A17; border-radius: 32px; box-shadow: 0 24px 50px -26px rgba(34,32,28,0.6)"><img src="/assets/rsvp-clasico.png" alt="Diseño clásico: confirmación de asistencia" style="display: block; width: 100%; height: auto; aspect-ratio: 350 / 754; object-fit: cover; border-radius: 26px"></div>
+</div>
+<div style="padding: 26px 28px 28px; display: flex; flex-direction: column; gap: 14px">
+<h3 style="margin: 0; font-family: 'Cormorant Garamond', serif; font-weight: 600; font-size: 36px; color: #2B3A33">Diseño clásico</h3>
+<p style="margin: 0; font-size: 15px; line-height: 1.6; color: #4A4640">Nombres en serif grande, su foto enmarcada en un arco y una apertura de puertas con sello. Romántico y atemporal.</p>
+<div style="display: flex; flex-wrap: wrap; gap: 8px">
+<span style="font-size: 12px; padding: 6px 11px; border-radius: 999px; background: #EAE4D7; color: #4A4640">Apertura: sobre o puertas</span>
+<span style="font-size: 12px; padding: 6px 11px; border-radius: 999px; background: #EAE4D7; color: #4A4640">Paleta a elección</span>
+</div>
+<a href="https://danna-fabian.vercel.app/" style="align-self: flex-start; margin-top: 6px; text-decoration: none; padding: 14px 26px; border-radius: 999px; border: 1px solid #22201C; color: #22201C; font-weight: 500; font-size: 15px">Ver demo</a>
+</div>
+</article>
+
+<article style="background: #F5F2EA; border-radius: 20px; overflow: hidden; display: flex; flex-direction: column">
+<div style="background: #4A3A2E; padding: 36px 24px 0; display: flex; justify-content: center; align-items: flex-start; gap: 16px; height: 420px; overflow: hidden">
+<div style="width: 210px; flex-shrink: 0; padding: 8px; background: #1C1A17; border-radius: 36px; box-shadow: 0 24px 50px -26px rgba(0,0,0,0.7)"><img src="/assets/moderno-portada.jpg" alt="Diseño moderno: portada con monograma y sello" style="display: block; width: 100%; height: auto; aspect-ratio: 375 / 812; object-fit: cover; border-radius: 29px"></div>
+<div style="width: 170px; flex-shrink: 0; margin-top: 60px; padding: 7px; background: #1C1A17; border-radius: 32px; box-shadow: 0 24px 50px -26px rgba(0,0,0,0.7)"><img src="/assets/rsvp-moderno.png" alt="Diseño moderno: confirmación de asistencia" style="display: block; width: 100%; height: auto; aspect-ratio: 350 / 754; object-fit: cover; border-radius: 26px"></div>
+</div>
+<div style="padding: 26px 28px 28px; display: flex; flex-direction: column; gap: 14px">
+<h3 style="margin: 0; font-family: 'Cormorant Garamond', serif; font-weight: 600; font-size: 36px; color: #2B3A33">Diseño moderno</h3>
+<p style="margin: 0; font-size: 15px; line-height: 1.6; color: #4A4640">Editorial, con fotos en blanco y negro y una apertura deslizable. Para parejas que quieren algo limpio y actual.</p>
+<div style="display: flex; flex-wrap: wrap; gap: 8px">
+<span style="font-size: 12px; padding: 6px 11px; border-radius: 999px; background: #EAE4D7; color: #4A4640">Apertura: deslizable</span>
+<span style="font-size: 12px; padding: 6px 11px; border-radius: 999px; background: #EAE4D7; color: #4A4640">Paleta a elección</span>
+</div>
+<a href="https://flavio-adriana.vercel.app/" style="align-self: flex-start; margin-top: 6px; text-decoration: none; padding: 14px 26px; border-radius: 999px; border: 1px solid #22201C; color: #22201C; font-weight: 500; font-size: 15px">Ver demo</a>
+</div>
+</article>
+
+</div>
+</div>
+</section>
+
+<section id="incluye" style="max-width: 1200px; margin: 0 auto; padding: 96px 24px; display: flex; flex-direction: column; gap: 48px">
+<div style="display: flex; flex-direction: column; gap: 12px; max-width: 680px">
+<p style="margin: 0; font-size: 13px; font-weight: 500; letter-spacing: 3px; text-transform: uppercase; color: #6B5444">Incluido en todos los diseños</p>
+<h2 style="margin: 0; font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: 56px; line-height: 1.02; color: #2B3A33">Todo lo que su boda necesita, en un solo enlace</h2>
+</div>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr)); gap: 0 40px">
+<div style="display: flex; gap: 20px; border-top: 1px solid #CFC6B4; padding: 22px 0"><span style="font-family: 'Cormorant Garamond', serif; font-size: 26px; color: #6B5444; min-width: 32px">01</span><div style="display: flex; flex-direction: column; gap: 6px"><h3 style="margin: 0; font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 600">Efecto de apertura</h3><p style="margin: 0; font-size: 15px; line-height: 1.55; color: #4A4640">Sobre, puertas o deslizable.</p></div></div>
+<div style="display: flex; gap: 20px; border-top: 1px solid #CFC6B4; padding: 22px 0"><span style="font-family: 'Cormorant Garamond', serif; font-size: 26px; color: #6B5444; min-width: 32px">02</span><div style="display: flex; flex-direction: column; gap: 6px"><h3 style="margin: 0; font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 600">Enlace único por invitación</h3><p style="margin: 0; font-size: 15px; line-height: 1.55; color: #4A4640">Saluda a cada familia por su nombre y muestra sus cupos.</p></div></div>
+<div style="display: flex; gap: 20px; border-top: 1px solid #CFC6B4; padding: 22px 0"><span style="font-family: 'Cormorant Garamond', serif; font-size: 26px; color: #6B5444; min-width: 32px">03</span><div style="display: flex; flex-direction: column; gap: 6px"><h3 style="margin: 0; font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 600">Cuenta regresiva</h3><p style="margin: 0; font-size: 15px; line-height: 1.55; color: #4A4640">Días, horas, minutos y segundos hasta la boda.</p></div></div>
+<div style="display: flex; gap: 20px; border-top: 1px solid #CFC6B4; padding: 22px 0"><span style="font-family: 'Cormorant Garamond', serif; font-size: 26px; color: #6B5444; min-width: 32px">04</span><div style="display: flex; flex-direction: column; gap: 6px"><h3 style="margin: 0; font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 600">Historia</h3><p style="margin: 0; font-size: 15px; line-height: 1.55; color: #4A4640">Cómo se conocieron, con galería de fotos.</p></div></div>
+<div style="display: flex; gap: 20px; border-top: 1px solid #CFC6B4; padding: 22px 0"><span style="font-family: 'Cormorant Garamond', serif; font-size: 26px; color: #6B5444; min-width: 32px">05</span><div style="display: flex; flex-direction: column; gap: 6px"><h3 style="margin: 0; font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 600">Programa</h3><p style="margin: 0; font-size: 15px; line-height: 1.55; color: #4A4640">Ceremonia y recepción, dirección y mapa.</p></div></div>
+<div style="display: flex; gap: 20px; border-top: 1px solid #CFC6B4; padding: 22px 0"><span style="font-family: 'Cormorant Garamond', serif; font-size: 26px; color: #6B5444; min-width: 32px">06</span><div style="display: flex; flex-direction: column; gap: 6px"><h3 style="margin: 0; font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 600">Preguntas frecuentes</h3><p style="margin: 0; font-size: 15px; line-height: 1.55; color: #4A4640">Vestimenta, niños, regalos… agrupadas por tema.</p></div></div>
+<div style="display: flex; gap: 20px; border-top: 1px solid #CFC6B4; padding: 22px 0"><span style="font-family: 'Cormorant Garamond', serif; font-size: 26px; color: #6B5444; min-width: 32px">07</span><div style="display: flex; flex-direction: column; gap: 6px"><h3 style="margin: 0; font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 600">Música de fondo</h3><p style="margin: 0; font-size: 15px; line-height: 1.55; color: #4A4640">Su canción suena al abrir la invitación.</p></div></div>
+<div style="display: flex; gap: 20px; border-top: 1px solid #CFC6B4; padding: 22px 0"><span style="font-family: 'Cormorant Garamond', serif; font-size: 26px; color: #6B5444; min-width: 32px">08</span><div style="display: flex; flex-direction: column; gap: 6px"><h3 style="margin: 0; font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 600">Viaje y alojamiento</h3><p style="margin: 0; font-size: 15px; line-height: 1.55; color: #4A4640">Hoteles y turismo para quienes vienen de fuera.</p></div></div>
+<div style="display: flex; gap: 20px; border-top: 1px solid #CFC6B4; padding: 22px 0"><span style="font-family: 'Cormorant Garamond', serif; font-size: 26px; color: #6B5444; min-width: 32px">09</span><div style="display: flex; flex-direction: column; gap: 6px"><h3 style="margin: 0; font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 600">Confirmación de asistencia</h3><p style="margin: 0; font-size: 15px; line-height: 1.55; color: #4A4640">Sí o no por persona, con mensaje a los novios.</p></div></div>
+<div style="display: flex; gap: 20px; border-top: 1px solid #CFC6B4; padding: 22px 0"><span style="font-family: 'Cormorant Garamond', serif; font-size: 26px; color: #6B5444; min-width: 32px">10</span><div style="display: flex; flex-direction: column; gap: 6px"><h3 style="margin: 0; font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 600">Panel de organización</h3><p style="margin: 0; font-size: 15px; line-height: 1.55; color: #4A4640">Confirmados, lista de invitados y envíos.</p></div></div>
+</div>
+</section>
+
+<section style="background: #EAE4D7; padding: 96px 24px">
+<div style="max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; align-items: center; gap: 56px">
+<div style="flex: 1 1 420px; min-width: 0; display: flex; flex-direction: column; gap: 24px">
+<p style="margin: 0; font-size: 13px; font-weight: 500; letter-spacing: 3px; text-transform: uppercase; color: #6B5444">Confirmación de asistencia</p>
+<h2 style="margin: 0; font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: 52px; line-height: 1.02; color: #2B3A33">Cada familia confirma con su propio enlace</h2>
+<ul style="margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column">
+<li style="border-top: 1px solid #CFC6B4; padding: 16px 0; display: flex; flex-direction: column; gap: 4px"><strong style="font-weight: 600; font-size: 17px">Sí o no por persona</strong><span style="font-size: 15px; color: #4A4640">Cada cupo de la invitación responde por separado.</span></li>
+<li style="border-top: 1px solid #CFC6B4; padding: 16px 0; display: flex; flex-direction: column; gap: 4px"><strong style="font-weight: 600; font-size: 17px">Mensaje a los novios</strong><span style="font-size: 15px; color: #4A4640">Un espacio opcional para escribirles unas palabras.</span></li>
+<li style="border-top: 1px solid #CFC6B4; border-bottom: 1px solid #CFC6B4; padding: 16px 0; display: flex; flex-direction: column; gap: 4px"><strong style="font-weight: 600; font-size: 17px">Respuesta editable</strong><span style="font-size: 15px; color: #4A4640">El invitado puede cambiarla hasta la fecha límite.</span></li>
+</ul>
+</div>
+<div style="flex: 1 1 420px; min-width: 0; display: flex; justify-content: center; gap: 24px">
+<div style="width: 46%; max-width: 250px; padding: 8px; background: #1C1A17; border-radius: 38px; box-shadow: 0 30px 60px -30px rgba(34,32,28,0.55)"><img src="/assets/rsvp-clasico.png" alt="Formulario de confirmación, diseño clásico" style="display: block; width: 100%; height: auto; aspect-ratio: 350 / 754; object-fit: cover; border-radius: 31px"></div>
+<div style="width: 46%; max-width: 250px; padding: 8px; background: #1C1A17; border-radius: 38px; box-shadow: 0 30px 60px -30px rgba(34,32,28,0.55); transform: translateY(40px)"><img src="/assets/rsvp-moderno.png" alt="Formulario de confirmación, diseño moderno" style="display: block; width: 100%; height: auto; aspect-ratio: 350 / 754; object-fit: cover; border-radius: 31px"></div>
+</div>
+</div>
+</section>
+
+<section style="background: #1C1A17; color: #F5F2EA; padding: 96px 24px">
+<div style="max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap-reverse; align-items: center; gap: 56px">
+<div style="flex: 1 1 420px; min-width: 0; display: flex; justify-content: center; gap: 24px">
+<div style="width: 46%; max-width: 250px; padding: 8px; background: #3A3631; border-radius: 38px; box-shadow: 0 30px 60px -30px rgba(0,0,0,0.8)"><img src="/assets/panel-clasico.png" alt="Panel de los novios, diseño clásico" style="display: block; width: 100%; height: auto; aspect-ratio: 350 / 754; object-fit: cover; border-radius: 31px"></div>
+<div style="width: 46%; max-width: 250px; padding: 8px; background: #3A3631; border-radius: 38px; box-shadow: 0 30px 60px -30px rgba(0,0,0,0.8); transform: translateY(40px)"><img src="/assets/panel-moderno.png" alt="Panel de los novios, diseño moderno" style="display: block; width: 100%; height: auto; aspect-ratio: 350 / 754; object-fit: cover; border-radius: 31px"></div>
+</div>
+<div style="flex: 1 1 420px; min-width: 0; display: flex; flex-direction: column; gap: 24px">
+<p style="margin: 0; font-size: 13px; font-weight: 500; letter-spacing: 3px; text-transform: uppercase; color: #C9B49A">Panel de los novios</p>
+<h2 style="margin: 0; font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: 52px; line-height: 1.02">Su boda, organizada desde el celular</h2>
+<ul style="margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column">
+<li style="border-top: 1px solid #3A3631; padding: 16px 0; display: flex; flex-direction: column; gap: 4px"><strong style="font-weight: 600; font-size: 17px">Contenido</strong><span style="font-size: 15px; color: #CFCABE">Escriban sus textos, suban fotos y elijan colores. Los cambios se ven al instante.</span></li>
+<li style="border-top: 1px solid #3A3631; padding: 16px 0; display: flex; flex-direction: column; gap: 4px"><strong style="font-weight: 600; font-size: 17px">Resumen</strong><span style="font-size: 15px; color: #CFCABE">Personas confirmadas, cupos y respuestas recientes.</span></li>
+<li style="border-top: 1px solid #3A3631; padding: 16px 0; display: flex; flex-direction: column; gap: 4px"><strong style="font-weight: 600; font-size: 17px">Invitados</strong><span style="font-size: 15px; color: #CFCABE">Búsqueda, filtros por estado y exportación a Excel (CSV).</span></li>
+<li style="border-top: 1px solid #3A3631; border-bottom: 1px solid #3A3631; padding: 16px 0; display: flex; flex-direction: column; gap: 4px"><strong style="font-weight: 600; font-size: 17px">Envío</strong><span style="font-size: 15px; color: #CFCABE">Creen invitaciones, copien el mensaje con el enlace y márquenlas como enviadas.</span></li>
+</ul>
+</div>
+</div>
+</section>
+
+<section style="max-width: 1200px; margin: 0 auto; padding: 96px 24px; display: flex; flex-direction: column; gap: 56px">
+<h2 style="margin: 0; font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: 56px; line-height: 1.02; max-width: 680px; color: #2B3A33">Lista en una tarde, sin esperar a nadie</h2>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr)); gap: 40px">
+<div style="display: flex; flex-direction: column; gap: 14px"><span style="font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 72px; line-height: 1; color: #6B5444">1</span><h3 style="margin: 0; font-size: 20px; font-weight: 600">Elijan y paguen</h3><p style="margin: 0; font-size: 15px; line-height: 1.6; color: #4A4640">Escojan su diseño y los extras que quieran. Al pagar reciben el acceso a su panel.</p></div>
+<div style="display: flex; flex-direction: column; gap: 14px"><span style="font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 72px; line-height: 1; color: #6B5444">2</span><h3 style="margin: 0; font-size: 20px; font-weight: 600">Llenen su panel</h3><p style="margin: 0; font-size: 15px; line-height: 1.6; color: #4A4640">Textos, fotos, fechas, lugares e invitados. La web se arma sola mientras escriben.</p></div>
+<div style="display: flex; flex-direction: column; gap: 14px"><span style="font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 72px; line-height: 1; color: #6B5444">3</span><h3 style="margin: 0; font-size: 20px; font-weight: 600">Compartan</h3><p style="margin: 0; font-size: 15px; line-height: 1.6; color: #4A4640">Envíen a cada familia su enlace único por WhatsApp y sigan las confirmaciones en vivo.</p></div>
+</div>
+</section>
+
+<section id="precios" style="background: #EAE4D7; padding: 96px 24px">
+<div style="max-width: 1200px; margin: 0 auto; display: flex; flex-direction: column; gap: 48px">
+<div style="display: flex; flex-direction: column; gap: 12px; align-items: center; text-align: center">
+<p style="margin: 0; font-size: 13px; font-weight: 500; letter-spacing: 3px; text-transform: uppercase; color: #6B5444">Precios</p>
+<h2 style="margin: 0; font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: 56px; line-height: 1.02; color: #2B3A33">Un solo pago. Armen su invitación a su medida.</h2>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 24px; align-items: stretch">
+
+<div style="flex: 1 1 320px; min-width: 0; background: #FBF9F4; border-radius: 20px; padding: 36px 32px; display: flex; flex-direction: column; gap: 18px">
+<h3 style="margin: 0; font-family: 'Cormorant Garamond', serif; font-weight: 600; font-size: 34px; color: #2B3A33">Invitación</h3>
+<p style="margin: 0; font-size: 44px; font-weight: 600; line-height: 1">[Precio]</p>
+<p style="margin: 0; font-size: 15px; color: #4A4640; line-height: 1.55">Todo lo incluido en el diseño que elijan.</p>
+<ul style="margin: 0; padding: 0 0 0 18px; display: flex; flex-direction: column; gap: 8px; font-size: 15px; line-height: 1.45">
+<li>Diseño clásico o moderno</li>
+<li>Efecto de apertura</li>
+<li>Enlaces únicos y confirmación por persona</li>
+<li>Historia, programa, FAQ, música, viaje</li>
+<li>Panel de organización</li>
+</ul>
+</div>
+
+<div style="flex: 2 1 520px; min-width: 0; background: #FBF9F4; border: 2px solid #2B3A33; border-radius: 20px; padding: 36px 32px; display: flex; flex-direction: column; gap: 18px">
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 12px">
+<h3 style="margin: 0; font-family: 'Cormorant Garamond', serif; font-weight: 600; font-size: 34px; color: #2B3A33">Extras</h3>
+<span style="font-size: 14px; color: #5A5650">Toquen los que quieran sumar</span>
+</div>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr)); gap: 10px">
+<button type="button" class="extra" aria-pressed="false"><span style="display: flex; flex-direction: column; gap: 3px"><strong style="font-family: 'Cormorant Garamond', serif; font-weight: 600; font-size: 22px; line-height: 1.1">Playlist colaborativa</strong><span style="font-size: 13px; opacity: 0.8">Conexión con Spotify</span></span><span style="font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 600; white-space: nowrap">[$]</span></button>
+<button type="button" class="extra" aria-pressed="false"><span style="display: flex; flex-direction: column; gap: 3px"><strong style="font-family: 'Cormorant Garamond', serif; font-weight: 600; font-size: 22px; line-height: 1.1">Guestbook con QR</strong><span style="font-size: 13px; opacity: 0.8">Mensaje y foto el día de la boda</span></span><span style="font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 600; white-space: nowrap">[$]</span></button>
+<button type="button" class="extra" aria-pressed="false"><span style="display: flex; flex-direction: column; gap: 3px"><strong style="font-family: 'Cormorant Garamond', serif; font-weight: 600; font-size: 22px; line-height: 1.1">Cápsula de mensajes</strong><span style="font-size: 13px; opacity: 0.8">Se abren en el aniversario</span></span><span style="font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 600; white-space: nowrap">[$]</span></button>
+<button type="button" class="extra" aria-pressed="false"><span style="display: flex; flex-direction: column; gap: 3px"><strong style="font-family: 'Cormorant Garamond', serif; font-weight: 600; font-size: 22px; line-height: 1.1">Encuestas para invitados</strong><span style="font-size: 13px; opacity: 0.8">Preguntas con respuesta de todos</span></span><span style="font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 600; white-space: nowrap">[$]</span></button>
+<button type="button" class="extra" aria-pressed="false"><span style="display: flex; flex-direction: column; gap: 3px"><strong style="font-family: 'Cormorant Garamond', serif; font-weight: 600; font-size: 22px; line-height: 1.1">Galería colaborativa</strong><span style="font-size: 13px; opacity: 0.8">Los invitados suben sus fotos</span></span><span style="font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 600; white-space: nowrap">[$]</span></button>
+<button type="button" class="extra" aria-pressed="false"><span style="display: flex; flex-direction: column; gap: 3px"><strong style="font-family: 'Cormorant Garamond', serif; font-weight: 600; font-size: 22px; line-height: 1.1">Versión bilingüe</strong><span style="font-size: 13px; opacity: 0.8">Español e inglés</span></span><span style="font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 600; white-space: nowrap">[$]</span></button>
+<button type="button" class="extra" aria-pressed="false"><span style="display: flex; flex-direction: column; gap: 3px"><strong style="font-family: 'Cormorant Garamond', serif; font-weight: 600; font-size: 22px; line-height: 1.1">Dominio propio</strong><span style="font-size: 13px; opacity: 0.8">Ej. fabianydanna.com</span></span><span style="font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 600; white-space: nowrap">[$]</span></button>
+</div>
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 16px; background: #1C1A17; color: #F5F2EA; border-radius: 14px; padding: 20px 22px">
+<div style="display: flex; flex-direction: column; gap: 4px">
+<span style="font-size: 12px; letter-spacing: 2px; text-transform: uppercase; color: #C9B49A">Combo · Todos los extras</span>
+<span style="font-size: 14px; color: #CFCABE">Playlist, guestbook, cápsula de mensajes y encuestas</span>
+</div>
+<span style="font-family: 'Cormorant Garamond', serif; font-size: 40px; font-weight: 500">[Precio]</span>
+</div>
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 16px; border-top: 1px solid #E5DFD2; padding-top: 18px">
+<span id="extras-summary" aria-live="polite" style="font-size: 14px; color: #5A5650">Invitación sin extras</span>
+<a href="#" style="text-decoration: none; background: #2B3A33; color: #F5F2EA; padding: 15px 28px; border-radius: 999px; font-weight: 500">Crear mi invitación</a>
+</div>
+</div>
+
+</div>
+
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 24px; border: 1px dashed #A99F8B; border-radius: 20px; padding: 32px">
+<div style="display: flex; flex-direction: column; gap: 8px; max-width: 640px">
+<h3 style="margin: 0; font-family: 'Cormorant Garamond', serif; font-weight: 600; font-size: 32px; color: #2B3A33">¿Prefieren que la hagamos por ustedes?</h3>
+<p style="margin: 0; font-size: 15px; line-height: 1.6; color: #4A4640">Servicio personalizado: diseño exclusivo con su paleta y su historia, y nosotros cargamos todo el contenido. Desde [Precio].</p>
+</div>
+<a href="#contacto" style="text-decoration: none; padding: 15px 28px; border-radius: 999px; border: 1px solid #22201C; color: #22201C; font-weight: 500">Hablemos</a>
+</div>
+
+<div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 12px 28px; font-size: 14px; color: #5A5650">
+<span>Pagos seguros con</span>
+<strong style="font-weight: 600; color: #22201C">Mercado Pago</strong>
+<strong style="font-weight: 600; color: #22201C">Tarjeta de crédito</strong>
+<strong style="font-weight: 600; color: #22201C">PayPal</strong>
+<span>· Precios en [moneda]</span>
+</div>
+</div>
+</section>
+
+<section id="faq" style="max-width: 860px; margin: 0 auto; padding: 96px 24px; display: flex; flex-direction: column; gap: 32px">
+<h2 style="margin: 0; font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: 56px; line-height: 1.02; text-align: center; color: #2B3A33">Preguntas frecuentes</h2>
+<div style="display: flex; flex-direction: column">
+<details style="border-bottom: 1px solid #CFC6B4; padding: 20px 0"><summary style="display: flex; justify-content: space-between; align-items: center; gap: 16px; font-size: 18px; font-weight: 500; min-height: 44px">¿Tenemos que saber de diseño o programación?<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#22201C" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></summary><p style="margin: 12px 0 0; font-size: 16px; line-height: 1.65; color: #4A4640">No. Todo se llena desde su panel, como un formulario, y la web se genera sola.</p></details>
+<details style="border-bottom: 1px solid #CFC6B4; padding: 20px 0"><summary style="display: flex; justify-content: space-between; align-items: center; gap: 16px; font-size: 18px; font-weight: 500; min-height: 44px">¿Cómo les llega la invitación a los invitados?<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#22201C" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></summary><p style="margin: 12px 0 0; font-size: 16px; line-height: 1.65; color: #4A4640">Desde el panel crean cada invitación con sus cupos, copian el mensaje con el enlace único y lo envían por WhatsApp.</p></details>
+<details style="border-bottom: 1px solid #CFC6B4; padding: 20px 0"><summary style="display: flex; justify-content: space-between; align-items: center; gap: 16px; font-size: 18px; font-weight: 500; min-height: 44px">¿Podemos cambiar textos o fotos después de enviarla?<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#22201C" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></summary><p style="margin: 12px 0 0; font-size: 16px; line-height: 1.65; color: #4A4640">Sí, cuando quieran. Los cambios se ven al instante en todos los enlaces.</p></details>
+<details style="border-bottom: 1px solid #CFC6B4; padding: 20px 0"><summary style="display: flex; justify-content: space-between; align-items: center; gap: 16px; font-size: 18px; font-weight: 500; min-height: 44px">¿Por cuánto tiempo estará publicada?<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#22201C" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></summary><p style="margin: 12px 0 0; font-size: 16px; line-height: 1.65; color: #4A4640">[Hasta X meses después de la boda.]</p></details>
+<details style="border-bottom: 1px solid #CFC6B4; padding: 20px 0"><summary style="display: flex; justify-content: space-between; align-items: center; gap: 16px; font-size: 18px; font-weight: 500; min-height: 44px">¿Desde qué países puedo pagar?<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#22201C" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></summary><p style="margin: 12px 0 0; font-size: 16px; line-height: 1.65; color: #4A4640">Desde Colombia con Mercado Pago, y desde cualquier país con tarjeta internacional o PayPal.</p></details>
+</div>
+</section>
+
+<footer id="contacto" style="background: #2B3A33; color: #F5F2EA; padding: 80px 24px 40px">
+<div style="max-width: 1200px; margin: 0 auto; display: flex; flex-direction: column; gap: 56px">
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 32px">
+<h2 style="margin: 0; font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: 60px; line-height: 1.02; max-width: 640px">Empiecen su invitación <span style="font-style: italic; color: #C9B49A">hoy.</span></h2>
+<div style="display: flex; flex-wrap: wrap; gap: 12px">
+<a href="#precios" style="text-decoration: none; background: #F5F2EA; color: #2B3A33; padding: 16px 30px; border-radius: 999px; font-weight: 500">Crear mi invitación</a>
+<a href="#" style="text-decoration: none; border: 1px solid #8E9B85; color: #F5F2EA; padding: 16px 30px; border-radius: 999px; font-weight: 500">Escríbenos por WhatsApp</a>
+</div>
+</div>
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 24px; border-top: 1px solid #44544B; padding-top: 28px; font-size: 14px; color: #CFCABE">
+<span style="font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 28px; color: #F5F2EA">lazo</span>
+<div style="display: flex; flex-wrap: wrap; gap: 24px">
+<a href="#" style="color: #CFCABE">Instagram</a>
+<a href="#" style="color: #CFCABE">[hola@tudominio.com]</a>
+<a href="#" style="color: #CFCABE">Términos</a>
+<a href="/en/" style="color: #CFCABE">English</a>
+</div>
+</div>
+</div>
+</footer>
+
+</div>
+<script>
+(function(){
+  var btns=document.querySelectorAll('.extra'),out=document.getElementById('extras-summary');
+  function update(){var n=document.querySelectorAll('.extra[aria-pressed="true"]').length;
+    out.textContent=n===0?'Invitación sin extras':(n===1?'Invitación + {n} extra':'Invitación + {n} extras').replace('{n}',n);}
+  btns.forEach(function(b){b.addEventListener('click',function(){
+    b.setAttribute('aria-pressed',b.getAttribute('aria-pressed')==='true'?'false':'true');update();});});
+})();
+</script>
+</body>
+</html>
