@@ -1,0 +1,473 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Melissa &amp; Andrés · Demo diseño romántico — Lazo</title>
+<meta name="description" content="Demo de invitación web de boda: sobre lacrado que se abre, cuenta regresiva, el día, historia, confirmación por persona y preguntas frecuentes.">
+<meta name="theme-color" content="#F0E2E0">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%23C08A4F'/%3E%3Ctext x='32' y='44' font-family='Georgia,serif' font-style='italic' font-size='34' fill='%23FBEBD0' text-anchor='middle'%3E%26%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&amp;family=Jost:wght@300;400;500&amp;display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box}
+[hidden]{display:none !important}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;background:#F6EBEC;font-family:Jost,Helvetica,sans-serif;font-weight:300;color:#3E3236}
+body.locked{overflow:hidden}
+a{color:#3E3236;text-decoration:none}a:hover{opacity:.75}
+img{max-width:100%}
+textarea::placeholder{color:#8E7F84}
+button{font-family:inherit}
+a:focus-visible,button:focus-visible,summary:focus-visible,textarea:focus-visible{outline:2px solid #B48650;outline-offset:3px}
+@keyframes rNudge{0%,100%{translate:0 0}50%{translate:0 6px}}
+@keyframes sBreath{0%,100%{scale:1}50%{scale:1.025}}
+
+/* ---------- Sobre ---------- */
+.env{position:fixed;inset:0;z-index:50;overflow:hidden;background:#F0E2E0;transition:opacity .9s ease,visibility 0s linear .9s}
+.env.gone{opacity:0;visibility:hidden}
+.env svg{display:block}
+.scene{position:absolute;inset:0;perspective:2400px;transition:opacity 1s ease,transform 2.6s cubic-bezier(.4,0,.2,1)}
+.base{position:absolute;inset:0;width:100%;height:100%}
+.liner-glow{opacity:0;transition:opacity 1s ease .3s}
+.dim{position:absolute;inset:0;background:#6B5158;mix-blend-mode:multiply;opacity:0;transition:opacity 1.4s ease}
+.reach{position:absolute;inset:0;clip-path:circle(0px at var(--cx) var(--cy));transition:clip-path 1.9s cubic-bezier(.3,0,.25,1)}
+.reach svg{width:100%;height:100%}
+.flap{position:absolute;left:0;top:0;width:100%;height:var(--fh);transform-origin:50% 0;transition:transform 1.3s cubic-bezier(.65,0,.35,1);filter:drop-shadow(0 10px 16px rgba(120,80,70,.28))}
+.flap .tri{position:absolute;inset:0;clip-path:polygon(0 0,100% 0,50% 100%)}
+.flap .tri svg{width:100%;height:100%}
+.seal-btn{position:absolute;left:50%;top:var(--fh);width:var(--ss);height:var(--ss);margin:calc(var(--ss) / -2) 0 0 calc(var(--ss) / -2);padding:0;border:0;background:none;cursor:pointer;animation:sBreath 3s ease-in-out infinite;transition:filter 1s ease}
+.seal-btn svg{width:100%;height:100%;overflow:visible}
+.bloom{position:absolute;left:var(--cx);top:var(--cy);width:10px;height:10px;margin:-5px 0 0 -5px;border-radius:50%;background:#FFF6E2;opacity:0;filter:blur(30px);pointer-events:none;transition:transform 1.9s cubic-bezier(.2,.7,.2,1),opacity 1.2s ease}
+.hint{position:absolute;left:0;right:0;bottom:clamp(28px,6vh,48px);margin:0;padding:0 20px;text-align:center;font-size:11px;font-weight:400;letter-spacing:.34em;text-transform:uppercase;color:#6A5550;transition:opacity .5s ease}
+.env:not([data-phase="closed"]) .dim{opacity:.38}
+.env:not([data-phase="closed"]) .reach{clip-path:circle(2400px at var(--cx) var(--cy))}
+.env:not([data-phase="closed"]) .seal-btn{animation:none;filter:brightness(1.55) saturate(.25) drop-shadow(0 0 24px #FFF2D2);cursor:default}
+.env:not([data-phase="closed"]) .hint{opacity:0}
+.env[data-phase="glow"] .bloom{transform:scale(120);opacity:.5}
+.env[data-phase="open"] .bloom,.env[data-phase="flash"] .bloom,.env[data-phase="card"] .bloom{transform:scale(120);opacity:.3}
+.env[data-phase="open"] .scene,.env[data-phase="flash"] .scene{transform:scale(1.06)}
+.env[data-phase="open"] .flap,.env[data-phase="flash"] .flap,.env[data-phase="card"] .flap{transform:rotateX(180deg)}
+.env[data-phase="open"] .liner-glow,.env[data-phase="flash"] .liner-glow,.env[data-phase="card"] .liner-glow{opacity:.9}
+.env[data-phase="card"] .scene{opacity:0;transform:scale(1.06)}
+.wash{position:absolute;inset:0;background:#F1F1FB;opacity:0;pointer-events:none;transition:opacity .7s ease}
+.env[data-phase="flash"] .wash{opacity:1}
+
+.card{position:absolute;inset:0;background:#E3E2F4;opacity:0;pointer-events:none;overflow-y:auto;display:flex;flex-direction:column;transition:opacity 1.3s ease,background-color 3.2s ease .8s}
+.env[data-phase="card"] .card{opacity:1;pointer-events:auto;background:#F5E6EB}
+.card .corner{position:absolute;width:clamp(90px,12vw,160px);height:clamp(90px,12vw,160px);opacity:0;transition:opacity 1.4s ease 1.2s}
+.env[data-phase="card"] .card .corner{opacity:1}
+.card .bar{position:relative;height:72px;padding:0 clamp(20px,4vw,64px);display:flex;align-items:center;justify-content:space-between;font-size:11px;font-weight:400;letter-spacing:.34em;text-transform:uppercase;color:#6E5F64}
+.card .inner{position:relative;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px clamp(20px,6vw,96px) 72px}
+.rv{opacity:0;translate:0 14px;transition:opacity 1.1s ease,translate 1.1s ease}
+.env[data-phase="card"] .rv{opacity:1;translate:0 0}
+.env[data-phase="card"] .d1{transition-delay:1s}
+.env[data-phase="card"] .d2{transition-delay:1.5s}
+.env[data-phase="card"] .d3{transition-delay:1.8s}
+.env[data-phase="card"] .d4{transition-delay:2.2s}
+.env[data-phase="card"] .d5{transition-delay:2.7s}
+
+/* ---------- Invitación ---------- */
+.pill{display:inline-flex;align-items:center;justify-content:center;border-radius:100px;font-size:11px;font-weight:400;letter-spacing:.28em;text-transform:uppercase}
+.kicker{margin:0;font-size:11px;font-weight:400;letter-spacing:.34em;text-transform:uppercase;color:#7A5530}
+.h2{margin:14px 0 0;font:400 clamp(40px,4.4vw,60px)/1.05 'Instrument Serif',serif;color:#3E3236}
+.ph{position:relative;width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;background:#EBD6D5;overflow:hidden;color:#7D6A70;text-align:center}
+.ph svg.bg{position:absolute;inset:0;width:100%;height:100%;opacity:.55}
+.ph .mono{position:relative;font:italic 400 clamp(40px,6vw,72px)/1 'Instrument Serif',serif;color:#9C7E80}
+.ph .cap{position:relative;font-size:10px;font-weight:400;letter-spacing:.3em;text-transform:uppercase}
+.att{width:60px;height:44px;border-radius:100px;border:1px solid #3E3236;background:transparent;color:#3E3236;font-size:12px;font-weight:400;letter-spacing:.12em;cursor:pointer}
+.att[aria-pressed="true"]{background:#3E3236;color:#F7EEF0}
+details.faq{border-top:1px solid #E2CFC6}
+details.faq summary{min-height:72px;padding:16px 0;display:flex;align-items:center;justify-content:space-between;gap:16px;cursor:pointer;list-style:none}
+details.faq summary::-webkit-details-marker{display:none}
+details.faq .plus{flex:none;font:400 30px/1 'Instrument Serif',serif;color:#B48650;transition:rotate .3s ease}
+details.faq[open] .plus{rotate:45deg}
+.demo-bar{position:fixed;left:50%;bottom:16px;z-index:40;translate:-50% 0;display:flex;align-items:center;gap:14px;padding:8px 8px 8px 18px;border-radius:100px;background:#2B3A33;color:#F5F2EA;box-shadow:0 12px 30px -12px rgba(0,0,0,.45);font-size:13px;white-space:nowrap}
+.demo-bar a{color:#2B3A33;background:#F5F2EA;padding:10px 16px;border-radius:100px;font-weight:400}
+.demo-bar a:hover{opacity:.9}
+@media (max-width:520px){.demo-bar span.long{display:none}}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{transition-duration:.01s !important;animation:none !important}}
+</style>
+</head>
+<body class="locked">
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <g id="mShapes">
+      <path d="M65 28 C74 44 74 64 65 80 C56 64 56 44 65 28 Z"/>
+      <path d="M63 70 C52 60 44 46 48 32 C54 44 60 56 63 70 Z"/>
+      <path d="M67 70 C78 60 86 46 82 32 C76 44 70 56 67 70 Z"/>
+      <path d="M61 78 C44 74 32 60 34 46 C42 58 52 70 61 78 Z"/>
+      <path d="M69 78 C86 74 98 60 96 46 C88 58 78 70 69 78 Z"/>
+      <path d="M52 86 C56 80 74 80 78 86 C72 92 58 92 52 86 Z"/>
+      <path d="M65 108 C56 104 46 108 42 118 C52 120 60 116 65 108 Z"/>
+      <path d="M65 108 C74 104 84 108 88 118 C78 120 70 116 65 108 Z"/>
+      <path d="M65 128 C58 136 58 146 65 156 C72 146 72 136 65 128 Z"/>
+      <path d="M44 132 C36 128 28 132 26 140 C34 142 40 138 44 132 Z"/>
+      <path d="M86 132 C94 128 102 132 104 140 C96 142 90 138 86 132 Z"/>
+    </g>
+    <g id="mLines" fill="none" stroke-linecap="round">
+      <path d="M65 40 L65 70"/>
+      <path d="M56 90 C40 96 26 92 22 80 C19 70 30 64 36 72 C40 78 34 84 30 80"/>
+      <path d="M74 90 C90 96 104 92 108 80 C111 70 100 64 94 72 C90 78 96 84 100 80"/>
+      <path d="M65 92 L65 128"/>
+      <path d="M65 118 C56 124 48 128 44 132"/>
+      <path d="M65 118 C74 124 82 128 86 132"/>
+      <path d="M65 28 C62 20 56 18 52 22"/>
+      <path d="M65 28 C68 20 74 18 78 22"/>
+      <path d="M30 52 C24 44 26 36 32 34"/>
+      <path d="M100 52 C106 44 104 36 98 34"/>
+    </g>
+    <g id="motif"><use href="#mShapes"/><use href="#mLines"/></g>
+    <pattern id="dmk" width="130" height="180" patternUnits="userSpaceOnUse" patternTransform="scale(1.25)">
+      <g transform="translate(.9 1.1)" fill="none" stroke="#B8978B" stroke-width="1.1" opacity=".5">
+        <use href="#motif"/><use href="#motif" x="-65" y="90"/><use href="#motif" x="65" y="90"/><use href="#motif" x="-65" y="-90"/><use href="#motif" x="65" y="-90"/>
+      </g>
+      <g fill="#F7EDEA" stroke="#D3BBAF" stroke-width="1">
+        <use href="#motif"/><use href="#motif" x="-65" y="90"/><use href="#motif" x="65" y="90"/><use href="#motif" x="-65" y="-90"/><use href="#motif" x="65" y="-90"/>
+      </g>
+    </pattern>
+    <pattern id="dmkGold" width="130" height="180" patternUnits="userSpaceOnUse" patternTransform="scale(1.25)">
+      <g fill="#FFE7AE" fill-opacity=".45" stroke="#FFE3A0" stroke-width="1.8">
+        <use href="#motif"/><use href="#motif" x="-65" y="90"/><use href="#motif" x="65" y="90"/><use href="#motif" x="-65" y="-90"/><use href="#motif" x="65" y="-90"/>
+      </g>
+    </pattern>
+    <filter id="bloomF" x="-10%" y="-10%" width="120%" height="120%">
+      <feGaussianBlur stdDeviation="3.2" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <linearGradient id="shL" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="rgba(110,70,60,.12)"/></linearGradient>
+    <linearGradient id="shR" x1="1" y1="0" x2="0" y2="0"><stop offset="0" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="rgba(110,70,60,.12)"/></linearGradient>
+    <linearGradient id="shB" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="rgba(110,70,60,.12)"/></linearGradient>
+    <linearGradient id="shT" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="rgba(110,70,60,.12)"/></linearGradient>
+    <linearGradient id="linerG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFFFFF"/><stop offset="1" stop-color="#F8ECE8"/></linearGradient>
+    <radialGradient id="waxG" cx="36%" cy="30%" r="80%">
+      <stop offset="0" stop-color="#FCE7BE"/><stop offset=".3" stop-color="#E6BC7E"/><stop offset=".65" stop-color="#C08A4F"/><stop offset="1" stop-color="#8C5A2C"/>
+    </radialGradient>
+    <radialGradient id="fieldG" cx="40%" cy="35%" r="75%">
+      <stop offset="0" stop-color="#E9C48C"/><stop offset=".6" stop-color="#C99A5E"/><stop offset="1" stop-color="#A9773F"/>
+    </radialGradient>
+    <g id="emblem">
+      <path d="M0 -36 C9 -22 9 -6 0 8 C-9 -6 -9 -22 0 -36 Z"/>
+      <path d="M-3 4 C-16 -2 -26 -16 -22 -30 C-14 -18 -8 -8 -3 4 Z"/>
+      <path d="M3 4 C16 -2 26 -16 22 -30 C14 -18 8 -8 3 4 Z"/>
+      <path d="M-5 10 C-22 10 -36 0 -36 -14 C-28 -4 -18 2 -5 10 Z"/>
+      <path d="M5 10 C22 10 36 0 36 -14 C28 -4 18 2 5 10 Z"/>
+      <path d="M-12 12 C-8 8 8 8 12 12 C8 17 -8 17 -12 12 Z"/>
+      <path d="M0 16 C-6 22 -16 24 -22 20 C-18 30 -6 30 0 22 Z"/>
+      <path d="M0 16 C6 22 16 24 22 20 C18 30 6 30 0 22 Z"/>
+      <path d="M0 22 C-4 28 -4 34 0 40 C4 34 4 28 0 22 Z"/>
+    </g>
+    <g id="seal">
+      <path d="M157.5 80.0 L156.3 84.0 L154.0 87.8 L151.2 91.3 L148.8 94.6 L147.2 98.0 L146.3 101.6 L145.9 105.3 L145.5 109.2 L144.7 113.0 L143.4 116.6 L141.7 120.1 L139.6 123.3 L137.2 126.4 L134.5 129.1 L131.3 131.3 L127.6 132.8 L123.6 133.8 L119.7 134.6 L116.2 135.8 L113.3 137.7 L110.9 140.6 L108.6 144.3 L106.1 148.0 L103.1 151.2 L99.6 153.3 L95.8 154.1 L91.7 154.1 L87.7 153.5 L83.8 152.7 L80.0 152.1 L76.3 151.5 L72.6 150.8 L68.9 150.0 L65.3 149.4 L61.5 149.0 L57.6 149.0 L53.5 149.1 L49.3 149.0 L45.4 148.0 L42.0 145.8 L39.5 142.4 L37.7 138.3 L36.2 134.0 L34.7 130.3 L32.8 127.2 L30.2 124.9 L27.0 122.9 L23.7 120.9 L20.5 118.6 L17.7 116.0 L15.1 113.1 L12.8 109.9 L10.8 106.6 L9.3 103.0 L8.5 99.2 L8.6 95.2 L9.3 91.2 L10.3 87.3 L10.9 83.6 L10.6 80.0 L9.4 76.3 L7.6 72.4 L5.9 68.3 L5.1 64.1 L5.5 60.0 L7.2 56.4 L9.9 53.1 L12.9 50.1 L16.0 47.4 L18.9 44.7 L21.6 42.1 L24.3 39.5 L26.9 37.0 L29.3 34.4 L31.5 31.5 L33.3 28.1 L35.0 24.4 L36.9 20.7 L39.4 17.5 L42.7 15.3 L46.5 14.3 L50.8 14.3 L54.9 14.7 L58.8 14.7 L62.3 14.0 L65.6 12.5 L69.0 10.4 L72.5 8.2 L76.1 6.5 L80.0 5.3 L84.0 4.6 L87.9 4.4 L91.9 4.7 L95.8 5.6 L99.5 7.3 L102.8 9.9 L105.7 13.1 L108.3 16.4 L111.0 19.2 L113.9 21.2 L117.4 22.3 L121.4 23.0 L125.6 23.7 L129.4 25.1 L132.6 27.4 L134.9 30.6 L136.5 34.3 L137.7 38.1 L138.8 41.8 L140.0 45.3 L141.4 48.7 L142.8 52.1 L144.2 55.4 L145.8 58.6 L147.8 61.8 L150.2 65.1 L153.0 68.4 L155.5 72.1 L157.2 76.0 L157.5 80.0 Z" fill="#5A3A1A" opacity=".25" transform="translate(2 5)"/>
+      <path d="M157.5 80.0 L156.3 84.0 L154.0 87.8 L151.2 91.3 L148.8 94.6 L147.2 98.0 L146.3 101.6 L145.9 105.3 L145.5 109.2 L144.7 113.0 L143.4 116.6 L141.7 120.1 L139.6 123.3 L137.2 126.4 L134.5 129.1 L131.3 131.3 L127.6 132.8 L123.6 133.8 L119.7 134.6 L116.2 135.8 L113.3 137.7 L110.9 140.6 L108.6 144.3 L106.1 148.0 L103.1 151.2 L99.6 153.3 L95.8 154.1 L91.7 154.1 L87.7 153.5 L83.8 152.7 L80.0 152.1 L76.3 151.5 L72.6 150.8 L68.9 150.0 L65.3 149.4 L61.5 149.0 L57.6 149.0 L53.5 149.1 L49.3 149.0 L45.4 148.0 L42.0 145.8 L39.5 142.4 L37.7 138.3 L36.2 134.0 L34.7 130.3 L32.8 127.2 L30.2 124.9 L27.0 122.9 L23.7 120.9 L20.5 118.6 L17.7 116.0 L15.1 113.1 L12.8 109.9 L10.8 106.6 L9.3 103.0 L8.5 99.2 L8.6 95.2 L9.3 91.2 L10.3 87.3 L10.9 83.6 L10.6 80.0 L9.4 76.3 L7.6 72.4 L5.9 68.3 L5.1 64.1 L5.5 60.0 L7.2 56.4 L9.9 53.1 L12.9 50.1 L16.0 47.4 L18.9 44.7 L21.6 42.1 L24.3 39.5 L26.9 37.0 L29.3 34.4 L31.5 31.5 L33.3 28.1 L35.0 24.4 L36.9 20.7 L39.4 17.5 L42.7 15.3 L46.5 14.3 L50.8 14.3 L54.9 14.7 L58.8 14.7 L62.3 14.0 L65.6 12.5 L69.0 10.4 L72.5 8.2 L76.1 6.5 L80.0 5.3 L84.0 4.6 L87.9 4.4 L91.9 4.7 L95.8 5.6 L99.5 7.3 L102.8 9.9 L105.7 13.1 L108.3 16.4 L111.0 19.2 L113.9 21.2 L117.4 22.3 L121.4 23.0 L125.6 23.7 L129.4 25.1 L132.6 27.4 L134.9 30.6 L136.5 34.3 L137.7 38.1 L138.8 41.8 L140.0 45.3 L141.4 48.7 L142.8 52.1 L144.2 55.4 L145.8 58.6 L147.8 61.8 L150.2 65.1 L153.0 68.4 L155.5 72.1 L157.2 76.0 L157.5 80.0 Z" fill="url(#waxG)"/>
+      <path d="M157.5 80.0 L156.3 84.0 L154.0 87.8 L151.2 91.3 L148.8 94.6 L147.2 98.0 L146.3 101.6 L145.9 105.3 L145.5 109.2 L144.7 113.0 L143.4 116.6 L141.7 120.1 L139.6 123.3 L137.2 126.4 L134.5 129.1 L131.3 131.3 L127.6 132.8 L123.6 133.8 L119.7 134.6 L116.2 135.8 L113.3 137.7 L110.9 140.6 L108.6 144.3 L106.1 148.0 L103.1 151.2 L99.6 153.3 L95.8 154.1 L91.7 154.1 L87.7 153.5 L83.8 152.7 L80.0 152.1 L76.3 151.5 L72.6 150.8 L68.9 150.0 L65.3 149.4 L61.5 149.0 L57.6 149.0 L53.5 149.1 L49.3 149.0 L45.4 148.0 L42.0 145.8 L39.5 142.4 L37.7 138.3 L36.2 134.0 L34.7 130.3 L32.8 127.2 L30.2 124.9 L27.0 122.9 L23.7 120.9 L20.5 118.6 L17.7 116.0 L15.1 113.1 L12.8 109.9 L10.8 106.6 L9.3 103.0 L8.5 99.2 L8.6 95.2 L9.3 91.2 L10.3 87.3 L10.9 83.6 L10.6 80.0 L9.4 76.3 L7.6 72.4 L5.9 68.3 L5.1 64.1 L5.5 60.0 L7.2 56.4 L9.9 53.1 L12.9 50.1 L16.0 47.4 L18.9 44.7 L21.6 42.1 L24.3 39.5 L26.9 37.0 L29.3 34.4 L31.5 31.5 L33.3 28.1 L35.0 24.4 L36.9 20.7 L39.4 17.5 L42.7 15.3 L46.5 14.3 L50.8 14.3 L54.9 14.7 L58.8 14.7 L62.3 14.0 L65.6 12.5 L69.0 10.4 L72.5 8.2 L76.1 6.5 L80.0 5.3 L84.0 4.6 L87.9 4.4 L91.9 4.7 L95.8 5.6 L99.5 7.3 L102.8 9.9 L105.7 13.1 L108.3 16.4 L111.0 19.2 L113.9 21.2 L117.4 22.3 L121.4 23.0 L125.6 23.7 L129.4 25.1 L132.6 27.4 L134.9 30.6 L136.5 34.3 L137.7 38.1 L138.8 41.8 L140.0 45.3 L141.4 48.7 L142.8 52.1 L144.2 55.4 L145.8 58.6 L147.8 61.8 L150.2 65.1 L153.0 68.4 L155.5 72.1 L157.2 76.0 L157.5 80.0 Z" fill="none" stroke="#7A4E22" stroke-opacity=".35" stroke-width="1"/>
+      <circle cx="80" cy="80" r="57" fill="none" stroke="#FBE3B4" stroke-opacity=".7" stroke-width="2"/>
+      <circle cx="80" cy="80" r="54" fill="url(#fieldG)"/>
+      <circle cx="80" cy="80" r="54" fill="none" stroke="#8C5E2C" stroke-width="1.6"/>
+      <g transform="translate(79.3 78.4)" fill="#F6DCA8" opacity=".75"><use href="#emblem"/></g>
+      <g transform="translate(80 80)" fill="#C08C52" stroke="#835628" stroke-width=".8"><use href="#emblem"/></g>
+      <ellipse cx="58" cy="50" rx="22" ry="10" fill="#FFF6DE" opacity=".22" transform="rotate(-35 58 50)"/>
+    </g>
+    <g id="corner" fill="none" stroke="#C49A62" stroke-linecap="round">
+      <path d="M14 4 L146 4 Q156 4 156 14 L156 146" stroke-width="1.2"/>
+      <path d="M52 12 L138 12 Q148 12 148 22 L148 108" stroke-width=".8"/>
+      <path d="M14 4 C4 4 2 14 9 16 C14 17 15 10 10 10" stroke-width="1.2"/>
+      <path d="M156 146 C156 156 146 158 144 151 C143 146 150 145 150 150" stroke-width="1.2"/>
+      <path d="M52 12 C44 12 42 20 48 22" stroke-width=".8"/>
+      <path d="M148 108 C148 116 140 118 138 112" stroke-width=".8"/>
+      <path d="M88 12 C90 26 102 32 110 28 C115 25 113 18 108 20" stroke-width=".9"/>
+      <path d="M148 72 C134 74 128 86 132 94 C135 99 142 97 140 92" stroke-width=".9"/>
+      <circle cx="72" cy="12" r="1.6" fill="#C49A62" stroke="none"/>
+      <circle cx="148" cy="56" r="1.6" fill="#C49A62" stroke="none"/>
+      <g transform="translate(124 36) rotate(45) scale(.42)" fill="#C49A62" stroke="none"><use href="#emblem"/></g>
+    </g>
+    <g id="orn">
+      <path d="M-150 0 L-46 0" stroke="#C49A62" stroke-width="1"/>
+      <path d="M46 0 L150 0" stroke="#C49A62" stroke-width="1"/>
+      <circle cx="-40" cy="0" r="2" fill="#C49A62"/>
+      <circle cx="40" cy="0" r="2" fill="#C49A62"/>
+      <g transform="scale(.6)" fill="#C49A62"><use href="#emblem"/></g>
+    </g>
+  </defs>
+</svg>
+
+<!-- ======================= SOBRE ======================= -->
+<div class="env" id="env" data-phase="closed" role="dialog" aria-modal="true" aria-label="Invitación en sobre lacrado">
+  <div class="scene">
+    <svg class="base" id="base" preserveAspectRatio="none" aria-hidden="true">
+      <rect width="100%" height="100%" fill="#F0E2E0"/>
+      <polygon data-p="liner" fill="url(#linerG)"/>
+      <polygon data-p="liner" class="liner-glow" fill="url(#dmkGold)" filter="url(#bloomF)"/>
+      <polygon data-p="left" fill="#F0E2E0"/><polygon data-p="left" fill="url(#dmk)"/><polygon data-p="left" fill="url(#shL)"/>
+      <polygon data-p="right" fill="#F0E2E0"/><polygon data-p="right" fill="url(#dmk)"/><polygon data-p="right" fill="url(#shR)"/>
+      <polygon data-p="bottom" fill="#F0E2E0" stroke="rgba(120,80,70,.28)" stroke-width="1"/><polygon data-p="bottom" fill="url(#dmk)"/><polygon data-p="bottom" fill="url(#shB)"/>
+    </svg>
+    <div class="dim"></div>
+    <div class="reach"><svg aria-hidden="true"><rect width="100%" height="100%" fill="url(#dmkGold)" filter="url(#bloomF)"/></svg></div>
+    <div class="flap">
+      <div class="tri"><svg aria-hidden="true"><rect width="100%" height="100%" fill="#F0E2E0"/><rect width="100%" height="100%" fill="url(#dmk)"/><rect width="100%" height="100%" fill="url(#shT)"/></svg></div>
+      <div class="tri dim"></div>
+      <div class="tri"><div class="reach"><svg aria-hidden="true"><rect width="100%" height="100%" fill="url(#dmkGold)" filter="url(#bloomF)"/></svg></div></div>
+      <button class="seal-btn" id="sealBtn" type="button" aria-label="Abrir la invitación"><svg viewBox="0 0 160 160" aria-hidden="true"><use href="#seal"/></svg></button>
+    </div>
+    <div class="bloom"></div>
+    <p class="hint">Toca el sello para abrir</p>
+  </div>
+
+  <div class="card" id="card">
+    <svg class="corner" viewBox="0 0 160 160" style="left:clamp(16px,3vw,40px);top:84px;transform:scaleX(-1)" aria-hidden="true"><use href="#corner"/></svg>
+    <svg class="corner" viewBox="0 0 160 160" style="right:clamp(16px,3vw,40px);top:84px" aria-hidden="true"><use href="#corner"/></svg>
+    <svg class="corner" viewBox="0 0 160 160" style="left:clamp(16px,3vw,40px);bottom:clamp(16px,3vw,40px);transform:scale(-1,-1)" aria-hidden="true"><use href="#corner"/></svg>
+    <svg class="corner" viewBox="0 0 160 160" style="right:clamp(16px,3vw,40px);bottom:clamp(16px,3vw,40px);transform:scaleY(-1)" aria-hidden="true"><use href="#corner"/></svg>
+    <div class="bar rv d1"><span>M — A</span><span>12.06.2027</span></div>
+    <div class="inner">
+      <p class="rv d1" style="margin:0;font:400 clamp(15px,1.4vw,18px)/1.5 'Instrument Serif',serif;letter-spacing:.22em;text-transform:uppercase;color:#7D6A70">Celebra con nosotros<br>nuestro gran día</p>
+      <div class="rv d2" style="width:1px;height:44px;margin:26px 0;background:#5E525740"></div>
+      <p class="rv d2" style="margin:0;font-size:11px;font-weight:400;letter-spacing:.34em;text-transform:uppercase;color:#6E5F64">Una invitación para</p>
+      <p class="rv d3" style="margin:14px 0 0;font:italic 400 clamp(42px,5vw,64px)/1 'Instrument Serif',serif;color:#3E3236">Familia Rodríguez</p>
+      <p class="rv d4" style="margin:clamp(28px,4vh,44px) 0 0;font:400 clamp(54px,8vw,96px)/1 'Instrument Serif',serif;letter-spacing:-.02em;color:#3E3236">Melissa <em style="color:#B48650">&amp;</em> Andrés</p>
+      <p class="rv d4" style="margin:18px 0 0;font-size:11px;font-weight:400;letter-spacing:.32em;text-transform:uppercase;color:#6E5F64">Sábado · 12 de junio · 2027</p>
+      <div class="rv d5" style="margin-top:clamp(32px,5vh,52px);display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:8px 20px">
+        <button type="button" id="enter" class="pill" style="height:56px;padding:0 44px;border:0;background:#3E3236;color:#F7EEF0;font-size:12px;cursor:pointer">Ver invitación</button>
+        <button type="button" id="replay" style="height:56px;padding:0 20px;border:0;background:none;cursor:pointer;font-size:12px;font-weight:400;letter-spacing:.22em;text-transform:uppercase;color:#5E5257">Ver el sobre otra vez</button>
+      </div>
+    </div>
+  </div>
+  <div class="wash"></div>
+</div>
+
+<!-- ======================= INVITACIÓN ======================= -->
+<div id="invite" style="position:relative;width:100%;display:flex;flex-direction:column;overflow:hidden;background:#F6EBEC">
+
+  <header style="position:relative;z-index:2;width:100%;max-width:1280px;margin:0 auto;padding:22px clamp(20px,4vw,56px);display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px 32px">
+    <a href="#portada" style="display:flex;align-items:center;gap:12px;font-size:11px;font-weight:400;letter-spacing:.34em;text-transform:uppercase">
+      <svg width="40" height="40" viewBox="0 0 160 160" aria-hidden="true"><use href="#seal"/></svg>M — A
+    </a>
+    <nav aria-label="Secciones" style="display:flex;flex-wrap:wrap;gap:0 28px;font-size:11px;font-weight:400;letter-spacing:.24em;text-transform:uppercase">
+      <a href="#dia" style="display:inline-flex;align-items:center;min-height:44px">El día</a>
+      <a href="#historia" style="display:inline-flex;align-items:center;min-height:44px">Historia</a>
+      <a href="#confirmar" style="display:inline-flex;align-items:center;min-height:44px">Confirmación</a>
+      <a href="#preguntas" style="display:inline-flex;align-items:center;min-height:44px">Preguntas</a>
+    </nav>
+    <a href="#confirmar" class="pill" style="height:44px;padding:0 24px;border:1px solid #3E3236;letter-spacing:.24em">Confirmar asistencia</a>
+  </header>
+
+  <section id="portada" style="position:relative;padding:40px clamp(20px,4vw,56px) 96px">
+    <svg viewBox="0 0 160 160" style="position:absolute;left:clamp(8px,2vw,28px);top:8px;width:clamp(100px,13vw,190px);height:clamp(100px,13vw,190px);transform:scaleX(-1)" aria-hidden="true"><use href="#corner"/></svg>
+    <svg viewBox="0 0 160 160" style="position:absolute;right:clamp(8px,2vw,28px);top:8px;width:clamp(100px,13vw,190px);height:clamp(100px,13vw,190px)" aria-hidden="true"><use href="#corner"/></svg>
+    <div style="position:relative;max-width:1120px;margin:0 auto;display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:56px 80px">
+      <div style="flex:1 1 420px;min-width:0;text-align:center">
+        <p style="margin:0;font:400 16px/1.6 'Instrument Serif',serif;letter-spacing:.22em;text-transform:uppercase;color:#7D6A70">Celebra con nosotros<br>nuestro gran día</p>
+        <h1 style="margin:28px 0 0;font:400 clamp(64px,8vw,120px)/.9 'Instrument Serif',serif;letter-spacing:-.02em;color:#3E3236">Melissa<br><em style="font-size:.6em;color:#B48650">&amp;</em><br>Andrés</h1>
+        <svg width="300" height="40" viewBox="-150 -20 300 40" style="display:block;max-width:100%;margin:28px auto 0" aria-hidden="true"><use href="#orn"/></svg>
+        <p style="margin:18px 0 0;font-size:11px;font-weight:400;letter-spacing:.32em;text-transform:uppercase;color:#6E5F64">Sábado · 12 de junio · 2027</p>
+        <a href="#confirmar" class="pill" style="height:54px;margin-top:36px;padding:0 40px;background:#3E3236;color:#F7EEF0">Confirmar asistencia</a>
+      </div>
+      <div style="flex:0 1 440px;min-width:0;width:100%;max-width:440px">
+        <div style="width:100%;aspect-ratio:440 / 560;padding:9px;border:1px solid #C49A62;border-radius:220px 220px 12px 12px">
+          <div class="ph" style="border-radius:212px 212px 6px 6px"><svg class="bg" aria-hidden="true"><rect width="100%" height="100%" fill="url(#dmk)"/></svg><span class="mono">M &amp; A</span><span class="cap">Su foto aquí</span></div>
+        </div>
+      </div>
+    </div>
+    <div style="position:relative;margin-top:48px;display:flex;flex-direction:column;align-items:center;gap:8px;font-size:10px;font-weight:400;letter-spacing:.3em;text-transform:uppercase;color:#6E5F64">
+      <span>Desliza</span>
+      <svg width="14" height="18" viewBox="0 0 14 18" style="animation:rNudge 2s ease-in-out infinite" aria-hidden="true"><path d="M7 2 V15 M2 10 L7 15 L12 10" fill="none" stroke="#6E5F64" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </div>
+  </section>
+
+  <section style="position:relative;padding:96px clamp(20px,4vw,56px);background:#F0E2E0">
+    <svg style="position:absolute;inset:0;width:100%;height:100%;opacity:.6" aria-hidden="true"><rect width="100%" height="100%" fill="url(#dmk)"/></svg>
+    <div style="position:relative;max-width:760px;margin:0 auto;padding:56px clamp(24px,5vw,72px);background:#FBF4F3;border:1px solid #E2CFC6;border-radius:8px;box-shadow:0 24px 60px #6B515818;text-align:center">
+      <p class="kicker">Una invitación para</p>
+      <p style="margin:18px 0 0;font:italic 400 clamp(42px,5vw,64px)/1 'Instrument Serif',serif;color:#3E3236">Familia Rodríguez</p>
+      <svg width="300" height="40" viewBox="-150 -20 300 40" style="display:block;max-width:100%;margin:26px auto" aria-hidden="true"><use href="#orn"/></svg>
+      <p style="margin:0 auto;max-width:520px;font-size:17px;line-height:1.8;color:#4E4247">Nuestro día será aún más especial con ustedes a nuestro lado. Hemos reservado <strong style="font-weight:500">4 cupos</strong> para ustedes.</p>
+    </div>
+  </section>
+
+  <section style="padding:104px clamp(20px,4vw,56px);text-align:center">
+    <svg width="300" height="40" viewBox="-150 -20 300 40" style="display:block;max-width:100%;margin:0 auto" aria-hidden="true"><use href="#orn"/></svg>
+    <p class="kicker" style="margin-top:18px">Cuenta regresiva</p>
+    <h2 class="h2">Cada vez falta <em>menos</em></h2>
+    <div style="max-width:800px;margin:48px auto 0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(8px,2vw,24px)" aria-live="off">
+      <div style="padding:clamp(18px,3vw,36px) 0 clamp(14px,2vw,24px);border:1px solid #E2CFC6;border-radius:120px 120px 8px 8px;background:#FBF4F3"><p data-cd="d" style="margin:0;font:400 clamp(36px,5.4vw,76px)/1 'Instrument Serif',serif;font-variant-numeric:tabular-nums">—</p><p style="margin:10px 0 0;font-size:10px;font-weight:400;letter-spacing:.26em;text-transform:uppercase;color:#6E5F64">Días</p></div>
+      <div style="padding:clamp(18px,3vw,36px) 0 clamp(14px,2vw,24px);border:1px solid #E2CFC6;border-radius:120px 120px 8px 8px;background:#FBF4F3"><p data-cd="h" style="margin:0;font:400 clamp(36px,5.4vw,76px)/1 'Instrument Serif',serif;font-variant-numeric:tabular-nums">—</p><p style="margin:10px 0 0;font-size:10px;font-weight:400;letter-spacing:.26em;text-transform:uppercase;color:#6E5F64">Horas</p></div>
+      <div style="padding:clamp(18px,3vw,36px) 0 clamp(14px,2vw,24px);border:1px solid #E2CFC6;border-radius:120px 120px 8px 8px;background:#FBF4F3"><p data-cd="m" style="margin:0;font:400 clamp(36px,5.4vw,76px)/1 'Instrument Serif',serif;font-variant-numeric:tabular-nums">—</p><p style="margin:10px 0 0;font-size:10px;font-weight:400;letter-spacing:.26em;text-transform:uppercase;color:#6E5F64">Minutos</p></div>
+      <div style="padding:clamp(18px,3vw,36px) 0 clamp(14px,2vw,24px);border:1px solid #E2CFC6;border-radius:120px 120px 8px 8px;background:#FBF4F3"><p data-cd="s" style="margin:0;font:400 clamp(36px,5.4vw,76px)/1 'Instrument Serif',serif;font-variant-numeric:tabular-nums">—</p><p style="margin:10px 0 0;font-size:10px;font-weight:400;letter-spacing:.26em;text-transform:uppercase;color:#6E5F64">Segundos</p></div>
+    </div>
+    <p style="margin:28px 0 0;font:italic 400 22px/1.4 'Instrument Serif',serif;color:#6E5F64">Sábado 12 de junio de 2027 · 16:00</p>
+  </section>
+
+  <section id="dia" style="position:relative;padding:104px clamp(20px,4vw,56px);background:#F0E2E0">
+    <svg style="position:absolute;inset:0;width:100%;height:100%;opacity:.4" aria-hidden="true"><rect width="100%" height="100%" fill="url(#dmk)"/></svg>
+    <div style="position:relative;max-width:1120px;margin:0 auto">
+      <div style="text-align:center">
+        <p class="kicker">El día</p>
+        <h2 class="h2">Sábado, <em>12 de junio</em></h2>
+      </div>
+      <div style="margin-top:48px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(280px,100%),1fr));gap:20px">
+        <div style="padding:40px 32px;background:#FBF4F3;border:1px solid #E2CFC6;border-radius:160px 160px 8px 8px;text-align:center">
+          <p style="margin:12px 0 0;font:400 44px/1 'Instrument Serif',serif">16:00</p>
+          <div style="width:1px;height:36px;margin:18px auto;background:#C49A62"></div>
+          <p class="kicker" style="letter-spacing:.32em">Ceremonia</p>
+          <p style="margin:12px 0 0;font:400 28px/1.2 'Instrument Serif',serif">Lugar de la ceremonia</p>
+          <p style="margin:6px 0 0;font-size:15px;line-height:1.6;color:#6E5F64">Dirección de la ceremonia</p>
+          <a href="#dia" style="display:inline-flex;align-items:center;height:44px;margin-top:10px;font-size:11px;font-weight:400;letter-spacing:.24em;text-transform:uppercase;border-bottom:1px solid #C49A62">Cómo llegar ↗</a>
+        </div>
+        <div style="padding:40px 32px;background:#FBF4F3;border:1px solid #E2CFC6;border-radius:160px 160px 8px 8px;text-align:center">
+          <p style="margin:12px 0 0;font:italic 400 44px/1 'Instrument Serif',serif">Después</p>
+          <div style="width:1px;height:36px;margin:18px auto;background:#C49A62"></div>
+          <p class="kicker" style="letter-spacing:.32em">Recepción</p>
+          <p style="margin:12px 0 0;font:400 28px/1.2 'Instrument Serif',serif">Lugar de la recepción</p>
+          <p style="margin:6px 0 0;font-size:15px;line-height:1.6;color:#6E5F64">Dirección de la recepción</p>
+          <a href="#dia" style="display:inline-flex;align-items:center;height:44px;margin-top:10px;font-size:11px;font-weight:400;letter-spacing:.24em;text-transform:uppercase;border-bottom:1px solid #C49A62">Cómo llegar ↗</a>
+        </div>
+        <div style="padding:40px 32px;background:#3E3236;border-radius:160px 160px 8px 8px;color:#F6EBEC;text-align:center">
+          <svg width="56" height="56" viewBox="0 0 160 160" style="display:block;margin:0 auto" aria-hidden="true"><use href="#seal"/></svg>
+          <div style="width:1px;height:36px;margin:18px auto;background:#C49A62"></div>
+          <p style="margin:0;font-size:11px;font-weight:400;letter-spacing:.32em;text-transform:uppercase;color:#E6C9A0">Código de vestimenta</p>
+          <p style="margin:12px 0 0;font:italic 400 28px/1.2 'Instrument Serif',serif">Formal de tarde</p>
+          <p style="margin:6px 0 0;font-size:15px;line-height:1.7;color:#E8DADC">Agrega aquí las recomendaciones de vestimenta y los colores reservados.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="historia" style="position:relative;padding:104px clamp(20px,4vw,56px)">
+    <div style="max-width:1120px;margin:0 auto;display:flex;flex-wrap:wrap;align-items:center;gap:48px 72px">
+      <div style="flex:1 1 340px;min-width:0">
+        <svg width="200" height="40" viewBox="-150 -20 300 40" style="display:block" aria-hidden="true"><use href="#orn"/></svg>
+        <p class="kicker" style="margin-top:18px">Nuestra historia</p>
+        <h2 class="h2">Una historia<br><em>escrita juntos</em></h2>
+        <p style="margin:22px 0 0;max-width:440px;font-size:17px;line-height:1.8;color:#4E4247">Cuenta cómo se conocieron los novios. Comparte sus recuerdos favoritos juntos. Describe la nueva etapa que están por comenzar.</p>
+      </div>
+      <div style="flex:2 1 520px;min-width:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(150px,100%),1fr));gap:16px">
+        <div style="aspect-ratio:3 / 4;padding:5px;border:1px solid #C49A62;border-radius:200px 200px 8px 8px;background:#FBF4F3"><div class="ph" style="border-radius:195px 195px 5px 5px"><svg class="bg" aria-hidden="true"><rect width="100%" height="100%" fill="url(#dmk)"/></svg><span class="cap">Foto 1</span></div></div>
+        <div style="aspect-ratio:3 / 4;padding:5px;border:1px solid #C49A62;border-radius:200px 200px 8px 8px;background:#FBF4F3"><div class="ph" style="border-radius:195px 195px 5px 5px"><svg class="bg" aria-hidden="true"><rect width="100%" height="100%" fill="url(#dmk)"/></svg><span class="cap">Foto 2</span></div></div>
+        <div style="aspect-ratio:3 / 4;padding:5px;border:1px solid #C49A62;border-radius:200px 200px 8px 8px;background:#FBF4F3"><div class="ph" style="border-radius:195px 195px 5px 5px"><svg class="bg" aria-hidden="true"><rect width="100%" height="100%" fill="url(#dmk)"/></svg><span class="cap">Foto 3</span></div></div>
+        <div style="aspect-ratio:3 / 4;padding:5px;border:1px solid #C49A62;border-radius:200px 200px 8px 8px;background:#FBF4F3"><div class="ph" style="border-radius:195px 195px 5px 5px"><svg class="bg" aria-hidden="true"><rect width="100%" height="100%" fill="url(#dmk)"/></svg><span class="cap">Foto 4</span></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="confirmar" style="position:relative;padding:104px clamp(20px,4vw,56px);background:#F0E2E0">
+    <svg style="position:absolute;inset:0;width:100%;height:100%;opacity:.6" aria-hidden="true"><rect width="100%" height="100%" fill="url(#dmk)"/></svg>
+    <div style="position:relative;max-width:1040px;margin:0 auto;padding:clamp(28px,5vw,64px);background:#FBF4F3;border:1px solid #E2CFC6;border-radius:8px;box-shadow:0 24px 60px #6B515818;display:flex;flex-wrap:wrap;gap:40px 64px">
+      <div style="flex:1 1 300px;min-width:0">
+        <svg width="96" height="96" viewBox="0 0 160 160" style="display:block" aria-hidden="true"><use href="#seal"/></svg>
+        <p class="kicker" style="margin-top:24px">Confirmación</p>
+        <h2 class="h2" id="rsTitle" style="font-size:clamp(40px,4.4vw,56px)">¿Nos acompañan?</h2>
+        <p id="rsText" style="margin:16px 0 0;font-size:16px;line-height:1.8;color:#6E5F64">Tienen 4 cupos reservados. Confirmen por persona antes de la fecha límite de confirmación.</p>
+        <p style="margin:16px 0 0;font-size:13px;line-height:1.6;color:#6E5F64">Nuestra celebración es exclusivamente para adultos.</p>
+      </div>
+      <div style="flex:1.3 1 360px;min-width:0">
+        <form id="rsForm" novalidate>
+          <div id="people" style="display:flex;flex-direction:column"></div>
+          <label for="msg" style="display:block;margin-top:22px;font-size:10px;font-weight:400;letter-spacing:.28em;text-transform:uppercase;color:#6E5F64">Un mensaje para nosotros</label>
+          <textarea id="msg" rows="3" placeholder="Opcional" style="display:block;width:100%;margin-top:8px;padding:12px 14px;border:1px solid #D9C5BE;border-radius:6px;background:#FFFFFF;font:300 15px/1.5 Jost,Helvetica,sans-serif;color:#3E3236;resize:none"></textarea>
+          <p id="rsError" role="alert" hidden style="margin:14px 0 0;font-size:13px;color:#9B3B4A">Indiquen Sí o No para cada persona.</p>
+          <button type="submit" class="pill" style="width:100%;height:54px;margin-top:20px;border:0;background:#3E3236;color:#F7EEF0;cursor:pointer">Confirmar asistencia</button>
+        </form>
+        <div id="rsDone" hidden style="min-height:280px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:32px;border:1px solid #E2CFC6;border-radius:160px 160px 8px 8px;text-align:center">
+          <p style="margin:0;font:italic 400 34px/1.1 'Instrument Serif',serif">¡Gracias!</p>
+          <p id="rsSummary" style="margin:0;max-width:340px;font-size:15px;line-height:1.7;color:#6E5F64"></p>
+          <button type="button" id="rsEdit" class="pill" style="height:44px;padding:0 22px;border:1px solid #3E3236;background:none;color:#3E3236;letter-spacing:.24em;cursor:pointer">Editar respuesta</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="preguntas" style="padding:104px clamp(20px,4vw,56px)">
+    <div style="max-width:1120px;margin:0 auto;display:flex;flex-wrap:wrap;gap:32px 72px">
+      <div style="flex:1 1 280px;min-width:0">
+        <svg width="200" height="40" viewBox="-150 -20 300 40" style="display:block" aria-hidden="true"><use href="#orn"/></svg>
+        <p class="kicker" style="margin-top:18px">Preguntas</p>
+        <h2 class="h2">Los <em>detalles</em></h2>
+      </div>
+      <div style="flex:2 1 480px;min-width:0;border-bottom:1px solid #E2CFC6">
+        <details class="faq"><summary><span style="display:flex;flex-direction:column;gap:4px"><span class="kicker" style="font-size:10px;letter-spacing:.28em">Vestimenta</span><span style="font:400 24px/1.2 'Instrument Serif',serif">¿Hay código de vestimenta?</span></span><span class="plus" aria-hidden="true">+</span></summary><p style="margin:0;padding:0 0 20px;max-width:620px;font-size:15px;line-height:1.7;color:#6E5F64">Agrega las recomendaciones de vestimenta para los invitados.</p></details>
+        <details class="faq"><summary><span style="display:flex;flex-direction:column;gap:4px"><span class="kicker" style="font-size:10px;letter-spacing:.28em">Vestimenta</span><span style="font:400 24px/1.2 'Instrument Serif',serif">¿Hay colores reservados?</span></span><span class="plus" aria-hidden="true">+</span></summary><p style="margin:0;padding:0 0 20px;max-width:620px;font-size:15px;line-height:1.7;color:#6E5F64">Indica los colores reservados y otras recomendaciones de vestimenta.</p></details>
+        <details class="faq"><summary><span style="display:flex;flex-direction:column;gap:4px"><span class="kicker" style="font-size:10px;letter-spacing:.28em">Niños</span><span style="font:400 24px/1.2 'Instrument Serif',serif">Niños en la celebración</span></span><span class="plus" aria-hidden="true">+</span></summary><p style="margin:0;padding:0 0 20px;max-width:620px;font-size:15px;line-height:1.7;color:#6E5F64">Indica si la celebración incluirá niños.</p></details>
+        <details class="faq"><summary><span style="display:flex;flex-direction:column;gap:4px"><span class="kicker" style="font-size:10px;letter-spacing:.28em">Alimentación</span><span style="font:400 24px/1.2 'Instrument Serif',serif">Restricciones alimentarias</span></span><span class="plus" aria-hidden="true">+</span></summary><p style="margin:0;padding:0 0 20px;max-width:620px;font-size:15px;line-height:1.7;color:#6E5F64">Agrega información sobre el menú y las opciones para necesidades alimentarias especiales.</p></details>
+        <details class="faq"><summary><span style="display:flex;flex-direction:column;gap:4px"><span class="kicker" style="font-size:10px;letter-spacing:.28em">Alimentación</span><span style="font:400 24px/1.2 'Instrument Serif',serif">Solicitudes especiales</span></span><span class="plus" aria-hidden="true">+</span></summary><p style="margin:0;padding:0 0 20px;max-width:620px;font-size:15px;line-height:1.7;color:#6E5F64">Indica cómo comunicar cualquier solicitud especial.</p></details>
+      </div>
+    </div>
+  </section>
+
+  <footer style="position:relative;padding:104px clamp(20px,4vw,56px) 140px;background:#F0E2E0;text-align:center">
+    <svg style="position:absolute;inset:0;width:100%;height:100%;opacity:.75" aria-hidden="true"><rect width="100%" height="100%" fill="url(#dmk)"/></svg>
+    <svg viewBox="0 0 160 160" style="position:absolute;left:clamp(12px,2vw,32px);top:32px;width:clamp(80px,10vw,150px);height:clamp(80px,10vw,150px);transform:scaleX(-1)" aria-hidden="true"><use href="#corner"/></svg>
+    <svg viewBox="0 0 160 160" style="position:absolute;right:clamp(12px,2vw,32px);top:32px;width:clamp(80px,10vw,150px);height:clamp(80px,10vw,150px)" aria-hidden="true"><use href="#corner"/></svg>
+    <svg viewBox="0 0 160 160" style="position:absolute;left:clamp(12px,2vw,32px);bottom:32px;width:clamp(80px,10vw,150px);height:clamp(80px,10vw,150px);transform:scale(-1,-1)" aria-hidden="true"><use href="#corner"/></svg>
+    <svg viewBox="0 0 160 160" style="position:absolute;right:clamp(12px,2vw,32px);bottom:32px;width:clamp(80px,10vw,150px);height:clamp(80px,10vw,150px);transform:scaleY(-1)" aria-hidden="true"><use href="#corner"/></svg>
+    <svg width="150" height="150" viewBox="0 0 160 160" style="position:relative;display:block;margin:0 auto" aria-hidden="true"><use href="#seal"/></svg>
+    <p style="position:relative;margin:32px 0 0;font:400 16px/1.6 'Instrument Serif',serif;letter-spacing:.22em;text-transform:uppercase;color:#7D6A70">Con amor</p>
+    <p style="position:relative;margin:12px 0 0;font:400 clamp(44px,5vw,72px)/1 'Instrument Serif',serif">Melissa <em style="color:#B48650">&amp;</em> Andrés</p>
+    <p style="position:relative;margin:18px 0 0;font-size:11px;font-weight:400;letter-spacing:.32em;text-transform:uppercase;color:#6E5F64">12 · 06 · 2027</p>
+  </footer>
+</div>
+
+<div class="demo-bar" id="demoBar" hidden><span>Demo <span class="long">· diseño romántico de Lazo</span></span><a href="/#disenos">Volver a la tienda</a></div>
+
+<script>
+(function(){
+  var env=document.getElementById('env'),base=document.getElementById('base'),timers=[];
+  function layout(){
+    var w=window.innerWidth,h=window.innerHeight,fh=Math.round(h*.545),tip=Math.round(h*.533),bot=Math.round(h*.6);
+    var ss=Math.round(Math.max(120,Math.min(210,Math.min(w*.42,h*.24))));
+    base.setAttribute('viewBox','0 0 '+w+' '+h);
+    var pts={liner:'0,0 '+w+',0 '+w/2+','+(fh-20),left:'0,0 '+w/2+','+tip+' 0,'+h,right:w+',0 '+w/2+','+tip+' '+w+','+h,bottom:'0,'+h+' '+w/2+','+bot+' '+w+','+h};
+    base.querySelectorAll('polygon').forEach(function(p){p.setAttribute('points',pts[p.dataset.p]);});
+    env.style.setProperty('--fh',fh+'px');env.style.setProperty('--ss',ss+'px');
+    env.style.setProperty('--cx',(w/2)+'px');env.style.setProperty('--cy',fh+'px');
+  }
+  layout();window.addEventListener('resize',layout);
+  function set(p){env.dataset.phase=p;}
+  function go(p,ms){timers.push(setTimeout(function(){set(p);if(p==='card')document.getElementById('enter').focus({preventScroll:true});},ms));}
+  function clear(){timers.forEach(clearTimeout);timers=[];}
+  document.getElementById('sealBtn').addEventListener('click',function(){
+    if(env.dataset.phase!=='closed')return;clear();set('glow');go('open',1900);go('flash',3000);go('card',3600);
+  });
+  document.getElementById('replay').addEventListener('click',function(){clear();set('closed');document.getElementById('sealBtn').focus();});
+  document.getElementById('enter').addEventListener('click',function(){
+    env.classList.add('gone');document.body.classList.remove('locked');document.getElementById('demoBar').hidden=false;window.scrollTo(0,0);
+  });
+
+  // Cuenta regresiva
+  var TARGET=Date.parse('2027-06-12T16:00:00-05:00'),pad=function(n){return String(n).padStart(2,'0');};
+  var cd={};document.querySelectorAll('[data-cd]').forEach(function(e){cd[e.dataset.cd]=e;});
+  function tick(){var s=Math.floor(Math.max(0,TARGET-Date.now())/1000);
+    cd.d.textContent=Math.floor(s/86400);cd.h.textContent=pad(Math.floor(s/3600)%24);cd.m.textContent=pad(Math.floor(s/60)%60);cd.s.textContent=pad(s%60);}
+  tick();setInterval(tick,1000);
+
+  // Confirmación (demo: no se envía a ningún lado)
+  var PEOPLE=['Carlos Rodríguez','Lucía Pérez','Sofía Rodríguez','Mateo Rodríguez'],att=PEOPLE.map(function(){return null;});
+  var wrap=document.getElementById('people');
+  PEOPLE.forEach(function(name,i){
+    var row=document.createElement('div');
+    row.setAttribute('role','group');row.setAttribute('aria-label',name);
+    row.style.cssText='display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 0;border-top:1px solid #E8D8D4';
+    var n=document.createElement('span');n.textContent=name;n.style.cssText="font:400 22px/1.2 'Instrument Serif',serif";
+    var g=document.createElement('div');g.style.cssText='display:flex;gap:6px;flex:none';
+    [['Sí',true],['No',false]].forEach(function(o){var b=document.createElement('button');b.type='button';b.className='att';b.textContent=o[0];b.setAttribute('aria-pressed','false');
+      b.addEventListener('click',function(){att[i]=o[1];g.querySelectorAll('button').forEach(function(x){x.setAttribute('aria-pressed',String(x===b));});document.getElementById('rsError').hidden=true;});g.appendChild(b);});
+    row.appendChild(n);row.appendChild(g);wrap.appendChild(row);
+  });
+  var form=document.getElementById('rsForm'),done=document.getElementById('rsDone');
+  form.addEventListener('submit',function(e){e.preventDefault();
+    if(att.some(function(x){return x===null;})){document.getElementById('rsError').hidden=false;return;}
+    var yes=att.filter(Boolean).length;
+    document.getElementById('rsTitle').textContent=yes>0?'Nos vemos pronto':'Los extrañaremos';
+    document.getElementById('rsText').textContent='Recibimos su respuesta. Pueden cambiarla en cualquier momento antes de la fecha límite de confirmación.';
+    document.getElementById('rsSummary').textContent=yes>0?('Asistirán '+yes+' de '+PEOPLE.length+' personas.'):'Gracias por avisarnos.';
+    form.hidden=true;done.hidden=false;done.style.display='flex';
+  });
+  document.getElementById('rsEdit').addEventListener('click',function(){done.hidden=true;done.style.display='none';form.hidden=false;
+    document.getElementById('rsTitle').textContent='¿Nos acompañan?';
+    document.getElementById('rsText').textContent='Tienen 4 cupos reservados. Confirmen por persona antes de la fecha límite de confirmación.';});
+})();
+</script>
+</body>
+</html>
