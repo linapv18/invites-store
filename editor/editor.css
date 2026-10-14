@@ -249,7 +249,7 @@ img{max-width:100%}
 .iv-open{min-height:100%;background:var(--a);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;padding:30px 0;color:var(--bg)}
 .iv-open .k{font-size:10px;letter-spacing:.2em;text-transform:uppercase;opacity:.9}
 .iv-env{position:relative;width:240px;height:160px;background:var(--bg);border-radius:4px;box-shadow:0 10px 30px rgba(0,0,0,.18)}
-.iv-env svg{position:absolute;top:0;left:0}
+.iv-env>svg{position:absolute;top:0;left:0}
 .iv-env .iv-seal{position:absolute;left:84px;top:58px}
 .iv-doors{position:relative;width:220px;height:300px;display:flex;gap:2px}
 .iv-doors span{flex:1 1 0;background:var(--bg);border-radius:110px 0 0 0;box-shadow:inset -1px 0 0 var(--line)}
@@ -499,3 +499,10 @@ a.ed-btn[aria-disabled="true"]{opacity:.4;pointer-events:none}
 .ed-phone.desk .ed-frame{position:absolute;top:8px;left:8px;border-radius:0;transform-origin:0 0}
 .ed-guest-frame{flex:1 1 auto;width:100%;border:0;background:#fff}
 @media (max-width:720px){.ac-narrow h1,.ac-wide h1{font-size:40px}.ac-user a{display:none}}
+
+/* Configuración de complementos (encuestas, cápsula) */
+.ed-setup{padding:22px;border-radius:16px;border:1px solid var(--line);background:#FBFAF6;display:flex;flex-direction:column;gap:20px}
+.ed-setup h2{margin:0;font-family:'Cormorant Garamond',serif;font-weight:500;font-size:28px;line-height:1.1}
+.ed-setup .ed-card{background:#fff}
+.ed-demo{grid-template-columns:repeat(auto-fit,minmax(min(230px,100%),1fr))}
+@media (max-width:960px){.ed-setup{padding:16px}}

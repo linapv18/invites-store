@@ -97,6 +97,16 @@
       qrScan: 'Escanea y déjanos un mensaje', qrMsg: '¡Que vivan los novios! Gracias por la mejor fiesta.', qrBy: 'Tía Marta · 23:14',
       sealedUntil: 'Sellada hasta el', capsuleMsgs: [['Familia García', 'Se abre en su aniversario'], ['Daniel y Sofía', 'Se abre en su aniversario'], ['Tía Marta', 'Se abre en su aniversario']],
       pollMain: '¿Quién llorará más en la ceremonia?', moreIdeas: 'Más ideas',
+      setupK: 'Déjalo listo', setupNote: 'Puedes prepararlo ahora: se activa en tu invitación cuando lo compres.',
+      pollsTitle: 'Tus preguntas', pollQ: 'Pregunta', pollQPh: 'Escribe una pregunta divertida', pollOpts: 'Respuestas (separadas por comas)',
+      pollOptsPh: function (a, b) { return 'Si lo dejas vacío: ' + a + ' o ' + b; }, delPoll: 'Eliminar pregunta', addPoll: '+ Escribir otra pregunta',
+      pollIdeasK: 'Ideas para añadir', pollCount: function (n) { return n + ' de 6 preguntas'; }, pollFull: 'Llegaste a 6 preguntas. Elimina una para añadir otra.', noPolls: 'Aún no hay preguntas. Añade una idea o escribe la tuya.',
+      reveal: '¿Cuándo ven los resultados?', revealParty: 'En la fiesta', revealVote: 'Al votar',
+      revealPartyHint: 'Los resultados quedan en secreto hasta que ustedes los revelen en la fiesta.', revealVoteHint: 'Cada invitado ve cómo van las respuestas justo después de votar.',
+      guestsSee: 'Así lo verán tus invitados', vote: 'Votar', secretTill: 'Resultados en la fiesta',
+      capDate: 'Fecha de apertura', capDateHint: function (d) { return 'Si la dejas vacía, se abre en su primer aniversario' + (d ? ': ' + d : '') + '.'; },
+      capPrompt: 'Lo que les piden a sus invitados', capPromptPh: 'Escríbenos algo para leer en nuestro primer aniversario.',
+      capRsvp: 'Pedir el mensaje al confirmar asistencia', capRsvpOn: 'Aparece como un paso más del RSVP.', capRsvpOff: 'Tendrá su propio botón dentro de la invitación.', capWrite: 'Escribir mi mensaje',
       pollIdeas: ['¿Quién llegará tarde a la ceremonia?', '¿Quién será el último en la pista?', '¿Quién dijo «te quiero» primero?', '¿Cuántos minutos durará el discurso del padrino?'],
       galUploaded: 'Subidas por tus invitados', galShot: function (n) { return 'Foto de invitado ' + n; },
       biEs: 'Español', biEn: 'English', biEsT: 'Nos casamos', biEnT: 'We’re getting married', biEsMsg: 'y queremos celebrarlo contigo.', biEnMsg: 'and we want to celebrate with you.',
@@ -185,6 +195,16 @@
       qrScan: 'Scan and leave us a message', qrMsg: 'Cheers to the newlyweds! Thanks for the best party.', qrBy: 'Aunt Martha · 11:14 pm',
       sealedUntil: 'Sealed until', capsuleMsgs: [['The García family', 'Opens on your anniversary'], ['Daniel and Sofía', 'Opens on your anniversary'], ['Aunt Martha', 'Opens on your anniversary']],
       pollMain: 'Who will cry the most at the ceremony?', moreIdeas: 'More ideas',
+      setupK: 'Get it ready', setupNote: 'You can set it up now: it turns on in your invitation once you buy it.',
+      pollsTitle: 'Your questions', pollQ: 'Question', pollQPh: 'Write a fun question', pollOpts: 'Answers (separated by commas)',
+      pollOptsPh: function (a, b) { return 'Leave empty for: ' + a + ' or ' + b; }, delPoll: 'Delete question', addPoll: '+ Write another question',
+      pollIdeasK: 'Ideas to add', pollCount: function (n) { return n + ' of 6 questions'; }, pollFull: 'You reached 6 questions. Delete one to add another.', noPolls: 'No questions yet. Add an idea or write your own.',
+      reveal: 'When do they see the results?', revealParty: 'At the party', revealVote: 'After voting',
+      revealPartyHint: 'Results stay secret until you reveal them at the party.', revealVoteHint: 'Each guest sees how answers are going right after voting.',
+      guestsSee: 'What your guests see', vote: 'Vote', secretTill: 'Results at the party',
+      capDate: 'Opening date', capDateHint: function (d) { return 'Leave it empty and it opens on your first anniversary' + (d ? ': ' + d : '') + '.'; },
+      capPrompt: 'What you ask your guests', capPromptPh: 'Write us something to read on our first anniversary.',
+      capRsvp: 'Ask for the message when they RSVP', capRsvpOn: 'It shows up as one more step of the RSVP.', capRsvpOff: 'It gets its own button inside the invitation.', capWrite: 'Write my message',
       pollIdeas: ['Who will be late to the ceremony?', 'Who will be the last one on the dance floor?', 'Who said “I love you” first?', 'How many minutes will the best man’s speech last?'],
       galUploaded: 'Uploaded by your guests', galShot: function (n) { return 'Guest photo ' + n; },
       biEs: 'Español', biEn: 'English', biEsT: 'Nos casamos', biEnT: 'We’re getting married', biEsMsg: 'y queremos celebrarlo contigo.', biEnMsg: 'and we want to celebrate with you.',
@@ -270,6 +290,8 @@
       musicOn: true, song: '',
       viajeOn: true, hotel: '', hotelLink: '', travelNotes: '',
       rsvpDeadline: '', rsvpMsg: es ? 'Nos encantaría verte allí.' : 'We’d love to see you there.', rsvpDiet: true, rsvpNote: true,
+      polls: [{ id: 4, q: S.pollMain, opts: '' }, { id: 5, q: S.pollIdeas[0], opts: '' }], pollReveal: 'fiesta',
+      capsuleDate: '', capsulePrompt: '', capsuleInRsvp: true,
       uid: 10
     };
   }
@@ -663,13 +685,50 @@
     }
     return '<svg class="ed-qr" viewBox="0 0 ' + n + ' ' + n + '" role="img" aria-label="QR"><path d="' + cells + '" fill="#2B3A33"/></svg>';
   }
+  var val = function (v, ph) { return v && String(v).trim() ? esc(v) : '<span class="iv-empty">[' + esc(ph) + ']</span>'; };
+  // Respuestas de una encuesta: las que escribieron (separadas por comas) o, si no hay, los dos novios.
+  function pollOpts(p) {
+    var o = String(p.opts || '').split(',').map(function (x) { return x.trim(); }).filter(Boolean);
+    return o.length ? o.slice(0, 6) : [state.n1 || S.n1, state.n2 || S.n2];
+  }
+  // Fecha de apertura de la cápsula: la elegida o el primer aniversario.
+  function capsuleOpen() {
+    if (dateObj(state.capsuleDate)) return state.capsuleDate;
+    var d = dateObj(state.date); if (!d) return '';
+    return (d.getFullYear() + 1) + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate());
+  }
+  var pollIdeasLeft = function () { var used = state.polls.map(function (p) { return p.q; }); return [S.pollMain].concat(S.pollIdeas).filter(function (q) { return used.indexOf(q) < 0; }); };
+  function addonSetup(id) {
+    var h;
+    if (id === 'encuestas') {
+      var pl = state.polls, full = pl.length >= 6, ideas = pollIdeasLeft();
+      h = '<h2>' + esc(S.pollsTitle) + '</h2>' +
+        (pl.length ? '<div class="ed-stack" style="gap:12px">' + pl.map(function (p, i) {
+          return '<div class="ed-card"><span class="ed-card-n">' + (i + 1) + '</span><div class="ed-card-body">' + listField('polls', i, 'q', S.pollQ, { ph: S.pollQPh }) + listField('polls', i, 'opts', S.pollOpts, { ph: S.pollOptsPh(state.n1 || S.n1, state.n2 || S.n2) }) + '</div>' + delBtn('poll-del', i, S.delPoll + ' ' + (i + 1), 'plx-' + p.id) + '</div>';
+        }).join('') + '</div>' : '<p class="ed-empty">' + esc(S.noPolls) + '</p>') +
+        '<div class="ed-limit"><button type="button" class="ed-btn ed-btn-dash" data-act="poll-add" data-i="-1" data-fk="poll-add"' + (full ? ' disabled' : '') + '>' + esc(S.addPoll) + '</button><small aria-live="polite">' + esc(S.pollCount(pl.length)) + '</small>' + (full ? '<small class="warn" role="status">' + esc(S.pollFull) + '</small>' : '') + '</div>' +
+        (ideas.length && !full ? '<div class="ed-stack"><span class="ed-label">' + esc(S.pollIdeasK) + '</span><div class="ed-presets">' + ideas.map(function (q, i) { return '<button type="button" class="ed-btn ed-btn-dash ed-btn-sm" data-act="poll-add" data-i="' + i + '">+ ' + esc(q) + '</button>'; }).join('') + '</div></div>' : '') +
+        '<div class="ed-stack"><span class="ed-label" id="lblRev">' + esc(S.reveal) + '</span><div class="ed-seg" role="radiogroup" aria-labelledby="lblRev">' +
+          [['fiesta', S.revealParty], ['voto', S.revealVote]].map(function (r) { return '<button type="button" role="radio" aria-checked="' + (state.pollReveal === r[0]) + '" data-act="pollReveal" data-id="' + r[0] + '" data-fk="rev-' + r[0] + '">' + esc(r[1]) + '</button>'; }).join('') +
+        '</div><span class="ed-hint">' + esc(state.pollReveal === 'voto' ? S.revealVoteHint : S.revealPartyHint) + '</span></div>';
+    } else if (id === 'capsula') {
+      var d = dateObj(state.date), ann = d ? longDate((d.getFullYear() + 1) + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()), true) : '';
+      h = field(S.capDate, 'capsuleDate', { type: 'date', hint: S.capDateHint(ann) }) + field(S.capPrompt, 'capsulePrompt', { rows: 2, ph: S.capPromptPh }) +
+        toggleRow('capsuleInRsvp', S.capRsvp, S.capRsvpOn, S.capRsvpOff);
+    } else return '';
+    return '<section class="ed-setup" aria-labelledby="setupK"><div class="ed-head"><span class="ed-kicker-gold" id="setupK">' + esc(S.setupK) + '</span><p>' + esc(S.setupNote) + '</p></div>' + h + '</section>';
+  }
   function addonDemo(id) {
     var card = function (inner, style) { return '<div class="ed-demo-card"' + (style ? ' style="' + style + '"' : '') + '>' + inner + '</div>'; };
     switch (id) {
       case 'encuestas':
-        return '<div class="ed-demo">' + card('<span class="t">' + esc(S.pollMain) + '</span>' +
-          [[state.n1, 62], [state.n2, 38]].map(function (x, i) { return '<div class="ed-vote"><div><span>' + val(x[0], i ? S.n2 : S.n1) + '</span><span>[' + x[1] + '%]</span></div><div class="bar"><span style="width:' + x[1] + '%;' + (i ? 'background:#8A9886' : '') + '"></span></div></div>'; }).join('')) +
-          card('<span class="ed-kicker">' + esc(S.moreIdeas) + '</span>' + S.pollIdeas.map(function (q) { return '<span class="s">' + esc(q) + '</span>'; }).join(''), 'gap:10px') + '</div>';
+        var pl = state.polls[0];
+        if (!pl) return '<div class="ed-demo">' + card('<span class="s">' + esc(S.noPolls) + '</span>') + '</div>';
+        var opts = pollOpts(pl), w = opts.length === 2 ? [62, 38] : opts.map(function () { return Math.round(100 / opts.length); });
+        return '<div class="ed-demo">' + card('<span class="ed-kicker">' + esc(S.guestsSee) + '</span><span class="t">' + val(pl.q, S.pollQ) + '</span>' +
+          opts.map(function (o, i) { return '<div class="ed-vote"><div><span>' + esc(o) + '</span><span>' + (state.pollReveal === 'voto' ? '[' + w[i] + '%]' : '') + '</span></div><div class="bar"><span style="width:' + (state.pollReveal === 'voto' ? w[i] : 0) + '%;' + (i ? 'background:#8A9886' : '') + '"></span></div></div>'; }).join('') +
+          (state.pollReveal === 'voto' ? '' : '<small class="ed-hint">' + esc(S.secretTill) + '</small>')) +
+          card('<span class="ed-kicker">' + esc(S.pollsTitle) + '</span>' + state.polls.map(function (x, i) { return '<span class="s">' + (i + 1) + '. ' + val(x.q, S.pollQ) + '</span>'; }).join(''), 'gap:10px') + '</div>';
       case 'playlist':
         return '<div class="ed-demo">' + card('<span class="ed-kicker">Spotify · ' + esc(couple(state)) + '</span>' + S.songs.map(function (s, i) {
           return '<div class="ed-song"><i>' + svg(P.music, 16) + '</i><div><span>' + esc(s[0]) + '</span><small>' + esc(s[1]) + (i === 2 ? ' · ' + esc(S.approve) : '') + '</small></div></div>';
@@ -678,10 +737,10 @@
         return '<div class="ed-demo">' + card(qrSVG() + '<span class="s">' + esc(S.qrScan) + '</span>', 'align-items:center;text-align:center') +
           card('<img src="/assets/fotos/escalera.jpg" alt="" style="width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:8px"><span class="t" style="font-size:19px;font-style:italic">«' + esc(S.qrMsg) + '»</span><small class="ed-hint">' + esc(S.qrBy) + '</small>') + '</div>';
       case 'capsula':
-        var d = dateObj(state.date), open = d ? new Date(d.getFullYear() + 1, d.getMonth(), d.getDate()) : null;
-        var openTxt = open ? longDate(open.getFullYear() + '-' + pad(open.getMonth() + 1) + '-' + pad(open.getDate()), true) : '';
+        var openTxt = longDate(capsuleOpen(), true);
         return '<div class="ed-demo">' + card('<div class="iv-env" style="width:100%;max-width:240px;height:150px;align-self:center"><svg width="100%" height="90" viewBox="0 0 240 96" preserveAspectRatio="none" aria-hidden="true"><path d="M0 0h240L120 92Z" fill="#E6E1D4" stroke="#D6CFBF"/></svg><div class="iv-seal" style="left:calc(50% - 36px);top:52px">' + svg(P.lock, 22, 1.6) + '</div></div><span class="ed-kicker" style="text-align:center">' + esc(S.sealedUntil) + '</span><span class="t" style="text-align:center">' + esc(openTxt || '—') + '</span>', 'background:var(--cream)') +
-          card(S.capsuleMsgs.map(function (m) { return '<div class="ed-song"><i>' + svg(P.lock, 15) + '</i><div><span>' + esc(m[0]) + '</span><small>' + esc(m[1]) + '</small></div></div>'; }).join('')) + '</div>';
+          card('<span class="ed-kicker">' + esc(S.guestsSee) + '</span><span class="t" style="font-size:19px;font-style:italic">«' + esc(String(state.capsulePrompt || '').trim() || S.capPromptPh) + '»</span><span class="ed-btn ed-btn-dark ed-btn-sm" style="align-self:flex-start">' + esc(S.capWrite) + '</span>' +
+            S.capsuleMsgs.slice(0, 2).map(function (m) { return '<div class="ed-song"><i>' + svg(P.lock, 15) + '</i><div><span>' + esc(m[0]) + '</span><small>' + esc(m[1]) + '</small></div></div>'; }).join('')) + '</div>';
       case 'galeria':
         return '<div class="ed-demo">' + card('<span class="ed-kicker">' + esc(S.galUploaded) + '</span><div class="ed-photos3">' + ['torre', 'beso', 'muro', 'paseo', 'escalera', 'torre'].map(function (f, i) { return '<img src="/assets/fotos/' + f + '.jpg" alt="' + esc(S.galShot(i + 1)) + '" loading="lazy"' + (i === 5 ? ' style="transform:scaleX(-1)"' : '') + '>'; }).join('') + '</div>', 'grid-column:1/-1') + '</div>';
       case 'bilingue':
@@ -697,7 +756,7 @@
     var t = ADDON_TXT[id], on = !!cart[id];
     var pk = PACKS.filter(function (p) { return !p.feat && p.ids.indexOf(id) > -1; })[0];
     return '<div class="ed-head" style="gap:8px"><span class="ed-badge">' + esc(S.addonK) + ' · ' + esc(on ? S.inYourCart : S.available) + '</span><h1 id="edH1" tabindex="-1">' + esc(t[0]) + '</h1><p class="ed-lead">' + esc(t[2]) + '</p></div>' +
-      addonDemo(id) +
+      '<div id="edDemo">' + addonDemo(id) + '</div>' + addonSetup(id) +
       '<ul class="ed-points">' + t[3].map(function (p) { return '<li>' + esc(p) + '</li>'; }).join('') + '</ul>' +
       (pk ? '<div class="ed-packnote"><span>' + esc(S.alsoIn) + ' <strong>' + esc(PACK_TXT[pk.id][0]) + '</strong> · ' + esc(PACK_TXT[pk.id][1]) + '</span><button type="button" class="ed-link" data-act="drawer">' + esc(S.seePacks) + '</button></div>' : '') +
       '<div class="ed-buy"><div class="ed-buy-price"><b>[$]</b><small>' + esc(S.oneTime) + '</small></div><div class="ed-spacer"></div>' +
@@ -854,6 +913,8 @@
     if (t.type === 'file') return;
     if (t.hasAttribute('data-k') && /^(INPUT|TEXTAREA)$/.test(t.tagName)) { state[t.getAttribute('data-k')] = t.value; changed(false); }
     else if (t.hasAttribute('data-list')) { var it = state[t.getAttribute('data-list')][+t.getAttribute('data-i')]; if (it) { it[t.getAttribute('data-f')] = t.value; changed(false); } }
+    else return;
+    var demo = $('#edDemo'); if (demo) demo.innerHTML = addonDemo(state.sec);
   });
   root.addEventListener('change', function (e) {
     var t = e.target;
@@ -939,6 +1000,14 @@
         state.faqs.push({ id: ++state.uid, q: '', a: '' }); changed(true);
         var qs = $$('[data-list="faqs"][data-f="q"]'); if (qs.length) qs[qs.length - 1].focus();
         break;
+      case 'poll-add':
+        if (state.polls.length >= 6) return;
+        var idea = i >= 0 ? pollIdeasLeft()[i] : '';
+        state.polls.push({ id: ++state.uid, q: idea || '', opts: '' }); changed(true);
+        var pq = $$('[data-list="polls"][data-f="' + (idea ? 'opts' : 'q') + '"]'); if (pq.length) pq[pq.length - 1].focus();
+        break;
+      case 'poll-del': state.polls.splice(i, 1); changed(true); focusAfterDelete('[data-list="polls"][data-f="q"]', i, '[data-fk="poll-add"]'); break;
+      case 'pollReveal': state.pollReveal = id; changed(true); break;
       case 'faq-del': state.faqs.splice(i, 1); changed(true); focusAfterDelete('[data-list="faqs"][data-f="q"]', i, '[data-fk="faq-add"]'); break;
       case 'gal-move': moveItem(state.gallery, i, i + d); changed(true); var nb = $('.ed-thumb[data-gi="' + (i + d) + '"] [data-act="gal-move"][data-d="' + d + '"]'); if (nb && !nb.disabled) nb.focus(); else { nb = $('.ed-thumb[data-gi="' + (i + d) + '"] [data-act="gal-del"]'); if (nb) nb.focus(); } break;
       case 'gal-del': state.gallery.splice(i, 1); changed(true); var g = $$('.ed-thumb [data-act="gal-del"]'); (g[Math.min(i, g.length - 1)] || $('[data-file="gallery"]') || main).focus(); break;

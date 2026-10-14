@@ -35,7 +35,7 @@
     '.mo-seal>.lz-seal{font-size:20px}' +
     '.lz-seal-over{display:flex;align-items:center;justify-content:center;position:absolute;left:24%;top:24%;width:52%;height:52%;border-radius:50%;background:radial-gradient(circle at 35% 30%,#D8AE76,#A8743E 70%);color:#FFF4DF;box-shadow:inset 0 0 0 2px #8C5E2C55;font-size:calc(var(--ss,160px) * .2) !important;pointer-events:none}' +
     '.lz-seal-over.is-img{background:none;box-shadow:none}' +
-    '[data-lz-f="time"]:not(:empty)::before{content:" · "}';
+    '.venue-card [data-lz-f="time"]:not(:empty)::before{content:" · "}';
   document.head.appendChild(css);
 
   function read() {
