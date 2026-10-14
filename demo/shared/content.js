@@ -77,20 +77,29 @@
     if (themes.length < 2) return;
     var start = q.get('color');
     if (start) applyTheme(start);
+    // Cápsula propia, encima de la barra de la demo (dentro de la barra la apretaba contra el botón de música).
     var css0 = document.createElement('style');
-    css0.textContent = '.lz-swatches{display:inline-flex;align-items:center;gap:6px;margin:0 4px}.lz-swatches button{width:22px;height:22px;padding:0;border-radius:50%;border:1px solid rgba(0,0,0,.18);cursor:pointer;box-shadow:inset 0 0 0 2px rgba(255,255,255,.35)}.lz-swatches button[aria-pressed="true"]{outline:2px solid currentColor;outline-offset:2px}';
+    css0.textContent = '.lz-colors{position:fixed;left:max(16px,env(safe-area-inset-left));bottom:calc(max(16px,env(safe-area-inset-bottom)) + 56px);z-index:80;display:flex;align-items:center;gap:8px;padding:6px 10px 6px 14px;border-radius:100px;background:var(--p-ink);color:var(--p-bg);box-shadow:0 12px 30px -14px rgba(0,0,0,.5);font:400 10px var(--p-sans,sans-serif);letter-spacing:.12em;text-transform:uppercase}' +
+      '.lz-colors[hidden],body.panel-open .lz-colors,body.viewer-open .lz-colors,body.sheet-open .lz-colors{display:none !important}' +
+      '.lz-colors span{opacity:.8;margin-right:2px}' +
+      '.lz-colors button{width:26px;height:26px;padding:0;border-radius:50%;border:1px solid rgba(255,255,255,.35);cursor:pointer}' +
+      '.lz-colors button[aria-pressed="true"]{outline:2px solid currentColor;outline-offset:2px}';
     document.head.appendChild(css0);
     document.addEventListener('DOMContentLoaded', function () {
       var bar = document.querySelector('.demo-bar'); if (!bar) return;
-      var g = document.createElement('span'); g.className = 'lz-swatches'; g.setAttribute('role', 'group'); g.setAttribute('aria-label', LANG === 'en' ? 'Colors' : 'Colores');
+      var g = document.createElement('div'); g.className = 'lz-colors'; g.setAttribute('role', 'group'); g.setAttribute('aria-label', LANG === 'en' ? 'Design colors' : 'Colores del diseño');
+      g.innerHTML = '<span aria-hidden="true">' + (LANG === 'en' ? 'Color' : 'Color') + '</span>';
       var cur = themes.some(function (x) { return x.id === start; }) ? start : themes[0].id;
       themes.forEach(function (t) {
         var b = document.createElement('button'); b.type = 'button'; b.style.background = t.sw; b.title = t[LANG];
-        b.setAttribute('aria-label', (LANG === 'en' ? 'Color: ' : 'Color: ') + t[LANG]); b.setAttribute('aria-pressed', String(t.id === cur));
+        b.setAttribute('aria-label', t[LANG]); b.setAttribute('aria-pressed', String(t.id === cur));
         b.addEventListener('click', function () { applyTheme(t.id); g.querySelectorAll('button').forEach(function (x) { x.setAttribute('aria-pressed', String(x === b)); }); });
         g.appendChild(b);
       });
-      var lbl = bar.querySelector('.lbl'); if (lbl && lbl.nextSibling) bar.insertBefore(g, lbl.nextSibling); else bar.appendChild(g);
+      // Se ve y se oculta junto con la barra de la demo (que aparece al abrir la invitación).
+      var sync = function () { g.hidden = bar.hidden || getComputedStyle(bar).display === 'none'; };
+      new MutationObserver(sync).observe(bar, { attributes: true, attributeFilter: ['hidden', 'style', 'class'] });
+      document.body.appendChild(g); sync();
     });
     return;
   }
