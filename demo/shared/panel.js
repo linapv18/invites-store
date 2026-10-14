@@ -306,7 +306,7 @@
   };
 
   /* Galería: toda imagen dentro de [data-gallery] se abre en grande al tocarla.
-     Con data-gallery="mono" las fotos se ven en blanco y negro. */
+     Con data-gallery="mono" las fotos se ven en blanco y negro (salvo que la invitación elija fotos a color: html.lz-photo-color). */
   function initGallery() {
     var groups = document.querySelectorAll('[data-gallery]'); if (!groups.length) return;
     var box = document.createElement('div');
@@ -327,7 +327,7 @@
     }
     function open(group, el) {
       list = [].slice.call(group.querySelectorAll('img')); idx = Math.max(0, list.indexOf(el)); last = el;
-      box.classList.toggle('is-mono', group.dataset.gallery === 'mono');
+      box.classList.toggle('is-mono', group.dataset.gallery === 'mono' && !document.documentElement.classList.contains('lz-photo-color'));
       show(); box.hidden = false; document.body.classList.add('viewer-open');
       box.querySelector('.is-close').focus();
     }

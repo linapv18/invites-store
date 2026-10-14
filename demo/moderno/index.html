@@ -80,6 +80,8 @@ html,body{margin:0;height:100%}
 .mo-side img.is-on{opacity:1;scale:1.06}
 .mo-cover::after{content:'';position:absolute;inset:0;background:linear-gradient(transparent 35%,color-mix(in srgb,var(--ink) 82%,transparent))}
 .mo-thumbs img{flex:none;width:64px;height:84px;object-fit:cover;filter:grayscale(1)}
+/* Opción del editor: fotos con sus colores originales (html.lz-photo-color) */
+html.lz-photo-color .mo-photo,html.lz-photo-color .mo-side img,html.lz-photo-color .mo-thumbs img{filter:none}
 .mo-side-ph{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font:italic 400 clamp(140px,14cqw,240px)/1 var(--serif);color:color-mix(in srgb,var(--ivory) 6%,transparent);letter-spacing:-.04em;transition:opacity 1s ease}
 .mo-side-note{position:absolute;top:32px;left:40px;font-size:9px;letter-spacing:.28em;text-transform:uppercase;color:color-mix(in srgb,var(--ivory) 40%,transparent)}
 .mo-side::after{content:'';position:absolute;inset:0;background:linear-gradient(transparent 55%,color-mix(in srgb,var(--ink) 67%,transparent))}

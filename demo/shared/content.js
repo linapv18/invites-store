@@ -83,13 +83,17 @@
     if (themes.length < 2) return;
     var start = q.get('color');
     if (start) applyTheme(start);
+    var photoColor = TPL === 'moderno' && /^(color|colour)$/.test(q.get('fotos') || q.get('photos') || '');
+    html.classList.toggle('lz-photo-color', photoColor);
     // Cápsula propia, encima de la barra de la demo (dentro de la barra la apretaba contra el botón de música).
     var css0 = document.createElement('style');
     css0.textContent = '.lz-colors{position:fixed;left:max(16px,env(safe-area-inset-left));bottom:calc(max(16px,env(safe-area-inset-bottom)) + 56px);z-index:80;display:flex;align-items:center;gap:8px;padding:6px 10px 6px 14px;border-radius:100px;background:var(--p-ink);color:var(--p-bg);box-shadow:0 12px 30px -14px rgba(0,0,0,.5);font:400 10px var(--p-sans,sans-serif);letter-spacing:.12em;text-transform:uppercase}' +
       '.lz-colors[hidden],body.panel-open .lz-colors,body.viewer-open .lz-colors,body.sheet-open .lz-colors{display:none !important}' +
       '.lz-colors span{opacity:.8;margin-right:2px}' +
       '.lz-colors button{width:26px;height:26px;padding:0;border-radius:50%;border:2px solid rgba(255,255,255,.6);cursor:pointer}' +
-      '.lz-colors button[aria-pressed="true"]{outline:2px solid currentColor;outline-offset:2px}';
+      '.lz-colors button[aria-pressed="true"]{outline:2px solid currentColor;outline-offset:2px}' +
+      '.lz-colors button.lz-photo{width:auto;height:28px;margin-left:4px;padding:0 12px;border-radius:100px;border:1px solid rgba(255,255,255,.45);background:transparent;color:inherit;font:inherit;letter-spacing:.1em;outline:0}' +
+      '.lz-colors button.lz-photo[aria-pressed="true"]{background:var(--p-bg);color:var(--p-ink)}';
     document.head.appendChild(css0);
     document.addEventListener('DOMContentLoaded', function () {
       var bar = document.querySelector('.demo-bar'); if (!bar) return;
@@ -102,6 +106,13 @@
         b.addEventListener('click', function () { applyTheme(t.id); g.querySelectorAll('button').forEach(function (x) { x.setAttribute('aria-pressed', String(x === b)); }); });
         g.appendChild(b);
       });
+      if (TPL === 'moderno') {
+        // Moderno: ver las fotos en blanco y negro (original) o con sus colores.
+        var pb = document.createElement('button'); pb.type = 'button'; pb.className = 'lz-photo';
+        pb.textContent = LANG === 'en' ? 'Color photos' : 'Fotos a color'; pb.setAttribute('aria-pressed', String(photoColor));
+        pb.addEventListener('click', function () { photoColor = !photoColor; html.classList.toggle('lz-photo-color', photoColor); pb.setAttribute('aria-pressed', String(photoColor)); });
+        g.appendChild(pb);
+      }
       // Se ve y se oculta junto con la barra de la demo (que aparece al abrir la invitación).
       var sync = function () { g.hidden = bar.hidden || getComputedStyle(bar).display === 'none'; };
       new MutationObserver(sync).observe(bar, { attributes: true, attributeFilter: ['hidden', 'style', 'class'] });
@@ -291,6 +302,7 @@
       renderList(box, rows);
     });
     applyTheme(c0.pal, c0.palCustom);
+    html.classList.toggle('lz-photo-color', TPL === 'moderno' && c0.photoBW === false);
     // Cuenta regresiva: las plantillas leen window.LZ_T en cada segundo.
     var d = dateObj(c0.date);
     if (d) { var m = /^(\d{1,2}):(\d{2})$/.exec(cdEv && cdEv.time || ''); if (m) d.setHours(+m[1], +m[2]); window.LZ_T = d.getTime(); }
