@@ -57,7 +57,7 @@
       upMono: 'O sube tu propio monograma', upMonoHint: 'SVG o PNG con fondo transparente', yourMono: 'Tu monograma', useIt: 'Usar este', inUse: 'En uso', delMono: 'Quitar monograma',
       greeting: 'Saludo en la carta', greetingHint: '{apellido} se reemplaza con el nombre de cada familia.', token: '{apellido}',
       storyTitle: 'Título', story: 'Su historia', storyPh: 'Escribe aquí cómo se conocieron, su primera cita o la propuesta.',
-      gallery: 'Galería', galCount: function (n) { return n + ' de 12 fotos · arrastra para ordenar'; }, upPhotos: 'Subir fotos',
+      gallery: 'Galería', galCount: function (n, touch) { return n + ' de 12 fotos · ' + (touch ? 'ordénalas con las flechas' : 'arrastra para ordenar'); }, upPhotos: 'Subir fotos',
       photoN: function (i) { return 'Foto ' + i; }, movePrev: 'Mover antes', moveNext: 'Mover después', delPhoto: 'Quitar foto', galFull: 'Llegaste a 12 fotos.',
       galK: 'Complemento · Galería compartida', galT: '¿Y las fotos que tomen tus invitados?', galS: 'Que las suban a este mismo álbum, sin grupos de WhatsApp. [$]',
       event: 'Evento', eventPh: 'Nombre del evento', time: 'Hora', place: 'Lugar y dirección', placePh: 'Lugar · dirección',
@@ -145,7 +145,7 @@
       upMono: 'Or upload your own monogram', upMonoHint: 'SVG or PNG with a transparent background', yourMono: 'Your monogram', useIt: 'Use this one', inUse: 'In use', delMono: 'Remove monogram',
       greeting: 'Greeting on the letter', greetingHint: '{surname} is replaced with each family’s name.', token: '{surname}',
       storyTitle: 'Title', story: 'Your story', storyPh: 'Write how you met, your first date or the proposal.',
-      gallery: 'Gallery', galCount: function (n) { return n + ' of 12 photos · drag to reorder'; }, upPhotos: 'Upload photos',
+      gallery: 'Gallery', galCount: function (n, touch) { return n + ' of 12 photos · ' + (touch ? 'use the arrows to reorder' : 'drag to reorder'); }, upPhotos: 'Upload photos',
       photoN: function (i) { return 'Photo ' + i; }, movePrev: 'Move earlier', moveNext: 'Move later', delPhoto: 'Remove photo', galFull: 'You reached 12 photos.',
       galK: 'Add-on · Shared gallery', galT: 'What about the photos your guests take?', galS: 'Let them upload to this same album, no group chats. [$]',
       event: 'Event', eventPh: 'Event name', time: 'Time', place: 'Place and address', placePh: 'Venue · address',
@@ -596,7 +596,7 @@
     historia: function () {
       var g = state.gallery;
       return head('historia') + field(S.storyTitle, 'storyTitle') + field(S.story, 'story', { rows: 5, ph: S.storyPh }) +
-        '<div class="ed-stack"><div style="display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap"><span class="ed-label">' + esc(S.gallery) + '</span><span class="ed-hint">' + esc(S.galCount(g.length)) + '</span></div>' +
+        '<div class="ed-stack"><div style="display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap"><span class="ed-label">' + esc(S.gallery) + '</span><span class="ed-hint">' + esc(S.galCount(g.length, window.matchMedia('(pointer: coarse)').matches)) + '</span></div>' +
         '<div class="ed-gallery">' + g.map(function (src, i) {
           return '<div class="ed-thumb" draggable="true" data-gi="' + i + '"><img src="' + esc(src) + '" alt="' + esc(S.photoN(i + 1)) + '" draggable="false"><div class="ed-thumb-tools">' +
             '<button type="button" data-act="gal-move" data-i="' + i + '" data-d="-1" aria-label="' + esc(S.movePrev + ' · ' + S.photoN(i + 1)) + '"' + (i === 0 ? ' disabled' : '') + '>' + svg(P.left, 14, 2) + '</button>' +

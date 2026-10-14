@@ -163,7 +163,8 @@ a:hover{opacity:.75}
 }
 @media(max-width:600px){
   .hero-photo{min-height:470px}
-  .story-intro,.venue-grid,  .story-image{max-width:240px}
+  .story-intro,.venue-grid{grid-template-columns:1fr}
+  .story-image{max-width:240px}
   .schedule-heading{align-items:start;flex-direction:column}
   .ceremony-details{flex-direction:column;align-items:flex-start}
   .ceremony-countdown{margin-top:32px}
@@ -378,7 +379,7 @@ LazoMusic.init({src:'/assets/musica/demo.mp3'});
   var cover=document.getElementById('cover'),letter=document.getElementById('letter'),seal=document.getElementById('seal'),hint=document.getElementById('hint'),replay=document.getElementById('replay');
   function setOpen(o){cover.classList.toggle('is-open',o);letter.toggleAttribute('inert',!o);letter.setAttribute('aria-hidden',String(!o));seal.disabled=o;replay.hidden=!o;hint.textContent=o?'The beginning of forever.':'Tap the seal to open your invitation';}
   // Para el editor de Lazo (demo/shared/content.js): saltar o volver a mostrar el sobre.
-  window.LzTemplate={open:function(){cover.classList.add('gone');document.body.classList.remove('locked');},envelope:function(){setOpen(false);cover.classList.remove('gone');document.body.classList.add('locked');window.scrollTo(0,0);},scroll:function(el){window.scrollTo(0,el.getBoundingClientRect().top+window.pageYOffset-70);}};
+  window.LzTemplate={open:function(){cover.classList.add('gone');document.body.classList.remove('locked');},envelope:function(){setOpen(false);cover.classList.remove('gone');document.body.classList.add('locked');window.scrollTo(0,0);},scroll:function(el,now){window.scrollTo({top:el.getBoundingClientRect().top+window.pageYOffset-70,behavior:now?'instant':'smooth'});}};
   seal.addEventListener('click',function(){setOpen(true);LazoMusic.play();});
   replay.addEventListener('click',function(){setOpen(false);seal.focus();});
   document.getElementById('enter').addEventListener('click',function(){cover.classList.add('gone');document.body.classList.remove('locked');document.getElementById('demoBar').hidden=false;window.scrollTo(0,0);});

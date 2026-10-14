@@ -179,7 +179,11 @@
     if (sec === 'apertura') { T.envelope(); return; }
     T.open();
     var el = document.querySelector('[data-lz-anchor~="' + sec + '"]') || document.querySelector('[data-lz-anchor~="portada"]');
-    if (el) setTimeout(function () { T.scroll(el, now); }, 60);
+    if (el) {
+      setTimeout(function () { T.scroll(el, now); }, 60);
+      // Las fotos cargan después y mueven la página: se corrige la posición cuando ya están.
+      setTimeout(function () { T.scroll(el, true); }, 900);
+    }
   }
 
   window.LazoContent = { apply: apply, goto: goto };

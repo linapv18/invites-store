@@ -398,6 +398,9 @@ a.ed-btn[aria-disabled="true"]{opacity:.4;pointer-events:none}
   .ed-drawer-foot{padding:14px 20px calc(20px + env(safe-area-inset-bottom))}
 }
 @media (max-width:520px){
+  .ed-gallery{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+  .ed-thumb-tools{inset:auto 8px 8px 8px}
+  .ed-thumb-tools button{width:36px;height:36px}
   .ed-guest-bar>span:first-child{display:none}
   .ed-guest-bar>span:last-child{width:100%;justify-content:space-between}
   .ed-guest-bar .ed-btn{padding:0 14px;font-size:13px}

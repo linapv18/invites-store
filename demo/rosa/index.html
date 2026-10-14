@@ -486,7 +486,7 @@ LazoMusic.init({src:'/assets/musica/demo.mp3'});
   function go(p,ms){timers.push(setTimeout(function(){set(p);if(p==='card')document.getElementById('enter').focus({preventScroll:true});},ms));}
   function clear(){timers.forEach(clearTimeout);timers=[];}
   // Para el editor de Lazo (demo/shared/content.js): saltar o volver a mostrar el sobre.
-  window.LzTemplate={open:function(){clear();env.classList.add('gone');document.body.classList.remove('locked');},envelope:function(){clear();set('closed');env.classList.remove('gone');document.body.classList.add('locked');window.scrollTo(0,0);},scroll:function(el){window.scrollTo(0,el.getBoundingClientRect().top+window.pageYOffset-20);}};
+  window.LzTemplate={open:function(){clear();env.classList.add('gone');document.body.classList.remove('locked');},envelope:function(){clear();set('closed');env.classList.remove('gone');document.body.classList.add('locked');window.scrollTo(0,0);},scroll:function(el,now){window.scrollTo({top:el.getBoundingClientRect().top+window.pageYOffset-20,behavior:now?'instant':'smooth'});}};
   document.getElementById('sealBtn').addEventListener('click',function(){
     if(env.dataset.phase!=='closed')return;clear();LazoMusic.play();set('glow');go('open',1900);go('flash',3000);go('card',3600);
   });
