@@ -27,7 +27,7 @@
 
   /* ---------- Colores de cada plantilla ----------
      Clásico: paletas a partir de un color oscuro (o uno propio); Romántico: champaña (base) o rosado;
-     Moderno: blanco y negro. La primera de cada lista es la original del diseño (sin variables). */
+     Moderno: blanco y negro (base), arena, oliva, azul marino o vino. La primera de cada lista es la original del diseño (sin variables). */
   var THEMES = {
     clasico: [
       { id: 'salvia', es: 'Salvia', en: 'Sage', sw: '#293c35' },
@@ -39,7 +39,13 @@
       { id: 'champana', es: 'Champaña', en: 'Champagne', sw: '#E9DCC4' },
       { id: 'rosado', es: 'Rosado', en: 'Blush', sw: '#EBD3D2', vars: { 'r-bg': '#F6EBEC', 'r-bg2': '#F0E2E0', 'r-card': '#FBF4F3', 'r-line': '#E2CFC6', 'r-on': '#F7EEF0', 'r-ink': '#3E3236', 'r-text': '#6E5F64', 'r-muted': '#7D6A70', 'r-field': '#D9C5BE', 'r-on2': '#E8DADC', 'r-body': '#4E4247', 'r-row': '#E8D8D4', 'r-soft40': '#5E525740', 'r-soft': '#5E5257', 'r-shadow': '#6B515818', 'r-shade': '#6B5158', 'r-liner1': '#F8ECE8', 'r-liner2': '#F7EDEA', 'r-liner3': '#EBD6D5', 'r-liner4': '#F5E6EB', 'r-pat': '#B8978B', 'r-pat2': '#D3BBAF', 'r-sh1': '#9C7E80', 'r-sh2': '#8E7F84', 'r-sh3': '#6A5550' } }
     ],
-    moderno: []
+    moderno: [
+      { id: 'bn', es: 'Blanco y negro', en: 'Black & white', sw: '#141414' },
+      { id: 'arena', es: 'Arena', en: 'Sand', sw: '#2E2A25', vars: { 't-ink': '#2E2A25', 't-ivory': '#F3EEE6', 't-sand': '#E6DED2', 't-stone': '#C2B6A5', 't-muted': '#7A6F62', 't-body': '#4D453C', 't-soft': '#9A8E7F', 'sand2': '#D8CEBF', 'tone1': '#231F1B', 'tone2': '#332D27', 'tone3': '#463F37', 'p-bg': '#F3EEE6', 'p-ink': '#2E2A25', 'p-muted': '#7A6F62', 'p-accent': '#2E2A25', 'p-on-accent': '#F3EEE6', 'm-bg': '#2E2A25', 'm-fg': '#F3EEE6' } },
+      { id: 'oliva', es: 'Oliva', en: 'Olive', sw: '#262B22', vars: { 't-ink': '#262B22', 't-ivory': '#F2F1EA', 't-sand': '#E2E3D7', 't-stone': '#B9BBA8', 't-muted': '#6A6E5F', 't-body': '#464A3E', 't-soft': '#8C907F', 'sand2': '#D3D5C6', 'tone1': '#1D211A', 'tone2': '#2A3026', 'tone3': '#3B4235', 'p-bg': '#F2F1EA', 'p-ink': '#262B22', 'p-muted': '#6A6E5F', 'p-accent': '#262B22', 'p-on-accent': '#F2F1EA', 'm-bg': '#262B22', 'm-fg': '#F2F1EA' } },
+      { id: 'marino', es: 'Azul marino', en: 'Navy', sw: '#1B2433', vars: { 't-ink': '#1B2433', 't-ivory': '#F3F4F6', 't-sand': '#E3E6EB', 't-stone': '#B7BDC8', 't-muted': '#626B7A', 't-body': '#3F4756', 't-soft': '#868E9C', 'sand2': '#D3D8DF', 'tone1': '#151C28', 'tone2': '#212B3B', 'tone3': '#2F3B4E', 'p-bg': '#F3F4F6', 'p-ink': '#1B2433', 'p-muted': '#626B7A', 'p-accent': '#1B2433', 'p-on-accent': '#F3F4F6', 'm-bg': '#1B2433', 'm-fg': '#F3F4F6' } },
+      { id: 'vino', es: 'Vino', en: 'Wine', sw: '#3A1E24', vars: { 't-ink': '#3A1E24', 't-ivory': '#F6F0EE', 't-sand': '#EADFDC', 't-stone': '#C7B2AD', 't-muted': '#7A5F63', 't-body': '#523A3E', 't-soft': '#9B8285', 'sand2': '#DDCDC9', 'tone1': '#2C161B', 'tone2': '#402329', 'tone3': '#553139', 'p-bg': '#F6F0EE', 'p-ink': '#3A1E24', 'p-muted': '#7A5F63', 'p-accent': '#3A1E24', 'p-on-accent': '#F6F0EE', 'm-bg': '#3A1E24', 'm-fg': '#F6F0EE' } }
+    ]
   };
   function hexRgb(h) { var m = /^#?([0-9a-f]{6})$/i.exec(h || ''); if (!m) return null; var n = parseInt(m[1], 16); return [n >> 16 & 255, n >> 8 & 255, n & 255]; }
   function lum(c) { return [0, 1, 2].reduce(function (sum, i) { var x = c[i] / 255; x = x <= 0.03928 ? x / 12.92 : Math.pow((x + 0.055) / 1.055, 2.4); return sum + x * [0.2126, 0.7152, 0.0722][i]; }, 0); }
@@ -67,7 +73,7 @@
     Object.keys(themeVars).concat(Object.keys(vars)).forEach(function (k) { html.style.setProperty(k, vars[k] || ''); });
     themeVars = vars;
     var tc = document.querySelector('meta[name="theme-color"]');
-    if (tc) { if (tc._lz === undefined) tc._lz = tc.content; tc.content = vars['--env-bg'] || vars['--r-bg2'] || tc._lz; }
+    if (tc) { if (tc._lz === undefined) tc._lz = tc.content; tc.content = vars['--env-bg'] || vars['--r-bg2'] || vars['--t-ink'] || tc._lz; }
   }
   window.LazoTheme = { list: function () { return THEMES[TPL] || []; }, apply: applyTheme };
 
@@ -82,7 +88,7 @@
     css0.textContent = '.lz-colors{position:fixed;left:max(16px,env(safe-area-inset-left));bottom:calc(max(16px,env(safe-area-inset-bottom)) + 56px);z-index:80;display:flex;align-items:center;gap:8px;padding:6px 10px 6px 14px;border-radius:100px;background:var(--p-ink);color:var(--p-bg);box-shadow:0 12px 30px -14px rgba(0,0,0,.5);font:400 10px var(--p-sans,sans-serif);letter-spacing:.12em;text-transform:uppercase}' +
       '.lz-colors[hidden],body.panel-open .lz-colors,body.viewer-open .lz-colors,body.sheet-open .lz-colors{display:none !important}' +
       '.lz-colors span{opacity:.8;margin-right:2px}' +
-      '.lz-colors button{width:26px;height:26px;padding:0;border-radius:50%;border:1px solid rgba(255,255,255,.35);cursor:pointer}' +
+      '.lz-colors button{width:26px;height:26px;padding:0;border-radius:50%;border:2px solid rgba(255,255,255,.6);cursor:pointer}' +
       '.lz-colors button[aria-pressed="true"]{outline:2px solid currentColor;outline-offset:2px}';
     document.head.appendChild(css0);
     document.addEventListener('DOMContentLoaded', function () {

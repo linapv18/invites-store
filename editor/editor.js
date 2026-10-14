@@ -306,6 +306,16 @@
     { id: 'champana', hex: '#E9DCC4', es: 'Champaña', en: 'Champagne' },
     { id: 'rosado', hex: '#EBD3D2', es: 'Rosado', en: 'Blush' }
   ];
+  // Paletas de Moderno (los colores los aplica demo/shared/content.js; aquí nombre, muestra y el color del sello).
+  var MOD_PALETTES = [
+    { id: 'bn', hex: '#141414', ink: '#141414', sand: '#E7E6E1', es: 'Blanco y negro', en: 'Black & white' },
+    { id: 'arena', hex: '#2E2A25', ink: '#2E2A25', sand: '#E6DED2', es: 'Arena', en: 'Sand' },
+    { id: 'oliva', hex: '#262B22', ink: '#262B22', sand: '#E2E3D7', es: 'Oliva', en: 'Olive' },
+    { id: 'marino', hex: '#1B2433', ink: '#1B2433', sand: '#E3E6EB', es: 'Azul marino', en: 'Navy' },
+    { id: 'vino', hex: '#3A1E24', ink: '#3A1E24', sand: '#EADFDC', es: 'Vino', en: 'Wine' }
+  ];
+  var TPL_PALETTES = { rosa: ROSA_PALETTES, moderno: MOD_PALETTES };
+  var tplPal = function () { var l = TPL_PALETTES[state.design] || []; return l.filter(function (x) { return x.id === state.pal; })[0] || l[0]; };
   var PALETTES = [
     { id: 'salvia', hex: '#5F7360', es: 'Salvia', en: 'Sage' },
     { id: 'rosa', hex: '#9A5F5C', es: 'Rosa antiguo', en: 'Dusty rose' },
@@ -456,7 +466,7 @@
   var TPL_DARK = { rosa: '#4A2F2E', azul: '#26304A', terracota: '#4A2B1F' };
   function sealLook() {
     var serif = "font-family:'Instrument Serif',Georgia,serif;";
-    if (state.design === 'moderno') return serif + 'background:radial-gradient(circle at 35% 30%,#FFFFFF,#E9E4DA 70%);color:#141414;box-shadow:inset 0 0 0 1px #14141433';
+    if (state.design === 'moderno') { var mp = tplPal(); return serif + 'background:radial-gradient(circle at 35% 30%,#FFFFFF,' + mp.sand + ' 70%);color:' + mp.ink + ';box-shadow:inset 0 0 0 1px ' + mp.ink + '33'; }
     if (state.design === 'rosa') return serif + 'background:radial-gradient(circle at 35% 30%,#D8AE76,#A8743E 70%);color:#FFF4DF';
     var hex = state.pal === 'custom' ? state.palCustom : TPL_DARK[state.pal], m = /^#?([0-9a-f]{6})$/i.exec(hex || '');
     if (!m) return 'font-family:Georgia,serif;background:radial-gradient(circle at 30% 20%,#64745a,#2b4437);color:#f5f2ea';
@@ -680,9 +690,8 @@
           (state.cover ? '<div class="ed-photo-img"><img src="' + esc(state.cover) + '" alt="' + esc(S.coverAlt) + '"></div>' : '<div class="ed-photo-img ph"></div>') +
           dropzone('cover', S.drop, S.dropHint) + '</div></div>' +
         field(S.msg, 'msg', { rows: 3, ph: S.msgPh }) + field(S.countdownNote, 'countdownNote', { ph: S.countdownNotePh }) +
-        (state.design === 'moderno' ? '<div class="ed-info"><div><b>' + esc(S.palette) + '</b><span>' + esc(S.palFixed(design()[0])) + '</span></div></div>' :
-        state.design === 'rosa' ? '<div class="ed-stack"><span class="ed-label" id="lblPal">' + esc(S.palette) + '</span><div class="ed-palettes" role="radiogroup" aria-labelledby="lblPal">' +
-          ROSA_PALETTES.map(function (p, i) { var on = p.id === state.pal || (i === 0 && !ROSA_PALETTES.some(function (x) { return x.id === state.pal; })); return '<button type="button" class="ed-pal" role="radio" aria-checked="' + on + '" data-act="pal" data-id="' + p.id + '" data-fk="pal-' + p.id + '"><i style="background:' + p.hex + ';box-shadow:inset 0 0 0 1px rgba(0,0,0,.12)"></i>' + esc(p[LANG]) + '</button>'; }).join('') +
+        (TPL_PALETTES[state.design] ? '<div class="ed-stack"><span class="ed-label" id="lblPal">' + esc(S.palette) + '</span><div class="ed-palettes" role="radiogroup" aria-labelledby="lblPal">' +
+          TPL_PALETTES[state.design].map(function (p) { var on = p === tplPal(); return '<button type="button" class="ed-pal" role="radio" aria-checked="' + on + '" data-act="pal" data-id="' + p.id + '" data-fk="pal-' + p.id + '"><i style="background:' + p.hex + ';box-shadow:inset 0 0 0 1px rgba(0,0,0,.12)"></i>' + esc(p[LANG]) + '</button>'; }).join('') +
         '</div></div>' :
         '<div class="ed-stack"><span class="ed-label" id="lblPal">' + esc(S.palette) + '</span><div class="ed-palettes" role="radiogroup" aria-labelledby="lblPal">' +
           PALETTES.map(function (p) { return '<button type="button" class="ed-pal" role="radio" aria-checked="' + (p.id === state.pal) + '" data-act="pal" data-id="' + p.id + '" data-fk="pal-' + p.id + '"><i style="background:' + p.hex + '"></i>' + esc(p[LANG]) + '</button>'; }).join('') +
