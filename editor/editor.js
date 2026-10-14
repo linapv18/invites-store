@@ -499,7 +499,7 @@
     $$('[data-act="device"]').forEach(function (b) { b.setAttribute('aria-pressed', String(b.getAttribute('data-id') === ui.device)); });
     $('#ed').setAttribute('data-mode', ui.mode);
     $('#edPhone').classList.toggle('desk', ui.device === 'd');
-    $('#edPv').style.flexBasis = ui.device === 'd' && !isMobile() ? '560px' : '';
+    $('#edPv').style.flexBasis = ui.device === 'd' && !isMobile() ? '600px' : '';
     layoutFrame();
   }
 
@@ -917,7 +917,7 @@
       case 'modal-close': closeModal(); break;
       case 'modal-scrim': if (e.target === b) closeModal(); break;
       case 'mode': ui.mode = id; stopSample(); renderChrome(); if (id === 'preview') renderPreview(true); break;
-      case 'device': ui.device = id; renderChrome(); break;
+      case 'device': ui.device = id; renderChrome(); setTimeout(function () { renderPreview(true); }, 350); break;
       case 'step':
         var idx = SECS.indexOf(state.sec), nx = idx < 0 ? (d > 0 ? 0 : -1) : idx + d;
         if (nx >= 0 && nx < SECS.length) go(SECS[nx]);
@@ -965,6 +965,7 @@
   frame.addEventListener('load', function () { frameReady = true; renderPreview(true); });
   frame.src = frameUrl('editor');
   window.addEventListener('resize', layoutFrame);
+  $('#edPhone').addEventListener('transitionend', layoutFrame); // el marco anima su ancho al cambiar de dispositivo
   renderChrome(); renderNav(); renderMain();
   if (ui.drawer) openDrawer($('.ed-cartbtn'));
 

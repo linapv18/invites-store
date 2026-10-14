@@ -490,6 +490,9 @@ a.ed-btn[aria-disabled="true"]{opacity:.4;pointer-events:none}
 .ed-gate p{margin:0;color:var(--ink-2);line-height:1.5}
 .ed-gate div{display:flex;flex-wrap:wrap;gap:10px}
 .ed-frame{display:block;width:100%;height:100%;border:0;border-radius:31px;background:var(--bg)}
-.ed-phone.desk .ed-frame{border-radius:8px;transform-origin:0 0}
+/* En "Escritorio" el iframe mide 1280 px y se escala; va en position:absolute para no ensanchar la columna. */
+.ed-pv{min-width:0}
+.ed-phone{position:relative;overflow:hidden}
+.ed-phone.desk .ed-frame{position:absolute;top:8px;left:8px;border-radius:0;transform-origin:0 0}
 .ed-guest-frame{flex:1 1 auto;width:100%;border:0;background:#fff}
 @media (max-width:720px){.ac-narrow h1,.ac-wide h1{font-size:40px}.ac-user a{display:none}}
