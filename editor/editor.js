@@ -82,6 +82,8 @@
       musicSrc: '¿Qué música suena?', srcLibrary: 'Biblioteca Lazo', srcUpload: 'Subir mi canción', libraryK: 'Canciones de la biblioteca', libraryMore: 'Pronto habrá más canciones libres de derechos para elegir.',
       musicUpload: 'Sube tu canción', musicReplace: 'Cambiar por otra canción', musicHint: 'MP3, hasta 15 MB', musicLocal: 'Por ahora la canción se guarda en este navegador.', musicDel: 'Quitar la canción',
       badMp3: 'El archivo debe ser un MP3.', mp3Big: 'La canción pesa más de 15 MB. Prueba con una versión más ligera.', mp3Fail: 'No se pudo guardar la canción en este navegador.',
+      envK: 'Textos del sobre', envIntro: 'Frase del sobre', envClosing: 'Despedida', envClosingPh: 'p. ej. Con todo nuestro cariño',
+      envKeepHint: 'Si lo dejas vacío, se usa el texto del diseño.', envOptHint: 'Opcional: aparece bajo el nombre de cada familia.',
       palCustom: 'Personalizado', palCustomLbl: 'Elegir un color', palLight: 'Es un color claro: en la invitación lo oscurecemos un poco para que el texto se lea bien.',
       sample: 'Música de ejemplo', sampleHint: 'Así suena la música de fondo en las demos.', play: 'Escuchar', pause: 'Pausar',
       playlistK: 'Complemento · Playlist colaborativa', playlistT: 'Deja que tus invitados armen la playlist de la fiesta.',
@@ -195,6 +197,8 @@
       musicSrc: 'What music plays?', srcLibrary: 'Lazo library', srcUpload: 'Upload my song', libraryK: 'Library songs', libraryMore: 'More royalty-free songs coming soon.',
       musicUpload: 'Upload your song', musicReplace: 'Replace with another song', musicHint: 'MP3, up to 15 MB', musicLocal: 'For now the song is stored in this browser.', musicDel: 'Remove the song',
       badMp3: 'The file must be an MP3.', mp3Big: 'The song is larger than 15 MB. Try a lighter version.', mp3Fail: 'Could not save the song in this browser.',
+      envK: 'Envelope text', envIntro: 'Envelope line', envClosing: 'Sign-off', envClosingPh: 'e.g. With all our love',
+      envKeepHint: 'Leave it empty to use the design’s text.', envOptHint: 'Optional: shown under each family’s name.',
       palCustom: 'Custom', palCustomLbl: 'Pick a color', palLight: 'It’s a light color: in the invitation we darken it a bit so text stays readable.',
       sample: 'Sample music', sampleHint: 'This is how background music sounds in the demos.', play: 'Listen', pause: 'Pause',
       playlistK: 'Add-on · Collaborative playlist', playlistT: 'Let your guests build the party playlist.',
@@ -291,6 +295,12 @@
   var MUSIC_LIBRARY = [
     { id: 'demo', src: '/assets/musica/demo.mp3', es: 'Canción de ejemplo', en: 'Sample song', credit: 'paulyudin · Pixabay' }
   ];
+  // Textos del sobre de cada diseño: se usan si la persona deja el campo vacío (y como ejemplo en el formulario).
+  var ENV_TEXT = {
+    clasico: { es: ['Una invitación para un día inolvidable', 'Con todo nuestro cariño'], en: ['An invitation to an unforgettable day', 'With all our love'] },
+    moderno: { es: ['Una invitación para un día inolvidable', ''], en: ['An invitation to an unforgettable day', ''] },
+    rosa: { es: ['Celebra con nosotros nuestro gran día', ''], en: ['Celebrate our big day with us', ''] }
+  };
   var PALETTES = [
     { id: 'salvia', hex: '#5F7360', es: 'Salvia', en: 'Sage' },
     { id: 'rosa', hex: '#9A5F5C', es: 'Rosa antiguo', en: 'Dusty rose' },
@@ -323,7 +333,7 @@
       musicOn: true, musicSource: 'library', musicTrack: 'demo', musicTrackSrc: '/assets/musica/demo.mp3', musicFileName: '', musicFileSize: 0,
       palCustom: '#8A4F5C',
       // Todos los diseños reciben y muestran estos mismos campos (ver demo/shared/content.js).
-      countdownId: 1, countdownNote: '', quote: '', quoteAuthor: '', dressCode: '', dressNotes: '', dressColors: '',
+      envIntro: '', envClosing: '', countdownId: 1, countdownNote: '', quote: '', quoteAuthor: '', dressCode: '', dressNotes: '', dressColors: '',
       viajeOn: true, travelIntro: '', hotel: '', hotelAddress: '', hotelCode: '', hotelLink: '', hotelNotes: '',
       airport: '', transport: '', guideFood: '', guideCulture: '', guidePlans: '',
       rsvpDeadline: '', rsvpMsg: '', rsvpDiet: true, rsvpNote: true,
@@ -689,7 +699,10 @@
                 (state.mono === 'custom' ? '<span class="ed-pill ed-pill-dark" style="flex:0 0 auto">' + esc(S.inUse) + '</span>' : '<button type="button" class="ed-btn ed-btn-sm" data-act="mono" data-id="custom" data-fk="mono-custom">' + esc(S.useIt) + '</button>') +
                 '<button type="button" class="ed-del" data-act="mono-del" aria-label="' + esc(S.delMono) + '">' + svg(P.trash, 18, 1.7) + '</button></div>' : '') +
               dropzone('mono', S.upMono, S.upMonoHint, false, '') + '</div>'
-          : field(S.sealText, 'sealText', { max: 8, hint: S.upTo8 }));
+          : field(S.sealText, 'sealText', { max: 8, hint: S.upTo8 })) +
+        '<div class="ed-stack ed-group"><h2 class="ed-sub">' + esc(S.envK) + '</h2>' +
+          field(S.envIntro, 'envIntro', { ph: ENV_TEXT[state.design][LANG][0], hint: S.envKeepHint }) +
+          field(S.envClosing, 'envClosing', { ph: ENV_TEXT[state.design][LANG][1] || S.envClosingPh, hint: ENV_TEXT[state.design][LANG][1] ? S.envKeepHint : S.envOptHint }) + '</div>';
     },
     historia: function () {
       var g = state.gallery;

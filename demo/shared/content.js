@@ -11,6 +11,7 @@
      data-lz-href="hotelLink"  enlace
      data-lz-list="gallery|events|faqs" con hijos data-lz-item y campos data-lz-f="…" lista que se repite
      data-lz-show="viajeOn|rsvpDiet|rsvpNote"  se oculta si está apagado
+     data-lz-keep              si el campo está vacío se deja el texto del diseño (frases del sobre)
      data-lz-if="k1 k2"        solo se muestra si alguno de esos campos tiene valor (huecos que la demo no trae)
      data-lz-group="k1 k2"     al ver como invitado se oculta si todos esos campos están vacíos (título + texto)
      data-lz-seal              contenido del sello
@@ -118,6 +119,7 @@
   function setText(el, v) {
     if (el._lz === undefined) el._lz = el.innerHTML;
     if (has(v)) { el.textContent = v; el.style.whiteSpace = /\n/.test(v) ? 'pre-line' : ''; el.classList.remove('lz-ph', 'lz-off'); }
+    else if (el.hasAttribute('data-lz-keep')) { el.innerHTML = el._lz; el.style.whiteSpace = ''; el.classList.remove('lz-ph', 'lz-off'); } // vacío: el texto del diseño
     else { el.innerHTML = el._lz; el.style.whiteSpace = ''; el.classList.toggle('lz-off', MODE === 'vista'); el.classList.toggle('lz-ph', MODE !== 'vista'); }
   }
   function fill(item, data) {
@@ -156,7 +158,7 @@
     // Evento elegido en el editor para la cuenta regresiva (si no hay, el primero).
     var cdEv = evs.filter(function (e) { return e.id === c0.countdownId; })[0] || evs[0];
     var v = {
-      n1: c0.n1, n2: c0.n2, i1: init(c0.n1), i2: init(c0.n2), city: c0.city, msg: c0.msg, countdownNote: c0.countdownNote,
+      n1: c0.n1, n2: c0.n2, i1: init(c0.n1), i2: init(c0.n2), city: c0.city, msg: c0.msg, envIntro: c0.envIntro, envClosing: c0.envClosing, countdownNote: c0.countdownNote,
       storyTitle: c0.storyTitle, story: c0.story, quote: c0.quote, quoteAuthor: c0.quoteAuthor,
       dressCode: c0.dressCode, dressNotes: c0.dressNotes, dressColors: c0.dressColors,
       travelIntro: c0.travelIntro, hotel: c0.hotel, hotelAddress: c0.hotelAddress, hotelCode: c0.hotelCode, hotelNotes: c0.hotelNotes || c0.travelNotes,
