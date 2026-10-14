@@ -79,7 +79,6 @@
       faqCount: function (n) { return n + ' de 7 preguntas'; }, faqFull: 'Llegaste al máximo. Elimina una para añadir otra.', noFaq: 'Aún no hay preguntas.',
       pollK: 'Complemento · Encuestas', pollT: 'Y para las preguntas divertidas: ¿quién llorará más?',
       musicOn: 'Música al abrir la invitación', musicOnHint: 'Suena cuando el invitado toca el sello.', musicOffHint: 'Sin música: la invitación se abre en silencio.',
-      song: 'Nombre de la canción (opcional)', songPh: 'Título y artista', songHint: 'Para saber qué está sonando.',
       musicSrc: '¿Qué música suena?', srcLibrary: 'Biblioteca Lazo', srcUpload: 'Subir mi canción', libraryK: 'Canciones de la biblioteca', libraryMore: 'Pronto habrá más canciones libres de derechos para elegir.',
       musicUpload: 'Sube tu canción', musicReplace: 'Cambiar por otra canción', musicHint: 'MP3, hasta 15 MB', musicLocal: 'Por ahora la canción se guarda en este navegador.', musicDel: 'Quitar la canción',
       badMp3: 'El archivo debe ser un MP3.', mp3Big: 'La canción pesa más de 15 MB. Prueba con una versión más ligera.', mp3Fail: 'No se pudo guardar la canción en este navegador.',
@@ -193,7 +192,6 @@
       faqCount: function (n) { return n + ' of 7 questions'; }, faqFull: 'You reached the limit. Delete one to add another.', noFaq: 'No questions yet.',
       pollK: 'Add-on · Polls', pollT: 'And for the fun questions: who will cry the most?',
       musicOn: 'Music when the invitation opens', musicOnHint: 'Plays when the guest taps the seal.', musicOffHint: 'No music: the invitation opens in silence.',
-      song: 'Song name (optional)', songPh: 'Title and artist', songHint: 'So people know what’s playing.',
       musicSrc: 'What music plays?', srcLibrary: 'Lazo library', srcUpload: 'Upload my song', libraryK: 'Library songs', libraryMore: 'More royalty-free songs coming soon.',
       musicUpload: 'Upload your song', musicReplace: 'Replace with another song', musicHint: 'MP3, up to 15 MB', musicLocal: 'For now the song is stored in this browser.', musicDel: 'Remove the song',
       badMp3: 'The file must be an MP3.', mp3Big: 'The song is larger than 15 MB. Try a lighter version.', mp3Fail: 'Could not save the song in this browser.',
@@ -322,7 +320,7 @@
       faqs: es
         ? [{ id: 1, q: '¿Cuál es el código de vestimenta?', a: 'Formal. Evita el blanco, por favor.' }, { id: 2, q: '¿Pueden ir niños?', a: '' }, { id: 3, q: '¿Hay mesa de regalos?', a: '' }]
         : [{ id: 1, q: 'What is the dress code?', a: 'Formal. Please avoid white.' }, { id: 2, q: 'Are kids welcome?', a: '' }, { id: 3, q: 'Is there a gift registry?', a: '' }],
-      musicOn: true, song: '', musicSource: 'library', musicTrack: 'demo', musicTrackSrc: '/assets/musica/demo.mp3', musicFileName: '', musicFileSize: 0,
+      musicOn: true, musicSource: 'library', musicTrack: 'demo', musicTrackSrc: '/assets/musica/demo.mp3', musicFileName: '', musicFileSize: 0,
       palCustom: '#8A4F5C',
       // Todos los diseños reciben y muestran estos mismos campos (ver demo/shared/content.js).
       countdownId: 1, countdownNote: '', quote: '', quoteAuthor: '', dressCode: '', dressNotes: '', dressColors: '',
@@ -343,7 +341,7 @@
     s.events.forEach(function (e) { if (e.address === undefined) { var m = /^(.*?)\s[·\-–—]\s(.*)$/.exec(e.place || ''); e.place = m ? m[1] : (e.place || ''); e.address = m ? m[2] : ''; } });
     s.events.forEach(function (e) { if (e.mapUrl === undefined) e.mapUrl = ''; });
     if (s.travelNotes && !s.hotelNotes) s.hotelNotes = s.travelNotes;
-    delete s.travelNotes; delete s.greeting;
+    delete s.travelNotes; delete s.greeting; delete s.song;
     return s;
   }
   function loadCart() {
@@ -438,6 +436,20 @@
   var mediaPut = function (k, blob) { return mediaDo('readwrite', function (st) { return st.put(blob, k); }); };
   var mediaGet = function (k) { return mediaDo('readonly', function (st) { return st.get(k); }); };
   var mediaDel = function (k) { return mediaDo('readwrite', function (st) { return st.delete(k); }); };
+  // Color del sello tal como sale en la plantilla, para mostrar los estilos de monograma en el formulario.
+  // Clásico: según la paleta (mismos cálculos que demo/shared/content.js); Moderno y Romántico: su sello fijo.
+  var TPL_DARK = { rosa: '#4A2F2E', azul: '#26304A', terracota: '#4A2B1F' };
+  function sealLook() {
+    if (state.design === 'moderno') return 'background:radial-gradient(circle at 35% 30%,#FFFFFF,#E9E4DA 70%);color:#141414;box-shadow:inset 0 0 0 1px #14141433';
+    if (state.design === 'rosa') return 'background:radial-gradient(circle at 35% 30%,#D8AE76,#A8743E 70%);color:#FFF4DF';
+    var hex = state.pal === 'custom' ? state.palCustom : TPL_DARK[state.pal], m = /^#?([0-9a-f]{6})$/i.exec(hex || '');
+    if (!m) return 'background:radial-gradient(circle at 30% 20%,#64745a,#2b4437);color:#f5f2ea';
+    var n = parseInt(m[1], 16), c = [n >> 16 & 255, n >> 8 & 255, n & 255];
+    var mixc = function (t, a) { return c.map(function (x, i) { return Math.round(x + (t[i] - x) * a); }); };
+    var hx = function (v) { return '#' + v.map(function (x) { return ('0' + x.toString(16)).slice(-2); }).join(''); };
+    for (var i = 0; i < 25 && isLight(hx(c)); i++) c = mixc([0, 0, 0], 0.15);
+    return 'background:radial-gradient(circle at 30% 20%,' + hx(mixc([255, 255, 255], 0.28)) + ',' + hx(mixc([0, 0, 0], 0.05)) + ');color:#f5f2ea';
+  }
   // Un color muy claro no deja leer el texto claro de la plantilla (ver customPalette en demo/shared/content.js).
   function isLight(hex) {
     var m = /^#?([0-9a-f]{6})$/i.exec(hex || ''); if (!m) return false; var n = parseInt(m[1], 16), c = [n >> 16 & 255, n >> 8 & 255, n & 255];
@@ -663,7 +675,7 @@
       var d = design(), mono = state.sealMode === 'mono';
       var opt = function (id, label) {
         var st = clone(state); st.sealMode = 'mono'; st.mono = id;
-        return '<button type="button" class="ed-mono" role="radio" aria-checked="' + (mono && state.mono === id) + '" data-act="mono" data-id="' + id + '" data-fk="mono-' + id + '"><span class="iv-seal">' + sealInner(st) + '</span>' + esc(label) + '</button>';
+        return '<button type="button" class="ed-mono" role="radio" aria-checked="' + (mono && state.mono === id) + '" data-act="mono" data-id="' + id + '" data-fk="mono-' + id + '"><span class="iv-seal" style="' + sealLook() + '">' + sealInner(st) + '</span>' + esc(label) + '</button>';
       };
       return head('apertura') +
         '<div class="ed-info">' + svg(DESIGNS[state.design].kind === 'doors' ? P.doors : P.mail, 22, 1.6) + '<div><b>' + esc(d[1]) + '</b><span>' + esc(S.effectNote(d[0])) + '</span></div></div>' +
@@ -673,7 +685,7 @@
         (mono
           ? '<div class="ed-stack" style="gap:18px"><div class="ed-stack"><span class="ed-label" id="lblMono">' + esc(S.withInitials) + '</span><div class="ed-monos" role="radiogroup" aria-labelledby="lblMono">' +
               opt('amp', S.amp) + opt('stack', S.stack) + opt('ring', S.ring) + '</div></div>' +
-              (state.monoImg ? '<div class="ed-mono-custom" style="' + (state.mono === 'custom' ? '' : 'border-width:1px;border-color:var(--line)') + '"><img src="' + esc(state.monoImg) + '" alt="' + esc(S.yourMono) + '" style="background:' + '#2B3A33' + '"><span>' + esc(S.yourMono) + '</span>' +
+              (state.monoImg ? '<div class="ed-mono-custom" style="' + (state.mono === 'custom' ? '' : 'border-width:1px;border-color:var(--line)') + '"><img src="' + esc(state.monoImg) + '" alt="' + esc(S.yourMono) + '" style="' + sealLook() + '"><span>' + esc(S.yourMono) + '</span>' +
                 (state.mono === 'custom' ? '<span class="ed-pill ed-pill-dark" style="flex:0 0 auto">' + esc(S.inUse) + '</span>' : '<button type="button" class="ed-btn ed-btn-sm" data-act="mono" data-id="custom" data-fk="mono-custom">' + esc(S.useIt) + '</button>') +
                 '<button type="button" class="ed-del" data-act="mono-del" aria-label="' + esc(S.delMono) + '">' + svg(P.trash, 18, 1.7) + '</button></div>' : '') +
               dropzone('mono', S.upMono, S.upMonoHint, false, '') + '</div>'
@@ -749,7 +761,6 @@
             : dropzone('music', S.musicUpload, S.musicHint)) +
             '<p class="ed-hint" style="margin:0">' + esc(S.musicLocal) + '</p>';
         }
-        h += field(S.song, 'song', { ph: S.songPh, hint: S.songHint });
       }
       return h + addonUpsell('playlist', { light: true, k: S.playlistK, t: esc(S.playlistT) });
     },
@@ -1020,7 +1031,6 @@
       mediaPut(KEY + ':music', mp3).then(function (ok) {
         if (!ok) { toast(S.mp3Fail); return; }
         state.musicFileName = mp3.name; state.musicFileSize = mp3.size; state.musicSource = 'upload';
-        if (!String(state.song || '').trim()) state.song = mp3.name.replace(/\.mp3$/i, '').replace(/[_-]+/g, ' ');
         changed(true);
       });
       return;
