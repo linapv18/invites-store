@@ -250,6 +250,56 @@
     }
   };
 
+  /* Galería: toda imagen dentro de [data-gallery] se abre en grande al tocarla.
+     Con data-gallery="mono" las fotos se ven en blanco y negro. */
+  function initGallery() {
+    var groups = document.querySelectorAll('[data-gallery]'); if (!groups.length) return;
+    var box = document.createElement('div');
+    box.className = 'lz-viewer'; box.hidden = true;
+    box.setAttribute('role', 'dialog'); box.setAttribute('aria-modal', 'true'); box.setAttribute('aria-label', 'Fotos');
+    box.innerHTML = '<button type="button" class="lz-v-scrim" tabindex="-1" aria-label="Cerrar"></button>' +
+      '<figure class="lz-v-frame"><img alt=""><figcaption class="lz-v-count" aria-live="polite"></figcaption></figure>' +
+      '<button type="button" class="lz-v-btn is-close" aria-label="Cerrar">×</button>' +
+      '<button type="button" class="lz-v-btn is-prev" aria-label="Foto anterior">‹</button>' +
+      '<button type="button" class="lz-v-btn is-next" aria-label="Foto siguiente">›</button>';
+    document.body.appendChild(box);
+    var img = box.querySelector('img'), count = box.querySelector('.lz-v-count'), list = [], idx = 0, last = null, touchX = null;
+    function show() {
+      var src = list[idx];
+      img.src = src.currentSrc || src.src; img.alt = src.alt || '';
+      count.textContent = (idx + 1) + ' / ' + list.length;
+      box.querySelector('.is-prev').hidden = box.querySelector('.is-next').hidden = list.length < 2;
+    }
+    function open(group, el) {
+      list = [].slice.call(group.querySelectorAll('img')); idx = Math.max(0, list.indexOf(el)); last = el;
+      box.classList.toggle('is-mono', group.dataset.gallery === 'mono');
+      show(); box.hidden = false; document.body.classList.add('viewer-open');
+      box.querySelector('.is-close').focus();
+    }
+    function close() { box.hidden = true; document.body.classList.remove('viewer-open'); if (last) last.focus({ preventScroll: true }); }
+    function step(d) { idx = (idx + d + list.length) % list.length; show(); }
+    groups.forEach(function (group) {
+      group.querySelectorAll('img').forEach(function (el, i, all) {
+        el.classList.add('lz-zoomable'); el.tabIndex = 0; el.setAttribute('role', 'button');
+        el.setAttribute('aria-label', 'Ver la foto ' + (i + 1) + ' de ' + all.length + ' en grande');
+        el.addEventListener('click', function (e) { e.preventDefault(); e.stopPropagation(); open(group, el); });
+        el.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(group, el); } });
+      });
+    });
+    box.querySelector('.lz-v-scrim').addEventListener('click', close);
+    box.querySelector('.is-close').addEventListener('click', close);
+    box.querySelector('.is-prev').addEventListener('click', function () { step(-1); });
+    box.querySelector('.is-next').addEventListener('click', function () { step(1); });
+    box.addEventListener('touchstart', function (e) { touchX = e.touches[0].clientX; }, { passive: true });
+    box.addEventListener('touchend', function (e) { if (touchX === null) return; var dx = e.changedTouches[0].clientX - touchX; touchX = null; if (Math.abs(dx) > 50 && list.length > 1) step(dx < 0 ? 1 : -1); });
+    document.addEventListener('keydown', function (e) {
+      if (box.hidden) return;
+      if (e.key === 'Escape') close(); else if (e.key === 'ArrowRight') step(1); else if (e.key === 'ArrowLeft') step(-1);
+      else if (e.key === 'Tab') { var f = [].slice.call(box.querySelectorAll('.lz-v-btn:not([hidden])')); var i = f.indexOf(document.activeElement); if (e.shiftKey && i <= 0) { e.preventDefault(); f[f.length - 1].focus(); } else if (!e.shiftKey && i === f.length - 1) { e.preventDefault(); f[0].focus(); } }
+    });
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initGallery); else initGallery();
+
   /* Música de fondo: solo suena en la invitación; el panel la pausa. Si no hay archivo, el botón no aparece. */
   var audio, btn, available = false;
   function sync() { btn.classList.toggle('is-playing', !audio.paused); btn.setAttribute('aria-pressed', String(!audio.paused)); btn.setAttribute('aria-label', audio.paused ? 'Reproducir música' : 'Pausar música'); }
