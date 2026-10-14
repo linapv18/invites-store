@@ -37,7 +37,6 @@ nav.open .nav-toggle .x{display:block}
   .nav-links > a:last-child{margin-top:14px;padding:16px 24px !important;text-align:center;border-top:0}
 }
 @media (max-width: 720px){
-  .shot-phone{display:none}
   h1{font-size:52px !important}
   h2{font-size:38px !important}
   section,footer{padding-top:64px !important;padding-bottom:64px !important}
@@ -72,6 +71,27 @@ nav.open .nav-toggle .x{display:block}
   .ad-tabs::-webkit-scrollbar{display:none}
   .ad-tab{flex:none;scroll-snap-align:start}
 }
+.inc{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2fr);gap:32px 64px;align-items:start}
+.inc-list{margin:0;padding:0;list-style:none;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0 28px}
+.inc-list li{display:flex;gap:10px;padding:14px 0;border-top:1px solid #DED7C8}
+.inc-list svg{flex:none;margin-top:3px}
+.inc-list b{display:block;font-weight:500;font-size:15px;color:#22201C}
+.inc-list span{display:block;margin-top:2px;font-size:13px;line-height:1.45;color:#6B6660}
+.pnl-phones{display:flex;justify-content:center;align-items:flex-start;gap:16px}
+.pnl-phones div{width:31%;max-width:220px;padding:6px;background:#22201C;border-radius:30px;box-shadow:0 30px 50px -30px rgba(34,32,28,.6)}
+.pnl-phones div:nth-child(2){transform:translateY(-28px)}
+.pnl-phones img{display:block;width:100%;height:auto;aspect-ratio:350/754;object-fit:cover;border-radius:25px}
+@media (max-width: 900px){
+  .inc{grid-template-columns:1fr}
+  .inc-list{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width: 560px){
+  .inc-list span{display:none}
+  .pnl-phones{gap:8px}
+  .pnl-phones div{padding:4px;border-radius:20px}
+  .pnl-phones img{border-radius:16px}
+  .pnl-phones div:nth-child(2){transform:translateY(-16px)}
+}
 </style>
 </head>
 <body>
@@ -87,6 +107,7 @@ nav.open .nav-toggle .x{display:block}
 <div id="nav-links" class="nav-links" style="display: flex; flex-wrap: wrap; align-items: center; gap: 24px; font-size: 15px">
 <a href="#disenos" style="text-decoration: none; color: #22201C">Diseños</a>
 <a href="#editor" style="text-decoration: none; color: #22201C">El editor</a>
+<a href="#panel" style="text-decoration: none; color: #22201C">Panel</a>
 <a href="#complementos" style="text-decoration: none; color: #22201C">Complementos</a>
 <a href="#precios" style="text-decoration: none; color: #22201C">Precios</a>
 <a href="#faq" style="text-decoration: none; color: #22201C">Preguntas</a>
@@ -182,22 +203,10 @@ nav.open .nav-toggle .x{display:block}
 </div>
 </section>
 
-<section id="incluye" style="max-width: 1200px; margin: 0 auto; padding: 96px 24px; display: flex; flex-direction: column; gap: 48px">
-<div style="display: flex; flex-direction: column; gap: 12px; max-width: 680px">
-<p style="margin: 0; font-size: 13px; font-weight: 500; letter-spacing: 3px; text-transform: uppercase; color: #6B5444">Incluido en todos los diseños</p>
-<h2 style="margin: 0; font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: 56px; line-height: 1.02; color: #2B3A33">Todo lo que su boda necesita, en un solo enlace</h2>
-</div>
-<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr)); gap: 0 40px">
-<div style="display: flex; gap: 20px; border-top: 1px solid #CFC6B4; padding: 22px 0"><span style="font-family: 'Cormorant Garamond', serif; font-size: 26px; color: #6B5444; min-width: 32px">01</span><div style="display: flex; flex-direction: column; gap: 6px"><h3 style="margin: 0; font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 600">Efecto de apertura</h3><p style="margin: 0; font-size: 15px; line-height: 1.55; color: #4A4640">Sobre con carta, sobre lacrado o puertas.</p></div></div>
-<div style="display: flex; gap: 20px; border-top: 1px solid #CFC6B4; padding: 22px 0"><span style="font-family: 'Cormorant Garamond', serif; font-size: 26px; color: #6B5444; min-width: 32px">02</span><div style="display: flex; flex-direction: column; gap: 6px"><h3 style="margin: 0; font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 600">Enlace único por invitación</h3><p style="margin: 0; font-size: 15px; line-height: 1.55; color: #4A4640">Saluda a cada familia por su nombre y muestra sus cupos.</p></div></div>
-<div style="display: flex; gap: 20px; border-top: 1px solid #CFC6B4; padding: 22px 0"><span style="font-family: 'Cormorant Garamond', serif; font-size: 26px; color: #6B5444; min-width: 32px">03</span><div style="display: flex; flex-direction: column; gap: 6px"><h3 style="margin: 0; font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 600">Cuenta regresiva</h3><p style="margin: 0; font-size: 15px; line-height: 1.55; color: #4A4640">Días, horas, minutos y segundos hasta la boda.</p></div></div>
-<div style="display: flex; gap: 20px; border-top: 1px solid #CFC6B4; padding: 22px 0"><span style="font-family: 'Cormorant Garamond', serif; font-size: 26px; color: #6B5444; min-width: 32px">04</span><div style="display: flex; flex-direction: column; gap: 6px"><h3 style="margin: 0; font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 600">Historia</h3><p style="margin: 0; font-size: 15px; line-height: 1.55; color: #4A4640">Cómo se conocieron, con galería de fotos.</p></div></div>
-<div style="display: flex; gap: 20px; border-top: 1px solid #CFC6B4; padding: 22px 0"><span style="font-family: 'Cormorant Garamond', serif; font-size: 26px; color: #6B5444; min-width: 32px">05</span><div style="display: flex; flex-direction: column; gap: 6px"><h3 style="margin: 0; font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 600">Programa</h3><p style="margin: 0; font-size: 15px; line-height: 1.55; color: #4A4640">Ceremonia y recepción, dirección y mapa.</p></div></div>
-<div style="display: flex; gap: 20px; border-top: 1px solid #CFC6B4; padding: 22px 0"><span style="font-family: 'Cormorant Garamond', serif; font-size: 26px; color: #6B5444; min-width: 32px">06</span><div style="display: flex; flex-direction: column; gap: 6px"><h3 style="margin: 0; font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 600">Preguntas frecuentes</h3><p style="margin: 0; font-size: 15px; line-height: 1.55; color: #4A4640">Vestimenta, niños, regalos… agrupadas por tema.</p></div></div>
-<div style="display: flex; gap: 20px; border-top: 1px solid #CFC6B4; padding: 22px 0"><span style="font-family: 'Cormorant Garamond', serif; font-size: 26px; color: #6B5444; min-width: 32px">07</span><div style="display: flex; flex-direction: column; gap: 6px"><h3 style="margin: 0; font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 600">Música de fondo</h3><p style="margin: 0; font-size: 15px; line-height: 1.55; color: #4A4640">Su canción suena al abrir la invitación.</p></div></div>
-<div style="display: flex; gap: 20px; border-top: 1px solid #CFC6B4; padding: 22px 0"><span style="font-family: 'Cormorant Garamond', serif; font-size: 26px; color: #6B5444; min-width: 32px">08</span><div style="display: flex; flex-direction: column; gap: 6px"><h3 style="margin: 0; font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 600">Viaje y alojamiento</h3><p style="margin: 0; font-size: 15px; line-height: 1.55; color: #4A4640">Hoteles y turismo para quienes vienen de fuera.</p></div></div>
-<div style="display: flex; gap: 20px; border-top: 1px solid #CFC6B4; padding: 22px 0"><span style="font-family: 'Cormorant Garamond', serif; font-size: 26px; color: #6B5444; min-width: 32px">09</span><div style="display: flex; flex-direction: column; gap: 6px"><h3 style="margin: 0; font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 600">Confirmación de asistencia</h3><p style="margin: 0; font-size: 15px; line-height: 1.55; color: #4A4640">Sí o no por persona, con mensaje a los novios.</p></div></div>
-<div style="display: flex; gap: 20px; border-top: 1px solid #CFC6B4; padding: 22px 0"><span style="font-family: 'Cormorant Garamond', serif; font-size: 26px; color: #6B5444; min-width: 32px">10</span><div style="display: flex; flex-direction: column; gap: 6px"><h3 style="margin: 0; font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 600">Panel de organización</h3><p style="margin: 0; font-size: 15px; line-height: 1.55; color: #4A4640">Confirmados, lista de invitados y envíos.</p></div></div>
+<section id="incluye" style="max-width: 1200px; margin: 0 auto; padding: 80px 24px">
+<div class="inc">
+<div style="display: flex; flex-direction: column; gap: 12px"><p style="margin: 0; font-size: 13px; font-weight: 500; letter-spacing: 3px; text-transform: uppercase; color: #6B5444">Incluido en todos los diseños</p><h2 style="margin: 0; font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: 42px; line-height: 1.05; color: #2B3A33">Todo lo que su boda necesita, en un solo enlace</h2></div>
+<ul class="inc-list"><li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6B5444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><div><b>Efecto de apertura</b><span>Sobre con carta, sobre lacrado o puertas.</span></div></li><li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6B5444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><div><b>Enlace único por invitación</b><span>Saluda a cada familia por su nombre y muestra sus cupos.</span></div></li><li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6B5444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><div><b>Cuenta regresiva</b><span>Días, horas, minutos y segundos hasta la boda.</span></div></li><li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6B5444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><div><b>Historia</b><span>Cómo se conocieron, con galería de fotos.</span></div></li><li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6B5444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><div><b>Programa</b><span>Ceremonia y recepción, dirección y mapa.</span></div></li><li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6B5444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><div><b>Preguntas frecuentes</b><span>Vestimenta, niños, regalos… agrupadas por tema.</span></div></li><li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6B5444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><div><b>Música de fondo</b><span>Su canción suena al abrir la invitación.</span></div></li><li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6B5444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><div><b>Viaje y alojamiento</b><span>Hoteles y turismo para quienes vienen de fuera.</span></div></li><li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6B5444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><div><b>Confirmación de asistencia</b><span>Sí o no por persona, con mensaje a los novios.</span></div></li></ul>
 </div>
 </section>
 
@@ -215,11 +224,17 @@ nav.open .nav-toggle .x{display:block}
 <div aria-hidden="true" style="display: flex; gap: 7px; padding: 12px 14px"><i style="width: 10px; height: 10px; border-radius: 50%; background: #4A4640"></i><i style="width: 10px; height: 10px; border-radius: 50%; background: #4A4640"></i><i style="width: 10px; height: 10px; border-radius: 50%; background: #4A4640"></i></div>
 <img src="/assets/editor-es.jpg" alt="Editor de Lazo: formulario de la portada y vista previa de la invitación en un celular" loading="lazy" style="display: block; width: 100%; height: auto; aspect-ratio: 16 / 10">
 </div>
-<div class="shot-phone" style="position: absolute; left: -12px; bottom: -8px; width: 17%; max-width: 190px; padding: 6px; background: #3A3631; border-radius: 30px; box-shadow: 0 30px 60px -20px rgba(0,0,0,0.9)"><img src="/assets/panel-moderno.jpg" alt="Panel de los novios con las personas confirmadas" loading="lazy" style="display: block; width: 100%; height: auto; aspect-ratio: 350 / 754; object-fit: cover; border-radius: 25px"></div>
 </div>
 <ul style="margin: 0; padding: 0; list-style: none; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr)); gap: 24px 40px">
 <li style="border-top: 1px solid #3A3631; padding: 18px 0 0; display: flex; flex-direction: column; gap: 6px"><strong style="font-weight: 600; font-size: 17px">Vista previa en vivo</strong><span style="font-size: 15px; line-height: 1.55; color: #CFCABE">Cada cambio se ve en la invitación real, en celular o en computador.</span></li><li style="border-top: 1px solid #3A3631; padding: 18px 0 0; display: flex; flex-direction: column; gap: 6px"><strong style="font-weight: 600; font-size: 17px">Colores, fotos y su canción</strong><span style="font-size: 15px; line-height: 1.55; color: #CFCABE">Elijan la paleta, suban sus fotos y la música que quieran.</span></li><li style="border-top: 1px solid #3A3631; padding: 18px 0 0; display: flex; flex-direction: column; gap: 6px"><strong style="font-weight: 600; font-size: 17px">Invitados y confirmaciones</strong><span style="font-size: 15px; line-height: 1.55; color: #CFCABE">Suban la lista desde Excel y sigan quién confirma desde su panel.</span></li>
 </ul>
+</div>
+</section>
+
+<section id="panel" style="background: #EAE4D7; padding: 112px 24px 96px">
+<div style="max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; align-items: center; gap: 48px 64px">
+<div style="flex: 1 1 380px; min-width: 0; display: flex; flex-direction: column; gap: 18px"><p style="margin: 0; font-size: 13px; font-weight: 500; letter-spacing: 3px; text-transform: uppercase; color: #6B5444">Panel de organización</p><h2 style="margin: 0; font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: 52px; line-height: 1.02; color: #2B3A33">Sepan quién viene, al momento</h2><p style="margin: 0; font-size: 17px; line-height: 1.6; color: #4A4640">Cada respuesta llega sola a su panel: sin hojas de cálculo ni mensajes perdidos en WhatsApp.</p><ul style="margin: 8px 0 0; padding: 0; list-style: none; display: flex; flex-direction: column"><li style="border-top: 1px solid #CFC6B4; padding: 14px 0; display: flex; flex-direction: column; gap: 3px"><strong style="font-weight: 600; font-size: 16px; color: #22201C">Resumen</strong><span style="font-size: 14.5px; line-height: 1.5; color: #4A4640">Cuántos confirmaron, cuántos no y quién falta por responder.</span></li><li style="border-top: 1px solid #CFC6B4; padding: 14px 0; display: flex; flex-direction: column; gap: 3px"><strong style="font-weight: 600; font-size: 16px; color: #22201C">Invitados</strong><span style="font-size: 14.5px; line-height: 1.5; color: #4A4640">Busquen, filtren por estado y editen nombres y cupos.</span></li><li style="border-top: 1px solid #CFC6B4; padding: 14px 0; display: flex; flex-direction: column; gap: 3px"><strong style="font-weight: 600; font-size: 16px; color: #22201C">Envío</strong><span style="font-size: 14.5px; line-height: 1.5; color: #4A4640">Creen invitaciones y copien el mensaje con su enlace para WhatsApp.</span></li><li style="border-top: 1px solid #CFC6B4; padding: 14px 0; display: flex; flex-direction: column; gap: 3px"><strong style="font-weight: 600; font-size: 16px; color: #22201C">Excel</strong><span style="font-size: 14.5px; line-height: 1.5; color: #4A4640">Descarguen la lista con todas las respuestas (CSV).</span></li></ul></div>
+<div class="pnl-phones" style="flex: 1 1 480px; min-width: 0"><div><img src="/assets/panel-moderno.jpg" alt="Panel: resumen de personas confirmadas" loading="lazy"></div><div><img src="/assets/panel-invitados.jpg" alt="Panel: lista de invitados con su respuesta" loading="lazy"></div><div><img src="/assets/panel-envio.jpg" alt="Panel: crear una invitación para enviar" loading="lazy"></div></div>
 </div>
 </section>
 
