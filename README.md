@@ -16,3 +16,9 @@ python3 -m http.server 4173
 ```
 
 Pendiente: precios (`[Precio]`, `[$]`), enlaces de pago, "Ingresar" y WhatsApp.
+
+Compartido por las demos:
+
+- `demo/shared/panel.js` + `panel.css` — panel de los novios (vista previa), música de fondo y barra de demo
+- `assets/fotos/` — fotos de stock (Pexels) usadas en las demos
+- `assets/musica/demo.mp3` — música libre de derechos (Pixabay, paulyudin)

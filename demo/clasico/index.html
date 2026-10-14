@@ -34,6 +34,7 @@ a:hover{opacity:.75}
 .ph{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;background:radial-gradient(ellipse at 30% 20%,#dfe3d3,#c9cfbb 70%);color:#5b6b5a;text-align:center}
 .ph .mono{font:clamp(44px,6vw,80px)/1 Georgia,serif;letter-spacing:-.05em}
 .ph .mono em{color:#8a957e}
+.photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .ph .cap{font-size:9px;font-weight:500;letter-spacing:.24em;text-transform:uppercase}
 
 /* ---------- Sobre ---------- */
@@ -136,8 +137,25 @@ a:hover{opacity:.75}
 .field{display:block;font-size:14px;font-weight:500}
 .field select,.field textarea{display:block;margin-top:8px;width:100%;border:1px solid #293c3540;border-radius:12px;background:#ffffff80;padding:12px 16px;font:400 16px Montserrat,sans-serif;color:var(--dark)}
 .site-footer{padding:30px 7%;background:var(--dark);color:var(--light);display:flex;justify-content:space-between;gap:20px;align-items:center}
-.demo-bar{position:fixed;left:50%;bottom:16px;z-index:30;translate:-50% 0;display:flex;align-items:center;gap:14px;padding:8px 8px 8px 18px;border-radius:100px;background:#1f2a24;color:#f5f2ea;box-shadow:0 12px 30px -12px rgba(0,0,0,.45);font-size:13px;white-space:nowrap}
-.demo-bar a{color:#1f2a24;background:#f5f2ea;padding:10px 16px;border-radius:100px}
+:root{--p-bg:#f5f2ea;--p-surface:#fbf9f3;--p-ink:#293c35;--p-muted:#6b7566;--p-line:#293c3526;--p-accent:#293c35;--p-on-accent:#f5f2ea;--p-serif:Georgia,'Times New Roman',serif;--p-sans:Montserrat,Arial,sans-serif;--m-bg:#293c35;--m-fg:#f5f2ea;--m-border:#f5f2ea88}
+.story-thumbs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:0 0 30px;max-width:520px}
+.story-thumbs div{position:relative;aspect-ratio:3/4;border:6px solid #fff;box-shadow:0 10px 24px #293c3514;overflow:hidden}
+.story-thumbs div:nth-child(odd){rotate:-2deg}.story-thumbs div:nth-child(even){rotate:2deg}
+.faq-list summary small{display:block;margin-bottom:6px;font:500 9px Montserrat,sans-serif;letter-spacing:.22em;text-transform:uppercase;color:#79634b}
+.travel-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-top:1px solid #293c3520;margin-top:56px}
+.travel-grid>div{padding:40px 8% 40px 0}
+.travel-grid>div+div{border-left:1px solid #293c3520;padding-left:8%}
+.travel-grid h3{font:400 30px/1.15 Georgia,serif;letter-spacing:-.02em;margin:14px 0}
+.travel-grid p{font-size:13px;line-height:1.9;opacity:.85}
+.travel-grid ul{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:14px;font-size:13px;line-height:1.7}
+.travel-grid li b{display:block;font:400 19px Georgia,serif}
+.person{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;padding:16px 18px;border:1px solid #293c3526;border-radius:12px}
+.person>span{font:400 20px Georgia,serif}
+.person div{display:flex;gap:8px}
+.person button{height:40px;padding:0 16px;border:1px solid #293c3540;border-radius:100px;background:transparent;color:var(--dark);font:500 9px Montserrat,sans-serif;letter-spacing:.16em;text-transform:uppercase;cursor:pointer}
+.person button[aria-pressed="true"]{background:var(--dark);border-color:var(--dark);color:var(--light)}
+.mini-link{border:0;background:none;padding:6px 0;color:var(--dark);font:500 9px Montserrat,sans-serif;letter-spacing:.2em;text-transform:uppercase;text-decoration:underline;text-underline-offset:5px;cursor:pointer}
+@media(max-width:900px){.travel-grid{grid-template-columns:1fr}.travel-grid>div{padding:32px 0}.travel-grid>div+div{border-left:0;border-top:1px solid #293c3520;padding-left:0}}
 @media(max-width:900px){
   .nav-links,.nav-rsvp{display:none}
   .mobile-toggle{display:inline-flex}
@@ -161,10 +179,10 @@ a:hover{opacity:.75}
   .quick-card{padding:45px 7%}
   .quick-card+.quick-card{border-left:0;border-top:1px solid #293c3520}
   .site-footer{flex-direction:column;text-align:center;padding-bottom:90px}
-  .demo-bar .long{display:none}
 }
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{transition:none !important;animation:none !important}}
 </style>
+<link rel="stylesheet" href="/demo/shared/panel.css">
 </head>
 <body class="locked">
 
@@ -202,7 +220,7 @@ a:hover{opacity:.75}
   <header class="nav-shell">
     <a href="#top" class="display nav-brand" aria-label="Valentina y Martín, inicio">V<span>&amp;</span>M</a>
     <nav aria-label="Navegación principal" class="nav-links">
-      <a href="#historia">Nuestra historia</a><a href="#celebracion">Celebración</a><a href="#ubicacion">Ubicación</a><a href="#preguntas">Preguntas frecuentes</a>
+      <a href="#historia">Nuestra historia</a><a href="#celebracion">Celebración</a><a href="#ubicacion">Ubicación</a><a href="#viaje">Viaje y alojamiento</a><a href="#preguntas">Preguntas frecuentes</a>
     </nav>
     <a href="#confirmar" class="button nav-rsvp">Confirmar asistencia <svg class="arrow" aria-hidden="true"><use href="#arr"/></svg></a>
     <button type="button" class="mobile-toggle" id="menuOpen" aria-expanded="false" aria-controls="mobileMenu">Menú <span aria-hidden="true">☰</span></button>
@@ -213,6 +231,7 @@ a:hover{opacity:.75}
       <a class="display" href="#historia">Nuestra historia</a>
       <a class="display" href="#celebracion">Celebración</a>
       <a class="display" href="#ubicacion">Ubicación</a>
+      <a class="display" href="#viaje">Viaje y alojamiento</a>
       <a class="display" href="#preguntas">Preguntas frecuentes</a>
       <a class="text-link" style="align-self:flex-start" href="#confirmar">Confirmar asistencia <svg class="arrow" aria-hidden="true"><use href="#arr"/></svg></a>
     </nav>
@@ -226,18 +245,24 @@ a:hover{opacity:.75}
       <a href="#celebracion" class="text-link">Nuestro gran día <svg class="arrow" style="rotate:90deg" aria-hidden="true"><use href="#arr"/></svg></a>
     </div>
     <div class="hero-photo">
-      <div class="ph"><span class="mono">V <em>&amp;</em> M</span><span class="cap">Su foto aquí</span></div>
+      <img class="photo" src="/assets/fotos/torre.jpg" alt="Valentina y Martín tomados de la mano" style="object-position:center 70%">
       <div class="hero-caption"><span class="eyebrow">El comienzo de siempre</span><span class="display" style="font-size:36px">V &amp; M</span></div>
     </div>
   </section>
 
   <section class="section-shell story-intro" id="historia">
-    <div class="story-image"><div class="ph"><span class="cap">Su foto aquí</span></div></div>
+    <div class="story-image"><img class="photo" src="/assets/fotos/beso.jpg" alt="Un recuerdo de Valentina y Martín" loading="lazy" style="object-position:center 62%"></div>
     <div class="story-copy">
       <span class="eyebrow">Nuestra historia</span>
       <h2 class="section-title" style="margin-top:24px">Una historia que se escribe con el <em>tiempo.</em></h2>
       <p>Todo comienza con pequeños momentos que, sin darse cuenta, se vuelven importantes. Esta es una historia hecha de recuerdos, caminos compartidos y capítulos que siguen escribiéndose.</p>
-      <a href="#celebracion" class="text-link">Lee nuestra historia <svg class="arrow" aria-hidden="true"><use href="#arr"/></svg></a>
+      <div class="story-thumbs" aria-label="Galería de fotos">
+        <div><img class="photo" src="/assets/fotos/muro.jpg" alt="Foto 1 de la galería" loading="lazy" style="object-position:center 45%"></div>
+        <div><img class="photo" src="/assets/fotos/escalera.jpg" alt="Foto 2 de la galería" loading="lazy" style="object-position:center 65%"></div>
+        <div><img class="photo" src="/assets/fotos/paseo.jpg" alt="Foto 3 de la galería" loading="lazy" style="object-position:center 72%"></div>
+        <div><img class="photo" src="/assets/fotos/torre.jpg" alt="Foto 4 de la galería" loading="lazy" style="object-position:center 70%"></div>
+      </div>
+      <a href="#celebracion" class="text-link">Nuestro gran día <svg class="arrow" style="rotate:90deg" aria-hidden="true"><use href="#arr"/></svg></a>
     </div>
   </section>
 
@@ -261,13 +286,40 @@ a:hover{opacity:.75}
   </section>
 
   <section class="section-shell venue-grid" id="ubicacion">
-    <div class="venue-photo"><div class="ph"><span class="mono" style="font-size:44px">Ceremonia</span><span class="cap">Foto del lugar</span></div></div>
+    <div class="venue-photo"><img class="photo" src="/assets/fotos/paseo.jpg" alt="El lugar de la celebración" loading="lazy" style="object-position:center 55%"></div>
     <div>
       <p class="eyebrow" style="margin-bottom:24px">Nos encontramos aquí</p>
       <h2 class="section-title">Ubicación</h2>
       <div class="venue-card"><p class="eyebrow">Ceremonia</p><h3>Lugar de la ceremonia</h3><a href="#ubicacion">Dirección de la ceremonia <svg class="arrow" aria-hidden="true"><use href="#arr"/></svg></a></div>
       <div class="venue-card"><p class="eyebrow">Recepción</p><h3>Lugar de la recepción</h3><a href="#ubicacion">Dirección de la recepción <svg class="arrow" aria-hidden="true"><use href="#arr"/></svg></a></div>
-      <a href="#preguntas" class="button" style="margin-top:32px">Viaje y alojamiento <svg class="arrow" aria-hidden="true"><use href="#arr"/></svg></a>
+      <a href="#viaje" class="button" style="margin-top:32px">Viaje y alojamiento <svg class="arrow" aria-hidden="true"><use href="#arr"/></svg></a>
+    </div>
+  </section>
+
+  <section class="section-shell" id="viaje" style="border-top:1px solid #293c3520">
+    <p class="eyebrow" style="margin-bottom:24px">Si vienen de fuera</p>
+    <h2 class="section-title">Viaje y alojamiento</h2>
+    <div class="travel-grid">
+      <div>
+        <p class="eyebrow">Alojamiento</p>
+        <h3>Nombre del hotel</h3>
+        <p>Dirección del hotel. Tenemos tarifa especial con el código <strong>BODA-VM</strong>.</p>
+        <a href="#viaje" class="text-link" style="margin-top:22px">Reservar <svg class="arrow" aria-hidden="true"><use href="#arr"/></svg></a>
+      </div>
+      <div>
+        <p class="eyebrow">Cómo llegar</p>
+        <h3>Aeropuerto y transporte</h3>
+        <p>Agrega el aeropuerto más cercano, el tiempo de viaje y si habrá transporte para los invitados.</p>
+      </div>
+      <div>
+        <p class="eyebrow">Guía de la ciudad</p>
+        <h3>Turismo y actividades</h3>
+        <ul>
+          <li><b>Restaurantes</b>Agrega recomendaciones de la zona.</li>
+          <li><b>Museos y cultura</b>Lugares de interés para visitar.</li>
+          <li><b>Actividades</b>Planes para disfrutar esos días.</li>
+        </ul>
+      </div>
     </div>
   </section>
 
@@ -286,11 +338,11 @@ a:hover{opacity:.75}
     <p class="eyebrow">Todo lo que necesitas saber</p>
     <h2 class="section-title" style="margin-top:20px">Preguntas frecuentes</h2>
     <div class="faq-list">
-      <details><summary><span class="display">¿Hay código de vestimenta?</span><b aria-hidden="true">+</b></summary><p>Agrega las recomendaciones de vestimenta para los invitados.</p></details>
-      <details><summary><span class="display">¿Hay colores reservados?</span><b aria-hidden="true">+</b></summary><p>Indica los colores reservados y otras recomendaciones de vestimenta.</p></details>
-      <details><summary><span class="display">¿Pueden asistir niños?</span><b aria-hidden="true">+</b></summary><p>Indica si la celebración incluirá niños.</p></details>
-      <details><summary><span class="display">¿Dónde podemos hospedarnos?</span><b aria-hidden="true">+</b></summary><p>Agrega los hoteles recomendados, los códigos de reserva y cómo llegar desde el aeropuerto.</p></details>
-      <details><summary><span class="display">Restricciones alimentarias</span><b aria-hidden="true">+</b></summary><p>Agrega información sobre el menú y las opciones para necesidades alimentarias especiales.</p></details>
+      <details><summary><span><small>Vestimenta</small><span class="display">¿Hay código de vestimenta?</span></span><b aria-hidden="true">+</b></summary><p>Agrega las recomendaciones de vestimenta para los invitados.</p></details>
+      <details><summary><span><small>Vestimenta</small><span class="display">¿Hay colores reservados?</span></span><b aria-hidden="true">+</b></summary><p>Indica los colores reservados y otras recomendaciones de vestimenta.</p></details>
+      <details><summary><span><small>Niños</small><span class="display">¿Pueden asistir niños?</span></span><b aria-hidden="true">+</b></summary><p>Indica si la celebración incluirá niños.</p></details>
+      <details><summary><span><small>Alimentación</small><span class="display">Restricciones alimentarias</span></span><b aria-hidden="true">+</b></summary><p>Agrega información sobre el menú y las opciones para necesidades alimentarias especiales.</p></details>
+      <details><summary><span><small>Regalos</small><span class="display">¿Hay lista de regalos?</span></span><b aria-hidden="true">+</b></summary><p>Su compañía es nuestro mejor regalo. Si desean hacernos un detalle, encontrarán la información en la lluvia de sobres.</p></details>
     </div>
   </section>
 
@@ -318,20 +370,19 @@ a:hover{opacity:.75}
     <h2 class="section-title">Nos encantará<br><em>celebrar con ustedes.</em></h2>
     <div style="margin:32px 0;padding:24px 0;border-top:1px solid #293c3533;border-bottom:1px solid #293c3533"><p class="display" style="font-size:30px">Familia Rodríguez</p><p style="margin-top:12px;font-size:14px">4 cupos reservados</p></div>
     <form id="rsvpForm" novalidate style="display:flex;flex-direction:column;gap:28px">
-      <p style="font-size:14px;line-height:1.9">Nuestra celebración es exclusivamente para adultos. Confirma cuántas personas de esta invitación podrán acompañarnos.</p>
-      <fieldset style="border:0;padding:0;margin:0">
-        <legend style="font-size:14px;font-weight:500;margin-bottom:12px">¿Nos acompañarán? *</legend>
-        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(220px,100%),1fr));gap:12px">
-          <label class="choice"><input type="radio" name="att" value="yes"> Sí, ¡allí estaremos!</label>
-          <label class="choice"><input type="radio" name="att" value="no"> No podremos asistir</label>
+      <p style="font-size:14px;line-height:1.9">Nuestra celebración es exclusivamente para adultos. Confirma quiénes de esta invitación podrán acompañarnos; pueden cambiar su respuesta hasta el 12 de noviembre de 2026.</p>
+      <div>
+        <div style="display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:12px">
+          <span style="font-size:14px;font-weight:500">¿Nos acompañarán? *</span>
+          <span style="display:flex;gap:16px"><button type="button" class="mini-link" data-all="1">Todos</button><button type="button" class="mini-link" data-all="0">Ninguno</button></span>
         </div>
-      </fieldset>
-      <div id="yesFields" hidden style="display:flex;flex-direction:column;gap:24px">
-        <label class="field">¿Cuántas personas asistirán? *<select id="party"><option value="1">1 persona</option><option value="2">2 personas</option><option value="3">3 personas</option><option value="4" selected>4 personas</option></select></label>
+        <div id="people" style="display:flex;flex-direction:column;gap:10px"></div>
+      </div>
+      <div id="yesFields" hidden>
         <label class="field">Restricciones alimentarias (opcional)<textarea rows="3" placeholder="Indica a quién corresponde cada restricción."></textarea></label>
       </div>
-      <label class="field">Un mensaje para nosotros (opcional)<textarea rows="3"></textarea></label>
-      <p id="formErr" role="alert" hidden style="padding:16px;border:1px solid #e3b4b4;border-radius:12px;background:#fbefef;color:#7a1f1f;font-size:14px">Indica si podrán acompañarnos.</p>
+      <label class="field">Un mensaje para nosotros (opcional)<textarea rows="3" id="msg"></textarea></label>
+      <p id="formErr" role="alert" hidden style="padding:16px;border:1px solid #e3b4b4;border-radius:12px;background:#fbefef;color:#7a1f1f;font-size:14px">Indica si cada persona de la invitación podrá asistir.</p>
       <p style="font-size:12px;line-height:1.8;opacity:.75">Vista previa: esta respuesta no se guarda.</p>
       <button type="submit" class="button" style="align-self:flex-start">Guardar confirmación <svg class="arrow" aria-hidden="true"><use href="#arr"/></svg></button>
     </form>
@@ -346,13 +397,16 @@ a:hover{opacity:.75}
   <footer class="site-footer"><p class="display" style="font-size:30px">Valentina &amp; Martín</p><p class="eyebrow">12.12.2026 · Ciudad, país</p><a class="eyebrow" href="#top" style="display:inline-flex;align-items:center;gap:8px">Volver arriba <svg class="arrow" style="rotate:-45deg" aria-hidden="true"><use href="#arr"/></svg></a></footer>
 </div>
 
-<div class="demo-bar" id="demoBar" hidden><span>Demo <span class="long">· diseño clásico de Lazo</span></span><a href="/#disenos">Volver a la tienda</a></div>
+<div class="demo-bar" id="demoBar" hidden><span class="lbl">Demo</span><button type="button" data-open-panel>Panel de novios</button><a href="/#disenos">Tienda</a></div>
 
+<script src="/demo/shared/panel.js"></script>
 <script>
+LazoPanel.init({mono:'V&M',couple:'Valentina y Martín',link:'/demo/clasico/',guest:'Familia Rodríguez',seats:4});
+LazoMusic.init({src:'/assets/musica/demo.mp3'});
 (function(){
   var cover=document.getElementById('cover'),letter=document.getElementById('letter'),seal=document.getElementById('seal'),hint=document.getElementById('hint'),replay=document.getElementById('replay');
   function setOpen(o){cover.classList.toggle('is-open',o);letter.toggleAttribute('inert',!o);letter.setAttribute('aria-hidden',String(!o));seal.disabled=o;replay.hidden=!o;hint.textContent=o?'El comienzo de siempre.':'Toca el sello para abrir tu invitación';}
-  seal.addEventListener('click',function(){setOpen(true);});
+  seal.addEventListener('click',function(){setOpen(true);LazoMusic.play();});
   replay.addEventListener('click',function(){setOpen(false);seal.focus();});
   document.getElementById('enter').addEventListener('click',function(){cover.classList.add('gone');document.body.classList.remove('locked');document.getElementById('demoBar').hidden=false;window.scrollTo(0,0);});
 
@@ -370,13 +424,23 @@ a:hover{opacity:.75}
   function tick(){var s=Math.max(0,Math.floor((T-Date.now())/1000));cd.d.textContent=p(Math.floor(s/86400));cd.h.textContent=p(Math.floor(s/3600)%24);cd.m.textContent=p(Math.floor(s/60)%60);cd.s.textContent=p(s%60);}
   tick();setInterval(tick,1000);
 
-  // Confirmación (demo: no se envía)
-  var form=document.getElementById('rsvpForm'),yesF=document.getElementById('yesFields'),thanks=document.getElementById('thanks');
-  form.querySelectorAll('input[name=att]').forEach(function(r){r.addEventListener('change',function(){yesF.hidden=r.value!=='yes'||!r.checked;document.getElementById('formErr').hidden=true;});});
-  form.addEventListener('submit',function(e){e.preventDefault();var v=(form.querySelector('input[name=att]:checked')||{}).value;
-    if(!v){document.getElementById('formErr').hidden=false;return;}
-    var n=Number(document.getElementById('party').value);
-    document.getElementById('thanksText').textContent=v==='yes'?'Nos encantará celebrar con ustedes. Confirmamos '+n+' '+(n===1?'asistente':'asistentes')+'.':'Gracias por hacérnoslo saber. Les tendremos presentes en este día tan especial.';
+  // Confirmación por persona (demo: no se envía)
+  var PEOPLE=['Carlos Rodríguez','Lucía Pérez','Sofía Rodríguez','Mateo Rodríguez'],att=PEOPLE.map(function(){return null;});
+  var form=document.getElementById('rsvpForm'),yesF=document.getElementById('yesFields'),thanks=document.getElementById('thanks'),box=document.getElementById('people');
+  function renderPeople(){box.innerHTML='';PEOPLE.forEach(function(name,i){
+    var row=document.createElement('div');row.className='person';row.setAttribute('role','group');row.setAttribute('aria-label',name);
+    var n=document.createElement('span');n.textContent=name;var g=document.createElement('div');
+    [['Asistirá',true],['No asistirá',false]].forEach(function(o){var b=document.createElement('button');b.type='button';b.textContent=o[0];b.setAttribute('aria-pressed',String(att[i]===o[1]));
+      b.addEventListener('click',function(){att[i]=o[1];document.getElementById('formErr').hidden=true;renderPeople();});g.appendChild(b);});
+    row.appendChild(n);row.appendChild(g);box.appendChild(row);});
+    yesF.hidden=!att.some(function(x){return x===true;});}
+  renderPeople();
+  form.querySelectorAll('[data-all]').forEach(function(b){b.addEventListener('click',function(){var v=b.dataset.all==='1';att=PEOPLE.map(function(){return v;});document.getElementById('formErr').hidden=true;renderPeople();});});
+  form.addEventListener('submit',function(e){e.preventDefault();
+    if(att.some(function(x){return x===null;})){document.getElementById('formErr').hidden=false;return;}
+    var n=att.filter(Boolean).length;
+    document.getElementById('thanksText').textContent=n?'Nos encantará celebrar con ustedes. Confirmamos '+n+' '+(n===1?'asistente':'asistentes')+'.':'Gracias por hacérnoslo saber. Les tendremos presentes en este día tan especial.';
+    LazoPanel.setResponse(att,document.getElementById('msg').value.trim());
     form.hidden=true;thanks.hidden=false;});
   document.getElementById('editRsvp').addEventListener('click',function(){thanks.hidden=true;form.hidden=false;});
 })();
