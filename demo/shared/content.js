@@ -5,7 +5,7 @@
    Se carga ANTES de panel.js y de los scripts de cada plantilla, para que la galería, los acordeones
    y la cuenta regresiva ya encuentren el contenido de los novios.
    Marcas en el HTML de cada plantilla:
-     data-lz="n1|n2|i1|i2|city|msg|storyTitle|story|hotel|travelNotes|rsvpMsg|time0"   texto
+     data-lz="n1|n2|city|msg|storyTitle|story|hotel|rsvpMsg|time0|cdName|…"   texto (time0 y cdName: evento de la cuenta regresiva)
      data-lz-date="{W} · {d} de {M} · {Y}" [data-lz-from="rsvpDeadline"]               fecha con formato
      data-lz-src="photo:N"     foto N de [portada, ...galería] (se repite si hay menos)
      data-lz-href="hotelLink"  enlace
@@ -68,6 +68,10 @@
     var i = p.search(/\s[·\-–—]\s|,|\n/);
     return i < 0 ? [p.trim(), ''] : [p.slice(0, i).trim(), p.slice(i).replace(/^[\s·\-–—,]+/, '').trim()];
   }
+  // Solo enlaces de Google Maps (los que da el botón Compartir); cualquier otro se ignora.
+  function isMapsUrl(u) {
+    try { var x = new URL(u); return x.protocol === 'https:' && (/(^|\.)goo\.gl$/.test(x.hostname) || x.hostname === 'g.co' || (/(^|\.)google\.[a-z.]+$/.test(x.hostname) && (/^\/maps/.test(x.pathname) || /^maps\./.test(x.hostname)))); } catch (e) { return false; }
+  }
   function sealHTML(c) {
     var i1 = esc(init(c.n1)), i2 = esc(init(c.n2));
     if (c.sealMode === 'text') return has(c.sealText) ? '<span class="lz-seal" style="font-size:' + (c.sealText.length > 6 ? '.55em' : c.sealText.length > 4 ? '.7em' : '1em') + '">' + esc(c.sealText) + '</span>' : null;
@@ -90,7 +94,7 @@
     if (item.hasAttribute('data-lz-f')) els.unshift(item);
     els.forEach(function (el) {
       var f = el.getAttribute('data-lz-f'), v = data[f];
-      if (f === 'map') { if (has(data.mapQuery)) { el.href = 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(data.mapQuery); el.target = '_blank'; el.rel = 'noopener'; el.classList.remove('lz-off'); } else el.classList.add('lz-off'); return; }
+      if (f === 'map') { if (has(data.mapUrl) || has(data.mapQuery)) { el.href = data.mapUrl || 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(data.mapQuery); el.target = '_blank'; el.rel = 'noopener'; el.classList.remove('lz-off'); } else el.classList.add('lz-off'); return; }
       if (f === 'img') { if (has(v)) { el.src = v; el.removeAttribute('srcset'); } return; }
       if (f === 'hide') { el.classList.add('lz-off'); return; }
       if (el._lz === undefined) el._lz = el.innerHTML;
@@ -118,13 +122,15 @@
   function apply(c) {
     C = c || C || {};
     var c0 = C, ph = photos(c0), evs = c0.events || [];
+    // Evento elegido en el editor para la cuenta regresiva (si no hay, el primero).
+    var cdEv = evs.filter(function (e) { return e.id === c0.countdownId; })[0] || evs[0];
     var v = {
       n1: c0.n1, n2: c0.n2, i1: init(c0.n1), i2: init(c0.n2), city: c0.city, msg: c0.msg, countdownNote: c0.countdownNote,
       storyTitle: c0.storyTitle, story: c0.story, quote: c0.quote, quoteAuthor: c0.quoteAuthor,
       dressCode: c0.dressCode, dressNotes: c0.dressNotes, dressColors: c0.dressColors,
       travelIntro: c0.travelIntro, hotel: c0.hotel, hotelAddress: c0.hotelAddress, hotelCode: c0.hotelCode, hotelNotes: c0.hotelNotes || c0.travelNotes,
       airport: c0.airport, transport: c0.transport, guideFood: c0.guideFood, guideCulture: c0.guideCulture, guidePlans: c0.guidePlans,
-      rsvpMsg: c0.rsvpMsg, time0: evs[0] ? fmtTime(evs[0].time) : ''
+      rsvpMsg: c0.rsvpMsg, time0: cdEv ? fmtTime(cdEv.time) : '', cdName: cdEv ? cdEv.name : ''
     };
     var filled = function (keys) { return keys.split(/\s+/).some(function (k) { return has(k in v ? v[k] : c0[k]); }); };
     document.querySelectorAll('[data-lz-if]').forEach(function (el) { el.hidden = !filled(el.getAttribute('data-lz-if')); });
@@ -169,7 +175,7 @@
       else if (k === 'events') rows = evs.map(function (e) {
         // Lugar y dirección van en campos separados; las invitaciones antiguas los tenían juntos ("Lugar · dirección").
         var p = e.address === undefined ? splitPlace(e.place) : [e.place || '', e.address || ''];
-        return { name: e.name, time: fmtTime(e.time), place: p[0], address: p[1], mapQuery: p.filter(has).join(', '),
+        return { name: e.name, time: fmtTime(e.time), place: p[0], address: p[1], mapUrl: isMapsUrl(e.mapUrl) ? e.mapUrl : '', mapQuery: p.filter(has).length ? p.concat(c0.city || '').filter(has).join(', ') : '',
           mapText: p[1] || (has(p[0]) ? (LANG === 'en' ? 'Directions' : 'Cómo llegar') : '') };
       });
       else if (k === 'faqs') rows = (c0.faqs || []).map(function (f) { return { q: f.q, a: f.a }; });
@@ -184,7 +190,7 @@
     }
     // Cuenta regresiva: las plantillas leen window.LZ_T en cada segundo.
     var d = dateObj(c0.date);
-    if (d) { var m = /^(\d{1,2}):(\d{2})$/.exec(evs[0] && evs[0].time || ''); if (m) d.setHours(+m[1], +m[2]); window.LZ_T = d.getTime(); }
+    if (d) { var m = /^(\d{1,2}):(\d{2})$/.exec(cdEv && cdEv.time || ''); if (m) d.setHours(+m[1], +m[2]); window.LZ_T = d.getTime(); }
     if (window.LazoMusic && c0.musicOn === false) { window.LazoMusic.play = function () {}; var mb = document.querySelector('.lz-music'); if (mb) mb.classList.add('lz-off'); }
   }
 

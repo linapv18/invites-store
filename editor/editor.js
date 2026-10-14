@@ -61,6 +61,11 @@
       photoN: function (i) { return 'Foto ' + i; }, movePrev: 'Mover antes', moveNext: 'Mover después', delPhoto: 'Quitar foto', galFull: 'Llegaste a 12 fotos.',
       galK: 'Complemento · Galería compartida', galT: '¿Y las fotos que tomen tus invitados?', galS: 'Que las suban a este mismo álbum, sin grupos de WhatsApp. [$]',
       event: 'Evento', eventPh: 'Nombre del evento', time: 'Hora', place: 'Lugar', placePh: 'Nombre del lugar', address: 'Dirección', addressPh: 'Calle, número y ciudad',
+      cdUse: 'Cuenta regresiva hasta este evento', cdHint: 'Marca el evento que usa la cuenta regresiva: cuenta hasta la fecha de la boda a la hora de ese evento.',
+      mapUrl: 'Enlace de Google Maps (opcional)', mapUrlPh: 'https://maps.app.goo.gl/…', mapsHint: 'Para cada lugar puedes pegar su enlace de Google Maps (en Google Maps: Compartir → Copiar enlace). Si no lo pones, el botón "Cómo llegar" busca el lugar, la dirección y la ciudad.',
+      mapUrlBad: 'Ese enlace no es de Google Maps: se usará la búsqueda por lugar y dirección.', showMap: 'Ver en el mapa', hideMap: 'Ocultar mapa', searchMaps: 'Buscar en Google Maps', mapOf: function (n) { return 'Mapa: ' + n; },
+      needPlace: 'Escribe primero el lugar o la dirección.',
+      cityHint: 'También se usa para encontrar los lugares del itinerario en Google Maps.',
       countdownNote: 'Frase de la cuenta regresiva', countdownNotePh: 'Cada vez falta menos para celebrar juntos.',
       quote: 'Una frase o cita (opcional)', quotePh: 'Una frase que los represente', quoteAuthor: 'Autor de la frase', quoteAuthorPh: 'Quién la dijo',
       dressK: 'Código de vestimenta', dressCode: 'Estilo', dressCodePh: 'Formal, cóctel, playa…', dressNotes: 'Recomendaciones', dressNotesPh: 'Lo que conviene saber para vestirse', dressColors: 'Colores reservados', dressColorsPh: 'p. ej. blanco y marfil',
@@ -166,6 +171,11 @@
       photoN: function (i) { return 'Photo ' + i; }, movePrev: 'Move earlier', moveNext: 'Move later', delPhoto: 'Remove photo', galFull: 'You reached 12 photos.',
       galK: 'Add-on · Shared gallery', galT: 'What about the photos your guests take?', galS: 'Let them upload to this same album, no group chats. [$]',
       event: 'Event', eventPh: 'Event name', time: 'Time', place: 'Venue', placePh: 'Venue name', address: 'Address', addressPh: 'Street, number and city',
+      cdUse: 'Countdown to this event', cdHint: 'Check the event the countdown uses: it counts down to the wedding date at that event’s time.',
+      mapUrl: 'Google Maps link (optional)', mapUrlPh: 'https://maps.app.goo.gl/…', mapsHint: 'For each venue you can paste its Google Maps link (in Google Maps: Share → Copy link). If you leave it empty, the "Directions" button searches the venue, address and city.',
+      mapUrlBad: 'That isn’t a Google Maps link: the venue and address search will be used.', showMap: 'Show on map', hideMap: 'Hide map', searchMaps: 'Search Google Maps', mapOf: function (n) { return 'Map: ' + n; },
+      needPlace: 'Type the venue or address first.',
+      cityHint: 'Also used to find the schedule venues on Google Maps.',
       countdownNote: 'Countdown line', countdownNotePh: 'The countdown to celebrating together is on.',
       quote: 'A quote (optional)', quotePh: 'A line that represents you', quoteAuthor: 'Quote author', quoteAuthorPh: 'Who said it',
       dressK: 'Dress code', dressCode: 'Style', dressCodePh: 'Formal, cocktail, beach…', dressNotes: 'Recommendations', dressNotesPh: 'What guests should know about what to wear', dressColors: 'Reserved colors', dressColorsPh: 'e.g. white and ivory',
@@ -295,14 +305,14 @@
       storyTitle: es ? 'Cómo empezó todo' : 'How it all began', story: '',
       gallery: ['/assets/fotos/beso.jpg', '/assets/fotos/escalera.jpg', '/assets/fotos/muro.jpg'],
       events: es
-        ? [{ id: 1, name: 'Ceremonia civil', time: '13:00', place: '', address: '' }, { id: 2, name: 'Comida familiar', time: '14:30', place: '', address: '' }, { id: 3, name: 'Fiesta', time: '20:00', place: '', address: '' }]
-        : [{ id: 1, name: 'Civil ceremony', time: '13:00', place: '', address: '' }, { id: 2, name: 'Family lunch', time: '14:30', place: '', address: '' }, { id: 3, name: 'Party', time: '20:00', place: '', address: '' }],
+        ? [{ id: 1, name: 'Ceremonia civil', time: '13:00', place: '', address: '', mapUrl: '' }, { id: 2, name: 'Comida familiar', time: '14:30', place: '', address: '' }, { id: 3, name: 'Fiesta', time: '20:00', place: '', address: '' }]
+        : [{ id: 1, name: 'Civil ceremony', time: '13:00', place: '', address: '', mapUrl: '' }, { id: 2, name: 'Family lunch', time: '14:30', place: '', address: '' }, { id: 3, name: 'Party', time: '20:00', place: '', address: '' }],
       faqs: es
         ? [{ id: 1, q: '¿Cuál es el código de vestimenta?', a: 'Formal. Evita el blanco, por favor.' }, { id: 2, q: '¿Pueden ir niños?', a: '' }, { id: 3, q: '¿Hay mesa de regalos?', a: '' }]
         : [{ id: 1, q: 'What is the dress code?', a: 'Formal. Please avoid white.' }, { id: 2, q: 'Are kids welcome?', a: '' }, { id: 3, q: 'Is there a gift registry?', a: '' }],
       musicOn: true, song: '',
       // Todos los diseños reciben y muestran estos mismos campos (ver demo/shared/content.js).
-      countdownNote: '', quote: '', quoteAuthor: '', dressCode: '', dressNotes: '', dressColors: '',
+      countdownId: 1, countdownNote: '', quote: '', quoteAuthor: '', dressCode: '', dressNotes: '', dressColors: '',
       viajeOn: true, travelIntro: '', hotel: '', hotelAddress: '', hotelCode: '', hotelLink: '', hotelNotes: '',
       airport: '', transport: '', guideFood: '', guideCulture: '', guidePlans: '',
       rsvpDeadline: '', rsvpMsg: '', rsvpDiet: true, rsvpNote: true,
@@ -318,6 +328,7 @@
     if (!DESIGNS[s.design]) s.design = 'clasico';
     // Invitaciones guardadas antes de separar lugar/dirección y de las notas del hotel.
     s.events.forEach(function (e) { if (e.address === undefined) { var m = /^(.*?)\s[·\-–—]\s(.*)$/.exec(e.place || ''); e.place = m ? m[1] : (e.place || ''); e.address = m ? m[2] : ''; } });
+    s.events.forEach(function (e) { if (e.mapUrl === undefined) e.mapUrl = ''; });
     if (s.travelNotes && !s.hotelNotes) s.hotelNotes = s.travelNotes;
     delete s.travelNotes; delete s.greeting;
     return s;
@@ -455,7 +466,7 @@
      ========================================================= */
   var state = loadState(), cart = loadCart();
   state.design = DESIGN;
-  var ui = { drawer: false, nav: false, mode: 'edit', device: 'm', dragIdx: null, saving: 'saved', audio: null };
+  var ui = { maps: {}, drawer: false, nav: false, mode: 'edit', device: 'm', dragIdx: null, saving: 'saved', audio: null };
   (function initialRoute() {
     var h = decodeURIComponent(location.hash.slice(1));
     if (SECS.indexOf(h) > -1 || ADDON_IDS.indexOf(h) > -1) state.sec = h;
@@ -463,6 +474,7 @@
     if (SECS.indexOf(state.sec) < 0 && ADDON_IDS.indexOf(state.sec) < 0) state.sec = 'portada';
   })();
   var design = function () { return DESIGNS[state.design][LANG]; };
+  var cdEvent = function () { return state.events.filter(function (e) { return e.id === state.countdownId; })[0] || state.events[0] || null; };
   var secName = function (id) { return S.sec[id] ? S.sec[id][0] : addonName(id); };
   var isMobile = function () { return window.matchMedia('(max-width: 960px)').matches; };
 
@@ -604,7 +616,7 @@
   var SECTION_HTML = {
     portada: function () {
       return head('portada') +
-        '<div class="ed-grid2">' + field(S.n1, 'n1') + field(S.n2, 'n2') + field(S.date, 'date', { type: 'date' }) + field(S.city, 'city', { ph: S.cityPh }) + '</div>' +
+        '<div class="ed-grid2">' + field(S.n1, 'n1') + field(S.n2, 'n2') + field(S.date, 'date', { type: 'date' }) + field(S.city, 'city', { ph: S.cityPh, hint: S.cityHint }) + '</div>' +
         '<div class="ed-stack"><span class="ed-label">' + esc(S.cover) + '</span><div class="ed-photo">' +
           (state.cover ? '<div class="ed-photo-img"><img src="' + esc(state.cover) + '" alt="' + esc(S.coverAlt) + '"></div>' : '<div class="ed-photo-img ph"></div>') +
           dropzone('cover', S.drop, S.dropHint) + '</div></div>' +
@@ -651,13 +663,20 @@
     },
     itinerario: function () {
       var ev = state.events;
-      return head('itinerario') +
+      return head('itinerario') + (ev.length ? '<p class="ed-hint" style="margin:0">' + esc(S.cdHint) + ' ' + esc(S.mapsHint) + '</p>' : '') +
         (ev.length ? '<ol class="ed-ol">' + ev.map(function (e, i) {
           return '<li class="ed-card"><div class="ed-move">' +
             '<button type="button" data-act="ev-move" data-i="' + i + '" data-d="-1" data-fk="evu-' + e.id + '" aria-label="' + esc(S.moveUp) + '"' + (i === 0 ? ' disabled' : '') + '>' + svg(P.up, 14, 2) + '</button>' +
             '<span aria-hidden="true">' + pad(i + 1) + '</span>' +
             '<button type="button" data-act="ev-move" data-i="' + i + '" data-d="1" data-fk="evd-' + e.id + '" aria-label="' + esc(S.moveDown) + '"' + (i === ev.length - 1 ? ' disabled' : '') + '>' + svg(P.down, 14, 2) + '</button></div>' +
-            '<div class="ed-ev-grid">' + listField('events', i, 'name', S.event, { cls: 'wide', ph: S.eventPh }) + listField('events', i, 'time', S.time, { type: 'time' }) + listField('events', i, 'place', S.place, { cls: 'full', ph: S.placePh }) + listField('events', i, 'address', S.address, { cls: 'full', ph: S.addressPh }) + '</div>' +
+            '<div class="ed-ev-body"><div class="ed-ev-grid">' + listField('events', i, 'name', S.event, { cls: 'wide', ph: S.eventPh }) + listField('events', i, 'time', S.time, { type: 'time' }) + listField('events', i, 'place', S.place, { cls: 'full', ph: S.placePh }) + listField('events', i, 'address', S.address, { cls: 'full', ph: S.addressPh }) +
+              listField('events', i, 'mapUrl', S.mapUrl, { cls: 'full', ph: S.mapUrlPh, type: 'url' }) + '</div>' +
+              '<small class="ed-hint ed-maphint" data-maphint="' + e.id + '"' + (e.mapUrl && !isMapsUrl(e.mapUrl) ? '' : ' hidden') + '>' + esc(S.mapUrlBad) + '</small>' +
+              '<div class="ed-ev-tools"><label class="ed-check"><input type="radio" name="cdEvent" value="' + e.id + '"' + (cdEvent() === e ? ' checked' : '') + '><span>' + esc(S.cdUse) + '</span></label>' +
+                ('<button type="button" class="ed-link" data-act="ev-map" data-id="' + e.id + '" data-fk="evmap-' + e.id + '" aria-expanded="' + !!ui.maps[e.id] + '">' + esc(ui.maps[e.id] ? S.hideMap : S.showMap) + '</button>' +
+                '<a class="ed-link" data-mapsearch href="' + esc(mapsSearch(mapQuery(e) || S.place)) + '" target="_blank" rel="noopener">' + esc(S.searchMaps) + ' ↗</a>') + '</div>' +
+              (ui.maps[e.id] && mapQuery(e) ? '<iframe class="ed-map" title="' + esc(S.mapOf(e.place || e.name)) + '" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="' + esc(mapsEmbed(mapQuery(e))) + '"></iframe>' : '') +
+            '</div>' +
             delBtn('ev-del', i, S.delEvent + ' ' + (i + 1), 'evx-' + e.id) + '</li>';
         }).join('') + '</ol>' : '<p class="ed-empty">' + esc(S.noEvents) + '</p>') +
         '<div class="ed-stack"><span class="ed-label">' + esc(S.addEvent) + '</span><div class="ed-presets">' + PRESETS.map(function (p, i) {
@@ -711,6 +730,13 @@
     }
     return '<svg class="ed-qr" viewBox="0 0 ' + n + ' ' + n + '" role="img" aria-label="QR"><path d="' + cells + '" fill="#2B3A33"/></svg>';
   }
+  /* ---------- Google Maps (sin clave de API): enlace pegado o búsqueda por lugar, dirección y ciudad ---------- */
+  function isMapsUrl(u) {
+    try { var x = new URL(u); return x.protocol === 'https:' && (/(^|\.)goo\.gl$/.test(x.hostname) || x.hostname === 'g.co' || (/(^|\.)google\.[a-z.]+$/.test(x.hostname) && (/^\/maps/.test(x.pathname) || /^maps\./.test(x.hostname)))); } catch (e) { return false; }
+  }
+  var mapQuery = function (e) { return [e.place, e.address, state.city].map(function (x) { return String(x || '').trim(); }).filter(Boolean).join(', '); };
+  var mapsSearch = function (q) { return 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(q); };
+  var mapsEmbed = function (q) { return 'https://maps.google.com/maps?q=' + encodeURIComponent(q) + '&z=15&output=embed'; };
   var val = function (v, ph) { return v && String(v).trim() ? esc(v) : '<span class="iv-empty">[' + esc(ph) + ']</span>'; };
   // Respuestas de una encuesta: las que escribieron (separadas por comas) o, si no hay, los dos novios.
   function pollOpts(p) {
@@ -958,11 +984,21 @@
     if (t.hasAttribute('data-k') && /^(INPUT|TEXTAREA)$/.test(t.tagName)) { state[t.getAttribute('data-k')] = t.value; changed(false); }
     else if (t.hasAttribute('data-list')) { var it = state[t.getAttribute('data-list')][+t.getAttribute('data-i')]; if (it) { it[t.getAttribute('data-f')] = t.value; changed(false); } }
     else return;
+    if (t.getAttribute('data-f') === 'mapUrl') { var mh = $('[data-maphint="' + state.events[+t.getAttribute('data-i')].id + '"]'); if (mh) mh.hidden = !t.value.trim() || isMapsUrl(t.value.trim()); }
     var demo = $('#edDemo'); if (demo) demo.innerHTML = addonDemo(state.sec);
   });
   root.addEventListener('change', function (e) {
     var t = e.target;
     if (t.type === 'file' && t.hasAttribute('data-file')) { handleFiles(t.getAttribute('data-file'), t.files); t.value = ''; }
+    else if (t.name === 'cdEvent') { state.countdownId = +t.value; changed(false); }
+    else if (t.getAttribute('data-list') === 'events' && /^(place|address)$/.test(t.getAttribute('data-f'))) {
+      // Al salir del campo: el mapa y la búsqueda de ese evento apuntan a la nueva dirección.
+      var ev = state.events[+t.getAttribute('data-i')], body = t.closest('.ed-ev-body'), q = ev && mapQuery(ev);
+      if (!body || !q) return;
+      var fr = body.querySelector('.ed-map'), a = body.querySelector('[data-mapsearch]');
+      if (fr) fr.src = mapsEmbed(q);
+      if (a) a.href = mapsSearch(q);
+    }
   });
   root.addEventListener('dragover', function (e) {
     var z = e.target.closest && e.target.closest('[data-drop],.ed-thumb');
@@ -1036,7 +1072,7 @@
       case 'ev-del': state.events.splice(i, 1); changed(true); focusAfterDelete('[data-list="events"][data-f="name"]', i, '[data-fk="evadd-0"]'); break;
       case 'ev-add':
         var name = PRESETS[i], last = i === PRESETS.length - 1;
-        state.events.push({ id: ++state.uid, name: last ? '' : name, time: '', place: '', address: '' }); changed(true);
+        state.events.push({ id: ++state.uid, name: last ? '' : name, time: '', place: '', address: '', mapUrl: '' }); changed(true);
         var inputs = $$('[data-list="events"][data-f="' + (last ? 'name' : 'time') + '"]'); if (inputs.length) inputs[inputs.length - 1].focus();
         break;
       case 'faq-add':
@@ -1044,6 +1080,10 @@
         state.faqs.push({ id: ++state.uid, q: '', a: '' }); changed(true);
         var qs = $$('[data-list="faqs"][data-f="q"]'); if (qs.length) qs[qs.length - 1].focus();
         break;
+      case 'ev-map':
+        var mev = state.events.filter(function (x) { return String(x.id) === id; })[0];
+        if (mev && !mapQuery(mev)) { toast(S.needPlace); break; }
+        ui.maps[id] = !ui.maps[id]; keepFocus(renderMain); break;
       case 'poll-add':
         if (state.polls.length >= 6) return;
         var idea = i >= 0 ? pollIdeasLeft()[i] : '';
