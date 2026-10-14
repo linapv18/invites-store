@@ -780,13 +780,31 @@
     if (scroll) post({ lz: 'goto', sec: pvTarget() });
   }
   function queuePreview() { if (pvQueued) return; pvQueued = true; requestAnimationFrame(function () { pvQueued = false; renderPreview(false); }); }
-  // En "Escritorio" la plantilla se dibuja a 1280 px y se reduce para que quepa en la columna.
+  // La plantilla siempre se dibuja a un tamaño fijo y se reduce para caber, así no se deforma:
+  // "Móvil" como un iPhone 16 Pro Max (440 × 956) y "Escritorio" a 1280 px de ancho.
+  var PHONE_W = 440, PHONE_H = 956;
   function layoutFrame() {
     var ph = $('#edPhone');
-    if (ui.device !== 'd' || isMobile()) { frame.style.cssText = ''; ph.style.height = ''; return; }
-    var w = ph.clientWidth - 16, k = w / 1280;
-    ph.style.height = Math.round(w * 0.68 + 16) + 'px';
-    frame.style.cssText = 'width:1280px;height:' + Math.round(w * 0.68 / k) + 'px;transform:scale(' + k + ')';
+    if (ui.device === 'd' && !isMobile()) {
+      ph.style.cssText = '';
+      var w = ph.clientWidth - 16, k = w / 1280;
+      ph.style.height = Math.round(w * 0.68 + 16) + 'px';
+      frame.style.cssText = 'width:1280px;height:' + Math.round(w * 0.68 / k) + 'px;transform:scale(' + k + ')';
+      return;
+    }
+    var pad = 10, maxW, maxH;
+    if (isMobile()) {
+      var st = $('.ed-pv-sticky'), cap = $('.ed-pv-cap');
+      if (!st.clientHeight) return; // la pestaña "Vista previa" está oculta
+      maxW = Math.min(st.clientWidth, 380);
+      maxH = st.clientHeight - (cap ? cap.offsetHeight + 16 : 0);
+    } else {
+      maxW = 300;
+      maxH = Math.max(420, window.innerHeight - 200);
+    }
+    var iw = Math.min(maxW - 2 * pad, (maxH - 2 * pad) * PHONE_W / PHONE_H), k = iw / PHONE_W;
+    ph.style.cssText = 'flex:none;width:' + Math.round(iw + 2 * pad) + 'px;height:' + Math.round(PHONE_H * k + 2 * pad) + 'px;min-height:0;max-height:none';
+    frame.style.cssText = 'position:absolute;top:' + pad + 'px;left:' + pad + 'px;width:' + PHONE_W + 'px;height:' + PHONE_H + 'px;transform:scale(' + k + ');transform-origin:0 0;border-radius:' + Math.round(31 / k) + 'px';
   }
 
   /* ---------- Panel de complementos ---------- */
