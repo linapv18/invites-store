@@ -80,7 +80,11 @@ img{max-width:100%}
 .ed-head h1{margin:0;font-family:'Cormorant Garamond',serif;font-weight:500;font-size:44px;line-height:1.05}
 .ed-head p{margin:0;color:var(--mute);line-height:1.5}
 .ed-grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
-.ed-field{display:flex;flex-direction:column;gap:6px;font-size:13px;font-weight:500}
+.ed-field{display:flex;flex-direction:column;gap:6px;font-size:13px;font-weight:500;min-width:0}
+/* iOS da a fecha/hora un ancho propio que ignora width:100% y se sale de la columna. */
+.ed-field input[type=date],.ed-field input[type=time]{-webkit-appearance:none;appearance:none;display:block;max-width:100%}
+.ed-field input::-webkit-date-and-time-value{text-align:left;margin:0;min-height:1.2em}
+.ed-field input::-webkit-calendar-picker-indicator{margin-left:auto}
 .ed-field input,.ed-field textarea,.ed-field select{min-height:46px;min-width:0;width:100%;padding:0 14px;border-radius:10px;border:1px solid var(--line-2);background:var(--paper);font-size:16px}
 .ed-field textarea{padding:12px 14px;line-height:1.5;resize:vertical}
 .ed-field input::placeholder,.ed-field textarea::placeholder{color:#8C8F86}
