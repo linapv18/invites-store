@@ -241,7 +241,7 @@ details.faq[open] .plus{rotate:45deg}
       <p class="rv d2" style="margin:0;font-size:11px;font-weight:400;letter-spacing:.34em;text-transform:uppercase;color:#6E5F64">An invitation for</p>
       <p class="rv d3" style="margin:14px 0 0;font:italic 400 clamp(42px,5vw,64px)/1 'Instrument Serif',serif;color:#3E3236">The Rodríguez Family</p>
       <p class="rv d4" style="margin:clamp(28px,4vh,44px) 0 0;font:400 clamp(54px,8vw,96px)/1 'Instrument Serif',serif;letter-spacing:-.02em;color:#3E3236"><span data-lz="n1">Melissa</span> <em style="color:#B48650">&amp;</em> <span data-lz="n2">Andrés</span></p>
-      <p class="rv d4" style="margin:18px 0 0;font-size:11px;font-weight:400;letter-spacing:.32em;text-transform:uppercase;color:#6E5F64" data-lz-date="{W} · {Mc} {d} · {Y}">Saturday · June 12 · 2027</p>
+      <p class="rv d4" style="margin:18px 0 0;font-size:11px;font-weight:400;letter-spacing:.32em;text-transform:uppercase;color:#6E5F64"><span data-lz-date="{W} · {Mc} {d} · {Y}">Saturday · June 12 · 2027</span><span data-lz-if="city" hidden> · <span data-lz="city"></span></span></p>
       <div class="rv d5" style="margin-top:clamp(32px,5vh,52px);display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:8px 20px">
         <button type="button" id="enter" class="pill" style="height:56px;padding:0 44px;border:0;background:#3E3236;color:#F7EEF0;font-size:12px;cursor:pointer">View invitation</button>
         <button type="button" id="replay" style="height:56px;padding:0 20px;border:0;background:none;cursor:pointer;font-size:12px;font-weight:400;letter-spacing:.22em;text-transform:uppercase;color:#5E5257">See the envelope again</button>
@@ -280,7 +280,7 @@ details.faq[open] .plus{rotate:45deg}
         <p style="margin:0;font:400 16px/1.6 'Instrument Serif',serif;letter-spacing:.22em;text-transform:uppercase;color:#7D6A70">Celebrate<br>our big day with us</p>
         <h1 style="margin:28px 0 0;font:400 clamp(64px,8vw,120px)/.9 'Instrument Serif',serif;letter-spacing:-.02em;color:#3E3236"><span data-lz="n1">Melissa</span><br><em style="font-size:.6em;color:#B48650">&amp;</em><br><span data-lz="n2">Andrés</span></h1>
         <svg width="300" height="40" viewBox="-150 -20 300 40" style="display:block;max-width:100%;margin:28px auto 0" aria-hidden="true"><use href="#orn"/></svg>
-        <p style="margin:18px 0 0;font-size:11px;font-weight:400;letter-spacing:.32em;text-transform:uppercase;color:#6E5F64" data-lz-date="{W} · {Mc} {d} · {Y}">Saturday · June 12 · 2027</p>
+        <p style="margin:18px 0 0;font-size:11px;font-weight:400;letter-spacing:.32em;text-transform:uppercase;color:#6E5F64"><span data-lz-date="{W} · {Mc} {d} · {Y}">Saturday · June 12 · 2027</span><span data-lz-if="city" hidden> · <span data-lz="city"></span></span></p>
         <a href="#confirmar" class="pill" style="height:54px;margin-top:36px;padding:0 40px;background:#3E3236;color:#F7EEF0">RSVP</a>
       </div>
       <div style="flex:0 1 440px;min-width:0;width:100%;max-width:440px">
@@ -308,7 +308,7 @@ details.faq[open] .plus{rotate:45deg}
   <section style="padding:104px clamp(20px,4vw,56px);text-align:center">
     <svg width="300" height="40" viewBox="-150 -20 300 40" style="display:block;max-width:100%;margin:0 auto" aria-hidden="true"><use href="#orn"/></svg>
     <p class="kicker" style="margin-top:18px">Countdown</p>
-    <h2 class="h2">Almost <em>time</em></h2>
+    <h2 class="h2" data-lz="countdownNote">Almost <em>time</em></h2>
     <div style="max-width:800px;margin:48px auto 0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(8px,2vw,24px)" aria-live="off">
       <div style="padding:clamp(18px,3vw,36px) 0 clamp(14px,2vw,24px);border:1px solid #E2CFC6;border-radius:120px 120px 8px 8px;background:#FBF4F3"><p data-cd="d" style="margin:0;font:400 clamp(36px,5.4vw,76px)/1 'Instrument Serif',serif;font-variant-numeric:tabular-nums">—</p><p style="margin:10px 0 0;font-size:10px;font-weight:400;letter-spacing:.26em;text-transform:uppercase;color:#6E5F64">Days</p></div>
       <div style="padding:clamp(18px,3vw,36px) 0 clamp(14px,2vw,24px);border:1px solid #E2CFC6;border-radius:120px 120px 8px 8px;background:#FBF4F3"><p data-cd="h" style="margin:0;font:400 clamp(36px,5.4vw,76px)/1 'Instrument Serif',serif;font-variant-numeric:tabular-nums">—</p><p style="margin:10px 0 0;font-size:10px;font-weight:400;letter-spacing:.26em;text-transform:uppercase;color:#6E5F64">Hours</p></div>
@@ -330,24 +330,24 @@ details.faq[open] .plus{rotate:45deg}
           <p style="margin:12px 0 0;font:400 44px/1 'Instrument Serif',serif" data-lz-f="time">4:00 p.m.</p>
           <div style="width:1px;height:36px;margin:18px auto;background:#C49A62"></div>
           <p class="kicker" style="letter-spacing:.32em" data-lz-f="name">Ceremony</p>
-          <p style="margin:12px 0 0;font:400 28px/1.2 'Instrument Serif',serif" data-lz-f="placeName">Ceremony venue</p>
-          <p style="margin:6px 0 0;font-size:15px;line-height:1.6;color:#6E5F64" data-lz-f="addr">Ceremony address</p>
+          <p style="margin:12px 0 0;font:400 28px/1.2 'Instrument Serif',serif" data-lz-f="place">Ceremony venue</p>
+          <p style="margin:6px 0 0;font-size:15px;line-height:1.6;color:#6E5F64" data-lz-f="address">Ceremony address</p>
           <a href="#dia" data-lz-f="map" style="display:inline-flex;align-items:center;height:44px;margin-top:10px;font-size:11px;font-weight:400;letter-spacing:.24em;text-transform:uppercase;border-bottom:1px solid #C49A62">Getting there ↗</a>
         </div>
         <div style="padding:40px 32px;background:#FBF4F3;border:1px solid #E2CFC6;border-radius:160px 160px 8px 8px;text-align:center" data-lz-item>
           <p style="margin:12px 0 0;font:italic 400 44px/1 'Instrument Serif',serif" data-lz-f="time">Afterwards</p>
           <div style="width:1px;height:36px;margin:18px auto;background:#C49A62"></div>
           <p class="kicker" style="letter-spacing:.32em" data-lz-f="name">Reception</p>
-          <p style="margin:12px 0 0;font:400 28px/1.2 'Instrument Serif',serif" data-lz-f="placeName">Reception venue</p>
-          <p style="margin:6px 0 0;font-size:15px;line-height:1.6;color:#6E5F64" data-lz-f="addr">Reception address</p>
+          <p style="margin:12px 0 0;font:400 28px/1.2 'Instrument Serif',serif" data-lz-f="place">Reception venue</p>
+          <p style="margin:6px 0 0;font-size:15px;line-height:1.6;color:#6E5F64" data-lz-f="address">Reception address</p>
           <a href="#dia" data-lz-f="map" style="display:inline-flex;align-items:center;height:44px;margin-top:10px;font-size:11px;font-weight:400;letter-spacing:.24em;text-transform:uppercase;border-bottom:1px solid #C49A62">Getting there ↗</a>
         </div>
-        <div style="padding:40px 32px;background:#3E3236;border-radius:160px 160px 8px 8px;color:#F6EBEC;text-align:center">
+        <div data-lz-group="dressCode dressNotes dressColors" style="padding:40px 32px;background:#3E3236;border-radius:160px 160px 8px 8px;color:#F6EBEC;text-align:center">
           <svg width="56" height="56" viewBox="0 0 160 160" style="display:block;margin:0 auto" aria-hidden="true"><use href="#seal"/></svg>
           <div style="width:1px;height:36px;margin:18px auto;background:#C49A62"></div>
           <p style="margin:0;font-size:11px;font-weight:400;letter-spacing:.32em;text-transform:uppercase;color:#E6C9A0">Dress code</p>
-          <p style="margin:12px 0 0;font:italic 400 28px/1.2 'Instrument Serif',serif">Semi-formal</p>
-          <p style="margin:6px 0 0;font-size:15px;line-height:1.7;color:#E8DADC">Add your dress code recommendations and reserved colors here.</p>
+          <p style="margin:12px 0 0;font:italic 400 28px/1.2 'Instrument Serif',serif" data-lz="dressCode">Semi-formal</p>
+          <p style="margin:6px 0 0;font-size:15px;line-height:1.7;color:#E8DADC" data-lz="dressNotes">Add your dress code recommendations and reserved colors here.</p><p data-lz-group="dressColors" style="margin:10px 0 0;font-size:14px;line-height:1.7;color:#E8DADC"><b style="font-weight:500;color:#E6C9A0">Reserved colors:</b> <span data-lz="dressColors">List any reserved colors.</span></p>
         </div>
       </div>
     </div>
@@ -359,7 +359,7 @@ details.faq[open] .plus{rotate:45deg}
         <svg width="200" height="40" viewBox="-150 -20 300 40" style="display:block" aria-hidden="true"><use href="#orn"/></svg>
         <p class="kicker" style="margin-top:18px">Our story</p>
         <h2 class="h2" data-lz="storyTitle">A story<br><em>written together</em></h2>
-        <p data-lz="story" style="margin:22px 0 0;max-width:440px;font-size:17px;line-height:1.8;color:#4E4247">Tell how the two of you met. Share your favorite memories together. Describe the new chapter you are about to begin.</p>
+        <p data-lz="story" style="margin:22px 0 0;max-width:440px;font-size:17px;line-height:1.8;color:#4E4247">Tell how the two of you met. Share your favorite memories together. Describe the new chapter you are about to begin.</p><blockquote data-lz-if="quote" hidden style="margin:28px 0 0;max-width:440px"><p data-lz="quote" style="margin:0;font:italic 400 26px/1.35 'Instrument Serif',serif;color:#3E3236"></p><p data-lz="quoteAuthor" style="margin:10px 0 0;font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:#7D6A70"></p></blockquote>
       </div>
       <div data-gallery data-lz-list="gallery" style="flex:2 1 520px;min-width:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(150px,100%),1fr));gap:16px">
         <div data-lz-item style="aspect-ratio:3 / 4;padding:5px;border:1px solid #C49A62;border-radius:200px 200px 8px 8px;background:#FBF4F3"><img data-lz-f="img" src="/assets/fotos/torre.jpg" alt="Melissa and Andrés holding hands" loading="lazy" style="display:block;width:100%;height:100%;object-fit:cover;object-position:center 70%;border-radius:195px 195px 5px 5px"></div>
@@ -378,11 +378,13 @@ details.faq[open] .plus{rotate:45deg}
         <p class="kicker" style="margin-top:24px">RSVP</p>
         <h2 class="h2" id="rsTitle" style="font-size:clamp(40px,4.4vw,56px)">Will you join us?</h2>
         <p id="rsText" style="margin:16px 0 0;font-size:16px;line-height:1.8;color:#6E5F64">We have saved 4 seats for you. Please reply for each guest before the RSVP deadline.</p>
-        <p style="margin:16px 0 0;font-size:13px;line-height:1.6;color:#6E5F64" data-lz="rsvpMsg">Our celebration is adults only.</p>
+        <p style="margin:16px 0 0;font-size:13px;line-height:1.6;color:#6E5F64" data-lz="rsvpMsg">Our celebration is adults only.</p><p data-lz-if="rsvpDeadline" hidden style="margin:8px 0 0;font-size:13px;line-height:1.6;color:#6E5F64">Please reply by <span data-lz-date="{Mc} {d}, {Y}" data-lz-from="rsvpDeadline"></span></p>
       </div>
       <div style="flex:1.3 1 360px;min-width:0">
         <form id="rsForm" novalidate>
           <div id="people" style="display:flex;flex-direction:column"></div>
+          <label for="diet" data-lz-show="rsvpDiet" style="display:block;margin-top:22px;font-size:10px;font-weight:400;letter-spacing:.28em;text-transform:uppercase;color:#6E5F64">Restricciones alimentarias</label>
+          <textarea id="diet" data-lz-show="rsvpDiet" rows="2" placeholder="Opcional: indiquen a quién corresponde cada una" style="display:block;width:100%;margin-top:8px;padding:12px 14px;border:1px solid #D9C5BE;border-radius:6px;background:#FFFFFF;font:300 15px/1.5 Jost,Helvetica,sans-serif;color:#3E3236;resize:none"></textarea>
           <label for="msg" data-lz-show="rsvpNote" style="display:block;margin-top:22px;font-size:10px;font-weight:400;letter-spacing:.28em;text-transform:uppercase;color:#6E5F64">A note for us</label>
           <textarea id="msg" data-lz-show="rsvpNote" rows="3" placeholder="Optional" style="display:block;width:100%;margin-top:8px;padding:12px 14px;border:1px solid #D9C5BE;border-radius:6px;background:#FFFFFF;font:300 15px/1.5 Jost,Helvetica,sans-serif;color:#3E3236;resize:none"></textarea>
           <p id="rsError" role="alert" hidden style="margin:14px 0 0;font-size:13px;color:#9B3B4A">Please choose Yes or No for each guest.</p>
@@ -420,30 +422,30 @@ details.faq[open] .plus{rotate:45deg}
         <svg width="300" height="40" viewBox="-150 -20 300 40" style="display:block;max-width:100%;margin:0 auto" aria-hidden="true"><use href="#orn"/></svg>
         <p class="kicker" style="margin-top:18px">Travel & stay</p>
         <h2 class="h2">If you’re <em>traveling</em></h2>
-        <p style="margin:18px auto 0;max-width:520px;font-size:16px;line-height:1.8;color:#6E5F64">Everything you need to get here, rest and explore the city while you’re in town.</p>
+        <p data-lz="travelIntro" style="margin:18px auto 0;max-width:520px;font-size:16px;line-height:1.8;color:#6E5F64">Everything you need to get here, rest and explore the city while you’re in town.</p>
       </div>
       <div style="margin-top:48px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(280px,100%),1fr));gap:20px">
-        <div class="travel-card">
+        <div class="travel-card" data-lz-group="hotel hotelAddress hotelCode hotelNotes">
           <p class="kicker" style="letter-spacing:.32em">Where to stay</p>
           <p style="margin:12px 0 0;font:400 28px/1.2 'Instrument Serif',serif" data-lz="hotel">Hotel name</p>
-          <p style="margin:6px 0 0;font-size:15px;line-height:1.6;color:#6E5F64" data-lz="travelNotes">Hotel address</p>
+          <p style="margin:6px 0 0;font-size:15px;line-height:1.6;color:#6E5F64" data-lz="hotelAddress">Hotel address</p>
           <div style="width:1px;height:28px;margin:16px auto;background:#C49A62"></div>
-          <p style="margin:0;font-size:14px;line-height:1.7;color:#6E5F64">Booking code: <strong style="font-weight:500;color:#3E3236">WEDDING-MA</strong></p>
+          <p data-lz-group="hotelCode" style="margin:0;font-size:14px;line-height:1.7;color:#6E5F64">Booking code: <strong data-lz="hotelCode" style="font-weight:500;color:#3E3236">WEDDING-MA</strong></p><p data-lz="hotelNotes" data-lz-if="hotelNotes" hidden style="margin:10px 0 0;font-size:14px;line-height:1.7;color:#6E5F64"></p>
           <a data-lz-href="hotelLink" href="#viaje" style="display:inline-flex;align-items:center;height:44px;margin-top:8px;font-size:11px;font-weight:400;letter-spacing:.24em;text-transform:uppercase;border-bottom:1px solid #C49A62">Book ↗</a>
         </div>
-        <div class="travel-card">
+        <div class="travel-card" data-lz-group="airport transport">
           <p class="kicker" style="letter-spacing:.32em">Getting there</p>
           <ul>
-            <li><b>Airport</b><span>Add the nearest airport and travel time.</span></li>
-            <li><b>Transportation</b><span>Let guests know if transportation will be provided.</span></li>
+            <li data-lz-group="airport"><b>Airport</b><span data-lz="airport">Add the nearest airport and travel time.</span></li>
+            <li data-lz-group="transport"><b>Transportation</b><span data-lz="transport">Let guests know if transportation will be provided.</span></li>
           </ul>
         </div>
-        <div class="travel-card">
+        <div class="travel-card" data-lz-group="guideFood guideCulture guidePlans">
           <p class="kicker" style="letter-spacing:.32em">City guide</p>
           <ul>
-            <li><b>Restaurants</b><span>Add local recommendations.</span></li>
-            <li><b>Museums & culture</b><span>Places worth visiting.</span></li>
-            <li><b>Activities</b><span>Things to enjoy while you’re in town.</span></li>
+            <li data-lz-group="guideFood"><b>Restaurants</b><span data-lz="guideFood">Add local recommendations.</span></li>
+            <li data-lz-group="guideCulture"><b>Museums & culture</b><span data-lz="guideCulture">Places worth visiting.</span></li>
+            <li data-lz-group="guidePlans"><b>Activities</b><span data-lz="guidePlans">Things to enjoy while you’re in town.</span></li>
           </ul>
         </div>
       </div>

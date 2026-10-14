@@ -244,7 +244,7 @@ button.mo-row{width:100%;grid-template-columns:72px minmax(0,1fr) auto;align-ite
         <section class="mo-ch mo-cover" data-lz-anchor="portada" aria-label="Cover">
           <img class="mo-photo" data-lz-src="photo:0" src="/assets/fotos/beso.jpg" alt="Sofía and Tomás" style="object-position:center 55%">
           <div class="mo-cover-copy">
-            <p class="mo-kicker" data-lz-date="{W} · {Mc} {d} · {Y}">Saturday · June 12 · 2027</p>
+            <p class="mo-kicker"><span data-lz-date="{W} · {Mc} {d} · {Y}">Saturday · June 12 · 2027</span><span data-lz-if="city" hidden> · <span data-lz="city"></span></span></p>
             <h1><span data-lz="n1">Sofía</span><br><em>&amp; <span data-lz="n2">Tomás</span></em></h1>
             <p class="mo-cover-intro" data-lz="msg">We’re getting married and want to celebrate with you, Rodríguez family.</p>
             <button type="button" class="mo-discover" data-go="1"><span aria-hidden="true">↓</span> Discover</button>
@@ -261,18 +261,18 @@ button.mo-row{width:100%;grid-template-columns:72px minmax(0,1fr) auto;align-ite
               <div><strong data-cd="s">—</strong><span>Seconds</span></div>
             </div>
           </div>
-          <p class="mo-count-note">The countdown to celebrating together is on.</p>
+          <p class="mo-count-note" data-lz="countdownNote">The countdown to celebrating together is on.</p>
         </section>
 
         <section class="mo-ch is-grow" aria-label="The day" data-lz-anchor="itinerario musica">
           <p class="mo-kicker">The day</p>
           <h2 class="mo-display" style="margin-top:18px"><span data-lz-date="{W},">Saturday,</span><br><em data-lz-date="{Mc} {d}">June 12</em></h2>
           <div style="margin-top:auto;padding-top:32px" data-lz-list="events">
-            <div class="mo-row" data-lz-item><span class="mo-row-time" data-lz-f="time">4 p.m.</span><div><p class="mo-row-title" data-lz-f="name">Ceremony</p><p class="mo-row-text"><span data-lz-f="placeName">Ceremony venue</span><br><span data-lz-f="addr">Ceremony address</span></p><a class="mo-underline" href="#" data-lz-f="map">Getting there <svg class="mo-arrow" aria-hidden="true"><use href="#ext"/></svg></a></div></div>
-            <div class="mo-row" data-lz-item><span class="mo-row-key" data-lz-f="time">Afterwards</span><div><p class="mo-row-title" data-lz-f="name">Reception</p><p class="mo-row-text"><span data-lz-f="placeName">Reception venue</span><br><span data-lz-f="addr">Reception address</span></p><a class="mo-underline" href="#" data-lz-f="map">Getting there <svg class="mo-arrow" aria-hidden="true"><use href="#ext"/></svg></a></div></div>
-            <div class="mo-dress" id="dress">
+            <div class="mo-row" data-lz-item><span class="mo-row-time" data-lz-f="time">4 p.m.</span><div><p class="mo-row-title" data-lz-f="name">Ceremony</p><p class="mo-row-text"><span data-lz-f="place">Ceremony venue</span><br><span data-lz-f="address">Ceremony address</span></p><a class="mo-underline" href="#" data-lz-f="map">Getting there <svg class="mo-arrow" aria-hidden="true"><use href="#ext"/></svg></a></div></div>
+            <div class="mo-row" data-lz-item><span class="mo-row-key" data-lz-f="time">Afterwards</span><div><p class="mo-row-title" data-lz-f="name">Reception</p><p class="mo-row-text"><span data-lz-f="place">Reception venue</span><br><span data-lz-f="address">Reception address</span></p><a class="mo-underline" href="#" data-lz-f="map">Getting there <svg class="mo-arrow" aria-hidden="true"><use href="#ext"/></svg></a></div></div>
+            <div class="mo-dress" id="dress" data-lz-group="dressCode dressNotes dressColors">
               <button type="button" class="mo-row" aria-expanded="false" aria-controls="dressBody" id="dressBtn"><span class="mo-row-key">Note</span><span class="mo-row-title">Dress code</span><span class="mo-faq-plus" aria-hidden="true">+</span></button>
-              <div id="dressBody" class="mo-dress-body" hidden><p>Add your dress code recommendations for guests.</p><p class="mo-label" style="margin-top:16px;color:var(--muted)">Reserved colors</p><p>List any reserved colors and other attire tips.</p></div>
+              <div id="dressBody" class="mo-dress-body" hidden><p data-lz="dressCode" data-lz-if="dressCode" hidden style="font:400 22px/1.2 var(--serif);color:var(--ink);margin-bottom:6px"></p><p data-lz="dressNotes">Add your dress code recommendations for guests.</p><div data-lz-group="dressColors"><p class="mo-label" style="margin-top:16px;color:var(--muted)">Reserved colors</p><p data-lz="dressColors">List any reserved colors and other attire tips.</p></div></div>
             </div>
           </div>
         </section>
@@ -280,7 +280,7 @@ button.mo-row{width:100%;grid-template-columns:72px minmax(0,1fr) auto;align-ite
         <section class="mo-ch is-sand" data-lz-anchor="rsvp" aria-label="RSVP">
           <p class="mo-kicker">RSVP</p>
           <h2 class="mo-display" style="margin-top:18px" id="rsTitle">Will you join us?</h2>
-          <p class="mo-text" style="margin-top:18px;max-width:380px" id="rsText">We have saved 4 seats for you. Please reply for each guest before the RSVP deadline.</p>
+          <p class="mo-text" style="margin-top:18px;max-width:380px" id="rsText">We have saved 4 seats for you. Please reply for each guest before the RSVP deadline.</p><p class="mo-text" data-lz="rsvpMsg" data-lz-if="rsvpMsg" hidden style="margin-top:12px;max-width:380px;font-size:13px"></p><p class="mo-text" data-lz-if="rsvpDeadline" hidden style="margin-top:8px;font-size:13px">Please reply by <span data-lz-date="{Mc} {d}" data-lz-from="rsvpDeadline"></span></p>
           <div style="margin-top:auto;padding-top:24px">
             <div id="peopleList"></div>
             <button type="button" class="mo-pill" style="margin-top:22px" id="rsOpen">RSVP</button>
@@ -292,7 +292,7 @@ button.mo-row{width:100%;grid-template-columns:72px minmax(0,1fr) auto;align-ite
           <div class="mo-story-copy">
             <p class="mo-kicker">Our story</p>
             <h2 data-lz="storyTitle">A story <em>written together.</em></h2>
-            <p class="mo-text" data-lz="story" style="margin-top:16px;max-width:460px">Tell how the two of you met. Share your favorite memories together. Describe the new chapter you are about to begin.</p>
+            <p class="mo-text" data-lz="story" style="margin-top:16px;max-width:460px">Tell how the two of you met. Share your favorite memories together. Describe the new chapter you are about to begin.</p><blockquote data-lz-if="quote" hidden style="margin:22px 0 0;max-width:460px"><p data-lz="quote" style="font:italic 400 24px/1.3 var(--serif)"></p><p data-lz="quoteAuthor" class="mo-label" style="margin-top:8px;color:var(--muted)"></p></blockquote>
             <div class="mo-thumbs mo-ns" data-lz-list="gallery" aria-label="Photo gallery"><img data-lz-item data-lz-f="img" src="/assets/fotos/beso.jpg" alt="Photo 1" loading="lazy"><img data-lz-item data-lz-f="img" src="/assets/fotos/muro.jpg" alt="Photo 2" loading="lazy"><img data-lz-item data-lz-f="img" src="/assets/fotos/escalera.jpg" alt="Photo 3" loading="lazy"><img data-lz-item data-lz-f="img" src="/assets/fotos/paseo.jpg" alt="Photo 4" loading="lazy"><img data-lz-item data-lz-f="img" src="/assets/fotos/torre.jpg" alt="Photo 5" loading="lazy"></div>
           </div>
         </section>
@@ -313,27 +313,22 @@ button.mo-row{width:100%;grid-template-columns:72px minmax(0,1fr) auto;align-ite
         <section class="mo-ch is-tall" aria-label="Travel" data-lz-show="viajeOn" data-lz-anchor="viaje">
           <p class="mo-kicker">Travel</p>
           <h2 class="mo-display" style="margin-top:18px">If you’re <em>traveling</em></h2>
-          <p class="mo-text" style="margin-top:18px;max-width:460px">Everything you need to get here, rest and explore the city while you’re in town.</p>
+          <p class="mo-text" data-lz="travelIntro" style="margin-top:18px;max-width:460px">Everything you need to get here, rest and explore the city while you’re in town.</p>
           <div style="margin-top:40px">
             <p class="mo-label" style="color:var(--muted);margin-bottom:6px">Where to stay</p>
-            <div class="mo-row"><span class="mo-row-key">Hotel</span><div><p class="mo-row-title" data-lz="hotel">Hotel name</p><p class="mo-row-text" data-lz="travelNotes">Add recommended places to stay and how to book.</p><p class="mo-row-text">Hotel address</p></div></div>
-            <div class="mo-row"><span class="mo-row-key">Code</span><div><p class="mo-row-title">Booking code</p><p class="mo-row-text">Explain how to use the booking code.</p></div></div>
-            <div class="mo-row" style="border-bottom:1px solid var(--line)"><span class="mo-row-key">Details</span>
-              <dl class="mo-details">
-                <div><dt>Standard room</dt><dd>Add standard room details.</dd></div>
-                <div><dt>Suite</dt><dd>Add suite details.</dd></div>
-                <div><dt>Check-in & check-out</dt><dd>Add check-in and check-out times.</dd></div>
-                <div><dt>Bookings</dt><dd>Add contact details for bookings.</dd></div>
-              </dl>
+            <div class="mo-row" data-lz-group="hotel hotelAddress hotelNotes"><span class="mo-row-key">Hotel</span><div><p class="mo-row-title" data-lz="hotel">Hotel name</p><p class="mo-row-text" data-lz="hotelNotes">Add recommended places to stay and how to book.</p><p class="mo-row-text" data-lz="hotelAddress">Hotel address</p></div></div>
+            <div class="mo-row" data-lz-group="hotelCode hotelLink"><span class="mo-row-key">Code</span><div><p class="mo-row-title" data-lz="hotelCode">Booking code</p><p class="mo-row-text"><a class="mo-underline" href="#" data-lz-href="hotelLink">Book <svg class="mo-arrow" aria-hidden="true"><use href="#ext"/></svg></a></p></div></div>
+            <div class="mo-row" style="border-bottom:1px solid var(--line)" data-lz-group="airport transport"><span class="mo-row-key">Getting there</span>
+              <dl class="mo-details"><div data-lz-group="airport"><dt>Airport</dt><dd data-lz="airport">Add the nearest airport and travel time.</dd></div><div data-lz-group="transport"><dt>Transportation</dt><dd data-lz="transport">Let guests know if transportation will be provided.</dd></div></dl>
             </div>
           </div>
-          <div style="margin-top:48px">
+          <div style="margin-top:48px" data-lz-group="guideFood guideCulture guidePlans">
             <p class="mo-label" style="color:var(--muted)">City guide</p>
             <h3 class="mo-serif" style="margin:10px 0 20px;font-size:34px;line-height:1.05">Sights & activities</h3>
             <div data-acc="guide">
-              <div class="mo-faq is-open"><button type="button" aria-expanded="true"><span class="mo-faq-q" style="margin-top:0">Restaurants</span><span class="mo-faq-plus" aria-hidden="true">+</span></button><div class="mo-guide"><p class="mo-guide-note">Add local recommendations.</p><p class="n">Restaurant name</p><p class="d">Add a description.</p></div></div>
-              <div class="mo-faq"><button type="button" aria-expanded="false"><span class="mo-faq-q" style="margin-top:0">Museums & culture</span><span class="mo-faq-plus" aria-hidden="true">+</span></button><div class="mo-guide" hidden><p class="mo-guide-note">Add local recommendations.</p><p class="n">Cultural landmark</p><p class="d">Add a description.</p></div></div>
-              <div class="mo-faq"><button type="button" aria-expanded="false"><span class="mo-faq-q" style="margin-top:0">Things to do</span><span class="mo-faq-plus" aria-hidden="true">+</span></button><div class="mo-guide" hidden><p class="mo-guide-note">Add local recommendations.</p><p class="n">Local activity</p><p class="d">Add a description.</p></div></div>
+              <div class="mo-faq is-open" data-lz-group="guideFood"><button type="button" aria-expanded="true"><span class="mo-faq-q" style="margin-top:0">Restaurants</span><span class="mo-faq-plus" aria-hidden="true">+</span></button><div class="mo-guide"><p class="mo-guide-note" data-lz="guideFood">Add local recommendations.</p></div></div>
+              <div class="mo-faq" data-lz-group="guideCulture"><button type="button" aria-expanded="false"><span class="mo-faq-q" style="margin-top:0">Museums & culture</span><span class="mo-faq-plus" aria-hidden="true">+</span></button><div class="mo-guide" hidden><p class="mo-guide-note" data-lz="guideCulture">Add local recommendations.</p></div></div>
+              <div class="mo-faq" data-lz-group="guidePlans"><button type="button" aria-expanded="false"><span class="mo-faq-q" style="margin-top:0">Things to do</span><span class="mo-faq-plus" aria-hidden="true">+</span></button><div class="mo-guide" hidden><p class="mo-guide-note" data-lz="guidePlans">Add local recommendations.</p></div></div>
             </div>
             <div style="border-top:1px solid var(--line)"></div>
           </div>

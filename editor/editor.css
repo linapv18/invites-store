@@ -506,3 +506,9 @@ a.ed-btn[aria-disabled="true"]{opacity:.4;pointer-events:none}
 .ed-setup .ed-card{background:#fff}
 .ed-demo{grid-template-columns:repeat(auto-fit,minmax(min(230px,100%),1fr))}
 @media (max-width:960px){.ed-setup{padding:16px}}
+
+/* Subgrupos dentro de una sección (vestimenta, hotel, cómo llegar…) */
+.ed-group{gap:14px;padding-top:22px;border-top:1px solid var(--line)}
+.ed-sub{margin:0;font-family:'Cormorant Garamond',serif;font-weight:500;font-size:26px;line-height:1.1}
+.ed-grid2 .span2{grid-column:span 2}
+@media (max-width:520px){.ed-grid2 .span2{grid-column:auto}}

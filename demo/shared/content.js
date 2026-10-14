@@ -11,10 +11,13 @@
      data-lz-href="hotelLink"  enlace
      data-lz-list="gallery|events|faqs" con hijos data-lz-item y campos data-lz-f="…" lista que se repite
      data-lz-show="viajeOn|rsvpDiet|rsvpNote"  se oculta si está apagado
+     data-lz-if="k1 k2"        solo se muestra si alguno de esos campos tiene valor (huecos que la demo no trae)
+     data-lz-group="k1 k2"     al ver como invitado se oculta si todos esos campos están vacíos (título + texto)
      data-lz-seal              contenido del sello
      data-lz-mono              monograma ya maquetado ("V<span>&</span>M", "S — T"): solo cambia las dos letras
      data-lz-anchor="portada|historia|itinerario|faq|viaje|rsvp"  destino al cambiar de sección en el editor
-   Si un texto está vacío en el editor, se deja el texto de ejemplo de la plantilla. */
+   Si un texto está vacío: en el editor se ve el texto de ejemplo de la plantilla, atenuado; al ver como
+   invitado (?lz=vista) se oculta, para que nunca salga texto de ejemplo en la invitación. */
 (function () {
   'use strict';
   var q = new URLSearchParams(location.search), MODE = q.get('lz'), KEY = q.get('k');
@@ -25,7 +28,7 @@
 
   var css = document.createElement('style');
   css.textContent =
-    '.demo-bar{display:none !important}.lz-off{display:none !important}' +
+    '.demo-bar{display:none !important}.lz-off{display:none !important}.lz-editor .lz-ph{opacity:.42}' +
     '.lz-seal{display:inline-flex !important;align-items:center;justify-content:center;font-family:Georgia,"Times New Roman",serif !important;font-style:normal !important;line-height:1 !important;letter-spacing:0 !important;white-space:nowrap;color:inherit}' +
     '.lz-seal *{font:inherit !important;color:inherit !important}' +
     '.lz-seal i{font-style:italic !important;font-size:.7em !important;margin:0 .04em}' +
@@ -79,14 +82,15 @@
   function photos(c) { var l = []; if (has(c.cover)) l.push(c.cover); (c.gallery || []).forEach(function (g) { if (has(g)) l.push(g); }); return l; }
   function setText(el, v) {
     if (el._lz === undefined) el._lz = el.innerHTML;
-    if (has(v)) el.textContent = v; else el.innerHTML = el._lz;
+    if (has(v)) { el.textContent = v; el.style.whiteSpace = /\n/.test(v) ? 'pre-line' : ''; el.classList.remove('lz-ph', 'lz-off'); }
+    else { el.innerHTML = el._lz; el.style.whiteSpace = ''; el.classList.toggle('lz-off', MODE === 'vista'); el.classList.toggle('lz-ph', MODE !== 'vista'); }
   }
   function fill(item, data) {
     var els = [].slice.call(item.querySelectorAll('[data-lz-f]'));
     if (item.hasAttribute('data-lz-f')) els.unshift(item);
     els.forEach(function (el) {
       var f = el.getAttribute('data-lz-f'), v = data[f];
-      if (f === 'map') { if (has(data.place)) { el.href = 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(data.place); el.target = '_blank'; el.rel = 'noopener'; el.classList.remove('lz-off'); } else el.classList.add('lz-off'); return; }
+      if (f === 'map') { if (has(data.mapQuery)) { el.href = 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(data.mapQuery); el.target = '_blank'; el.rel = 'noopener'; el.classList.remove('lz-off'); } else el.classList.add('lz-off'); return; }
       if (f === 'img') { if (has(v)) { el.src = v; el.removeAttribute('srcset'); } return; }
       if (f === 'hide') { el.classList.add('lz-off'); return; }
       if (el._lz === undefined) el._lz = el.innerHTML;
@@ -115,10 +119,16 @@
     C = c || C || {};
     var c0 = C, ph = photos(c0), evs = c0.events || [];
     var v = {
-      n1: c0.n1, n2: c0.n2, i1: init(c0.n1), i2: init(c0.n2), city: c0.city, msg: c0.msg,
-      storyTitle: c0.storyTitle, story: c0.story, hotel: c0.hotel, travelNotes: c0.travelNotes, rsvpMsg: c0.rsvpMsg,
-      time0: evs[0] ? fmtTime(evs[0].time) : ''
+      n1: c0.n1, n2: c0.n2, i1: init(c0.n1), i2: init(c0.n2), city: c0.city, msg: c0.msg, countdownNote: c0.countdownNote,
+      storyTitle: c0.storyTitle, story: c0.story, quote: c0.quote, quoteAuthor: c0.quoteAuthor,
+      dressCode: c0.dressCode, dressNotes: c0.dressNotes, dressColors: c0.dressColors,
+      travelIntro: c0.travelIntro, hotel: c0.hotel, hotelAddress: c0.hotelAddress, hotelCode: c0.hotelCode, hotelNotes: c0.hotelNotes || c0.travelNotes,
+      airport: c0.airport, transport: c0.transport, guideFood: c0.guideFood, guideCulture: c0.guideCulture, guidePlans: c0.guidePlans,
+      rsvpMsg: c0.rsvpMsg, time0: evs[0] ? fmtTime(evs[0].time) : ''
     };
+    var filled = function (keys) { return keys.split(/\s+/).some(function (k) { return has(k in v ? v[k] : c0[k]); }); };
+    document.querySelectorAll('[data-lz-if]').forEach(function (el) { el.hidden = !filled(el.getAttribute('data-lz-if')); });
+    document.querySelectorAll('[data-lz-group]').forEach(function (el) { el.classList.toggle('lz-off', MODE === 'vista' && !filled(el.getAttribute('data-lz-group'))); });
     document.querySelectorAll('[data-lz]').forEach(function (el) { setText(el, v[el.getAttribute('data-lz')]); });
     document.querySelectorAll('[data-lz-mono]').forEach(function (el) {
       var w = document.createTreeWalker(el, NodeFilter.SHOW_TEXT), n, t = [];
@@ -156,7 +166,12 @@
     document.querySelectorAll('[data-lz-list]').forEach(function (box) {
       var k = box.getAttribute('data-lz-list'), rows;
       if (k === 'gallery') rows = (c0.gallery || []).filter(has).map(function (g) { return { img: g, _keepEmpty: true }; });
-      else if (k === 'events') rows = evs.map(function (e) { var p = splitPlace(e.place); return { name: e.name, time: fmtTime(e.time), place: e.place, placeName: p[0], addr: p[1], placeAddr: p[1] || (p[0] ? (LANG === 'en' ? 'Directions' : 'Cómo llegar') : '') }; });
+      else if (k === 'events') rows = evs.map(function (e) {
+        // Lugar y dirección van en campos separados; las invitaciones antiguas los tenían juntos ("Lugar · dirección").
+        var p = e.address === undefined ? splitPlace(e.place) : [e.place || '', e.address || ''];
+        return { name: e.name, time: fmtTime(e.time), place: p[0], address: p[1], mapQuery: p.filter(has).join(', '),
+          mapText: p[1] || (has(p[0]) ? (LANG === 'en' ? 'Directions' : 'Cómo llegar') : '') };
+      });
       else if (k === 'faqs') rows = (c0.faqs || []).map(function (f) { return { q: f.q, a: f.a }; });
       else return;
       if (k === 'gallery' && !rows.length) return;
@@ -194,10 +209,11 @@
     if (MODE === 'editor') { var s = q.get('sec'); if (s) goto(s, true); }
   });
   // Algunas plantillas reajustan el scroll al terminar de cargar fotos y fuentes: se repite al final.
-  window.addEventListener('load', function () { if (MODE === 'editor') { var s = q.get('sec'); if (s) setTimeout(function () { goto(s, true); }, 50); } });
+  var asked = false; // si el editor ya pidió una sección, no se vuelve a la de la URL inicial
+  window.addEventListener('load', function () { if (MODE === 'editor' && !asked) { var s = q.get('sec'); if (s) setTimeout(function () { if (!asked) goto(s, true); }, 50); } });
   window.addEventListener('message', function (e) {
     if (e.origin !== location.origin || !e.data || typeof e.data !== 'object') return;
     if (e.data.lz === 'content') apply(e.data.content);
-    else if (e.data.lz === 'goto') goto(e.data.sec);
+    else if (e.data.lz === 'goto') { asked = true; goto(e.data.sec); }
   });
 })();

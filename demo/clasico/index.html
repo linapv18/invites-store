@@ -234,6 +234,7 @@ a:hover{opacity:.75}
       <p class="eyebrow">Nos vamos a casar</p>
       <h1 class="hero-title"><span data-lz="n1">Valentina</span><br><em>&amp;</em> <span data-lz="n2">Martín</span></h1>
       <div class="hero-date"><span class="display" data-lz-date="{d}">12</span><i></i><p class="eyebrow" style="line-height:24px"><span data-lz-date="{Mc} · {Y}">Diciembre · 2026</span><br><span data-lz="city">Ciudad, país</span></p></div>
+      <p data-lz="msg" data-lz-if="msg" hidden style="max-width:420px;font:italic 19px/1.5 Georgia,serif;opacity:.85"></p>
       <a href="#celebracion" class="text-link">Nuestro gran día <svg class="arrow" style="rotate:90deg" aria-hidden="true"><use href="#arr"/></svg></a>
     </div>
     <div class="hero-photo">
@@ -266,7 +267,7 @@ a:hover{opacity:.75}
       </div>
       <div class="ceremony-details">
         <div><p class="display ceremony-time" data-lz="time0">7:30 <span>p. m.</span></p><p class="eyebrow" style="margin-top:20px">Hora de <span data-lz="city">Ciudad, país</span></p></div>
-        <p class="ceremony-note">Cada vez falta menos<br>para celebrar juntos.</p>
+        <p class="ceremony-note" data-lz="countdownNote">Cada vez falta menos<br>para celebrar juntos.</p>
       </div>
       <div class="ceremony-countdown" role="timer" aria-label="Tiempo restante para la ceremonia" aria-live="off">
         <div><span class="countdown-number" data-cd="d">—</span><span class="countdown-label">Días</span></div>
@@ -282,8 +283,9 @@ a:hover{opacity:.75}
     <div data-lz-list="events">
       <p class="eyebrow" style="margin-bottom:24px">Nos encontramos aquí</p>
       <h2 class="section-title">Ubicación</h2>
-      <div class="venue-card" data-lz-item><p class="eyebrow"><span data-lz-f="name">Ceremonia</span><span data-lz-f="time"></span></p><h3 data-lz-f="placeName">Lugar de la ceremonia</h3><a href="#ubicacion" data-lz-f="map"><span data-lz-f="placeAddr">Dirección de la ceremonia</span> <svg class="arrow" aria-hidden="true"><use href="#arr"/></svg></a></div>
-      <div class="venue-card" data-lz-item><p class="eyebrow"><span data-lz-f="name">Recepción</span><span data-lz-f="time"></span></p><h3 data-lz-f="placeName">Lugar de la recepción</h3><a href="#ubicacion" data-lz-f="map"><span data-lz-f="placeAddr">Dirección de la recepción</span> <svg class="arrow" aria-hidden="true"><use href="#arr"/></svg></a></div>
+      <div class="venue-card" data-lz-item><p class="eyebrow"><span data-lz-f="name">Ceremonia</span><span data-lz-f="time"></span></p><h3 data-lz-f="place">Lugar de la ceremonia</h3><a href="#ubicacion" data-lz-f="map"><span data-lz-f="mapText">Dirección de la ceremonia</span> <svg class="arrow" aria-hidden="true"><use href="#arr"/></svg></a></div>
+      <div class="venue-card" data-lz-item><p class="eyebrow"><span data-lz-f="name">Recepción</span><span data-lz-f="time"></span></p><h3 data-lz-f="place">Lugar de la recepción</h3><a href="#ubicacion" data-lz-f="map"><span data-lz-f="mapText">Dirección de la recepción</span> <svg class="arrow" aria-hidden="true"><use href="#arr"/></svg></a></div>
+      <div class="venue-card" data-lz-group="dressCode dressNotes dressColors"><p class="eyebrow">Código de vestimenta</p><h3 data-lz="dressCode">Formal</h3><p data-lz="dressNotes" style="font-size:13px;line-height:1.8">Agrega las recomendaciones de vestimenta para los invitados.</p><p data-lz-group="dressColors" style="font-size:13px;line-height:1.8;margin-top:6px"><b style="font-weight:600">Colores reservados:</b> <span data-lz="dressColors">Indica los colores reservados.</span></p></div>
       <a href="#viaje" class="button" data-lz-show="viajeOn" style="margin-top:32px">Viaje y alojamiento <svg class="arrow" aria-hidden="true"><use href="#arr"/></svg></a>
     </div>
   </section>
@@ -291,34 +293,37 @@ a:hover{opacity:.75}
   <section class="section-shell" id="viaje" data-lz-show="viajeOn" data-lz-anchor="viaje" style="border-top:1px solid #293c3520">
     <p class="eyebrow" style="margin-bottom:24px">Si vienen de fuera</p>
     <h2 class="section-title">Viaje y alojamiento</h2>
+    <p data-lz="travelIntro" data-lz-if="travelIntro" hidden style="max-width:620px;margin-top:20px;font-size:14px;line-height:1.9"></p>
     <div class="travel-grid">
-      <div>
+      <div data-lz-group="hotel hotelAddress hotelCode hotelNotes">
         <p class="eyebrow">Alojamiento</p>
         <h3 data-lz="hotel">Nombre del hotel</h3>
-        <p data-lz="travelNotes">Dirección del hotel. Tenemos tarifa especial con el código <strong>BODA-VM</strong>.</p>
+        <p data-lz="hotelAddress">Dirección del hotel</p>
+        <p data-lz-group="hotelCode">Tenemos tarifa especial con el código <strong data-lz="hotelCode">BODA-VM</strong>.</p>
+        <p data-lz="hotelNotes" data-lz-if="hotelNotes" hidden></p>
         <a href="#viaje" class="text-link" data-lz-href="hotelLink" style="margin-top:22px">Reservar <svg class="arrow" aria-hidden="true"><use href="#arr"/></svg></a>
       </div>
-      <div>
+      <div data-lz-group="airport transport">
         <p class="eyebrow">Cómo llegar</p>
         <h3>Aeropuerto y transporte</h3>
-        <p>Agrega el aeropuerto más cercano, el tiempo de viaje y si habrá transporte para los invitados.</p>
+        <ul><li data-lz-group="airport"><b>Aeropuerto</b><span data-lz="airport">Agrega el aeropuerto más cercano y el tiempo de viaje.</span></li><li data-lz-group="transport"><b>Transporte</b><span data-lz="transport">Indica si habrá transporte para los invitados.</span></li></ul>
       </div>
-      <div>
+      <div data-lz-group="guideFood guideCulture guidePlans">
         <p class="eyebrow">Guía de la ciudad</p>
         <h3>Turismo y actividades</h3>
         <ul>
-          <li><b>Restaurantes</b>Agrega recomendaciones de la zona.</li>
-          <li><b>Museos y cultura</b>Lugares de interés para visitar.</li>
-          <li><b>Actividades</b>Planes para disfrutar esos días.</li>
+          <li data-lz-group="guideFood"><b>Restaurantes</b><span data-lz="guideFood">Agrega recomendaciones de la zona.</span></li>
+          <li data-lz-group="guideCulture"><b>Museos y cultura</b><span data-lz="guideCulture">Lugares de interés para visitar.</span></li>
+          <li data-lz-group="guidePlans"><b>Actividades</b><span data-lz="guidePlans">Planes para disfrutar esos días.</span></li>
         </ul>
       </div>
     </div>
   </section>
 
-  <section class="quote-section">
+  <section class="quote-section" data-lz-group="quote">
     <svg width="36" height="36" viewBox="0 0 40 40" fill="none" stroke="#79634b" stroke-width="3" style="display:block;margin:0 auto" aria-hidden="true"><path d="M20 4v32M4 20h32M8.7 8.7l22.6 22.6M8.7 31.3 31.3 8.7"/></svg>
-    <blockquote class="display">“Amar no es mirarse el uno al otro; es mirar juntos en la misma dirección.”</blockquote>
-    <p class="eyebrow">Antoine de Saint-Exupéry</p>
+    <blockquote class="display" data-lz="quote">“Amar no es mirarse el uno al otro; es mirar juntos en la misma dirección.”</blockquote>
+    <p class="eyebrow" data-lz="quoteAuthor">Antoine de Saint-Exupéry</p>
   </section>
 
 
@@ -342,7 +347,7 @@ a:hover{opacity:.75}
     <h2 class="section-title">Nos encantará<br><em>celebrar con ustedes.</em></h2>
     <div style="margin:32px 0;padding:24px 0;border-top:1px solid #293c3533;border-bottom:1px solid #293c3533"><p class="display" style="font-size:30px">Familia Rodríguez</p><p style="margin-top:12px;font-size:14px">4 cupos reservados</p></div>
     <form id="rsvpForm" novalidate style="display:flex;flex-direction:column;gap:28px">
-      <p style="font-size:14px;line-height:1.9"><span data-lz="rsvpMsg">Nuestra celebración es exclusivamente para adultos.</span> Confirma quiénes de esta invitación podrán acompañarnos; pueden cambiar su respuesta hasta el <span data-lz-date="{d} de {M} de {Y}" data-lz-from="rsvpDeadline">12 de noviembre de 2026</span>.</p>
+      <p style="font-size:14px;line-height:1.9"><span data-lz="rsvpMsg">Nuestra celebración es exclusivamente para adultos.</span> Confirma quiénes de esta invitación podrán acompañarnos<span data-lz-group="rsvpDeadline">; pueden cambiar su respuesta hasta el <span data-lz-date="{d} de {M} de {Y}" data-lz-from="rsvpDeadline">12 de noviembre de 2026</span></span>.</p>
       <div>
         <div style="display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:12px">
           <span style="font-size:14px;font-weight:500">¿Nos acompañarán? *</span>

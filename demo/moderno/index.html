@@ -244,7 +244,7 @@ button.mo-row{width:100%;grid-template-columns:72px minmax(0,1fr) auto;align-ite
         <section class="mo-ch mo-cover" data-lz-anchor="portada" aria-label="Portada">
           <img class="mo-photo" data-lz-src="photo:0" src="/assets/fotos/beso.jpg" alt="Sofía y Tomás" style="object-position:center 55%">
           <div class="mo-cover-copy">
-            <p class="mo-kicker" data-lz-date="{W} · {d} de {M} · {Y}">Sábado · 12 de junio · 2027</p>
+            <p class="mo-kicker"><span data-lz-date="{W} · {d} de {M} · {Y}">Sábado · 12 de junio · 2027</span><span data-lz-if="city" hidden> · <span data-lz="city"></span></span></p>
             <h1><span data-lz="n1">Sofía</span><br><em>&amp; <span data-lz="n2">Tomás</span></em></h1>
             <p class="mo-cover-intro" data-lz="msg">Nos vamos a casar y queremos celebrarlo con ustedes, Familia Rodríguez.</p>
             <button type="button" class="mo-discover" data-go="1"><span aria-hidden="true">↓</span> Descubrir</button>
@@ -261,18 +261,18 @@ button.mo-row{width:100%;grid-template-columns:72px minmax(0,1fr) auto;align-ite
               <div><strong data-cd="s">—</strong><span>Segundos</span></div>
             </div>
           </div>
-          <p class="mo-count-note">Cada vez falta menos para celebrar juntos.</p>
+          <p class="mo-count-note" data-lz="countdownNote">Cada vez falta menos para celebrar juntos.</p>
         </section>
 
         <section class="mo-ch is-grow" aria-label="El día" data-lz-anchor="itinerario musica">
           <p class="mo-kicker">El día</p>
           <h2 class="mo-display" style="margin-top:18px"><span data-lz-date="{W},">Sábado,</span><br><em data-lz-date="{d} de {M}">12 de junio</em></h2>
           <div style="margin-top:auto;padding-top:32px" data-lz-list="events">
-            <div class="mo-row" data-lz-item><span class="mo-row-time" data-lz-f="time">16:00</span><div><p class="mo-row-title" data-lz-f="name">Ceremonia</p><p class="mo-row-text"><span data-lz-f="placeName">Lugar de la ceremonia</span><br><span data-lz-f="addr">Dirección de la ceremonia</span></p><a class="mo-underline" href="#" data-lz-f="map">Cómo llegar <svg class="mo-arrow" aria-hidden="true"><use href="#ext"/></svg></a></div></div>
-            <div class="mo-row" data-lz-item><span class="mo-row-key" data-lz-f="time">Después</span><div><p class="mo-row-title" data-lz-f="name">Recepción</p><p class="mo-row-text"><span data-lz-f="placeName">Lugar de la recepción</span><br><span data-lz-f="addr">Dirección de la recepción</span></p><a class="mo-underline" href="#" data-lz-f="map">Cómo llegar <svg class="mo-arrow" aria-hidden="true"><use href="#ext"/></svg></a></div></div>
-            <div class="mo-dress" id="dress">
+            <div class="mo-row" data-lz-item><span class="mo-row-time" data-lz-f="time">16:00</span><div><p class="mo-row-title" data-lz-f="name">Ceremonia</p><p class="mo-row-text"><span data-lz-f="place">Lugar de la ceremonia</span><br><span data-lz-f="address">Dirección de la ceremonia</span></p><a class="mo-underline" href="#" data-lz-f="map">Cómo llegar <svg class="mo-arrow" aria-hidden="true"><use href="#ext"/></svg></a></div></div>
+            <div class="mo-row" data-lz-item><span class="mo-row-key" data-lz-f="time">Después</span><div><p class="mo-row-title" data-lz-f="name">Recepción</p><p class="mo-row-text"><span data-lz-f="place">Lugar de la recepción</span><br><span data-lz-f="address">Dirección de la recepción</span></p><a class="mo-underline" href="#" data-lz-f="map">Cómo llegar <svg class="mo-arrow" aria-hidden="true"><use href="#ext"/></svg></a></div></div>
+            <div class="mo-dress" id="dress" data-lz-group="dressCode dressNotes dressColors">
               <button type="button" class="mo-row" aria-expanded="false" aria-controls="dressBody" id="dressBtn"><span class="mo-row-key">Nota</span><span class="mo-row-title">Código de vestimenta</span><span class="mo-faq-plus" aria-hidden="true">+</span></button>
-              <div id="dressBody" class="mo-dress-body" hidden><p>Agrega las recomendaciones de vestimenta para los invitados.</p><p class="mo-label" style="margin-top:16px;color:var(--muted)">Colores reservados</p><p>Indica los colores reservados y otras recomendaciones de vestimenta.</p></div>
+              <div id="dressBody" class="mo-dress-body" hidden><p data-lz="dressCode" data-lz-if="dressCode" hidden style="font:400 22px/1.2 var(--serif);color:var(--ink);margin-bottom:6px"></p><p data-lz="dressNotes">Agrega las recomendaciones de vestimenta para los invitados.</p><div data-lz-group="dressColors"><p class="mo-label" style="margin-top:16px;color:var(--muted)">Colores reservados</p><p data-lz="dressColors">Indica los colores reservados y otras recomendaciones de vestimenta.</p></div></div>
             </div>
           </div>
         </section>
@@ -280,7 +280,7 @@ button.mo-row{width:100%;grid-template-columns:72px minmax(0,1fr) auto;align-ite
         <section class="mo-ch is-sand" data-lz-anchor="rsvp" aria-label="Confirmación">
           <p class="mo-kicker">Confirmación</p>
           <h2 class="mo-display" style="margin-top:18px" id="rsTitle">¿Nos acompañan?</h2>
-          <p class="mo-text" style="margin-top:18px;max-width:380px" id="rsText">Tienen 4 cupos reservados. Confirmen por persona antes de la fecha límite de confirmación.</p>
+          <p class="mo-text" style="margin-top:18px;max-width:380px" id="rsText">Tienen 4 cupos reservados. Confirmen por persona antes de la fecha límite de confirmación.</p><p class="mo-text" data-lz="rsvpMsg" data-lz-if="rsvpMsg" hidden style="margin-top:12px;max-width:380px;font-size:13px"></p><p class="mo-text" data-lz-if="rsvpDeadline" hidden style="margin-top:8px;font-size:13px">Confirmen antes del <span data-lz-date="{d} de {M}" data-lz-from="rsvpDeadline"></span></p>
           <div style="margin-top:auto;padding-top:24px">
             <div id="peopleList"></div>
             <button type="button" class="mo-pill" style="margin-top:22px" id="rsOpen">Confirmar asistencia</button>
@@ -292,7 +292,7 @@ button.mo-row{width:100%;grid-template-columns:72px minmax(0,1fr) auto;align-ite
           <div class="mo-story-copy">
             <p class="mo-kicker">Nuestra historia</p>
             <h2 data-lz="storyTitle">Una historia <em>escrita juntos.</em></h2>
-            <p class="mo-text" data-lz="story" style="margin-top:16px;max-width:460px">Cuenta cómo se conocieron los novios. Comparte sus recuerdos favoritos juntos. Describe la nueva etapa que están por comenzar.</p>
+            <p class="mo-text" data-lz="story" style="margin-top:16px;max-width:460px">Cuenta cómo se conocieron los novios. Comparte sus recuerdos favoritos juntos. Describe la nueva etapa que están por comenzar.</p><blockquote data-lz-if="quote" hidden style="margin:22px 0 0;max-width:460px"><p data-lz="quote" style="font:italic 400 24px/1.3 var(--serif)"></p><p data-lz="quoteAuthor" class="mo-label" style="margin-top:8px;color:var(--muted)"></p></blockquote>
             <div class="mo-thumbs mo-ns" data-lz-list="gallery" aria-label="Galería de fotos"><img data-lz-item data-lz-f="img" src="/assets/fotos/beso.jpg" alt="Foto 1" loading="lazy"><img data-lz-item data-lz-f="img" src="/assets/fotos/muro.jpg" alt="Foto 2" loading="lazy"><img data-lz-item data-lz-f="img" src="/assets/fotos/escalera.jpg" alt="Foto 3" loading="lazy"><img data-lz-item data-lz-f="img" src="/assets/fotos/paseo.jpg" alt="Foto 4" loading="lazy"><img data-lz-item data-lz-f="img" src="/assets/fotos/torre.jpg" alt="Foto 5" loading="lazy"></div>
           </div>
         </section>
@@ -313,27 +313,22 @@ button.mo-row{width:100%;grid-template-columns:72px minmax(0,1fr) auto;align-ite
         <section class="mo-ch is-tall" aria-label="Viaje" data-lz-show="viajeOn" data-lz-anchor="viaje">
           <p class="mo-kicker">Viaje</p>
           <h2 class="mo-display" style="margin-top:18px">Si vienen <em>de viaje</em></h2>
-          <p class="mo-text" style="margin-top:18px;max-width:460px">Todo lo que necesitan para llegar, descansar y conocer la ciudad durante esos días.</p>
+          <p class="mo-text" data-lz="travelIntro" style="margin-top:18px;max-width:460px">Todo lo que necesitan para llegar, descansar y conocer la ciudad durante esos días.</p>
           <div style="margin-top:40px">
             <p class="mo-label" style="color:var(--muted);margin-bottom:6px">Alojamiento</p>
-            <div class="mo-row"><span class="mo-row-key">Hotel</span><div><p class="mo-row-title" data-lz="hotel">Nombre del hotel</p><p class="mo-row-text" data-lz="travelNotes">Agrega los alojamientos recomendados y la información para reservar.</p><p class="mo-row-text">Dirección del hotel</p></div></div>
-            <div class="mo-row"><span class="mo-row-key">Código</span><div><p class="mo-row-title">Código de reserva</p><p class="mo-row-text">Indica cómo utilizar el código de reserva.</p></div></div>
-            <div class="mo-row" style="border-bottom:1px solid var(--line)"><span class="mo-row-key">Detalles</span>
-              <dl class="mo-details">
-                <div><dt>Habitación estándar</dt><dd>Agrega los detalles de la habitación estándar.</dd></div>
-                <div><dt>Suite</dt><dd>Agrega los detalles de la suite.</dd></div>
-                <div><dt>Entrada y salida</dt><dd>Indica los horarios de entrada y salida.</dd></div>
-                <div><dt>Reservas</dt><dd>Agrega los datos de contacto para reservar.</dd></div>
-              </dl>
+            <div class="mo-row" data-lz-group="hotel hotelAddress hotelNotes"><span class="mo-row-key">Hotel</span><div><p class="mo-row-title" data-lz="hotel">Nombre del hotel</p><p class="mo-row-text" data-lz="hotelNotes">Agrega los alojamientos recomendados y la información para reservar.</p><p class="mo-row-text" data-lz="hotelAddress">Dirección del hotel</p></div></div>
+            <div class="mo-row" data-lz-group="hotelCode hotelLink"><span class="mo-row-key">Código</span><div><p class="mo-row-title" data-lz="hotelCode">Código de reserva</p><p class="mo-row-text"><a class="mo-underline" href="#" data-lz-href="hotelLink">Reservar <svg class="mo-arrow" aria-hidden="true"><use href="#ext"/></svg></a></p></div></div>
+            <div class="mo-row" style="border-bottom:1px solid var(--line)" data-lz-group="airport transport"><span class="mo-row-key">Cómo llegar</span>
+              <dl class="mo-details"><div data-lz-group="airport"><dt>Aeropuerto</dt><dd data-lz="airport">Agrega el aeropuerto más cercano y el tiempo de viaje.</dd></div><div data-lz-group="transport"><dt>Transporte</dt><dd data-lz="transport">Indica si habrá transporte para los invitados.</dd></div></dl>
             </div>
           </div>
-          <div style="margin-top:48px">
+          <div style="margin-top:48px" data-lz-group="guideFood guideCulture guidePlans">
             <p class="mo-label" style="color:var(--muted)">Guía de la ciudad</p>
             <h3 class="mo-serif" style="margin:10px 0 20px;font-size:34px;line-height:1.05">Turismo y actividades</h3>
             <div data-acc="guide">
-              <div class="mo-faq is-open"><button type="button" aria-expanded="true"><span class="mo-faq-q" style="margin-top:0">Restaurantes</span><span class="mo-faq-plus" aria-hidden="true">+</span></button><div class="mo-guide"><p class="mo-guide-note">Agrega recomendaciones de la zona.</p><p class="n">Nombre del restaurante</p><p class="d">Agrega una descripción.</p></div></div>
-              <div class="mo-faq"><button type="button" aria-expanded="false"><span class="mo-faq-q" style="margin-top:0">Museos y cultura</span><span class="mo-faq-plus" aria-hidden="true">+</span></button><div class="mo-guide" hidden><p class="mo-guide-note">Agrega recomendaciones de la zona.</p><p class="n">Lugar de interés cultural</p><p class="d">Agrega una descripción.</p></div></div>
-              <div class="mo-faq"><button type="button" aria-expanded="false"><span class="mo-faq-q" style="margin-top:0">Actividades para disfrutar</span><span class="mo-faq-plus" aria-hidden="true">+</span></button><div class="mo-guide" hidden><p class="mo-guide-note">Agrega recomendaciones de la zona.</p><p class="n">Actividad local</p><p class="d">Agrega una descripción.</p></div></div>
+              <div class="mo-faq is-open" data-lz-group="guideFood"><button type="button" aria-expanded="true"><span class="mo-faq-q" style="margin-top:0">Restaurantes</span><span class="mo-faq-plus" aria-hidden="true">+</span></button><div class="mo-guide"><p class="mo-guide-note" data-lz="guideFood">Agrega recomendaciones de la zona.</p></div></div>
+              <div class="mo-faq" data-lz-group="guideCulture"><button type="button" aria-expanded="false"><span class="mo-faq-q" style="margin-top:0">Museos y cultura</span><span class="mo-faq-plus" aria-hidden="true">+</span></button><div class="mo-guide" hidden><p class="mo-guide-note" data-lz="guideCulture">Agrega recomendaciones de la zona.</p></div></div>
+              <div class="mo-faq" data-lz-group="guidePlans"><button type="button" aria-expanded="false"><span class="mo-faq-q" style="margin-top:0">Actividades para disfrutar</span><span class="mo-faq-plus" aria-hidden="true">+</span></button><div class="mo-guide" hidden><p class="mo-guide-note" data-lz="guidePlans">Agrega recomendaciones de la zona.</p></div></div>
             </div>
             <div style="border-top:1px solid var(--line)"></div>
           </div>

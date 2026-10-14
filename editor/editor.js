@@ -60,7 +60,14 @@
       gallery: 'Galería', galCount: function (n, touch) { return n + ' de 12 fotos · ' + (touch ? 'ordénalas con las flechas' : 'arrastra para ordenar'); }, upPhotos: 'Subir fotos',
       photoN: function (i) { return 'Foto ' + i; }, movePrev: 'Mover antes', moveNext: 'Mover después', delPhoto: 'Quitar foto', galFull: 'Llegaste a 12 fotos.',
       galK: 'Complemento · Galería compartida', galT: '¿Y las fotos que tomen tus invitados?', galS: 'Que las suban a este mismo álbum, sin grupos de WhatsApp. [$]',
-      event: 'Evento', eventPh: 'Nombre del evento', time: 'Hora', place: 'Lugar y dirección', placePh: 'Lugar · dirección',
+      event: 'Evento', eventPh: 'Nombre del evento', time: 'Hora', place: 'Lugar', placePh: 'Nombre del lugar', address: 'Dirección', addressPh: 'Calle, número y ciudad',
+      countdownNote: 'Frase de la cuenta regresiva', countdownNotePh: 'Cada vez falta menos para celebrar juntos.',
+      quote: 'Una frase o cita (opcional)', quotePh: 'Una frase que los represente', quoteAuthor: 'Autor de la frase', quoteAuthorPh: 'Quién la dijo',
+      dressK: 'Código de vestimenta', dressCode: 'Estilo', dressCodePh: 'Formal, cóctel, playa…', dressNotes: 'Recomendaciones', dressNotesPh: 'Lo que conviene saber para vestirse', dressColors: 'Colores reservados', dressColorsPh: 'p. ej. blanco y marfil',
+      travelIntro: 'Introducción', travelIntroPh: 'Todo lo que necesitan para llegar y disfrutar esos días.', hotelK: 'Hotel', hotelAddress: 'Dirección del hotel', hotelCode: 'Código de reserva', hotelCodePh: 'p. ej. BODA-AL',
+      gettingK: 'Cómo llegar', airport: 'Aeropuerto', airportPh: 'Aeropuerto más cercano y tiempo de viaje', transport: 'Transporte', transportPh: '¿Habrá transporte para los invitados?',
+      guideK: 'Guía de la ciudad', guideFood: 'Restaurantes', guideCulture: 'Museos y cultura', guidePlans: 'Actividades', guidePh: 'Sus recomendaciones',
+      emptyHidden: 'Lo que dejes vacío no aparece en la invitación.',
       moveUp: 'Mover arriba', moveDown: 'Mover abajo', delEvent: 'Eliminar evento', addEvent: 'Añadir evento', noEvents: 'Aún no hay eventos. Añade el primero con los atajos de abajo.',
       libroK: 'Complemento · Libro de visitas QR', libroT: 'Un QR en las mesas para que te dejen mensajes y fotos durante la fiesta.',
       q: 'Pregunta', qPh: 'Escribe la pregunta', a: 'Respuesta', aPh: 'Escribe la respuesta', delQ: 'Eliminar pregunta', addQ: '+ Añadir pregunta',
@@ -72,9 +79,9 @@
       playlistK: 'Complemento · Playlist colaborativa', playlistT: 'Deja que tus invitados armen la playlist de la fiesta.',
       viajeShow: 'Mostrar esta sección en mi invitación', viajeOnHint: 'Visible para todos tus invitados.', viajeOffHint: 'Oculta: no aparecerá en tu invitación.',
       hotel: 'Hotel recomendado', hotelPh: 'Nombre del hotel', hotelLink: 'Enlace de reserva', hotelLinkPh: 'https://…',
-      notes: 'Notas para los invitados', notesPh: 'Código de descuento, transporte, qué hacer en la ciudad…',
+      notes: 'Notas del hotel', notesPh: 'Tarifa especial, horarios de entrada y salida, contacto para reservar…',
       destK: 'Paquete · Boda destino', destT: 'Sitio bilingüe y dominio propio para tus invitados de fuera',
-      deadline: 'Fecha límite para confirmar', rsvpMsg: 'Mensaje en el formulario', rsvpMsgPh: 'Nos encantaría verte allí',
+      deadline: 'Fecha límite para confirmar', rsvpMsg: 'Nota para los invitados', rsvpMsgPh: 'p. ej. Nuestra celebración es solo para adultos.',
       diet: 'Preguntar por alergias o dieta', dietHint: 'Cada invitado puede indicar lo que no come.',
       note: 'Permitir una nota para los novios', noteHint: 'Un espacio libre al final del formulario.', offHint: 'Desactivado.',
       capsulaK: 'Complemento · Cápsula de mensajes', capsulaT: 'Convierte las notas en una cápsula que se abre en su aniversario.',
@@ -158,7 +165,14 @@
       gallery: 'Gallery', galCount: function (n, touch) { return n + ' of 12 photos · ' + (touch ? 'use the arrows to reorder' : 'drag to reorder'); }, upPhotos: 'Upload photos',
       photoN: function (i) { return 'Photo ' + i; }, movePrev: 'Move earlier', moveNext: 'Move later', delPhoto: 'Remove photo', galFull: 'You reached 12 photos.',
       galK: 'Add-on · Shared gallery', galT: 'What about the photos your guests take?', galS: 'Let them upload to this same album, no group chats. [$]',
-      event: 'Event', eventPh: 'Event name', time: 'Time', place: 'Place and address', placePh: 'Venue · address',
+      event: 'Event', eventPh: 'Event name', time: 'Time', place: 'Venue', placePh: 'Venue name', address: 'Address', addressPh: 'Street, number and city',
+      countdownNote: 'Countdown line', countdownNotePh: 'The countdown to celebrating together is on.',
+      quote: 'A quote (optional)', quotePh: 'A line that represents you', quoteAuthor: 'Quote author', quoteAuthorPh: 'Who said it',
+      dressK: 'Dress code', dressCode: 'Style', dressCodePh: 'Formal, cocktail, beach…', dressNotes: 'Recommendations', dressNotesPh: 'What guests should know about what to wear', dressColors: 'Reserved colors', dressColorsPh: 'e.g. white and ivory',
+      travelIntro: 'Introduction', travelIntroPh: 'Everything you need to get here and enjoy those days.', hotelK: 'Hotel', hotelAddress: 'Hotel address', hotelCode: 'Booking code', hotelCodePh: 'e.g. WEDDING-AL',
+      gettingK: 'Getting there', airport: 'Airport', airportPh: 'Nearest airport and travel time', transport: 'Transportation', transportPh: 'Will there be transportation for guests?',
+      guideK: 'City guide', guideFood: 'Restaurants', guideCulture: 'Museums & culture', guidePlans: 'Activities', guidePh: 'Your recommendations',
+      emptyHidden: 'Anything you leave empty won’t appear in the invitation.',
       moveUp: 'Move up', moveDown: 'Move down', delEvent: 'Delete event', addEvent: 'Add event', noEvents: 'No events yet. Add the first one with the shortcuts below.',
       libroK: 'Add-on · QR guestbook', libroT: 'A QR code on the tables so guests leave messages and photos during the party.',
       q: 'Question', qPh: 'Write the question', a: 'Answer', aPh: 'Write the answer', delQ: 'Delete question', addQ: '+ Add question',
@@ -170,9 +184,9 @@
       playlistK: 'Add-on · Collaborative playlist', playlistT: 'Let your guests build the party playlist.',
       viajeShow: 'Show this section in my invitation', viajeOnHint: 'Visible to all your guests.', viajeOffHint: 'Hidden: it won’t appear in your invitation.',
       hotel: 'Recommended hotel', hotelPh: 'Hotel name', hotelLink: 'Booking link', hotelLinkPh: 'https://…',
-      notes: 'Notes for guests', notesPh: 'Discount code, transport, things to do in town…',
+      notes: 'Hotel notes', notesPh: 'Special rate, check-in and check-out times, booking contact…',
       destK: 'Bundle · Destination wedding', destT: 'Bilingual site and custom domain for your out-of-town guests',
-      deadline: 'RSVP deadline', rsvpMsg: 'Message on the form', rsvpMsgPh: 'We’d love to see you there',
+      deadline: 'RSVP deadline', rsvpMsg: 'Note for guests', rsvpMsgPh: 'e.g. Our celebration is adults only.',
       diet: 'Ask about allergies or diet', dietHint: 'Each guest can tell you what they don’t eat.',
       note: 'Allow a note for the couple', noteHint: 'A free-text space at the end of the form.', offHint: 'Off.',
       capsulaK: 'Add-on · Message capsule', capsulaT: 'Turn the notes into a capsule that opens on your anniversary.',
@@ -278,18 +292,20 @@
       n1: es ? 'Ana' : 'Anna', n2: es ? 'León' : 'Leo', date: '2027-03-14', city: 'Oaxaca',
       cover: '/assets/fotos/paseo.jpg', msg: es ? 'Nos casamos y queremos celebrarlo contigo.' : 'We’re getting married and want to celebrate with you.', pal: 'salvia',
       sealMode: 'mono', sealText: es ? 'A & L' : 'A & L', mono: 'amp', monoImg: '',
-      greeting: es ? 'Querida familia {apellido}' : 'Dear {surname} family',
       storyTitle: es ? 'Cómo empezó todo' : 'How it all began', story: '',
       gallery: ['/assets/fotos/beso.jpg', '/assets/fotos/escalera.jpg', '/assets/fotos/muro.jpg'],
       events: es
-        ? [{ id: 1, name: 'Ceremonia civil', time: '13:00', place: '' }, { id: 2, name: 'Comida familiar', time: '14:30', place: '' }, { id: 3, name: 'Fiesta', time: '20:00', place: '' }]
-        : [{ id: 1, name: 'Civil ceremony', time: '13:00', place: '' }, { id: 2, name: 'Family lunch', time: '14:30', place: '' }, { id: 3, name: 'Party', time: '20:00', place: '' }],
+        ? [{ id: 1, name: 'Ceremonia civil', time: '13:00', place: '', address: '' }, { id: 2, name: 'Comida familiar', time: '14:30', place: '', address: '' }, { id: 3, name: 'Fiesta', time: '20:00', place: '', address: '' }]
+        : [{ id: 1, name: 'Civil ceremony', time: '13:00', place: '', address: '' }, { id: 2, name: 'Family lunch', time: '14:30', place: '', address: '' }, { id: 3, name: 'Party', time: '20:00', place: '', address: '' }],
       faqs: es
         ? [{ id: 1, q: '¿Cuál es el código de vestimenta?', a: 'Formal. Evita el blanco, por favor.' }, { id: 2, q: '¿Pueden ir niños?', a: '' }, { id: 3, q: '¿Hay mesa de regalos?', a: '' }]
         : [{ id: 1, q: 'What is the dress code?', a: 'Formal. Please avoid white.' }, { id: 2, q: 'Are kids welcome?', a: '' }, { id: 3, q: 'Is there a gift registry?', a: '' }],
       musicOn: true, song: '',
-      viajeOn: true, hotel: '', hotelLink: '', travelNotes: '',
-      rsvpDeadline: '', rsvpMsg: es ? 'Nos encantaría verte allí.' : 'We’d love to see you there.', rsvpDiet: true, rsvpNote: true,
+      // Todos los diseños reciben y muestran estos mismos campos (ver demo/shared/content.js).
+      countdownNote: '', quote: '', quoteAuthor: '', dressCode: '', dressNotes: '', dressColors: '',
+      viajeOn: true, travelIntro: '', hotel: '', hotelAddress: '', hotelCode: '', hotelLink: '', hotelNotes: '',
+      airport: '', transport: '', guideFood: '', guideCulture: '', guidePlans: '',
+      rsvpDeadline: '', rsvpMsg: '', rsvpDiet: true, rsvpNote: true,
       polls: [{ id: 4, q: S.pollMain, opts: '' }, { id: 5, q: S.pollIdeas[0], opts: '' }], pollReveal: 'fiesta',
       capsuleDate: '', capsulePrompt: '', capsuleInRsvp: true,
       uid: 10
@@ -300,6 +316,10 @@
     if (!s || typeof s !== 'object') return d;
     Object.keys(d).forEach(function (k) { if (s[k] === undefined || typeof s[k] !== typeof d[k] || Array.isArray(d[k]) !== Array.isArray(s[k])) s[k] = d[k]; });
     if (!DESIGNS[s.design]) s.design = 'clasico';
+    // Invitaciones guardadas antes de separar lugar/dirección y de las notas del hotel.
+    s.events.forEach(function (e) { if (e.address === undefined) { var m = /^(.*?)\s[·\-–—]\s(.*)$/.exec(e.place || ''); e.place = m ? m[1] : (e.place || ''); e.address = m ? m[2] : ''; } });
+    if (s.travelNotes && !s.hotelNotes) s.hotelNotes = s.travelNotes;
+    delete s.travelNotes; delete s.greeting;
     return s;
   }
   function loadCart() {
@@ -452,7 +472,7 @@
       case 'portada': return t(s.n1) && t(s.n2) && t(s.date) && t(s.city);
       case 'apertura': return s.sealMode === 'text' ? t(s.sealText) : (s.mono !== 'custom' || t(s.monoImg));
       case 'historia': return t(s.story);
-      case 'itinerario': return s.events.length > 0 && s.events.every(function (e) { return t(e.name) && t(e.time) && t(e.place); });
+      case 'itinerario': return s.events.length > 0 && s.events.every(function (e) { return t(e.name) && t(e.time) && (t(e.place) || t(e.address)); });
       case 'faq': return s.faqs.length > 0 && s.faqs.every(function (f) { return t(f.q) && t(f.a); });
       case 'musica': return !s.musicOn || t(s.song);
       case 'viaje': return !s.viajeOn || t(s.hotel);
@@ -588,7 +608,7 @@
         '<div class="ed-stack"><span class="ed-label">' + esc(S.cover) + '</span><div class="ed-photo">' +
           (state.cover ? '<div class="ed-photo-img"><img src="' + esc(state.cover) + '" alt="' + esc(S.coverAlt) + '"></div>' : '<div class="ed-photo-img ph"></div>') +
           dropzone('cover', S.drop, S.dropHint) + '</div></div>' +
-        field(S.msg, 'msg', { rows: 3, ph: S.msgPh }) +
+        field(S.msg, 'msg', { rows: 3, ph: S.msgPh }) + field(S.countdownNote, 'countdownNote', { ph: S.countdownNotePh }) +
         (state.design !== 'clasico' ? '<div class="ed-info"><div><b>' + esc(S.palette) + '</b><span>' + esc(S.palFixed(design()[0])) + '</span></div></div>' :
         '<div class="ed-stack"><span class="ed-label" id="lblPal">' + esc(S.palette) + '</span><div class="ed-palettes" role="radiogroup" aria-labelledby="lblPal">' +
           PALETTES.map(function (p) { return '<button type="button" class="ed-pal" role="radio" aria-checked="' + (p.id === state.pal) + '" data-act="pal" data-id="' + p.id + '" data-fk="pal-' + p.id + '"><i style="background:' + p.hex + '"></i>' + esc(p[LANG]) + '</button>'; }).join('') +
@@ -618,6 +638,7 @@
     historia: function () {
       var g = state.gallery;
       return head('historia') + field(S.storyTitle, 'storyTitle') + field(S.story, 'story', { rows: 5, ph: S.storyPh }) +
+        '<div class="ed-grid2">' + field(S.quote, 'quote', { rows: 2, ph: S.quotePh, cls: 'span2' }) + field(S.quoteAuthor, 'quoteAuthor', { ph: S.quoteAuthorPh }) + '</div>' +
         '<div class="ed-stack"><div style="display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap"><span class="ed-label">' + esc(S.gallery) + '</span><span class="ed-hint">' + esc(S.galCount(g.length, window.matchMedia('(pointer: coarse)').matches)) + '</span></div>' +
         '<div class="ed-gallery">' + g.map(function (src, i) {
           return '<div class="ed-thumb" draggable="true" data-gi="' + i + '"><img src="' + esc(src) + '" alt="' + esc(S.photoN(i + 1)) + '" draggable="false"><div class="ed-thumb-tools">' +
@@ -636,12 +657,13 @@
             '<button type="button" data-act="ev-move" data-i="' + i + '" data-d="-1" data-fk="evu-' + e.id + '" aria-label="' + esc(S.moveUp) + '"' + (i === 0 ? ' disabled' : '') + '>' + svg(P.up, 14, 2) + '</button>' +
             '<span aria-hidden="true">' + pad(i + 1) + '</span>' +
             '<button type="button" data-act="ev-move" data-i="' + i + '" data-d="1" data-fk="evd-' + e.id + '" aria-label="' + esc(S.moveDown) + '"' + (i === ev.length - 1 ? ' disabled' : '') + '>' + svg(P.down, 14, 2) + '</button></div>' +
-            '<div class="ed-ev-grid">' + listField('events', i, 'name', S.event, { cls: 'wide', ph: S.eventPh }) + listField('events', i, 'time', S.time, { type: 'time' }) + listField('events', i, 'place', S.place, { cls: 'full', ph: S.placePh }) + '</div>' +
+            '<div class="ed-ev-grid">' + listField('events', i, 'name', S.event, { cls: 'wide', ph: S.eventPh }) + listField('events', i, 'time', S.time, { type: 'time' }) + listField('events', i, 'place', S.place, { cls: 'full', ph: S.placePh }) + listField('events', i, 'address', S.address, { cls: 'full', ph: S.addressPh }) + '</div>' +
             delBtn('ev-del', i, S.delEvent + ' ' + (i + 1), 'evx-' + e.id) + '</li>';
         }).join('') + '</ol>' : '<p class="ed-empty">' + esc(S.noEvents) + '</p>') +
         '<div class="ed-stack"><span class="ed-label">' + esc(S.addEvent) + '</span><div class="ed-presets">' + PRESETS.map(function (p, i) {
           return '<button type="button" class="ed-btn ed-btn-dash ed-btn-sm" data-act="ev-add" data-i="' + i + '" data-fk="evadd-' + i + '">+ ' + esc(p) + '</button>';
         }).join('') + '</div></div>' +
+        '<div class="ed-stack ed-group"><h2 class="ed-sub">' + esc(S.dressK) + '</h2>' + field(S.dressCode, 'dressCode', { ph: S.dressCodePh }) + field(S.dressNotes, 'dressNotes', { rows: 2, ph: S.dressNotesPh }) + field(S.dressColors, 'dressColors', { ph: S.dressColorsPh }) + '</div>' +
         addonUpsell('libro', { light: true, k: S.libroK, t: esc(S.libroT) });
     },
     faq: function () {
@@ -664,7 +686,11 @@
     },
     viaje: function () {
       return head('viaje') + toggleRow('viajeOn', S.viajeShow, S.viajeOnHint, S.viajeOffHint) +
-        (state.viajeOn ? '<div class="ed-stack" style="gap:16px">' + field(S.hotel, 'hotel', { ph: S.hotelPh }) + field(S.hotelLink, 'hotelLink', { ph: S.hotelLinkPh, type: 'url' }) + field(S.notes, 'travelNotes', { rows: 3, ph: S.notesPh }) +
+        (state.viajeOn ? '<div class="ed-stack" style="gap:16px"><p class="ed-hint" style="margin:0">' + esc(S.emptyHidden) + '</p>' + field(S.travelIntro, 'travelIntro', { rows: 2, ph: S.travelIntroPh }) +
+          '<div class="ed-stack ed-group"><h2 class="ed-sub">' + esc(S.hotelK) + '</h2>' + field(S.hotel, 'hotel', { ph: S.hotelPh }) + field(S.hotelAddress, 'hotelAddress') +
+            '<div class="ed-grid2">' + field(S.hotelCode, 'hotelCode', { ph: S.hotelCodePh }) + field(S.hotelLink, 'hotelLink', { ph: S.hotelLinkPh, type: 'url' }) + '</div>' + field(S.notes, 'hotelNotes', { rows: 3, ph: S.notesPh }) + '</div>' +
+          '<div class="ed-stack ed-group"><h2 class="ed-sub">' + esc(S.gettingK) + '</h2>' + field(S.airport, 'airport', { rows: 2, ph: S.airportPh }) + field(S.transport, 'transport', { rows: 2, ph: S.transportPh }) + '</div>' +
+          '<div class="ed-stack ed-group"><h2 class="ed-sub">' + esc(S.guideK) + '</h2>' + field(S.guideFood, 'guideFood', { rows: 2, ph: S.guidePh }) + field(S.guideCulture, 'guideCulture', { rows: 2, ph: S.guidePh }) + field(S.guidePlans, 'guidePlans', { rows: 2, ph: S.guidePh }) + '</div>' +
           upsell({ k: S.destK, t: esc(S.destT), act: 'drawer', label: S.seePack }) + '</div>' : '');
     },
     rsvp: function () {
@@ -1010,7 +1036,7 @@
       case 'ev-del': state.events.splice(i, 1); changed(true); focusAfterDelete('[data-list="events"][data-f="name"]', i, '[data-fk="evadd-0"]'); break;
       case 'ev-add':
         var name = PRESETS[i], last = i === PRESETS.length - 1;
-        state.events.push({ id: ++state.uid, name: last ? '' : name, time: '', place: '' }); changed(true);
+        state.events.push({ id: ++state.uid, name: last ? '' : name, time: '', place: '', address: '' }); changed(true);
         var inputs = $$('[data-list="events"][data-f="' + (last ? 'name' : 'time') + '"]'); if (inputs.length) inputs[inputs.length - 1].focus();
         break;
       case 'faq-add':

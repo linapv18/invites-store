@@ -234,6 +234,7 @@ a:hover{opacity:.75}
       <p class="eyebrow">We’re getting married</p>
       <h1 class="hero-title"><span data-lz="n1">Valentina</span><br><em>&amp;</em> <span data-lz="n2">Martín</span></h1>
       <div class="hero-date"><span class="display" data-lz-date="{d}">12</span><i></i><p class="eyebrow" style="line-height:24px"><span data-lz-date="{Mc} · {Y}">December · 2026</span><br><span data-lz="city">City, country</span></p></div>
+      <p data-lz="msg" data-lz-if="msg" hidden style="max-width:420px;font:italic 19px/1.5 Georgia,serif;opacity:.85"></p>
       <a href="#celebracion" class="text-link">Our big day <svg class="arrow" style="rotate:90deg" aria-hidden="true"><use href="#arr"/></svg></a>
     </div>
     <div class="hero-photo">
@@ -266,7 +267,7 @@ a:hover{opacity:.75}
       </div>
       <div class="ceremony-details">
         <div><p class="display ceremony-time" data-lz="time0">7:30 <span>p.m.</span></p><p class="eyebrow" style="margin-top:20px">Local time · <span data-lz="city">City, country</span></p></div>
-        <p class="ceremony-note">The countdown<br>to celebrating together.</p>
+        <p class="ceremony-note" data-lz="countdownNote">The countdown<br>to celebrating together.</p>
       </div>
       <div class="ceremony-countdown" role="timer" aria-label="Time left until the ceremony" aria-live="off">
         <div><span class="countdown-number" data-cd="d">—</span><span class="countdown-label">Days</span></div>
@@ -282,8 +283,9 @@ a:hover{opacity:.75}
     <div data-lz-list="events">
       <p class="eyebrow" style="margin-bottom:24px">Where we’ll meet</p>
       <h2 class="section-title">Location</h2>
-      <div class="venue-card" data-lz-item><p class="eyebrow"><span data-lz-f="name">Ceremony</span><span data-lz-f="time"></span></p><h3 data-lz-f="placeName">Ceremony venue</h3><a href="#ubicacion" data-lz-f="map"><span data-lz-f="placeAddr">Ceremony address</span> <svg class="arrow" aria-hidden="true"><use href="#arr"/></svg></a></div>
-      <div class="venue-card" data-lz-item><p class="eyebrow"><span data-lz-f="name">Reception</span><span data-lz-f="time"></span></p><h3 data-lz-f="placeName">Reception venue</h3><a href="#ubicacion" data-lz-f="map"><span data-lz-f="placeAddr">Reception address</span> <svg class="arrow" aria-hidden="true"><use href="#arr"/></svg></a></div>
+      <div class="venue-card" data-lz-item><p class="eyebrow"><span data-lz-f="name">Ceremony</span><span data-lz-f="time"></span></p><h3 data-lz-f="place">Ceremony venue</h3><a href="#ubicacion" data-lz-f="map"><span data-lz-f="mapText">Ceremony address</span> <svg class="arrow" aria-hidden="true"><use href="#arr"/></svg></a></div>
+      <div class="venue-card" data-lz-item><p class="eyebrow"><span data-lz-f="name">Reception</span><span data-lz-f="time"></span></p><h3 data-lz-f="place">Reception venue</h3><a href="#ubicacion" data-lz-f="map"><span data-lz-f="mapText">Reception address</span> <svg class="arrow" aria-hidden="true"><use href="#arr"/></svg></a></div>
+      <div class="venue-card" data-lz-group="dressCode dressNotes dressColors"><p class="eyebrow">Dress code</p><h3 data-lz="dressCode">Formal</h3><p data-lz="dressNotes" style="font-size:13px;line-height:1.8">Add your dress code recommendations for guests.</p><p data-lz-group="dressColors" style="font-size:13px;line-height:1.8;margin-top:6px"><b style="font-weight:600">Reserved colors:</b> <span data-lz="dressColors">List any reserved colors.</span></p></div>
       <a href="#viaje" class="button" data-lz-show="viajeOn" style="margin-top:32px">Travel & stay <svg class="arrow" aria-hidden="true"><use href="#arr"/></svg></a>
     </div>
   </section>
@@ -291,34 +293,37 @@ a:hover{opacity:.75}
   <section class="section-shell" id="viaje" data-lz-show="viajeOn" data-lz-anchor="viaje" style="border-top:1px solid #293c3520">
     <p class="eyebrow" style="margin-bottom:24px">Coming from out of town</p>
     <h2 class="section-title">Travel & stay</h2>
+    <p data-lz="travelIntro" data-lz-if="travelIntro" hidden style="max-width:620px;margin-top:20px;font-size:14px;line-height:1.9"></p>
     <div class="travel-grid">
-      <div>
+      <div data-lz-group="hotel hotelAddress hotelCode hotelNotes">
         <p class="eyebrow">Where to stay</p>
         <h3 data-lz="hotel">Hotel name</h3>
-        <p data-lz="travelNotes">Hotel address. We have a special rate with the code <strong>WEDDING-VM</strong>.</p>
+        <p data-lz="hotelAddress">Hotel address</p>
+        <p data-lz-group="hotelCode">We have a special rate with the code <strong data-lz="hotelCode">WEDDING-VM</strong>.</p>
+        <p data-lz="hotelNotes" data-lz-if="hotelNotes" hidden></p>
         <a href="#viaje" class="text-link" data-lz-href="hotelLink" style="margin-top:22px">Book <svg class="arrow" aria-hidden="true"><use href="#arr"/></svg></a>
       </div>
-      <div>
+      <div data-lz-group="airport transport">
         <p class="eyebrow">Getting there</p>
         <h3>Airport & transportation</h3>
-        <p>Add the nearest airport, travel time and whether there will be transportation for guests.</p>
+        <ul><li data-lz-group="airport"><b>Airport</b><span data-lz="airport">Add the nearest airport and travel time.</span></li><li data-lz-group="transport"><b>Transportation</b><span data-lz="transport">Let guests know if transportation will be provided.</span></li></ul>
       </div>
-      <div>
+      <div data-lz-group="guideFood guideCulture guidePlans">
         <p class="eyebrow">City guide</p>
         <h3>Sights & activities</h3>
         <ul>
-          <li><b>Restaurants</b>Add local recommendations.</li>
-          <li><b>Museums & culture</b>Places worth visiting.</li>
-          <li><b>Activities</b>Things to enjoy while you’re in town.</li>
+          <li data-lz-group="guideFood"><b>Restaurants</b><span data-lz="guideFood">Add local recommendations.</span></li>
+          <li data-lz-group="guideCulture"><b>Museums & culture</b><span data-lz="guideCulture">Places worth visiting.</span></li>
+          <li data-lz-group="guidePlans"><b>Activities</b><span data-lz="guidePlans">Things to enjoy while you’re in town.</span></li>
         </ul>
       </div>
     </div>
   </section>
 
-  <section class="quote-section">
+  <section class="quote-section" data-lz-group="quote">
     <svg width="36" height="36" viewBox="0 0 40 40" fill="none" stroke="#79634b" stroke-width="3" style="display:block;margin:0 auto" aria-hidden="true"><path d="M20 4v32M4 20h32M8.7 8.7l22.6 22.6M8.7 31.3 31.3 8.7"/></svg>
-    <blockquote class="display">“Love does not consist in gazing at each other, but in looking outward together in the same direction.”</blockquote>
-    <p class="eyebrow">Antoine de Saint-Exupéry</p>
+    <blockquote class="display" data-lz="quote">“Love does not consist in gazing at each other, but in looking outward together in the same direction.”</blockquote>
+    <p class="eyebrow" data-lz="quoteAuthor">Antoine de Saint-Exupéry</p>
   </section>
 
 
@@ -342,7 +347,7 @@ a:hover{opacity:.75}
     <h2 class="section-title">We’d love<br><em>to celebrate with you.</em></h2>
     <div style="margin:32px 0;padding:24px 0;border-top:1px solid #293c3533;border-bottom:1px solid #293c3533"><p class="display" style="font-size:30px">The Rodríguez Family</p><p style="margin-top:12px;font-size:14px">4 seats reserved</p></div>
     <form id="rsvpForm" novalidate style="display:flex;flex-direction:column;gap:28px">
-      <p style="font-size:14px;line-height:1.9"><span data-lz="rsvpMsg">Our celebration is adults only.</span> Let us know who on this invitation can join us; you can change your reply until <span data-lz-date="{Mc} {d}, {Y}" data-lz-from="rsvpDeadline">November 12, 2026</span>.</p>
+      <p style="font-size:14px;line-height:1.9"><span data-lz="rsvpMsg">Our celebration is adults only.</span> Let us know who on this invitation can join us<span data-lz-group="rsvpDeadline">; you can change your reply until <span data-lz-date="{Mc} {d}, {Y}" data-lz-from="rsvpDeadline">November 12, 2026</span></span>.</p>
       <div>
         <div style="display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:12px">
           <span style="font-size:14px;font-weight:500">Will you join us? *</span>
