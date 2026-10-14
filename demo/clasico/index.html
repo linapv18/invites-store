@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="es">
+<html lang="es" data-lz-palette>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -187,18 +187,18 @@ a:hover{opacity:.75}
     <div class="envelope-back"></div>
     <article class="envelope-letter" id="letter" aria-hidden="true" inert>
       <p class="eyebrow">¡Nos casamos!</p>
-      <h1>Valentina <em>&amp;</em> Martín</h1>
-      <p class="envelope-date">12 · DICIEMBRE · 2026</p>
+      <h1><span data-lz="n1">Valentina</span> <em>&amp;</em> <span data-lz="n2">Martín</span></h1>
+      <p class="envelope-date" data-lz-date="{d} · {MU} · {Y}">12 · DICIEMBRE · 2026</p>
       <div class="envelope-rule"></div>
       <p class="eyebrow">Con mucho cariño, para</p>
       <h2>Familia Rodríguez</h2>
-      <p>Nuestro día será aún más especial<br>con ustedes a nuestro lado.</p>
+      <p data-lz="msg">Nuestro día será aún más especial<br>con ustedes a nuestro lado.</p>
       <p class="envelope-seat">Hemos reservado <strong>4 cupos</strong> para ustedes.</p>
       <button type="button" class="button" id="enter">Abrir invitación <svg class="arrow" aria-hidden="true"><use href="#arr"/></svg></button>
     </article>
     <div class="envelope-front"></div>
     <div class="envelope-flap"></div>
-    <button type="button" class="envelope-seal" id="seal" aria-label="Abrir el sobre de la invitación"><span>V<span>&amp;</span>M</span></button>
+    <button type="button" class="envelope-seal" id="seal" data-lz-seal aria-label="Abrir el sobre de la invitación"><span>V<span>&amp;</span>M</span></button>
     <div class="envelope-address"><p>Para</p><h2>Familia Rodríguez</h2><span>CON TODO NUESTRO CARIÑO</span></div>
   </div>
   <p class="envelope-hint" id="hint" aria-live="polite">Toca el sello para abrir tu invitación</p>
@@ -208,62 +208,62 @@ a:hover{opacity:.75}
 <!-- ======================= SITIO ======================= -->
 <div style="position:relative">
   <header class="nav-shell">
-    <a href="#top" class="display nav-brand" aria-label="Valentina y Martín, inicio">V<span>&amp;</span>M</a>
+    <a href="#top" class="display nav-brand" data-lz-mono aria-label="Valentina y Martín, inicio">V<span>&amp;</span>M</a>
     <nav aria-label="Navegación principal" class="nav-links">
-      <a href="#historia">Nuestra historia</a><a href="#celebracion">Celebración</a><a href="#ubicacion">Ubicación</a><a href="#viaje">Viaje y alojamiento</a><a href="#preguntas">Preguntas frecuentes</a>
+      <a href="#historia">Nuestra historia</a><a href="#celebracion">Celebración</a><a href="#ubicacion">Ubicación</a><a href="#viaje" data-lz-show="viajeOn">Viaje y alojamiento</a><a href="#preguntas">Preguntas frecuentes</a>
     </nav>
     <a href="#confirmar" class="button nav-rsvp">Confirmar asistencia <svg class="arrow" aria-hidden="true"><use href="#arr"/></svg></a>
     <button type="button" class="mobile-toggle" id="menuOpen" aria-expanded="false" aria-controls="mobileMenu">Menú <span aria-hidden="true">☰</span></button>
   </header>
   <div class="mobile-menu" id="mobileMenu" role="dialog" aria-modal="true" aria-label="Menú de navegación" hidden>
-    <div class="mobile-menu-top"><span class="display" style="font-size:30px">V &amp; M</span><button type="button" id="menuClose" aria-label="Cerrar menú">Cerrar ×</button></div>
+    <div class="mobile-menu-top"><span class="display" data-lz-mono style="font-size:30px">V &amp; M</span><button type="button" id="menuClose" aria-label="Cerrar menú">Cerrar ×</button></div>
     <nav aria-label="Navegación móvil">
       <a class="display" href="#historia">Nuestra historia</a>
       <a class="display" href="#celebracion">Celebración</a>
       <a class="display" href="#ubicacion">Ubicación</a>
-      <a class="display" href="#viaje">Viaje y alojamiento</a>
+      <a class="display" href="#viaje" data-lz-show="viajeOn">Viaje y alojamiento</a>
       <a class="display" href="#preguntas">Preguntas frecuentes</a>
       <a class="text-link" style="align-self:flex-start" href="#confirmar">Confirmar asistencia <svg class="arrow" aria-hidden="true"><use href="#arr"/></svg></a>
     </nav>
   </div>
 
-  <section class="hero" id="top">
+  <section class="hero" id="top" data-lz-anchor="portada">
     <div class="hero-copy">
       <p class="eyebrow">Nos vamos a casar</p>
-      <h1 class="hero-title">Valentina<br><em>&amp;</em> Martín</h1>
-      <div class="hero-date"><span class="display">12</span><i></i><p class="eyebrow" style="line-height:24px">Diciembre · 2026<br>Ciudad, país</p></div>
+      <h1 class="hero-title"><span data-lz="n1">Valentina</span><br><em>&amp;</em> <span data-lz="n2">Martín</span></h1>
+      <div class="hero-date"><span class="display" data-lz-date="{d}">12</span><i></i><p class="eyebrow" style="line-height:24px"><span data-lz-date="{Mc} · {Y}">Diciembre · 2026</span><br><span data-lz="city">Ciudad, país</span></p></div>
       <a href="#celebracion" class="text-link">Nuestro gran día <svg class="arrow" style="rotate:90deg" aria-hidden="true"><use href="#arr"/></svg></a>
     </div>
     <div class="hero-photo">
-      <img class="photo" src="/assets/fotos/torre.jpg" alt="Valentina y Martín tomados de la mano" style="object-position:center 70%">
-      <div class="hero-caption"><span class="eyebrow">El comienzo de siempre</span><span class="display" style="font-size:36px">V &amp; M</span></div>
+      <img class="photo" data-lz-src="photo:0" src="/assets/fotos/torre.jpg" alt="Valentina y Martín tomados de la mano" style="object-position:center 70%">
+      <div class="hero-caption"><span class="eyebrow">El comienzo de siempre</span><span class="display" style="font-size:36px" data-lz-mono>V &amp; M</span></div>
     </div>
   </section>
 
-  <section class="section-shell story-intro" id="historia" data-gallery>
-    <div class="story-image"><img class="photo" src="/assets/fotos/beso.jpg" alt="Un recuerdo de Valentina y Martín" loading="lazy" style="object-position:center 62%"></div>
+  <section class="section-shell story-intro" id="historia" data-gallery data-lz-anchor="historia">
+    <div class="story-image"><img class="photo" data-lz-src="photo:1" src="/assets/fotos/beso.jpg" alt="Un recuerdo de Valentina y Martín" loading="lazy" style="object-position:center 62%"></div>
     <div class="story-copy">
       <span class="eyebrow">Nuestra historia</span>
-      <h2 class="section-title" style="margin-top:24px">Una historia que se escribe con el <em>tiempo.</em></h2>
-      <p>Todo comienza con pequeños momentos que, sin darse cuenta, se vuelven importantes. Esta es una historia hecha de recuerdos, caminos compartidos y capítulos que siguen escribiéndose.</p>
-      <div class="story-thumbs" aria-label="Galería de fotos">
-        <div><img class="photo" src="/assets/fotos/muro.jpg" alt="Foto 1 de la galería" loading="lazy" style="object-position:center 45%"></div>
-        <div><img class="photo" src="/assets/fotos/escalera.jpg" alt="Foto 2 de la galería" loading="lazy" style="object-position:center 65%"></div>
-        <div><img class="photo" src="/assets/fotos/paseo.jpg" alt="Foto 3 de la galería" loading="lazy" style="object-position:center 72%"></div>
-        <div><img class="photo" src="/assets/fotos/torre.jpg" alt="Foto 4 de la galería" loading="lazy" style="object-position:center 70%"></div>
+      <h2 class="section-title" style="margin-top:24px" data-lz="storyTitle">Una historia que se escribe con el <em>tiempo.</em></h2>
+      <p data-lz="story">Todo comienza con pequeños momentos que, sin darse cuenta, se vuelven importantes. Esta es una historia hecha de recuerdos, caminos compartidos y capítulos que siguen escribiéndose.</p>
+      <div class="story-thumbs" data-lz-list="gallery" aria-label="Galería de fotos">
+        <div data-lz-item><img class="photo" data-lz-f="img" src="/assets/fotos/muro.jpg" alt="Foto 1 de la galería" loading="lazy" style="object-position:center 45%"></div>
+        <div data-lz-item><img class="photo" data-lz-f="img" src="/assets/fotos/escalera.jpg" alt="Foto 2 de la galería" loading="lazy" style="object-position:center 65%"></div>
+        <div data-lz-item><img class="photo" data-lz-f="img" src="/assets/fotos/paseo.jpg" alt="Foto 3 de la galería" loading="lazy" style="object-position:center 72%"></div>
+        <div data-lz-item><img class="photo" data-lz-f="img" src="/assets/fotos/torre.jpg" alt="Foto 4 de la galería" loading="lazy" style="object-position:center 70%"></div>
       </div>
       <a href="#celebracion" class="text-link">Nuestro gran día <svg class="arrow" style="rotate:90deg" aria-hidden="true"><use href="#arr"/></svg></a>
     </div>
   </section>
 
-  <section id="celebracion" class="schedule">
+  <section id="celebracion" class="schedule" data-lz-anchor="itinerario musica">
     <div class="section-shell">
       <div class="schedule-heading">
         <div><p class="eyebrow" style="margin-bottom:24px;color:#c3cbaa">El gran día</p><h2 class="section-title">La ceremonia</h2></div>
-        <p class="eyebrow">Sábado, 12 de diciembre de 2026</p>
+        <p class="eyebrow" data-lz-date="{W}, {d} de {M} de {Y}">Sábado, 12 de diciembre de 2026</p>
       </div>
       <div class="ceremony-details">
-        <div><p class="display ceremony-time">7:30 <span>p. m.</span></p><p class="eyebrow" style="margin-top:20px">Hora de Ciudad, país</p></div>
+        <div><p class="display ceremony-time" data-lz="time0">7:30 <span>p. m.</span></p><p class="eyebrow" style="margin-top:20px">Hora de <span data-lz="city">Ciudad, país</span></p></div>
         <p class="ceremony-note">Cada vez falta menos<br>para celebrar juntos.</p>
       </div>
       <div class="ceremony-countdown" role="timer" aria-label="Tiempo restante para la ceremonia" aria-live="off">
@@ -276,25 +276,25 @@ a:hover{opacity:.75}
   </section>
 
   <section class="section-shell venue-grid" id="ubicacion">
-    <div class="venue-photo"><img class="photo" src="/assets/fotos/paseo.jpg" alt="El lugar de la celebración" loading="lazy" style="object-position:center 55%"></div>
-    <div>
+    <div class="venue-photo"><img class="photo" data-lz-src="photo:2" src="/assets/fotos/paseo.jpg" alt="El lugar de la celebración" loading="lazy" style="object-position:center 55%"></div>
+    <div data-lz-list="events">
       <p class="eyebrow" style="margin-bottom:24px">Nos encontramos aquí</p>
       <h2 class="section-title">Ubicación</h2>
-      <div class="venue-card"><p class="eyebrow">Ceremonia</p><h3>Lugar de la ceremonia</h3><a href="#ubicacion">Dirección de la ceremonia <svg class="arrow" aria-hidden="true"><use href="#arr"/></svg></a></div>
-      <div class="venue-card"><p class="eyebrow">Recepción</p><h3>Lugar de la recepción</h3><a href="#ubicacion">Dirección de la recepción <svg class="arrow" aria-hidden="true"><use href="#arr"/></svg></a></div>
-      <a href="#viaje" class="button" style="margin-top:32px">Viaje y alojamiento <svg class="arrow" aria-hidden="true"><use href="#arr"/></svg></a>
+      <div class="venue-card" data-lz-item><p class="eyebrow"><span data-lz-f="name">Ceremonia</span><span data-lz-f="time"></span></p><h3 data-lz-f="placeName">Lugar de la ceremonia</h3><a href="#ubicacion" data-lz-f="map"><span data-lz-f="placeAddr">Dirección de la ceremonia</span> <svg class="arrow" aria-hidden="true"><use href="#arr"/></svg></a></div>
+      <div class="venue-card" data-lz-item><p class="eyebrow"><span data-lz-f="name">Recepción</span><span data-lz-f="time"></span></p><h3 data-lz-f="placeName">Lugar de la recepción</h3><a href="#ubicacion" data-lz-f="map"><span data-lz-f="placeAddr">Dirección de la recepción</span> <svg class="arrow" aria-hidden="true"><use href="#arr"/></svg></a></div>
+      <a href="#viaje" class="button" data-lz-show="viajeOn" style="margin-top:32px">Viaje y alojamiento <svg class="arrow" aria-hidden="true"><use href="#arr"/></svg></a>
     </div>
   </section>
 
-  <section class="section-shell" id="viaje" style="border-top:1px solid #293c3520">
+  <section class="section-shell" id="viaje" data-lz-show="viajeOn" data-lz-anchor="viaje" style="border-top:1px solid #293c3520">
     <p class="eyebrow" style="margin-bottom:24px">Si vienen de fuera</p>
     <h2 class="section-title">Viaje y alojamiento</h2>
     <div class="travel-grid">
       <div>
         <p class="eyebrow">Alojamiento</p>
-        <h3>Nombre del hotel</h3>
-        <p>Dirección del hotel. Tenemos tarifa especial con el código <strong>BODA-VM</strong>.</p>
-        <a href="#viaje" class="text-link" style="margin-top:22px">Reservar <svg class="arrow" aria-hidden="true"><use href="#arr"/></svg></a>
+        <h3 data-lz="hotel">Nombre del hotel</h3>
+        <p data-lz="travelNotes">Dirección del hotel. Tenemos tarifa especial con el código <strong>BODA-VM</strong>.</p>
+        <a href="#viaje" class="text-link" data-lz-href="hotelLink" style="margin-top:22px">Reservar <svg class="arrow" aria-hidden="true"><use href="#arr"/></svg></a>
       </div>
       <div>
         <p class="eyebrow">Cómo llegar</p>
@@ -320,27 +320,27 @@ a:hover{opacity:.75}
   </section>
 
 
-  <section class="section-shell" id="preguntas" style="border-top:1px solid #293c3520">
+  <section class="section-shell" id="preguntas" data-lz-anchor="faq" data-lz-hide-empty style="border-top:1px solid #293c3520">
     <p class="eyebrow">Todo lo que necesitas saber</p>
     <h2 class="section-title" style="margin-top:20px">Preguntas frecuentes</h2>
-    <div class="faq-list">
-      <details><summary><span><small>Vestimenta</small><span class="display">¿Hay código de vestimenta?</span></span><b aria-hidden="true">+</b></summary><p>Agrega las recomendaciones de vestimenta para los invitados.</p></details>
-      <details><summary><span><small>Vestimenta</small><span class="display">¿Hay colores reservados?</span></span><b aria-hidden="true">+</b></summary><p>Indica los colores reservados y otras recomendaciones de vestimenta.</p></details>
-      <details><summary><span><small>Niños</small><span class="display">¿Pueden asistir niños?</span></span><b aria-hidden="true">+</b></summary><p>Indica si la celebración incluirá niños.</p></details>
-      <details><summary><span><small>Alimentación</small><span class="display">Restricciones alimentarias</span></span><b aria-hidden="true">+</b></summary><p>Agrega información sobre el menú y las opciones para necesidades alimentarias especiales.</p></details>
-      <details><summary><span><small>Regalos</small><span class="display">¿Hay lista de regalos?</span></span><b aria-hidden="true">+</b></summary><p>Su compañía es nuestro mejor regalo. Agrega aquí la información de la lista de regalos o los datos para un detalle.</p></details>
+    <div class="faq-list" data-lz-list="faqs">
+      <details data-lz-item><summary><span><small data-lz-f="hide">Vestimenta</small><span class="display" data-lz-f="q">¿Hay código de vestimenta?</span></span><b aria-hidden="true">+</b></summary><p data-lz-f="a">Agrega las recomendaciones de vestimenta para los invitados.</p></details>
+      <details data-lz-item><summary><span><small data-lz-f="hide">Vestimenta</small><span class="display" data-lz-f="q">¿Hay colores reservados?</span></span><b aria-hidden="true">+</b></summary><p data-lz-f="a">Indica los colores reservados y otras recomendaciones de vestimenta.</p></details>
+      <details data-lz-item><summary><span><small data-lz-f="hide">Niños</small><span class="display" data-lz-f="q">¿Pueden asistir niños?</span></span><b aria-hidden="true">+</b></summary><p data-lz-f="a">Indica si la celebración incluirá niños.</p></details>
+      <details data-lz-item><summary><span><small data-lz-f="hide">Alimentación</small><span class="display" data-lz-f="q">Restricciones alimentarias</span></span><b aria-hidden="true">+</b></summary><p data-lz-f="a">Agrega información sobre el menú y las opciones para necesidades alimentarias especiales.</p></details>
+      <details data-lz-item><summary><span><small data-lz-f="hide">Regalos</small><span class="display" data-lz-f="q">¿Hay lista de regalos?</span></span><b aria-hidden="true">+</b></summary><p data-lz-f="a">Su compañía es nuestro mejor regalo. Agrega aquí la información de la lista de regalos o los datos para un detalle.</p></details>
     </div>
   </section>
 
 
 
   <div style="border-top:1px solid #293c3520" aria-hidden="true"></div>
-  <section class="rsvp-form-wrap" id="confirmar">
-    <p class="eyebrow" style="margin-bottom:20px">12 de diciembre de 2026 · Ciudad, país</p>
+  <section class="rsvp-form-wrap" id="confirmar" data-lz-anchor="rsvp">
+    <p class="eyebrow" style="margin-bottom:20px"><span data-lz-date="{d} de {M} de {Y}">12 de diciembre de 2026</span> · <span data-lz="city">Ciudad, país</span></p>
     <h2 class="section-title">Nos encantará<br><em>celebrar con ustedes.</em></h2>
     <div style="margin:32px 0;padding:24px 0;border-top:1px solid #293c3533;border-bottom:1px solid #293c3533"><p class="display" style="font-size:30px">Familia Rodríguez</p><p style="margin-top:12px;font-size:14px">4 cupos reservados</p></div>
     <form id="rsvpForm" novalidate style="display:flex;flex-direction:column;gap:28px">
-      <p style="font-size:14px;line-height:1.9">Nuestra celebración es exclusivamente para adultos. Confirma quiénes de esta invitación podrán acompañarnos; pueden cambiar su respuesta hasta el 12 de noviembre de 2026.</p>
+      <p style="font-size:14px;line-height:1.9"><span data-lz="rsvpMsg">Nuestra celebración es exclusivamente para adultos.</span> Confirma quiénes de esta invitación podrán acompañarnos; pueden cambiar su respuesta hasta el <span data-lz-date="{d} de {M} de {Y}" data-lz-from="rsvpDeadline">12 de noviembre de 2026</span>.</p>
       <div>
         <div style="display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:12px">
           <span style="font-size:14px;font-weight:500">¿Nos acompañarán? *</span>
@@ -348,10 +348,10 @@ a:hover{opacity:.75}
         </div>
         <div id="people" style="display:flex;flex-direction:column;gap:10px"></div>
       </div>
-      <div id="yesFields" hidden>
+      <div id="yesFields" hidden data-lz-show="rsvpDiet">
         <label class="field">Restricciones alimentarias (opcional)<textarea rows="3" placeholder="Indica a quién corresponde cada restricción."></textarea></label>
       </div>
-      <label class="field">Un mensaje para nosotros (opcional)<textarea rows="3" id="msg"></textarea></label>
+      <label class="field" data-lz-show="rsvpNote">Un mensaje para nosotros (opcional)<textarea rows="3" id="msg"></textarea></label>
       <p id="formErr" role="alert" hidden style="padding:16px;border:1px solid #e3b4b4;border-radius:12px;background:#fbefef;color:#7a1f1f;font-size:14px">Indica si cada persona de la invitación podrá asistir.</p>
       <p style="font-size:12px;line-height:1.8;opacity:.75">Vista previa: esta respuesta no se guarda.</p>
       <button type="submit" class="button" style="align-self:flex-start">Guardar confirmación <svg class="arrow" aria-hidden="true"><use href="#arr"/></svg></button>
@@ -364,11 +364,12 @@ a:hover{opacity:.75}
     </div>
   </section>
 
-  <footer class="site-footer"><p class="display" style="font-size:30px">Valentina &amp; Martín</p><p class="eyebrow">12.12.2026 · Ciudad, país</p><a class="eyebrow" href="#top" style="display:inline-flex;align-items:center;gap:8px">Volver arriba <svg class="arrow" style="rotate:-45deg" aria-hidden="true"><use href="#arr"/></svg></a></footer>
+  <footer class="site-footer"><p class="display" style="font-size:30px"><span data-lz="n1">Valentina</span> &amp; <span data-lz="n2">Martín</span></p><p class="eyebrow"><span data-lz-date="{dd}.{mm}.{Y}">12.12.2026</span> · <span data-lz="city">Ciudad, país</span></p><a class="eyebrow" href="#top" style="display:inline-flex;align-items:center;gap:8px">Volver arriba <svg class="arrow" style="rotate:-45deg" aria-hidden="true"><use href="#arr"/></svg></a></footer>
 </div>
 
 <div class="demo-bar" id="demoBar" hidden><span class="lbl">Demo</span><button type="button" data-open-panel>Panel de novios</button><a href="/#disenos">Tienda</a></div>
 
+<script src="/demo/shared/content.js"></script>
 <script src="/demo/shared/panel.js"></script>
 <script>
 LazoPanel.init({mono:'V&M',couple:'Valentina y Martín',link:'/demo/clasico/',guest:'Familia Rodríguez',people:['Carlos Rodríguez','Lucía Pérez','Sofía Rodríguez','Mateo Rodríguez']});
@@ -376,6 +377,8 @@ LazoMusic.init({src:'/assets/musica/demo.mp3'});
 (function(){
   var cover=document.getElementById('cover'),letter=document.getElementById('letter'),seal=document.getElementById('seal'),hint=document.getElementById('hint'),replay=document.getElementById('replay');
   function setOpen(o){cover.classList.toggle('is-open',o);letter.toggleAttribute('inert',!o);letter.setAttribute('aria-hidden',String(!o));seal.disabled=o;replay.hidden=!o;hint.textContent=o?'El comienzo de siempre.':'Toca el sello para abrir tu invitación';}
+  // Para el editor de Lazo (demo/shared/content.js): saltar o volver a mostrar el sobre.
+  window.LzTemplate={open:function(){cover.classList.add('gone');document.body.classList.remove('locked');},envelope:function(){setOpen(false);cover.classList.remove('gone');document.body.classList.add('locked');window.scrollTo(0,0);},scroll:function(el){window.scrollTo(0,el.getBoundingClientRect().top+window.pageYOffset-70);}};
   seal.addEventListener('click',function(){setOpen(true);LazoMusic.play();});
   replay.addEventListener('click',function(){setOpen(false);seal.focus();});
   document.getElementById('enter').addEventListener('click',function(){cover.classList.add('gone');document.body.classList.remove('locked');document.getElementById('demoBar').hidden=false;window.scrollTo(0,0);});
@@ -391,7 +394,7 @@ LazoMusic.init({src:'/assets/musica/demo.mp3'});
   // Cuenta regresiva
   var T=Date.parse('2026-12-12T19:30:00-05:00'),cd={},p=function(n){return String(n).padStart(2,'0');};
   document.querySelectorAll('[data-cd]').forEach(function(e){cd[e.dataset.cd]=e;});
-  function tick(){var s=Math.max(0,Math.floor((T-Date.now())/1000));cd.d.textContent=p(Math.floor(s/86400));cd.h.textContent=p(Math.floor(s/3600)%24);cd.m.textContent=p(Math.floor(s/60)%60);cd.s.textContent=p(s%60);}
+  function tick(){var s=Math.max(0,Math.floor(((window.LZ_T||T)-Date.now())/1000));cd.d.textContent=p(Math.floor(s/86400));cd.h.textContent=p(Math.floor(s/3600)%24);cd.m.textContent=p(Math.floor(s/60)%60);cd.s.textContent=p(s%60);}
   tick();setInterval(tick,1000);
 
   // Confirmación por persona (demo: no se envía)

@@ -9,6 +9,10 @@ Sitio estático (HTML + CSS + un poco de JS), sin paso de build.
 - `/demo/clasico/` — demo del diseño clásico (sobre con carta)
 - `/demo/moderno/` — demo del diseño moderno, blanco y negro (puertas y capítulos)
 - `/demo/rosa/` — demo del diseño romántico (sobre lacrado)
+- `/cuenta/` y `/en/cuenta/` — ingresar o crear cuenta y "Mis invitaciones" (los diseños comprados)
+- `/comprar/?diseno=<diseño>` y `/en/comprar/…` — compra de un diseño (cuenta + pago; hay un botón de compra de prueba)
+- `/editor/?diseno=<diseño>` y `/en/editor/…` — editor del diseño comprado, con la plantilla real en la vista previa y complementos con carrito. Pide sesión y que el diseño esté comprado. Atajos: `#<sección o complemento>` (p. ej. `#musica`) y `#complementos`
+- `/editor/pago/` y `/en/editor/pago/` — pago de los complementos (tarjeta o PayPal; el cobro aún no está conectado)
 
 Para verlo en local:
 
@@ -16,7 +20,13 @@ Para verlo en local:
 python3 -m http.server 4173
 ```
 
-Pendiente: precios (`[Precio]`, `[$]`), enlaces de pago, "Ingresar" y WhatsApp.
+Pendiente: precios (`[Precio]`, `[$]`, `[Total]`), enlaces de pago (compra del diseño en `/comprar/` y "Pagar y activar" de `/editor/pago/`), cuentas reales, publicar desde el editor y WhatsApp. No hay backend: cuentas, invitaciones y carrito se guardan en `localStorage` del navegador.
+
+Editor y cuentas (el idioma sale de `<html lang>`):
+
+- `editor/auth.js` — cuentas **simuladas**: se guardan en `localStorage` de cada navegador (sirven para probar el flujo, no son seguras ni se comparten entre dispositivos). Pendiente: cuentas reales (p. ej. Supabase o Firebase) y activar la compra desde el servidor al confirmarse el pago
+- `editor/cuenta.js` — páginas de cuenta y compra; `editor/editor.js` + `editor.css` — editor y pago de complementos
+- `demo/shared/content.js` — lleva el contenido del editor a la plantilla real. Solo actúa con `?lz=editor` (vista previa) o `?lz=vista` (ver como invitado); sin esos parámetros las demos se ven igual. Las plantillas marcan con `data-lz…` dónde va cada dato
 
 Compartido por las demos:
 

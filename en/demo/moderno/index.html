@@ -209,44 +209,44 @@ button.mo-row{width:100%;grid-template-columns:72px minmax(0,1fr) auto;align-ite
   <!-- Puertas -->
   <div class="mo-env" id="env">
     <div class="mo-door is-left"><div class="mo-door-face">
-      <div class="mo-env-top mo-kicker"><span>S — T</span><span>12.06.2027</span></div>
-      <div class="mo-env-head"><p class="mo-kicker">An invitation to an unforgettable day</p><p class="mo-env-mono">S<em>&amp;</em>T</p></div>
+      <div class="mo-env-top mo-kicker"><span data-lz-mono>S — T</span><span data-lz-date="{dd}.{mm}.{Y}">12.06.2027</span></div>
+      <div class="mo-env-head"><p class="mo-kicker">An invitation to an unforgettable day</p><p class="mo-env-mono" data-lz-mono>S<em>&amp;</em>T</p></div>
       <div class="mo-env-name"><span>For the</span><span>Rodríguez Family</span></div>
     </div></div>
     <div class="mo-door is-right" aria-hidden="true"><div class="mo-door-face">
-      <div class="mo-env-top mo-kicker"><span>S — T</span><span>12.06.2027</span></div>
-      <div class="mo-env-head"><p class="mo-kicker">An invitation to an unforgettable day</p><p class="mo-env-mono">S<em>&amp;</em>T</p></div>
+      <div class="mo-env-top mo-kicker"><span data-lz-mono>S — T</span><span data-lz-date="{dd}.{mm}.{Y}">12.06.2027</span></div>
+      <div class="mo-env-head"><p class="mo-kicker">An invitation to an unforgettable day</p><p class="mo-env-mono" data-lz-mono>S<em>&amp;</em>T</p></div>
       <div class="mo-env-name"><span>For the</span><span>Rodríguez Family</span></div>
     </div></div>
-    <button type="button" class="mo-seal" id="seal" aria-label="Open the invitation"><span>&amp;</span></button>
+    <button type="button" class="mo-seal" id="seal" data-lz-seal aria-label="Open the invitation"><span>&amp;</span></button>
     <p class="mo-env-hint">Tap the seal to open your invitation</p>
   </div>
 
   <!-- Invitación -->
   <div class="mo-guest" id="guest" hidden>
     <div class="mo-side" aria-hidden="true">
-      <img src="/assets/fotos/beso.jpg" alt="" data-ch="0" class="is-on" style="object-position:center 60%">
-      <img src="/assets/fotos/muro.jpg" alt="" data-ch="1" loading="lazy" style="object-position:center 40%">
-      <img src="/assets/fotos/paseo.jpg" alt="" data-ch="2" loading="lazy" style="object-position:center 70%">
-      <img src="/assets/fotos/torre.jpg" alt="" data-ch="3" loading="lazy" style="object-position:center 70%">
-      <img src="/assets/fotos/beso.jpg" alt="" data-ch="4" loading="lazy" style="object-position:center 60%">
-      <img src="/assets/fotos/escalera.jpg" alt="" data-ch="5" loading="lazy" style="object-position:center 65%">
-      <img src="/assets/fotos/paseo.jpg" alt="" data-ch="6" loading="lazy" style="object-position:center 70%">
+      <img src="/assets/fotos/beso.jpg" alt="" data-ch="0" data-lz-src="photo:0" class="is-on" style="object-position:center 60%">
+      <img src="/assets/fotos/muro.jpg" alt="" data-ch="1" data-lz-src="photo:1" loading="lazy" style="object-position:center 40%">
+      <img src="/assets/fotos/paseo.jpg" alt="" data-ch="2" data-lz-src="photo:2" loading="lazy" style="object-position:center 70%">
+      <img src="/assets/fotos/torre.jpg" alt="" data-ch="3" data-lz-src="photo:3" loading="lazy" style="object-position:center 70%">
+      <img src="/assets/fotos/beso.jpg" alt="" data-ch="4" data-lz-src="photo:4" loading="lazy" style="object-position:center 60%">
+      <img src="/assets/fotos/escalera.jpg" alt="" data-ch="5" data-lz-src="photo:5" loading="lazy" style="object-position:center 65%">
+      <img src="/assets/fotos/paseo.jpg" alt="" data-ch="6" data-lz-src="photo:6" loading="lazy" style="object-position:center 70%">
       <div class="mo-side-cap" id="sideCap">Cover</div>
     </div>
     <div class="mo-main">
       <div class="mo-bar mo-chrome">
-        <button type="button" class="mo-bar-brand" data-go="0" aria-label="Go to the cover">S<em>&amp;</em>T</button>
+        <button type="button" class="mo-bar-brand" data-lz-mono data-go="0" aria-label="Go to the cover">S<em>&amp;</em>T</button>
         <nav aria-label="Chapters" id="chapNav"></nav>
       </div>
 
       <div class="mo-scroller mo-ns" id="scroller">
-        <section class="mo-ch mo-cover" aria-label="Cover">
-          <img class="mo-photo" src="/assets/fotos/beso.jpg" alt="Sofía and Tomás" style="object-position:center 55%">
+        <section class="mo-ch mo-cover" data-lz-anchor="portada" aria-label="Cover">
+          <img class="mo-photo" data-lz-src="photo:0" src="/assets/fotos/beso.jpg" alt="Sofía and Tomás" style="object-position:center 55%">
           <div class="mo-cover-copy">
-            <p class="mo-kicker">Saturday · June 12 · 2027</p>
-            <h1>Sofía<br><em>&amp; Tomás</em></h1>
-            <p class="mo-cover-intro">We’re getting married and want to celebrate with you, Rodríguez family.</p>
+            <p class="mo-kicker" data-lz-date="{W} · {Mc} {d} · {Y}">Saturday · June 12 · 2027</p>
+            <h1><span data-lz="n1">Sofía</span><br><em>&amp; <span data-lz="n2">Tomás</span></em></h1>
+            <p class="mo-cover-intro" data-lz="msg">We’re getting married and want to celebrate with you, Rodríguez family.</p>
             <button type="button" class="mo-discover" data-go="1"><span aria-hidden="true">↓</span> Discover</button>
           </div>
         </section>
@@ -264,12 +264,12 @@ button.mo-row{width:100%;grid-template-columns:72px minmax(0,1fr) auto;align-ite
           <p class="mo-count-note">The countdown to celebrating together is on.</p>
         </section>
 
-        <section class="mo-ch is-grow" aria-label="The day">
-          <p class="mo-kicker">El día</p>
-          <h2 class="mo-display" style="margin-top:18px">Saturday,<br><em>June 12</em></h2>
-          <div style="margin-top:auto;padding-top:32px">
-            <div class="mo-row"><span class="mo-row-time">4 p.m.</span><div><p class="mo-row-title">Ceremony</p><p class="mo-row-text">Ceremony venue<br>Ceremony address</p><a class="mo-underline" href="#">Getting there <svg class="mo-arrow" aria-hidden="true"><use href="#ext"/></svg></a></div></div>
-            <div class="mo-row"><span class="mo-row-key">Afterwards</span><div><p class="mo-row-title">Reception</p><p class="mo-row-text">Reception venue<br>Reception address</p><a class="mo-underline" href="#">Getting there <svg class="mo-arrow" aria-hidden="true"><use href="#ext"/></svg></a></div></div>
+        <section class="mo-ch is-grow" aria-label="The day" data-lz-anchor="itinerario musica">
+          <p class="mo-kicker">The day</p>
+          <h2 class="mo-display" style="margin-top:18px"><span data-lz-date="{W},">Saturday,</span><br><em data-lz-date="{Mc} {d}">June 12</em></h2>
+          <div style="margin-top:auto;padding-top:32px" data-lz-list="events">
+            <div class="mo-row" data-lz-item><span class="mo-row-time" data-lz-f="time">4 p.m.</span><div><p class="mo-row-title" data-lz-f="name">Ceremony</p><p class="mo-row-text"><span data-lz-f="placeName">Ceremony venue</span><br><span data-lz-f="addr">Ceremony address</span></p><a class="mo-underline" href="#" data-lz-f="map">Getting there <svg class="mo-arrow" aria-hidden="true"><use href="#ext"/></svg></a></div></div>
+            <div class="mo-row" data-lz-item><span class="mo-row-key" data-lz-f="time">Afterwards</span><div><p class="mo-row-title" data-lz-f="name">Reception</p><p class="mo-row-text"><span data-lz-f="placeName">Reception venue</span><br><span data-lz-f="addr">Reception address</span></p><a class="mo-underline" href="#" data-lz-f="map">Getting there <svg class="mo-arrow" aria-hidden="true"><use href="#ext"/></svg></a></div></div>
             <div class="mo-dress" id="dress">
               <button type="button" class="mo-row" aria-expanded="false" aria-controls="dressBody" id="dressBtn"><span class="mo-row-key">Note</span><span class="mo-row-title">Dress code</span><span class="mo-faq-plus" aria-hidden="true">+</span></button>
               <div id="dressBody" class="mo-dress-body" hidden><p>Add your dress code recommendations for guests.</p><p class="mo-label" style="margin-top:16px;color:var(--muted)">Reserved colors</p><p>List any reserved colors and other attire tips.</p></div>
@@ -277,7 +277,7 @@ button.mo-row{width:100%;grid-template-columns:72px minmax(0,1fr) auto;align-ite
           </div>
         </section>
 
-        <section class="mo-ch is-sand" aria-label="RSVP">
+        <section class="mo-ch is-sand" data-lz-anchor="rsvp" aria-label="RSVP">
           <p class="mo-kicker">RSVP</p>
           <h2 class="mo-display" style="margin-top:18px" id="rsTitle">Will you join us?</h2>
           <p class="mo-text" style="margin-top:18px;max-width:380px" id="rsText">We have saved 4 seats for you. Please reply for each guest before the RSVP deadline.</p>
@@ -287,36 +287,36 @@ button.mo-row{width:100%;grid-template-columns:72px minmax(0,1fr) auto;align-ite
           </div>
         </section>
 
-        <section class="mo-ch mo-story" aria-label="Story" data-gallery="mono">
-          <div class="mo-story-photo"><img class="mo-photo" src="/assets/fotos/torre.jpg" alt="Sofía and Tomás holding hands" loading="lazy" style="object-position:center 72%"></div>
+        <section class="mo-ch mo-story" data-lz-anchor="historia" aria-label="Story" data-gallery="mono">
+          <div class="mo-story-photo"><img class="mo-photo" data-lz-src="photo:1" src="/assets/fotos/torre.jpg" alt="Sofía and Tomás holding hands" loading="lazy" style="object-position:center 72%"></div>
           <div class="mo-story-copy">
             <p class="mo-kicker">Our story</p>
-            <h2>A story <em>written together.</em></h2>
-            <p class="mo-text" style="margin-top:16px;max-width:460px">Tell how the two of you met. Share your favorite memories together. Describe the new chapter you are about to begin.</p>
-            <div class="mo-thumbs mo-ns" aria-label="Photo gallery"><img src="/assets/fotos/beso.jpg" alt="Photo 1" loading="lazy"><img src="/assets/fotos/muro.jpg" alt="Photo 2" loading="lazy"><img src="/assets/fotos/escalera.jpg" alt="Photo 3" loading="lazy"><img src="/assets/fotos/paseo.jpg" alt="Photo 4" loading="lazy"><img src="/assets/fotos/torre.jpg" alt="Photo 5" loading="lazy"></div>
+            <h2 data-lz="storyTitle">A story <em>written together.</em></h2>
+            <p class="mo-text" data-lz="story" style="margin-top:16px;max-width:460px">Tell how the two of you met. Share your favorite memories together. Describe the new chapter you are about to begin.</p>
+            <div class="mo-thumbs mo-ns" data-lz-list="gallery" aria-label="Photo gallery"><img data-lz-item data-lz-f="img" src="/assets/fotos/beso.jpg" alt="Photo 1" loading="lazy"><img data-lz-item data-lz-f="img" src="/assets/fotos/muro.jpg" alt="Photo 2" loading="lazy"><img data-lz-item data-lz-f="img" src="/assets/fotos/escalera.jpg" alt="Photo 3" loading="lazy"><img data-lz-item data-lz-f="img" src="/assets/fotos/paseo.jpg" alt="Photo 4" loading="lazy"><img data-lz-item data-lz-f="img" src="/assets/fotos/torre.jpg" alt="Photo 5" loading="lazy"></div>
           </div>
         </section>
 
-        <section class="mo-ch is-tall" aria-label="FAQ">
+        <section class="mo-ch is-tall" aria-label="FAQ" data-lz-anchor="faq">
           <p class="mo-kicker">Questions</p>
           <h2 class="mo-display" style="margin:18px 0 28px">The details</h2>
-          <div data-acc="faq">
-            <div class="mo-faq is-open"><button type="button" aria-expanded="true"><span><span class="mo-label" style="display:block;color:var(--muted)">Dress code</span><span class="mo-faq-q">Is there a dress code?</span></span><span class="mo-faq-plus" aria-hidden="true">+</span></button><p class="mo-faq-a">Add your dress code recommendations for guests.</p></div>
-            <div class="mo-faq"><button type="button" aria-expanded="false"><span><span class="mo-label" style="display:block;color:var(--muted)">Dress code</span><span class="mo-faq-q">Are any colors reserved?</span></span><span class="mo-faq-plus" aria-hidden="true">+</span></button><p class="mo-faq-a" hidden>List any reserved colors and other attire tips.</p></div>
-            <div class="mo-faq"><button type="button" aria-expanded="false"><span><span class="mo-label" style="display:block;color:var(--muted)">Children</span><span class="mo-faq-q">Children at the celebration</span></span><span class="mo-faq-plus" aria-hidden="true">+</span></button><p class="mo-faq-a" hidden>Let guests know whether children are invited.</p></div>
-            <div class="mo-faq"><button type="button" aria-expanded="false"><span><span class="mo-label" style="display:block;color:var(--muted)">Food</span><span class="mo-faq-q">Dietary restrictions</span></span><span class="mo-faq-plus" aria-hidden="true">+</span></button><p class="mo-faq-a" hidden>Add details about the menu and options for special dietary needs.</p></div>
-            <div class="mo-faq"><button type="button" aria-expanded="false"><span><span class="mo-label" style="display:block;color:var(--muted)">Gifts</span><span class="mo-faq-q">Is there a gift registry?</span></span><span class="mo-faq-plus" aria-hidden="true">+</span></button><p class="mo-faq-a" hidden>Your presence is our greatest gift. Add your preferences or registry details.</p></div>
+          <div data-acc="faq" data-lz-list="faqs">
+            <div class="mo-faq is-open" data-lz-item><button type="button" aria-expanded="true"><span><span class="mo-label" data-lz-f="hide" style="display:block;color:var(--muted)">Dress code</span><span class="mo-faq-q" data-lz-f="q">Is there a dress code?</span></span><span class="mo-faq-plus" aria-hidden="true">+</span></button><p class="mo-faq-a" data-lz-f="a">Add your dress code recommendations for guests.</p></div>
+            <div class="mo-faq" data-lz-item><button type="button" aria-expanded="false"><span><span class="mo-label" data-lz-f="hide" style="display:block;color:var(--muted)">Dress code</span><span class="mo-faq-q" data-lz-f="q">Are any colors reserved?</span></span><span class="mo-faq-plus" aria-hidden="true">+</span></button><p class="mo-faq-a" data-lz-f="a" hidden>List any reserved colors and other attire tips.</p></div>
+            <div class="mo-faq" data-lz-item><button type="button" aria-expanded="false"><span><span class="mo-label" data-lz-f="hide" style="display:block;color:var(--muted)">Children</span><span class="mo-faq-q" data-lz-f="q">Children at the celebration</span></span><span class="mo-faq-plus" aria-hidden="true">+</span></button><p class="mo-faq-a" data-lz-f="a" hidden>Let guests know whether children are invited.</p></div>
+            <div class="mo-faq" data-lz-item><button type="button" aria-expanded="false"><span><span class="mo-label" data-lz-f="hide" style="display:block;color:var(--muted)">Food</span><span class="mo-faq-q" data-lz-f="q">Dietary restrictions</span></span><span class="mo-faq-plus" aria-hidden="true">+</span></button><p class="mo-faq-a" data-lz-f="a" hidden>Add details about the menu and options for special dietary needs.</p></div>
+            <div class="mo-faq" data-lz-item><button type="button" aria-expanded="false"><span><span class="mo-label" data-lz-f="hide" style="display:block;color:var(--muted)">Gifts</span><span class="mo-faq-q" data-lz-f="q">Is there a gift registry?</span></span><span class="mo-faq-plus" aria-hidden="true">+</span></button><p class="mo-faq-a" data-lz-f="a" hidden>Your presence is our greatest gift. Add your preferences or registry details.</p></div>
           </div>
           <div style="border-top:1px solid var(--line)"></div>
         </section>
 
-        <section class="mo-ch is-tall" aria-label="Travel">
+        <section class="mo-ch is-tall" aria-label="Travel" data-lz-show="viajeOn" data-lz-anchor="viaje">
           <p class="mo-kicker">Travel</p>
           <h2 class="mo-display" style="margin-top:18px">If you’re <em>traveling</em></h2>
           <p class="mo-text" style="margin-top:18px;max-width:460px">Everything you need to get here, rest and explore the city while you’re in town.</p>
           <div style="margin-top:40px">
             <p class="mo-label" style="color:var(--muted);margin-bottom:6px">Where to stay</p>
-            <div class="mo-row"><span class="mo-row-key">Hotel</span><div><p class="mo-row-title">Hotel name</p><p class="mo-row-text">Add recommended places to stay and how to book.</p><p class="mo-row-text">Hotel address</p></div></div>
+            <div class="mo-row"><span class="mo-row-key">Hotel</span><div><p class="mo-row-title" data-lz="hotel">Hotel name</p><p class="mo-row-text" data-lz="travelNotes">Add recommended places to stay and how to book.</p><p class="mo-row-text">Hotel address</p></div></div>
             <div class="mo-row"><span class="mo-row-key">Code</span><div><p class="mo-row-title">Booking code</p><p class="mo-row-text">Explain how to use the booking code.</p></div></div>
             <div class="mo-row" style="border-bottom:1px solid var(--line)"><span class="mo-row-key">Details</span>
               <dl class="mo-details">
@@ -358,8 +358,8 @@ button.mo-row{width:100%;grid-template-columns:72px minmax(0,1fr) auto;align-ite
           <button type="button" class="mo-kicker" id="allYes" style="letter-spacing:.2em;text-decoration:underline;text-underline-offset:5px;padding:4px 0">Everyone’s coming</button>
         </div>
         <div style="margin-top:10px" id="switches"></div>
-        <label class="mo-field" id="dietField" hidden>Dietary restrictions <span style="color:var(--muted)">· optional</span><textarea rows="2" maxlength="1000" placeholder="Tell us who each one is for…"></textarea></label>
-        <label class="mo-field">A note for us <span style="color:var(--muted)">· optional</span><textarea rows="3" maxlength="2000" placeholder="Leave us a few words…"></textarea></label>
+        <label class="mo-field" id="dietField" hidden data-lz-show="rsvpDiet">Dietary restrictions <span style="color:var(--muted)">· optional</span><textarea rows="2" maxlength="1000" placeholder="Tell us who each one is for…"></textarea></label>
+        <label class="mo-field" data-lz-show="rsvpNote">A note for us <span style="color:var(--muted)">· optional</span><textarea rows="3" maxlength="2000" placeholder="Leave us a few words…"></textarea></label>
         <p role="alert" class="mo-error" id="sheetErr" hidden>Let us know whether each guest on the invitation can attend.</p>
         <button type="button" class="mo-pill" style="margin-top:26px" id="sheetSend">Send reply</button>
         <p style="margin-top:14px;font-size:11px;line-height:1.6;color:var(--muted);text-align:center">Preview: this reply is not saved.</p>
@@ -379,6 +379,7 @@ button.mo-row{width:100%;grid-template-columns:72px minmax(0,1fr) auto;align-ite
 
 <div class="demo-bar"><span class="lbl">Demo</span><button type="button" data-open-panel>Couple’s dashboard</button><a href="/en/#designs">Shop</a></div>
 
+<script src="/demo/shared/content.js"></script>
 <script src="/demo/shared/panel.js"></script>
 <script>
 LazoPanel.init({mono:'S&T',couple:'Sofía & Tomás',link:'/en/demo/moderno/',guest:'The Rodríguez Family',people:['Carlos Rodríguez','Lucía Pérez','Sofía Rodríguez','Mateo Rodríguez']});
@@ -394,8 +395,9 @@ LazoMusic.init({src:'/assets/musica/demo.mp3'});
   // Navegación de capítulos
   var nav=document.getElementById('chapNav'),ticks=document.getElementById('ticks');
   CH.forEach(function(c,i){
-    if(i>0){var b=document.createElement('button');b.type='button';b.textContent=c[1];b.dataset.go=i;nav.appendChild(b);}
+    var b=null;if(i>0){b=document.createElement('button');b.type='button';b.textContent=c[1];b.dataset.go=i;nav.appendChild(b);}
     var t=document.createElement('button');t.type='button';t.setAttribute('aria-label',c[1]);t.dataset.go=i;t.appendChild(document.createElement('span'));ticks.appendChild(t);
+    if(c[0]==='viaje'){t.setAttribute('data-lz-show','viajeOn');if(b)b.setAttribute('data-lz-show','viajeOn');}
   });
   function top(i){var el=scroller.children[i];return el?el.offsetTop:0;}
   function go(i){scroller.scrollTo({top:top(i),behavior:'smooth'});}
@@ -418,14 +420,16 @@ LazoMusic.init({src:'/assets/musica/demo.mp3'});
   document.getElementById('showEnv').addEventListener('click',function(){
     timers.forEach(clearTimeout);timers=[];guest.hidden=true;env.hidden=false;env.classList.remove('is-busy','is-open');document.getElementById('seal').focus();
   });
+  // Para el editor de Lazo (demo/shared/content.js): saltar o volver a mostrar las puertas.
+  window.LzTemplate={open:function(){timers.forEach(clearTimeout);timers=[];env.hidden=true;env.classList.remove('is-busy','is-open');guest.hidden=false;},envelope:function(){timers.forEach(clearTimeout);timers=[];guest.hidden=true;env.hidden=false;env.classList.remove('is-busy','is-open');},scroll:function(el,now){scroller.scrollTo({top:el.offsetTop,behavior:now?'instant':'smooth'});}};
 
-  // Acordeones (uno abierto a la vez)
+  // Acordeones (uno abierto a la vez). Delegado, para que también funcione con preguntas que agrega el editor.
   document.querySelectorAll('[data-acc]').forEach(function(acc){
-    acc.querySelectorAll(':scope > .mo-faq > button').forEach(function(btn){
-      btn.addEventListener('click',function(){var item=btn.parentNode,open=!item.classList.contains('is-open');
-        acc.querySelectorAll(':scope > .mo-faq').forEach(function(f){f.classList.remove('is-open');f.querySelector('button').setAttribute('aria-expanded','false');f.lastElementChild.hidden=true;});
-        if(open){item.classList.add('is-open');btn.setAttribute('aria-expanded','true');item.lastElementChild.hidden=false;}});
-    });
+    function items(){return acc.querySelectorAll(':scope > .mo-faq');}
+    function setOpen(item,o){item.classList.toggle('is-open',o);item.querySelector('button').setAttribute('aria-expanded',String(o));item.lastElementChild.hidden=!o;}
+    acc.addEventListener('click',function(e){var btn=e.target.closest('button');if(!btn||btn.parentNode.parentNode!==acc)return;
+      var item=btn.parentNode,open=!item.classList.contains('is-open');items().forEach(function(f){setOpen(f,false);});if(open)setOpen(item,true);});
+    acc.addEventListener('lz-render',function(){items().forEach(function(f,i){setOpen(f,i===0);});});
   });
   var dress=document.getElementById('dress'),dressBtn=document.getElementById('dressBtn');
   dressBtn.addEventListener('click',function(){var o=!dress.classList.contains('is-open');dress.classList.toggle('is-open',o);dressBtn.setAttribute('aria-expanded',String(o));document.getElementById('dressBody').hidden=!o;});
@@ -433,7 +437,7 @@ LazoMusic.init({src:'/assets/musica/demo.mp3'});
   // Cuenta regresiva
   var T=Date.parse('2027-06-12T16:00:00-05:00'),cd={},p=function(n){return String(n).padStart(2,'0');};
   document.querySelectorAll('[data-cd]').forEach(function(e){cd[e.dataset.cd]=e;});
-  function tick(){var s=Math.max(0,Math.floor((T-Date.now())/1000));cd.d.textContent=Math.floor(s/86400);cd.h.textContent=p(Math.floor(s/3600)%24);cd.m.textContent=p(Math.floor(s/60)%60);cd.s.textContent=p(s%60);}
+  function tick(){var s=Math.max(0,Math.floor(((window.LZ_T||T)-Date.now())/1000));cd.d.textContent=Math.floor(s/86400);cd.h.textContent=p(Math.floor(s/3600)%24);cd.m.textContent=p(Math.floor(s/60)%60);cd.s.textContent=p(s%60);}
   tick();setInterval(tick,1000);
 
   // Confirmación (demo: no se guarda)

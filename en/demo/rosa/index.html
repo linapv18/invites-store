@@ -223,7 +223,7 @@ details.faq[open] .plus{rotate:45deg}
       <div class="tri"><svg aria-hidden="true"><rect width="100%" height="100%" fill="#F0E2E0"/><rect width="100%" height="100%" fill="url(#dmk)"/><rect width="100%" height="100%" fill="url(#shT)"/></svg></div>
       <div class="tri dim"></div>
       <div class="tri"><div class="reach"><svg aria-hidden="true"><rect width="100%" height="100%" fill="url(#dmkGold)" filter="url(#bloomF)"/></svg></div></div>
-      <button class="seal-btn" id="sealBtn" type="button" aria-label="Open the invitation"><svg viewBox="0 0 160 160" aria-hidden="true"><use href="#seal"/></svg></button>
+      <button class="seal-btn" id="sealBtn" type="button" aria-label="Open the invitation"><svg viewBox="0 0 160 160" aria-hidden="true"><use href="#seal"/></svg><span class="lz-seal-over" data-lz-seal></span></button>
     </div>
     <div class="bloom"></div>
     <p class="hint">Tap the seal to open</p>
@@ -234,14 +234,14 @@ details.faq[open] .plus{rotate:45deg}
     <svg class="corner" viewBox="0 0 160 160" style="right:clamp(16px,3vw,40px);top:84px" aria-hidden="true"><use href="#corner"/></svg>
     <svg class="corner" viewBox="0 0 160 160" style="left:clamp(16px,3vw,40px);bottom:clamp(16px,3vw,40px);transform:scale(-1,-1)" aria-hidden="true"><use href="#corner"/></svg>
     <svg class="corner" viewBox="0 0 160 160" style="right:clamp(16px,3vw,40px);bottom:clamp(16px,3vw,40px);transform:scaleY(-1)" aria-hidden="true"><use href="#corner"/></svg>
-    <div class="bar rv d1"><span>M — A</span><span>12.06.2027</span></div>
+    <div class="bar rv d1"><span data-lz-mono>M — A</span><span data-lz-date="{dd}.{mm}.{Y}">12.06.2027</span></div>
     <div class="inner">
       <p class="rv d1" style="margin:0;font:400 clamp(15px,1.4vw,18px)/1.5 'Instrument Serif',serif;letter-spacing:.22em;text-transform:uppercase;color:#7D6A70">Celebrate<br>our big day with us</p>
       <div class="rv d2" style="width:1px;height:44px;margin:26px 0;background:#5E525740"></div>
       <p class="rv d2" style="margin:0;font-size:11px;font-weight:400;letter-spacing:.34em;text-transform:uppercase;color:#6E5F64">An invitation for</p>
       <p class="rv d3" style="margin:14px 0 0;font:italic 400 clamp(42px,5vw,64px)/1 'Instrument Serif',serif;color:#3E3236">The Rodríguez Family</p>
-      <p class="rv d4" style="margin:clamp(28px,4vh,44px) 0 0;font:400 clamp(54px,8vw,96px)/1 'Instrument Serif',serif;letter-spacing:-.02em;color:#3E3236">Melissa <em style="color:#B48650">&amp;</em> Andrés</p>
-      <p class="rv d4" style="margin:18px 0 0;font-size:11px;font-weight:400;letter-spacing:.32em;text-transform:uppercase;color:#6E5F64">Saturday · June 12 · 2027</p>
+      <p class="rv d4" style="margin:clamp(28px,4vh,44px) 0 0;font:400 clamp(54px,8vw,96px)/1 'Instrument Serif',serif;letter-spacing:-.02em;color:#3E3236"><span data-lz="n1">Melissa</span> <em style="color:#B48650">&amp;</em> <span data-lz="n2">Andrés</span></p>
+      <p class="rv d4" style="margin:18px 0 0;font-size:11px;font-weight:400;letter-spacing:.32em;text-transform:uppercase;color:#6E5F64" data-lz-date="{W} · {Mc} {d} · {Y}">Saturday · June 12 · 2027</p>
       <div class="rv d5" style="margin-top:clamp(32px,5vh,52px);display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:8px 20px">
         <button type="button" id="enter" class="pill" style="height:56px;padding:0 44px;border:0;background:#3E3236;color:#F7EEF0;font-size:12px;cursor:pointer">View invitation</button>
         <button type="button" id="replay" style="height:56px;padding:0 20px;border:0;background:none;cursor:pointer;font-size:12px;font-weight:400;letter-spacing:.22em;text-transform:uppercase;color:#5E5257">See the envelope again</button>
@@ -255,7 +255,7 @@ details.faq[open] .plus{rotate:45deg}
 <div id="invite" style="position:relative;width:100%;display:flex;flex-direction:column;overflow:hidden;background:#F6EBEC">
 
   <header id="siteHead" style="position:relative;z-index:2;width:100%;max-width:1280px;margin:0 auto;padding:22px clamp(20px,4vw,56px);display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px 32px">
-    <a href="#portada" style="display:flex;align-items:center;gap:12px;font-size:11px;font-weight:400;letter-spacing:.34em;text-transform:uppercase">
+    <a href="#portada" style="display:flex;align-items:center;gap:12px;font-size:11px;font-weight:400;letter-spacing:.34em;text-transform:uppercase" data-lz-mono>
       <svg width="40" height="40" viewBox="0 0 160 160" aria-hidden="true"><use href="#seal"/></svg>M — A
     </a>
     <button type="button" class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="secNav" aria-label="Open menu">
@@ -267,25 +267,25 @@ details.faq[open] .plus{rotate:45deg}
       <a href="#historia" style="display:inline-flex;align-items:center;min-height:44px">Story</a>
       <a href="#confirmar" style="display:inline-flex;align-items:center;min-height:44px">RSVP</a>
       <a href="#preguntas" style="display:inline-flex;align-items:center;min-height:44px">FAQ</a>
-      <a href="#viaje" style="display:inline-flex;align-items:center;min-height:44px">Travel</a>
+      <a href="#viaje" style="display:inline-flex;align-items:center;min-height:44px" data-lz-show="viajeOn">Travel</a>
     </nav>
     <a href="#confirmar" class="pill head-cta" style="height:44px;padding:0 24px;border:1px solid #3E3236;letter-spacing:.24em">RSVP</a>
   </header>
 
-  <section id="portada" style="position:relative;padding:40px clamp(20px,4vw,56px) 96px">
+  <section id="portada" data-lz-anchor="portada" style="position:relative;padding:40px clamp(20px,4vw,56px) 96px">
     <svg viewBox="0 0 160 160" style="position:absolute;left:clamp(8px,2vw,28px);top:8px;width:clamp(100px,13vw,190px);height:clamp(100px,13vw,190px);transform:scaleX(-1)" aria-hidden="true"><use href="#corner"/></svg>
     <svg viewBox="0 0 160 160" style="position:absolute;right:clamp(8px,2vw,28px);top:8px;width:clamp(100px,13vw,190px);height:clamp(100px,13vw,190px)" aria-hidden="true"><use href="#corner"/></svg>
     <div style="position:relative;max-width:1120px;margin:0 auto;display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:56px 80px">
       <div style="flex:1 1 420px;min-width:0;text-align:center">
         <p style="margin:0;font:400 16px/1.6 'Instrument Serif',serif;letter-spacing:.22em;text-transform:uppercase;color:#7D6A70">Celebrate<br>our big day with us</p>
-        <h1 style="margin:28px 0 0;font:400 clamp(64px,8vw,120px)/.9 'Instrument Serif',serif;letter-spacing:-.02em;color:#3E3236">Melissa<br><em style="font-size:.6em;color:#B48650">&amp;</em><br>Andrés</h1>
+        <h1 style="margin:28px 0 0;font:400 clamp(64px,8vw,120px)/.9 'Instrument Serif',serif;letter-spacing:-.02em;color:#3E3236"><span data-lz="n1">Melissa</span><br><em style="font-size:.6em;color:#B48650">&amp;</em><br><span data-lz="n2">Andrés</span></h1>
         <svg width="300" height="40" viewBox="-150 -20 300 40" style="display:block;max-width:100%;margin:28px auto 0" aria-hidden="true"><use href="#orn"/></svg>
-        <p style="margin:18px 0 0;font-size:11px;font-weight:400;letter-spacing:.32em;text-transform:uppercase;color:#6E5F64">Saturday · June 12 · 2027</p>
+        <p style="margin:18px 0 0;font-size:11px;font-weight:400;letter-spacing:.32em;text-transform:uppercase;color:#6E5F64" data-lz-date="{W} · {Mc} {d} · {Y}">Saturday · June 12 · 2027</p>
         <a href="#confirmar" class="pill" style="height:54px;margin-top:36px;padding:0 40px;background:#3E3236;color:#F7EEF0">RSVP</a>
       </div>
       <div style="flex:0 1 440px;min-width:0;width:100%;max-width:440px">
         <div style="width:100%;aspect-ratio:440 / 560;padding:9px;border:1px solid #C49A62;border-radius:220px 220px 12px 12px">
-          <img src="/assets/fotos/beso.jpg" alt="Melissa and Andrés" style="display:block;width:100%;height:100%;object-fit:cover;object-position:center 60%;border-radius:212px 212px 6px 6px">
+          <img src="/assets/fotos/beso.jpg" data-lz-src="photo:0" alt="Melissa and Andrés" style="display:block;width:100%;height:100%;object-fit:cover;object-position:center 60%;border-radius:212px 212px 6px 6px">
         </div>
       </div>
     </div>
@@ -301,7 +301,7 @@ details.faq[open] .plus{rotate:45deg}
       <p class="kicker">An invitation for</p>
       <p style="margin:18px 0 0;font:italic 400 clamp(42px,5vw,64px)/1 'Instrument Serif',serif;color:#3E3236">The Rodríguez Family</p>
       <svg width="300" height="40" viewBox="-150 -20 300 40" style="display:block;max-width:100%;margin:26px auto" aria-hidden="true"><use href="#orn"/></svg>
-      <p style="margin:0 auto;max-width:520px;font-size:17px;line-height:1.8;color:#4E4247">Our day will be even more special with you by our side. We have saved <strong style="font-weight:500">4 seats</strong> for you.</p>
+      <p style="margin:0 auto;max-width:520px;font-size:17px;line-height:1.8;color:#4E4247"><span data-lz="msg">Our day will be even more special with you by our side.</span> We have saved <strong style="font-weight:500">4 seats</strong> for you.</p>
     </div>
   </section>
 
@@ -315,32 +315,32 @@ details.faq[open] .plus{rotate:45deg}
       <div style="padding:clamp(18px,3vw,36px) 0 clamp(14px,2vw,24px);border:1px solid #E2CFC6;border-radius:120px 120px 8px 8px;background:#FBF4F3"><p data-cd="m" style="margin:0;font:400 clamp(36px,5.4vw,76px)/1 'Instrument Serif',serif;font-variant-numeric:tabular-nums">—</p><p style="margin:10px 0 0;font-size:10px;font-weight:400;letter-spacing:.26em;text-transform:uppercase;color:#6E5F64">Minutes</p></div>
       <div style="padding:clamp(18px,3vw,36px) 0 clamp(14px,2vw,24px);border:1px solid #E2CFC6;border-radius:120px 120px 8px 8px;background:#FBF4F3"><p data-cd="s" style="margin:0;font:400 clamp(36px,5.4vw,76px)/1 'Instrument Serif',serif;font-variant-numeric:tabular-nums">—</p><p style="margin:10px 0 0;font-size:10px;font-weight:400;letter-spacing:.26em;text-transform:uppercase;color:#6E5F64">Seconds</p></div>
     </div>
-    <p style="margin:28px 0 0;font:italic 400 22px/1.4 'Instrument Serif',serif;color:#6E5F64">Saturday, June 12, 2027 · 4:00 p.m.</p>
+    <p style="margin:28px 0 0;font:italic 400 22px/1.4 'Instrument Serif',serif;color:#6E5F64"><span data-lz-date="{W}, {Mc} {d}, {Y}">Saturday, June 12, 2027</span> · <span data-lz="time0">4:00 p.m.</span></p>
   </section>
 
-  <section id="dia" style="position:relative;padding:104px clamp(20px,4vw,56px);background:#F0E2E0">
+  <section id="dia" data-lz-anchor="itinerario musica" style="position:relative;padding:104px clamp(20px,4vw,56px);background:#F0E2E0">
     <svg style="position:absolute;inset:0;width:100%;height:100%;opacity:.4" aria-hidden="true"><rect width="100%" height="100%" fill="url(#dmk)"/></svg>
     <div style="position:relative;max-width:1120px;margin:0 auto">
       <div style="text-align:center">
         <p class="kicker">The day</p>
-        <h2 class="h2">Saturday, <em>June 12</em></h2>
+        <h2 class="h2"><span data-lz-date="{W},">Saturday,</span> <em data-lz-date="{Mc} {d}">June 12</em></h2>
       </div>
-      <div style="margin-top:48px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(280px,100%),1fr));gap:20px">
-        <div style="padding:40px 32px;background:#FBF4F3;border:1px solid #E2CFC6;border-radius:160px 160px 8px 8px;text-align:center">
-          <p style="margin:12px 0 0;font:400 44px/1 'Instrument Serif',serif">4:00 p.m.</p>
+      <div data-lz-list="events" style="margin-top:48px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(280px,100%),1fr));gap:20px">
+        <div style="padding:40px 32px;background:#FBF4F3;border:1px solid #E2CFC6;border-radius:160px 160px 8px 8px;text-align:center" data-lz-item>
+          <p style="margin:12px 0 0;font:400 44px/1 'Instrument Serif',serif" data-lz-f="time">4:00 p.m.</p>
           <div style="width:1px;height:36px;margin:18px auto;background:#C49A62"></div>
-          <p class="kicker" style="letter-spacing:.32em">Ceremony</p>
-          <p style="margin:12px 0 0;font:400 28px/1.2 'Instrument Serif',serif">Ceremony venue</p>
-          <p style="margin:6px 0 0;font-size:15px;line-height:1.6;color:#6E5F64">Ceremony address</p>
-          <a href="#dia" style="display:inline-flex;align-items:center;height:44px;margin-top:10px;font-size:11px;font-weight:400;letter-spacing:.24em;text-transform:uppercase;border-bottom:1px solid #C49A62">Getting there ↗</a>
+          <p class="kicker" style="letter-spacing:.32em" data-lz-f="name">Ceremony</p>
+          <p style="margin:12px 0 0;font:400 28px/1.2 'Instrument Serif',serif" data-lz-f="placeName">Ceremony venue</p>
+          <p style="margin:6px 0 0;font-size:15px;line-height:1.6;color:#6E5F64" data-lz-f="addr">Ceremony address</p>
+          <a href="#dia" data-lz-f="map" style="display:inline-flex;align-items:center;height:44px;margin-top:10px;font-size:11px;font-weight:400;letter-spacing:.24em;text-transform:uppercase;border-bottom:1px solid #C49A62">Getting there ↗</a>
         </div>
-        <div style="padding:40px 32px;background:#FBF4F3;border:1px solid #E2CFC6;border-radius:160px 160px 8px 8px;text-align:center">
-          <p style="margin:12px 0 0;font:italic 400 44px/1 'Instrument Serif',serif">Afterwards</p>
+        <div style="padding:40px 32px;background:#FBF4F3;border:1px solid #E2CFC6;border-radius:160px 160px 8px 8px;text-align:center" data-lz-item>
+          <p style="margin:12px 0 0;font:italic 400 44px/1 'Instrument Serif',serif" data-lz-f="time">Afterwards</p>
           <div style="width:1px;height:36px;margin:18px auto;background:#C49A62"></div>
-          <p class="kicker" style="letter-spacing:.32em">Reception</p>
-          <p style="margin:12px 0 0;font:400 28px/1.2 'Instrument Serif',serif">Reception venue</p>
-          <p style="margin:6px 0 0;font-size:15px;line-height:1.6;color:#6E5F64">Reception address</p>
-          <a href="#dia" style="display:inline-flex;align-items:center;height:44px;margin-top:10px;font-size:11px;font-weight:400;letter-spacing:.24em;text-transform:uppercase;border-bottom:1px solid #C49A62">Getting there ↗</a>
+          <p class="kicker" style="letter-spacing:.32em" data-lz-f="name">Reception</p>
+          <p style="margin:12px 0 0;font:400 28px/1.2 'Instrument Serif',serif" data-lz-f="placeName">Reception venue</p>
+          <p style="margin:6px 0 0;font-size:15px;line-height:1.6;color:#6E5F64" data-lz-f="addr">Reception address</p>
+          <a href="#dia" data-lz-f="map" style="display:inline-flex;align-items:center;height:44px;margin-top:10px;font-size:11px;font-weight:400;letter-spacing:.24em;text-transform:uppercase;border-bottom:1px solid #C49A62">Getting there ↗</a>
         </div>
         <div style="padding:40px 32px;background:#3E3236;border-radius:160px 160px 8px 8px;color:#F6EBEC;text-align:center">
           <svg width="56" height="56" viewBox="0 0 160 160" style="display:block;margin:0 auto" aria-hidden="true"><use href="#seal"/></svg>
@@ -353,24 +353,24 @@ details.faq[open] .plus{rotate:45deg}
     </div>
   </section>
 
-  <section id="historia" style="position:relative;padding:104px clamp(20px,4vw,56px)">
+  <section id="historia" data-lz-anchor="historia" style="position:relative;padding:104px clamp(20px,4vw,56px)">
     <div style="max-width:1120px;margin:0 auto;display:flex;flex-wrap:wrap;align-items:center;gap:48px 72px">
       <div style="flex:1 1 340px;min-width:0">
         <svg width="200" height="40" viewBox="-150 -20 300 40" style="display:block" aria-hidden="true"><use href="#orn"/></svg>
         <p class="kicker" style="margin-top:18px">Our story</p>
-        <h2 class="h2">A story<br><em>written together</em></h2>
-        <p style="margin:22px 0 0;max-width:440px;font-size:17px;line-height:1.8;color:#4E4247">Tell how the two of you met. Share your favorite memories together. Describe the new chapter you are about to begin.</p>
+        <h2 class="h2" data-lz="storyTitle">A story<br><em>written together</em></h2>
+        <p data-lz="story" style="margin:22px 0 0;max-width:440px;font-size:17px;line-height:1.8;color:#4E4247">Tell how the two of you met. Share your favorite memories together. Describe the new chapter you are about to begin.</p>
       </div>
-      <div data-gallery style="flex:2 1 520px;min-width:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(150px,100%),1fr));gap:16px">
-        <div style="aspect-ratio:3 / 4;padding:5px;border:1px solid #C49A62;border-radius:200px 200px 8px 8px;background:#FBF4F3"><img src="/assets/fotos/torre.jpg" alt="Melissa and Andrés holding hands" loading="lazy" style="display:block;width:100%;height:100%;object-fit:cover;object-position:center 70%;border-radius:195px 195px 5px 5px"></div>
-        <div style="aspect-ratio:3 / 4;padding:5px;border:1px solid #C49A62;border-radius:200px 200px 8px 8px;background:#FBF4F3"><img src="/assets/fotos/muro.jpg" alt="Melissa and Andrés by the brick wall" loading="lazy" style="display:block;width:100%;height:100%;object-fit:cover;object-position:center 45%;border-radius:195px 195px 5px 5px"></div>
-        <div style="aspect-ratio:3 / 4;padding:5px;border:1px solid #C49A62;border-radius:200px 200px 8px 8px;background:#FBF4F3"><img src="/assets/fotos/escalera.jpg" alt="Melissa and Andrés on the stairs" loading="lazy" style="display:block;width:100%;height:100%;object-fit:cover;object-position:center 65%;border-radius:195px 195px 5px 5px"></div>
-        <div style="aspect-ratio:3 / 4;padding:5px;border:1px solid #C49A62;border-radius:200px 200px 8px 8px;background:#FBF4F3"><img src="/assets/fotos/paseo.jpg" alt="Melissa and Andrés walking" loading="lazy" style="display:block;width:100%;height:100%;object-fit:cover;object-position:center 72%;border-radius:195px 195px 5px 5px"></div>
+      <div data-gallery data-lz-list="gallery" style="flex:2 1 520px;min-width:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(150px,100%),1fr));gap:16px">
+        <div data-lz-item style="aspect-ratio:3 / 4;padding:5px;border:1px solid #C49A62;border-radius:200px 200px 8px 8px;background:#FBF4F3"><img data-lz-f="img" src="/assets/fotos/torre.jpg" alt="Melissa and Andrés holding hands" loading="lazy" style="display:block;width:100%;height:100%;object-fit:cover;object-position:center 70%;border-radius:195px 195px 5px 5px"></div>
+        <div data-lz-item style="aspect-ratio:3 / 4;padding:5px;border:1px solid #C49A62;border-radius:200px 200px 8px 8px;background:#FBF4F3"><img data-lz-f="img" src="/assets/fotos/muro.jpg" alt="Melissa and Andrés by the brick wall" loading="lazy" style="display:block;width:100%;height:100%;object-fit:cover;object-position:center 45%;border-radius:195px 195px 5px 5px"></div>
+        <div data-lz-item style="aspect-ratio:3 / 4;padding:5px;border:1px solid #C49A62;border-radius:200px 200px 8px 8px;background:#FBF4F3"><img data-lz-f="img" src="/assets/fotos/escalera.jpg" alt="Melissa and Andrés on the stairs" loading="lazy" style="display:block;width:100%;height:100%;object-fit:cover;object-position:center 65%;border-radius:195px 195px 5px 5px"></div>
+        <div data-lz-item style="aspect-ratio:3 / 4;padding:5px;border:1px solid #C49A62;border-radius:200px 200px 8px 8px;background:#FBF4F3"><img data-lz-f="img" src="/assets/fotos/paseo.jpg" alt="Melissa and Andrés walking" loading="lazy" style="display:block;width:100%;height:100%;object-fit:cover;object-position:center 72%;border-radius:195px 195px 5px 5px"></div>
       </div>
     </div>
   </section>
 
-  <section id="confirmar" style="position:relative;padding:104px clamp(20px,4vw,56px);background:#F0E2E0">
+  <section id="confirmar" data-lz-anchor="rsvp" style="position:relative;padding:104px clamp(20px,4vw,56px);background:#F0E2E0">
     <svg style="position:absolute;inset:0;width:100%;height:100%;opacity:.6" aria-hidden="true"><rect width="100%" height="100%" fill="url(#dmk)"/></svg>
     <div style="position:relative;max-width:1040px;margin:0 auto;padding:clamp(28px,5vw,64px);background:#FBF4F3;border:1px solid #E2CFC6;border-radius:8px;box-shadow:0 24px 60px #6B515818;display:flex;flex-wrap:wrap;gap:40px 64px">
       <div style="flex:1 1 300px;min-width:0">
@@ -378,13 +378,13 @@ details.faq[open] .plus{rotate:45deg}
         <p class="kicker" style="margin-top:24px">RSVP</p>
         <h2 class="h2" id="rsTitle" style="font-size:clamp(40px,4.4vw,56px)">Will you join us?</h2>
         <p id="rsText" style="margin:16px 0 0;font-size:16px;line-height:1.8;color:#6E5F64">We have saved 4 seats for you. Please reply for each guest before the RSVP deadline.</p>
-        <p style="margin:16px 0 0;font-size:13px;line-height:1.6;color:#6E5F64">Our celebration is adults only.</p>
+        <p style="margin:16px 0 0;font-size:13px;line-height:1.6;color:#6E5F64" data-lz="rsvpMsg">Our celebration is adults only.</p>
       </div>
       <div style="flex:1.3 1 360px;min-width:0">
         <form id="rsForm" novalidate>
           <div id="people" style="display:flex;flex-direction:column"></div>
-          <label for="msg" style="display:block;margin-top:22px;font-size:10px;font-weight:400;letter-spacing:.28em;text-transform:uppercase;color:#6E5F64">A note for us</label>
-          <textarea id="msg" rows="3" placeholder="Optional" style="display:block;width:100%;margin-top:8px;padding:12px 14px;border:1px solid #D9C5BE;border-radius:6px;background:#FFFFFF;font:300 15px/1.5 Jost,Helvetica,sans-serif;color:#3E3236;resize:none"></textarea>
+          <label for="msg" data-lz-show="rsvpNote" style="display:block;margin-top:22px;font-size:10px;font-weight:400;letter-spacing:.28em;text-transform:uppercase;color:#6E5F64">A note for us</label>
+          <textarea id="msg" data-lz-show="rsvpNote" rows="3" placeholder="Optional" style="display:block;width:100%;margin-top:8px;padding:12px 14px;border:1px solid #D9C5BE;border-radius:6px;background:#FFFFFF;font:300 15px/1.5 Jost,Helvetica,sans-serif;color:#3E3236;resize:none"></textarea>
           <p id="rsError" role="alert" hidden style="margin:14px 0 0;font-size:13px;color:#9B3B4A">Please choose Yes or No for each guest.</p>
           <button type="submit" class="pill" style="width:100%;height:54px;margin-top:20px;border:0;background:#3E3236;color:#F7EEF0;cursor:pointer">RSVP</button>
         </form>
@@ -397,24 +397,24 @@ details.faq[open] .plus{rotate:45deg}
     </div>
   </section>
 
-  <section id="preguntas" style="padding:104px clamp(20px,4vw,56px)">
+  <section id="preguntas" data-lz-anchor="faq" data-lz-hide-empty style="padding:104px clamp(20px,4vw,56px)">
     <div style="max-width:1120px;margin:0 auto;display:flex;flex-wrap:wrap;gap:32px 72px">
       <div style="flex:1 1 280px;min-width:0">
         <svg width="200" height="40" viewBox="-150 -20 300 40" style="display:block" aria-hidden="true"><use href="#orn"/></svg>
         <p class="kicker" style="margin-top:18px">FAQ</p>
         <h2 class="h2">The <em>details</em></h2>
       </div>
-      <div style="flex:2 1 480px;min-width:0;border-bottom:1px solid #E2CFC6">
-        <details class="faq"><summary><span style="display:flex;flex-direction:column;gap:4px"><span class="kicker" style="font-size:10px;letter-spacing:.28em">Dress code</span><span style="font:400 24px/1.2 'Instrument Serif',serif">Is there a dress code?</span></span><span class="plus" aria-hidden="true">+</span></summary><p style="margin:0;padding:0 0 20px;max-width:620px;font-size:15px;line-height:1.7;color:#6E5F64">Add your dress code recommendations for guests.</p></details>
-        <details class="faq"><summary><span style="display:flex;flex-direction:column;gap:4px"><span class="kicker" style="font-size:10px;letter-spacing:.28em">Dress code</span><span style="font:400 24px/1.2 'Instrument Serif',serif">Are any colors reserved?</span></span><span class="plus" aria-hidden="true">+</span></summary><p style="margin:0;padding:0 0 20px;max-width:620px;font-size:15px;line-height:1.7;color:#6E5F64">List any reserved colors and other attire tips.</p></details>
-        <details class="faq"><summary><span style="display:flex;flex-direction:column;gap:4px"><span class="kicker" style="font-size:10px;letter-spacing:.28em">Children</span><span style="font:400 24px/1.2 'Instrument Serif',serif">Children at the celebration</span></span><span class="plus" aria-hidden="true">+</span></summary><p style="margin:0;padding:0 0 20px;max-width:620px;font-size:15px;line-height:1.7;color:#6E5F64">Let guests know whether children are invited.</p></details>
-        <details class="faq"><summary><span style="display:flex;flex-direction:column;gap:4px"><span class="kicker" style="font-size:10px;letter-spacing:.28em">Food</span><span style="font:400 24px/1.2 'Instrument Serif',serif">Dietary restrictions</span></span><span class="plus" aria-hidden="true">+</span></summary><p style="margin:0;padding:0 0 20px;max-width:620px;font-size:15px;line-height:1.7;color:#6E5F64">Add details about the menu and options for special dietary needs.</p></details>
-        <details class="faq"><summary><span style="display:flex;flex-direction:column;gap:4px"><span class="kicker" style="font-size:10px;letter-spacing:.28em">Food</span><span style="font:400 24px/1.2 'Instrument Serif',serif">Special requests</span></span><span class="plus" aria-hidden="true">+</span></summary><p style="margin:0;padding:0 0 20px;max-width:620px;font-size:15px;line-height:1.7;color:#6E5F64">Explain how to share any special request.</p></details>
+      <div data-lz-list="faqs" style="flex:2 1 480px;min-width:0;border-bottom:1px solid #E2CFC6">
+        <details class="faq" data-lz-item><summary><span style="display:flex;flex-direction:column;gap:4px"><span data-lz-f="hide" class="kicker" style="font-size:10px;letter-spacing:.28em">Dress code</span><span data-lz-f="q" style="font:400 24px/1.2 'Instrument Serif',serif">Is there a dress code?</span></span><span class="plus" aria-hidden="true">+</span></summary><p data-lz-f="a" style="margin:0;padding:0 0 20px;max-width:620px;font-size:15px;line-height:1.7;color:#6E5F64">Add your dress code recommendations for guests.</p></details>
+        <details class="faq" data-lz-item><summary><span style="display:flex;flex-direction:column;gap:4px"><span data-lz-f="hide" class="kicker" style="font-size:10px;letter-spacing:.28em">Dress code</span><span data-lz-f="q" style="font:400 24px/1.2 'Instrument Serif',serif">Are any colors reserved?</span></span><span class="plus" aria-hidden="true">+</span></summary><p data-lz-f="a" style="margin:0;padding:0 0 20px;max-width:620px;font-size:15px;line-height:1.7;color:#6E5F64">List any reserved colors and other attire tips.</p></details>
+        <details class="faq" data-lz-item><summary><span style="display:flex;flex-direction:column;gap:4px"><span data-lz-f="hide" class="kicker" style="font-size:10px;letter-spacing:.28em">Children</span><span data-lz-f="q" style="font:400 24px/1.2 'Instrument Serif',serif">Children at the celebration</span></span><span class="plus" aria-hidden="true">+</span></summary><p data-lz-f="a" style="margin:0;padding:0 0 20px;max-width:620px;font-size:15px;line-height:1.7;color:#6E5F64">Let guests know whether children are invited.</p></details>
+        <details class="faq" data-lz-item><summary><span style="display:flex;flex-direction:column;gap:4px"><span data-lz-f="hide" class="kicker" style="font-size:10px;letter-spacing:.28em">Food</span><span data-lz-f="q" style="font:400 24px/1.2 'Instrument Serif',serif">Dietary restrictions</span></span><span class="plus" aria-hidden="true">+</span></summary><p data-lz-f="a" style="margin:0;padding:0 0 20px;max-width:620px;font-size:15px;line-height:1.7;color:#6E5F64">Add details about the menu and options for special dietary needs.</p></details>
+        <details class="faq" data-lz-item><summary><span style="display:flex;flex-direction:column;gap:4px"><span data-lz-f="hide" class="kicker" style="font-size:10px;letter-spacing:.28em">Food</span><span data-lz-f="q" style="font:400 24px/1.2 'Instrument Serif',serif">Special requests</span></span><span class="plus" aria-hidden="true">+</span></summary><p data-lz-f="a" style="margin:0;padding:0 0 20px;max-width:620px;font-size:15px;line-height:1.7;color:#6E5F64">Explain how to share any special request.</p></details>
       </div>
     </div>
   </section>
 
-  <section id="viaje" style="position:relative;padding:104px clamp(20px,4vw,56px);border-top:1px solid #E2CFC6">
+  <section id="viaje" data-lz-show="viajeOn" data-lz-anchor="viaje" style="position:relative;padding:104px clamp(20px,4vw,56px);border-top:1px solid #E2CFC6">
     <div style="max-width:1120px;margin:0 auto">
       <div style="text-align:center">
         <svg width="300" height="40" viewBox="-150 -20 300 40" style="display:block;max-width:100%;margin:0 auto" aria-hidden="true"><use href="#orn"/></svg>
@@ -425,11 +425,11 @@ details.faq[open] .plus{rotate:45deg}
       <div style="margin-top:48px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(280px,100%),1fr));gap:20px">
         <div class="travel-card">
           <p class="kicker" style="letter-spacing:.32em">Where to stay</p>
-          <p style="margin:12px 0 0;font:400 28px/1.2 'Instrument Serif',serif">Hotel name</p>
-          <p style="margin:6px 0 0;font-size:15px;line-height:1.6;color:#6E5F64">Hotel address</p>
+          <p style="margin:12px 0 0;font:400 28px/1.2 'Instrument Serif',serif" data-lz="hotel">Hotel name</p>
+          <p style="margin:6px 0 0;font-size:15px;line-height:1.6;color:#6E5F64" data-lz="travelNotes">Hotel address</p>
           <div style="width:1px;height:28px;margin:16px auto;background:#C49A62"></div>
           <p style="margin:0;font-size:14px;line-height:1.7;color:#6E5F64">Booking code: <strong style="font-weight:500;color:#3E3236">WEDDING-MA</strong></p>
-          <a href="#viaje" style="display:inline-flex;align-items:center;height:44px;margin-top:8px;font-size:11px;font-weight:400;letter-spacing:.24em;text-transform:uppercase;border-bottom:1px solid #C49A62">Book ↗</a>
+          <a data-lz-href="hotelLink" href="#viaje" style="display:inline-flex;align-items:center;height:44px;margin-top:8px;font-size:11px;font-weight:400;letter-spacing:.24em;text-transform:uppercase;border-bottom:1px solid #C49A62">Book ↗</a>
         </div>
         <div class="travel-card">
           <p class="kicker" style="letter-spacing:.32em">Getting there</p>
@@ -458,12 +458,13 @@ details.faq[open] .plus{rotate:45deg}
     <svg viewBox="0 0 160 160" style="position:absolute;right:clamp(12px,2vw,32px);bottom:32px;width:clamp(80px,10vw,150px);height:clamp(80px,10vw,150px);transform:scaleY(-1)" aria-hidden="true"><use href="#corner"/></svg>
     <svg width="150" height="150" viewBox="0 0 160 160" style="position:relative;display:block;margin:0 auto" aria-hidden="true"><use href="#seal"/></svg>
     <p style="position:relative;margin:32px 0 0;font:400 16px/1.6 'Instrument Serif',serif;letter-spacing:.22em;text-transform:uppercase;color:#7D6A70">With love</p>
-    <p style="position:relative;margin:12px 0 0;font:400 clamp(44px,5vw,72px)/1 'Instrument Serif',serif">Melissa <em style="color:#B48650">&amp;</em> Andrés</p>
-    <p style="position:relative;margin:18px 0 0;font-size:11px;font-weight:400;letter-spacing:.32em;text-transform:uppercase;color:#6E5F64">12 · 06 · 2027</p>
+    <p style="position:relative;margin:12px 0 0;font:400 clamp(44px,5vw,72px)/1 'Instrument Serif',serif"><span data-lz="n1">Melissa</span> <em style="color:#B48650">&amp;</em> <span data-lz="n2">Andrés</span></p>
+    <p style="position:relative;margin:18px 0 0;font-size:11px;font-weight:400;letter-spacing:.32em;text-transform:uppercase;color:#6E5F64" data-lz-date="{dd} · {mm} · {Y}">12 · 06 · 2027</p>
   </footer>
 </div>
 
 <div class="demo-bar" id="demoBar" hidden><span class="lbl">Demo</span><button type="button" data-open-panel>Couple’s dashboard</button><a href="/en/#designs">Shop</a></div>
+<script src="/demo/shared/content.js"></script>
 <script src="/demo/shared/panel.js"></script>
 
 <script>
@@ -484,6 +485,8 @@ LazoMusic.init({src:'/assets/musica/demo.mp3'});
   function set(p){env.dataset.phase=p;}
   function go(p,ms){timers.push(setTimeout(function(){set(p);if(p==='card')document.getElementById('enter').focus({preventScroll:true});},ms));}
   function clear(){timers.forEach(clearTimeout);timers=[];}
+  // Para el editor de Lazo (demo/shared/content.js): saltar o volver a mostrar el sobre.
+  window.LzTemplate={open:function(){clear();env.classList.add('gone');document.body.classList.remove('locked');},envelope:function(){clear();set('closed');env.classList.remove('gone');document.body.classList.add('locked');window.scrollTo(0,0);},scroll:function(el){window.scrollTo(0,el.getBoundingClientRect().top+window.pageYOffset-20);}};
   document.getElementById('sealBtn').addEventListener('click',function(){
     if(env.dataset.phase!=='closed')return;clear();LazoMusic.play();set('glow');go('open',1900);go('flash',3000);go('card',3600);
   });
@@ -502,7 +505,7 @@ LazoMusic.init({src:'/assets/musica/demo.mp3'});
   // Countdown
   var TARGET=Date.parse('2027-06-12T16:00:00-05:00'),pad=function(n){return String(n).padStart(2,'0');};
   var cd={};document.querySelectorAll('[data-cd]').forEach(function(e){cd[e.dataset.cd]=e;});
-  function tick(){var s=Math.floor(Math.max(0,TARGET-Date.now())/1000);
+  function tick(){var s=Math.floor(Math.max(0,(window.LZ_T||TARGET)-Date.now())/1000);
     cd.d.textContent=Math.floor(s/86400);cd.h.textContent=pad(Math.floor(s/3600)%24);cd.m.textContent=pad(Math.floor(s/60)%60);cd.s.textContent=pad(s%60);}
   tick();setInterval(tick,1000);
 
