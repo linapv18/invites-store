@@ -22,9 +22,82 @@
 (function () {
   'use strict';
   var q = new URLSearchParams(location.search), MODE = q.get('lz'), KEY = q.get('k');
-  if (MODE !== 'editor' && MODE !== 'vista') return;
   var LANG = (document.documentElement.lang || 'es').slice(0, 2) === 'en' ? 'en' : 'es';
-  var html = document.documentElement;
+  var html = document.documentElement, TPL = html.getAttribute('data-lz-tpl');
+
+  /* ---------- Colores de cada plantilla ----------
+     Clásico: paletas a partir de un color oscuro (o uno propio); Romántico: rosado (original) o champaña;
+     Moderno: blanco y negro. La primera de cada lista es la original del diseño (sin variables). */
+  var THEMES = {
+    clasico: [
+      { id: 'salvia', es: 'Salvia', en: 'Sage', sw: '#293c35' },
+      { id: 'rosa', es: 'Rosa antiguo', en: 'Dusty rose', sw: '#4A2F2E', dark: '#4A2F2E', accent: '#6B4442' },
+      { id: 'azul', es: 'Azul noche', en: 'Midnight blue', sw: '#26304A', dark: '#26304A', accent: '#34405A' },
+      { id: 'terracota', es: 'Terracota', en: 'Terracotta', sw: '#4A2B1F', dark: '#4A2B1F', accent: '#6A3D2A' }
+    ],
+    rosa: [
+      { id: 'rosado', es: 'Rosado', en: 'Blush', sw: '#EBD3D2' },
+      { id: 'champana', es: 'Champaña', en: 'Champagne', sw: '#E9DCC4', vars: {
+        'r-bg': '#F5EFE4', 'r-bg2': '#EEE5D4', 'r-card': '#FBF7EF', 'r-line': '#E3D6BF', 'r-on': '#F8F2E6', 'r-ink': '#3D352B', 'r-text': '#6E6354',
+        'r-muted': '#7F7361', 'r-field': '#D9CCB4', 'r-on2': '#E9E0CE', 'r-body': '#4E463A', 'r-row': '#E8DDC9', 'r-soft40': '#5E554840', 'r-soft': '#5E5548',
+        'r-shadow': '#6B5D4818', 'r-shade': '#6B5D48', 'r-liner1': '#F6EFE1', 'r-liner2': '#F5EEDF', 'r-liner3': '#EADDC5', 'r-liner4': '#F3EBDC',
+        'r-pat': '#BCA27E', 'r-pat2': '#D4C1A1', 'r-sh1': '#9C8C72', 'r-sh2': '#8E8371', 'r-sh3': '#6A5F4E' } }
+    ],
+    moderno: []
+  };
+  function hexRgb(h) { var m = /^#?([0-9a-f]{6})$/i.exec(h || ''); if (!m) return null; var n = parseInt(m[1], 16); return [n >> 16 & 255, n >> 8 & 255, n & 255]; }
+  function lum(c) { return [0, 1, 2].reduce(function (sum, i) { var x = c[i] / 255; x = x <= 0.03928 ? x / 12.92 : Math.pow((x + 0.055) / 1.055, 2.4); return sum + x * [0.2126, 0.7152, 0.0722][i]; }, 0); }
+  var mix = function (c, t, a) { return c.map(function (x, i) { return Math.round(x + (t[i] - x) * a); }); };
+  var toHex = function (c) { return '#' + c.map(function (x) { return ('0' + x.toString(16)).slice(-2); }).join(''); };
+  // Color propio (selector de color): se oscurece si hace falta para que el texto claro se lea.
+  function customPalette(hex) {
+    var c = hexRgb(hex); if (!c) return null;
+    for (var i = 0; i < 25 && lum(c) > 0.12; i++) c = mix(c, [0, 0, 0], 0.15);
+    return [toHex(c), toHex(mix(c, [255, 255, 255], 0.12))];
+  }
+  var themeVars = {};
+  function applyTheme(id, custom) {
+    var list = THEMES[TPL] || [], t = list.filter(function (x) { return x.id === id; })[0], vars = {};
+    if (TPL === 'clasico') {
+      // Todo lo que en la plantilla es de ese color sale del color elegido: texto y fondos (--dark, --accent),
+      // el sobre exterior y su sello, los detalles claros sobre fondo oscuro y el botón de música.
+      var pal = id === 'custom' ? customPalette(custom) : t && t.dark ? [t.dark, t.accent] : null, c = pal && hexRgb(pal[0]), W = [255, 255, 255], K = [0, 0, 0];
+      if (c) vars = {
+        '--dark': pal[0], '--accent': pal[1], '--env-bg': toHex(mix(c, K, 0.12)), '--env-glow': toHex(mix(c, W, 0.22)),
+        '--seal-hi': toHex(mix(c, W, 0.28)), '--seal-lo': toHex(mix(c, K, 0.05)), '--seal-ring': toHex(mix(c, W, 0.5)),
+        '--pale': toHex(mix(c, W, 0.68)), '--m-bg': pal[0], '--p-ink': pal[0], '--p-accent': pal[0]
+      };
+    } else if (t && t.vars) Object.keys(t.vars).forEach(function (k) { vars['--' + k] = t.vars[k]; });
+    Object.keys(themeVars).concat(Object.keys(vars)).forEach(function (k) { html.style.setProperty(k, vars[k] || ''); });
+    themeVars = vars;
+    var tc = document.querySelector('meta[name="theme-color"]');
+    if (tc) { if (tc._lz === undefined) tc._lz = tc.content; tc.content = vars['--env-bg'] || vars['--r-bg2'] || tc._lz; }
+  }
+  window.LazoTheme = { list: function () { return THEMES[TPL] || []; }, apply: applyTheme };
+
+  if (MODE !== 'editor' && MODE !== 'vista') {
+    // Demo de la tienda: elegir entre los colores del diseño desde la barra de la demo (o con ?color=champana).
+    var themes = THEMES[TPL] || [];
+    if (themes.length < 2) return;
+    var start = q.get('color');
+    if (start) applyTheme(start);
+    var css0 = document.createElement('style');
+    css0.textContent = '.lz-swatches{display:inline-flex;align-items:center;gap:6px;margin:0 4px}.lz-swatches button{width:22px;height:22px;padding:0;border-radius:50%;border:1px solid rgba(0,0,0,.18);cursor:pointer;box-shadow:inset 0 0 0 2px rgba(255,255,255,.35)}.lz-swatches button[aria-pressed="true"]{outline:2px solid currentColor;outline-offset:2px}';
+    document.head.appendChild(css0);
+    document.addEventListener('DOMContentLoaded', function () {
+      var bar = document.querySelector('.demo-bar'); if (!bar) return;
+      var g = document.createElement('span'); g.className = 'lz-swatches'; g.setAttribute('role', 'group'); g.setAttribute('aria-label', LANG === 'en' ? 'Colors' : 'Colores');
+      var cur = themes.some(function (x) { return x.id === start; }) ? start : themes[0].id;
+      themes.forEach(function (t) {
+        var b = document.createElement('button'); b.type = 'button'; b.style.background = t.sw; b.title = t[LANG];
+        b.setAttribute('aria-label', (LANG === 'en' ? 'Color: ' : 'Color: ') + t[LANG]); b.setAttribute('aria-pressed', String(t.id === cur));
+        b.addEventListener('click', function () { applyTheme(t.id); g.querySelectorAll('button').forEach(function (x) { x.setAttribute('aria-pressed', String(x === b)); }); });
+        g.appendChild(b);
+      });
+      var lbl = bar.querySelector('.lbl'); if (lbl && lbl.nextSibling) bar.insertBefore(g, lbl.nextSibling); else bar.appendChild(g);
+    });
+    return;
+  }
   html.classList.add('lz-content', 'lz-' + MODE);
 
   var css = document.createElement('style');
@@ -37,6 +110,7 @@
     '.lz-seal-ring{width:2.3em;height:2.3em;border-radius:50%;border:1px solid currentColor;font-style:italic !important}' +
     '.lz-seal img{width:100%;height:100%;object-fit:contain}' +
     '.mo-seal>.lz-seal{font-size:20px}' +
+    '.mo-seal .lz-seal,.lz-seal-over .lz-seal{font-family:"Instrument Serif",Georgia,serif !important}' +
     '.lz-seal-over{display:flex;align-items:center;justify-content:center;position:absolute;left:24%;top:24%;width:52%;height:52%;border-radius:50%;background:radial-gradient(circle at 35% 30%,#D8AE76,#A8743E 70%);color:#FFF4DF;box-shadow:inset 0 0 0 2px #8C5E2C55;font-size:calc(var(--ss,160px) * .2) !important;pointer-events:none}' +
     '.lz-seal-over.is-img{background:none;box-shadow:none}' +
     '.venue-card [data-lz-f="time"]:not(:empty)::before{content:" · "}';
@@ -81,17 +155,6 @@
     if (c.mono === 'stack') return '<span class="lz-seal lz-seal-stack" style="font-size:.8em"><span>' + i1 + '</span><hr><span>' + i2 + '</span></span>';
     if (c.mono === 'ring') return '<span class="lz-seal lz-seal-ring" style="font-size:.8em">' + i1 + i2 + '</span>';
     return '<span class="lz-seal">' + i1 + '<i>&amp;</i>' + i2 + '</span>';
-  }
-  var PALETTES = { rosa: ['#4A2F2E', '#6B4442'], azul: ['#26304A', '#34405A'], terracota: ['#4A2B1F', '#6A3D2A'] };
-  // Color propio (selector de color): se oscurece si hace falta para que el texto claro se lea.
-  function hexRgb(h) { var m = /^#?([0-9a-f]{6})$/i.exec(h || ''); if (!m) return null; var n = parseInt(m[1], 16); return [n >> 16 & 255, n >> 8 & 255, n & 255]; }
-  function lum(c) { return [0, 1, 2].reduce(function (sum, i) { var x = c[i] / 255; x = x <= 0.03928 ? x / 12.92 : Math.pow((x + 0.055) / 1.055, 2.4); return sum + x * [0.2126, 0.7152, 0.0722][i]; }, 0); }
-  var mix = function (c, t, a) { return c.map(function (x, i) { return Math.round(x + (t[i] - x) * a); }); };
-  var toHex = function (c) { return '#' + c.map(function (x) { return ('0' + x.toString(16)).slice(-2); }).join(''); };
-  function customPalette(hex) {
-    var c = hexRgb(hex); if (!c) return null;
-    for (var i = 0; i < 25 && lum(c) > 0.12; i++) c = mix(c, [0, 0, 0], 0.15);
-    return [toHex(c), toHex(mix(c, [255, 255, 255], 0.12))];
   }
   /* Música: canción de la biblioteca (ruta) o MP3 subido, que el editor guarda en IndexedDB ('lazo-media'). */
   function readFile(key) {
@@ -216,21 +279,7 @@
       if (k === 'gallery' && !rows.length) return;
       renderList(box, rows);
     });
-    var pal = PALETTES[c0.pal];
-    if (c0.pal === 'custom') pal = customPalette(c0.palCustom);
-    if (html.getAttribute('data-lz-palette') !== null) {
-      // Todo lo que en la plantilla es de ese color sale del color elegido: texto y fondos (--dark, --accent),
-      // el sobre exterior y su sello, los detalles claros sobre fondo oscuro y el botón de música.
-      // Sin paleta (o la original) se borran y la plantilla usa sus valores por defecto.
-      var c = pal && hexRgb(pal[0]), W = [255, 255, 255], K = [0, 0, 0];
-      var vars = c ? {
-        '--dark': pal[0], '--accent': pal[1], '--env-bg': toHex(mix(c, K, 0.12)), '--env-glow': toHex(mix(c, W, 0.22)),
-        '--seal-hi': toHex(mix(c, W, 0.28)), '--seal-lo': toHex(mix(c, K, 0.05)), '--seal-ring': toHex(mix(c, W, 0.5)),
-        '--pale': toHex(mix(c, W, 0.68)), '--m-bg': pal[0], '--p-ink': pal[0], '--p-accent': pal[0]
-      } : {};
-      ['--dark', '--accent', '--env-bg', '--env-glow', '--seal-hi', '--seal-lo', '--seal-ring', '--pale', '--m-bg', '--p-ink', '--p-accent'].forEach(function (k) { html.style.setProperty(k, vars[k] || ''); });
-      var tc = document.querySelector('meta[name="theme-color"]'); if (tc) { if (tc._lz === undefined) tc._lz = tc.content; tc.content = vars['--env-bg'] || tc._lz; }
-    }
+    applyTheme(c0.pal, c0.palCustom);
     // Cuenta regresiva: las plantillas leen window.LZ_T en cada segundo.
     var d = dateObj(c0.date);
     if (d) { var m = /^(\d{1,2}):(\d{2})$/.exec(cdEv && cdEv.time || ''); if (m) d.setHours(+m[1], +m[2]); window.LZ_T = d.getTime(); }

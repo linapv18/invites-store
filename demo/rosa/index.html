@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="es">
+<html lang="es" data-lz-tpl="rosa">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -14,24 +14,24 @@
 *,*::before,*::after{box-sizing:border-box}
 [hidden]{display:none !important}
 html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
-body{margin:0;background:#F6EBEC;font-family:Jost,Helvetica,sans-serif;font-weight:300;color:#3E3236}
+body{margin:0;background:var(--r-bg,#F6EBEC);font-family:Jost,Helvetica,sans-serif;font-weight:300;color:var(--r-ink,#3E3236)}
 body.locked{overflow:hidden}
-a{color:#3E3236;text-decoration:none}a:hover{opacity:.75}
+a{color:var(--r-ink,#3E3236);text-decoration:none}a:hover{opacity:.75}
 img{max-width:100%}
-textarea::placeholder{color:#8E7F84}
+textarea::placeholder{color:var(--r-sh2,#8E7F84)}
 button{font-family:inherit}
 a:focus-visible,button:focus-visible,summary:focus-visible,textarea:focus-visible{outline:2px solid #B48650;outline-offset:3px}
 @keyframes rNudge{0%,100%{translate:0 0}50%{translate:0 6px}}
 @keyframes sBreath{0%,100%{scale:1}50%{scale:1.025}}
 
 /* ---------- Sobre ---------- */
-.env{position:fixed;inset:0;z-index:50;overflow:hidden;background:#F0E2E0;transition:opacity .9s ease,visibility 0s linear .9s}
+.env{position:fixed;inset:0;z-index:50;overflow:hidden;background:var(--r-bg2,#F0E2E0);transition:opacity .9s ease,visibility 0s linear .9s}
 .env.gone{opacity:0;visibility:hidden}
 .env svg{display:block}
 .scene{position:absolute;inset:0;perspective:2400px;transition:opacity 1s ease,transform 2.6s cubic-bezier(.4,0,.2,1)}
 .base{position:absolute;inset:0;width:100%;height:100%}
 .liner-glow{opacity:0;transition:opacity 1s ease .3s}
-.dim{position:absolute;inset:0;background:#6B5158;mix-blend-mode:multiply;opacity:0;transition:opacity 1.4s ease}
+.dim{position:absolute;inset:0;background:var(--r-shade,#6B5158);mix-blend-mode:multiply;opacity:0;transition:opacity 1.4s ease}
 .reach{position:absolute;inset:0;clip-path:circle(0px at var(--cx) var(--cy));transition:clip-path 1.9s cubic-bezier(.3,0,.25,1)}
 .reach svg{width:100%;height:100%}
 .flap{position:absolute;left:0;top:0;width:100%;height:var(--fh);transform-origin:50% 0;transition:transform 1.3s cubic-bezier(.65,0,.35,1);filter:drop-shadow(0 10px 16px rgba(120,80,70,.28))}
@@ -40,7 +40,7 @@ a:focus-visible,button:focus-visible,summary:focus-visible,textarea:focus-visibl
 .seal-btn{position:absolute;left:50%;top:var(--fh);width:var(--ss);height:var(--ss);margin:calc(var(--ss) / -2) 0 0 calc(var(--ss) / -2);padding:0;border:0;background:none;cursor:pointer;animation:sBreath 3s ease-in-out infinite;transition:filter 1s ease}
 .seal-btn svg{width:100%;height:100%;overflow:visible}
 .bloom{position:absolute;left:var(--cx);top:var(--cy);width:10px;height:10px;margin:-5px 0 0 -5px;border-radius:50%;background:#FFF6E2;opacity:0;filter:blur(30px);pointer-events:none;transition:transform 1.9s cubic-bezier(.2,.7,.2,1),opacity 1.2s ease}
-.hint{position:absolute;left:0;right:0;bottom:clamp(28px,6vh,48px);margin:0;padding:0 20px;text-align:center;font-size:11px;font-weight:400;letter-spacing:.34em;text-transform:uppercase;color:#6A5550;transition:opacity .5s ease}
+.hint{position:absolute;left:0;right:0;bottom:clamp(28px,6vh,48px);margin:0;padding:0 20px;text-align:center;font-size:11px;font-weight:400;letter-spacing:.34em;text-transform:uppercase;color:var(--r-sh3,#6A5550);transition:opacity .5s ease}
 .env:not([data-phase="closed"]) .dim{opacity:.38}
 .env:not([data-phase="closed"]) .reach{clip-path:circle(2400px at var(--cx) var(--cy))}
 .env:not([data-phase="closed"]) .seal-btn{animation:none;filter:brightness(1.55) saturate(.25) drop-shadow(0 0 24px #FFF2D2);cursor:default}
@@ -55,10 +55,10 @@ a:focus-visible,button:focus-visible,summary:focus-visible,textarea:focus-visibl
 .env[data-phase="flash"] .wash{opacity:1}
 
 .card{position:absolute;inset:0;background:#E3E2F4;opacity:0;pointer-events:none;overflow-y:auto;display:flex;flex-direction:column;transition:opacity 1.3s ease,background-color 3.2s ease .8s}
-.env[data-phase="card"] .card{opacity:1;pointer-events:auto;background:#F5E6EB}
+.env[data-phase="card"] .card{opacity:1;pointer-events:auto;background:var(--r-liner4,#F5E6EB)}
 .card .corner{position:absolute;width:clamp(90px,12vw,160px);height:clamp(90px,12vw,160px);opacity:0;transition:opacity 1.4s ease 1.2s}
 .env[data-phase="card"] .card .corner{opacity:1}
-.card .bar{position:relative;height:72px;padding:0 clamp(20px,4vw,64px);display:flex;align-items:center;justify-content:space-between;font-size:11px;font-weight:400;letter-spacing:.34em;text-transform:uppercase;color:#6E5F64}
+.card .bar{position:relative;height:72px;padding:0 clamp(20px,4vw,64px);display:flex;align-items:center;justify-content:space-between;font-size:11px;font-weight:400;letter-spacing:.34em;text-transform:uppercase;color:var(--r-text,#6E5F64)}
 .card .inner{position:relative;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px clamp(20px,6vw,96px) 72px}
 .rv{opacity:0;translate:0 14px;transition:opacity 1.1s ease,translate 1.1s ease}
 .env[data-phase="card"] .rv{opacity:1;translate:0 0}
@@ -71,24 +71,24 @@ a:focus-visible,button:focus-visible,summary:focus-visible,textarea:focus-visibl
 /* ---------- Invitación ---------- */
 .pill{display:inline-flex;align-items:center;justify-content:center;border-radius:100px;font-size:11px;font-weight:400;letter-spacing:.28em;text-transform:uppercase}
 .kicker{margin:0;font-size:11px;font-weight:400;letter-spacing:.34em;text-transform:uppercase;color:#7A5530}
-.h2{margin:14px 0 0;font:400 clamp(40px,4.4vw,60px)/1.05 'Instrument Serif',serif;color:#3E3236}
-.ph{position:relative;width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;background:#EBD6D5;overflow:hidden;color:#7D6A70;text-align:center}
+.h2{margin:14px 0 0;font:400 clamp(40px,4.4vw,60px)/1.05 'Instrument Serif',serif;color:var(--r-ink,#3E3236)}
+.ph{position:relative;width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;background:var(--r-liner3,#EBD6D5);overflow:hidden;color:var(--r-muted,#7D6A70);text-align:center}
 .ph svg.bg{position:absolute;inset:0;width:100%;height:100%;opacity:.55}
-.ph .mono{position:relative;font:italic 400 clamp(40px,6vw,72px)/1 'Instrument Serif',serif;color:#9C7E80}
+.ph .mono{position:relative;font:italic 400 clamp(40px,6vw,72px)/1 'Instrument Serif',serif;color:var(--r-sh1,#9C7E80)}
 .ph .cap{position:relative;font-size:10px;font-weight:400;letter-spacing:.3em;text-transform:uppercase}
-.att{width:60px;height:44px;border-radius:100px;border:1px solid #3E3236;background:transparent;color:#3E3236;font-size:12px;font-weight:400;letter-spacing:.12em;cursor:pointer}
-.att[aria-pressed="true"]{background:#3E3236;color:#F7EEF0}
-details.faq{border-top:1px solid #E2CFC6}
+.att{width:60px;height:44px;border-radius:100px;border:1px solid var(--r-ink,#3E3236);background:transparent;color:var(--r-ink,#3E3236);font-size:12px;font-weight:400;letter-spacing:.12em;cursor:pointer}
+.att[aria-pressed="true"]{background:var(--r-ink,#3E3236);color:var(--r-on,#F7EEF0)}
+details.faq{border-top:1px solid var(--r-line,#E2CFC6)}
 details.faq summary{min-height:72px;padding:16px 0;display:flex;align-items:center;justify-content:space-between;gap:16px;cursor:pointer;list-style:none}
 details.faq summary::-webkit-details-marker{display:none}
 details.faq .plus{flex:none;font:400 30px/1 'Instrument Serif',serif;color:#B48650;transition:rotate .3s ease}
 details.faq[open] .plus{rotate:45deg}
-:root{--p-bg:#F6EBEC;--p-surface:#FBF4F3;--p-ink:#3E3236;--p-muted:#7D6A70;--p-line:#E2CFC6;--p-accent:#3E3236;--p-on-accent:#F7EEF0;--p-serif:'Instrument Serif',Georgia,serif;--p-sans:Jost,Helvetica,sans-serif;--m-bg:#3E3236;--m-fg:#F7EEF0}
-.travel-card{padding:40px 32px;background:#FBF4F3;border:1px solid #E2CFC6;border-radius:160px 160px 8px 8px;text-align:center}
+:root{--p-bg:var(--r-bg,#F6EBEC);--p-surface:var(--r-card,#FBF4F3);--p-ink:var(--r-ink,#3E3236);--p-muted:var(--r-muted,#7D6A70);--p-line:var(--r-line,#E2CFC6);--p-accent:var(--r-ink,#3E3236);--p-on-accent:var(--r-on,#F7EEF0);--p-serif:'Instrument Serif',Georgia,serif;--p-sans:Jost,Helvetica,sans-serif;--m-bg:var(--r-ink,#3E3236);--m-fg:var(--r-on,#F7EEF0)}
+.travel-card{padding:40px 32px;background:var(--r-card,#FBF4F3);border:1px solid var(--r-line,#E2CFC6);border-radius:160px 160px 8px 8px;text-align:center}
 .travel-card ul{margin:14px 0 0;padding:0;list-style:none;display:flex;flex-direction:column;gap:12px}
-.travel-card li b{display:block;font:400 22px/1.2 'Instrument Serif',serif;color:#3E3236}
-.travel-card li span{font-size:14px;line-height:1.6;color:#6E5F64}
-.menu-btn{display:none;align-items:center;justify-content:center;width:48px;height:48px;padding:0;border:1px solid #D9C5BE;border-radius:100px;background:transparent;color:#3E3236;cursor:pointer}
+.travel-card li b{display:block;font:400 22px/1.2 'Instrument Serif',serif;color:var(--r-ink,#3E3236)}
+.travel-card li span{font-size:14px;line-height:1.6;color:var(--r-text,#6E5F64)}
+.menu-btn{display:none;align-items:center;justify-content:center;width:48px;height:48px;padding:0;border:1px solid var(--r-field,#D9C5BE);border-radius:100px;background:transparent;color:var(--r-ink,#3E3236);cursor:pointer}
 .menu-btn .x{display:none}
 #siteHead.open .menu-btn .bars{display:none}
 #siteHead.open .menu-btn .x{display:block}
@@ -96,8 +96,8 @@ details.faq[open] .plus{rotate:45deg}
   .menu-btn{display:flex}
   #secNav,.head-cta{display:none !important}
   #siteHead.open #secNav{display:flex !important;width:100%;flex-direction:column;font-size:12px !important}
-  #siteHead.open #secNav a{min-height:52px !important;border-top:1px solid #E2CFC6}
-  #siteHead.open .head-cta{display:flex !important;width:100%;height:52px !important;margin-top:8px;background:#3E3236;color:#F7EEF0}
+  #siteHead.open #secNav a{min-height:52px !important;border-top:1px solid var(--r-line,#E2CFC6)}
+  #siteHead.open .head-cta{display:flex !important;width:100%;height:52px !important;margin-top:8px;background:var(--r-ink,#3E3236);color:var(--r-on,#F7EEF0)}
 }
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{transition-duration:.01s !important;animation:none !important}}
 </style>
@@ -134,10 +134,10 @@ details.faq[open] .plus{rotate:45deg}
     </g>
     <g id="motif"><use href="#mShapes"/><use href="#mLines"/></g>
     <pattern id="dmk" width="130" height="180" patternUnits="userSpaceOnUse" patternTransform="scale(1.25)">
-      <g transform="translate(.9 1.1)" fill="none" stroke="#B8978B" stroke-width="1.1" opacity=".5">
+      <g transform="translate(.9 1.1)" fill="none" style="stroke:var(--r-pat,#B8978B)" stroke-width="1.1" opacity=".5">
         <use href="#motif"/><use href="#motif" x="-65" y="90"/><use href="#motif" x="65" y="90"/><use href="#motif" x="-65" y="-90"/><use href="#motif" x="65" y="-90"/>
       </g>
-      <g fill="#F7EDEA" stroke="#D3BBAF" stroke-width="1">
+      <g style="fill:var(--r-liner2,#F7EDEA);stroke:var(--r-pat2,#D3BBAF)" stroke-width="1">
         <use href="#motif"/><use href="#motif" x="-65" y="90"/><use href="#motif" x="65" y="90"/><use href="#motif" x="-65" y="-90"/><use href="#motif" x="65" y="-90"/>
       </g>
     </pattern>
@@ -154,7 +154,7 @@ details.faq[open] .plus{rotate:45deg}
     <linearGradient id="shR" x1="1" y1="0" x2="0" y2="0"><stop offset="0" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="rgba(110,70,60,.12)"/></linearGradient>
     <linearGradient id="shB" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="rgba(110,70,60,.12)"/></linearGradient>
     <linearGradient id="shT" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="rgba(110,70,60,.12)"/></linearGradient>
-    <linearGradient id="linerG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFFFFF"/><stop offset="1" stop-color="#F8ECE8"/></linearGradient>
+    <linearGradient id="linerG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFFFFF"/><stop offset="1" style="stop-color:var(--r-liner1,#F8ECE8)"/></linearGradient>
     <radialGradient id="waxG" cx="36%" cy="30%" r="80%">
       <stop offset="0" stop-color="#FCE7BE"/><stop offset=".3" stop-color="#E6BC7E"/><stop offset=".65" stop-color="#C08A4F"/><stop offset="1" stop-color="#8C5A2C"/>
     </radialGradient>
@@ -210,17 +210,17 @@ details.faq[open] .plus{rotate:45deg}
 <div class="env" id="env" data-phase="closed" role="dialog" aria-modal="true" aria-label="Invitación en sobre lacrado">
   <div class="scene">
     <svg class="base" id="base" preserveAspectRatio="none" aria-hidden="true">
-      <rect width="100%" height="100%" fill="#F0E2E0"/>
+      <rect width="100%" height="100%" style="fill:var(--r-bg2,#F0E2E0)"/>
       <polygon data-p="liner" fill="url(#linerG)"/>
       <polygon data-p="liner" class="liner-glow" fill="url(#dmkGold)" filter="url(#bloomF)"/>
-      <polygon data-p="left" fill="#F0E2E0"/><polygon data-p="left" fill="url(#dmk)"/><polygon data-p="left" fill="url(#shL)"/>
-      <polygon data-p="right" fill="#F0E2E0"/><polygon data-p="right" fill="url(#dmk)"/><polygon data-p="right" fill="url(#shR)"/>
-      <polygon data-p="bottom" fill="#F0E2E0" stroke="rgba(120,80,70,.28)" stroke-width="1"/><polygon data-p="bottom" fill="url(#dmk)"/><polygon data-p="bottom" fill="url(#shB)"/>
+      <polygon data-p="left" style="fill:var(--r-bg2,#F0E2E0)"/><polygon data-p="left" fill="url(#dmk)"/><polygon data-p="left" fill="url(#shL)"/>
+      <polygon data-p="right" style="fill:var(--r-bg2,#F0E2E0)"/><polygon data-p="right" fill="url(#dmk)"/><polygon data-p="right" fill="url(#shR)"/>
+      <polygon data-p="bottom" style="fill:var(--r-bg2,#F0E2E0)" stroke="rgba(120,80,70,.28)" stroke-width="1"/><polygon data-p="bottom" fill="url(#dmk)"/><polygon data-p="bottom" fill="url(#shB)"/>
     </svg>
     <div class="dim"></div>
     <div class="reach"><svg aria-hidden="true"><rect width="100%" height="100%" fill="url(#dmkGold)" filter="url(#bloomF)"/></svg></div>
     <div class="flap">
-      <div class="tri"><svg aria-hidden="true"><rect width="100%" height="100%" fill="#F0E2E0"/><rect width="100%" height="100%" fill="url(#dmk)"/><rect width="100%" height="100%" fill="url(#shT)"/></svg></div>
+      <div class="tri"><svg aria-hidden="true"><rect width="100%" height="100%" style="fill:var(--r-bg2,#F0E2E0)"/><rect width="100%" height="100%" fill="url(#dmk)"/><rect width="100%" height="100%" fill="url(#shT)"/></svg></div>
       <div class="tri dim"></div>
       <div class="tri"><div class="reach"><svg aria-hidden="true"><rect width="100%" height="100%" fill="url(#dmkGold)" filter="url(#bloomF)"/></svg></div></div>
       <button class="seal-btn" id="sealBtn" type="button" aria-label="Abrir la invitación"><svg viewBox="0 0 160 160" aria-hidden="true"><use href="#seal"/></svg><span class="lz-seal-over" data-lz-seal></span></button>
@@ -236,15 +236,15 @@ details.faq[open] .plus{rotate:45deg}
     <svg class="corner" viewBox="0 0 160 160" style="right:clamp(16px,3vw,40px);bottom:clamp(16px,3vw,40px);transform:scaleY(-1)" aria-hidden="true"><use href="#corner"/></svg>
     <div class="bar rv d1"><span data-lz-mono>M — A</span><span data-lz-date="{dd}.{mm}.{Y}">12.06.2027</span></div>
     <div class="inner">
-      <p class="rv d1" style="margin:0;font:400 clamp(15px,1.4vw,18px)/1.5 'Instrument Serif',serif;letter-spacing:.22em;text-transform:uppercase;color:#7D6A70" data-lz="envIntro" data-lz-keep>Celebra con nosotros<br>nuestro gran día</p>
-      <div class="rv d2" style="width:1px;height:44px;margin:26px 0;background:#5E525740"></div>
-      <p class="rv d2" style="margin:0;font-size:11px;font-weight:400;letter-spacing:.34em;text-transform:uppercase;color:#6E5F64">Una invitación para</p>
-      <p class="rv d3" style="margin:14px 0 0;font:italic 400 clamp(42px,5vw,64px)/1 'Instrument Serif',serif;color:#3E3236">Familia Rodríguez</p><p class="rv d3" data-lz="envClosing" data-lz-if="envClosing" hidden style="margin:12px 0 0;font-size:11px;font-weight:400;letter-spacing:.32em;text-transform:uppercase;color:#6E5F64"></p>
-      <p class="rv d4" style="margin:clamp(28px,4vh,44px) 0 0;font:400 clamp(54px,8vw,96px)/1 'Instrument Serif',serif;letter-spacing:-.02em;color:#3E3236"><span data-lz="n1">Melissa</span> <em style="color:#B48650">&amp;</em> <span data-lz="n2">Andrés</span></p>
-      <p class="rv d4" style="margin:18px 0 0;font-size:11px;font-weight:400;letter-spacing:.32em;text-transform:uppercase;color:#6E5F64"><span data-lz-date="{W} · {d} de {M} · {Y}">Sábado · 12 de junio · 2027</span><span data-lz-if="city" hidden> · <span data-lz="city"></span></span></p>
+      <p class="rv d1" style="margin:0;font:400 clamp(15px,1.4vw,18px)/1.5 'Instrument Serif',serif;letter-spacing:.22em;text-transform:uppercase;color:var(--r-muted,#7D6A70)" data-lz="envIntro" data-lz-keep>Celebra con nosotros<br>nuestro gran día</p>
+      <div class="rv d2" style="width:1px;height:44px;margin:26px 0;background:var(--r-soft40,#5E525740)"></div>
+      <p class="rv d2" style="margin:0;font-size:11px;font-weight:400;letter-spacing:.34em;text-transform:uppercase;color:var(--r-text,#6E5F64)">Una invitación para</p>
+      <p class="rv d3" style="margin:14px 0 0;font:italic 400 clamp(42px,5vw,64px)/1 'Instrument Serif',serif;color:var(--r-ink,#3E3236)">Familia Rodríguez</p><p class="rv d3" data-lz="envClosing" data-lz-if="envClosing" hidden style="margin:12px 0 0;font-size:11px;font-weight:400;letter-spacing:.32em;text-transform:uppercase;color:var(--r-text,#6E5F64)"></p>
+      <p class="rv d4" style="margin:clamp(28px,4vh,44px) 0 0;font:400 clamp(54px,8vw,96px)/1 'Instrument Serif',serif;letter-spacing:-.02em;color:var(--r-ink,#3E3236)"><span data-lz="n1">Melissa</span> <em style="color:#B48650">&amp;</em> <span data-lz="n2">Andrés</span></p>
+      <p class="rv d4" style="margin:18px 0 0;font-size:11px;font-weight:400;letter-spacing:.32em;text-transform:uppercase;color:var(--r-text,#6E5F64)"><span data-lz-date="{W} · {d} de {M} · {Y}">Sábado · 12 de junio · 2027</span><span data-lz-if="city" hidden> · <span data-lz="city"></span></span></p>
       <div class="rv d5" style="margin-top:clamp(32px,5vh,52px);display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:8px 20px">
-        <button type="button" id="enter" class="pill" style="height:56px;padding:0 44px;border:0;background:#3E3236;color:#F7EEF0;font-size:12px;cursor:pointer">Ver invitación</button>
-        <button type="button" id="replay" style="height:56px;padding:0 20px;border:0;background:none;cursor:pointer;font-size:12px;font-weight:400;letter-spacing:.22em;text-transform:uppercase;color:#5E5257">Ver el sobre otra vez</button>
+        <button type="button" id="enter" class="pill" style="height:56px;padding:0 44px;border:0;background:var(--r-ink,#3E3236);color:var(--r-on,#F7EEF0);font-size:12px;cursor:pointer">Ver invitación</button>
+        <button type="button" id="replay" style="height:56px;padding:0 20px;border:0;background:none;cursor:pointer;font-size:12px;font-weight:400;letter-spacing:.22em;text-transform:uppercase;color:var(--r-soft,#5E5257)">Ver el sobre otra vez</button>
       </div>
     </div>
   </div>
@@ -252,7 +252,7 @@ details.faq[open] .plus{rotate:45deg}
 </div>
 
 <!-- ======================= INVITACIÓN ======================= -->
-<div id="invite" style="position:relative;width:100%;display:flex;flex-direction:column;overflow:hidden;background:#F6EBEC">
+<div id="invite" style="position:relative;width:100%;display:flex;flex-direction:column;overflow:hidden;background:var(--r-bg,#F6EBEC)">
 
   <header id="siteHead" style="position:relative;z-index:2;width:100%;max-width:1280px;margin:0 auto;padding:22px clamp(20px,4vw,56px);display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px 32px">
     <a href="#portada" style="display:flex;align-items:center;gap:12px;font-size:11px;font-weight:400;letter-spacing:.34em;text-transform:uppercase" data-lz-mono>
@@ -269,7 +269,7 @@ details.faq[open] .plus{rotate:45deg}
       <a href="#preguntas" style="display:inline-flex;align-items:center;min-height:44px">Preguntas</a>
       <a href="#viaje" style="display:inline-flex;align-items:center;min-height:44px" data-lz-show="viajeOn">Viaje</a>
     </nav>
-    <a href="#confirmar" class="pill head-cta" style="height:44px;padding:0 24px;border:1px solid #3E3236;letter-spacing:.24em">Confirmar asistencia</a>
+    <a href="#confirmar" class="pill head-cta" style="height:44px;padding:0 24px;border:1px solid var(--r-ink,#3E3236);letter-spacing:.24em">Confirmar asistencia</a>
   </header>
 
   <section id="portada" data-lz-anchor="portada" style="position:relative;padding:40px clamp(20px,4vw,56px) 96px">
@@ -277,11 +277,11 @@ details.faq[open] .plus{rotate:45deg}
     <svg viewBox="0 0 160 160" style="position:absolute;right:clamp(8px,2vw,28px);top:8px;width:clamp(100px,13vw,190px);height:clamp(100px,13vw,190px)" aria-hidden="true"><use href="#corner"/></svg>
     <div style="position:relative;max-width:1120px;margin:0 auto;display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:56px 80px">
       <div style="flex:1 1 420px;min-width:0;text-align:center">
-        <p style="margin:0;font:400 16px/1.6 'Instrument Serif',serif;letter-spacing:.22em;text-transform:uppercase;color:#7D6A70">Celebra con nosotros<br>nuestro gran día</p>
-        <h1 style="margin:28px 0 0;font:400 clamp(64px,8vw,120px)/.9 'Instrument Serif',serif;letter-spacing:-.02em;color:#3E3236"><span data-lz="n1">Melissa</span><br><em style="font-size:.6em;color:#B48650">&amp;</em><br><span data-lz="n2">Andrés</span></h1>
+        <p style="margin:0;font:400 16px/1.6 'Instrument Serif',serif;letter-spacing:.22em;text-transform:uppercase;color:var(--r-muted,#7D6A70)">Celebra con nosotros<br>nuestro gran día</p>
+        <h1 style="margin:28px 0 0;font:400 clamp(64px,8vw,120px)/.9 'Instrument Serif',serif;letter-spacing:-.02em;color:var(--r-ink,#3E3236)"><span data-lz="n1">Melissa</span><br><em style="font-size:.6em;color:#B48650">&amp;</em><br><span data-lz="n2">Andrés</span></h1>
         <svg width="300" height="40" viewBox="-150 -20 300 40" style="display:block;max-width:100%;margin:28px auto 0" aria-hidden="true"><use href="#orn"/></svg>
-        <p style="margin:18px 0 0;font-size:11px;font-weight:400;letter-spacing:.32em;text-transform:uppercase;color:#6E5F64"><span data-lz-date="{W} · {d} de {M} · {Y}">Sábado · 12 de junio · 2027</span><span data-lz-if="city" hidden> · <span data-lz="city"></span></span></p>
-        <a href="#confirmar" class="pill" style="height:54px;margin-top:36px;padding:0 40px;background:#3E3236;color:#F7EEF0">Confirmar asistencia</a>
+        <p style="margin:18px 0 0;font-size:11px;font-weight:400;letter-spacing:.32em;text-transform:uppercase;color:var(--r-text,#6E5F64)"><span data-lz-date="{W} · {d} de {M} · {Y}">Sábado · 12 de junio · 2027</span><span data-lz-if="city" hidden> · <span data-lz="city"></span></span></p>
+        <a href="#confirmar" class="pill" style="height:54px;margin-top:36px;padding:0 40px;background:var(--r-ink,#3E3236);color:var(--r-on,#F7EEF0)">Confirmar asistencia</a>
       </div>
       <div style="flex:0 1 440px;min-width:0;width:100%;max-width:440px">
         <div style="width:100%;aspect-ratio:440 / 560;padding:9px;border:1px solid #C49A62;border-radius:220px 220px 12px 12px">
@@ -289,19 +289,19 @@ details.faq[open] .plus{rotate:45deg}
         </div>
       </div>
     </div>
-    <div style="position:relative;margin-top:48px;display:flex;flex-direction:column;align-items:center;gap:8px;font-size:10px;font-weight:400;letter-spacing:.3em;text-transform:uppercase;color:#6E5F64">
+    <div style="position:relative;margin-top:48px;display:flex;flex-direction:column;align-items:center;gap:8px;font-size:10px;font-weight:400;letter-spacing:.3em;text-transform:uppercase;color:var(--r-text,#6E5F64)">
       <span>Desliza</span>
-      <svg width="14" height="18" viewBox="0 0 14 18" style="animation:rNudge 2s ease-in-out infinite" aria-hidden="true"><path d="M7 2 V15 M2 10 L7 15 L12 10" fill="none" stroke="#6E5F64" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <svg width="14" height="18" viewBox="0 0 14 18" style="animation:rNudge 2s ease-in-out infinite" aria-hidden="true"><path d="M7 2 V15 M2 10 L7 15 L12 10" fill="none" style="stroke:var(--r-text,#6E5F64)" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
     </div>
   </section>
 
-  <section style="position:relative;padding:96px clamp(20px,4vw,56px);background:#F0E2E0">
+  <section style="position:relative;padding:96px clamp(20px,4vw,56px);background:var(--r-bg2,#F0E2E0)">
     <svg style="position:absolute;inset:0;width:100%;height:100%;opacity:.6" aria-hidden="true"><rect width="100%" height="100%" fill="url(#dmk)"/></svg>
-    <div style="position:relative;max-width:760px;margin:0 auto;padding:56px clamp(24px,5vw,72px);background:#FBF4F3;border:1px solid #E2CFC6;border-radius:8px;box-shadow:0 24px 60px #6B515818;text-align:center">
+    <div style="position:relative;max-width:760px;margin:0 auto;padding:56px clamp(24px,5vw,72px);background:var(--r-card,#FBF4F3);border:1px solid var(--r-line,#E2CFC6);border-radius:8px;box-shadow:0 24px 60px var(--r-shadow,#6B515818);text-align:center">
       <p class="kicker">Una invitación para</p>
-      <p style="margin:18px 0 0;font:italic 400 clamp(42px,5vw,64px)/1 'Instrument Serif',serif;color:#3E3236">Familia Rodríguez</p>
+      <p style="margin:18px 0 0;font:italic 400 clamp(42px,5vw,64px)/1 'Instrument Serif',serif;color:var(--r-ink,#3E3236)">Familia Rodríguez</p>
       <svg width="300" height="40" viewBox="-150 -20 300 40" style="display:block;max-width:100%;margin:26px auto" aria-hidden="true"><use href="#orn"/></svg>
-      <p style="margin:0 auto;max-width:520px;font-size:17px;line-height:1.8;color:#4E4247"><span data-lz="msg">Nuestro día será aún más especial con ustedes a nuestro lado.</span> Hemos reservado <strong style="font-weight:500">4 cupos</strong> para ustedes.</p>
+      <p style="margin:0 auto;max-width:520px;font-size:17px;line-height:1.8;color:var(--r-body,#4E4247)"><span data-lz="msg">Nuestro día será aún más especial con ustedes a nuestro lado.</span> Hemos reservado <strong style="font-weight:500">4 cupos</strong> para ustedes.</p>
     </div>
   </section>
 
@@ -310,15 +310,15 @@ details.faq[open] .plus{rotate:45deg}
     <p class="kicker" style="margin-top:18px">Cuenta regresiva</p>
     <h2 class="h2" data-lz="countdownNote">Cada vez falta <em>menos</em></h2>
     <div style="max-width:800px;margin:48px auto 0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(8px,2vw,24px)" aria-live="off">
-      <div style="padding:clamp(18px,3vw,36px) 0 clamp(14px,2vw,24px);border:1px solid #E2CFC6;border-radius:120px 120px 8px 8px;background:#FBF4F3"><p data-cd="d" style="margin:0;font:400 clamp(36px,5.4vw,76px)/1 'Instrument Serif',serif;font-variant-numeric:tabular-nums">—</p><p style="margin:10px 0 0;font-size:10px;font-weight:400;letter-spacing:.26em;text-transform:uppercase;color:#6E5F64">Días</p></div>
-      <div style="padding:clamp(18px,3vw,36px) 0 clamp(14px,2vw,24px);border:1px solid #E2CFC6;border-radius:120px 120px 8px 8px;background:#FBF4F3"><p data-cd="h" style="margin:0;font:400 clamp(36px,5.4vw,76px)/1 'Instrument Serif',serif;font-variant-numeric:tabular-nums">—</p><p style="margin:10px 0 0;font-size:10px;font-weight:400;letter-spacing:.26em;text-transform:uppercase;color:#6E5F64">Horas</p></div>
-      <div style="padding:clamp(18px,3vw,36px) 0 clamp(14px,2vw,24px);border:1px solid #E2CFC6;border-radius:120px 120px 8px 8px;background:#FBF4F3"><p data-cd="m" style="margin:0;font:400 clamp(36px,5.4vw,76px)/1 'Instrument Serif',serif;font-variant-numeric:tabular-nums">—</p><p style="margin:10px 0 0;font-size:10px;font-weight:400;letter-spacing:.26em;text-transform:uppercase;color:#6E5F64">Minutos</p></div>
-      <div style="padding:clamp(18px,3vw,36px) 0 clamp(14px,2vw,24px);border:1px solid #E2CFC6;border-radius:120px 120px 8px 8px;background:#FBF4F3"><p data-cd="s" style="margin:0;font:400 clamp(36px,5.4vw,76px)/1 'Instrument Serif',serif;font-variant-numeric:tabular-nums">—</p><p style="margin:10px 0 0;font-size:10px;font-weight:400;letter-spacing:.26em;text-transform:uppercase;color:#6E5F64">Segundos</p></div>
+      <div style="padding:clamp(18px,3vw,36px) 0 clamp(14px,2vw,24px);border:1px solid var(--r-line,#E2CFC6);border-radius:120px 120px 8px 8px;background:var(--r-card,#FBF4F3)"><p data-cd="d" style="margin:0;font:400 clamp(36px,5.4vw,76px)/1 'Instrument Serif',serif;font-variant-numeric:tabular-nums">—</p><p style="margin:10px 0 0;font-size:10px;font-weight:400;letter-spacing:.26em;text-transform:uppercase;color:var(--r-text,#6E5F64)">Días</p></div>
+      <div style="padding:clamp(18px,3vw,36px) 0 clamp(14px,2vw,24px);border:1px solid var(--r-line,#E2CFC6);border-radius:120px 120px 8px 8px;background:var(--r-card,#FBF4F3)"><p data-cd="h" style="margin:0;font:400 clamp(36px,5.4vw,76px)/1 'Instrument Serif',serif;font-variant-numeric:tabular-nums">—</p><p style="margin:10px 0 0;font-size:10px;font-weight:400;letter-spacing:.26em;text-transform:uppercase;color:var(--r-text,#6E5F64)">Horas</p></div>
+      <div style="padding:clamp(18px,3vw,36px) 0 clamp(14px,2vw,24px);border:1px solid var(--r-line,#E2CFC6);border-radius:120px 120px 8px 8px;background:var(--r-card,#FBF4F3)"><p data-cd="m" style="margin:0;font:400 clamp(36px,5.4vw,76px)/1 'Instrument Serif',serif;font-variant-numeric:tabular-nums">—</p><p style="margin:10px 0 0;font-size:10px;font-weight:400;letter-spacing:.26em;text-transform:uppercase;color:var(--r-text,#6E5F64)">Minutos</p></div>
+      <div style="padding:clamp(18px,3vw,36px) 0 clamp(14px,2vw,24px);border:1px solid var(--r-line,#E2CFC6);border-radius:120px 120px 8px 8px;background:var(--r-card,#FBF4F3)"><p data-cd="s" style="margin:0;font:400 clamp(36px,5.4vw,76px)/1 'Instrument Serif',serif;font-variant-numeric:tabular-nums">—</p><p style="margin:10px 0 0;font-size:10px;font-weight:400;letter-spacing:.26em;text-transform:uppercase;color:var(--r-text,#6E5F64)">Segundos</p></div>
     </div>
-    <p style="margin:28px 0 0;font:italic 400 22px/1.4 'Instrument Serif',serif;color:#6E5F64"><span data-lz-date="{W} {d} de {M} de {Y}">Sábado 12 de junio de 2027</span> · <span data-lz="time0">16:00</span></p>
+    <p style="margin:28px 0 0;font:italic 400 22px/1.4 'Instrument Serif',serif;color:var(--r-text,#6E5F64)"><span data-lz-date="{W} {d} de {M} de {Y}">Sábado 12 de junio de 2027</span> · <span data-lz="time0">16:00</span></p>
   </section>
 
-  <section id="dia" data-lz-anchor="itinerario musica" style="position:relative;padding:104px clamp(20px,4vw,56px);background:#F0E2E0">
+  <section id="dia" data-lz-anchor="itinerario musica" style="position:relative;padding:104px clamp(20px,4vw,56px);background:var(--r-bg2,#F0E2E0)">
     <svg style="position:absolute;inset:0;width:100%;height:100%;opacity:.4" aria-hidden="true"><rect width="100%" height="100%" fill="url(#dmk)"/></svg>
     <div style="position:relative;max-width:1120px;margin:0 auto">
       <div style="text-align:center">
@@ -326,28 +326,28 @@ details.faq[open] .plus{rotate:45deg}
         <h2 class="h2"><span data-lz-date="{W},">Sábado,</span> <em data-lz-date="{d} de {M}">12 de junio</em></h2>
       </div>
       <div data-lz-list="events" style="margin-top:48px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(280px,100%),1fr));gap:20px">
-        <div style="padding:40px 32px;background:#FBF4F3;border:1px solid #E2CFC6;border-radius:160px 160px 8px 8px;text-align:center" data-lz-item>
+        <div style="padding:40px 32px;background:var(--r-card,#FBF4F3);border:1px solid var(--r-line,#E2CFC6);border-radius:160px 160px 8px 8px;text-align:center" data-lz-item>
           <p style="margin:12px 0 0;font:400 44px/1 'Instrument Serif',serif" data-lz-f="time">16:00</p>
           <div style="width:1px;height:36px;margin:18px auto;background:#C49A62"></div>
           <p class="kicker" style="letter-spacing:.32em" data-lz-f="name">Ceremonia</p>
           <p style="margin:12px 0 0;font:400 28px/1.2 'Instrument Serif',serif" data-lz-f="place">Lugar de la ceremonia</p>
-          <p style="margin:6px 0 0;font-size:15px;line-height:1.6;color:#6E5F64" data-lz-f="address">Dirección de la ceremonia</p>
+          <p style="margin:6px 0 0;font-size:15px;line-height:1.6;color:var(--r-text,#6E5F64)" data-lz-f="address">Dirección de la ceremonia</p>
           <a href="#dia" data-lz-f="map" style="display:inline-flex;align-items:center;height:44px;margin-top:10px;font-size:11px;font-weight:400;letter-spacing:.24em;text-transform:uppercase;border-bottom:1px solid #C49A62">Cómo llegar ↗</a>
         </div>
-        <div style="padding:40px 32px;background:#FBF4F3;border:1px solid #E2CFC6;border-radius:160px 160px 8px 8px;text-align:center" data-lz-item>
+        <div style="padding:40px 32px;background:var(--r-card,#FBF4F3);border:1px solid var(--r-line,#E2CFC6);border-radius:160px 160px 8px 8px;text-align:center" data-lz-item>
           <p style="margin:12px 0 0;font:italic 400 44px/1 'Instrument Serif',serif" data-lz-f="time">Después</p>
           <div style="width:1px;height:36px;margin:18px auto;background:#C49A62"></div>
           <p class="kicker" style="letter-spacing:.32em" data-lz-f="name">Recepción</p>
           <p style="margin:12px 0 0;font:400 28px/1.2 'Instrument Serif',serif" data-lz-f="place">Lugar de la recepción</p>
-          <p style="margin:6px 0 0;font-size:15px;line-height:1.6;color:#6E5F64" data-lz-f="address">Dirección de la recepción</p>
+          <p style="margin:6px 0 0;font-size:15px;line-height:1.6;color:var(--r-text,#6E5F64)" data-lz-f="address">Dirección de la recepción</p>
           <a href="#dia" data-lz-f="map" style="display:inline-flex;align-items:center;height:44px;margin-top:10px;font-size:11px;font-weight:400;letter-spacing:.24em;text-transform:uppercase;border-bottom:1px solid #C49A62">Cómo llegar ↗</a>
         </div>
-        <div data-lz-group="dressCode dressNotes dressColors" style="padding:40px 32px;background:#3E3236;border-radius:160px 160px 8px 8px;color:#F6EBEC;text-align:center">
+        <div data-lz-group="dressCode dressNotes dressColors" style="padding:40px 32px;background:var(--r-ink,#3E3236);border-radius:160px 160px 8px 8px;color:var(--r-bg,#F6EBEC);text-align:center">
           <svg width="56" height="56" viewBox="0 0 160 160" style="display:block;margin:0 auto" aria-hidden="true"><use href="#seal"/></svg>
           <div style="width:1px;height:36px;margin:18px auto;background:#C49A62"></div>
           <p style="margin:0;font-size:11px;font-weight:400;letter-spacing:.32em;text-transform:uppercase;color:#E6C9A0">Código de vestimenta</p>
           <p style="margin:12px 0 0;font:italic 400 28px/1.2 'Instrument Serif',serif" data-lz="dressCode">Formal de tarde</p>
-          <p style="margin:6px 0 0;font-size:15px;line-height:1.7;color:#E8DADC" data-lz="dressNotes">Agrega aquí las recomendaciones de vestimenta y los colores reservados.</p><p data-lz-group="dressColors" style="margin:10px 0 0;font-size:14px;line-height:1.7;color:#E8DADC"><b style="font-weight:500;color:#E6C9A0">Colores reservados:</b> <span data-lz="dressColors">Indica los colores reservados.</span></p>
+          <p style="margin:6px 0 0;font-size:15px;line-height:1.7;color:var(--r-on2,#E8DADC)" data-lz="dressNotes">Agrega aquí las recomendaciones de vestimenta y los colores reservados.</p><p data-lz-group="dressColors" style="margin:10px 0 0;font-size:14px;line-height:1.7;color:var(--r-on2,#E8DADC)"><b style="font-weight:500;color:#E6C9A0">Colores reservados:</b> <span data-lz="dressColors">Indica los colores reservados.</span></p>
         </div>
       </div>
     </div>
@@ -359,41 +359,41 @@ details.faq[open] .plus{rotate:45deg}
         <svg width="200" height="40" viewBox="-150 -20 300 40" style="display:block" aria-hidden="true"><use href="#orn"/></svg>
         <p class="kicker" style="margin-top:18px">Nuestra historia</p>
         <h2 class="h2" data-lz="storyTitle">Una historia<br><em>escrita juntos</em></h2>
-        <p data-lz="story" style="margin:22px 0 0;max-width:440px;font-size:17px;line-height:1.8;color:#4E4247">Cuenta cómo se conocieron los novios. Comparte sus recuerdos favoritos juntos. Describe la nueva etapa que están por comenzar.</p><blockquote data-lz-if="quote" hidden style="margin:28px 0 0;max-width:440px"><p data-lz="quote" style="margin:0;font:italic 400 26px/1.35 'Instrument Serif',serif;color:#3E3236"></p><p data-lz="quoteAuthor" style="margin:10px 0 0;font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:#7D6A70"></p></blockquote>
+        <p data-lz="story" style="margin:22px 0 0;max-width:440px;font-size:17px;line-height:1.8;color:var(--r-body,#4E4247)">Cuenta cómo se conocieron los novios. Comparte sus recuerdos favoritos juntos. Describe la nueva etapa que están por comenzar.</p><blockquote data-lz-if="quote" hidden style="margin:28px 0 0;max-width:440px"><p data-lz="quote" style="margin:0;font:italic 400 26px/1.35 'Instrument Serif',serif;color:var(--r-ink,#3E3236)"></p><p data-lz="quoteAuthor" style="margin:10px 0 0;font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--r-muted,#7D6A70)"></p></blockquote>
       </div>
       <div data-gallery data-lz-list="gallery" style="flex:2 1 520px;min-width:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(150px,100%),1fr));gap:16px">
-        <div data-lz-item style="aspect-ratio:3 / 4;padding:5px;border:1px solid #C49A62;border-radius:200px 200px 8px 8px;background:#FBF4F3"><img data-lz-f="img" src="/assets/fotos/torre.jpg" alt="Melissa y Andrés tomados de la mano" loading="lazy" style="display:block;width:100%;height:100%;object-fit:cover;object-position:center 70%;border-radius:195px 195px 5px 5px"></div>
-        <div data-lz-item style="aspect-ratio:3 / 4;padding:5px;border:1px solid #C49A62;border-radius:200px 200px 8px 8px;background:#FBF4F3"><img data-lz-f="img" src="/assets/fotos/muro.jpg" alt="Melissa y Andrés junto al muro de ladrillo" loading="lazy" style="display:block;width:100%;height:100%;object-fit:cover;object-position:center 45%;border-radius:195px 195px 5px 5px"></div>
-        <div data-lz-item style="aspect-ratio:3 / 4;padding:5px;border:1px solid #C49A62;border-radius:200px 200px 8px 8px;background:#FBF4F3"><img data-lz-f="img" src="/assets/fotos/escalera.jpg" alt="Melissa y Andrés en la escalera" loading="lazy" style="display:block;width:100%;height:100%;object-fit:cover;object-position:center 65%;border-radius:195px 195px 5px 5px"></div>
-        <div data-lz-item style="aspect-ratio:3 / 4;padding:5px;border:1px solid #C49A62;border-radius:200px 200px 8px 8px;background:#FBF4F3"><img data-lz-f="img" src="/assets/fotos/paseo.jpg" alt="Melissa y Andrés caminando" loading="lazy" style="display:block;width:100%;height:100%;object-fit:cover;object-position:center 72%;border-radius:195px 195px 5px 5px"></div>
+        <div data-lz-item style="aspect-ratio:3 / 4;padding:5px;border:1px solid #C49A62;border-radius:200px 200px 8px 8px;background:var(--r-card,#FBF4F3)"><img data-lz-f="img" src="/assets/fotos/torre.jpg" alt="Melissa y Andrés tomados de la mano" loading="lazy" style="display:block;width:100%;height:100%;object-fit:cover;object-position:center 70%;border-radius:195px 195px 5px 5px"></div>
+        <div data-lz-item style="aspect-ratio:3 / 4;padding:5px;border:1px solid #C49A62;border-radius:200px 200px 8px 8px;background:var(--r-card,#FBF4F3)"><img data-lz-f="img" src="/assets/fotos/muro.jpg" alt="Melissa y Andrés junto al muro de ladrillo" loading="lazy" style="display:block;width:100%;height:100%;object-fit:cover;object-position:center 45%;border-radius:195px 195px 5px 5px"></div>
+        <div data-lz-item style="aspect-ratio:3 / 4;padding:5px;border:1px solid #C49A62;border-radius:200px 200px 8px 8px;background:var(--r-card,#FBF4F3)"><img data-lz-f="img" src="/assets/fotos/escalera.jpg" alt="Melissa y Andrés en la escalera" loading="lazy" style="display:block;width:100%;height:100%;object-fit:cover;object-position:center 65%;border-radius:195px 195px 5px 5px"></div>
+        <div data-lz-item style="aspect-ratio:3 / 4;padding:5px;border:1px solid #C49A62;border-radius:200px 200px 8px 8px;background:var(--r-card,#FBF4F3)"><img data-lz-f="img" src="/assets/fotos/paseo.jpg" alt="Melissa y Andrés caminando" loading="lazy" style="display:block;width:100%;height:100%;object-fit:cover;object-position:center 72%;border-radius:195px 195px 5px 5px"></div>
       </div>
     </div>
   </section>
 
-  <section id="confirmar" data-lz-anchor="rsvp" style="position:relative;padding:104px clamp(20px,4vw,56px);background:#F0E2E0">
+  <section id="confirmar" data-lz-anchor="rsvp" style="position:relative;padding:104px clamp(20px,4vw,56px);background:var(--r-bg2,#F0E2E0)">
     <svg style="position:absolute;inset:0;width:100%;height:100%;opacity:.6" aria-hidden="true"><rect width="100%" height="100%" fill="url(#dmk)"/></svg>
-    <div style="position:relative;max-width:1040px;margin:0 auto;padding:clamp(28px,5vw,64px);background:#FBF4F3;border:1px solid #E2CFC6;border-radius:8px;box-shadow:0 24px 60px #6B515818;display:flex;flex-wrap:wrap;gap:40px 64px">
+    <div style="position:relative;max-width:1040px;margin:0 auto;padding:clamp(28px,5vw,64px);background:var(--r-card,#FBF4F3);border:1px solid var(--r-line,#E2CFC6);border-radius:8px;box-shadow:0 24px 60px var(--r-shadow,#6B515818);display:flex;flex-wrap:wrap;gap:40px 64px">
       <div style="flex:1 1 300px;min-width:0">
         <svg width="96" height="96" viewBox="0 0 160 160" style="display:block" aria-hidden="true"><use href="#seal"/></svg>
         <p class="kicker" style="margin-top:24px">Confirmación</p>
         <h2 class="h2" id="rsTitle" style="font-size:clamp(40px,4.4vw,56px)">¿Nos acompañan?</h2>
-        <p id="rsText" style="margin:16px 0 0;font-size:16px;line-height:1.8;color:#6E5F64">Tienen 4 cupos reservados. Confirmen por persona antes de la fecha límite de confirmación.</p>
-        <p style="margin:16px 0 0;font-size:13px;line-height:1.6;color:#6E5F64" data-lz="rsvpMsg">Nuestra celebración es exclusivamente para adultos.</p><p data-lz-if="rsvpDeadline" hidden style="margin:8px 0 0;font-size:13px;line-height:1.6;color:#6E5F64">Confirmen antes del <span data-lz-date="{d} de {M} de {Y}" data-lz-from="rsvpDeadline"></span></p>
+        <p id="rsText" style="margin:16px 0 0;font-size:16px;line-height:1.8;color:var(--r-text,#6E5F64)">Tienen 4 cupos reservados. Confirmen por persona antes de la fecha límite de confirmación.</p>
+        <p style="margin:16px 0 0;font-size:13px;line-height:1.6;color:var(--r-text,#6E5F64)" data-lz="rsvpMsg">Nuestra celebración es exclusivamente para adultos.</p><p data-lz-if="rsvpDeadline" hidden style="margin:8px 0 0;font-size:13px;line-height:1.6;color:var(--r-text,#6E5F64)">Confirmen antes del <span data-lz-date="{d} de {M} de {Y}" data-lz-from="rsvpDeadline"></span></p>
       </div>
       <div style="flex:1.3 1 360px;min-width:0">
         <form id="rsForm" novalidate>
           <div id="people" style="display:flex;flex-direction:column"></div>
-          <label for="diet" data-lz-show="rsvpDiet" style="display:block;margin-top:22px;font-size:10px;font-weight:400;letter-spacing:.28em;text-transform:uppercase;color:#6E5F64">Restricciones alimentarias</label>
-          <textarea id="diet" data-lz-show="rsvpDiet" rows="2" placeholder="Opcional: indiquen a quién corresponde cada una" style="display:block;width:100%;margin-top:8px;padding:12px 14px;border:1px solid #D9C5BE;border-radius:6px;background:#FFFFFF;font:300 15px/1.5 Jost,Helvetica,sans-serif;color:#3E3236;resize:none"></textarea>
-          <label for="msg" data-lz-show="rsvpNote" style="display:block;margin-top:22px;font-size:10px;font-weight:400;letter-spacing:.28em;text-transform:uppercase;color:#6E5F64">Un mensaje para nosotros</label>
-          <textarea id="msg" data-lz-show="rsvpNote" rows="3" placeholder="Opcional" style="display:block;width:100%;margin-top:8px;padding:12px 14px;border:1px solid #D9C5BE;border-radius:6px;background:#FFFFFF;font:300 15px/1.5 Jost,Helvetica,sans-serif;color:#3E3236;resize:none"></textarea>
+          <label for="diet" data-lz-show="rsvpDiet" style="display:block;margin-top:22px;font-size:10px;font-weight:400;letter-spacing:.28em;text-transform:uppercase;color:var(--r-text,#6E5F64)">Restricciones alimentarias</label>
+          <textarea id="diet" data-lz-show="rsvpDiet" rows="2" placeholder="Opcional: indiquen a quién corresponde cada una" style="display:block;width:100%;margin-top:8px;padding:12px 14px;border:1px solid var(--r-field,#D9C5BE);border-radius:6px;background:#FFFFFF;font:300 15px/1.5 Jost,Helvetica,sans-serif;color:var(--r-ink,#3E3236);resize:none"></textarea>
+          <label for="msg" data-lz-show="rsvpNote" style="display:block;margin-top:22px;font-size:10px;font-weight:400;letter-spacing:.28em;text-transform:uppercase;color:var(--r-text,#6E5F64)">Un mensaje para nosotros</label>
+          <textarea id="msg" data-lz-show="rsvpNote" rows="3" placeholder="Opcional" style="display:block;width:100%;margin-top:8px;padding:12px 14px;border:1px solid var(--r-field,#D9C5BE);border-radius:6px;background:#FFFFFF;font:300 15px/1.5 Jost,Helvetica,sans-serif;color:var(--r-ink,#3E3236);resize:none"></textarea>
           <p id="rsError" role="alert" hidden style="margin:14px 0 0;font-size:13px;color:#9B3B4A">Indiquen Sí o No para cada persona.</p>
-          <button type="submit" class="pill" style="width:100%;height:54px;margin-top:20px;border:0;background:#3E3236;color:#F7EEF0;cursor:pointer">Confirmar asistencia</button>
+          <button type="submit" class="pill" style="width:100%;height:54px;margin-top:20px;border:0;background:var(--r-ink,#3E3236);color:var(--r-on,#F7EEF0);cursor:pointer">Confirmar asistencia</button>
         </form>
-        <div id="rsDone" hidden style="min-height:280px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:32px;border:1px solid #E2CFC6;border-radius:160px 160px 8px 8px;text-align:center">
+        <div id="rsDone" hidden style="min-height:280px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:32px;border:1px solid var(--r-line,#E2CFC6);border-radius:160px 160px 8px 8px;text-align:center">
           <p style="margin:0;font:italic 400 34px/1.1 'Instrument Serif',serif">¡Gracias!</p>
-          <p id="rsSummary" style="margin:0;max-width:340px;font-size:15px;line-height:1.7;color:#6E5F64"></p>
-          <button type="button" id="rsEdit" class="pill" style="height:44px;padding:0 22px;border:1px solid #3E3236;background:none;color:#3E3236;letter-spacing:.24em;cursor:pointer">Editar respuesta</button>
+          <p id="rsSummary" style="margin:0;max-width:340px;font-size:15px;line-height:1.7;color:var(--r-text,#6E5F64)"></p>
+          <button type="button" id="rsEdit" class="pill" style="height:44px;padding:0 22px;border:1px solid var(--r-ink,#3E3236);background:none;color:var(--r-ink,#3E3236);letter-spacing:.24em;cursor:pointer">Editar respuesta</button>
         </div>
       </div>
     </div>
@@ -406,31 +406,31 @@ details.faq[open] .plus{rotate:45deg}
         <p class="kicker" style="margin-top:18px">Preguntas</p>
         <h2 class="h2">Los <em>detalles</em></h2>
       </div>
-      <div data-lz-list="faqs" style="flex:2 1 480px;min-width:0;border-bottom:1px solid #E2CFC6">
-        <details class="faq" data-lz-item><summary><span style="display:flex;flex-direction:column;gap:4px"><span data-lz-f="hide" class="kicker" style="font-size:10px;letter-spacing:.28em">Vestimenta</span><span data-lz-f="q" style="font:400 24px/1.2 'Instrument Serif',serif">¿Hay código de vestimenta?</span></span><span class="plus" aria-hidden="true">+</span></summary><p data-lz-f="a" style="margin:0;padding:0 0 20px;max-width:620px;font-size:15px;line-height:1.7;color:#6E5F64">Agrega las recomendaciones de vestimenta para los invitados.</p></details>
-        <details class="faq" data-lz-item><summary><span style="display:flex;flex-direction:column;gap:4px"><span data-lz-f="hide" class="kicker" style="font-size:10px;letter-spacing:.28em">Vestimenta</span><span data-lz-f="q" style="font:400 24px/1.2 'Instrument Serif',serif">¿Hay colores reservados?</span></span><span class="plus" aria-hidden="true">+</span></summary><p data-lz-f="a" style="margin:0;padding:0 0 20px;max-width:620px;font-size:15px;line-height:1.7;color:#6E5F64">Indica los colores reservados y otras recomendaciones de vestimenta.</p></details>
-        <details class="faq" data-lz-item><summary><span style="display:flex;flex-direction:column;gap:4px"><span data-lz-f="hide" class="kicker" style="font-size:10px;letter-spacing:.28em">Niños</span><span data-lz-f="q" style="font:400 24px/1.2 'Instrument Serif',serif">Niños en la celebración</span></span><span class="plus" aria-hidden="true">+</span></summary><p data-lz-f="a" style="margin:0;padding:0 0 20px;max-width:620px;font-size:15px;line-height:1.7;color:#6E5F64">Indica si la celebración incluirá niños.</p></details>
-        <details class="faq" data-lz-item><summary><span style="display:flex;flex-direction:column;gap:4px"><span data-lz-f="hide" class="kicker" style="font-size:10px;letter-spacing:.28em">Alimentación</span><span data-lz-f="q" style="font:400 24px/1.2 'Instrument Serif',serif">Restricciones alimentarias</span></span><span class="plus" aria-hidden="true">+</span></summary><p data-lz-f="a" style="margin:0;padding:0 0 20px;max-width:620px;font-size:15px;line-height:1.7;color:#6E5F64">Agrega información sobre el menú y las opciones para necesidades alimentarias especiales.</p></details>
-        <details class="faq" data-lz-item><summary><span style="display:flex;flex-direction:column;gap:4px"><span data-lz-f="hide" class="kicker" style="font-size:10px;letter-spacing:.28em">Alimentación</span><span data-lz-f="q" style="font:400 24px/1.2 'Instrument Serif',serif">Solicitudes especiales</span></span><span class="plus" aria-hidden="true">+</span></summary><p data-lz-f="a" style="margin:0;padding:0 0 20px;max-width:620px;font-size:15px;line-height:1.7;color:#6E5F64">Indica cómo comunicar cualquier solicitud especial.</p></details>
+      <div data-lz-list="faqs" style="flex:2 1 480px;min-width:0;border-bottom:1px solid var(--r-line,#E2CFC6)">
+        <details class="faq" data-lz-item><summary><span style="display:flex;flex-direction:column;gap:4px"><span data-lz-f="hide" class="kicker" style="font-size:10px;letter-spacing:.28em">Vestimenta</span><span data-lz-f="q" style="font:400 24px/1.2 'Instrument Serif',serif">¿Hay código de vestimenta?</span></span><span class="plus" aria-hidden="true">+</span></summary><p data-lz-f="a" style="margin:0;padding:0 0 20px;max-width:620px;font-size:15px;line-height:1.7;color:var(--r-text,#6E5F64)">Agrega las recomendaciones de vestimenta para los invitados.</p></details>
+        <details class="faq" data-lz-item><summary><span style="display:flex;flex-direction:column;gap:4px"><span data-lz-f="hide" class="kicker" style="font-size:10px;letter-spacing:.28em">Vestimenta</span><span data-lz-f="q" style="font:400 24px/1.2 'Instrument Serif',serif">¿Hay colores reservados?</span></span><span class="plus" aria-hidden="true">+</span></summary><p data-lz-f="a" style="margin:0;padding:0 0 20px;max-width:620px;font-size:15px;line-height:1.7;color:var(--r-text,#6E5F64)">Indica los colores reservados y otras recomendaciones de vestimenta.</p></details>
+        <details class="faq" data-lz-item><summary><span style="display:flex;flex-direction:column;gap:4px"><span data-lz-f="hide" class="kicker" style="font-size:10px;letter-spacing:.28em">Niños</span><span data-lz-f="q" style="font:400 24px/1.2 'Instrument Serif',serif">Niños en la celebración</span></span><span class="plus" aria-hidden="true">+</span></summary><p data-lz-f="a" style="margin:0;padding:0 0 20px;max-width:620px;font-size:15px;line-height:1.7;color:var(--r-text,#6E5F64)">Indica si la celebración incluirá niños.</p></details>
+        <details class="faq" data-lz-item><summary><span style="display:flex;flex-direction:column;gap:4px"><span data-lz-f="hide" class="kicker" style="font-size:10px;letter-spacing:.28em">Alimentación</span><span data-lz-f="q" style="font:400 24px/1.2 'Instrument Serif',serif">Restricciones alimentarias</span></span><span class="plus" aria-hidden="true">+</span></summary><p data-lz-f="a" style="margin:0;padding:0 0 20px;max-width:620px;font-size:15px;line-height:1.7;color:var(--r-text,#6E5F64)">Agrega información sobre el menú y las opciones para necesidades alimentarias especiales.</p></details>
+        <details class="faq" data-lz-item><summary><span style="display:flex;flex-direction:column;gap:4px"><span data-lz-f="hide" class="kicker" style="font-size:10px;letter-spacing:.28em">Alimentación</span><span data-lz-f="q" style="font:400 24px/1.2 'Instrument Serif',serif">Solicitudes especiales</span></span><span class="plus" aria-hidden="true">+</span></summary><p data-lz-f="a" style="margin:0;padding:0 0 20px;max-width:620px;font-size:15px;line-height:1.7;color:var(--r-text,#6E5F64)">Indica cómo comunicar cualquier solicitud especial.</p></details>
       </div>
     </div>
   </section>
 
-  <section id="viaje" data-lz-show="viajeOn" data-lz-anchor="viaje" style="position:relative;padding:104px clamp(20px,4vw,56px);border-top:1px solid #E2CFC6">
+  <section id="viaje" data-lz-show="viajeOn" data-lz-anchor="viaje" style="position:relative;padding:104px clamp(20px,4vw,56px);border-top:1px solid var(--r-line,#E2CFC6)">
     <div style="max-width:1120px;margin:0 auto">
       <div style="text-align:center">
         <svg width="300" height="40" viewBox="-150 -20 300 40" style="display:block;max-width:100%;margin:0 auto" aria-hidden="true"><use href="#orn"/></svg>
         <p class="kicker" style="margin-top:18px">Viaje y alojamiento</p>
         <h2 class="h2">Si vienen <em>de viaje</em></h2>
-        <p data-lz="travelIntro" style="margin:18px auto 0;max-width:520px;font-size:16px;line-height:1.8;color:#6E5F64">Todo lo que necesitan para llegar, descansar y conocer la ciudad durante esos días.</p>
+        <p data-lz="travelIntro" style="margin:18px auto 0;max-width:520px;font-size:16px;line-height:1.8;color:var(--r-text,#6E5F64)">Todo lo que necesitan para llegar, descansar y conocer la ciudad durante esos días.</p>
       </div>
       <div style="margin-top:48px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(280px,100%),1fr));gap:20px">
         <div class="travel-card" data-lz-group="hotel hotelAddress hotelCode hotelNotes">
           <p class="kicker" style="letter-spacing:.32em">Alojamiento</p>
           <p style="margin:12px 0 0;font:400 28px/1.2 'Instrument Serif',serif" data-lz="hotel">Nombre del hotel</p>
-          <p style="margin:6px 0 0;font-size:15px;line-height:1.6;color:#6E5F64" data-lz="hotelAddress">Dirección del hotel</p>
+          <p style="margin:6px 0 0;font-size:15px;line-height:1.6;color:var(--r-text,#6E5F64)" data-lz="hotelAddress">Dirección del hotel</p>
           <div style="width:1px;height:28px;margin:16px auto;background:#C49A62"></div>
-          <p data-lz-group="hotelCode" style="margin:0;font-size:14px;line-height:1.7;color:#6E5F64">Código de reserva: <strong data-lz="hotelCode" style="font-weight:500;color:#3E3236">BODA-MA</strong></p><p data-lz="hotelNotes" data-lz-if="hotelNotes" hidden style="margin:10px 0 0;font-size:14px;line-height:1.7;color:#6E5F64"></p>
+          <p data-lz-group="hotelCode" style="margin:0;font-size:14px;line-height:1.7;color:var(--r-text,#6E5F64)">Código de reserva: <strong data-lz="hotelCode" style="font-weight:500;color:var(--r-ink,#3E3236)">BODA-MA</strong></p><p data-lz="hotelNotes" data-lz-if="hotelNotes" hidden style="margin:10px 0 0;font-size:14px;line-height:1.7;color:var(--r-text,#6E5F64)"></p>
           <a data-lz-href="hotelLink" href="#viaje" style="display:inline-flex;align-items:center;height:44px;margin-top:8px;font-size:11px;font-weight:400;letter-spacing:.24em;text-transform:uppercase;border-bottom:1px solid #C49A62">Reservar ↗</a>
         </div>
         <div class="travel-card" data-lz-group="airport transport">
@@ -452,16 +452,16 @@ details.faq[open] .plus{rotate:45deg}
     </div>
   </section>
 
-  <footer style="position:relative;padding:104px clamp(20px,4vw,56px) 140px;background:#F0E2E0;text-align:center">
+  <footer style="position:relative;padding:104px clamp(20px,4vw,56px) 140px;background:var(--r-bg2,#F0E2E0);text-align:center">
     <svg style="position:absolute;inset:0;width:100%;height:100%;opacity:.75" aria-hidden="true"><rect width="100%" height="100%" fill="url(#dmk)"/></svg>
     <svg viewBox="0 0 160 160" style="position:absolute;left:clamp(12px,2vw,32px);top:32px;width:clamp(80px,10vw,150px);height:clamp(80px,10vw,150px);transform:scaleX(-1)" aria-hidden="true"><use href="#corner"/></svg>
     <svg viewBox="0 0 160 160" style="position:absolute;right:clamp(12px,2vw,32px);top:32px;width:clamp(80px,10vw,150px);height:clamp(80px,10vw,150px)" aria-hidden="true"><use href="#corner"/></svg>
     <svg viewBox="0 0 160 160" style="position:absolute;left:clamp(12px,2vw,32px);bottom:32px;width:clamp(80px,10vw,150px);height:clamp(80px,10vw,150px);transform:scale(-1,-1)" aria-hidden="true"><use href="#corner"/></svg>
     <svg viewBox="0 0 160 160" style="position:absolute;right:clamp(12px,2vw,32px);bottom:32px;width:clamp(80px,10vw,150px);height:clamp(80px,10vw,150px);transform:scaleY(-1)" aria-hidden="true"><use href="#corner"/></svg>
     <svg width="150" height="150" viewBox="0 0 160 160" style="position:relative;display:block;margin:0 auto" aria-hidden="true"><use href="#seal"/></svg>
-    <p style="position:relative;margin:32px 0 0;font:400 16px/1.6 'Instrument Serif',serif;letter-spacing:.22em;text-transform:uppercase;color:#7D6A70">Con amor</p>
+    <p style="position:relative;margin:32px 0 0;font:400 16px/1.6 'Instrument Serif',serif;letter-spacing:.22em;text-transform:uppercase;color:var(--r-muted,#7D6A70)">Con amor</p>
     <p style="position:relative;margin:12px 0 0;font:400 clamp(44px,5vw,72px)/1 'Instrument Serif',serif"><span data-lz="n1">Melissa</span> <em style="color:#B48650">&amp;</em> <span data-lz="n2">Andrés</span></p>
-    <p style="position:relative;margin:18px 0 0;font-size:11px;font-weight:400;letter-spacing:.32em;text-transform:uppercase;color:#6E5F64" data-lz-date="{dd} · {mm} · {Y}">12 · 06 · 2027</p>
+    <p style="position:relative;margin:18px 0 0;font-size:11px;font-weight:400;letter-spacing:.32em;text-transform:uppercase;color:var(--r-text,#6E5F64)" data-lz-date="{dd} · {mm} · {Y}">12 · 06 · 2027</p>
   </footer>
 </div>
 
@@ -517,7 +517,7 @@ LazoMusic.init({src:'/assets/musica/demo.mp3'});
   PEOPLE.forEach(function(name,i){
     var row=document.createElement('div');
     row.setAttribute('role','group');row.setAttribute('aria-label',name);
-    row.style.cssText='display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 0;border-top:1px solid #E8D8D4';
+    row.style.cssText='display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 0;border-top:1px solid var(--r-row,#E8D8D4)';
     var n=document.createElement('span');n.textContent=name;n.style.cssText="font:400 22px/1.2 'Instrument Serif',serif";
     var g=document.createElement('div');g.style.cssText='display:flex;gap:6px;flex:none';
     [['Sí',true],['No',false]].forEach(function(o){var b=document.createElement('button');b.type='button';b.className='att';b.textContent=o[0];b.setAttribute('aria-pressed','false');

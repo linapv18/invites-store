@@ -301,6 +301,11 @@
     moderno: { es: ['Una invitación para un día inolvidable', ''], en: ['An invitation to an unforgettable day', ''] },
     rosa: { es: ['Celebra con nosotros nuestro gran día', ''], en: ['Celebrate our big day with us', ''] }
   };
+  // Paletas de Romántico (los colores los aplica demo/shared/content.js; aquí solo el nombre y la muestra).
+  var ROSA_PALETTES = [
+    { id: 'rosado', hex: '#EBD3D2', es: 'Rosado', en: 'Blush' },
+    { id: 'champana', hex: '#E9DCC4', es: 'Champaña', en: 'Champagne' }
+  ];
   var PALETTES = [
     { id: 'salvia', hex: '#5F7360', es: 'Salvia', en: 'Sage' },
     { id: 'rosa', hex: '#9A5F5C', es: 'Rosa antiguo', en: 'Dusty rose' },
@@ -450,15 +455,16 @@
   // Clásico: según la paleta (mismos cálculos que demo/shared/content.js); Moderno y Romántico: su sello fijo.
   var TPL_DARK = { rosa: '#4A2F2E', azul: '#26304A', terracota: '#4A2B1F' };
   function sealLook() {
-    if (state.design === 'moderno') return 'background:radial-gradient(circle at 35% 30%,#FFFFFF,#E9E4DA 70%);color:#141414;box-shadow:inset 0 0 0 1px #14141433';
-    if (state.design === 'rosa') return 'background:radial-gradient(circle at 35% 30%,#D8AE76,#A8743E 70%);color:#FFF4DF';
+    var serif = "font-family:'Instrument Serif',Georgia,serif;";
+    if (state.design === 'moderno') return serif + 'background:radial-gradient(circle at 35% 30%,#FFFFFF,#E9E4DA 70%);color:#141414;box-shadow:inset 0 0 0 1px #14141433';
+    if (state.design === 'rosa') return serif + 'background:radial-gradient(circle at 35% 30%,#D8AE76,#A8743E 70%);color:#FFF4DF';
     var hex = state.pal === 'custom' ? state.palCustom : TPL_DARK[state.pal], m = /^#?([0-9a-f]{6})$/i.exec(hex || '');
-    if (!m) return 'background:radial-gradient(circle at 30% 20%,#64745a,#2b4437);color:#f5f2ea';
+    if (!m) return 'font-family:Georgia,serif;background:radial-gradient(circle at 30% 20%,#64745a,#2b4437);color:#f5f2ea';
     var n = parseInt(m[1], 16), c = [n >> 16 & 255, n >> 8 & 255, n & 255];
     var mixc = function (t, a) { return c.map(function (x, i) { return Math.round(x + (t[i] - x) * a); }); };
     var hx = function (v) { return '#' + v.map(function (x) { return ('0' + x.toString(16)).slice(-2); }).join(''); };
     for (var i = 0; i < 25 && isLight(hx(c)); i++) c = mixc([0, 0, 0], 0.15);
-    return 'background:radial-gradient(circle at 30% 20%,' + hx(mixc([255, 255, 255], 0.28)) + ',' + hx(mixc([0, 0, 0], 0.05)) + ');color:#f5f2ea';
+    return 'font-family:Georgia,serif;background:radial-gradient(circle at 30% 20%,' + hx(mixc([255, 255, 255], 0.28)) + ',' + hx(mixc([0, 0, 0], 0.05)) + ');color:#f5f2ea';
   }
   // Un color muy claro no deja leer el texto claro de la plantilla (ver customPalette en demo/shared/content.js).
   function isLight(hex) {
@@ -674,7 +680,10 @@
           (state.cover ? '<div class="ed-photo-img"><img src="' + esc(state.cover) + '" alt="' + esc(S.coverAlt) + '"></div>' : '<div class="ed-photo-img ph"></div>') +
           dropzone('cover', S.drop, S.dropHint) + '</div></div>' +
         field(S.msg, 'msg', { rows: 3, ph: S.msgPh }) + field(S.countdownNote, 'countdownNote', { ph: S.countdownNotePh }) +
-        (state.design !== 'clasico' ? '<div class="ed-info"><div><b>' + esc(S.palette) + '</b><span>' + esc(S.palFixed(design()[0])) + '</span></div></div>' :
+        (state.design === 'moderno' ? '<div class="ed-info"><div><b>' + esc(S.palette) + '</b><span>' + esc(S.palFixed(design()[0])) + '</span></div></div>' :
+        state.design === 'rosa' ? '<div class="ed-stack"><span class="ed-label" id="lblPal">' + esc(S.palette) + '</span><div class="ed-palettes" role="radiogroup" aria-labelledby="lblPal">' +
+          ROSA_PALETTES.map(function (p, i) { var on = p.id === state.pal || (i === 0 && !ROSA_PALETTES.some(function (x) { return x.id === state.pal; })); return '<button type="button" class="ed-pal" role="radio" aria-checked="' + on + '" data-act="pal" data-id="' + p.id + '" data-fk="pal-' + p.id + '"><i style="background:' + p.hex + ';box-shadow:inset 0 0 0 1px rgba(0,0,0,.12)"></i>' + esc(p[LANG]) + '</button>'; }).join('') +
+        '</div></div>' :
         '<div class="ed-stack"><span class="ed-label" id="lblPal">' + esc(S.palette) + '</span><div class="ed-palettes" role="radiogroup" aria-labelledby="lblPal">' +
           PALETTES.map(function (p) { return '<button type="button" class="ed-pal" role="radio" aria-checked="' + (p.id === state.pal) + '" data-act="pal" data-id="' + p.id + '" data-fk="pal-' + p.id + '"><i style="background:' + p.hex + '"></i>' + esc(p[LANG]) + '</button>'; }).join('') +
           '<label class="ed-pal ed-pal-custom' + (state.pal === 'custom' ? ' is-on' : '') + '"><input type="color" data-k="palCustom" value="' + esc(state.palCustom) + '" aria-label="' + esc(S.palCustomLbl) + '"><span>' + esc(S.palCustom) + '</span></label>' +
