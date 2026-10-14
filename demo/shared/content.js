@@ -217,8 +217,17 @@
     var pal = PALETTES[c0.pal];
     if (c0.pal === 'custom') pal = customPalette(c0.palCustom);
     if (html.getAttribute('data-lz-palette') !== null) {
-      html.style.setProperty('--dark', pal ? pal[0] : '');
-      html.style.setProperty('--accent', pal ? pal[1] : '');
+      // Todo lo que en la plantilla es de ese color sale del color elegido: texto y fondos (--dark, --accent),
+      // el sobre exterior y su sello, los detalles claros sobre fondo oscuro y el botón de música.
+      // Sin paleta (o la original) se borran y la plantilla usa sus valores por defecto.
+      var c = pal && hexRgb(pal[0]), W = [255, 255, 255], K = [0, 0, 0];
+      var vars = c ? {
+        '--dark': pal[0], '--accent': pal[1], '--env-bg': toHex(mix(c, K, 0.12)), '--env-glow': toHex(mix(c, W, 0.22)),
+        '--seal-hi': toHex(mix(c, W, 0.28)), '--seal-lo': toHex(mix(c, K, 0.05)), '--seal-ring': toHex(mix(c, W, 0.5)),
+        '--pale': toHex(mix(c, W, 0.68)), '--m-bg': pal[0], '--p-ink': pal[0], '--p-accent': pal[0]
+      } : {};
+      ['--dark', '--accent', '--env-bg', '--env-glow', '--seal-hi', '--seal-lo', '--seal-ring', '--pale', '--m-bg', '--p-ink', '--p-accent'].forEach(function (k) { html.style.setProperty(k, vars[k] || ''); });
+      var tc = document.querySelector('meta[name="theme-color"]'); if (tc) { if (tc._lz === undefined) tc._lz = tc.content; tc.content = vars['--env-bg'] || tc._lz; }
     }
     // Cuenta regresiva: las plantillas leen window.LZ_T en cada segundo.
     var d = dateObj(c0.date);

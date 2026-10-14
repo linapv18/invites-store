@@ -38,7 +38,7 @@ a:hover{opacity:.75}
 .ph .cap{font-size:9px;font-weight:500;letter-spacing:.24em;text-transform:uppercase}
 
 /* ---------- Sobre ---------- */
-.envelope-preview{position:fixed;inset:0;z-index:50;overflow-x:hidden;overflow-y:auto;scrollbar-width:none;background:radial-gradient(ellipse at 20% 0%,#52634e,transparent 60%),#243a32;color:#f5f2ea;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:55px 20px 30px;transition:opacity .8s ease,visibility 0s linear .8s}
+.envelope-preview{position:fixed;inset:0;z-index:50;overflow-x:hidden;overflow-y:auto;scrollbar-width:none;background:radial-gradient(ellipse at 20% 0%,var(--env-glow,#52634e),transparent 60%),var(--env-bg,#243a32);color:#f5f2ea;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:55px 20px 30px;transition:opacity .8s ease,visibility 0s linear .8s}
 .envelope-preview.gone{opacity:0;visibility:hidden}
 .envelope-intro{font-size:9px;letter-spacing:.25em;text-align:center;margin:0 0 65px;opacity:.7;transition:opacity .4s}
 .envelope-stage{width:min(540px,90vw);height:330px;position:relative;perspective:1200px;margin:40px 0 30px;transition:margin 1s}
@@ -46,7 +46,7 @@ a:hover{opacity:.75}
 .envelope-front{position:absolute;inset:0;z-index:4;pointer-events:none;background:linear-gradient(145deg,#e9e5d8,#d9d4c4);clip-path:polygon(0 0,50% 52%,100% 0,100% 100%,0 100%);border-radius:0 0 5px 5px}
 .envelope-front::after{content:"";position:absolute;inset:0;background:#eeeadd;clip-path:polygon(0 100%,50% 48%,100% 100%)}
 .envelope-flap{position:absolute;inset:0;z-index:5;transform-origin:top center;clip-path:polygon(0 0,100% 0,50% 55%);background:linear-gradient(#ece8dc,#d6d0bf);transition:transform .85s cubic-bezier(.4,0,.2,1),z-index 0s .4s}
-.envelope-seal{position:absolute;z-index:6;top:calc(50% - 38px);left:calc(50% - 38px);width:76px;height:76px;padding:0;border-radius:50%;background:radial-gradient(circle at 30% 20%,#64745a,#2b4437);border:3px double #96a184;box-shadow:0 5px 12px #15282055,inset 0 0 0 4px #293c3533;color:#f5f2ea;cursor:pointer;transition:opacity .3s,scale .3s}
+.envelope-seal{position:absolute;z-index:6;top:calc(50% - 38px);left:calc(50% - 38px);width:76px;height:76px;padding:0;border-radius:50%;background:radial-gradient(circle at 30% 20%,var(--seal-hi,#64745a),var(--seal-lo,#2b4437));border:3px double var(--seal-ring,#96a184);box-shadow:0 5px 12px #15282055,inset 0 0 0 4px #293c3533;color:#f5f2ea;cursor:pointer;transition:opacity .3s,scale .3s}
 .envelope-seal:hover{scale:1.07}
 .envelope-seal>span{font:24px Georgia,serif;letter-spacing:-2px}
 .envelope-seal>span>span{font-size:17px;color:#c5ccac;font-style:italic}
@@ -102,13 +102,13 @@ a:hover{opacity:.75}
 .schedule-heading{display:flex;justify-content:space-between;align-items:end;gap:30px}
 .ceremony-details{margin-top:48px;display:flex;align-items:center;justify-content:space-between;gap:24px}
 .ceremony-time{font-size:clamp(60px,9vw,100px);line-height:1;letter-spacing:-.04em}
-.ceremony-time span{font-size:.42em;color:#c3cbaa}
-.ceremony-note{font:italic clamp(22px,3vw,34px)/1.4 Georgia,serif;color:#c3cbaa}
+.ceremony-time span{font-size:.42em;color:var(--pale,#c3cbaa)}
+.ceremony-note{font:italic clamp(22px,3vw,34px)/1.4 Georgia,serif;color:var(--pale,#c3cbaa)}
 .ceremony-countdown{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));margin-top:48px;padding-top:30px;border-top:1px solid #f5f2ea35}
 .ceremony-countdown>div{text-align:center;padding:8px 4px}
 .ceremony-countdown>div+div{border-left:1px solid #f5f2ea25}
 .countdown-number{display:block;font:clamp(36px,7vw,78px)/1.2 Georgia,serif;font-variant-numeric:tabular-nums}
-.countdown-label{display:block;margin-top:12px;font-size:clamp(8px,1.5vw,10px);letter-spacing:.12em;text-transform:uppercase;color:#c3cbaa}
+.countdown-label{display:block;margin-top:12px;font-size:clamp(8px,1.5vw,10px);letter-spacing:.12em;text-transform:uppercase;color:var(--pale,#c3cbaa)}
 .venue-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
 .venue-photo{position:relative;min-height:620px;border-radius:220px 220px 4px 4px;overflow:hidden}
 .venue-card{border-bottom:1px solid #293c3525;padding:26px 0}
@@ -262,7 +262,7 @@ a:hover{opacity:.75}
   <section id="celebracion" class="schedule" data-lz-anchor="itinerario musica">
     <div class="section-shell">
       <div class="schedule-heading">
-        <div><p class="eyebrow" style="margin-bottom:24px;color:#c3cbaa">El gran día</p><h2 class="section-title" data-lz="cdName">La ceremonia</h2></div>
+        <div><p class="eyebrow" style="margin-bottom:24px;color:var(--pale,#c3cbaa)">El gran día</p><h2 class="section-title" data-lz="cdName">La ceremonia</h2></div>
         <p class="eyebrow" data-lz-date="{W}, {d} de {M} de {Y}">Sábado, 12 de diciembre de 2026</p>
       </div>
       <div class="ceremony-details">
