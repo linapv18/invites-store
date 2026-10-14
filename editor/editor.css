@@ -541,3 +541,26 @@ a.ed-btn[aria-disabled="true"]{opacity:.4;pointer-events:none}
 
 /* Los sellos del formulario usan la fuente de su plantilla (la pone sealLook en editor.js) */
 .ed-mono .iv-seal *{font-family:inherit}
+
+/* 09 · Invitados */
+.ed-howto{padding:18px;border-radius:14px;background:var(--sand);gap:12px}
+.ed-howto>b{font-weight:500}
+.ed-howto ol{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:6px;font-size:14px;line-height:1.5;color:var(--ink-2)}
+.ed-howto .ed-btn{align-self:flex-start}
+.ed-csv{display:flex;flex-direction:column;border-radius:10px;overflow:auto;border:1px solid var(--line);background:#fff;font-size:12px}
+.ed-csv>div{display:grid;grid-template-columns:1.2fr 1.1fr 1fr 1.2fr;min-width:480px}
+.ed-csv span{padding:7px 10px;border-top:1px solid var(--line);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ed-csv>div:first-child span{border-top:0;font-weight:600;background:var(--paper)}
+.ed-csv span+span{border-left:1px solid var(--line)}
+.ed-list-top{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap}
+.ed-invs{gap:12px}
+.ed-inv .ed-card-body{gap:12px}
+.ed-inv-head{display:flex;align-items:flex-end;gap:12px}
+.ed-inv-head .ed-field{flex:1 1 auto;min-width:0}
+.ed-inv-head .ed-pill{margin-bottom:12px}
+.ed-inv-people{display:flex;flex-direction:column;gap:6px;align-items:flex-start}
+.ed-inv-person{display:flex;align-items:center;gap:4px;width:100%}
+.ed-inv-person input{flex:1 1 auto;min-width:0;min-height:40px;padding:0 12px;border-radius:8px;border:1px solid var(--line-2);background:#fff;font-size:15px}
+.ed-inv-person .ed-del{width:36px;height:36px;align-self:center}
+.ed-inv .ed-grid2{gap:10px}
+.ed-inv .ed-field input{min-height:42px;border-radius:8px;background:#fff;font-size:15px}

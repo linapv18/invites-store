@@ -45,7 +45,8 @@
         faq: ['Preguntas frecuentes', 'Código de vestimenta, niños, regalos… Lo que más te van a preguntar.'],
         musica: ['Música de fondo', 'Su canción suena cuando se abre la invitación.'],
         viaje: ['Viaje y hospedaje', 'Hoteles y planes para quienes vienen de fuera. Si todos tus invitados son locales, puedes ocultarla.'],
-        rsvp: ['RSVP', 'Sí o no por invitado, más una nota para los novios.']
+        rsvp: ['RSVP', 'Sí o no por invitado, más una nota para los novios.'],
+        invitados: ['Invitados', 'Tu lista de invitaciones: cada una tendrá su enlace único y sus personas. Súbela desde un archivo o créala aquí.']
       },
       n1: 'Primer nombre', n2: 'Segundo nombre', date: 'Fecha de la boda', city: 'Ciudad', cityPh: 'Ciudad o lugar',
       cover: 'Foto de portada', coverAlt: 'Foto de portada actual', drop: 'Arrastra una foto o elige un archivo', dropHint: 'JPG o PNG, vertical se ve mejor en el móvil',
@@ -85,6 +86,17 @@
       envK: 'Textos del sobre', envIntro: 'Frase del sobre', envClosing: 'Despedida', envClosingPh: 'p. ej. Con todo nuestro cariño',
       envKeepHint: 'Si lo dejas vacío, se usa el texto del diseño.', envOptHint: 'Opcional: aparece bajo el nombre de cada familia.',
       photoBW: 'Fotos en blanco y negro', photoBWOn: 'Como en el diseño original.', photoBWOff: 'Las fotos se ven con sus colores originales.',
+      cancel: 'Cancelar', gUpload: 'Subir archivo (CSV)', gManual: 'Crear a mano', gHow: '¿Cómo se arma el archivo?',
+      gSteps: ['Descarga el archivo de ejemplo y ábrelo en Excel o Google Sheets.', 'Escribe una fila por persona. Las personas con el mismo nombre de invitación quedan juntas (por ejemplo, toda la Familia Rodríguez).', 'Guárdalo como CSV y súbelo aquí. Teléfono y correo son opcionales.'],
+      gCols: ['Invitación', 'Persona', 'Teléfono', 'Correo'], gExample: 'Descargar el ejemplo (CSV)', gExampleFile: '/editor/invitados-ejemplo.csv',
+      gDrop: 'Sube tu lista de invitados', gDropHint: 'Archivo CSV (Excel o Google Sheets)', gBadFile: 'El archivo debe ser un CSV. En Excel: Archivo → Guardar como → CSV.',
+      gImported: function (n, p, sk) { return 'Importamos ' + n + (n === 1 ? ' invitación' : ' invitaciones') + ' con ' + p + (p === 1 ? ' persona' : ' personas') + (sk ? '. ' + sk + (sk === 1 ? ' fila sin nombre se omitió' : ' filas sin nombre se omitieron') : '') + '.'; },
+      gNone: 'El archivo no tiene filas con invitación y persona.', gMerge: 'Si vuelves a subir un archivo, las invitaciones con el mismo nombre se combinan.',
+      gManualHint: 'Crea cada invitación con el nombre que verán (por ejemplo, Familia Rodríguez) y las personas que incluye.',
+      gList: 'Tu lista', gSummary: function (n, p) { return n + (n === 1 ? ' invitación' : ' invitaciones') + ' · ' + p + (p === 1 ? ' persona' : ' personas'); },
+      gEmpty: 'Todavía no hay invitaciones.', gNew: '+ Nueva invitación', gName: 'Nombre de la invitación', gNamePh: 'p. ej. Familia Rodríguez', gPhone: 'Teléfono (WhatsApp)', gEmail: 'Correo',
+      gPerson: 'Persona', gPersonPh: 'Nombre y apellido', gAddPerson: '+ Agregar persona', gDelPerson: 'Quitar a', gDelInv: 'Eliminar invitación', gClear: 'Borrar toda la lista', gClearAsk: '¿Borrar las {n} invitaciones de la lista?', gCleared: 'Lista borrada',
+      gSearch: 'Buscar en la lista', gSearchPh: 'Nombre o familia…', gNoMatch: 'Nada coincide con la búsqueda.', gSeats: function (n) { return n + (n === 1 ? ' cupo' : ' cupos'); },
       palCustom: 'Personalizado', palCustomLbl: 'Elegir un color', palLight: 'Es un color claro: en la invitación lo oscurecemos un poco para que el texto se lea bien.',
       sample: 'Música de ejemplo', sampleHint: 'Así suena la música de fondo en las demos.', play: 'Escuchar', pause: 'Pausar',
       playlistK: 'Complemento · Playlist colaborativa', playlistT: 'Deja que tus invitados armen la playlist de la fiesta.',
@@ -161,7 +173,8 @@
         faq: ['FAQ', 'Dress code, kids, gifts… What everyone will ask you.'],
         musica: ['Background music', 'Your song plays when the invitation opens.'],
         viaje: ['Travel and stay', 'Hotels and plans for out-of-town guests. If all your guests are local, you can hide it.'],
-        rsvp: ['RSVP', 'Yes or no per guest, plus a note for the couple.']
+        rsvp: ['RSVP', 'Yes or no per guest, plus a note for the couple.'],
+        invitados: ['Guests', 'Your invitation list: each one gets its own unique link and its guests. Upload it from a file or create it here.']
       },
       n1: 'First name', n2: 'Second name', date: 'Wedding date', city: 'City', cityPh: 'City or venue',
       cover: 'Cover photo', coverAlt: 'Current cover photo', drop: 'Drag a photo or choose a file', dropHint: 'JPG or PNG, portrait looks best on phones',
@@ -201,6 +214,17 @@
       envK: 'Envelope text', envIntro: 'Envelope line', envClosing: 'Sign-off', envClosingPh: 'e.g. With all our love',
       envKeepHint: 'Leave it empty to use the design’s text.', envOptHint: 'Optional: shown under each family’s name.',
       photoBW: 'Black-and-white photos', photoBWOn: 'As in the original design.', photoBWOff: 'Photos show their original colors.',
+      cancel: 'Cancel', gUpload: 'Upload file (CSV)', gManual: 'Create by hand', gHow: 'How do I build the file?',
+      gSteps: ['Download the example file and open it in Excel or Google Sheets.', 'Write one row per guest. Guests with the same invitation name are grouped together (e.g. the whole Rodríguez family).', 'Save it as CSV and upload it here. Phone and email are optional.'],
+      gCols: ['Invitation', 'Guest', 'Phone', 'Email'], gExample: 'Download the example (CSV)', gExampleFile: '/editor/guests-example.csv',
+      gDrop: 'Upload your guest list', gDropHint: 'CSV file (Excel or Google Sheets)', gBadFile: 'The file must be a CSV. In Excel: File → Save As → CSV.',
+      gImported: function (n, p, sk) { return 'Imported ' + n + (n === 1 ? ' invitation' : ' invitations') + ' with ' + p + (p === 1 ? ' guest' : ' guests') + (sk ? '. ' + sk + (sk === 1 ? ' row without a name was skipped' : ' rows without a name were skipped') : '') + '.'; },
+      gNone: 'The file has no rows with an invitation and a guest.', gMerge: 'If you upload a file again, invitations with the same name are merged.',
+      gManualHint: 'Create each invitation with the name guests will see (e.g. The Rodríguez Family) and the people it includes.',
+      gList: 'Your list', gSummary: function (n, p) { return n + (n === 1 ? ' invitation' : ' invitations') + ' · ' + p + (p === 1 ? ' guest' : ' guests'); },
+      gEmpty: 'No invitations yet.', gNew: '+ New invitation', gName: 'Invitation name', gNamePh: 'e.g. The Rodríguez Family', gPhone: 'Phone (WhatsApp)', gEmail: 'Email',
+      gPerson: 'Guest', gPersonPh: 'Full name', gAddPerson: '+ Add guest', gDelPerson: 'Remove', gDelInv: 'Delete invitation', gClear: 'Clear the whole list', gClearAsk: 'Delete all {n} invitations from the list?', gCleared: 'List cleared',
+      gSearch: 'Search the list', gSearchPh: 'Name or family…', gNoMatch: 'Nothing matches the search.', gSeats: function (n) { return n + (n === 1 ? ' seat' : ' seats'); },
       palCustom: 'Custom', palCustomLbl: 'Pick a color', palLight: 'It’s a light color: in the invitation we darken it a bit so text stays readable.',
       sample: 'Sample music', sampleHint: 'This is how background music sounds in the demos.', play: 'Listen', pause: 'Pause',
       playlistK: 'Add-on · Collaborative playlist', playlistT: 'Let your guests build the party playlist.',
@@ -257,7 +281,7 @@
   };
   var S = STR[LANG];
 
-  var SECS = ['portada', 'apertura', 'historia', 'itinerario', 'faq', 'musica', 'viaje', 'rsvp'];
+  var SECS = ['portada', 'apertura', 'historia', 'itinerario', 'faq', 'musica', 'viaje', 'rsvp', 'invitados'];
   var ADDON_IDS = ['playlist', 'libro', 'capsula', 'encuestas', 'galeria', 'bilingue', 'dominio'];
   var ADDON_TXT = {
     es: {
@@ -350,7 +374,7 @@
       musicOn: true, musicSource: 'library', musicTrack: 'demo', musicTrackSrc: '/assets/musica/demo.mp3', musicFileName: '', musicFileSize: 0,
       palCustom: '#8A4F5C',
       // Todos los diseños reciben y muestran estos mismos campos (ver demo/shared/content.js).
-      photoBW: true, envIntro: '', envClosing: '', countdownId: 1, countdownNote: '', quote: '', quoteAuthor: '', dressCode: '', dressNotes: '', dressColors: '',
+      invitations: [], photoBW: true, envIntro: '', envClosing: '', countdownId: 1, countdownNote: '', quote: '', quoteAuthor: '', dressCode: '', dressNotes: '', dressColors: '',
       viajeOn: true, travelIntro: '', hotel: '', hotelAddress: '', hotelCode: '', hotelLink: '', hotelNotes: '',
       airport: '', transport: '', guideFood: '', guideCulture: '', guidePlans: '',
       rsvpDeadline: '', rsvpMsg: '', rsvpDiet: true, rsvpNote: true,
@@ -451,6 +475,46 @@
     if (st.mono === 'ring') return '<span class="seal-ring">' + i1 + i2 + '</span>';
     return '<span class="seal-amp">' + i1 + '<i>&amp;</i>' + i2 + '</span>';
   }
+  /* ---------- Lista de invitados desde CSV ---------- */
+  function parseCSV(text) {
+    text = String(text || '').replace(/^\uFEFF/, '');
+    var first = text.split(/\r?\n/).slice(0, 5).join('\n'), count = function (c) { return first.split(c).length - 1; };
+    var d = [';', '\t', ','].sort(function (a, b) { return count(b) - count(a); })[0];
+    var rows = [], row = [], cell = '', q = false;
+    for (var i = 0; i < text.length; i++) {
+      var ch = text[i];
+      if (q) { if (ch === '"') { if (text[i + 1] === '"') { cell += '"'; i++; } else q = false; } else cell += ch; }
+      else if (ch === '"') q = true;
+      else if (ch === d) { row.push(cell); cell = ''; }
+      else if (ch === '\n' || ch === '\r') { if (ch === '\r' && text[i + 1] === '\n') i++; row.push(cell); rows.push(row); row = []; cell = ''; }
+      else cell += ch;
+    }
+    if (cell || row.length) { row.push(cell); rows.push(row); }
+    return rows.map(function (r) { return r.map(function (c) { return c.trim(); }); }).filter(function (r) { return r.some(Boolean); });
+  }
+  // Convierte las filas en invitaciones. Reconoce encabezados en español o inglés; sin encabezado: invitación, persona, teléfono, correo.
+  function rowsToInvitations(rows) {
+    var norm = function (x) { return String(x || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z]/g, ''); };
+    var KEYS = { name: /^(invitacion|invitation|familia|family|grupo|group|hogar|household)/, person: /^(persona|person|invitado|guest|nombre|name|asistente)/, phone: /^(telefono|phone|whatsapp|celular|movil|mobile|tel)/, email: /^(correo|email|mail|ecorreo)/ };
+    var col = { name: 0, person: 1, phone: 2, email: 3 }, start = 0, h = rows[0] || [], found = {};
+    h.forEach(function (c, i) { var n = norm(c); Object.keys(KEYS).forEach(function (k) { if (found[k] === undefined && KEYS[k].test(n)) found[k] = i; }); });
+    if (found.name !== undefined || found.person !== undefined) { start = 1; Object.keys(found).forEach(function (k) { col[k] = found[k]; }); if (found.phone === undefined) col.phone = -1; if (found.email === undefined) col.email = -1; }
+    var map = {}, list = [], skipped = 0;
+    rows.slice(start).forEach(function (r) {
+      var get = function (k) { return col[k] >= 0 ? (r[col[k]] || '').trim() : ''; };
+      var name = get('name'), person = get('person');
+      if (!name && !person) { skipped++; return; }
+      if (!name) name = person;
+      if (!person) person = name; // una fila con solo el nombre de la invitación es una persona
+      var key = name.toLowerCase(), inv = map[key];
+      if (!inv) { inv = map[key] = { name: name, people: [], phone: '', email: '' }; list.push(inv); }
+      if (person && inv.people.indexOf(person) < 0) inv.people.push(person);
+      if (!inv.phone) inv.phone = get('phone');
+      if (!inv.email) inv.email = get('email');
+    });
+    return { list: list, skipped: skipped };
+  }
+
   /* ---------- Archivos grandes (el MP3) en IndexedDB: no caben en localStorage ---------- */
   function mediaDB() {
     return new Promise(function (ok, ko) {
@@ -560,6 +624,7 @@
       case 'musica': return !s.musicOn || (s.musicSource === 'upload' ? t(s.musicFileName) : t(s.musicTrackSrc));
       case 'viaje': return !s.viajeOn || t(s.hotel);
       case 'rsvp': return t(s.rsvpDeadline);
+      case 'invitados': return s.invitations.length > 0;
     }
     return false;
   }
@@ -672,7 +737,7 @@
       '<button type="button" class="ed-switch" role="switch" aria-checked="' + !!state[k] + '" aria-labelledby="sw-' + k + '" data-act="toggle" data-k="' + k + '" data-fk="sw-' + k + '"></button></div>';
   }
   function dropzone(kind, title, hint, multiple, cls) {
-    var accept = kind === 'mono' ? 'image/svg+xml,image/png' : kind === 'music' ? 'audio/mpeg,.mp3' : 'image/jpeg,image/png,image/webp';
+    var accept = kind === 'mono' ? 'image/svg+xml,image/png' : kind === 'music' ? 'audio/mpeg,.mp3' : kind === 'csv' ? '.csv,text/csv' : 'image/jpeg,image/png,image/webp';
     return '<label class="ed-drop' + (cls ? ' ' + cls : '') + '" data-drop="' + kind + '" style="position:relative">' + svg(kind === 'gallery' ? P.plus : kind === 'music' ? P.music : P.upload, 20, 1.6) + '<b>' + esc(title) + '</b>' + (hint ? '<small>' + esc(hint) + '</small>' : '') +
       '<input type="file" accept="' + accept + '" data-file="' + kind + '"' + (multiple ? ' multiple' : '') + '></label>';
   }
@@ -811,6 +876,40 @@
       return head('rsvp') + field(S.deadline, 'rsvpDeadline', { type: 'date' }) + field(S.rsvpMsg, 'rsvpMsg', { rows: 3, ph: S.rsvpMsgPh }) +
         toggleRow('rsvpDiet', S.diet, S.dietHint, S.offHint) + toggleRow('rsvpNote', S.note, S.noteHint, S.offHint) +
         addonUpsell('capsula', { light: true, k: S.capsulaK, t: esc(S.capsulaT) });
+    },
+    invitados: function () {
+      var inv = state.invitations, up = ui.gMode !== 'manual', people = inv.reduce(function (n, x) { return n + x.people.length; }, 0);
+      var fq = String(ui.gq || '').trim().toLowerCase();
+      var shown = inv.map(function (x, i) { return [x, i]; }).filter(function (p) { return !fq || p[0].name.toLowerCase().indexOf(fq) > -1 || p[0].people.some(function (n) { return n.toLowerCase().indexOf(fq) > -1; }); });
+      var h = head('invitados') +
+        '<div class="ed-seg" role="radiogroup" aria-label="' + esc(S.sec.invitados[0]) + '">' +
+          '<button type="button" role="radio" aria-checked="' + up + '" data-act="gMode" data-id="upload" data-fk="gm-up">' + esc(S.gUpload) + '</button>' +
+          '<button type="button" role="radio" aria-checked="' + !up + '" data-act="gMode" data-id="manual" data-fk="gm-man">' + esc(S.gManual) + '</button></div>';
+      if (up) {
+        h += '<div class="ed-stack ed-howto"><b>' + esc(S.gHow) + '</b><ol>' + S.gSteps.map(function (x) { return '<li>' + esc(x) + '</li>'; }).join('') + '</ol>' +
+          '<div class="ed-csv" role="table" aria-label="' + esc(S.gExample) + '"><div role="row">' + S.gCols.map(function (c) { return '<span role="columnheader">' + esc(c) + '</span>'; }).join('') + '</div>' +
+            (LANG === 'en' ? [['The Rodríguez Family', 'Carlos Rodríguez', '+1 305 555 0123', 'carlos@example.com'], ['The Rodríguez Family', 'Lucía Pérez', '', ''], ['Aunt Martha', 'Martha Gómez', '+1 305 555 0101', '']]
+              : [['Familia Rodríguez', 'Carlos Rodríguez', '+57 300 123 4567', 'carlos@ejemplo.com'], ['Familia Rodríguez', 'Lucía Pérez', '', ''], ['Tía Marta', 'Marta Gómez', '+57 310 555 0101', '']])
+              .map(function (r) { return '<div role="row">' + r.map(function (c) { return '<span role="cell">' + esc(c) + '</span>'; }).join('') + '</div>'; }).join('') + '</div>' +
+          '<a class="ed-btn ed-btn-sm" href="' + S.gExampleFile + '" download>' + svg('<path d="M12 4v12M7 11l5 5 5-5M4 20h16"/>', 14, 2) + esc(S.gExample) + '</a></div>' +
+          dropzone('csv', S.gDrop, S.gDropHint) + '<p class="ed-hint" style="margin:0">' + esc(S.gMerge) + '</p>';
+      } else h += '<p class="ed-hint" style="margin:0">' + esc(S.gManualHint) + '</p>';
+      h += '<div class="ed-stack ed-group"><div class="ed-list-top"><h2 class="ed-sub">' + esc(S.gList) + '</h2><span class="ed-hint" aria-live="polite">' + esc(S.gSummary(inv.length, people)) + '</span></div>' +
+        (inv.length > 6 ? '<label class="ed-field"><span class="vh">' + esc(S.gSearch) + '</span><input type="search" data-gsearch value="' + esc(ui.gq || '') + '" placeholder="' + esc(S.gSearchPh) + '" aria-label="' + esc(S.gSearch) + '"></label>' : '') +
+        (inv.length ? (shown.length ? '<div class="ed-stack ed-invs">' + shown.map(function (p) {
+          var x = p[0], i = p[1];
+          return '<div class="ed-card ed-inv"><div class="ed-card-body">' +
+            '<div class="ed-inv-head"><label class="ed-field">' + esc(S.gName) + '<input data-inv="' + i + '" data-f="name" value="' + esc(x.name) + '" placeholder="' + esc(S.gNamePh) + '" autocomplete="off"></label><span class="ed-pill">' + esc(S.gSeats(x.people.length)) + '</span></div>' +
+            '<div class="ed-inv-people">' + x.people.map(function (n, j) {
+              return '<div class="ed-inv-person"><input data-inv="' + i + '" data-p="' + j + '" value="' + esc(n) + '" placeholder="' + esc(S.gPersonPh) + '" aria-label="' + esc(S.gPerson + ' ' + (j + 1)) + '" autocomplete="off">' +
+                '<button type="button" class="ed-del" data-act="g-delp" data-i="' + i + '" data-d="' + j + '" aria-label="' + esc(S.gDelPerson + ' ' + (n || S.gPerson)) + '">' + svg(P.x, 16, 2) + '</button></div>';
+            }).join('') + '<button type="button" class="ed-link" data-act="g-addp" data-i="' + i + '" data-fk="gap-' + i + '">' + esc(S.gAddPerson) + '</button></div>' +
+            '<div class="ed-grid2"><label class="ed-field">' + esc(S.gPhone) + '<input type="tel" data-inv="' + i + '" data-f="phone" value="' + esc(x.phone) + '" autocomplete="off"></label><label class="ed-field">' + esc(S.gEmail) + '<input type="email" data-inv="' + i + '" data-f="email" value="' + esc(x.email) + '" autocomplete="off"></label></div>' +
+            '</div>' + delBtn('g-del', i, S.gDelInv + ' ' + (x.name || ''), 'gx-' + i) + '</div>';
+        }).join('') + '</div>' : '<p class="ed-empty">' + esc(S.gNoMatch) + '</p>') : '<p class="ed-empty">' + esc(S.gEmpty) + '</p>') +
+        '<div class="ed-limit"><button type="button" class="ed-btn ed-btn-dash" data-act="g-new" data-fk="g-new">' + esc(S.gNew) + '</button>' +
+        (inv.length ? '<button type="button" class="ed-link" data-act="g-clear">' + esc(S.gClear) + '</button>' : '') + '</div></div>';
+      return h;
     }
   };
 
@@ -920,7 +1019,7 @@
      (ver demo/shared/content.js). */
   var pvQueued = false, frameReady = false;
   var frameUrl = function (mode) { return BASE + '/demo/' + state.design + '/?lz=' + mode + '&k=' + encodeURIComponent(KEY) + (mode === 'editor' ? '&sec=' + encodeURIComponent(pvTarget()) : ''); };
-  function pvTarget() { return SECS.indexOf(state.sec) > -1 ? state.sec : ADDON_SPOT[state.sec]; }
+  function pvTarget() { return state.sec === 'invitados' ? 'rsvp' : SECS.indexOf(state.sec) > -1 ? state.sec : ADDON_SPOT[state.sec]; }
   function post(msg) { if (frameReady && frame.contentWindow) frame.contentWindow.postMessage(msg, location.origin); }
   function renderPreview(scroll) {
     post({ lz: 'content', content: state });
@@ -1057,6 +1156,24 @@
   function handleFiles(kind, files) {
     files = Array.prototype.slice.call(files || []);
     if (!files.length) return;
+    if (kind === 'csv') {
+      var cf = files[0];
+      if (!/\.(csv|txt)$/i.test(cf.name) && !/csv|text\/plain/.test(cf.type)) { toast(S.gBadFile); return; }
+      var rd = new FileReader();
+      rd.onload = function () {
+        var res = rowsToInvitations(parseCSV(rd.result)), added = 0, ppl = 0;
+        if (!res.list.length) { toast(S.gNone); return; }
+        res.list.forEach(function (n) {
+          var ex = state.invitations.filter(function (x) { return x.name.toLowerCase() === n.name.toLowerCase(); })[0];
+          if (ex) { n.people.forEach(function (p) { if (ex.people.indexOf(p) < 0) ex.people.push(p); }); if (!ex.phone) ex.phone = n.phone; if (!ex.email) ex.email = n.email; }
+          else { n.id = ++state.uid; state.invitations.push(n); }
+          added++; ppl += n.people.length;
+        });
+        changed(true); toast(S.gImported(added, ppl, res.skipped));
+      };
+      rd.readAsText(cf, 'utf-8');
+      return;
+    }
     if (kind === 'music') {
       var mp3 = files[0];
       if (!(mp3.type === 'audio/mpeg' || mp3.type === 'audio/mp3' || /\.mp3$/i.test(mp3.name))) { toast(S.badMp3); return; }
@@ -1088,6 +1205,12 @@
   root.addEventListener('input', function (e) {
     var t = e.target;
     if (t.type === 'file') return;
+    if (t.hasAttribute('data-gsearch')) { ui.gq = t.value; var pos = t.selectionStart; renderMain(); var sb = $('[data-gsearch]'); if (sb) { sb.focus(); try { sb.setSelectionRange(pos, pos); } catch (x) {} } return; }
+    if (t.hasAttribute('data-inv')) {
+      var gi = state.invitations[+t.getAttribute('data-inv')]; if (!gi) return;
+      if (t.hasAttribute('data-p')) gi.people[+t.getAttribute('data-p')] = t.value; else gi[t.getAttribute('data-f')] = t.value;
+      changed(false); return;
+    }
     if (t.getAttribute('data-k') === 'palCustom') {
       state.palCustom = t.value; state.pal = 'custom'; changed(false);
       $$('.ed-pal[role="radio"]').forEach(function (b) { b.setAttribute('aria-checked', 'false'); });
@@ -1197,6 +1320,21 @@
         var mev = state.events.filter(function (x) { return String(x.id) === id; })[0];
         if (mev && !mapQuery(mev)) { toast(S.needPlace); break; }
         ui.maps[id] = !ui.maps[id]; keepFocus(renderMain); break;
+      case 'gMode': ui.gMode = id; keepFocus(renderMain); break;
+      case 'g-new':
+        state.invitations.push({ id: ++state.uid, name: '', people: [''], phone: '', email: '' }); ui.gq = ''; changed(true);
+        var gn = $$('[data-inv][data-f="name"]'); if (gn.length) gn[gn.length - 1].focus();
+        break;
+      case 'g-del': state.invitations.splice(i, 1); changed(true); focusAfterDelete('[data-inv][data-f="name"]', i, '[data-fk="g-new"]'); break;
+      case 'g-addp':
+        state.invitations[i].people.push(''); changed(true);
+        var gp = $$('[data-inv="' + i + '"][data-p]'); if (gp.length) gp[gp.length - 1].focus();
+        break;
+      case 'g-delp': state.invitations[i].people.splice(d, 1); changed(true); var gq = $$('[data-inv="' + i + '"][data-p]'); (gq[Math.min(d, gq.length - 1)] || $('[data-fk="gap-' + i + '"]') || main).focus(); break;
+      case 'g-clear':
+        modal('<h2 id="mdTitle">' + esc(S.gClear) + '</h2><p>' + esc(S.gClearAsk.replace('{n}', state.invitations.length)) + '</p><div class="ed-modal-actions"><button type="button" class="ed-btn" data-act="modal-close">' + esc(S.cancel) + '</button><button type="button" class="ed-btn ed-btn-dark" data-act="g-clear-yes">' + esc(S.gClear) + '</button></div>', b);
+        break;
+      case 'g-clear-yes': state.invitations = []; closeModal(); changed(true); toast(S.gCleared); break;
       case 'poll-add':
         if (state.polls.length >= 6) return;
         var idea = i >= 0 ? pollIdeasLeft()[i] : '';
