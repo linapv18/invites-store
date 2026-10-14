@@ -1,0 +1,477 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Sofía &amp; Tomás · Modern design demo — Lazo</title>
+<meta name="description" content="Wedding website invitation demo, modern black-and-white design: opening doors, chapters, countdown and per-guest RSVP.">
+<meta name="theme-color" content="#141414">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%23141414'/%3E%3Ctext x='32' y='44' font-family='Georgia,serif' font-style='italic' font-size='34' fill='%23F5F4F0' text-anchor='middle'%3E%26%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&amp;family=Jost:wght@300;400&amp;display=swap" rel="stylesheet">
+<style>
+html,body{margin:0;height:100%}
+[hidden]{display:none !important}
+.mo{--ink:#141414;--ivory:#F5F4F0;--sand:#E7E6E1;--stone:#BDBCB6;--muted:#6B6A66;--body:#454441;--soft:#8E8D88;--line:#14141426;
+  --serif:'Instrument Serif',Georgia,serif;--sans:Jost,Helvetica,sans-serif;--ease:cubic-bezier(.22,1,.36,1);
+  position:fixed;inset:0;overflow:hidden;container-type:size;background:var(--ivory);color:var(--ink);font-family:var(--sans);font-weight:300}
+.mo *,.mo *::before,.mo *::after{box-sizing:border-box}
+.mo ::selection{background:var(--ink);color:var(--ivory)}
+.mo :where(button){display:revert;padding:0;border:0;border-radius:0;background:transparent;color:inherit;font:inherit;letter-spacing:inherit;text-transform:inherit;cursor:pointer}
+.mo :where(a){color:inherit;text-decoration:none}
+.mo a:hover{opacity:.7}
+.mo :where(h1,h2,h3,p){margin:0;font-weight:inherit}
+.mo textarea::placeholder{color:var(--soft)}
+.mo :focus-visible{outline:2px solid var(--muted);outline-offset:4px}
+.mo-ns{scrollbar-width:none}.mo-ns::-webkit-scrollbar{display:none}
+@keyframes mRise{from{opacity:0;translate:0 18px}to{opacity:1;translate:0 0}}
+@keyframes mFade{from{opacity:0}to{opacity:1}}
+@keyframes mSheet{from{translate:0 100%}to{translate:0 0}}
+@keyframes mSide{from{translate:100% 0}to{translate:0 0}}
+@keyframes mNudge{0%,100%{translate:0 0}50%{translate:0 6px}}
+@keyframes mShimmer{from{background-position:-200% 0}to{background-position:200% 0}}
+@keyframes mPulseL{0%{box-shadow:0 10px 30px #00000080,0 0 0 0 #F5F4F055}100%{box-shadow:0 10px 30px #00000080,0 0 0 22px #F5F4F000}}
+
+.mo-kicker{font-size:10px;font-weight:400;letter-spacing:.32em;text-transform:uppercase}
+.mo-label{font-size:9px;font-weight:400;letter-spacing:.28em;text-transform:uppercase}
+.mo-serif{font-family:var(--serif);font-weight:400}
+.mo-display{font:400 clamp(48px,4.6cqw,76px)/.95 var(--serif);letter-spacing:-.02em}
+.mo-text{font-size:14px;line-height:1.75;color:var(--body)}
+.mo-pill{display:flex;align-items:center;justify-content:center;width:100%;height:58px;border-radius:100px;background:var(--ink) !important;color:var(--ivory) !important;font:400 11px var(--sans) !important;letter-spacing:.3em !important;text-transform:uppercase !important;transition:transform .3s}
+.mo-pill:hover{transform:translateY(-2px)}
+.mo-pill.is-outline{background:transparent !important;color:inherit !important;border:1px solid currentColor}
+.mo-pill:disabled{opacity:.5;transform:none}
+.mo-underline{font:400 10px var(--sans);letter-spacing:.24em;text-transform:uppercase;border-bottom:1px solid currentColor;padding-bottom:3px}
+.mo-arrow{display:inline-block;width:.9em;height:.9em;margin-left:.25em;vertical-align:-.05em}
+
+/* Puertas */
+.mo-env{position:absolute;inset:0;z-index:20;perspective:2000px}
+.mo-env.is-busy{pointer-events:none}
+.mo-door{position:absolute;top:0;bottom:0;width:50%;overflow:hidden;transition:transform 1.4s cubic-bezier(.7,0,.25,1),opacity .6s ease .8s}
+.mo-door.is-left{left:0;transform-origin:0 50%;box-shadow:inset -1px 0 0 #F5F4F033,12px 0 40px #00000055}
+.mo-door.is-right{right:0;transform-origin:100% 50%;box-shadow:inset 1px 0 0 #F5F4F033,-12px 0 40px #00000055}
+.mo-env.is-open .mo-door{opacity:0}
+.mo-env.is-open .mo-door.is-left{transform:rotateY(-104deg)}
+.mo-env.is-open .mo-door.is-right{transform:rotateY(104deg)}
+.mo-door-face{position:absolute;top:0;bottom:0;width:200%;background:radial-gradient(ellipse 70% 55% at 50% 46%,#3A3A38,var(--ink) 72%);color:var(--ivory)}
+.mo-door.is-left .mo-door-face{left:0}
+.mo-door.is-right .mo-door-face{right:0}
+.mo-env-top{position:absolute;top:0;left:0;right:0;height:64px;padding:0 24px;display:flex;align-items:center;justify-content:space-between;color:var(--stone)}
+.mo-env-head{position:absolute;top:17%;left:0;right:0;text-align:center}
+.mo-env-head .mo-kicker{font-size:9px;color:var(--stone)}
+.mo-env-mono{margin-top:18px !important;font:400 112px/.9 var(--serif);letter-spacing:-.03em}
+.mo-env-mono em{color:var(--stone)}
+.mo-env-name{position:absolute;bottom:24%;left:0;right:0;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);column-gap:.45em;font:italic 400 24px/1 var(--serif)}
+.mo-env-name span:first-child{text-align:right}
+.mo-seal{position:absolute !important;left:50%;top:50%;width:68px;height:68px;border-radius:50% !important;background:radial-gradient(circle at 35% 30%,#FFFFFF,var(--sand) 70%) !important;color:var(--ink) !important;display:flex !important;align-items:center;justify-content:center;translate:-50% -50%;box-shadow:0 10px 30px #00000080;animation:mPulseL 2.4s ease-out infinite;transition:scale .4s var(--ease),opacity .35s}
+.mo-seal::before{content:'';position:absolute;inset:5px;border-radius:50%;border:1px solid #14141440}
+.mo-seal span{font:italic 400 32px/1 var(--serif)}
+.mo-env.is-busy .mo-seal{scale:1.25;opacity:0;animation:none}
+.mo-env-hint{position:absolute;left:0;right:0;bottom:15%;text-align:center;font-size:10px;font-weight:400;letter-spacing:.3em;text-transform:uppercase;background:linear-gradient(90deg,var(--ivory) 40%,var(--soft) 50%,var(--ivory) 60%);background-size:200% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:mShimmer 3s linear infinite;pointer-events:none;transition:opacity .3s}
+.mo-env.is-busy .mo-env-hint{opacity:0}
+@media (min-width:820px){.mo-env-head{top:20%}.mo-env-head .mo-kicker{font-size:11px}.mo-env-mono{font-size:168px}.mo-env-name{bottom:20%;font-size:34px}.mo-seal{width:84px;height:84px}.mo-seal span{font-size:40px}.mo-env-hint{bottom:12%}}
+
+/* Capítulos */
+.mo-guest{position:absolute;inset:0;display:flex;animation:mFade .5s ease both}
+.mo-side{display:none;position:relative;flex:none;width:44%;height:100%;overflow:hidden;background:#1C1C1B}
+.mo-photo,.mo-side img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:grayscale(1) contrast(1.05)}
+.mo-side img{opacity:0;transition:opacity 1s ease,scale 6s ease}
+.mo-side img.is-on{opacity:1;scale:1.06}
+.mo-cover::after{content:'';position:absolute;inset:0;background:linear-gradient(#14141400 35%,#141414D0)}
+.mo-thumbs img{flex:none;width:64px;height:84px;object-fit:cover;filter:grayscale(1)}
+.mo-side-ph{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font:italic 400 clamp(140px,14cqw,240px)/1 var(--serif);color:#F5F4F00F;letter-spacing:-.04em;transition:opacity 1s ease}
+.mo-side-note{position:absolute;top:32px;left:40px;font-size:9px;letter-spacing:.28em;text-transform:uppercase;color:#F5F4F066}
+.mo-side::after{content:'';position:absolute;inset:0;background:linear-gradient(#14141400 55%,#141414AA)}
+.mo-side-cap{position:absolute;z-index:1;left:40px;right:40px;bottom:36px;color:var(--ivory);font:italic 400 30px/1 var(--serif)}
+.mo-main{position:relative;flex:1;min-width:0;height:100%}
+.mo-chrome{color:var(--ink);transition:color .4s}
+.mo[data-chapter="cuenta-atras"] .mo-chrome,.mo[data-chapter="historia"] .mo-chrome{color:var(--ivory)}
+.mo-bar{position:absolute;z-index:5;top:0;left:0;right:0;height:64px;padding:0 24px;display:flex;align-items:center;justify-content:space-between;pointer-events:none}
+.mo-bar>*{pointer-events:auto}
+.mo[data-chapter="el-dia"] .mo-bar,.mo[data-chapter="viaje"] .mo-bar,.mo[data-chapter="preguntas"] .mo-bar{background:linear-gradient(var(--ivory) 75%,#F5F4F000)}
+.mo-bar-brand{font:400 22px var(--serif) !important}
+.mo-bar nav{display:none;gap:26px;white-space:nowrap}
+.mo-bar nav button{padding:4px 0;font:400 10px var(--sans);letter-spacing:.24em;text-transform:uppercase;opacity:.6;border-bottom:1px solid transparent}
+.mo-bar nav button[aria-current="true"]{opacity:1;border-bottom-color:currentColor}
+.mo-ticks{position:absolute;z-index:5;right:12px;top:50%;translate:0 -50%;display:flex;flex-direction:column;align-items:flex-end;gap:10px}
+.mo-ticks button{width:28px;height:10px;display:flex;justify-content:flex-end;align-items:center}
+.mo-ticks span{display:block;height:1px;width:12px;background:currentColor;opacity:.45;transition:width .4s,opacity .4s}
+.mo-ticks button[aria-current="true"] span{width:28px;opacity:1}
+.mo-scroller{position:absolute;inset:0;overflow-y:auto;scroll-snap-type:y mandatory;scroll-behavior:smooth}
+.mo-ch{position:relative;height:100%;scroll-snap-align:start;overflow:hidden;padding:96px 24px 88px;display:flex;flex-direction:column}
+.mo-ch.is-dark{background:var(--ink);color:var(--ivory)}
+.mo-ch.is-sand{background:var(--sand)}
+.mo-ch.is-grow,.mo-ch.is-tall{overflow-y:auto;scrollbar-width:none}
+.mo-ch.is-grow::-webkit-scrollbar,.mo-ch.is-tall::-webkit-scrollbar{display:none}
+.mo-ch .mo-kicker{color:var(--muted)}
+.mo-ch.is-dark .mo-kicker{color:var(--stone)}
+.mo-cover{padding:0;background:radial-gradient(ellipse 90% 60% at 50% 30%,#2A2A28,var(--ink) 70%);color:var(--ivory)}
+.mo-cover-ph{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding-bottom:42%;color:#F5F4F01F;text-align:center}
+.mo-cover-ph b{font:italic 400 120px/1 var(--serif)}
+.mo-cover-ph small{font-size:9px;letter-spacing:.28em;text-transform:uppercase;color:#F5F4F066}
+.mo-cover-copy{position:relative;z-index:1;height:100%;padding:0 24px 88px;display:flex;flex-direction:column;justify-content:flex-end}
+.mo-cover .mo-kicker{color:inherit}
+.mo-cover h1{margin-top:18px;font:400 clamp(72px,8cqw,136px)/.9 var(--serif);letter-spacing:-.03em}
+.mo-cover h1 em{padding-left:.5em}
+.mo-cover-intro{margin-top:24px !important;max-width:360px;font-size:14px;line-height:1.75}
+.mo-discover{margin-top:36px;align-self:flex-start;display:flex !important;align-items:center;gap:14px;font:400 10px var(--sans) !important;letter-spacing:.3em !important;text-transform:uppercase !important}
+.mo-discover span{display:inline-block;animation:mNudge 2s ease-in-out infinite}
+.mo-count{flex:1;display:flex;flex-direction:column;justify-content:center}
+.mo-count-days{display:flex;align-items:baseline;gap:16px}
+.mo-count-days span:first-child{font:400 clamp(150px,15cqw,260px)/.8 var(--serif);letter-spacing:-.04em;font-variant-numeric:tabular-nums}
+.mo-count-days span:last-child{font:italic 400 34px var(--serif);color:var(--stone)}
+.mo-count-grid{margin-top:40px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-top:1px solid #F5F4F026}
+.mo-count-grid div{padding:18px 0 0 18px;border-left:1px solid #F5F4F026}
+.mo-count-grid div:first-child{padding-left:0;border-left:0}
+.mo-count-grid strong{display:block;font:400 40px/1 var(--serif);font-variant-numeric:tabular-nums}
+.mo-count-grid span{display:block;margin-top:8px;font-size:9px;letter-spacing:.28em;text-transform:uppercase;color:var(--stone)}
+.mo-count-note{font:italic 400 22px/1.4 var(--serif);color:var(--stone)}
+.mo-row{display:grid;grid-template-columns:72px minmax(0,1fr);gap:16px;padding:22px 0;border-top:1px solid var(--line)}
+.mo-row-key{font:italic 400 22px/1.1 var(--serif);color:var(--muted)}
+.mo-row-time,.mo-row-title{font:400 26px/1 var(--serif)}
+.mo-row-text{margin-top:8px !important;font-size:13px;line-height:1.6;color:var(--body)}
+.mo-row .mo-underline{display:inline-block;margin-top:10px}
+button.mo-row{width:100%;grid-template-columns:72px minmax(0,1fr) auto;align-items:baseline;border-bottom:1px solid var(--line);text-align:left;display:grid}
+.mo-dress.is-open>button.mo-row{border-bottom-color:transparent}
+.mo-dress.is-open .mo-faq-plus{transform:rotate(45deg)}
+.mo-dress-body{padding:0 0 24px 88px;border-bottom:1px solid var(--line);font-size:14px;line-height:1.75;color:var(--body);animation:mRise .35s ease both}
+.mo-person{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:14px 0;border-top:1px solid #14141422}
+.mo-person>span:first-child{font:400 22px/1.1 var(--serif)}
+.mo-status{display:flex;align-items:center;gap:8px;font-size:9px;font-weight:400;letter-spacing:.24em;text-transform:uppercase;color:var(--body)}
+.mo-dot{flex:none;width:7px;height:7px;border-radius:50%;border:1px solid currentColor}
+.mo-dot.is-yes{background:currentColor}
+.mo-story{padding:0;background:var(--ink);color:var(--ivory)}
+.mo-story-photo{position:relative;flex:1;min-height:0;overflow:hidden;background:radial-gradient(ellipse at 40% 30%,#3A3A38,#1C1C1B 75%);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;color:#F5F4F02E}
+.mo-story-photo b{font:italic 400 96px/1 var(--serif)}
+.mo-story-photo small{font-size:9px;letter-spacing:.28em;text-transform:uppercase;color:#F5F4F066}
+.mo-story-copy{flex:none;padding:28px 24px 88px}
+.mo-story .mo-kicker{color:var(--stone)}
+.mo-story .mo-text{color:#D9D8D3}
+.mo-story h2{margin-top:14px;font:400 clamp(40px,3.8cqw,60px)/1 var(--serif);letter-spacing:-.02em}
+.mo-thumbs{margin-top:18px;display:flex;gap:8px;overflow-x:auto}
+.mo-thumb{flex:none;width:64px;height:84px;background:#2A2A28;border:1px solid #F5F4F01A}
+.mo-faq{border-top:1px solid var(--line)}
+.mo-faq>button{width:100%;display:flex !important;justify-content:space-between;align-items:center;gap:16px;padding:18px 0;text-align:left}
+.mo-faq-q{display:block;margin-top:6px;font:400 22px/1.15 var(--serif)}
+.mo-faq-plus{flex:none;font:300 22px/1 var(--sans);transition:transform .35s}
+.mo-faq.is-open .mo-faq-plus{transform:rotate(45deg)}
+.mo-faq-a{padding:0 0 20px;font-size:14px;line-height:1.75;color:var(--body);animation:mRise .35s ease both}
+.mo-details{margin:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:16px 24px}
+.mo-details dt{font:400 18px/1.2 var(--serif)}
+.mo-details dd{margin:4px 0 0;font-size:12px;line-height:1.6;color:var(--body)}
+.mo-guide{padding:0 0 22px;animation:mRise .35s ease both}
+.mo-guide-note{font-size:13px;line-height:1.7;color:var(--muted)}
+.mo-guide p.n{margin-top:14px !important;font:400 20px/1.2 var(--serif)}
+.mo-guide p.d{margin-top:4px !important;font-size:13px;line-height:1.7;color:var(--body)}
+.mo-foot{margin-top:auto;padding-top:36px;display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px 24px;border-top:1px solid var(--line)}
+.mo-foot>*{padding-top:14px !important;font:400 10px var(--sans) !important;letter-spacing:.24em !important;text-transform:uppercase !important}
+@media (min-width:820px){
+  .mo-side{display:block}
+  .mo-ch{padding-left:max(24px,6cqw);padding-right:max(24px,6cqw);padding-bottom:48px}
+  .mo-cover{background:var(--ivory);color:var(--ink)}
+  .mo-cover-ph,.mo-cover .mo-photo,.mo-cover::after{display:none}
+  .mo-cover-copy,.mo-story-copy{padding-left:max(24px,6cqw);padding-right:max(24px,6cqw);padding-bottom:72px}
+}
+@media (max-width:819px){.mo[data-chapter="portada"] .mo-chrome{color:var(--ivory)}}
+@media (min-width:1200px){.mo-bar nav{display:flex}}
+
+/* Hoja de confirmación */
+.mo-scrim{position:absolute;inset:0;z-index:30;background:#14141466;display:flex;justify-content:center;align-items:flex-end;animation:mFade .3s ease both}
+.mo-scrim-close{position:absolute !important;inset:0;cursor:default !important}
+.mo-sheet{position:relative;width:100%;height:94%;overflow-y:auto;background:var(--ivory);color:var(--ink);border-radius:22px 22px 0 0;padding:26px 26px 32px;animation:mSheet .5s var(--ease) both}
+.mo-sheet-head{display:flex;justify-content:space-between;align-items:center}
+.mo-close{width:40px;height:40px;border-radius:50% !important;border:1px solid #1414142E !important;font:300 18px var(--sans) !important}
+@media (min-width:820px){.mo-scrim{justify-content:flex-end}.mo-sheet{max-width:520px;height:100%;border-radius:0;animation-name:mSide}}
+.mo-switch{position:relative;flex:none;display:grid;grid-template-columns:1fr 1fr;width:128px;height:40px;border-radius:100px;border:1px solid #14141440;padding:3px}
+.mo-switch::before{content:'';position:absolute;top:3px;bottom:3px;left:3px;width:calc(50% - 3px);border-radius:100px;background:var(--ink);opacity:0;transition:transform .35s var(--ease),opacity .2s}
+.mo-switch.is-yes::before{opacity:1}
+.mo-switch.is-no::before{opacity:1;transform:translateX(100%)}
+.mo-switch button{position:relative;font:400 10px var(--sans) !important;letter-spacing:.2em !important;text-transform:uppercase !important;transition:color .3s}
+.mo-switch.is-yes button:first-child,.mo-switch.is-no button:last-child{color:var(--ivory)}
+.mo-field{display:block;margin-top:26px;font-size:10px;font-weight:400;letter-spacing:.28em;text-transform:uppercase}
+.mo-field textarea{display:block;margin-top:10px;width:100%;border:0;border-bottom:1px solid #14141466;background:transparent;padding:8px 0;font:italic 400 20px/1.4 var(--serif);color:inherit;resize:none;outline:none;text-transform:none;letter-spacing:0}
+.mo-field textarea:focus-visible{border-bottom-color:currentColor;outline:none}
+.mo-error{margin-top:16px !important;font-size:13px;color:#8A1C1C}
+.mo-thanks{padding-top:12cqh;animation:mRise .6s var(--ease) both}
+.mo-thanks>p:first-child{font:italic 400 104px/.9 var(--serif);letter-spacing:-.03em}
+
+:root{--p-bg:#F5F4F0;--p-surface:#FFFFFF;--p-ink:#141414;--p-muted:#6B6A66;--p-line:#14141426;--p-accent:#141414;--p-on-accent:#F5F4F0;--p-serif:'Instrument Serif',Georgia,serif;--p-sans:Jost,Helvetica,sans-serif;--m-bg:#141414;--m-fg:#F5F4F0;--m-border:#F5F4F055}
+@media (prefers-reduced-motion:reduce){.mo *,.mo *::before{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important}.mo-scroller{scroll-behavior:auto}}
+</style>
+<link rel="stylesheet" href="/demo/shared/panel.css">
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="ext" viewBox="0 0 12 12"><path d="M3 9 9 3M4 3h5v5" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></symbol></svg>
+
+<div class="mo" id="mo" data-chapter="portada">
+
+  <!-- Puertas -->
+  <div class="mo-env" id="env">
+    <div class="mo-door is-left"><div class="mo-door-face">
+      <div class="mo-env-top mo-kicker"><span>S — T</span><span>12.06.2027</span></div>
+      <div class="mo-env-head"><p class="mo-kicker">An invitation to an unforgettable day</p><p class="mo-env-mono">S<em>&amp;</em>T</p></div>
+      <div class="mo-env-name"><span>For the</span><span>Rodríguez Family</span></div>
+    </div></div>
+    <div class="mo-door is-right" aria-hidden="true"><div class="mo-door-face">
+      <div class="mo-env-top mo-kicker"><span>S — T</span><span>12.06.2027</span></div>
+      <div class="mo-env-head"><p class="mo-kicker">An invitation to an unforgettable day</p><p class="mo-env-mono">S<em>&amp;</em>T</p></div>
+      <div class="mo-env-name"><span>For the</span><span>Rodríguez Family</span></div>
+    </div></div>
+    <button type="button" class="mo-seal" id="seal" aria-label="Open the invitation"><span>&amp;</span></button>
+    <p class="mo-env-hint">Tap the seal to open your invitation</p>
+  </div>
+
+  <!-- Invitación -->
+  <div class="mo-guest" id="guest" hidden>
+    <div class="mo-side" aria-hidden="true">
+      <img src="/assets/fotos/beso.jpg" alt="" data-ch="0" class="is-on" style="object-position:center 60%">
+      <img src="/assets/fotos/muro.jpg" alt="" data-ch="1" loading="lazy" style="object-position:center 40%">
+      <img src="/assets/fotos/paseo.jpg" alt="" data-ch="2" loading="lazy" style="object-position:center 70%">
+      <img src="/assets/fotos/torre.jpg" alt="" data-ch="3" loading="lazy" style="object-position:center 70%">
+      <img src="/assets/fotos/beso.jpg" alt="" data-ch="4" loading="lazy" style="object-position:center 60%">
+      <img src="/assets/fotos/escalera.jpg" alt="" data-ch="5" loading="lazy" style="object-position:center 65%">
+      <img src="/assets/fotos/paseo.jpg" alt="" data-ch="6" loading="lazy" style="object-position:center 70%">
+      <div class="mo-side-cap" id="sideCap">Cover</div>
+    </div>
+    <div class="mo-main">
+      <div class="mo-bar mo-chrome">
+        <button type="button" class="mo-bar-brand" data-go="0" aria-label="Go to the cover">S<em>&amp;</em>T</button>
+        <nav aria-label="Chapters" id="chapNav"></nav>
+      </div>
+
+      <div class="mo-scroller mo-ns" id="scroller">
+        <section class="mo-ch mo-cover" aria-label="Cover">
+          <img class="mo-photo" src="/assets/fotos/beso.jpg" alt="Sofía and Tomás" style="object-position:center 55%">
+          <div class="mo-cover-copy">
+            <p class="mo-kicker">Saturday · June 12 · 2027</p>
+            <h1>Sofía<br><em>&amp; Tomás</em></h1>
+            <p class="mo-cover-intro">We’re getting married and want to celebrate with you, Rodríguez family.</p>
+            <button type="button" class="mo-discover" data-go="1"><span aria-hidden="true">↓</span> Discover</button>
+          </div>
+        </section>
+
+        <section class="mo-ch is-dark" aria-label="Countdown">
+          <p class="mo-kicker">Only</p>
+          <div class="mo-count">
+            <p class="mo-count-days"><span data-cd="d">—</span><span>days to go</span></p>
+            <div class="mo-count-grid" role="timer" aria-live="off">
+              <div><strong data-cd="h">—</strong><span>Hours</span></div>
+              <div><strong data-cd="m">—</strong><span>Minutes</span></div>
+              <div><strong data-cd="s">—</strong><span>Seconds</span></div>
+            </div>
+          </div>
+          <p class="mo-count-note">The countdown to celebrating together is on.</p>
+        </section>
+
+        <section class="mo-ch is-grow" aria-label="The day">
+          <p class="mo-kicker">El día</p>
+          <h2 class="mo-display" style="margin-top:18px">Saturday,<br><em>June 12</em></h2>
+          <div style="margin-top:auto;padding-top:32px">
+            <div class="mo-row"><span class="mo-row-time">4 p.m.</span><div><p class="mo-row-title">Ceremony</p><p class="mo-row-text">Ceremony venue<br>Ceremony address</p><a class="mo-underline" href="#">Getting there <svg class="mo-arrow" aria-hidden="true"><use href="#ext"/></svg></a></div></div>
+            <div class="mo-row"><span class="mo-row-key">Afterwards</span><div><p class="mo-row-title">Reception</p><p class="mo-row-text">Reception venue<br>Reception address</p><a class="mo-underline" href="#">Getting there <svg class="mo-arrow" aria-hidden="true"><use href="#ext"/></svg></a></div></div>
+            <div class="mo-dress" id="dress">
+              <button type="button" class="mo-row" aria-expanded="false" aria-controls="dressBody" id="dressBtn"><span class="mo-row-key">Note</span><span class="mo-row-title">Dress code</span><span class="mo-faq-plus" aria-hidden="true">+</span></button>
+              <div id="dressBody" class="mo-dress-body" hidden><p>Add your dress code recommendations for guests.</p><p class="mo-label" style="margin-top:16px;color:var(--muted)">Reserved colors</p><p>List any reserved colors and other attire tips.</p></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="mo-ch is-sand" aria-label="RSVP">
+          <p class="mo-kicker">RSVP</p>
+          <h2 class="mo-display" style="margin-top:18px" id="rsTitle">Will you join us?</h2>
+          <p class="mo-text" style="margin-top:18px;max-width:380px" id="rsText">We have saved 4 seats for you. Please reply for each guest before the RSVP deadline.</p>
+          <div style="margin-top:auto;padding-top:24px">
+            <div id="peopleList"></div>
+            <button type="button" class="mo-pill" style="margin-top:22px" id="rsOpen">RSVP</button>
+          </div>
+        </section>
+
+        <section class="mo-ch mo-story" aria-label="Story" data-gallery="mono">
+          <div class="mo-story-photo"><img class="mo-photo" src="/assets/fotos/torre.jpg" alt="Sofía and Tomás holding hands" loading="lazy" style="object-position:center 72%"></div>
+          <div class="mo-story-copy">
+            <p class="mo-kicker">Our story</p>
+            <h2>A story <em>written together.</em></h2>
+            <p class="mo-text" style="margin-top:16px;max-width:460px">Tell how the two of you met. Share your favorite memories together. Describe the new chapter you are about to begin.</p>
+            <div class="mo-thumbs mo-ns" aria-label="Photo gallery"><img src="/assets/fotos/beso.jpg" alt="Photo 1" loading="lazy"><img src="/assets/fotos/muro.jpg" alt="Photo 2" loading="lazy"><img src="/assets/fotos/escalera.jpg" alt="Photo 3" loading="lazy"><img src="/assets/fotos/paseo.jpg" alt="Photo 4" loading="lazy"><img src="/assets/fotos/torre.jpg" alt="Photo 5" loading="lazy"></div>
+          </div>
+        </section>
+
+        <section class="mo-ch is-tall" aria-label="FAQ">
+          <p class="mo-kicker">Questions</p>
+          <h2 class="mo-display" style="margin:18px 0 28px">The details</h2>
+          <div data-acc="faq">
+            <div class="mo-faq is-open"><button type="button" aria-expanded="true"><span><span class="mo-label" style="display:block;color:var(--muted)">Dress code</span><span class="mo-faq-q">Is there a dress code?</span></span><span class="mo-faq-plus" aria-hidden="true">+</span></button><p class="mo-faq-a">Add your dress code recommendations for guests.</p></div>
+            <div class="mo-faq"><button type="button" aria-expanded="false"><span><span class="mo-label" style="display:block;color:var(--muted)">Dress code</span><span class="mo-faq-q">Are any colors reserved?</span></span><span class="mo-faq-plus" aria-hidden="true">+</span></button><p class="mo-faq-a" hidden>List any reserved colors and other attire tips.</p></div>
+            <div class="mo-faq"><button type="button" aria-expanded="false"><span><span class="mo-label" style="display:block;color:var(--muted)">Children</span><span class="mo-faq-q">Children at the celebration</span></span><span class="mo-faq-plus" aria-hidden="true">+</span></button><p class="mo-faq-a" hidden>Let guests know whether children are invited.</p></div>
+            <div class="mo-faq"><button type="button" aria-expanded="false"><span><span class="mo-label" style="display:block;color:var(--muted)">Food</span><span class="mo-faq-q">Dietary restrictions</span></span><span class="mo-faq-plus" aria-hidden="true">+</span></button><p class="mo-faq-a" hidden>Add details about the menu and options for special dietary needs.</p></div>
+            <div class="mo-faq"><button type="button" aria-expanded="false"><span><span class="mo-label" style="display:block;color:var(--muted)">Gifts</span><span class="mo-faq-q">Is there a gift registry?</span></span><span class="mo-faq-plus" aria-hidden="true">+</span></button><p class="mo-faq-a" hidden>Your presence is our greatest gift. Add your preferences or registry details.</p></div>
+          </div>
+          <div style="border-top:1px solid var(--line)"></div>
+        </section>
+
+        <section class="mo-ch is-tall" aria-label="Travel">
+          <p class="mo-kicker">Travel</p>
+          <h2 class="mo-display" style="margin-top:18px">If you’re <em>traveling</em></h2>
+          <p class="mo-text" style="margin-top:18px;max-width:460px">Everything you need to get here, rest and explore the city while you’re in town.</p>
+          <div style="margin-top:40px">
+            <p class="mo-label" style="color:var(--muted);margin-bottom:6px">Where to stay</p>
+            <div class="mo-row"><span class="mo-row-key">Hotel</span><div><p class="mo-row-title">Hotel name</p><p class="mo-row-text">Add recommended places to stay and how to book.</p><p class="mo-row-text">Hotel address</p></div></div>
+            <div class="mo-row"><span class="mo-row-key">Code</span><div><p class="mo-row-title">Booking code</p><p class="mo-row-text">Explain how to use the booking code.</p></div></div>
+            <div class="mo-row" style="border-bottom:1px solid var(--line)"><span class="mo-row-key">Details</span>
+              <dl class="mo-details">
+                <div><dt>Standard room</dt><dd>Add standard room details.</dd></div>
+                <div><dt>Suite</dt><dd>Add suite details.</dd></div>
+                <div><dt>Check-in & check-out</dt><dd>Add check-in and check-out times.</dd></div>
+                <div><dt>Bookings</dt><dd>Add contact details for bookings.</dd></div>
+              </dl>
+            </div>
+          </div>
+          <div style="margin-top:48px">
+            <p class="mo-label" style="color:var(--muted)">City guide</p>
+            <h3 class="mo-serif" style="margin:10px 0 20px;font-size:34px;line-height:1.05">Sights & activities</h3>
+            <div data-acc="guide">
+              <div class="mo-faq is-open"><button type="button" aria-expanded="true"><span class="mo-faq-q" style="margin-top:0">Restaurants</span><span class="mo-faq-plus" aria-hidden="true">+</span></button><div class="mo-guide"><p class="mo-guide-note">Add local recommendations.</p><p class="n">Restaurant name</p><p class="d">Add a description.</p></div></div>
+              <div class="mo-faq"><button type="button" aria-expanded="false"><span class="mo-faq-q" style="margin-top:0">Museums & culture</span><span class="mo-faq-plus" aria-hidden="true">+</span></button><div class="mo-guide" hidden><p class="mo-guide-note">Add local recommendations.</p><p class="n">Cultural landmark</p><p class="d">Add a description.</p></div></div>
+              <div class="mo-faq"><button type="button" aria-expanded="false"><span class="mo-faq-q" style="margin-top:0">Things to do</span><span class="mo-faq-plus" aria-hidden="true">+</span></button><div class="mo-guide" hidden><p class="mo-guide-note">Add local recommendations.</p><p class="n">Local activity</p><p class="d">Add a description.</p></div></div>
+            </div>
+            <div style="border-top:1px solid var(--line)"></div>
+          </div>
+          <div class="mo-foot"><button type="button" id="showEnv">View invitation</button></div>
+        </section>
+      </div>
+
+      <div class="mo-ticks mo-chrome" id="ticks"></div>
+    </div>
+  </div>
+
+  <!-- Hoja de confirmación -->
+  <div class="mo-scrim" id="scrim" hidden>
+    <button type="button" class="mo-scrim-close" id="scrimClose" aria-label="Close" tabindex="-1"></button>
+    <div class="mo-sheet mo-ns" role="dialog" aria-modal="true" aria-labelledby="sheetTitle">
+      <div class="mo-sheet-head"><span class="mo-kicker" style="color:var(--muted)">RSVP</span><button type="button" class="mo-close" id="sheetClose" aria-label="Close">×</button></div>
+      <div id="sheetForm">
+        <h2 id="sheetTitle" class="mo-serif" style="margin-top:26px;font-size:46px;line-height:1;letter-spacing:-.02em">The Rodríguez <em>Family</em></h2>
+        <p class="mo-text" style="margin-top:12px;font-size:13px">4 seats reserved.</p>
+        <div style="margin-top:26px;display:flex;justify-content:space-between;align-items:baseline;gap:12px">
+          <span class="mo-kicker" style="letter-spacing:.28em">Who’s joining us?</span>
+          <button type="button" class="mo-kicker" id="allYes" style="letter-spacing:.2em;text-decoration:underline;text-underline-offset:5px;padding:4px 0">Everyone’s coming</button>
+        </div>
+        <div style="margin-top:10px" id="switches"></div>
+        <label class="mo-field" id="dietField" hidden>Dietary restrictions <span style="color:var(--muted)">· optional</span><textarea rows="2" maxlength="1000" placeholder="Tell us who each one is for…"></textarea></label>
+        <label class="mo-field">A note for us <span style="color:var(--muted)">· optional</span><textarea rows="3" maxlength="2000" placeholder="Leave us a few words…"></textarea></label>
+        <p role="alert" class="mo-error" id="sheetErr" hidden>Let us know whether each guest on the invitation can attend.</p>
+        <button type="button" class="mo-pill" style="margin-top:26px" id="sheetSend">Send reply</button>
+        <p style="margin-top:14px;font-size:11px;line-height:1.6;color:var(--muted);text-align:center">Preview: this reply is not saved.</p>
+      </div>
+      <div id="sheetThanks" class="mo-thanks" hidden>
+        <p>Thank you.</p>
+        <p class="mo-text" style="margin-top:22px;font-size:15px" id="thanksText"></p>
+        <div style="margin-top:28px" id="thanksList"></div>
+        <div style="margin-top:28px;display:flex;gap:10px;flex-wrap:wrap">
+          <button type="button" class="mo-pill" style="flex:1;min-width:140px;height:56px" id="thanksBack">Back</button>
+          <button type="button" class="mo-pill is-outline" style="flex:1;min-width:140px;height:56px" id="thanksEdit">Edit reply</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="demo-bar"><span class="lbl">Demo</span><button type="button" data-open-panel>Couple’s dashboard</button><a href="/en/#designs">Shop</a></div>
+
+<script src="/demo/shared/panel.js"></script>
+<script>
+LazoPanel.init({mono:'S&T',couple:'Sofía & Tomás',link:'/en/demo/moderno/',guest:'The Rodríguez Family',people:['Carlos Rodríguez','Lucía Pérez','Sofía Rodríguez','Mateo Rodríguez']});
+LazoMusic.init({src:'/assets/musica/demo.mp3'});
+</script>
+<script>
+(function(){
+  var CH=[['portada','Cover'],['cuenta-atras','Countdown'],['el-dia','The day'],['confirmacion','RSVP'],['historia','Story'],['preguntas','FAQ'],['viaje','Travel']];
+  var PEOPLE=['Carlos Rodríguez','Lucía Pérez','Sofía Rodríguez','Mateo Rodríguez'];
+  var mo=document.getElementById('mo'),env=document.getElementById('env'),guest=document.getElementById('guest'),scroller=document.getElementById('scroller');
+  var chapter=0,saved=null,draft=PEOPLE.map(function(){return null;}),timers=[];
+
+  // Navegación de capítulos
+  var nav=document.getElementById('chapNav'),ticks=document.getElementById('ticks');
+  CH.forEach(function(c,i){
+    if(i>0){var b=document.createElement('button');b.type='button';b.textContent=c[1];b.dataset.go=i;nav.appendChild(b);}
+    var t=document.createElement('button');t.type='button';t.setAttribute('aria-label',c[1]);t.dataset.go=i;t.appendChild(document.createElement('span'));ticks.appendChild(t);
+  });
+  function top(i){var el=scroller.children[i];return el?el.offsetTop:0;}
+  function go(i){scroller.scrollTo({top:top(i),behavior:'smooth'});}
+  mo.addEventListener('click',function(e){var b=e.target.closest('[data-go]');if(b)go(Number(b.dataset.go));});
+  function setChapter(i){chapter=i;mo.dataset.chapter=CH[i][0];document.getElementById('sideCap').textContent=CH[i][1];
+    document.querySelectorAll('.mo-side img').forEach(function(im){im.classList.toggle('is-on',Number(im.dataset.ch)===i);});
+    nav.querySelectorAll('button').forEach(function(b){b.setAttribute('aria-current',String(Number(b.dataset.go)===i));});
+    ticks.querySelectorAll('button').forEach(function(b){b.setAttribute('aria-current',String(Number(b.dataset.go)===i));});}
+  scroller.addEventListener('scroll',function(){var mid=scroller.scrollTop+scroller.clientHeight/2,i=0;
+    for(var j=0;j<scroller.children.length;j++)if(scroller.children[j].offsetTop<=mid)i=j;if(i!==chapter)setChapter(i);},{passive:true});
+  setChapter(0);
+
+  // Abrir y volver al sobre
+  document.getElementById('seal').addEventListener('click',function(){
+    if(env.classList.contains('is-busy'))return;
+    env.classList.add('is-busy');LazoMusic.play();
+    timers.push(setTimeout(function(){env.classList.add('is-open');guest.hidden=false;scroller.scrollTo({top:0,behavior:'instant'});setChapter(0);requestAnimationFrame(function(){scroller.scrollTo({top:0,behavior:'instant'});});},380));
+    timers.push(setTimeout(function(){env.hidden=true;env.classList.remove('is-busy','is-open');},1850));
+  });
+  document.getElementById('showEnv').addEventListener('click',function(){
+    timers.forEach(clearTimeout);timers=[];guest.hidden=true;env.hidden=false;env.classList.remove('is-busy','is-open');document.getElementById('seal').focus();
+  });
+
+  // Acordeones (uno abierto a la vez)
+  document.querySelectorAll('[data-acc]').forEach(function(acc){
+    acc.querySelectorAll(':scope > .mo-faq > button').forEach(function(btn){
+      btn.addEventListener('click',function(){var item=btn.parentNode,open=!item.classList.contains('is-open');
+        acc.querySelectorAll(':scope > .mo-faq').forEach(function(f){f.classList.remove('is-open');f.querySelector('button').setAttribute('aria-expanded','false');f.lastElementChild.hidden=true;});
+        if(open){item.classList.add('is-open');btn.setAttribute('aria-expanded','true');item.lastElementChild.hidden=false;}});
+    });
+  });
+  var dress=document.getElementById('dress'),dressBtn=document.getElementById('dressBtn');
+  dressBtn.addEventListener('click',function(){var o=!dress.classList.contains('is-open');dress.classList.toggle('is-open',o);dressBtn.setAttribute('aria-expanded',String(o));document.getElementById('dressBody').hidden=!o;});
+
+  // Cuenta regresiva
+  var T=Date.parse('2027-06-12T16:00:00-05:00'),cd={},p=function(n){return String(n).padStart(2,'0');};
+  document.querySelectorAll('[data-cd]').forEach(function(e){cd[e.dataset.cd]=e;});
+  function tick(){var s=Math.max(0,Math.floor((T-Date.now())/1000));cd.d.textContent=Math.floor(s/86400);cd.h.textContent=p(Math.floor(s/3600)%24);cd.m.textContent=p(Math.floor(s/60)%60);cd.s.textContent=p(s%60);}
+  tick();setInterval(tick,1000);
+
+  // Confirmación (demo: no se guarda)
+  function renderList(){var box=document.getElementById('peopleList');box.innerHTML='';
+    PEOPLE.forEach(function(n,i){var a=saved?saved[i]:null,row=document.createElement('div');row.className='mo-person';
+      var nm=document.createElement('span');nm.textContent=n;var st=document.createElement('span');st.className='mo-status';
+      var dot=document.createElement('span');dot.className='mo-dot'+(a?' is-yes':'');st.appendChild(dot);st.appendChild(document.createTextNode(a===null?'Pending':a?'Attending':'Not attending'));
+      row.appendChild(nm);row.appendChild(st);box.appendChild(row);});
+    var yes=saved?saved.filter(Boolean).length:0;
+    document.getElementById('rsTitle').textContent=!saved?'Will you join us?':yes?'See you soon.':'We’ll miss you.';
+    document.getElementById('rsText').textContent=saved?'We received your reply. You can change it any time before the RSVP deadline.':'We have saved 4 seats for you. Please reply for each guest before the RSVP deadline.';
+    document.getElementById('rsOpen').textContent=saved?'Edit reply':'RSVP';}
+  function renderSwitches(){var box=document.getElementById('switches');box.innerHTML='';
+    PEOPLE.forEach(function(n,i){var row=document.createElement('div');row.className='mo-person';
+      var nm=document.createElement('span');nm.id='seat'+i;nm.textContent=n;
+      var sw=document.createElement('div');sw.className='mo-switch'+(draft[i]===true?' is-yes':draft[i]===false?' is-no':'');sw.setAttribute('role','group');sw.setAttribute('aria-labelledby','seat'+i);
+      [['Yes',true],['No',false]].forEach(function(o){var b=document.createElement('button');b.type='button';b.textContent=o[0];b.setAttribute('aria-pressed',String(draft[i]===o[1]));
+        b.addEventListener('click',function(){draft[i]=o[1];document.getElementById('sheetErr').hidden=true;renderSwitches();});sw.appendChild(b);});
+      row.appendChild(nm);row.appendChild(sw);box.appendChild(row);});
+    document.getElementById('dietField').hidden=!draft.some(function(x){return x===true;});}
+  var scrim=document.getElementById('scrim');
+  function openSheet(){draft=saved?saved.slice():PEOPLE.map(function(){return null;});document.getElementById('sheetForm').hidden=!!saved;document.getElementById('sheetThanks').hidden=!saved;if(saved)renderThanks();renderSwitches();scrim.hidden=false;document.body.classList.add('sheet-open');document.getElementById('sheetClose').focus();}
+  function closeSheet(){scrim.hidden=true;document.body.classList.remove('sheet-open');document.getElementById('rsOpen').focus({preventScroll:true});}
+  function renderThanks(){var y=saved.filter(Boolean).length;document.getElementById('thanksText').textContent=y?'We can’t wait to celebrate with you. We have '+y+' '+(y===1?'guest':'guests')+' confirmed.':'Thank you for letting us know. You will be in our thoughts on our special day.';
+    var l=document.getElementById('thanksList');l.innerHTML='';PEOPLE.forEach(function(n,i){var r=document.createElement('div');r.className='mo-person';r.style.padding='12px 0';var a=document.createElement('span');a.style.fontSize='20px';a.textContent=n;var b=document.createElement('span');b.className='mo-status';b.textContent=saved[i]?'Attending':'Not attending';r.appendChild(a);r.appendChild(b);l.appendChild(r);});}
+  document.getElementById('rsOpen').addEventListener('click',openSheet);
+  document.getElementById('sheetClose').addEventListener('click',closeSheet);
+  document.getElementById('scrimClose').addEventListener('click',closeSheet);
+  document.getElementById('thanksBack').addEventListener('click',closeSheet);
+  document.getElementById('thanksEdit').addEventListener('click',function(){draft=saved.slice();document.getElementById('sheetThanks').hidden=true;document.getElementById('sheetForm').hidden=false;renderSwitches();});
+  document.getElementById('allYes').addEventListener('click',function(){draft=PEOPLE.map(function(){return true;});document.getElementById('sheetErr').hidden=true;renderSwitches();});
+  document.getElementById('sheetSend').addEventListener('click',function(){var b=this;
+    if(draft.some(function(x){return x===null;})){document.getElementById('sheetErr').hidden=false;return;}
+    b.disabled=true;b.textContent='Sending…';
+    setTimeout(function(){saved=draft.slice();LazoPanel.setResponse(saved,document.querySelector('#sheetForm textarea[maxlength="2000"]').value.trim());b.disabled=false;b.textContent='Send reply';renderList();renderThanks();document.getElementById('sheetForm').hidden=true;document.getElementById('sheetThanks').hidden=false;},600);});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&!scrim.hidden)closeSheet();});
+  renderList();
+})();
+</script>
+</body>
+</html>
