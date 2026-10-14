@@ -27,11 +27,21 @@ summary svg{transition:transform .2s ease;flex-shrink:0}
 .extra{font-family:inherit;text-align:left;cursor:pointer;display:flex;justify-content:space-between;align-items:flex-start;gap:12px;padding:16px 18px;min-height:44px;border-radius:14px;border:1px solid #DED7C8;background:#FFFFFF;color:#22201C;transition:background .15s ease,color .15s ease}
 .extra[aria-pressed="true"]{background:#1C1A17;color:#F5F2EA;border-color:#1C1A17}
 .extra:focus-visible,a:focus-visible,summary:focus-visible{outline:2px solid #6B5444;outline-offset:3px}
+.nav-toggle{display:none;align-items:center;justify-content:center;width:48px;height:48px;padding:0;border:1px solid #CFC6B4;border-radius:999px;background:transparent;color:#2B3A33;cursor:pointer}
+.nav-toggle .x{display:none}
+nav.open .nav-toggle .bars{display:none}
+nav.open .nav-toggle .x{display:block}
+@media (max-width: 900px){
+  .nav-toggle{display:flex}
+  .nav-links{display:none !important;width:100%;flex-direction:column;align-items:stretch !important;gap:0 !important;padding:8px 0 4px;font-size:17px !important}
+  nav.open .nav-links{display:flex !important}
+  .nav-links > a,.nav-links > span{padding:14px 2px !important;border-top:1px solid #DED7C8}
+  .nav-links > a:last-child{margin-top:14px;padding:16px 24px !important;text-align:center;border-top:0}
+}
 @media (max-width: 720px){
   h1{font-size:52px !important}
   h2{font-size:38px !important}
   section,footer{padding-top:64px !important;padding-bottom:64px !important}
-  nav > div{gap:14px !important;font-size:14px !important}
 }
 </style>
 </head>
@@ -44,7 +54,8 @@ summary svg{transition:transform .2s ease;flex-shrink:0}
 <span style="width: 40px; height: 40px; border-radius: 50%; border: 1px solid #2B3A33; display: flex; align-items: center; justify-content: center; font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 24px; line-height: 1">&amp;</span>
 <span style="font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 500; font-size: 34px; line-height: 1">lazo</span>
 </a>
-<div style="display: flex; flex-wrap: wrap; align-items: center; gap: 24px; font-size: 15px">
+<button type="button" class="nav-toggle" data-open="Open menu" data-close="Close menu" aria-expanded="false" aria-controls="nav-links" aria-label="Open menu"><svg class="bars" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg><svg class="x" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+<div id="nav-links" class="nav-links" style="display: flex; flex-wrap: wrap; align-items: center; gap: 24px; font-size: 15px">
 <a href="#designs" style="text-decoration: none; color: #22201C">Designs</a>
 <a href="#included" style="text-decoration: none; color: #22201C">What’s included</a>
 <a href="#pricing" style="text-decoration: none; color: #22201C">Pricing</a>
@@ -313,6 +324,15 @@ summary svg{transition:transform .2s ease;flex-shrink:0}
     out.textContent=n===0?'Invitation [Price] — no add-ons':(n===1?'Invitation [Price] + {n} add-on':'Invitation [Price] + {n} add-ons').replace('{n}',n);}
   btns.forEach(function(b){b.addEventListener('click',function(){
     b.setAttribute('aria-pressed',b.getAttribute('aria-pressed')==='true'?'false':'true');update();});});
+})();
+</script>
+<script>
+(function(){
+  var nav=document.querySelector('header nav'),btn=nav.querySelector('.nav-toggle');
+  function set(o){nav.classList.toggle('open',o);btn.setAttribute('aria-expanded',String(o));btn.setAttribute('aria-label',o?btn.dataset.close:btn.dataset.open);}
+  btn.addEventListener('click',function(){set(!nav.classList.contains('open'));});
+  nav.querySelectorAll('.nav-links a').forEach(function(a){a.addEventListener('click',function(){set(false);});});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&nav.classList.contains('open')){set(false);btn.focus();}});
 })();
 </script>
 </body>
