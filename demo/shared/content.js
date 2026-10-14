@@ -26,7 +26,7 @@
   var html = document.documentElement, TPL = html.getAttribute('data-lz-tpl');
 
   /* ---------- Colores de cada plantilla ----------
-     Clásico: paletas a partir de un color oscuro (o uno propio); Romántico: rosado (original) o champaña;
+     Clásico: paletas a partir de un color oscuro (o uno propio); Romántico: champaña (base) o rosado;
      Moderno: blanco y negro. La primera de cada lista es la original del diseño (sin variables). */
   var THEMES = {
     clasico: [
@@ -36,12 +36,8 @@
       { id: 'terracota', es: 'Terracota', en: 'Terracotta', sw: '#4A2B1F', dark: '#4A2B1F', accent: '#6A3D2A' }
     ],
     rosa: [
-      { id: 'rosado', es: 'Rosado', en: 'Blush', sw: '#EBD3D2' },
-      { id: 'champana', es: 'Champaña', en: 'Champagne', sw: '#E9DCC4', vars: {
-        'r-bg': '#F5EFE4', 'r-bg2': '#EEE5D4', 'r-card': '#FBF7EF', 'r-line': '#E3D6BF', 'r-on': '#F8F2E6', 'r-ink': '#3D352B', 'r-text': '#6E6354',
-        'r-muted': '#7F7361', 'r-field': '#D9CCB4', 'r-on2': '#E9E0CE', 'r-body': '#4E463A', 'r-row': '#E8DDC9', 'r-soft40': '#5E554840', 'r-soft': '#5E5548',
-        'r-shadow': '#6B5D4818', 'r-shade': '#6B5D48', 'r-liner1': '#F6EFE1', 'r-liner2': '#F5EEDF', 'r-liner3': '#EADDC5', 'r-liner4': '#F3EBDC',
-        'r-pat': '#BCA27E', 'r-pat2': '#D4C1A1', 'r-sh1': '#9C8C72', 'r-sh2': '#8E8371', 'r-sh3': '#6A5F4E' } }
+      { id: 'champana', es: 'Champaña', en: 'Champagne', sw: '#E9DCC4' },
+      { id: 'rosado', es: 'Rosado', en: 'Blush', sw: '#EBD3D2', vars: { 'r-bg': '#F6EBEC', 'r-bg2': '#F0E2E0', 'r-card': '#FBF4F3', 'r-line': '#E2CFC6', 'r-on': '#F7EEF0', 'r-ink': '#3E3236', 'r-text': '#6E5F64', 'r-muted': '#7D6A70', 'r-field': '#D9C5BE', 'r-on2': '#E8DADC', 'r-body': '#4E4247', 'r-row': '#E8D8D4', 'r-soft40': '#5E525740', 'r-soft': '#5E5257', 'r-shadow': '#6B515818', 'r-shade': '#6B5158', 'r-liner1': '#F8ECE8', 'r-liner2': '#F7EDEA', 'r-liner3': '#EBD6D5', 'r-liner4': '#F5E6EB', 'r-pat': '#B8978B', 'r-pat2': '#D3BBAF', 'r-sh1': '#9C7E80', 'r-sh2': '#8E7F84', 'r-sh3': '#6A5550' } }
     ],
     moderno: []
   };

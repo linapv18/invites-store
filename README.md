@@ -9,7 +9,7 @@ Sitio estático (HTML + CSS + un poco de JS), sin paso de build.
 - `/demo/clasico/` — demo del diseño clásico (sobre con carta)
 - `/demo/moderno/` — demo del diseño moderno, blanco y negro (puertas y capítulos)
 - `/demo/rosa/` — demo del diseño romántico (sobre lacrado)
-- Las demos tienen un selector de color en su barra (Clásico: salvia, rosa antiguo, azul noche, terracota; Romántico: rosado y champaña). También por enlace: `/demo/rosa/?color=champana`. Las paletas viven en `THEMES` de `demo/shared/content.js`
+- Las demos tienen un selector de color en su barra (Clásico: salvia, rosa antiguo, azul noche, terracota; Romántico: champaña, por defecto, y rosado). También por enlace: `/demo/rosa/?color=rosado`. Las paletas viven en `THEMES` de `demo/shared/content.js`
 - `/cuenta/` y `/en/cuenta/` — ingresar o crear cuenta y "Mis invitaciones" (los diseños comprados)
 - `/comprar/?diseno=<diseño>` y `/en/comprar/…` — compra de un diseño (cuenta + pago; hay un botón de compra de prueba)
 - `/editor/?diseno=<diseño>` y `/en/editor/…` — editor del diseño comprado, con la plantilla real en la vista previa y complementos con carrito. Pide sesión y que el diseño esté comprado. Atajos: `#<sección o complemento>` (p. ej. `#musica`) y `#complementos`

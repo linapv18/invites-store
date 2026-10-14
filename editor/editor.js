@@ -303,8 +303,8 @@
   };
   // Paletas de Romántico (los colores los aplica demo/shared/content.js; aquí solo el nombre y la muestra).
   var ROSA_PALETTES = [
-    { id: 'rosado', hex: '#EBD3D2', es: 'Rosado', en: 'Blush' },
-    { id: 'champana', hex: '#E9DCC4', es: 'Champaña', en: 'Champagne' }
+    { id: 'champana', hex: '#E9DCC4', es: 'Champaña', en: 'Champagne' },
+    { id: 'rosado', hex: '#EBD3D2', es: 'Rosado', en: 'Blush' }
   ];
   var PALETTES = [
     { id: 'salvia', hex: '#5F7360', es: 'Salvia', en: 'Sage' },
