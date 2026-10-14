@@ -83,6 +83,8 @@
       musicSrc: '¿Qué música suena?', srcLibrary: 'Biblioteca Lazo', srcUpload: 'Subir mi canción', libraryK: 'Canciones de la biblioteca', libraryMore: 'Pronto habrá más canciones libres de derechos para elegir.',
       musicUpload: 'Sube tu canción', musicReplace: 'Cambiar por otra canción', musicHint: 'MP3, hasta 15 MB', musicLocal: 'Por ahora la canción se guarda en este navegador.', musicDel: 'Quitar la canción',
       badMp3: 'El archivo debe ser un MP3.', mp3Big: 'La canción pesa más de 15 MB. Prueba con una versión más ligera.', mp3Fail: 'No se pudo guardar la canción en este navegador.',
+      shareK: 'Vista previa al compartir', shareHint: 'Lo que aparece al mandar el enlace por WhatsApp, Instagram o mensaje.',
+      shareSobre: 'Invitación cerrada', shareFoto: 'Una foto de ustedes', sharePick: '¿Cuál foto?', shareCover: 'Portada',
       envK: 'Textos del sobre', envIntro: 'Frase del sobre', envClosing: 'Despedida', envClosingPh: 'p. ej. Con todo nuestro cariño',
       envKeepHint: 'Si lo dejas vacío, se usa el texto del diseño.', envOptHint: 'Opcional: aparece bajo el nombre de cada familia.',
       photoBW: 'Fotos en blanco y negro', photoBWOn: 'Como en el diseño original.', photoBWOff: 'Las fotos se ven con sus colores originales.',
@@ -211,6 +213,8 @@
       musicSrc: 'What music plays?', srcLibrary: 'Lazo library', srcUpload: 'Upload my song', libraryK: 'Library songs', libraryMore: 'More royalty-free songs coming soon.',
       musicUpload: 'Upload your song', musicReplace: 'Replace with another song', musicHint: 'MP3, up to 15 MB', musicLocal: 'For now the song is stored in this browser.', musicDel: 'Remove the song',
       badMp3: 'The file must be an MP3.', mp3Big: 'The song is larger than 15 MB. Try a lighter version.', mp3Fail: 'Could not save the song in this browser.',
+      shareK: 'Link preview', shareHint: 'What people see when you send the link on WhatsApp, Instagram or by text.',
+      shareSobre: 'Closed invitation', shareFoto: 'A photo of you', sharePick: 'Which photo?', shareCover: 'Cover',
       envK: 'Envelope text', envIntro: 'Envelope line', envClosing: 'Sign-off', envClosingPh: 'e.g. With all our love',
       envKeepHint: 'Leave it empty to use the design’s text.', envOptHint: 'Optional: shown under each family’s name.',
       photoBW: 'Black-and-white photos', photoBWOn: 'As in the original design.', photoBWOff: 'Photos show their original colors.',
@@ -380,6 +384,7 @@
       rsvpDeadline: '', rsvpMsg: '', rsvpDiet: true, rsvpNote: true,
       polls: [{ id: 4, q: S.pollMain, opts: '' }, { id: 5, q: S.pollIdeas[0], opts: '' }], pollReveal: 'fiesta',
       capsuleDate: '', capsulePrompt: '', capsuleInRsvp: true,
+      shareMode: 'sobre', sharePhoto: 0,
       uid: 10
     };
   }
@@ -475,6 +480,35 @@
     if (st.mono === 'ring') return '<span class="seal-ring">' + i1 + i2 + '</span>';
     return '<span class="seal-amp">' + i1 + '<i>&amp;</i>' + i2 + '</span>';
   }
+  /* ---------- Vista previa al compartir (WhatsApp, Instagram…) ----------
+     Solo se guarda la elección. TODO: al publicar de verdad, el servidor debe poner esta imagen en og:image
+     (1200 × 630): una captura de la plantilla cerrada (/demo/<diseño>/?lz=vista) o la foto elegida. */
+  var sharePhotos = function () { return [state.cover].concat(state.gallery).filter(Boolean); };
+  var sharePhotoSrc = function () { var l = [state.cover].concat(state.gallery); return l[state.sharePhoto] || state.cover || state.gallery[0] || ''; };
+  function shareHTML() {
+    var foto = state.shareMode === 'foto', all = [state.cover].concat(state.gallery);
+    var img = foto ? '<img src="' + esc(sharePhotoSrc()) + '" alt="">'
+      : '<iframe id="edShareFrame" src="' + BASE + '/demo/' + state.design + '/?lz=vista&k=' + encodeURIComponent(KEY) + '" title="" tabindex="-1" aria-hidden="true" loading="lazy"></iframe>';
+    return '<div class="ed-stack ed-group"><h2 class="ed-sub">' + esc(S.shareK) + '</h2><span class="ed-hint" style="margin-top:-6px">' + esc(S.shareHint) + '</span>' +
+      '<div class="ed-seg" role="radiogroup" aria-label="' + esc(S.shareK) + '">' +
+        '<button type="button" role="radio" aria-checked="' + !foto + '" data-act="shareMode" data-id="sobre" data-fk="sh-sobre">' + esc(S.shareSobre) + '</button>' +
+        '<button type="button" role="radio" aria-checked="' + foto + '" data-act="shareMode" data-id="foto" data-fk="sh-foto">' + esc(S.shareFoto) + '</button></div>' +
+      (foto && sharePhotos().length ? '<div class="ed-stack"><span class="ed-label" id="lblShareP">' + esc(S.sharePick) + '</span><div class="ed-share-pick" role="radiogroup" aria-labelledby="lblShareP">' +
+        all.map(function (src, i) {
+          if (!src) return '';
+          var on = src === sharePhotoSrc() && (state.sharePhoto === i || !all[state.sharePhoto]);
+          return '<button type="button" role="radio" aria-checked="' + on + '" data-act="sharePhoto" data-i="' + i + '" data-fk="shp-' + i + '" aria-label="' + esc(i ? S.photoN(i) : S.shareCover) + '"><img src="' + esc(src) + '" alt=""></button>';
+        }).join('') + '</div></div>' : '') +
+      '<div class="ed-share" aria-hidden="true"><div class="ed-share-card"><div class="ed-share-img" id="edShareImg">' + img + '</div>' +
+        '<div class="ed-share-meta"><b>' + esc(couple(state)) + (state.date ? ' · ' + esc(longDate(state.date, true)) : '') + '</b>' +
+        (state.msg ? '<span>' + esc(state.msg) + '</span>' : '') + '<small>' + esc(location.host) + '</small></div></div></div></div>';
+  }
+  // La plantilla se dibuja a 1200 × 630 (tamaño de la imagen para compartir) y se reduce al ancho de la tarjeta.
+  function layoutShare() {
+    var box = $('#edShareImg'), f = $('#edShareFrame'); if (!box || !f) return;
+    f.style.transform = 'scale(' + (box.clientWidth / 1200) + ')';
+  }
+
   /* ---------- Lista de invitados desde CSV ---------- */
   function parseCSV(text) {
     text = String(text || '').replace(/^\uFEFF/, '');
@@ -788,7 +822,8 @@
           : field(S.sealText, 'sealText', { max: 8, hint: S.upTo8 })) +
         '<div class="ed-stack ed-group"><h2 class="ed-sub">' + esc(S.envK) + '</h2>' +
           field(S.envIntro, 'envIntro', { ph: ENV_TEXT[state.design][LANG][0], hint: S.envKeepHint }) +
-          field(S.envClosing, 'envClosing', { ph: ENV_TEXT[state.design][LANG][1] || S.envClosingPh, hint: ENV_TEXT[state.design][LANG][1] ? S.envKeepHint : S.envOptHint }) + '</div>';
+          field(S.envClosing, 'envClosing', { ph: ENV_TEXT[state.design][LANG][1] || S.envClosingPh, hint: ENV_TEXT[state.design][LANG][1] ? S.envKeepHint : S.envOptHint }) + '</div>' +
+        shareHTML();
     },
     historia: function () {
       var g = state.gallery;
@@ -1012,6 +1047,8 @@
   function renderMain() {
     var id = state.sec;
     main.innerHTML = '<div class="ed-sec">' + (SECTION_HTML[id] ? SECTION_HTML[id]() : addonPage(id)) + '</div>';
+    var sf = $('#edShareFrame');
+    if (sf) { layoutShare(); sf.addEventListener('load', function () { if (sf.contentWindow) sf.contentWindow.postMessage({ lz: 'content', content: state }, location.origin); }); }
   }
 
   /* ---------- Vista previa: la plantilla real del diseño, dentro de un iframe ----------
@@ -1020,7 +1057,10 @@
   var pvQueued = false, frameReady = false;
   var frameUrl = function (mode) { return BASE + '/demo/' + state.design + '/?lz=' + mode + '&k=' + encodeURIComponent(KEY) + (mode === 'editor' ? '&sec=' + encodeURIComponent(pvTarget()) : ''); };
   function pvTarget() { return state.sec === 'invitados' ? 'rsvp' : SECS.indexOf(state.sec) > -1 ? state.sec : ADDON_SPOT[state.sec]; }
-  function post(msg) { if (frameReady && frame.contentWindow) frame.contentWindow.postMessage(msg, location.origin); }
+  function post(msg) {
+    if (frameReady && frame.contentWindow) frame.contentWindow.postMessage(msg, location.origin);
+    var sf = msg.lz === 'content' && $('#edShareFrame'); if (sf && sf.contentWindow) sf.contentWindow.postMessage(msg, location.origin);
+  }
   function renderPreview(scroll) {
     post({ lz: 'content', content: state });
     if (scroll) post({ lz: 'goto', sec: pvTarget() });
@@ -1199,6 +1239,12 @@
     var left = files.length, got = [];
     files.forEach(function (x, i) { readImage(x, 1000, false, function (url) { got[i] = url; if (--left === 0) { state.gallery = state.gallery.concat(got.filter(Boolean)).slice(0, 12); changed(true); } }); });
   }
+  // Mueve una foto de la galería sin perder cuál se eligió para compartir (sharePhoto n = galería n-1).
+  function moveGallery(from, to) {
+    var idx = state.gallery.map(function (_, k) { return k; });
+    moveItem(state.gallery, from, to); moveItem(idx, from, to);
+    if (state.sharePhoto > 0) state.sharePhoto = idx.indexOf(state.sharePhoto - 1) + 1;
+  }
   function moveItem(list, from, to) { if (to < 0 || to >= list.length) return; var x = list.splice(from, 1)[0]; list.splice(to, 0, x); }
 
   /* ---------- Eventos ---------- */
@@ -1250,7 +1296,7 @@
     e.preventDefault();
     if (ui.dragIdx != null) {
       var to = z.classList.contains('ed-thumb') ? +z.getAttribute('data-gi') : state.gallery.length - 1;
-      moveItem(state.gallery, ui.dragIdx, to); ui.dragIdx = null; changed(true); return;
+      moveGallery(ui.dragIdx, to); ui.dragIdx = null; changed(true); return;
     }
     z.classList.remove('over');
     if (z.hasAttribute('data-drop')) handleFiles(z.getAttribute('data-drop'), e.dataTransfer.files);
@@ -1301,6 +1347,8 @@
         break;
       case 'pal': state.pal = id; changed(true); break;
       case 'sealMode': state.sealMode = id; changed(true); break;
+      case 'shareMode': state.shareMode = id; changed(true); break;
+      case 'sharePhoto': state.sharePhoto = i; changed(true); break;
       case 'mono': state.mono = id; changed(true); break;
       case 'mono-del': state.monoImg = ''; if (state.mono === 'custom') state.mono = 'amp'; changed(true); var mf = $('[data-fk="mono-amp"]'); if (mf) mf.focus(); break;
       case 'toggle': var k = b.getAttribute('data-k'); state[k] = !state[k]; changed(true); break;
@@ -1344,8 +1392,8 @@
       case 'poll-del': state.polls.splice(i, 1); changed(true); focusAfterDelete('[data-list="polls"][data-f="q"]', i, '[data-fk="poll-add"]'); break;
       case 'pollReveal': state.pollReveal = id; changed(true); break;
       case 'faq-del': state.faqs.splice(i, 1); changed(true); focusAfterDelete('[data-list="faqs"][data-f="q"]', i, '[data-fk="faq-add"]'); break;
-      case 'gal-move': moveItem(state.gallery, i, i + d); changed(true); var nb = $('.ed-thumb[data-gi="' + (i + d) + '"] [data-act="gal-move"][data-d="' + d + '"]'); if (nb && !nb.disabled) nb.focus(); else { nb = $('.ed-thumb[data-gi="' + (i + d) + '"] [data-act="gal-del"]'); if (nb) nb.focus(); } break;
-      case 'gal-del': state.gallery.splice(i, 1); changed(true); var g = $$('.ed-thumb [data-act="gal-del"]'); (g[Math.min(i, g.length - 1)] || $('[data-file="gallery"]') || main).focus(); break;
+      case 'gal-move': moveGallery(i, i + d); changed(true); var nb = $('.ed-thumb[data-gi="' + (i + d) + '"] [data-act="gal-move"][data-d="' + d + '"]'); if (nb && !nb.disabled) nb.focus(); else { nb = $('.ed-thumb[data-gi="' + (i + d) + '"] [data-act="gal-del"]'); if (nb) nb.focus(); } break;
+      case 'gal-del': if (state.sharePhoto === i + 1) state.sharePhoto = 0; else if (state.sharePhoto > i + 1) state.sharePhoto--; state.gallery.splice(i, 1); changed(true); var g = $$('.ed-thumb [data-act="gal-del"]'); (g[Math.min(i, g.length - 1)] || $('[data-file="gallery"]') || main).focus(); break;
       case 'musicSource': stopSample(); state.musicSource = id; changed(true); break;
       case 'track':
         var tr = MUSIC_LIBRARY.filter(function (x) { return x.id === id; })[0];
@@ -1384,6 +1432,7 @@
   frame.addEventListener('load', function () { frameReady = true; renderPreview(true); });
   frame.src = frameUrl('editor');
   window.addEventListener('resize', layoutFrame);
+  window.addEventListener('resize', layoutShare);
   $('#edPhone').addEventListener('transitionend', layoutFrame); // el marco anima su ancho al cambiar de dispositivo
   renderChrome(); renderNav(); renderMain();
   if (ui.drawer) openDrawer($('.ed-cartbtn'));
