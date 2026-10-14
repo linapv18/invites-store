@@ -522,3 +522,19 @@ a.ed-btn[aria-disabled="true"]{opacity:.4;pointer-events:none}
 .ed-check input{width:18px;height:18px;margin:0;accent-color:var(--ink)}
 .ed-map{width:100%;height:200px;border:0;border-radius:10px;background:var(--sand)}
 .ed-maphint{color:var(--gold)}
+
+/* Música: biblioteca y MP3 propio */
+.ed-track{display:flex;align-items:center;gap:12px;padding:10px 12px 10px 6px;border-radius:14px;border:1px solid var(--line);background:var(--paper)}
+.ed-track.on{border-color:var(--ink);background:#F1EFE6}
+.ed-track-pick{flex:1 1 auto;min-width:0;display:flex;align-items:center;gap:12px;padding:6px 8px;border:0;background:none;text-align:left;border-radius:10px}
+.ed-track-pick>span{display:flex;flex-direction:column;min-width:0}
+.ed-track-pick b{font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ed-track-pick small{font-size:12px;color:var(--mute)}
+/* Paleta: color propio */
+.ed-pal-custom{cursor:pointer;position:relative}
+.ed-pal-custom.is-on{border:2px solid var(--ink);padding:0 13px 0 9px}
+.ed-pal-custom input{width:22px;height:22px;padding:0;border:0;border-radius:50%;background:none;cursor:pointer}
+.ed-pal-custom input::-webkit-color-swatch-wrapper{padding:0}
+.ed-pal-custom input::-webkit-color-swatch{border:1px solid rgba(0,0,0,.15);border-radius:50%}
+.ed-pal-custom input::-moz-color-swatch{border:1px solid rgba(0,0,0,.15);border-radius:50%}
+.ed-sec>.ed-drop{flex:none;min-height:110px}

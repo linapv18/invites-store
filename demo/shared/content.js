@@ -82,6 +82,37 @@
     return '<span class="lz-seal">' + i1 + '<i>&amp;</i>' + i2 + '</span>';
   }
   var PALETTES = { rosa: ['#4A2F2E', '#6B4442'], azul: ['#26304A', '#34405A'], terracota: ['#4A2B1F', '#6A3D2A'] };
+  // Color propio (selector de color): se oscurece si hace falta para que el texto claro se lea.
+  function hexRgb(h) { var m = /^#?([0-9a-f]{6})$/i.exec(h || ''); if (!m) return null; var n = parseInt(m[1], 16); return [n >> 16 & 255, n >> 8 & 255, n & 255]; }
+  function lum(c) { return [0, 1, 2].reduce(function (sum, i) { var x = c[i] / 255; x = x <= 0.03928 ? x / 12.92 : Math.pow((x + 0.055) / 1.055, 2.4); return sum + x * [0.2126, 0.7152, 0.0722][i]; }, 0); }
+  var mix = function (c, t, a) { return c.map(function (x, i) { return Math.round(x + (t[i] - x) * a); }); };
+  var toHex = function (c) { return '#' + c.map(function (x) { return ('0' + x.toString(16)).slice(-2); }).join(''); };
+  function customPalette(hex) {
+    var c = hexRgb(hex); if (!c) return null;
+    for (var i = 0; i < 25 && lum(c) > 0.12; i++) c = mix(c, [0, 0, 0], 0.15);
+    return [toHex(c), toHex(mix(c, [255, 255, 255], 0.12))];
+  }
+  /* Música: canción de la biblioteca (ruta) o MP3 subido, que el editor guarda en IndexedDB ('lazo-media'). */
+  function readFile(key) {
+    return new Promise(function (ok) {
+      try {
+        var r = indexedDB.open('lazo-media', 1);
+        r.onupgradeneeded = function () { r.result.createObjectStore('files'); };
+        r.onsuccess = function () { try { var g = r.result.transaction('files').objectStore('files').get(key); g.onsuccess = function () { ok(g.result || null); }; g.onerror = function () { ok(null); }; } catch (e) { ok(null); } };
+        r.onerror = function () { ok(null); };
+      } catch (e) { ok(null); }
+    });
+  }
+  var musicKey = '', musicUrl = '';
+  function applyMusic(c) {
+    var M = window.LazoMusic; if (!M || !M.setSrc) return;
+    var k = [c.musicOn, c.musicSource, c.musicTrackSrc, c.musicFileName, c.musicFileSize].join('|');
+    if (k === musicKey) return; musicKey = k;
+    if (c.musicOn === false) return;
+    if (c.musicSource === 'upload' && c.musicFileName) {
+      readFile(KEY + ':music').then(function (blob) { if (!blob) return; if (musicUrl) URL.revokeObjectURL(musicUrl); musicUrl = URL.createObjectURL(blob); M.setSrc(musicUrl); });
+    } else if (c.musicTrackSrc) M.setSrc(c.musicTrackSrc);
+  }
 
   function photos(c) { var l = []; if (has(c.cover)) l.push(c.cover); (c.gallery || []).forEach(function (g) { if (has(g)) l.push(g); }); return l; }
   function setText(el, v) {
@@ -184,6 +215,7 @@
       renderList(box, rows);
     });
     var pal = PALETTES[c0.pal];
+    if (c0.pal === 'custom') pal = customPalette(c0.palCustom);
     if (html.getAttribute('data-lz-palette') !== null) {
       html.style.setProperty('--dark', pal ? pal[0] : '');
       html.style.setProperty('--accent', pal ? pal[1] : '');
@@ -192,6 +224,7 @@
     var d = dateObj(c0.date);
     if (d) { var m = /^(\d{1,2}):(\d{2})$/.exec(cdEv && cdEv.time || ''); if (m) d.setHours(+m[1], +m[2]); window.LZ_T = d.getTime(); }
     if (window.LazoMusic && c0.musicOn === false) { window.LazoMusic.play = function () {}; var mb = document.querySelector('.lz-music'); if (mb) mb.classList.add('lz-off'); }
+    applyMusic(c0);
   }
 
   /* Navegación desde el editor: cada plantilla define window.LzTemplate = { open(), envelope(), scroll(el) }. */

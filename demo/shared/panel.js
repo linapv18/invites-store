@@ -374,6 +374,8 @@
       if (!audio) return;
       audio.play().then(function () { available = true; btn.hidden = false; sync(); }).catch(function () { if (available) btn.hidden = false; });
     },
+    // Cambia la canción (la que eligieron en el editor: de la biblioteca o un MP3 subido).
+    setSrc: function (src) { if (!audio || !src || audio.src === src) return; var was = !audio.paused; audio.src = src; available = true; if (was) audio.play().catch(function () {}); },
     suspend: function () { if (!audio) return false; var was = !audio.paused; audio.pause(); return was; },
     resume: function () { if (audio) audio.play().catch(function () {}); }
   };

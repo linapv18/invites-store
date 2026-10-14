@@ -79,7 +79,11 @@
       faqCount: function (n) { return n + ' de 7 preguntas'; }, faqFull: 'Llegaste al máximo. Elimina una para añadir otra.', noFaq: 'Aún no hay preguntas.',
       pollK: 'Complemento · Encuestas', pollT: 'Y para las preguntas divertidas: ¿quién llorará más?',
       musicOn: 'Música al abrir la invitación', musicOnHint: 'Suena cuando el invitado toca el sello.', musicOffHint: 'Sin música: la invitación se abre en silencio.',
-      song: 'Canción', songPh: 'Título y artista', songHint: 'Escribe el título y el artista de su canción.',
+      song: 'Nombre de la canción (opcional)', songPh: 'Título y artista', songHint: 'Para saber qué está sonando.',
+      musicSrc: '¿Qué música suena?', srcLibrary: 'Biblioteca Lazo', srcUpload: 'Subir mi canción', libraryK: 'Canciones de la biblioteca', libraryMore: 'Pronto habrá más canciones libres de derechos para elegir.',
+      musicUpload: 'Sube tu canción', musicReplace: 'Cambiar por otra canción', musicHint: 'MP3, hasta 15 MB', musicLocal: 'Por ahora la canción se guarda en este navegador.', musicDel: 'Quitar la canción',
+      badMp3: 'El archivo debe ser un MP3.', mp3Big: 'La canción pesa más de 15 MB. Prueba con una versión más ligera.', mp3Fail: 'No se pudo guardar la canción en este navegador.',
+      palCustom: 'Personalizado', palCustomLbl: 'Elegir un color', palLight: 'Es un color claro: en la invitación lo oscurecemos un poco para que el texto se lea bien.',
       sample: 'Música de ejemplo', sampleHint: 'Así suena la música de fondo en las demos.', play: 'Escuchar', pause: 'Pausar',
       playlistK: 'Complemento · Playlist colaborativa', playlistT: 'Deja que tus invitados armen la playlist de la fiesta.',
       viajeShow: 'Mostrar esta sección en mi invitación', viajeOnHint: 'Visible para todos tus invitados.', viajeOffHint: 'Oculta: no aparecerá en tu invitación.',
@@ -189,7 +193,11 @@
       faqCount: function (n) { return n + ' of 7 questions'; }, faqFull: 'You reached the limit. Delete one to add another.', noFaq: 'No questions yet.',
       pollK: 'Add-on · Polls', pollT: 'And for the fun questions: who will cry the most?',
       musicOn: 'Music when the invitation opens', musicOnHint: 'Plays when the guest taps the seal.', musicOffHint: 'No music: the invitation opens in silence.',
-      song: 'Song', songPh: 'Title and artist', songHint: 'Write the title and artist of your song.',
+      song: 'Song name (optional)', songPh: 'Title and artist', songHint: 'So people know what’s playing.',
+      musicSrc: 'What music plays?', srcLibrary: 'Lazo library', srcUpload: 'Upload my song', libraryK: 'Library songs', libraryMore: 'More royalty-free songs coming soon.',
+      musicUpload: 'Upload your song', musicReplace: 'Replace with another song', musicHint: 'MP3, up to 15 MB', musicLocal: 'For now the song is stored in this browser.', musicDel: 'Remove the song',
+      badMp3: 'The file must be an MP3.', mp3Big: 'The song is larger than 15 MB. Try a lighter version.', mp3Fail: 'Could not save the song in this browser.',
+      palCustom: 'Custom', palCustomLbl: 'Pick a color', palLight: 'It’s a light color: in the invitation we darken it a bit so text stays readable.',
       sample: 'Sample music', sampleHint: 'This is how background music sounds in the demos.', play: 'Listen', pause: 'Pause',
       playlistK: 'Add-on · Collaborative playlist', playlistT: 'Let your guests build the party playlist.',
       viajeShow: 'Show this section in my invitation', viajeOnHint: 'Visible to all your guests.', viajeOffHint: 'Hidden: it won’t appear in your invitation.',
@@ -281,6 +289,10 @@
     es: ['Ceremonia civil', 'Ceremonia religiosa', 'Cóctel', 'Recepción', 'Tornaboda', 'Brunch del día siguiente', 'Otro evento'],
     en: ['Civil ceremony', 'Religious ceremony', 'Cocktail hour', 'Reception', 'After-party', 'Next-day brunch', 'Other event']
   }[LANG];
+  // Biblioteca de música libre de derechos. Para añadir una canción: subir el MP3 a /assets/musica/ y agregar una línea.
+  var MUSIC_LIBRARY = [
+    { id: 'demo', src: '/assets/musica/demo.mp3', es: 'Canción de ejemplo', en: 'Sample song', credit: 'paulyudin · Pixabay' }
+  ];
   var PALETTES = [
     { id: 'salvia', hex: '#5F7360', es: 'Salvia', en: 'Sage' },
     { id: 'rosa', hex: '#9A5F5C', es: 'Rosa antiguo', en: 'Dusty rose' },
@@ -310,7 +322,8 @@
       faqs: es
         ? [{ id: 1, q: '¿Cuál es el código de vestimenta?', a: 'Formal. Evita el blanco, por favor.' }, { id: 2, q: '¿Pueden ir niños?', a: '' }, { id: 3, q: '¿Hay mesa de regalos?', a: '' }]
         : [{ id: 1, q: 'What is the dress code?', a: 'Formal. Please avoid white.' }, { id: 2, q: 'Are kids welcome?', a: '' }, { id: 3, q: 'Is there a gift registry?', a: '' }],
-      musicOn: true, song: '',
+      musicOn: true, song: '', musicSource: 'library', musicTrack: 'demo', musicTrackSrc: '/assets/musica/demo.mp3', musicFileName: '', musicFileSize: 0,
+      palCustom: '#8A4F5C',
       // Todos los diseños reciben y muestran estos mismos campos (ver demo/shared/content.js).
       countdownId: 1, countdownNote: '', quote: '', quoteAuthor: '', dressCode: '', dressNotes: '', dressColors: '',
       viajeOn: true, travelIntro: '', hotel: '', hotelAddress: '', hotelCode: '', hotelLink: '', hotelNotes: '',
@@ -413,6 +426,24 @@
     if (st.mono === 'ring') return '<span class="seal-ring">' + i1 + i2 + '</span>';
     return '<span class="seal-amp">' + i1 + '<i>&amp;</i>' + i2 + '</span>';
   }
+  /* ---------- Archivos grandes (el MP3) en IndexedDB: no caben en localStorage ---------- */
+  function mediaDB() {
+    return new Promise(function (ok, ko) {
+      try { var r = indexedDB.open('lazo-media', 1); r.onupgradeneeded = function () { r.result.createObjectStore('files'); }; r.onsuccess = function () { ok(r.result); }; r.onerror = function () { ko(r.error); }; } catch (e) { ko(e); }
+    });
+  }
+  function mediaDo(mode, fn) {
+    return mediaDB().then(function (db) { return new Promise(function (ok) { var tx = db.transaction('files', mode), req = fn(tx.objectStore('files')); tx.oncomplete = function () { ok(req && req.result !== undefined ? req.result : true); }; tx.onerror = tx.onabort = function () { ok(null); }; }); }).catch(function () { return null; });
+  }
+  var mediaPut = function (k, blob) { return mediaDo('readwrite', function (st) { return st.put(blob, k); }); };
+  var mediaGet = function (k) { return mediaDo('readonly', function (st) { return st.get(k); }); };
+  var mediaDel = function (k) { return mediaDo('readwrite', function (st) { return st.delete(k); }); };
+  // Un color muy claro no deja leer el texto claro de la plantilla (ver customPalette en demo/shared/content.js).
+  function isLight(hex) {
+    var m = /^#?([0-9a-f]{6})$/i.exec(hex || ''); if (!m) return false; var n = parseInt(m[1], 16), c = [n >> 16 & 255, n >> 8 & 255, n & 255];
+    return [0, 1, 2].reduce(function (sum, i) { var x = c[i] / 255; x = x <= 0.03928 ? x / 12.92 : Math.pow((x + 0.055) / 1.055, 2.4); return sum + x * [0.2126, 0.7152, 0.0722][i]; }, 0) > 0.12;
+  }
+
   /* ---------- Imágenes ---------- */
   // Si una foto no carga (servidor caído, archivo borrado…), se muestra el patrón de relleno en lugar del icono roto.
   var BROKEN = 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40"><rect width="40" height="40" fill="#E6E1D4"/><path d="M-10 10 10-10M0 40 40 0M30 50 50 30" stroke="#D6D0C1" stroke-width="8"/></svg>');
@@ -486,7 +517,7 @@
       case 'historia': return t(s.story);
       case 'itinerario': return s.events.length > 0 && s.events.every(function (e) { return t(e.name) && t(e.time) && (t(e.place) || t(e.address)); });
       case 'faq': return s.faqs.length > 0 && s.faqs.every(function (f) { return t(f.q) && t(f.a); });
-      case 'musica': return !s.musicOn || t(s.song);
+      case 'musica': return !s.musicOn || (s.musicSource === 'upload' ? t(s.musicFileName) : t(s.musicTrackSrc));
       case 'viaje': return !s.viajeOn || t(s.hotel);
       case 'rsvp': return t(s.rsvpDeadline);
     }
@@ -601,8 +632,8 @@
       '<button type="button" class="ed-switch" role="switch" aria-checked="' + !!state[k] + '" aria-labelledby="sw-' + k + '" data-act="toggle" data-k="' + k + '" data-fk="sw-' + k + '"></button></div>';
   }
   function dropzone(kind, title, hint, multiple, cls) {
-    var accept = kind === 'mono' ? 'image/svg+xml,image/png' : 'image/jpeg,image/png,image/webp';
-    return '<label class="ed-drop' + (cls ? ' ' + cls : '') + '" data-drop="' + kind + '" style="position:relative">' + svg(kind === 'gallery' ? P.plus : P.upload, 20, 1.6) + '<b>' + esc(title) + '</b>' + (hint ? '<small>' + esc(hint) + '</small>' : '') +
+    var accept = kind === 'mono' ? 'image/svg+xml,image/png' : kind === 'music' ? 'audio/mpeg,.mp3' : 'image/jpeg,image/png,image/webp';
+    return '<label class="ed-drop' + (cls ? ' ' + cls : '') + '" data-drop="' + kind + '" style="position:relative">' + svg(kind === 'gallery' ? P.plus : kind === 'music' ? P.music : P.upload, 20, 1.6) + '<b>' + esc(title) + '</b>' + (hint ? '<small>' + esc(hint) + '</small>' : '') +
       '<input type="file" accept="' + accept + '" data-file="' + kind + '"' + (multiple ? ' multiple' : '') + '></label>';
   }
   function upsell(o) {
@@ -624,7 +655,8 @@
         (state.design !== 'clasico' ? '<div class="ed-info"><div><b>' + esc(S.palette) + '</b><span>' + esc(S.palFixed(design()[0])) + '</span></div></div>' :
         '<div class="ed-stack"><span class="ed-label" id="lblPal">' + esc(S.palette) + '</span><div class="ed-palettes" role="radiogroup" aria-labelledby="lblPal">' +
           PALETTES.map(function (p) { return '<button type="button" class="ed-pal" role="radio" aria-checked="' + (p.id === state.pal) + '" data-act="pal" data-id="' + p.id + '" data-fk="pal-' + p.id + '"><i style="background:' + p.hex + '"></i>' + esc(p[LANG]) + '</button>'; }).join('') +
-        '</div></div>') +
+          '<label class="ed-pal ed-pal-custom' + (state.pal === 'custom' ? ' is-on' : '') + '"><input type="color" data-k="palCustom" value="' + esc(state.palCustom) + '" aria-label="' + esc(S.palCustomLbl) + '"><span>' + esc(S.palCustom) + '</span></label>' +
+        '</div><span class="ed-hint" id="palNote"' + (state.pal === 'custom' && isLight(state.palCustom) ? '' : ' hidden') + '>' + esc(S.palLight) + '</span></div>') +
         cartUpsell('dominio', { light: true, k: S.domainK, t: esc(S.domainT(slug(state))) });
     },
     apertura: function () {
@@ -696,12 +728,30 @@
         addonUpsell('encuestas', { k: S.pollK, t: esc(S.pollT) });
     },
     musica: function () {
-      var playing = ui.audio && !ui.audio.paused;
-      return head('musica') + toggleRow('musicOn', S.musicOn, S.musicOnHint, S.musicOffHint) +
-        (state.musicOn ? field(S.song, 'song', { ph: S.songPh, hint: S.songHint }) : '') +
-        '<div class="ed-audio">' + svg(P.music, 22, 1.6) + '<div><b>' + esc(S.sample) + '</b><span>' + esc(S.sampleHint) + '</span></div>' +
-        '<button type="button" class="ed-btn ed-btn-sm" data-act="sample" data-fk="sample" aria-pressed="' + !!playing + '">' + svg(playing ? P.pause : P.play, 14, 2) + esc(playing ? S.pause : S.play) + '</button></div>' +
-        addonUpsell('playlist', { light: true, k: S.playlistK, t: esc(S.playlistT) });
+      var h = head('musica') + toggleRow('musicOn', S.musicOn, S.musicOnHint, S.musicOffHint);
+      if (state.musicOn) {
+        var up = state.musicSource === 'upload';
+        var playBtn = function (id) {
+          var on = ui.playing === id && ui.audio && !ui.audio.paused;
+          return '<button type="button" class="ed-btn ed-btn-sm" data-act="music-play" data-id="' + id + '" data-fk="mp-' + id + '" aria-pressed="' + !!on + '">' + svg(on ? P.pause : P.play, 14, 2) + esc(on ? S.pause : S.play) + '</button>';
+        };
+        h += '<div class="ed-stack"><span class="ed-label" id="lblSrc">' + esc(S.musicSrc) + '</span><div class="ed-seg" role="radiogroup" aria-labelledby="lblSrc">' +
+          [['library', S.srcLibrary], ['upload', S.srcUpload]].map(function (o) { return '<button type="button" role="radio" aria-checked="' + ((o[0] === 'upload') === up) + '" data-act="musicSource" data-id="' + o[0] + '" data-fk="ms-' + o[0] + '">' + esc(o[1]) + '</button>'; }).join('') + '</div></div>';
+        if (!up) {
+          h += '<div class="ed-stack" role="radiogroup" aria-label="' + esc(S.libraryK) + '">' + MUSIC_LIBRARY.map(function (t) {
+            var on = state.musicTrack === t.id;
+            return '<div class="ed-track' + (on ? ' on' : '') + '"><button type="button" class="ed-track-pick" role="radio" aria-checked="' + on + '" data-act="track" data-id="' + t.id + '" data-fk="tr-' + t.id + '">' + svg(P.music, 18, 1.6) + '<span><b>' + esc(t[LANG]) + '</b><small>' + esc(t.credit) + '</small></span></button>' + playBtn('lib:' + t.id) + '</div>';
+          }).join('') + '</div><p class="ed-hint" style="margin:0">' + esc(S.libraryMore) + '</p>';
+        } else {
+          h += (state.musicFileName
+            ? '<div class="ed-track on"><div class="ed-track-pick">' + svg(P.music, 18, 1.6) + '<span><b>' + esc(state.musicFileName) + '</b><small>' + (state.musicFileSize / 1048576).toFixed(1) + ' MB</small></span></div>' + playBtn('upload') +
+              '<button type="button" class="ed-del" data-act="music-del" aria-label="' + esc(S.musicDel) + '">' + svg(P.trash, 18, 1.7) + '</button></div>' + dropzone('music', S.musicReplace, S.musicHint)
+            : dropzone('music', S.musicUpload, S.musicHint)) +
+            '<p class="ed-hint" style="margin:0">' + esc(S.musicLocal) + '</p>';
+        }
+        h += field(S.song, 'song', { ph: S.songPh, hint: S.songHint });
+      }
+      return h + addonUpsell('playlist', { light: true, k: S.playlistK, t: esc(S.playlistT) });
     },
     viaje: function () {
       return head('viaje') + toggleRow('viajeOn', S.viajeShow, S.viajeOnHint, S.viajeOffHint) +
@@ -955,13 +1005,26 @@
     cart = next; saveCart(cart); if (msg) toast(msg);
     keepFocus(function () { renderChrome(); renderNav(); if (ADDON_IDS.indexOf(state.sec) > -1 || ['portada', 'historia'].indexOf(state.sec) > -1) renderMain(); renderDrawer(); });
   }
-  function stopSample() { if (ui.audio) { ui.audio.pause(); ui.audio = null; } }
+  function stopSample() { if (ui.audio) { ui.audio.pause(); ui.audio = null; } ui.playing = null; }
 
   /* ---------- Archivos ---------- */
   var OK_IMG = /^image\/(jpeg|png|webp)$/;
   function handleFiles(kind, files) {
     files = Array.prototype.slice.call(files || []);
     if (!files.length) return;
+    if (kind === 'music') {
+      var mp3 = files[0];
+      if (!(mp3.type === 'audio/mpeg' || mp3.type === 'audio/mp3' || /\.mp3$/i.test(mp3.name))) { toast(S.badMp3); return; }
+      if (mp3.size > 15 * 1048576) { toast(S.mp3Big); return; }
+      stopSample();
+      mediaPut(KEY + ':music', mp3).then(function (ok) {
+        if (!ok) { toast(S.mp3Fail); return; }
+        state.musicFileName = mp3.name; state.musicFileSize = mp3.size; state.musicSource = 'upload';
+        if (!String(state.song || '').trim()) state.song = mp3.name.replace(/\.mp3$/i, '').replace(/[_-]+/g, ' ');
+        changed(true);
+      });
+      return;
+    }
     if (kind === 'mono') {
       var f = files[0];
       if (!/^image\/(svg\+xml|png)$/.test(f.type)) { toast(S.badMono); return; }
@@ -981,6 +1044,12 @@
   root.addEventListener('input', function (e) {
     var t = e.target;
     if (t.type === 'file') return;
+    if (t.getAttribute('data-k') === 'palCustom') {
+      state.palCustom = t.value; state.pal = 'custom'; changed(false);
+      $$('.ed-pal[role="radio"]').forEach(function (b) { b.setAttribute('aria-checked', 'false'); });
+      t.parentNode.classList.add('is-on'); var pn = $('#palNote'); if (pn) pn.hidden = !isLight(t.value);
+      return;
+    }
     if (t.hasAttribute('data-k') && /^(INPUT|TEXTAREA)$/.test(t.tagName)) { state[t.getAttribute('data-k')] = t.value; changed(false); }
     else if (t.hasAttribute('data-list')) { var it = state[t.getAttribute('data-list')][+t.getAttribute('data-i')]; if (it) { it[t.getAttribute('data-f')] = t.value; changed(false); } }
     else return;
@@ -1095,10 +1164,25 @@
       case 'faq-del': state.faqs.splice(i, 1); changed(true); focusAfterDelete('[data-list="faqs"][data-f="q"]', i, '[data-fk="faq-add"]'); break;
       case 'gal-move': moveItem(state.gallery, i, i + d); changed(true); var nb = $('.ed-thumb[data-gi="' + (i + d) + '"] [data-act="gal-move"][data-d="' + d + '"]'); if (nb && !nb.disabled) nb.focus(); else { nb = $('.ed-thumb[data-gi="' + (i + d) + '"] [data-act="gal-del"]'); if (nb) nb.focus(); } break;
       case 'gal-del': state.gallery.splice(i, 1); changed(true); var g = $$('.ed-thumb [data-act="gal-del"]'); (g[Math.min(i, g.length - 1)] || $('[data-file="gallery"]') || main).focus(); break;
-      case 'sample':
-        if (ui.audio && !ui.audio.paused) stopSample();
-        else { try { ui.audio = new Audio('/assets/musica/demo.mp3'); ui.audio.addEventListener('ended', function () { ui.audio = null; keepFocus(renderMain); }); ui.audio.play().catch(function () { ui.audio = null; }); } catch (x) { ui.audio = null; } }
+      case 'musicSource': stopSample(); state.musicSource = id; changed(true); break;
+      case 'track':
+        var tr = MUSIC_LIBRARY.filter(function (x) { return x.id === id; })[0];
+        if (tr) { state.musicTrack = tr.id; state.musicTrackSrc = tr.src; state.musicSource = 'library'; changed(true); }
+        break;
+      case 'music-play':
+        var same = ui.playing === id && ui.audio && !ui.audio.paused;
+        stopSample();
+        if (!same) {
+          var start = function (src) { try { ui.audio = new Audio(src); ui.playing = id; ui.audio.addEventListener('ended', function () { stopSample(); keepFocus(renderMain); }); ui.audio.play().catch(function () { stopSample(); keepFocus(renderMain); }); } catch (x) { stopSample(); } keepFocus(renderMain); };
+          if (id === 'upload') mediaGet(KEY + ':music').then(function (blob) { if (blob) { if (ui.blobUrl) URL.revokeObjectURL(ui.blobUrl); ui.blobUrl = URL.createObjectURL(blob); start(ui.blobUrl); } });
+          else { var lt = MUSIC_LIBRARY.filter(function (x) { return 'lib:' + x.id === id; })[0]; if (lt) start(lt.src); }
+        }
         keepFocus(renderMain); break;
+      case 'music-del':
+        stopSample(); mediaDel(KEY + ':music');
+        state.musicFileName = ''; state.musicFileSize = 0; changed(true);
+        var dz = $('[data-file="music"]'); if (dz) dz.focus();
+        break;
     }
   });
   function focusAfterDelete(sel, i, fallback) { var l = $$(sel); var el = l[Math.min(i, l.length - 1)] || $(fallback); if (el) el.focus(); }

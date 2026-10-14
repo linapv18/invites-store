@@ -33,3 +33,4 @@ Compartido por las demos:
 - `demo/shared/panel.js` + `panel.css` — panel de los novios (vista previa), música de fondo y barra de demo
 - `assets/fotos/` — fotos de stock (Pexels) usadas en las demos
 - `assets/musica/demo.mp3` — música libre de derechos (Pixabay, paulyudin)
+- Biblioteca de música del editor: lista `MUSIC_LIBRARY` en `editor/editor.js`. Para sumar canciones libres de derechos, subir el MP3 a `assets/musica/` y agregar una línea. Los MP3 que suben los novios se guardan por ahora en IndexedDB del navegador (`lazo-media`)
