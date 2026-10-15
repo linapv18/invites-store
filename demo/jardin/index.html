@@ -21,7 +21,7 @@
   --sh1:1px 1px 2px color-mix(in srgb,var(--ink) 16%,transparent);--sh2:4px 16px 28px -18px color-mix(in srgb,var(--ink) 55%,transparent);
   /* Grano y moteado: mosaicos que empalman (stitchTiles) a intensidad baja; se alinean a la página para no cortar entre secciones */
   --grain:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncR type='linear' slope='.2' intercept='.86'/%3E%3CfeFuncG type='linear' slope='.2' intercept='.86'/%3E%3CfeFuncB type='linear' slope='.2' intercept='.86'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
-  --mottle:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='520' height='520'%3E%3Cfilter id='n' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.008' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncR type='linear' slope='.26' intercept='.83'/%3E%3CfeFuncG type='linear' slope='.26' intercept='.83'/%3E%3CfeFuncB type='linear' slope='.26' intercept='.83'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='520' height='520' filter='url(%23n)'/%3E%3C/svg%3E");
+  --mottle:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='520' height='520'%3E%3Cfilter id='n' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.008' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncR type='linear' slope='.17' intercept='.875'/%3E%3CfeFuncG type='linear' slope='.17' intercept='.875'/%3E%3CfeFuncB type='linear' slope='.17' intercept='.875'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='520' height='520' filter='url(%23n)'/%3E%3C/svg%3E");
   --torn:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='16' viewBox='0 0 300 16' preserveAspectRatio='none'%3E%3Cpath d='M0 16V9l9-3 8 4 11-6 9 3 12-5 8 6 13-4 10 5 12-6 11 4 9-3 13 5 10-4 12 3 9-6 12 5 11-3 10 4 13-5 9 6 12-4 10 3 11-5 9 4 12-3 6 4 10-4 9 5 10-3V16Z'/%3E%3C/svg%3E");
   --vine:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='60'%3E%3Cpath d='M10 0C2 15 18 30 10 45S2 60 10 60' fill='none' stroke='%23000' stroke-width='1.1'/%3E%3Cpath d='M10 14c6-4 9-2 10 0-4 3-7 2-10 0ZM10 42c-6-4-9-2-10 0 4 3 7 2 10 0Z' fill='%23000' fill-opacity='.5'/%3E%3C/svg%3E");
   /* Panel de los novios y música (demo/shared/panel.css) */
@@ -75,11 +75,11 @@ h1:focus:not(:focus-visible){outline:0}
 .opening.gone.now{transition:none}
 .opening>p.intro{position:relative;z-index:1;font-size:12px;font-weight:500;letter-spacing:.24em;text-transform:uppercase;color:var(--leaf-ink);text-align:center;max-width:32ch;line-height:1.6;transition:opacity .5s}
 .opening.done>p.intro{opacity:0}
-.packet{position:relative;z-index:2;width:236px;height:362px;flex:none;perspective:900px;rotate:-2deg;transition:transform 1s cubic-bezier(.4,0,.2,1)}
+.packet{position:relative;z-index:2;width:236px;height:362px;flex:none;perspective:900px;rotate:-2deg;transition:transform .9s cubic-bezier(.4,0,.2,1)}
 .packet::after{content:"";position:absolute;z-index:0;left:4%;right:-4%;bottom:-20px;height:34px;background:radial-gradient(ellipse at 56% 40%,#3a2a1555,transparent 70%);filter:blur(7px);pointer-events:none;transition:opacity .6s}
 .out.packet::after{opacity:0}
 .pk-back{position:absolute;inset:0;border-radius:3px;z-index:1;background-color:color-mix(in srgb,var(--kraft2),#000 8%);background-image:var(--fibers),var(--grain);background-blend-mode:normal,multiply;transition:transform .9s,opacity .7s}
-.seedcard{position:absolute;left:10px;right:10px;top:8px;height:346px;z-index:2;filter:drop-shadow(3px 8px 10px #3a2a1530);transition:transform 1.1s cubic-bezier(.22,1,.36,1)}
+.seedcard{position:absolute;left:10px;right:10px;top:8px;height:346px;z-index:2;filter:drop-shadow(3px 8px 10px #3a2a1530);transition:transform 1.05s cubic-bezier(.22,1,.36,1)}
 .seedcard>div{height:100%;padding:16px 14px 14px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
 .seedcard svg{flex:none}
 .seedcard .eb{font-size:11px;letter-spacing:.2em}
@@ -238,7 +238,7 @@ h3.fit.wrap{white-space:normal;text-wrap:balance;line-height:1.05}
 .tagc b,.infoc b{font-weight:500}
 .tagc .eb{color:#5E4524}
 .tagc .btn{margin-top:14px}
-.demo-state{margin-top:14px;padding:10px 14px;border:1px dashed #5E452488;border-radius:6px;font-size:14px !important;line-height:1.5 !important;color:#4A361C}
+.demo-state{margin-top:12px;font:italic 400 16px/1.4 'Cormorant Garamond',serif !important;color:#4A361C;opacity:.85}
 .lz-vista .demo-state,.btn:not([hidden])+.demo-state{display:none}
 .infos{display:grid;gap:18px}
 .infoc{padding:24px 22px;border-radius:6px;background:var(--surface);box-shadow:inset 0 0 0 1px var(--line),var(--sh1)}
@@ -310,6 +310,23 @@ textarea:focus-visible{outline:2px solid var(--accent-ink);outline-offset:1px;bo
 .rs-extra b{font-weight:500}
 .rs-actions{display:flex;flex-direction:column;align-items:center;gap:10px;margin-top:22px}
 .sec .rs-saved{font-size:13px;color:var(--leaf-ink)}
+.lz-content .rs-saved,.lz-content .hero-demo{display:none}
+.opt{white-space:normal;text-align:center;line-height:1.15}
+.is-icons .opt{font-size:20px}.is-icons .opt .ic{display:inline}
+.db-sel{display:block;margin:14px 0 10px;font:500 11px Jost,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--leaf-ink)}
+.db-sel select{display:block;width:100%;height:44px;margin-top:6px;padding:0 12px;border:1px solid var(--line2);border-radius:12px;background:var(--surface);color:var(--ink);font:400 15px Jost,sans-serif;letter-spacing:0;text-transform:none}
+.hero-demo{margin-top:26px}
+/* Rama de acuarela en WebP (exploración): capas de pigmento teñidas con la paleta; crece desde la base */
+.wc{display:none;position:relative;aspect-ratio:1;clip-path:circle(0% at 8% 94%);transition:clip-path 1.6s cubic-bezier(.3,.7,.3,1)}
+.wc.in{clip-path:circle(142% at 8% 94%)}
+.wc i{position:absolute;inset:0;-webkit-mask:var(--m) center/contain no-repeat;mask:var(--m) center/contain no-repeat;mix-blend-mode:multiply}
+.wc .l-soft{background:var(--soft);--m:url(/assets/jardin/jardin-rama-soft.webp)}
+.wc .l-leaf{background:var(--leaf);--m:url(/assets/jardin/jardin-rama-leaf.webp)}
+.wc .l-bloom{background:var(--bloom);--m:url(/assets/jardin/jardin-rama-bloom.webp)}
+.wc .l-eye{background:#B9862A;--m:url(/assets/jardin/jardin-rama-eye.webp)}
+html.art-webp .wc{display:block}html.art-webp .deco>.sv{display:none}
+.db-btn[aria-pressed=true]{background:var(--ink) !important;color:var(--paper) !important;border-color:var(--ink) !important}
+.hero-demo .pill{font-size:14px;min-height:44px;background:transparent}
 .meadow{height:150px;margin:34px -24px -68px;pointer-events:none}
 @media (max-width:360px){.sec{padding-left:16px;padding-right:16px}.ncard>.rs-card{padding-left:16px;padding-right:16px}.meadow{margin-left:-16px;margin-right:-16px}.ncard>div{padding-left:18px;padding-right:18px}}
 
@@ -341,7 +358,13 @@ footer a:focus-visible{outline-color:var(--paper)}
 .db-btn:hover{border-color:var(--ink) !important;opacity:1 !important}
 .lz-music{height:46px}
 #demoBar{transition:translate .3s,opacity .3s}
-body.tools-away #demoBar:not(:focus-within):not(:has(.db-sheet:not([hidden]))){translate:0 90px;opacity:0;pointer-events:none}
+#demoBar,.lz-music{transition:translate .3s,opacity .3s,visibility 0s}
+body.in-hero #demoBar:not(:has(.db-sheet:not([hidden]))),body.tools-hide #demoBar:not(:focus-within):not(:has(.db-sheet:not([hidden]))),body.typing #demoBar{translate:0 90px;opacity:0;visibility:hidden;pointer-events:none;transition:translate .3s,opacity .3s,visibility 0s .3s}
+body.music-hide .lz-music:not(:focus-visible),body.typing .lz-music{opacity:0;visibility:hidden;pointer-events:none;transition:opacity .3s,visibility 0s .3s}
+body.typing .qnav{opacity:0;visibility:hidden}
+/* En la portada la música se aparta arriba a la derecha (solo el ícono), lejos de nombres y mensaje */
+body.in-hero .lz-music{top:max(12px,env(safe-area-inset-top));bottom:auto;padding:0 15px}
+body.in-hero .lz-music .txt{display:none}
 .cd .when span,.cd .when b{white-space:nowrap}
 .cd .when,.tag4 b{font-variant-numeric:lining-nums tabular-nums}
 
@@ -360,7 +383,7 @@ body.tools-away #demoBar:not(:focus-within):not(:has(.db-sheet:not([hidden]))){t
 .lz-swipe{margin:6px 0 0;font-size:13px;color:var(--p-muted);text-align:right}
 
 /* ---------- Movimiento ---------- */
-[data-rv]{opacity:0;transform:translateY(26px);transition:opacity .9s ease,transform 1s cubic-bezier(.22,1,.36,1)}
+[data-rv]{opacity:0;transform:translateY(14px);transition:opacity .4s ease-out,transform .45s cubic-bezier(.22,1,.36,1)}
 [data-rv=left]{transform:translateX(-50px) rotate(-6deg)}
 [data-rv=right]{transform:translateX(50px) rotate(6deg)}
 [data-rv=stamp]{transform:scale(2.2) rotate(-25deg);transition:opacity .25s,transform .5s cubic-bezier(.5,1.7,.6,1)}
@@ -373,6 +396,8 @@ body.tools-away #demoBar:not(:focus-within):not(:has(.db-sheet:not([hidden]))){t
 .grow.in .lf{animation:gPop .8s var(--d,0s) cubic-bezier(.3,1.6,.5,1) forwards}
 .grow.in .bl{animation:gBloom 1.2s var(--d,0s) cubic-bezier(.3,1.45,.5,1) forwards}
 .grow.in .pl{animation:gSway 5s ease-in-out var(--sd,0s) infinite alternate}
+/* El ramo de la tarjeta florece al ritmo de la tarjeta: termina cuando ella se asienta */
+.seedcard .grow.in .st,.seedcard .grow.in .lf,.seedcard .grow.in .bl{animation-delay:calc(var(--d,0s) * .45);animation-duration:.6s}
 @keyframes gDraw{to{stroke-dashoffset:0}}
 @keyframes gPop{to{transform:scale(1)}}
 @keyframes gBloom{0%{transform:scale(0) rotate(-70deg)}100%{transform:scale(1) rotate(0)}}
@@ -420,19 +445,20 @@ body.tools-away #demoBar:not(:focus-within):not(:has(.db-sheet:not([hidden]))){t
       dress: 'Código de vestimenta', dressCode: 'Formal', dressNotes: 'Telas frescas: en marzo Oaxaca es cálida de día y fresca de noche.', avoid: 'Evita', dressColors: 'blanco y marfil',
       fromAway: 'Si vienen de fuera', travel: 'Viaje y <span class="script">alojamiento</span>', travelIntro: 'Si vienen de fuera, aquí tienen todo para organizar su viaje.',
       stay: 'Alojamiento', hotel: 'Hotel Casa Antigua', hotelAddress: 'Calle Macedonio Alcalá 304, Centro', rate: 'Código de tarifa:', hotelCode: 'BODA-AL', hotelNotes: 'Tarifa válida hasta el 1 de febrero.', book: 'Reservar en el hotel ↗',
-      bookDemo: 'Demo: aquí aparece el botón de reserva con el enlace del hotel que agreguen los novios en el editor.',
+      bookDemo: 'Enlace de reserva pendiente · demo',
       getThere: 'Cómo llegar', getThereT: 'Aeropuerto y transporte', airportL: 'Aeropuerto:', airport: 'Aeropuerto Internacional de Oaxaca (OAX), a 20 minutos del centro.', transportL: 'Transporte:', transport: 'Habrá camionetas del hotel a la fiesta y de regreso.',
       guide: 'Guía de la ciudad', guideT: 'Qué hacer', foodL: 'Restaurantes:', food: 'Levadura de Olla, Casa Oaxaca y los mercados.', cultureL: 'Cultura:', culture: 'Santo Domingo y el Museo Textil.', plansL: 'Actividades:', plans: 'Hierve el Agua y Monte Albán.',
       quote: 'Nos fuimos sembrando el uno al otro sin darnos cuenta. Ahora queremos verlo florecer con ustedes.', quoteAuthor: 'Ana y León',
       faqK: 'Todo lo que necesitas saber', faqT: 'Preguntas <span class="script">frecuentes</span>',
-      faqs: [['¿Cuál es el código de vestimenta?', 'Formal. Por favor eviten el blanco y el marfil, que son para la novia.'], ['¿Pueden ir niños?', 'Nuestra celebración es solo para adultos.'], ['¿Hay mesa de regalos?', 'Su compañía es nuestro mejor regalo. Si desean tener un detalle, los novios pondrán aquí el enlace o los datos de su mesa de regalos. (Demo: este dato se completa en el editor.)']],
+      faqs: [['¿Cuál es el código de vestimenta?', 'Formal. Por favor eviten el blanco y el marfil, que son para la novia.'], ['¿Pueden ir niños?', 'Nuestra celebración es solo para adultos.'], ['¿Hay mesa de regalos?', 'Su compañía es nuestro mejor regalo. Si desean tener un detalle, aquí compartiremos nuestra mesa de regalos (pendiente en esta demo).']],
       rsvpDatePat: '{d} de {M} de {Y}', rsvpDate: '14 de marzo de 2027', rsvpT: 'Nos encantará<br><span class="script" style="font-size:1.2em">celebrar con ustedes</span>', seatsRes: '4 cupos reservados',
       rsvpMsg: 'Marca para cada persona si podrá acompañarnos.', deadlineK: 'Responde antes del', deadline: '14 de febrero de 2027',
       diet: 'Restricciones alimentarias (opcional)', note: 'Un mensaje para nosotros (opcional)', save: 'Guardar confirmación',
       errOne: function (n) { return 'Elige si ' + n + ' asistirá o no.'; },
       errSum: function (k) { return k === 1 ? 'Falta la respuesta de 1 persona.' : 'Faltan las respuestas de ' + k + ' personas.'; },
       yes: 'Asistirá', no: 'No asistirá', yesShort: 'Asiste', noShort: 'No asiste', change: 'Cambiar', changeOf: 'Cambiar la respuesta de', dietK: 'Restricciones:', noteK: 'Mensaje:',
-      thanks: '¡Gracias!', edit: 'Editar respuesta', saved: 'Respuesta guardada en este dispositivo. Pueden cambiarla hasta la fecha límite.',
+      thanks: '¡Gracias!', edit: 'Editar respuesta', saved: 'Demostración: esta respuesta no se envía y se reinicia al recargar.', rsvpK: 'Respuestas del RSVP', art: 'Ramas en acuarela (prueba)',
+      rsvpStyles: { texto: { n: 'Asistirá / No asistirá', yes: 'Asistirá', no: 'No asistirá', yesShort: 'Asiste', noShort: 'No asiste' }, sino: { n: 'Sí / No', yes: 'Sí', no: 'No', yesShort: 'Sí', noShort: 'No' }, voy: { n: 'Voy / No voy', yes: 'Voy', no: 'No voy', yesShort: 'Va', noShort: 'No va' }, elegante: { n: 'Elegante', yes: 'Con gusto asistirá', no: 'Lamenta no asistir', yesShort: 'Con gusto', noShort: 'Lo lamenta' }, iconos: { n: 'Íconos', yes: '✓', no: '✕', yesShort: 'Asiste', noShort: 'No asiste' } },
       will: function (y, n) { return y === n ? '¡Asistirán las ' + n + ' personas! Nos vemos pronto.' : y ? 'Asistirán ' + y + ' de ' + n + ' personas. ¡Nos vemos pronto!' : 'Gracias por avisarnos. Los extrañaremos.'; },
       qnav: 'Accesos rápidos', qSchedule: 'Itinerario', qRsvp: 'Confirmar',
       fnav: 'Enlaces de la invitación', fSchedule: 'Itinerario', fMap: 'Ubicación ↗', fRsvp: 'Confirmar asistencia',
@@ -452,19 +478,20 @@ body.tools-away #demoBar:not(:focus-within):not(:has(.db-sheet:not([hidden]))){t
       dress: 'Dress code', dressCode: 'Formal', dressNotes: 'Light fabrics: in March Oaxaca is warm by day and cool at night.', avoid: 'Avoid', dressColors: 'white and ivory',
       fromAway: 'If you’re traveling', travel: 'Travel and <span class="script">stay</span>', travelIntro: 'If you’re coming from out of town, here’s everything to plan your trip.',
       stay: 'Where to stay', hotel: 'Hotel Casa Antigua', hotelAddress: 'Calle Macedonio Alcalá 304, Centro', rate: 'Rate code:', hotelCode: 'BODA-AL', hotelNotes: 'Rate valid until February 1.', book: 'Book the hotel ↗',
-      bookDemo: 'Demo: the booking button appears here with the hotel link the couple adds in the editor.',
+      bookDemo: 'Booking link pending · demo',
       getThere: 'Getting there', getThereT: 'Airport and transport', airportL: 'Airport:', airport: 'Oaxaca International Airport (OAX), 20 minutes from downtown.', transportL: 'Transport:', transport: 'Shuttles will run from the hotel to the party and back.',
       guide: 'City guide', guideT: 'Things to do', foodL: 'Restaurants:', food: 'Levadura de Olla, Casa Oaxaca and the markets.', cultureL: 'Culture:', culture: 'Santo Domingo and the Textile Museum.', plansL: 'Activities:', plans: 'Hierve el Agua and Monte Albán.',
       quote: 'We were planting each other without realizing it. Now we want to watch it bloom with you.', quoteAuthor: 'Anna and Leo',
       faqK: 'Everything you need to know', faqT: 'Frequently asked <span class="script">questions</span>',
-      faqs: [['What is the dress code?', 'Formal. Please avoid white and ivory, they’re for the bride.'], ['Are kids welcome?', 'Our celebration is adults only.'], ['Is there a gift registry?', 'Your presence is our best gift. If you’d like to give something, the couple will add their registry link or details here. (Demo: this is filled in from the editor.)']],
+      faqs: [['What is the dress code?', 'Formal. Please avoid white and ivory, they’re for the bride.'], ['Are kids welcome?', 'Our celebration is adults only.'], ['Is there a gift registry?', 'Your presence is our best gift. If you’d like to give something, we’ll share our registry here (pending in this demo).']],
       rsvpDatePat: '{Mc} {d}, {Y}', rsvpDate: 'March 14, 2027', rsvpT: 'We’d love to<br><span class="script" style="font-size:1.2em">celebrate with you</span>', seatsRes: '4 seats reserved',
       rsvpMsg: 'Let us know, for each person, whether they can join us.', deadlineK: 'Please reply by', deadline: 'February 14, 2027',
       diet: 'Dietary restrictions (optional)', note: 'A message for us (optional)', save: 'Save RSVP',
       errOne: function (n) { return 'Choose whether ' + n + ' will attend.'; },
       errSum: function (k) { return k === 1 ? '1 person still needs an answer.' : k + ' people still need an answer.'; },
       yes: 'Will attend', no: 'Won’t attend', yesShort: 'Attending', noShort: 'Not attending', change: 'Change', changeOf: 'Change the answer for', dietK: 'Restrictions:', noteK: 'Message:',
-      thanks: 'Thank you!', edit: 'Edit answer', saved: 'Answer saved on this device. You can change it until the deadline.',
+      thanks: 'Thank you!', edit: 'Edit answer', saved: 'Demo: this answer isn’t sent and resets when you reload.', rsvpK: 'RSVP answers', art: 'Watercolor sprigs (test)',
+      rsvpStyles: { texto: { n: 'Will attend / Won’t attend', yes: 'Will attend', no: 'Won’t attend', yesShort: 'Attending', noShort: 'Not attending' }, sino: { n: 'Yes / No', yes: 'Yes', no: 'No', yesShort: 'Yes', noShort: 'No' }, voy: { n: 'Going / Not going', yes: 'Going', no: 'Not going', yesShort: 'Going', noShort: 'Not going' }, elegante: { n: 'Formal', yes: 'Joyfully accepts', no: 'Regretfully declines', yesShort: 'Accepts', noShort: 'Declines' }, iconos: { n: 'Icons', yes: '✓', no: '✕', yesShort: 'Attending', noShort: 'Not attending' } },
       will: function (y, n) { return y === n ? 'All ' + n + ' people will attend! See you soon.' : y ? y + ' of ' + n + ' people will attend. See you soon!' : 'Thanks for letting us know. We’ll miss you.'; },
       qnav: 'Quick links', qSchedule: 'Schedule', qRsvp: 'RSVP',
       fnav: 'Invitation links', fSchedule: 'Schedule', fMap: 'Location ↗', fRsvp: 'RSVP',
@@ -533,6 +560,10 @@ body.tools-away #demoBar:not(:focus-within):not(:has(.db-sheet:not([hidden]))){t
     }
     return '<svg class="grow" viewBox="0 0 ' + w + ' ' + h + '" preserveAspectRatio="xMidYMax slice" aria-hidden="true"><g filter="url(#wc)">' + s + '</g></svg>';
   }
+  // Exploración de dirección artística: rama de acuarela horneada en capas WebP (máscaras de pigmento teñidas con la paleta).
+  // Solo se ve con ?acuarela=webp o desde «Explorar demo»; el SVG sigue siendo la versión por defecto.
+  var wcSprig = function (w, rot, flip) { return '<div class="wc grow" aria-hidden="true" style="width:' + w + 'px;transform:rotate(' + rot + 'deg) scaleX(' + (flip || 1) + ')"><i class="l-soft"></i><i class="l-leaf"></i><i class="l-bloom"></i><i class="l-eye"></i></div>'; };
+  var cornerSprig = function (w, rot, flip) { return '<div class="sv">' + sprig(w, rot, flip) + '</div>' + wcSprig(w * 1.15, rot, flip); };
   var BFLY = '<div class="bfly" aria-hidden="true"><svg viewBox="0 0 30 24" width="30"><g class="w"><path d="M15 12C9 0 0 2 2 9s9 5 13 3Z" style="fill:var(--bloom)" opacity=".9"/><path d="M15 12C21 0 30 2 28 9s-9 5-13 3Z" style="fill:var(--bloom)" opacity=".9"/><path d="M15 12C10 16 6 22 10 22s5-6 5-10ZM15 12c5 4 9 10 5 10s-5-6-5-10Z" style="fill:var(--bloom2)"/></g><path d="M15 6v13" style="stroke:var(--ink)" stroke-width="1.4" stroke-linecap="round"/></svg></div>';
   function bouquet(w, style, b) {
     b = b || 0;
@@ -603,14 +634,15 @@ body.tools-away #demoBar:not(:focus-within):not(:has(.db-sheet:not([hidden]))){t
   '<main id="invite">' +
     '<nav class="qnav" id="qnav" aria-label="' + S.qnav + '"><a href="#itinerario">' + S.qSchedule + '</a><a href="#rsvp">' + S.qRsvp + '</a></nav>' +
     '<section class="hero paper" id="portada" data-lz-anchor="portada">' +
-      '<div class="deco" style="left:-36px;top:-24px">' + sprig(140, 100) + '</div>' +
-      '<div class="deco" style="right:-30px;top:40px">' + sprig(120, 190, -1) + '</div>' +
+      '<div class="deco" style="left:-36px;top:-24px">' + cornerSprig(140, 100) + '</div>' +
+      '<div class="deco" style="right:-30px;top:40px">' + cornerSprig(120, 190, -1) + '</div>' +
       '<div class="in-w">' + BFLY +
         '<p class="eb">' + S.getting + '</p>' +
         '<div class="wreath"><div class="oval"><img class="ph-img" src="/assets/fotos/paseo.jpg" data-lz-src="photo:0" alt="' + S.photoAlt + '"></div>' + wreath() + '</div>' +
         '<h1 class="script" id="names" tabindex="-1"><span class="fitl" data-lz="n1">' + S.n1 + '</span><span class="y">' + S.y + '</span><span class="fitl" data-lz="n2">' + S.n2 + '</span></h1>' +
         '<p class="date" data-lz-date="{d} · {Mc} · {Y}">' + S.date + '</p><p class="eb city" data-lz="city">' + S.city + '</p>' +
         '<p class="msg" data-lz="msg">' + S.msg + '</p>' +
+        '<p class="hero-demo"><button type="button" class="pill" id="heroDemo" aria-controls="dbSheet" aria-expanded="false">' + S.demo + '</button></p>' +
       '</div>' +
     '</section>' +
 
@@ -666,7 +698,7 @@ body.tools-away #demoBar:not(:focus-within):not(:has(.db-sheet:not([hidden]))){t
         '<p class="eb"><span data-lz-date="' + S.rsvpDatePat + '">' + S.rsvpDate + '</span> · <span data-lz="city">' + S.city + '</span></p><h2>' + S.rsvpT + '</h2>' +
         '<p class="rs-guest">' + S.guest + '</p><p class="rs-seats">' + S.seatsRes + '</p>' +
         '<p class="rs-deadline" data-lz-if="rsvpDeadline"><span>' + S.deadlineK + '</span> <b data-lz-date="' + S.rsvpDatePat + '" data-lz-from="rsvpDeadline">' + S.deadline + '</b></p>' +
-        '<form id="rsForm" novalidate>' +
+        '<form id="rsForm" novalidate autocomplete="off">' +
           '<p class="rs-msg" data-lz="rsvpMsg">' + S.rsvpMsg + '</p>' +
           '<div id="people"></div>' +
           '<label class="fld" data-lz-show="rsvpDiet"><span>' + S.diet + '</span><textarea rows="2" id="diet"></textarea></label>' +
@@ -688,6 +720,8 @@ body.tools-away #demoBar:not(:focus-within):not(:has(.db-sheet:not([hidden]))){t
     '<button type="button" class="db-tg" id="dbToggle" aria-expanded="false" aria-controls="dbSheet"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m15.5 8.5-2 5-5 2 2-5z"/></svg>' + S.demo + '</button>' +
     '<div class="db-sheet" id="dbSheet" role="group" aria-label="' + S.demo + '" hidden><div class="db-head"><b>' + S.demo + '</b><button type="button" class="db-min" id="dbMin" aria-label="' + S.minimize + '">–</button></div>' +
       '<div class="db-colors" id="dbColors"></div>' +
+      '<button type="button" class="db-btn" id="dbArt" aria-pressed="false">' + S.art + ' <span aria-hidden="true">◐</span></button>' +
+      '<label class="db-sel"><span>' + S.rsvpK + '</span><select id="dbRsvp">' + Object.keys(S.rsvpStyles).map(function (k) { return '<option value="' + k + '">' + S.rsvpStyles[k].n + '</option>'; }).join('') + '</select></label>' +
       '<button type="button" class="db-btn" data-open-panel>' + S.panel + ' <span aria-hidden="true">→</span></button><a class="db-btn" href="' + S.storeUrl + '">' + S.store + ' <span aria-hidden="true">↗</span></a></div>';
 })();
 </script>
@@ -708,7 +742,7 @@ body.tools-away #demoBar:not(:focus-within):not(:has(.db-sheet:not([hidden]))){t
   function watch() {
     if (io) return;
     if (!('IntersectionObserver' in window)) { document.querySelectorAll('#invite [data-rv], #invite .grow').forEach(function (el) { el.classList.add('in'); }); return; }
-    io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }); }, { threshold: .15 });
+    io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }); }, { threshold: 0, rootMargin: '0px 0px -24px 0px' });
     observe(document);
   }
   // Fotos con su frase escrita a mano (también cuando el editor cambia la galería); la frase es también su texto alternativo.
@@ -762,8 +796,10 @@ body.tools-away #demoBar:not(:focus-within):not(:has(.db-sheet:not([hidden]))){t
     clear(); LazoMusic.play();
     if (reduce) { bloomCard(); $('enter').focus({ preventScroll: true }); return; }
     pk.classList.add('open'); hint.textContent = $('closing').textContent;
-    timers.push(setTimeout(function () { pk.classList.add('rise'); }, 750));
-    timers.push(setTimeout(function () { bloomCard(); $('enter').focus({ preventScroll: true }); }, 1800));
+    // Una sola etapa: la solapa se abre y, a los 450 ms, la tarjeta sube directo a su lugar (1,05 s).
+    // El botón recibe el foco cuando la tarjeta ya está quieta (~1,5 s).
+    timers.push(setTimeout(bloomCard, 450));
+    timers.push(setTimeout(function () { $('enter').focus({ preventScroll: true }); }, 1520));
   });
   function enter() { clear(); op.classList.add('gone'); document.body.classList.remove('locked'); setInert(false); setTimeout(watch, 350); refresh(); }
   function enterAsGuest() { enter(); $('demoBar').hidden = CONTENT; window.scrollTo(0, 0); $('names').focus({ preventScroll: true }); }
@@ -777,17 +813,54 @@ body.tools-away #demoBar:not(:focus-within):not(:has(.db-sheet:not([hidden]))){t
     scroll: function (el, now) { window.scrollTo({ top: el.getBoundingClientRect().top + window.pageYOffset - 10, behavior: now ? 'instant' : 'smooth' }); }
   };
 
-  // Accesos rápidos: aparecen al dejar atrás la portada.
-  // En pantallas angostas se retiran al bajar (para no tapar contenido) y vuelven al subir; la música se queda.
-  var pastHero = false, lastY = 0, wide = window.matchMedia('(min-width: 1000px)');
-  function chrome() {
-    var y = window.pageYOffset, up = y < lastY - 2, down = y > lastY + 2, bottom = y + innerHeight > document.documentElement.scrollHeight - 140;
-    if (down && !wide.matches && !bottom) document.body.classList.add('tools-away'); else if (up || bottom || wide.matches) document.body.classList.remove('tools-away');
-    if (up || down) lastY = y;
-    $('qnav').classList.toggle('show', pastHero && (wide.matches || !document.body.classList.contains('tools-away')));
+  // Herramientas flotantes (accesos rápidos, «Explorar demo» y música): no se presentan sobre la portada,
+  // se retiran al bajar y al escribir, y al detenerse el desplazamiento solo aparecen si no taparían texto, fotos ni acciones.
+  document.body.classList.add('in-hero');
+  var B = document.body, pastHero = false, lastY = window.pageYOffset, dir = 0, wide = window.matchMedia('(min-width: 1000px)');
+  var INK = 'h1,h2,h3,p,li,blockquote,figcaption,span,b', SOLID = 'a,button,input,textarea,select,summary,label,img';
+  function hits(r) {
+    if (!r.width) return false;
+    r = { left: r.left - 6, top: r.top - 6, right: r.right + 6, bottom: r.bottom + 6 }; // un pequeño margen de aire
+    var over = function (a) { return a.right > r.left && a.left < r.right && a.bottom > r.top && a.top < r.bottom; };
+    return [].some.call(document.querySelectorAll('#invite :is(' + INK + ',' + SOLID + ')'), function (el) {
+      if (el.closest('.qnav,.sr,[aria-hidden=true]') || (el.closest('details:not([open])') && !el.closest('summary'))) return false;
+      var b = el.getBoundingClientRect();
+      if (!over(b) || !b.width) return false;
+      if (el.matches(SOLID)) {
+        // Fotos recortadas por su marco (óvalo, polaroid): cuenta solo la parte visible.
+        if (el.tagName === 'IMG') { var c = el.parentElement.getBoundingClientRect(); return over({ left: Math.max(b.left, c.left), right: Math.min(b.right, c.right), top: Math.max(b.top, c.top), bottom: Math.min(b.bottom, c.bottom) }); }
+        return getComputedStyle(el).visibility !== 'hidden';
+      }
+      // Texto: se comparan las líneas reales, no la caja del párrafo (que ocupa todo el ancho).
+      if (![].some.call(el.childNodes, function (n) { return n.nodeType === 3 && n.nodeValue.trim(); })) return false;
+      var rg = document.createRange(); rg.selectNodeContents(el);
+      return [].some.call(rg.getClientRects(), over);
+    });
   }
-  window.addEventListener('scroll', chrome, { passive: true });
-  if ('IntersectionObserver' in window) new IntersectionObserver(function (es) { pastHero = !es[0].isIntersecting; chrome(); }, { rootMargin: '-40% 0px 0px 0px' }).observe($('portada'));
+  function homeOf(el, w, h) { return { left: el.offsetLeft, top: el.offsetTop, right: el.offsetLeft + w, bottom: el.offsetTop + h, width: w, height: h }; }
+  function place() {
+    var bar = $('demoBar'), tgl = $('dbToggle'), mus = document.querySelector('.lz-music'), bottom = window.pageYOffset + innerHeight > document.documentElement.scrollHeight - 4;
+    B.classList.toggle('in-hero', !pastHero);
+    var away = !wide.matches && dir > 0 && !bottom;
+    B.classList.toggle('tools-hide', away || (pastHero && !bar.hidden && hits(homeOf(bar, tgl.offsetWidth, tgl.offsetHeight))));
+    if (mus) B.classList.toggle('music-hide', !mus.hidden && hits(homeOf(mus, mus.offsetWidth, mus.offsetHeight)));
+    $('qnav').classList.toggle('show', pastHero && !away && !hits(homeOf($('qnav'), $('qnav').offsetWidth, $('qnav').offsetHeight)));
+  }
+  window.addEventListener('scroll', function () {
+    var y = window.pageYOffset; if (Math.abs(y - lastY) > 2) { dir = y > lastY ? 1 : -1; lastY = y; }
+    if (dir > 0 && !wide.matches) { B.classList.add('tools-hide'); $('qnav').classList.remove('show'); }
+    clearTimeout(place.t); place.t = setTimeout(function () { dir = 0; place(); }, 140);
+    // Segunda comprobación cuando termina de aparecer el contenido que entró al bajar (~0,5 s).
+    clearTimeout(place.t2); place.t2 = setTimeout(function () { if (!dir) place(); }, 620);
+  }, { passive: true });
+  window.addEventListener('resize', function () { clearTimeout(place.t); place.t = setTimeout(place, 140); });
+  // Si el contenido se mueve (fotos que terminan de cargar, textos del editor) se vuelve a comprobar.
+  if ('ResizeObserver' in window) new ResizeObserver(function () { clearTimeout(place.t); place.t = setTimeout(place, 140); }).observe($('invite'));
+  document.addEventListener('load', function (e) { if (e.target.tagName === 'IMG') { clearTimeout(place.t); place.t = setTimeout(place, 140); } }, true);
+  if ('IntersectionObserver' in window) new IntersectionObserver(function (es) { pastHero = !es[0].isIntersecting; place(); }, { rootMargin: '-40% 0px 0px 0px' }).observe($('portada'));
+  // Con un campo de texto activo (y el teclado abierto en el teléfono) no flota nada.
+  document.addEventListener('focusin', function (e) { if (e.target.matches('#invite textarea, #invite input:not([type=radio])')) B.classList.add('typing'); });
+  document.addEventListener('focusout', function (e) { if (e.target.matches('#invite textarea, #invite input:not([type=radio])')) B.classList.remove('typing'); });
 
   // Cuenta regresiva hasta el evento elegido (la fecha del editor llega en window.LZ_T). Sin segundos: cambia cada minuto.
   var TARGET = new Date(2027, 2, 14, 13, 0).getTime(), pad = function (n) { return String(n).padStart(2, '0'); }, cd = {};
@@ -799,13 +872,20 @@ body.tools-away #demoBar:not(:focus-within):not(:has(.db-sheet:not([hidden]))){t
   }
   tick(); setInterval(tick, 15000);
 
-  // Herramientas de la demo: «Explorar demo» agrupa color, panel y tienda, y se minimiza. La música queda aparte.
-  var tg = $('dbToggle'), sheet = $('dbSheet');
-  function sheetOpen(on, focus) { sheet.hidden = !on; tg.setAttribute('aria-expanded', String(on)); if (focus) (on ? sheet.querySelector('button,a') : tg).focus(); }
-  tg.addEventListener('click', function () { sheetOpen(true, true); });
+  // Herramientas de la demo: «Explorar demo» agrupa color, respuestas, panel y tienda, y se minimiza. La música queda aparte.
+  // En la portada se abre desde su propio botón (en el flujo de la página), así nada flota sobre los nombres.
+  var tg = $('dbToggle'), sheet = $('dbSheet'), opener = tg;
+  function sheetOpen(on, focus, from) {
+    if (on) opener = from || tg;
+    sheet.hidden = !on; tg.setAttribute('aria-expanded', String(on)); $('heroDemo').setAttribute('aria-expanded', String(on));
+    if (focus) (on ? sheet.querySelector('button,a,select') : opener).focus();
+    if (!on) place();
+  }
+  tg.addEventListener('click', function () { sheetOpen(true, true, tg); });
+  $('heroDemo').addEventListener('click', function () { sheetOpen(sheet.hidden, true, $('heroDemo')); });
   $('dbMin').addEventListener('click', function () { sheetOpen(false, true); });
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !sheet.hidden) sheetOpen(false, true); });
-  document.addEventListener('click', function (e) { if (!sheet.hidden && !$('demoBar').contains(e.target)) sheetOpen(false); });
+  document.addEventListener('click', function (e) { if (!sheet.hidden && !$('demoBar').contains(e.target) && !e.target.closest('#heroDemo')) sheetOpen(false); });
   sheet.addEventListener('click', function (e) { if (e.target.closest('[data-open-panel]')) sheetOpen(false); });
   document.addEventListener('DOMContentLoaded', function () { var c = document.querySelector('.lz-colors'); if (c) $('dbColors').appendChild(c); });
 
@@ -825,41 +905,63 @@ body.tools-away #demoBar:not(:focus-within):not(:has(.db-sheet:not([hidden]))){t
     window.addEventListener('resize', cues);
   }
 
-  // Confirmación por persona (demo: no se envía a ningún lado; se guarda en este navegador para poder recargar y editar).
-  var KEY = 'lazo-demo-rsvp:' + location.pathname, wrap = $('people'), form = $('rsForm');
+  // Confirmación por persona. Demo: no se envía ni se guarda; vive en memoria y se reinicia al recargar.
+  // Limpia respuestas que versiones anteriores de esta plantilla dejaron en el navegador (solo sus claves).
+  try { for (var k = localStorage.length - 1; k >= 0; k--) { var key = localStorage.key(k); if (key && key.indexOf('lazo-demo-rsvp:') === 0) localStorage.removeItem(key); } } catch (err) {}
+  var wrap = $('people'), form = $('rsForm');
   var att = PEOPLE.map(function () { return null; });
+  // Variante de los controles: la elegirá el editor; en la demo se prueba desde «Explorar demo» o con ?rsvp=.
+  var STYLES = Object.keys(S.rsvpStyles), q = new URLSearchParams(location.search);
+  var style = STYLES.indexOf(q.get('rsvp') || html.getAttribute('data-lz-rsvp')) >= 0 ? (q.get('rsvp') || html.getAttribute('data-lz-rsvp')) : 'texto';
+  function opt(v) { var st = S.rsvpStyles[style]; return { label: v ? st.yes : st.no, short: v ? st.yesShort : st.noShort, aria: v ? S.yes : S.no }; }
+  function paintOpts() {
+    wrap.classList.toggle('is-icons', style === 'iconos');
+    form.querySelectorAll('.opt').forEach(function (l) {
+      var v = l.classList.contains('yes'), o = opt(v), t = l.querySelector('.tx');
+      t.textContent = style === 'iconos' ? o.aria : o.label; t.className = 'tx' + (style === 'iconos' ? ' sr' : '');
+    });
+    if (!$('rsDone').hidden) showDone(false);
+  }
   PEOPLE.forEach(function (name, i) {
     var f = document.createElement('fieldset'); f.className = 'person'; f.id = 'p' + i; f.setAttribute('aria-describedby', 'p' + i + 'e');
     var lg = document.createElement('legend'); lg.className = 'sr'; lg.textContent = name; f.appendChild(lg);
     var row = document.createElement('div'); row.className = 'prow';
     var n = document.createElement('span'); n.className = 'pname'; n.setAttribute('aria-hidden', 'true'); n.textContent = name; row.appendChild(n);
     var g = document.createElement('div'); g.className = 'opts';
-    [[true, S.yes, 'yes'], [false, S.no, 'no']].forEach(function (o) {
-      var l = document.createElement('label'); l.className = 'opt ' + o[2];
+    [[true, 'yes'], [false, 'no']].forEach(function (o) {
+      var l = document.createElement('label'); l.className = 'opt ' + o[1];
       var r = document.createElement('input'); r.type = 'radio'; r.name = 'p' + i; r.value = o[0] ? '1' : '0';
-      r.addEventListener('change', function () { att[i] = o[0]; f.classList.remove('invalid'); r.closest('fieldset').removeAttribute('aria-invalid'); $('p' + i + 'e').hidden = true; summarizeErr(false); });
+      r.addEventListener('change', function () { att[i] = o[0]; f.classList.remove('invalid'); f.removeAttribute('aria-invalid'); $('p' + i + 'e').hidden = true; summarizeErr(false); });
       var ic = document.createElement('span'); ic.className = 'ic'; ic.setAttribute('aria-hidden', 'true'); ic.textContent = o[0] ? '✓' : '✕';
-      var t = document.createElement('span'); t.textContent = o[1];
+      var t = document.createElement('span'); t.className = 'tx';
       l.appendChild(r); l.appendChild(ic); l.appendChild(t); g.appendChild(l);
     });
     row.appendChild(g); f.appendChild(row);
     var er = document.createElement('p'); er.className = 'p-err'; er.id = 'p' + i + 'e'; er.hidden = true; er.textContent = S.errOne(name.split(' ')[0]); f.appendChild(er);
     wrap.appendChild(f);
   });
+  paintOpts();
+  // Exploración de acuarela en WebP: ?acuarela=webp o el botón de «Explorar demo».
+  var art = /^(webp|si|sí|1)$/.test(q.get('acuarela') || '');
+  function setArt(on) { art = on; html.classList.toggle('art-webp', on); $('dbArt').setAttribute('aria-pressed', String(on)); }
+  setArt(art); $('dbArt').addEventListener('click', function () { setArt(!art); });
+  // Selector de variante dentro de «Explorar demo».
+  var sel = $('dbRsvp');
+  if (sel) { sel.value = style; sel.addEventListener('change', function () { style = sel.value; paintOpts(); }); }
   function summarizeErr(show) {
     var miss = att.filter(function (x) { return x === null; }).length;
     if (!show && $('rsErr').hidden) return;
     $('rsErr').hidden = !miss; if (miss) $('rsErr').textContent = S.errSum(miss);
   }
-  function setRadios() { att.forEach(function (v, i) { form.querySelectorAll('input[name=p' + i + ']').forEach(function (r) { r.checked = v !== null && (r.value === '1') === v; }); }); }
   function showDone(focus) {
     var yes = att.filter(Boolean).length;
     $('rsSum').textContent = S.will(yes, PEOPLE.length);
     var list = $('rsList'); list.textContent = '';
     PEOPLE.forEach(function (name, i) {
       var li = document.createElement('li');
-      li.innerHTML = '<span class="nm"></span><span class="st' + (att[i] ? '' : ' no') + '">' + (att[i] ? S.yesShort : S.noShort) + '</span><button type="button"></button>';
-      li.querySelector('.nm').textContent = name; var b = li.querySelector('button'); b.textContent = S.change; b.setAttribute('aria-label', S.changeOf + ' ' + name);
+      li.innerHTML = '<span class="nm"></span><span class="st' + (att[i] ? '' : ' no') + '"></span><button type="button"></button>';
+      li.querySelector('.nm').textContent = name; li.querySelector('.st').textContent = opt(att[i]).short;
+      var b = li.querySelector('button'); b.textContent = S.change; b.setAttribute('aria-label', S.changeOf + ' ' + name);
       b.addEventListener('click', function () { edit(i); });
       list.appendChild(li);
     });
@@ -879,19 +981,10 @@ body.tools-away #demoBar:not(:focus-within):not(:has(.db-sheet:not([hidden]))){t
     att.forEach(function (v, i) { var bad = v === null, f = $('p' + i); f.classList.toggle('invalid', bad); $('p' + i + 'e').hidden = !bad; if (bad) f.setAttribute('aria-invalid', 'true'); else f.removeAttribute('aria-invalid'); if (bad && !first) first = f; });
     summarizeErr(true);
     if (first) { first.querySelector('input').focus(); first.scrollIntoView({ block: 'center', behavior: reduce ? 'auto' : 'smooth' }); return; }
-    if (!CONTENT) try { localStorage.setItem(KEY, JSON.stringify({ att: att, diet: $('diet').value, note: $('note').value })); } catch (err) {}
     showDone(true);
     LazoPanel.setResponse(att, $('note').value.trim());
   });
   $('rsEdit').addEventListener('click', function () { edit(0); });
-  // Al recargar, la respuesta guardada vuelve a mostrarse y se puede editar.
-  if (!CONTENT) try {
-    var saved = JSON.parse(localStorage.getItem(KEY) || 'null');
-    if (saved && saved.att && saved.att.length === PEOPLE.length && saved.att.every(function (x) { return typeof x === 'boolean'; })) {
-      att = saved.att; $('diet').value = saved.diet || ''; $('note').value = saved.note || ''; setRadios(); showDone(false);
-      LazoPanel.setResponse(att, (saved.note || '').trim());
-    }
-  } catch (err) {}
 })();
 </script>
 </body>
