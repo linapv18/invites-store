@@ -407,7 +407,7 @@
     { id: 'aurora', hex: '#0A2630', seal: '#081E26', es: 'Aurora', en: 'Aurora' },
     { id: 'lavanda', hex: '#241B42', seal: '#1C1636', es: 'Lavanda', en: 'Lavender' }
   ];
-  // Cisne: lacre burdeos (una sola paleta); Tinta: el sello es la tinta; Glicina: el color de las glicinas.
+  // Cisne y Glicina: una sola paleta; Tinta: el sello es la tinta.
   var CISNE_PALETTES = [
     { id: 'burdeos', hex: 'conic-gradient(#6E1A27 0 50%,#66682F 0)', seal: '#6E1A27', es: 'Burdeos y oliva', en: 'Burgundy and olive' }
   ];
@@ -417,9 +417,7 @@
     { id: 'verde', hex: '#2F6A48', seal: '#2F6A48', es: 'Verde botella', en: 'Bottle green' }
   ];
   var GLICINA_PALETTES = [
-    { id: 'lavanda', hex: 'conic-gradient(#8E79BD 0 50%,#7C8454 0)', seal: '#7C8454', es: 'Lavanda y oliva', en: 'Lavender and olive' },
-    { id: 'rosa', hex: 'conic-gradient(#D48DA4 0 50%,#7C8454 0)', seal: '#7C8454', es: 'Rosa', en: 'Pink' },
-    { id: 'azul', hex: 'conic-gradient(#7E9BD1 0 50%,#6C7C62 0)', seal: '#6C7C62', es: 'Azul', en: 'Blue' }
+    { id: 'lavanda', hex: 'conic-gradient(#8E79BD 0 50%,#7C8454 0)', seal: '#7C8454', es: 'Lavanda y oliva', en: 'Lavender and olive' }
   ];
   var TPL_PALETTES = { rosa: ROSA_PALETTES, moderno: MOD_PALETTES, jardin: JARDIN_PALETTES, costa: COSTA_PALETTES, gala: GALA_PALETTES, aurelia: AURELIA_PALETTES, noir: NOIR_PALETTES, lino: LINO_PALETTES, marfil: MARFIL_PALETTES, fiesta: FIESTA_PALETTES, celeste: CELESTE_PALETTES, cisne: CISNE_PALETTES, tinta: TINTA_PALETTES, glicina: GLICINA_PALETTES };
   var tplPal = function () { var l = TPL_PALETTES[state.design] || []; return l.filter(function (x) { return x.id === state.pal; })[0] || l[0]; };

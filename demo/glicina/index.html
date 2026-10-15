@@ -187,10 +187,12 @@ body.garden{background-size:160px,100% 100%,100% 100%,100% 100%,100% 100%,100% 1
 .wis .ramas{position:absolute;z-index:2;left:0;right:0;top:-12px;display:flex;justify-content:center;pointer-events:none}
 .wis .ramas img{flex:none;width:auto;height:130px;max-width:none}
 .wis .ramas img:nth-child(even){scale:-1 1}
-.wis .rc{position:absolute;max-width:none;transform-origin:50% 0;filter:var(--wis-filter,none);animation:glSway var(--du) ease-in-out var(--de) infinite alternate}
+.wis .rc{position:absolute;max-width:none;transform-origin:50% 0;animation:glSway var(--du) ease-in-out var(--de) infinite alternate}
 .wis .rc.f{scale:-1 1}
 .curt{position:absolute;top:0;bottom:0;width:64%;z-index:3;cursor:pointer;transition:transform 1.7s cubic-bezier(.6,0,.3,1)}
 .curt .wis{top:0}
+/* En la cortina los racimos no se mecen uno por uno: Safari en iPhone deja de dibujar capas animadas si son demasiadas */
+.curt .rc{animation:none}
 .curt.l{left:-8%}
 .curt.r{right:-8%}
 .parted .curt.l{transform:translateX(-125%)}
@@ -368,7 +370,7 @@ const HEART = '<svg viewBox="0 0 46 42" aria-hidden="true"><path d="M23 39C8 29 
 const brush = c => `<svg viewBox="0 0 70 26" aria-hidden="true"><path d="M5 11C20 4 46 3 64 7c4 1 4 9 0 11-18 4-42 5-58 2-5-1-5-7-1-9Z" style="fill:${c};stroke:var(--sage2)" stroke-width=".9" filter="url(#glRough)"/></svg>`;
 
   // Racimos de glicina (imágenes con fondo transparente) colgando de una rama; cada uno se mece por su cuenta.
-  var G = '/assets/glicina/', RAC = [['racimo-largo', .667], ['racimo-medio', .667], ['racimo-corto', .667], ['racimo-curvo', .667], ['racimo-tupido', .5]];
+  var G = '/assets/glicina/', RAC = [['racimo-largo', .224], ['racimo-medio', .267], ['racimo-corto', .547], ['racimo-curvo', .427], ['racimo-tupido', .19]];
   // unit 'vh': alto relativo a la pantalla (la cortina llena la pantalla en celular y en computador)
   function drape(seed, n, minH, maxH, kinds, top, cls, unit) {
     var Q = rng(seed), s = '<div class="ramas">' + new Array(8).join('<img src="' + G + 'rama.webp" alt="">') + '</div>';

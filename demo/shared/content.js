@@ -101,11 +101,9 @@
       { id: 'azul', es: 'Azul tinta', en: 'Ink blue', sw: '#23468C', vars: { red: '#23468C' } },
       { id: 'verde', es: 'Verde botella', en: 'Bottle green', sw: '#2F6A48', vars: { red: '#2F6A48', paper: '#EFEEE6' } }
     ],
-    // Glicina: los racimos son imágenes lavanda; en rosa y azul se les cambia el tono con un filtro.
+    // Glicina: una sola paleta (los racimos, la rama y las hortensias son imágenes).
     glicina: [
-      { id: 'lavanda', es: 'Lavanda y oliva', en: 'Lavender and olive', sw: 'conic-gradient(#8E79BD 0 50%,#7C8454 0)' },
-      { id: 'rosa', es: 'Rosa', en: 'Pink', sw: 'conic-gradient(#D48DA4 0 50%,#7C8454 0)', vars: { lav: '#D48DA4', lav2: '#F3C9D6', rose: '#F0B8C4', 'wis-filter': 'hue-rotate(68deg) saturate(.85)' } },
-      { id: 'azul', es: 'Azul', en: 'Blue', sw: 'conic-gradient(#7E9BD1 0 50%,#6C7C62 0)', vars: { lav: '#7E9BD1', lav2: '#C3D4F2', sage: '#6C7C62', sage2: '#A6B3A0', 'wis-filter': 'hue-rotate(-38deg) saturate(.9)' } }
+      { id: 'lavanda', es: 'Lavanda y oliva', en: 'Lavender and olive', sw: 'conic-gradient(#8E79BD 0 50%,#7C8454 0)' }
     ]
   };
   function hexRgb(h) { var m = /^#?([0-9a-f]{6})$/i.exec(h || ''); if (!m) return null; var n = parseInt(m[1], 16); return [n >> 16 & 255, n >> 8 & 255, n & 255]; }
@@ -141,7 +139,8 @@
   if (MODE !== 'editor' && MODE !== 'vista') {
     // Demo de la tienda: elegir entre los colores del diseño desde la barra de la demo (o con ?color=champana).
     var themes = THEMES[TPL] || [];
-    if (themes.length < 2) return;
+    // Con una sola paleta no hay selector de color (Glicina igual muestra su botón «Sin fotos»).
+    if (themes.length < 2 && TPL !== 'glicina') return;
     var start = q.get('color');
     if (start) applyTheme(start);
     var photoColor = TPL === 'moderno' && /^(color|colour)$/.test(q.get('fotos') || q.get('photos') || '');
@@ -162,9 +161,9 @@
     document.addEventListener('DOMContentLoaded', function () {
       var bar = document.querySelector('.demo-bar'); if (!bar) return;
       var g = document.createElement('div'); g.className = 'lz-colors'; g.setAttribute('role', 'group'); g.setAttribute('aria-label', LANG === 'en' ? 'Design colors' : 'Colores del diseño');
-      g.innerHTML = '<span aria-hidden="true">' + (LANG === 'en' ? 'Color' : 'Color') + '</span>';
+      if (themes.length > 1) g.innerHTML = '<span aria-hidden="true">' + (LANG === 'en' ? 'Color' : 'Color') + '</span>';
       var cur = themes.some(function (x) { return x.id === start; }) ? start : themes[0].id;
-      themes.forEach(function (t) {
+      if (themes.length > 1) themes.forEach(function (t) {
         var b = document.createElement('button'); b.type = 'button'; b.style.background = t.sw; b.title = t[LANG];
         b.setAttribute('aria-label', t[LANG]); b.setAttribute('aria-pressed', String(t.id === cur));
         b.addEventListener('click', function () { applyTheme(t.id); g.querySelectorAll('button').forEach(function (x) { x.setAttribute('aria-pressed', String(x === b)); }); });
@@ -178,7 +177,7 @@
         g.appendChild(pb);
       }
       if (TPL === 'glicina') {
-        var nb = document.createElement('button'); nb.type = 'button'; nb.className = 'lz-photo';
+        var nb = document.createElement('button'); nb.type = 'button'; nb.className = 'lz-photo'; if (themes.length < 2) nb.style.marginLeft = '0';
         nb.textContent = LANG === 'en' ? 'No photos' : 'Sin fotos'; nb.setAttribute('aria-pressed', String(noPhotos));
         nb.addEventListener('click', function () { noPhotos = !noPhotos; html.classList.toggle('lz-no-photos', noPhotos); nb.setAttribute('aria-pressed', String(noPhotos)); });
         g.appendChild(nb);
