@@ -56,6 +56,16 @@
       { id: 'cobalto', es: 'Cobalto', en: 'Cobalt', sw: '#1F4E8C' },
       { id: 'verde', es: 'Verde agua', en: 'Sea green', sw: '#2F6F62', vars: { ink: '#1F3B36', blue: '#2F6F62', blue2: '#DCEBE6', sun: '#E9B949', clay: '#C8643B' } },
       { id: 'barro', es: 'Barro', en: 'Clay', sw: '#B5522E', vars: { ink: '#4A2A1C', blue: '#B5522E', blue2: '#F3E1D6', sun: '#E3A43A', clay: '#3E6B8A' } }
+    ],
+    gala: [
+      { id: 'negro', es: 'Negro y oro', en: 'Black and gold', sw: '#0F0F0E' },
+      { id: 'esmeralda', es: 'Esmeralda', en: 'Emerald', sw: '#0F2A24', vars: { bg: '#0B1F1A', bg2: '#10291F' } },
+      { id: 'burdeos', es: 'Burdeos y oro rosa', en: 'Burgundy and rose gold', sw: '#2A1020', vars: { bg: '#1C0A14', bg2: '#26101C', gold: '#D1A88A', gold2: '#EDD3C0' } }
+    ],
+    aurelia: [
+      { id: 'oro', es: 'Oro', en: 'Gold', sw: '#B4955E' },
+      { id: 'plata', es: 'Plata', en: 'Silver', sw: '#A3A7AC', vars: { gold: '#9EA3A8', gold2: '#E4E7EA', bg: '#F7F7F5' } },
+      { id: 'rosa', es: 'Oro rosa', en: 'Rose gold', sw: '#C39488', vars: { gold: '#B98374', gold2: '#EBCFC4', bg: '#FBF7F4' } }
     ]
   };
   function hexRgb(h) { var m = /^#?([0-9a-f]{6})$/i.exec(h || ''); if (!m) return null; var n = parseInt(m[1], 16); return [n >> 16 & 255, n >> 8 & 255, n & 255]; }

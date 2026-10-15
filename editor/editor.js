@@ -331,7 +331,9 @@
     moderno: { es: ['Una invitación para un día inolvidable', ''], en: ['An invitation to an unforgettable day', ''] },
     rosa: { es: ['Celebra con nosotros nuestro gran día', ''], en: ['Celebrate our big day with us', ''] },
     jardin: { es: ['Una invitación para un día inolvidable', 'Con todo nuestro cariño'], en: ['An invitation to an unforgettable day', 'With all our love'] },
-    costa: { es: ['Una invitación para un día inolvidable', 'Con todo nuestro cariño'], en: ['An invitation to an unforgettable day', 'With all our love'] }
+    costa: { es: ['Una invitación para un día inolvidable', 'Con todo nuestro cariño'], en: ['An invitation to an unforgettable day', 'With all our love'] },
+    gala: { es: ['Una invitación para un día inolvidable', 'Con todo nuestro cariño'], en: ['An invitation to an unforgettable day', 'With all our love'] },
+    aurelia: { es: ['Una invitación para un día inolvidable', 'Con todo nuestro cariño'], en: ['An invitation to an unforgettable day', 'With all our love'] }
   };
   // Paletas de Romántico (los colores los aplica demo/shared/content.js; aquí solo el nombre y la muestra).
   var ROSA_PALETTES = [
@@ -357,7 +359,18 @@
     { id: 'verde', hex: '#2F6F62', seal: '#C8643B', es: 'Verde agua', en: 'Sea green' },
     { id: 'barro', hex: '#B5522E', seal: '#3E6B8A', es: 'Barro', en: 'Clay' }
   ];
-  var TPL_PALETTES = { rosa: ROSA_PALETTES, moderno: MOD_PALETTES, jardin: JARDIN_PALETTES, costa: COSTA_PALETTES };
+  // Gala: el medallón (seal = su oro); Aurelia: el monograma en oro sobre blanco.
+  var GALA_PALETTES = [
+    { id: 'negro', hex: '#0F0F0E', seal: '#C9A45C', es: 'Negro y oro', en: 'Black and gold' },
+    { id: 'esmeralda', hex: '#0F2A24', seal: '#C9A45C', es: 'Esmeralda', en: 'Emerald' },
+    { id: 'burdeos', hex: '#2A1020', seal: '#D1A88A', es: 'Burdeos y oro rosa', en: 'Burgundy and rose gold' }
+  ];
+  var AURELIA_PALETTES = [
+    { id: 'oro', hex: '#B4955E', seal: '#B4955E', es: 'Oro', en: 'Gold' },
+    { id: 'plata', hex: '#A3A7AC', seal: '#9EA3A8', es: 'Plata', en: 'Silver' },
+    { id: 'rosa', hex: '#C39488', seal: '#B98374', es: 'Oro rosa', en: 'Rose gold' }
+  ];
+  var TPL_PALETTES = { rosa: ROSA_PALETTES, moderno: MOD_PALETTES, jardin: JARDIN_PALETTES, costa: COSTA_PALETTES, gala: GALA_PALETTES, aurelia: AURELIA_PALETTES };
   var tplPal = function () { var l = TPL_PALETTES[state.design] || []; return l.filter(function (x) { return x.id === state.pal; })[0] || l[0]; };
   var PALETTES = [
     { id: 'salvia', hex: '#5F7360', es: 'Salvia', en: 'Sage' },
@@ -370,7 +383,9 @@
     moderno: { kind: 'doors', es: ['Moderno', 'Puertas que se abren'], en: ['Modern', 'Opening doors'] },
     rosa: { kind: 'envelope', es: ['Romántico', 'Sobre lacrado'], en: ['Romantic', 'Wax-sealed envelope'] },
     jardin: { kind: 'envelope', es: ['Jardín', 'Sobre de semillas'], en: ['Garden', 'Seed packet'] },
-    costa: { kind: 'envelope', es: ['Costa', 'Pase de abordar'], en: ['Coast', 'Boarding pass'] }
+    costa: { kind: 'envelope', es: ['Costa', 'Pase de abordar'], en: ['Coast', 'Boarding pass'] },
+    gala: { kind: 'envelope', es: ['Gala', 'Medallón dorado'], en: ['Gala', 'Gold medallion'] },
+    aurelia: { kind: 'doors', es: ['Aurelia', 'Carpeta con faja dorada'], en: ['Aurelia', 'Folder with a gold band'] }
   };
   // Sección de la vista previa a la que lleva cada complemento.
   var ADDON_SPOT = { playlist: 'musica', libro: 'itinerario', capsula: 'rsvp', encuestas: 'faq', galeria: 'historia', bilingue: 'portada', dominio: 'portada' };
@@ -585,6 +600,8 @@
     if (state.design === 'rosa') return serif + 'background:radial-gradient(circle at 35% 30%,#D8AE76,#A8743E 70%);color:#FFF4DF';
     if (state.design === 'jardin') return serif + 'background:radial-gradient(circle at 32% 26%,#ffffff40,transparent 40%),' + tplPal().seal + ';color:#FBF1E6';
     if (state.design === 'costa') return serif + 'background:#FFFCF5;color:' + tplPal().seal + ';box-shadow:inset 0 0 0 2px ' + tplPal().seal;
+    if (state.design === 'gala') return serif + 'background:radial-gradient(circle at 35% 30%,#F7E7B8,' + tplPal().seal + ' 70%);color:#2A1F0C';
+    if (state.design === 'aurelia') return serif + 'background:#FFFFFF;color:#1D1B19;box-shadow:inset 0 0 0 1px ' + tplPal().seal;
     var hex = state.pal === 'custom' ? state.palCustom : TPL_DARK[state.pal], m = /^#?([0-9a-f]{6})$/i.exec(hex || '');
     if (!m) return 'font-family:Georgia,serif;background:radial-gradient(circle at 30% 20%,#64745a,#2b4437);color:#f5f2ea';
     var n = parseInt(m[1], 16), c = [n >> 16 & 255, n >> 8 & 255, n & 255];

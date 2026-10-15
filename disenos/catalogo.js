@@ -19,7 +19,9 @@
     { key: 'apertura', es: 'Apertura', en: 'Opening', opts: [
       { id: 'sobre', es: 'Sobre', en: 'Envelope' },
       { id: 'puertas', es: 'Puertas', en: 'Doors' },
-      { id: 'pase', es: 'Pase de abordar', en: 'Boarding pass' }
+      { id: 'pase', es: 'Pase de abordar', en: 'Boarding pass' },
+      { id: 'medallon', es: 'Medallón', en: 'Medallion' },
+      { id: 'carpeta', es: 'Carpeta', en: 'Folder' }
     ] },
     { key: 'tono', es: 'Colores', en: 'Colors', opts: [
       { id: 'claros', es: 'Claros', en: 'Light' },
@@ -41,6 +43,14 @@
       tags: { estilo: ['romantico', 'elegante'], lugar: ['ciudad', 'campo'], apertura: ['sobre'], tono: ['claros'] },
       es: { name: 'Romántico', title: 'Diseño romántico', desc: 'Champaña o rosa empolvado, damasco y un sobre lacrado que se abre al tocar el sello. Delicado y lleno de detalles dorados.', opening: 'Apertura: sobre lacrado', colors: 'Champaña o rosado', alt: ['Diseño romántico: sobre lacrado con sello dorado', 'Diseño romántico: portada con los nombres'] },
       en: { name: 'Romantic', title: 'Romantic', desc: 'Champagne or dusty rose, damask and a wax-sealed envelope that opens when guests tap the seal. Delicate, with golden details.', opening: 'Opening: wax-sealed envelope', colors: 'Champagne or blush', alt: ['Romantic design: wax-sealed envelope with a gold seal', 'Romantic design: cover with the couple’s names'] } },
+    { id: 'aurelia', bg: '#ECE6DA', shadow: 'rgba(29,27,25,0.55)', img: ['/assets/aurelia-carpeta.jpg', '/assets/aurelia-portada.jpg'],
+      tags: { estilo: ['elegante', 'moderno'], lugar: ['ciudad', 'campo'], apertura: ['carpeta'], tono: ['claros'] },
+      es: { name: 'Aurelia', title: 'Diseño Aurelia', desc: 'Editorial y luminoso: blanco roto, tipografía Didot, filetes finos y detalles en pan de oro. Llega en una carpeta con monograma en relieve; al deslizar la faja dorada, se abre como un libro.', opening: 'Apertura: carpeta con faja', colors: 'Oro, plata u oro rosa', alt: ['Diseño aurelia: carpeta blanca con monograma en relieve y faja dorada', 'Diseño aurelia: portada editorial con los nombres en Didot'] },
+      en: { name: 'Aurelia', title: 'Aurelia', desc: 'Editorial and luminous: off-white, Didot type, fine rules and gold-leaf details. It arrives in a folder with an embossed monogram; slide off the gold band and it opens like a book.', opening: 'Opening: folder with a band', colors: 'Gold, silver or rose gold', alt: ['Aurelia design: white folder with an embossed monogram and a gold band', 'Aurelia design: editorial cover with the names in Didot'] } },
+    { id: 'gala', bg: '#2A2620', shadow: 'rgba(0,0,0,0.8)', img: ['/assets/gala-medallon.jpg', '/assets/gala-portada.jpg'],
+      tags: { estilo: ['elegante'], lugar: ['ciudad'], apertura: ['medallon'], tono: ['oscuros'] },
+      es: { name: 'Gala', title: 'Diseño gala', desc: 'Art déco de noche: terciopelo negro, oro y destellos. Al tocar el medallón estalla confeti dorado y la invitación se abre en círculo; los nombres aparecen letra por letra.', opening: 'Apertura: medallón dorado', colors: 'Negro, esmeralda o burdeos', alt: ['Diseño gala: medallón dorado sobre terciopelo negro', 'Diseño gala: portada art déco con arco dorado'] },
+      en: { name: 'Gala', title: 'Gala', desc: 'Art deco by night: black velvet, gold and sparkles. Tap the medallion and gold confetti bursts as the invitation opens in a circle; the names appear letter by letter.', opening: 'Opening: gold medallion', colors: 'Black, emerald or burgundy', alt: ['Gala design: gold medallion on black velvet', 'Gala design: art deco cover with a gold arch'] } },
     { id: 'clasico', bg: '#D9DDD0', shadow: 'rgba(34,32,28,0.6)', img: ['/assets/clasico-sobre.jpg', '/assets/clasico-demo-portada.jpg'],
       tags: { estilo: ['elegante'], lugar: ['ciudad', 'campo'], apertura: ['sobre'], tono: ['claros', 'oscuros'] },
       es: { name: 'Clásico', title: 'Diseño clásico', desc: 'Verde salvia y marfil, nombres en serif grande y un sobre que se abre para mostrar una carta con el nombre de cada familia. Atemporal.', opening: 'Apertura: sobre con carta', colors: 'Paleta a elección', alt: ['Diseño clásico: sobre con sello verde para la familia invitada', 'Diseño clásico: portada con los nombres y foto en arco'] },
