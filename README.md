@@ -11,7 +11,7 @@ Sitio estático (HTML + CSS + un poco de JS), sin paso de build.
 - `/demo/clasico/` — demo del diseño clásico (sobre con carta)
 - `/demo/moderno/` — demo del diseño moderno, blanco y negro (puertas y capítulos)
 - `/demo/rosa/` — demo del diseño romántico (sobre lacrado)
-- `/demo/jardin/` — demo del diseño jardín (sobre de semillas; flores en acuarela que crecen al bajar). Paletas: hoja, lavanda y eucalipto
+- `/demo/jardin/` — demo del diseño jardín (sobre de semillas; flores en acuarela que crecen al bajar). Paletas: hoja, lavanda y eucalipto. «Ver invitación directamente» salta la apertura; la confirmación de la demo se guarda en este navegador (`localStorage`, clave `lazo-demo-rsvp:<ruta>`) para poder recargar y editar; «Explorar demo» agrupa color, panel y tienda
 - `/demo/costa/` — demo del diseño costa, para bodas destino (pase de abordar, el mar en movimiento y tablero de salidas). Paletas: cobalto, verde agua y barro
 - `/demo/gala/` — demo del diseño gala, art déco de noche (medallón dorado que estalla en confeti). Paletas: negro y oro, esmeralda, burdeos y oro rosa
 - `/demo/aurelia/` — demo del diseño Aurelia, editorial en blanco y oro (carpeta con faja dorada que se abre como un libro). Paletas: oro, plata y oro rosa
