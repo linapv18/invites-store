@@ -1,0 +1,558 @@
+<!doctype html>
+<html lang="es" data-lz-tpl="jardin">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ana &amp; León · Demo diseño Jardín — Lazo</title>
+<meta name="description" content="Demo de invitación web de boda: un sobre de semillas que se abre, flores que crecen al bajar, cuenta regresiva, itinerario, viaje, confirmación por persona y preguntas frecuentes.">
+<meta name="theme-color" content="#F3EEE2">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%23B86B4B'/%3E%3Ctext x='32' y='44' font-family='Georgia,serif' font-style='italic' font-size='34' fill='%23FBF1E6' text-anchor='middle'%3E%26%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&amp;family=Pinyon+Script&amp;family=Jost:wght@300;400;500&amp;family=Caveat:wght@500&amp;display=swap" rel="stylesheet">
+<style>
+/* Jardín: botánico y de papelería. Los colores salen de estas variables (paletas en demo/shared/content.js). */
+:root{
+  --bg:#F3EEE2;--paper:#FAF6EC;--ink:#2F3B2C;--leaf:#6F8565;--soft:#A9B79C;--accent:#B86B4B;--bloom:#D9876A;--bloom2:#E7B3A0;--kraft:#C9A877;--kraft2:#B48F5C;
+  --grain:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncR type='linear' slope='.32' intercept='.76'/%3E%3CfeFuncG type='linear' slope='.32' intercept='.76'/%3E%3CfeFuncB type='linear' slope='.32' intercept='.76'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+  --mottle:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='520' height='520'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.007' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncR type='linear' slope='.45' intercept='.7'/%3E%3CfeFuncG type='linear' slope='.45' intercept='.7'/%3E%3CfeFuncB type='linear' slope='.45' intercept='.7'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='520' height='520' filter='url(%23n)'/%3E%3C/svg%3E");
+  --torn:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='16' viewBox='0 0 300 16' preserveAspectRatio='none'%3E%3Cpath d='M0 16V9l9-3 8 4 11-6 9 3 12-5 8 6 13-4 10 5 12-6 11 4 9-3 13 5 10-4 12 3 9-6 12 5 11-3 10 4 13-5 9 6 12-4 10 3 11-5 9 4 12-3 6 4 10-4 9 5 10-3V16Z'/%3E%3C/svg%3E");
+  --vine:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='60'%3E%3Cpath d='M10 0C2 15 18 30 10 45S2 60 10 60' fill='none' stroke='%23000' stroke-width='1.1'/%3E%3Cpath d='M10 14c6-4 9-2 10 0-4 3-7 2-10 0ZM10 42c-6-4-9-2-10 0 4 3 7 2 10 0Z' fill='%23000' fill-opacity='.5'/%3E%3C/svg%3E");
+  /* Panel de los novios y música (demo/shared/panel.css) */
+  --p-bg:var(--bg);--p-surface:var(--paper);--p-ink:var(--ink);--p-muted:var(--leaf);--p-line:color-mix(in srgb,var(--ink) 16%,transparent);--p-accent:var(--ink);--p-on-accent:var(--paper);
+  --p-serif:'Cormorant Garamond',Georgia,serif;--p-sans:Jost,Helvetica,sans-serif;--m-bg:var(--ink);--m-fg:var(--paper)
+}
+*,*::before,*::after{box-sizing:border-box}
+[hidden]{display:none !important}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;font-family:Jost,Helvetica,sans-serif;font-weight:300;color:var(--ink);background:var(--bg)}
+body.locked{overflow:hidden}
+h1,h2,h3,p{margin:0}
+img{display:block;max-width:100%}
+a{color:inherit}
+button{font-family:inherit}
+details summary{list-style:none;cursor:pointer}
+details summary::-webkit-details-marker{display:none}
+a:focus-visible,button:focus-visible,summary:focus-visible,textarea:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.ph-img{width:100%;height:100%;object-fit:cover}
+.deco{position:absolute;pointer-events:none}
+.in-w{position:relative;max-width:560px;margin:0 auto}
+.paper{background-color:var(--bg);background-image:var(--grain),var(--mottle);background-blend-mode:multiply,multiply}
+.edge{position:relative;z-index:1;margin-top:-15px;-webkit-mask:var(--torn) top left/300px 16px repeat-x,linear-gradient(#000 0 0) left 15px/100% 100% no-repeat;mask:var(--torn) top left/300px 16px repeat-x,linear-gradient(#000 0 0) left 15px/100% 100% no-repeat}
+.deckle{clip-path:polygon(0 1%,8% 0,17% .8%,26% 0,35% .6%,44% 0,53% .9%,62% .1%,71% .7%,80% 0,89% .8%,100% .2%,99.2% 10%,100% 20%,99.3% 30%,100% 40%,99.4% 50%,100% 60%,99.2% 70%,100% 80%,99.5% 90%,100% 99.5%,90% 100%,81% 99.2%,72% 100%,63% 99.3%,54% 100%,45% 99.2%,36% 100%,27% 99.4%,18% 100%,9% 99.3%,0 100%,.7% 90%,0 80%,.8% 70%,0 60%,.6% 50%,0 40%,.8% 30%,0 20%,.6% 10%)}
+.script{font-family:'Pinyon Script',cursive;font-weight:400}
+.serif{font-family:'Cormorant Garamond',serif}
+.hand{font:500 18px Caveat,cursive;color:var(--accent)}
+.eb{font-size:10px;font-weight:500;letter-spacing:.28em;text-transform:uppercase;color:var(--leaf)}
+.sec{padding:72px 26px 64px;text-align:center;position:relative;overflow:hidden}
+.sec h2{font:400 clamp(34px,5vw,44px)/1.1 'Cormorant Garamond',serif;margin:10px 0 16px}
+.sec h2 .script{font-size:1.3em;color:var(--accent)}
+.sec p{font-size:15px;line-height:1.85}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:14px 24px;border-radius:99px;border:0;background:var(--ink);color:var(--paper);font:500 10px Jost,sans-serif;letter-spacing:.22em;text-transform:uppercase;text-decoration:none;cursor:pointer;box-shadow:inset 0 0 0 3px var(--ink),inset 0 0 0 4px #ffffff40}
+.kraft{background-color:var(--kraft);background-image:var(--fibers),var(--grain),var(--mottle),linear-gradient(160deg,#ffffff38,transparent 45%,#0000001c);background-blend-mode:normal,multiply,multiply,normal}
+.seedpaper{background-color:#F8F3E7;background-image:var(--speck),var(--grain),var(--mottle);background-size:240px,160px,520px;background-blend-mode:normal,multiply,multiply}
+
+/* ---------- Apertura: sobre de semillas ---------- */
+.opening{position:fixed;inset:0;z-index:60;overflow:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:20px;transition:opacity .8s,visibility 0s .8s}
+.opening.gone{opacity:0;visibility:hidden;pointer-events:none}
+.opening>p{position:relative;z-index:1;font-size:10px;font-weight:500;letter-spacing:.28em;text-transform:uppercase;color:var(--leaf);text-align:center;transition:opacity .5s}
+.opening.done>p{opacity:0}
+.packet{position:relative;z-index:2;width:236px;height:362px;flex:none;perspective:900px;rotate:-2deg;transition:transform 1s cubic-bezier(.4,0,.2,1)}
+.packet::after{content:"";position:absolute;z-index:0;left:6%;right:-6%;bottom:-22px;height:36px;background:radial-gradient(ellipse at center,#3a2a1566,transparent 70%);filter:blur(7px);pointer-events:none;transition:opacity .6s}
+.out.packet::after{opacity:0}
+.pk-back{position:absolute;inset:0;border-radius:3px;z-index:1;background-color:color-mix(in srgb,var(--kraft2),#000 8%);background-image:var(--fibers),var(--grain);background-blend-mode:normal,multiply;transition:transform .9s,opacity .7s}
+.seedcard{position:absolute;left:10px;right:10px;top:8px;height:340px;z-index:2;filter:drop-shadow(0 6px 10px #3a2a1530);transition:transform 1.1s cubic-bezier(.22,1,.36,1)}
+.seedcard>div{height:100%;padding:16px 16px 14px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+.seedcard svg{flex:none}
+.seedcard h3{font-size:42px;line-height:.95;margin:4px 0 6px}
+.seedcard p{font-size:11px;line-height:1.7}
+.seedcard .btn{padding:12px 18px;white-space:nowrap}
+.pk-front{position:absolute;inset:0;z-index:3;border-radius:3px;padding:74px 14px 12px;display:flex;flex-direction:column;gap:6px;box-shadow:0 26px 40px -22px #4a361c99,0 2px 0 #00000014,inset 0 0 0 1px #00000018,inset 0 1px 0 #ffffff40;transition:transform .9s cubic-bezier(.4,0,.2,1),opacity .7s}
+.pk-front::before{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;background:linear-gradient(90deg,#0000002e 0 1px,#ffffff26 1px 2px,#00000014 2px 6px,transparent 6px calc(100% - 6px),#00000014 calc(100% - 6px) calc(100% - 2px),#ffffff26 calc(100% - 2px) calc(100% - 1px),#0000002e calc(100% - 1px)),linear-gradient(0deg,#0000002a 0 15px,#ffffff30 15px 16px,transparent 16px),linear-gradient(0deg,transparent 30%,#ffffff12 31%,transparent 36%),linear-gradient(112deg,transparent 40%,#ffffff2e 48%,transparent 57%)}
+.pk-front::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;background:var(--crumple) center/260px;mix-blend-mode:multiply;opacity:.6}
+.pk-label{position:relative;flex:1;min-height:0;overflow:hidden;padding:12px 12px 9px;text-align:center;box-shadow:0 1px 1px #00000030,0 0 0 1px #0000000d,1px 2px 3px #00000014}
+.pk-label::before{content:"";position:absolute;inset:5px;border:1.5px solid var(--ink);opacity:.55;pointer-events:none}
+.pk-label::after{content:"";position:absolute;inset:8px;border:.5px solid var(--ink);opacity:.4;pointer-events:none}
+.pk-label .k{position:relative;z-index:1;display:inline-block;background:#F8F3E7;padding:0 6px;margin-top:-4px;font-size:7.5px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:var(--accent)}
+.pk-label h3{font-size:34px;line-height:1;margin:-4px 0 2px;text-shadow:0 0 .5px currentColor;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pk-label .var{font:italic 12px 'Cormorant Garamond',serif;text-shadow:0 0 .5px currentColor}
+.pk-meta{display:flex;justify-content:space-around;gap:4px;margin-top:6px;padding-top:6px;border-top:1px dashed color-mix(in srgb,var(--ink) 25%,transparent);font:500 10px Jost}
+.pk-meta>span{min-width:0}
+.pk-meta small{display:block;font-size:6.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--leaf)}
+.pk-meta .city1{display:block;max-width:76px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pk-for{position:relative;z-index:1;flex:none;line-height:1.15;font:italic 15px 'Cormorant Garamond',serif;color:#2E2414;text-align:center;text-shadow:0 1px 0 #ffffff30}
+.pk-for small{display:block;font:500 7px Jost;letter-spacing:.24em;text-transform:uppercase;opacity:.75}
+.pk-flap{position:absolute;left:0;right:0;top:0;height:70px;z-index:4;transform-origin:top;background-color:var(--kraft2);background-image:var(--fibers),var(--grain),linear-gradient(#00000014,#ffffff26 70%,#0000001a);background-blend-mode:normal,multiply,normal;-webkit-mask:linear-gradient(#000 0 0) top/100% calc(100% - 8px) no-repeat,conic-gradient(from -45deg at bottom,#000 90deg,#0000 0) bottom left/12px 8px repeat-x;mask:linear-gradient(#000 0 0) top/100% calc(100% - 8px) no-repeat,conic-gradient(from -45deg at bottom,#000 90deg,#0000 0) bottom left/12px 8px repeat-x;transition:transform .8s cubic-bezier(.4,0,.2,1),z-index 0s .4s,opacity .5s}
+.pk-flap::before{content:"";position:absolute;inset:0;background:var(--crumple) center/260px;mix-blend-mode:multiply;opacity:.55}
+.pk-flap::after{content:"";position:absolute;left:0;right:0;top:0;height:5px;background:linear-gradient(#0000002a,transparent)}
+.sticker{position:absolute;z-index:5;left:50%;top:44px;width:62px;height:62px;margin-left:-31px;border-radius:50%;border:0;padding:0;cursor:pointer;background-color:var(--accent);background-image:radial-gradient(circle at 32% 26%,#ffffff60,transparent 38%),radial-gradient(circle at 70% 78%,#00000030,transparent 55%),var(--grain);background-blend-mode:normal,normal,multiply;color:#FBF1E6;box-shadow:0 2px 3px #0004,0 6px 10px -4px #0005,inset 0 0 0 2px #ffffff30;display:grid;place-items:center;transition:opacity .4s,scale .25s;animation:boPulse 2.4s ease-in-out infinite}
+.sticker>span{font:italic 19px 'Cormorant Garamond',serif;border:1px dashed #FBF1E699;border-radius:50%;width:48px;height:48px;display:grid;place-items:center;overflow:hidden}
+.sticker .lz-seal{font-size:17px}
+.sticker::after{content:"";position:absolute;right:3px;bottom:5px;width:16px;height:12px;border-radius:0 0 50% 0;background:linear-gradient(135deg,transparent 45%,#F3E6D3 46%,#D9C6A8);box-shadow:-1px -1px 2px #0003;rotate:-8deg}
+.sticker:hover{scale:1.08}
+@keyframes boPulse{50%{box-shadow:0 2px 3px #0004,0 6px 10px -4px #0005,inset 0 0 0 2px #ffffff30,0 0 0 9px color-mix(in srgb,var(--accent) 16%,transparent)}}
+.open .sticker{opacity:0;pointer-events:none}
+.open .pk-flap{transform:rotateX(180deg);z-index:1}
+.rise .seedcard{transform:translateY(-212px)}
+.rise.packet{transform:translateY(96px)}
+.out .seedcard{z-index:6;transform:translateY(-118px) rotate(-1.5deg) scale(1.08)}
+.out .pk-front,.out .pk-back{transform:translateY(460px) rotate(5deg);opacity:0}
+.out .pk-flap{opacity:0}
+.seeds{position:absolute;inset:0;pointer-events:none}
+.seeds i{position:absolute;width:5px;height:7px;border-radius:50%;background:#6B5233;opacity:0}
+.open .seeds i{animation:boSeed 1.2s ease-in forwards}
+@keyframes boSeed{0%{opacity:0;transform:translate(0,0)}15%{opacity:.9}100%{opacity:0;transform:translate(var(--x),var(--y)) rotate(200deg)}}
+.opening>p.hint{position:relative;z-index:1;min-height:22px;font:italic 400 18px 'Cormorant Garamond',serif;letter-spacing:0;text-transform:none;color:var(--ink);opacity:.85;text-align:center}
+.ogarden{position:absolute;left:0;right:0;bottom:0;height:200px;pointer-events:none}
+.ogarden svg,.meadow svg{display:block;width:100%;height:100%}
+@media (max-height:700px){.packet{scale:.86;margin:-24px 0}}
+
+/* ---------- Invitación ---------- */
+.hero{padding:64px 24px 64px;text-align:center;position:relative;overflow:hidden}
+.wreath{position:relative;width:260px;height:310px;margin:18px auto 14px}
+.wreath .oval{position:absolute;inset:34px 44px;border-radius:50%;overflow:hidden;border:7px solid var(--paper);box-shadow:0 14px 30px -18px color-mix(in srgb,var(--ink) 60%,transparent)}
+.wreath svg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.hero h1{font-size:clamp(62px,9vw,84px);line-height:.9;font-weight:400}
+.hero h1>span{display:block}
+.hero h1 .y{font:italic 24px 'Cormorant Garamond',serif;color:var(--accent);margin:2px 0}
+.hero .date{display:inline-block;font:400 20px 'Cormorant Garamond',serif;margin-top:18px;letter-spacing:.06em;padding:4px 16px;border-top:1px solid color-mix(in srgb,var(--ink) 25%,transparent);border-bottom:1px solid color-mix(in srgb,var(--ink) 25%,transparent)}
+.hero .msg{margin:18px auto 0;max-width:420px;font:italic 19px/1.5 'Cormorant Garamond',serif}
+.polas{display:flex;flex-wrap:wrap;justify-content:center;gap:18px 0;margin:30px 0 8px}
+.pola{position:relative;width:clamp(96px,30vw,128px);padding:6px 6px 24px;background:#FFFDF8;box-shadow:0 10px 18px -10px color-mix(in srgb,var(--ink) 55%,transparent);margin:0 -6px}
+.pola:nth-child(3n+1){rotate:-6deg}.pola:nth-child(3n+2){rotate:3deg;translate:0 12px;z-index:1}.pola:nth-child(3n){rotate:-2deg}
+.pola>div{aspect-ratio:4/5;overflow:hidden}
+.pola::before{content:"";position:absolute;z-index:1;top:-8px;left:50%;width:46px;height:15px;margin-left:-23px;rotate:-4deg;background:repeating-linear-gradient(45deg,#E9C9B4cc 0 5px,#F4DFD0cc 5px 10px);clip-path:polygon(0 10%,6% 0,12% 12%,20% 0,100% 0,94% 15%,100% 30%,95% 50%,100% 70%,94% 85%,100% 100%,0 100%,5% 80%,0 60%,6% 40%,0 25%)}
+.pola:nth-child(3n+2)::before{background:repeating-linear-gradient(-45deg,#C9D3BBcc 0 5px,#DFE6D4cc 5px 10px)}
+.pola .hand{position:absolute;left:0;right:0;bottom:2px;font-size:14px}
+.cd{color:var(--paper);background-color:var(--ink);background-image:var(--grain),repeating-linear-gradient(0deg,#ffffff07 0 1px,transparent 1px 3px),repeating-linear-gradient(90deg,#00000012 0 1px,transparent 1px 3px);background-blend-mode:multiply,normal,normal}
+.cd .eb{color:var(--soft)}
+.cd .time{font:400 56px 'Cormorant Garamond',serif;line-height:1}
+.cd .note{margin-top:12px;font:italic 19px 'Cormorant Garamond',serif;color:var(--soft)}
+.twine{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;height:26px;margin:22px auto -30px;max-width:420px;position:relative;z-index:1}
+.twine i{justify-self:center;width:1.5px;height:30px;background:repeating-linear-gradient(170deg,#D8C3A0 0 2px,#A88A5E 2px 4px)}
+.tags4{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:34px auto 0;max-width:420px}
+.tag4{position:relative;padding:22px 0 10px;color:#3D2E1A;clip-path:polygon(22% 0,78% 0,100% 16%,100% 100%,0 100%,0 16%);transform-origin:50% -24px;animation:tSwing 2.8s ease-in-out infinite alternate}
+.tag4:nth-child(2){animation-delay:-.7s}.tag4:nth-child(3){animation-delay:-1.4s}.tag4:nth-child(4){animation-delay:-2.1s}
+@keyframes tSwing{from{transform:rotate(-3deg)}to{transform:rotate(3deg)}}
+.tag4::before{content:"";position:absolute;top:7px;left:50%;width:8px;height:8px;margin-left:-4px;border-radius:50%;background:var(--ink);box-shadow:0 0 0 2px #E8D9BF}
+.tag4 b{display:block;font:500 30px 'Cormorant Garamond',serif;font-variant-numeric:tabular-nums}
+.tag4 span{font-size:8px;letter-spacing:.2em;text-transform:uppercase}
+.tl{list-style:none;margin:30px 0 0;padding:0;text-align:left;position:relative}
+.tl::before{content:"";position:absolute;left:4px;top:0;bottom:0;width:20px;background:var(--leaf);-webkit-mask:var(--vine) repeat-y;mask:var(--vine) repeat-y}
+.tl li{position:relative;padding:0 0 26px 40px}
+.tl li::before{content:"";position:absolute;left:7px;top:3px;width:14px;height:14px;border-radius:50%;background:radial-gradient(circle,#C9A24A 0 25%,var(--bloom) 28% 100%);box-shadow:0 0 0 3px var(--bg)}
+.tl .t{font:500 18px Caveat,cursive;color:var(--accent)}
+.tl h3{font:400 25px 'Cormorant Garamond',serif;margin:0 0 2px}
+.sec .tl p{font-size:14px;line-height:1.6}
+.tl a{font-size:12px;text-underline-offset:4px;text-decoration-style:wavy;text-decoration-color:var(--soft)}
+.ncard{position:relative;margin-top:18px;filter:drop-shadow(0 10px 14px color-mix(in srgb,var(--ink) 15%,transparent))}
+.ncard>div{padding:32px 24px 28px}
+.blobs{display:flex;justify-content:center;gap:10px;margin-top:12px}
+.blobs i{width:28px;height:24px;border-radius:58% 42% 55% 45%/50% 60% 40% 50%;box-shadow:inset 0 0 0 1px #0001,inset -3px -3px 6px #00000012}
+.lz-content .blobs{display:none}
+.tagcards{display:flex;flex-direction:column;gap:18px;margin-top:26px;text-align:left}
+.tagc{position:relative;padding:22px 20px 20px 48px;color:#3D2E1A;clip-path:polygon(0 18%,9% 0,100% 0,100% 100%,9% 100%,0 82%);filter:drop-shadow(0 6px 8px #0002)}
+.tagc:nth-child(odd){rotate:-1.2deg}.tagc:nth-child(even){rotate:1deg}
+.tagc::before{content:"";position:absolute;left:15px;top:50%;width:12px;height:12px;margin-top:-6px;border-radius:50%;background:var(--bg);box-shadow:inset 0 1px 2px #0005,0 0 0 3px #E3D2B2}
+.tagc h3{font:400 24px 'Cormorant Garamond',serif;margin:4px 0}
+.sec .tagc p{font-size:14px;line-height:1.7}
+.tagc b{font-weight:500}
+.tagc .eb{color:#6B4F2C}
+.wash{position:absolute;inset:30px 20px;width:calc(100% - 40px);height:calc(100% - 60px);pointer-events:none}
+blockquote{position:relative;margin:12px 0;font:italic 27px/1.35 'Cormorant Garamond',serif}
+.faq{text-align:left;margin-top:20px}
+.faq details{border-bottom:1px dashed color-mix(in srgb,var(--ink) 30%,transparent)}
+.faq summary{display:flex;justify-content:space-between;gap:12px;padding:18px 0;font:400 21px 'Cormorant Garamond',serif}
+.faq summary::after{content:"✿";color:var(--accent);transition:rotate .4s}
+.faq details[open] summary::after{rotate:90deg}
+.sec .faq p{font-size:14px;padding-bottom:18px;text-align:left}
+.stamp{position:absolute;right:12px;top:10px;width:60px;height:60px;border-radius:50%;border:2px solid var(--accent);color:var(--accent);display:grid;place-items:center;font:500 9px/1.3 Jost;letter-spacing:.2em;rotate:14deg;opacity:.8;filter:url(#rough)}
+.stamp::before{content:"";position:absolute;inset:4px;border-radius:50%;border:1px solid currentColor}
+.person{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:12px 0;border-bottom:1px dashed color-mix(in srgb,var(--ink) 20%,transparent);text-align:left}
+.person span{font:400 20px 'Cormorant Garamond',serif}
+.person div{display:flex;gap:6px;flex:none}
+.person button{width:40px;height:40px;border-radius:50%;border:1px solid color-mix(in srgb,var(--ink) 27%,transparent);background:#FFFDF8;cursor:pointer;color:var(--ink);font-size:14px}
+.person button[aria-pressed=true]{background:var(--leaf);border-color:var(--leaf);color:#fff}
+.person button.no[aria-pressed=true]{background:var(--accent);border-color:var(--accent)}
+textarea{width:100%;margin-top:6px;border:0;border-bottom:1px solid color-mix(in srgb,var(--ink) 27%,transparent);background:repeating-linear-gradient(transparent 0 27px,color-mix(in srgb,var(--ink) 13%,transparent) 27px 28px);padding:4px 2px;font:500 19px/28px Caveat,cursive;color:var(--ink);resize:none}
+label{display:block;text-align:left;font-size:13px;font-weight:500;margin-top:18px}
+.rs-err{margin-top:14px;font-size:13px;color:var(--accent)}
+.rs-done{padding:20px 0 6px}
+.rs-done .script{font-size:52px;color:var(--accent)}
+.meadow{height:150px;margin:34px -26px -64px;pointer-events:none}
+footer{padding:60px 20px 120px;text-align:center;color:var(--paper);background-color:var(--ink);background-image:var(--grain);background-blend-mode:multiply}
+footer .script{font-size:46px}
+footer .eb{color:var(--soft);margin-top:6px}
+
+/* ---------- Movimiento ---------- */
+[data-rv]{opacity:0;transform:translateY(26px);transition:opacity .9s ease,transform 1s cubic-bezier(.22,1,.36,1)}
+[data-rv=left]{transform:translateX(-60px) rotate(-8deg)}
+[data-rv=right]{transform:translateX(60px) rotate(8deg)}
+[data-rv=stamp]{transform:scale(2.2) rotate(-25deg);transition:opacity .25s,transform .5s cubic-bezier(.5,1.7,.6,1)}
+[data-rv].in,.lz-editor [data-rv]{opacity:1;transform:none}
+.grow .st{stroke-dasharray:1;stroke-dashoffset:1}
+.grow .lf,.grow .bl{transform:scale(0);transform-box:fill-box}
+.grow .lf{transform-origin:0% 50%}
+.grow .bl{transform-origin:50% 50%}
+.grow.in .st{animation:gDraw var(--t,1.3s) var(--d,0s) ease-out forwards}
+.grow.in .lf{animation:gPop .8s var(--d,0s) cubic-bezier(.3,1.6,.5,1) forwards}
+.grow.in .bl{animation:gBloom 1.2s var(--d,0s) cubic-bezier(.3,1.45,.5,1) forwards}
+.grow.in .pl{animation:gSway 5s ease-in-out var(--sd,0s) infinite alternate}
+@keyframes gDraw{to{stroke-dashoffset:0}}
+@keyframes gPop{to{transform:scale(1)}}
+@keyframes gBloom{0%{transform:scale(0) rotate(-70deg)}100%{transform:scale(1) rotate(0)}}
+@keyframes gSway{from{transform:rotate(-2.5deg)}to{transform:rotate(3deg)}}
+.bfly{position:absolute;left:0;top:0;z-index:3;width:30px;pointer-events:none;offset-path:path('M-40 560C40 420 110 470 170 330S290 150 330 210S390 120 420 60');offset-rotate:auto 90deg;animation:bFly 16s linear 1s infinite}
+@keyframes bFly{from{offset-distance:0%}to{offset-distance:100%}}
+.bfly .w{transform-box:fill-box;transform-origin:center;animation:bFlap .22s ease-in-out infinite alternate}
+@keyframes bFlap{to{transform:scaleX(.2)}}
+.hero .in-w>*:not(.bfly){position:relative;z-index:1}
+@media (min-width:700px){.sec{padding-left:40px;padding-right:40px}}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none !important;transition:none !important}[data-rv]{opacity:1;transform:none}.grow .st{stroke-dashoffset:0}.grow .lf,.grow .bl{transform:none}.bfly,</style>
+<link rel="stylesheet" href="/demo/shared/panel.css">
+</head>
+<body class="locked">
+<!-- Filtros: acuarela (bordes que sangran), trazo de sello y sombras de pétalos y hojas -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <filter id="wc" x="-20%" y="-20%" width="140%" height="140%"><feTurbulence type="fractalNoise" baseFrequency=".04" numOctaves="3" seed="4" result="t"/><feDisplacementMap in="SourceGraphic" in2="t" scale="7"/><feGaussianBlur stdDeviation=".35"/></filter>
+  <filter id="rough" x="-5%" y="-5%" width="110%" height="110%"><feTurbulence type="fractalNoise" baseFrequency=".7" numOctaves="2" seed="2" result="t"/><feDisplacementMap in="SourceGraphic" in2="t" scale="2.4"/></filter>
+  <linearGradient id="petShade" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#3a140c" stop-opacity=".42"/><stop offset=".4" stop-color="#3a140c" stop-opacity="0"/><stop offset=".85" stop-color="#fff" stop-opacity=".18"/><stop offset="1" stop-color="#fff" stop-opacity=".4"/></linearGradient>
+  <linearGradient id="leafShade" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".28"/><stop offset=".48" stop-color="#fff" stop-opacity="0"/><stop offset=".52" stop-color="#000" stop-opacity=".12"/><stop offset="1" stop-color="#000" stop-opacity=".26"/></linearGradient>
+  <radialGradient id="eyeShade" cx=".4" cy=".35" r=".7"><stop offset="0" stop-color="#fff" stop-opacity=".35"/><stop offset="1" stop-color="#000" stop-opacity=".3"/></radialGradient>
+</svg>
+
+<div id="app"></div>
+<div class="demo-bar" id="demoBar" hidden></div>
+
+<script>
+/* Plantilla Jardín. El HTML se arma aquí (las ilustraciones son SVG generados) ANTES de cargar
+   demo/shared/content.js, para que el editor encuentre las marcas data-lz… al llenar el contenido. */
+(function () {
+  var LANG = (document.documentElement.lang || 'es').slice(0, 2) === 'en' ? 'en' : 'es';
+  var S = {
+    es: {
+      envIntro: 'Una invitación para un día inolvidable', envClosing: 'Con todo nuestro cariño', openAria: 'Invitación en un sobre de semillas', sticker: 'Despegar la estampilla y abrir el sobre',
+      hint: 'Despega la estampilla para abrir tu invitación', married: '¡Nos casamos!', seatsTxt: 'Hemos reservado <b style="font-weight:500">4 cupos</b> para ustedes.', enter: 'Abrir invitación →',
+      lot: 'Semillas de amor · Lote Nº', variety: 'Variedad “Para siempre”', sow: 'Siembra', blooms: 'Florece en', seats: 'Cupos', for: 'Para',
+      guest: 'Familia Rodríguez', n1: 'Ana', n2: 'León', y: 'y', city: 'Oaxaca, México', date: '14 · Marzo · 2027', getting: 'Nos vamos a casar', msg: 'Nos casamos y queremos celebrarlo contigo.',
+      story: 'Nuestra historia', storyTitle: 'Cómo empezó todo', storyTxt: 'Nos conocimos en una boda —qué ironía— y desde ese baile no hemos dejado de caminar juntos. Ahora queremos que estén con nosotros en el capítulo más bonito.',
+      caps: ['el primer baile', 'nuestro lugar', 'nosotros'], photoAlt: 'Ana y León',
+      bigDay: 'El gran día', cdName: 'Ceremonia civil', time0: '1:00 p. m.', cdNote: 'Cada vez falta menos para celebrar juntos.', units: ['Días', 'Horas', 'Min', 'Seg'],
+      dayPat: '{W}, {d} de {M} de {Y}', dayTxt: 'Domingo, 14 de marzo de 2027', schedule: 'El <span class="script">itinerario</span>',
+      events: [['1:00 p. m.', 'Ceremonia civil', 'Jardín Etnobotánico', 'Reforma s/n, Centro'], ['2:30 p. m.', 'Comida familiar', 'Casa Oaxaca', 'García Vigil 407, Centro'], ['8:00 p. m.', 'Fiesta', 'Hacienda Los Laureles', 'Hidalgo 21, San Felipe del Agua']],
+      dress: 'Código de vestimenta', dressCode: 'Formal', dressNotes: 'Telas frescas: en marzo Oaxaca es cálida de día y fresca de noche.', reserved: 'Colores reservados:', dressColors: 'Blanco y marfil',
+      fromAway: 'Si vienen de fuera', travel: 'Viaje y <span class="script">alojamiento</span>', travelIntro: 'Si vienen de fuera, aquí tienen todo para organizar su viaje.',
+      stay: 'Alojamiento', hotel: 'Hotel Casa Antigua', hotelAddress: 'Calle Macedonio Alcalá 304, Centro', rate: 'Código de tarifa:', hotelCode: 'BODA-AL', hotelNotes: 'Tarifa válida hasta el 1 de febrero.', book: 'Reservar →',
+      getThere: 'Cómo llegar', getThereT: 'Aeropuerto y transporte', airportL: 'Aeropuerto:', airport: 'Aeropuerto Internacional de Oaxaca (OAX), a 20 minutos del centro.', transportL: 'Transporte:', transport: 'Habrá camionetas del hotel a la fiesta y de regreso.',
+      guide: 'Guía de la ciudad', guideT: 'Qué hacer', foodL: 'Restaurantes:', food: 'Levadura de Olla, Casa Oaxaca y los mercados.', cultureL: 'Cultura:', culture: 'Santo Domingo y el Museo Textil.', plansL: 'Actividades:', plans: 'Hierve el Agua y Monte Albán.',
+      quote: 'Amar no es mirarse el uno al otro; es mirar juntos en la misma dirección.', quoteAuthor: 'Antoine de Saint-Exupéry',
+      faqK: 'Todo lo que necesitas saber', faqT: 'Preguntas <span class="script">frecuentes</span>',
+      faqs: [['¿Cuál es el código de vestimenta?', 'Formal. Evita el blanco, por favor.'], ['¿Pueden ir niños?', 'Nuestra celebración es solo para adultos.'], ['¿Hay mesa de regalos?', 'Su compañía es nuestro mejor regalo. Si desean tener un detalle, encontrarán los datos aquí.']],
+      rsvpDatePat: '{d} de {M} de {Y}', rsvpDate: '14 de marzo de 2027', rsvpT: 'Nos encantará<br><span class="script" style="font-size:48px">celebrar con ustedes</span>', seatsRes: '4 cupos reservados',
+      rsvpMsg: 'Confirma quiénes de esta invitación podrán acompañarnos.', until: 'Pueden cambiar su respuesta hasta el', deadline: '14 de febrero de 2027',
+      diet: 'Restricciones alimentarias (opcional)', note: 'Un mensaje para nosotros (opcional)', save: 'Guardar confirmación →', err: 'Indiquen sí o no para cada persona.',
+      yes: 'Asistirá', no: 'No asistirá', thanks: '¡Gracias!', edit: 'Editar respuesta', will: function (y, n) { return y ? 'Asistirán ' + y + ' de ' + n + ' personas. ¡Nos vemos pronto!' : 'Gracias por avisarnos. Los extrañaremos.'; },
+      footDate: '14.03.2027', demo: 'Demo', panel: 'Panel de novios', store: 'Tienda', storeUrl: '/#disenos'
+    },
+    en: {
+      envIntro: 'An invitation to an unforgettable day', envClosing: 'With all our love', openAria: 'Invitation in a seed packet', sticker: 'Peel off the sticker and open the packet',
+      hint: 'Peel off the sticker to open your invitation', married: 'We’re getting married!', seatsTxt: 'We’ve saved <b style="font-weight:500">4 seats</b> for you.', enter: 'Open invitation →',
+      lot: 'Seeds of love · Lot No.', variety: '“Forever” variety', sow: 'Sown', blooms: 'Blooms in', seats: 'Seats', for: 'For',
+      guest: 'The Rodríguez family', n1: 'Anna', n2: 'Leo', y: 'and', city: 'Oaxaca, Mexico', date: '14 · March · 2027', getting: 'We’re getting married', msg: 'We’re getting married and want to celebrate with you.',
+      story: 'Our story', storyTitle: 'How it all began', storyTxt: 'We met at a wedding —how ironic— and since that dance we haven’t stopped walking together. Now we want you with us for the most beautiful chapter.',
+      caps: ['our first dance', 'our place', 'us'], photoAlt: 'Anna and Leo',
+      bigDay: 'The big day', cdName: 'Civil ceremony', time0: '1:00 PM', cdNote: 'Every day brings us closer to celebrating together.', units: ['Days', 'Hours', 'Min', 'Sec'],
+      dayPat: '{W}, {Mc} {d}, {Y}', dayTxt: 'Sunday, March 14, 2027', schedule: 'The <span class="script">schedule</span>',
+      events: [['1:00 PM', 'Civil ceremony', 'Ethnobotanical Garden', 'Reforma s/n, Centro'], ['2:30 PM', 'Family lunch', 'Casa Oaxaca', 'García Vigil 407, Centro'], ['8:00 PM', 'Party', 'Hacienda Los Laureles', 'Hidalgo 21, San Felipe del Agua']],
+      dress: 'Dress code', dressCode: 'Formal', dressNotes: 'Light fabrics: in March Oaxaca is warm by day and cool at night.', reserved: 'Reserved colors:', dressColors: 'White and ivory',
+      fromAway: 'If you’re traveling', travel: 'Travel and <span class="script">stay</span>', travelIntro: 'If you’re coming from out of town, here’s everything to plan your trip.',
+      stay: 'Where to stay', hotel: 'Hotel Casa Antigua', hotelAddress: 'Calle Macedonio Alcalá 304, Centro', rate: 'Rate code:', hotelCode: 'BODA-AL', hotelNotes: 'Rate valid until February 1.', book: 'Book →',
+      getThere: 'Getting there', getThereT: 'Airport and transport', airportL: 'Airport:', airport: 'Oaxaca International Airport (OAX), 20 minutes from downtown.', transportL: 'Transport:', transport: 'Shuttles will run from the hotel to the party and back.',
+      guide: 'City guide', guideT: 'Things to do', foodL: 'Restaurants:', food: 'Levadura de Olla, Casa Oaxaca and the markets.', cultureL: 'Culture:', culture: 'Santo Domingo and the Textile Museum.', plansL: 'Activities:', plans: 'Hierve el Agua and Monte Albán.',
+      quote: 'Love does not consist in gazing at each other, but in looking outward together in the same direction.', quoteAuthor: 'Antoine de Saint-Exupéry',
+      faqK: 'Everything you need to know', faqT: 'Frequently asked <span class="script">questions</span>',
+      faqs: [['What is the dress code?', 'Formal. Please avoid white.'], ['Are kids welcome?', 'Our celebration is adults only.'], ['Is there a gift registry?', 'Your presence is our best gift. If you’d like to give something, you’ll find the details here.']],
+      rsvpDatePat: '{Mc} {d}, {Y}', rsvpDate: 'March 14, 2027', rsvpT: 'We’d love to<br><span class="script" style="font-size:48px">celebrate with you</span>', seatsRes: '4 seats reserved',
+      rsvpMsg: 'Let us know who from this invitation can join us.', until: 'You can change your answer until', deadline: 'February 14, 2027',
+      diet: 'Dietary restrictions (optional)', note: 'A message for us (optional)', save: 'Save RSVP →', err: 'Please answer yes or no for each person.',
+      yes: 'Will attend', no: 'Won’t attend', thanks: 'Thank you!', edit: 'Edit answer', will: function (y, n) { return y ? y + ' of ' + n + ' people will attend. See you soon!' : 'Thanks for letting us know. We’ll miss you.'; },
+      footDate: '03.14.2027', demo: 'Demo', panel: 'Couple’s dashboard', store: 'Store', storeUrl: '/en/#designs'
+    }
+  }[LANG];
+  window.JardinS = S;
+
+  /* Papel sembrable (semillas y fibras) y papel kraft (fibras y arrugas): texturas generadas una vez. */
+  var rng = function (seed) { var r = seed; return function () { return (r = (r * 9301 + 49297) % 233280) / 233280; }; };
+  var enc = function (t) { return t.replace(/</g, '%3C').replace(/>/g, '%3E'); };
+  (function () {
+    var Q = rng(7), cols = ['8E7B5A', 'C69B83', '7E8F6E', 'A8906B', 'B9A27E'], d = '';
+    for (var i = 0; i < 46; i++) { var x = (Q() * 240).toFixed(1), y = (Q() * 240).toFixed(1), c = cols[i % 5]; d += i % 4 ? "<ellipse cx='" + x + "' cy='" + y + "' rx='" + (0.6 + Q() * 1.1).toFixed(1) + "' ry='" + (0.5 + Q() * .7).toFixed(1) + "' transform='rotate(" + ((Q() * 180) | 0) + ' ' + x + ' ' + y + ")' fill='%23" + c + "' opacity='.75'/>" : "<path d='M" + x + ' ' + y + 'q' + (Q() * 6 - 3).toFixed(1) + ' 3 ' + (Q() * 8 - 4).toFixed(1) + " 7' stroke='%23" + c + "' stroke-width='.5' fill='none' opacity='.6'/>"; }
+    document.documentElement.style.setProperty('--speck', 'url("data:image/svg+xml,' + enc("<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'>" + d + '</svg>') + '")');
+    var R = rng(21), fc = ['%235a4126', '%23f3e4c6', '%23826142', '%23e9d6b3'], f = '';
+    for (var j = 0; j < 70; j++) { var fx = R() * 260, fy = R() * 260, l = 4 + R() * 12, a = R() * Math.PI; f += "<path d='M" + fx.toFixed(1) + ' ' + fy.toFixed(1) + 'q' + (Math.cos(a) * l / 2 + (R() - .5) * 3).toFixed(1) + ' ' + (Math.sin(a) * l / 2 + (R() - .5) * 3).toFixed(1) + ' ' + (Math.cos(a) * l).toFixed(1) + ' ' + (Math.sin(a) * l).toFixed(1) + "' stroke='" + fc[j % 4] + "' stroke-opacity='" + (.25 + R() * .3).toFixed(2) + "' stroke-width='.5' fill='none'/>"; }
+    document.documentElement.style.setProperty('--fibers', 'url("data:image/svg+xml,' + enc("<svg xmlns='http://www.w3.org/2000/svg' width='260' height='260'>" + f + '</svg>') + '")');
+    document.documentElement.style.setProperty('--crumple', 'url("data:image/svg+xml,' + enc("<svg xmlns='http://www.w3.org/2000/svg' width='260' height='260'><filter id='c'><feTurbulence type='fractalNoise' baseFrequency='.016' numOctaves='4' seed='11' stitchTiles='stitch'/><feDiffuseLighting lighting-color='%23fff' surfaceScale='4'><feDistantLight azimuth='225' elevation='64'/></feDiffuseLighting></filter><rect width='260' height='260' filter='url(%23c)'/></svg>") + '")');
+  })();
+
+  /* ---------- Ilustraciones en acuarela que crecen ---------- */
+  var LEAFD = function (l) { return 'M0 0C' + l * .22 + ' ' + -l * .34 + ' ' + l * .68 + ' ' + -l * .32 + ' ' + l + ' 0C' + l * .7 + ' ' + l * .25 + ' ' + l * .26 + ' ' + l * .3 + ' 0 0Z'; };
+  var leafBody = function (l, c) { return '<path d="' + LEAFD(l) + '" style="fill:' + c + '"/><path d="' + LEAFD(l) + '" fill="url(#leafShade)"/><path d="M0 0Q' + l * .5 + ' ' + -l * .05 + ' ' + l * .94 + ' 0" stroke="#1f2a1c" stroke-opacity=".32" stroke-width=".6" fill="none"/>' + (l > 16 ? '<path d="M' + l * .3 + ' ' + -l * .02 + 'l' + l * .12 + ' ' + -l * .12 + 'M' + l * .55 + ' ' + -l * .03 + 'l' + l * .12 + ' ' + -l * .1 + 'M' + l * .3 + ' ' + -l * .02 + 'l' + l * .12 + ' ' + l * .1 + 'M' + l * .55 + ' ' + -l * .03 + 'l' + l * .1 + ' ' + l * .08 + '" stroke="#1f2a1c" stroke-opacity=".18" stroke-width=".45" fill="none"/>' : ''); };
+  var PETAL = function (L, W) { return 'M0 0C' + -W * .6 + ' ' + -L * .25 + ' ' + -W + ' ' + -L * .72 + ' ' + -W * .48 + ' ' + -L + 'Q' + -W * .2 + ' ' + -L * .93 + ' 0 ' + -L * .88 + 'Q' + W * .2 + ' ' + -L * .93 + ' ' + W * .48 + ' ' + -L + 'C' + W + ' ' + -L * .72 + ' ' + W * .6 + ' ' + -L * .25 + ' 0 0Z'; };
+  // Flor tipo cosmos: dos capas de pétalos con sombra en la base, nervaduras y estambres.
+  function flower(x, y, r, c, n) {
+    var Q = rng(Math.round(Math.abs(x * 7 + y * 13 + r * 31)) + 1); n = Math.max(n || 6, 7);
+    var s = '<g transform="translate(' + x + ' ' + y + ')">';
+    for (var layer = 0; layer < (r > 9 ? 2 : 1); layer++) for (var i = 0; i < n; i++) {
+      var a = i * 360 / n + layer * 180 / n + (Q() - .5) * 12, L = r * (layer ? .74 : 1) * (.9 + Q() * .2), W = r * (layer ? .34 : .4), d = PETAL(L, W);
+      s += '<g transform="rotate(' + a.toFixed(1) + ')"><path d="' + d + '" style="fill:' + c + '" opacity="' + (layer ? .96 : .88) + '"/><path d="' + d + '" fill="url(#petShade)"/>' + (r > 11 ? '<path d="M0 ' + -L * .14 + 'V' + -L * .8 + 'M0 ' + -L * .3 + 'L' + -W * .24 + ' ' + -L * .74 + 'M0 ' + -L * .3 + 'L' + W * .24 + ' ' + -L * .74 + '" stroke="#4a1a10" stroke-opacity=".16" stroke-width=".5" fill="none"/>' : '') + '</g>';
+    }
+    s += '<circle r="' + (r * .25).toFixed(2) + '" fill="#C9962E"/><circle r="' + (r * .25).toFixed(2) + '" fill="url(#eyeShade)"/>';
+    for (var k = 0; k < (r > 9 ? 16 : 7); k++) { var b = Q() * Math.PI * 2, dd = Math.sqrt(Q()) * r * .24; s += '<circle cx="' + (Math.cos(b) * dd).toFixed(1) + '" cy="' + (Math.sin(b) * dd).toFixed(1) + '" r="' + (r * .03 + Q() * r * .03).toFixed(2) + '" fill="' + (k % 3 ? '#F0CC55' : '#6E3F0E') + '"/>'; }
+    return s + '</g>';
+  }
+  // Rosa abierta: capas de pétalos redondos que se cierran hacia el centro.
+  function rose(r, c) {
+    var s = '';
+    for (var k = 0; k < 4; k++) { var R = r * (1 - k * .22); for (var i = 0; i < 5; i++) { var e = '<ellipse cy="' + (-R * .42).toFixed(2) + '" rx="' + (R * .52).toFixed(2) + '" ry="' + (R * .52).toFixed(2) + '"'; s += '<g transform="rotate(' + (i * 72 + k * 31) + ')">' + e + ' style="fill:' + c + '"/>' + e + ' fill="url(#petShade)"/><path d="M' + (-R * .45).toFixed(1) + ' ' + (-R * .62).toFixed(1) + 'Q0 ' + (-R * .98).toFixed(1) + ' ' + (R * .45).toFixed(1) + ' ' + (-R * .62).toFixed(1) + '" stroke="#fff" stroke-opacity=".3" stroke-width=".7" fill="none"/></g>'; } }
+    return s + '<path d="M' + -r * .16 + ' ' + r * .02 + 'c0-' + r * .16 + ' ' + r * .3 + '-' + r * .2 + ' ' + r * .3 + ' 0s-' + r * .22 + ' ' + r * .16 + '-' + r * .22 + '-' + r * .02 + '" stroke="#4a1a10" stroke-opacity=".38" stroke-width="' + (r * .05).toFixed(2) + '" fill="none"/>';
+  }
+  var at = function (x, y, inner) { return '<g transform="translate(' + x.toFixed(1) + ' ' + y.toFixed(1) + ')">' + inner + '</g>'; };
+  var gstem = function (d, del, t, col, w) { return '<path class="st" pathLength="1" d="' + d + '" fill="none" stroke-linecap="round" style="stroke:' + (col || 'var(--leaf)') + ';--d:' + del.toFixed(2) + 's;--t:' + (t || 1.3) + 's" stroke-width="' + (w || 1.3) + '" opacity=".8"/>'; };
+  var gleaf = function (x, y, l, a, c, del, o) { return '<g transform="translate(' + x.toFixed(1) + ' ' + y.toFixed(1) + ') rotate(' + a.toFixed(0) + ')"><g class="lf" style="--d:' + del.toFixed(2) + 's" opacity="' + (o || .6) + '">' + leafBody(l, c) + '</g></g>'; };
+  var gflower = function (x, y, r, c, del, n) { return at(x, y, '<g class="bl" style="--d:' + del.toFixed(2) + 's">' + flower(0, 0, r, c, n) + '</g>'); };
+  var grose = function (x, y, r, c, del) { return at(x, y, '<g class="bl" style="--d:' + del.toFixed(2) + 's">' + rose(r, c) + '</g>'); };
+  var gbud = function (x, y, r, c, del) { return at(x, y, '<g class="bl" style="--d:' + del.toFixed(2) + 's"><ellipse rx="' + r * .6 + '" ry="' + r + '" style="fill:' + c + '" opacity=".7"/></g>'); };
+  function garden(w, h, n, seed) {
+    var Q = rng(seed), cols = ['var(--bloom)', 'var(--bloom2)', 'var(--accent)'], s = '';
+    for (var i = 0; i < n * 2; i++) { var x0 = Q() * w, l = 12 + Q() * 22; s += gstem('M' + x0.toFixed(1) + ' ' + h + 'q' + ((Q() - .5) * 8).toFixed(1) + ' ' + (-l / 2).toFixed(1) + ' ' + ((Q() - .5) * 14).toFixed(1) + ' ' + (-l).toFixed(1), Q() * .8, .7, 'var(--soft)', 1.2); }
+    for (var j = 0; j < n; j++) {
+      var x = (j + .5) * w / n + (Q() - .5) * w / n * .7, ht = h * (.38 + Q() * .55), dx = (Q() - .5) * 44, d0 = j * .13 + Q() * .4, sd = (Q() * 4).toFixed(2), tx = x + dx, ty = h - ht;
+      var p = gstem('M' + x.toFixed(1) + ' ' + h + 'C' + (x + dx * .1).toFixed(1) + ' ' + (h - ht * .45).toFixed(1) + ' ' + tx.toFixed(1) + ' ' + (h - ht * .6).toFixed(1) + ' ' + tx.toFixed(1) + ' ' + ty.toFixed(1), d0, 1.2);
+      [.28, .52, .74].forEach(function (t, k) { if (k === 2 && Q() < .4) return; p += gleaf(x + dx * t * t * 1.1, h - ht * t, 12 + Q() * 11, (k % 2 ? -30 : -150) + (Q() - .5) * 30, k % 2 ? 'var(--leaf)' : 'var(--soft)', d0 + t * 1.1); });
+      var kind = Q(), c = cols[j % 3];
+      if (kind < .55) p += gflower(tx, ty, 9 + Q() * 9, c, d0 + 1.15, 5 + (j % 3));
+      else if (kind < .82) p += gflower(tx - 6, ty + 3, 6.5, c, d0 + 1.15, 5) + gflower(tx + 6, ty - 3, 7.5, cols[(j + 1) % 3], d0 + 1.3, 5) + gbud(tx, ty - 11, 4, c, d0 + 1.45);
+      else p += gbud(tx, ty, 5 + Q() * 3, c, d0 + 1.15);
+      s += '<g class="pl" style="transform-origin:' + x.toFixed(0) + 'px ' + h + 'px;--sd:-' + sd + 's">' + p + '</g>';
+    }
+    return '<svg class="grow" viewBox="0 0 ' + w + ' ' + h + '" preserveAspectRatio="xMidYMax slice" aria-hidden="true"><g filter="url(#wc)">' + s + '</g></svg>';
+  }
+  var BFLY = '<div class="bfly" aria-hidden="true"><svg viewBox="0 0 30 24" width="30"><g class="w"><path d="M15 12C9 0 0 2 2 9s9 5 13 3Z" style="fill:var(--bloom)" opacity=".9"/><path d="M15 12C21 0 30 2 28 9s-9 5-13 3Z" style="fill:var(--bloom)" opacity=".9"/><path d="M15 12C10 16 6 22 10 22s5-6 5-10ZM15 12c5 4 9 10 5 10s-5-6-5-10Z" style="fill:var(--bloom2)"/></g><path d="M15 6v13" style="stroke:var(--ink)" stroke-width="1.4" stroke-linecap="round"/></svg></div>';
+  function bouquet(w, style, b) {
+    b = b || 0;
+    return '<svg viewBox="0 0 160 110" width="' + w + '" class="grow" aria-hidden="true"' + (style ? ' style="' + style + '"' : '') + '><g filter="url(#wc)">' + gstem('M80 110C78 80 60 60 50 42', b) + gstem('M80 110C82 80 86 50 86 30', b + .15) + gstem('M80 110C84 85 104 64 114 46', b + .3) + gstem('M80 110C70 90 40 84 26 72', b + .2) +
+      gleaf(66, 78, 24, -150, 'var(--leaf)', b + .5) + gleaf(84, 70, 26, -30, 'var(--leaf)', b + .6) + gleaf(72, 94, 22, -175, 'var(--soft)', b + .35) + gleaf(90, 90, 24, -8, 'var(--soft)', b + .4) + gleaf(100, 62, 20, -60, 'var(--leaf)', b + .8) + gleaf(44, 82, 18, -200, 'var(--leaf)', b + .7) +
+      gbud(26, 70, 6, 'var(--bloom2)', b + 1.2) + gflower(50, 40, 19, 'var(--bloom)', b + 1.2) + grose(86, 28, 20, 'var(--bloom2)', b + 1.35) + gflower(114, 46, 16, 'var(--bloom)', b + 1.5, 5) + gstem('M114 46C124 40 132 38 136 34', b + 1.3, .6) + gbud(136, 34, 5, 'var(--bloom2)', b + 1.7) + '</g></svg>';
+  }
+  function sprig(w, rot, flip) {
+    var s = '';
+    for (var i = 0; i < 6; i++) { var t = .12 + i * .14; s += gleaf(4 + 100 * t, 116 - 98 * t, 22 - i * 1.5, i % 2 ? -10 : -110, i % 2 ? 'var(--leaf)' : 'var(--soft)', .3 + t * 1.3, .55); }
+    return '<svg viewBox="0 0 120 120" width="' + w + '" class="grow" aria-hidden="true" style="transform:rotate(' + rot + 'deg) scaleX(' + (flip || 1) + ')"><g filter="url(#wc)">' + gstem('M4 116C30 90 60 60 104 18', 0, 1.6) + s + gflower(104, 18, 13, 'var(--bloom)', 1.6, 5) + '</g></svg>';
+  }
+  function wreath() {
+    var s = '', k = 0;
+    for (var t = 0; t < 360; t += 10) {
+      if (t > 240 && t < 300) continue;
+      var r = t * Math.PI / 180, a = t + 90 + (t % 20 ? 28 : -28);
+      s += gleaf(130 + 100 * Math.cos(r), 155 + 128 * Math.sin(r), 20 + (t % 30) / 3, a, t % 20 ? 'var(--leaf)' : 'var(--soft)', .2 + k * .045, .55);
+      s += gleaf(130 + 108 * Math.cos(r + .09), 155 + 136 * Math.sin(r + .09), 14, a - 50, t % 20 ? 'var(--soft)' : 'var(--leaf)', .3 + k * .045, .45);
+      k++;
+    }
+    return '<svg viewBox="0 0 260 310" class="grow" aria-hidden="true"><g filter="url(#wc)">' + s + grose(130, 288, 17, 'var(--bloom)', 1.4) + gflower(103, 280, 12, 'var(--bloom2)', 1.6, 5) + gflower(158, 281, 13, 'var(--bloom2)', 1.7, 5) + gflower(40, 96, 14, 'var(--bloom)', 1.9) + gflower(226, 206, 13, 'var(--bloom)', 2, 5) + gbud(222, 94, 6, 'var(--bloom2)', 2.2) + gbud(38, 214, 6, 'var(--bloom2)', 2.3) + '</g></svg>';
+  }
+  var wash = '<svg class="wash" viewBox="0 0 300 200" preserveAspectRatio="none" aria-hidden="true"><g filter="url(#wc)" opacity=".5"><ellipse cx="150" cy="100" rx="130" ry="80" style="fill:var(--bloom2)" opacity=".35"/><ellipse cx="120" cy="90" rx="90" ry="60" style="fill:var(--soft)" opacity=".35"/><ellipse cx="190" cy="120" rx="80" ry="50" style="fill:var(--bloom2)" opacity=".3"/></g></svg>';
+
+  var seeds = ''; for (var i = 0; i < 14; i++) seeds += '<i style="left:' + (46 + (i % 7) * 1.5) + '%;top:' + (24 + (i % 3)) + '%;--x:' + ((i % 2 ? 1 : -1) * (30 + i * 9)) + 'px;--y:' + (-40 - (i * 13) % 90) + 'px;animation-delay:' + ((i % 5) * .05) + 's"></i>';
+  var gw = Math.max(360, Math.min(1600, window.innerWidth || 375));
+  var maps = function (q) { return 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(q + ', Oaxaca'); };
+  var photos = ['/assets/fotos/beso.jpg', '/assets/fotos/escalera.jpg', '/assets/fotos/muro.jpg'];
+  var names = '<span data-lz="n1">' + S.n1 + '</span>';
+
+  document.getElementById('app').innerHTML =
+  // ======================= APERTURA =======================
+  '<div class="opening paper" id="open" role="dialog" aria-modal="true" aria-label="' + S.openAria + '">' +
+    '<div class="deco" style="left:-30px;top:-20px">' + sprig(150, 100) + '</div>' +
+    '<div class="ogarden">' + garden(gw, 200, Math.round(gw / 31), 5) + '</div>' +
+    '<p data-lz="envIntro" data-lz-keep>' + S.envIntro + '</p>' +
+    '<div class="packet" id="pk">' +
+      '<div class="pk-back"></div>' +
+      '<div class="seedcard"><div class="seedpaper deckle">' +
+        '<p class="eb">' + S.married + '</p>' +
+        '<h3 class="script">' + names + '<br><span style="font-size:.5em">&amp;</span> <span data-lz="n2">' + S.n2 + '</span></h3>' +
+        '<p class="serif" style="font-size:15px;letter-spacing:.1em" data-lz-date="{d} · {MU} · {Y}">' + S.date.toUpperCase() + '</p>' +
+        bouquet(90, 'margin:4px 0') +
+        '<p data-lz="msg">' + S.msg + '</p><p>' + S.seatsTxt + '</p>' +
+        '<button type="button" class="btn" style="margin-top:12px" id="enter" tabindex="-1">' + S.enter + '</button>' +
+      '</div></div>' +
+      '<div class="pk-front kraft">' +
+        '<div class="pk-label seedpaper">' +
+          '<p class="k">' + S.lot + ' <span data-lz-date="{d}">14</span></p>' +
+          bouquet(128) +
+          '<h3 class="script"><span data-lz="n1">' + S.n1 + '</span> &amp; <span data-lz="n2">' + S.n2 + '</span></h3>' +
+          '<p class="var">' + S.variety + '</p>' +
+          '<div class="pk-meta"><span><small>' + S.sow + '</small><span data-lz-date="{dd}.{mm}.{Y}">14.03.2027</span></span><span><small>' + S.blooms + '</small><span class="city1" data-lz="city">' + S.city.split(',')[0] + '</span></span><span><small>' + S.seats + '</small>4</span></div>' +
+        '</div>' +
+        '<p class="pk-for"><small>' + S.for + '</small>' + S.guest + '</p>' +
+      '</div>' +
+      '<div class="pk-flap"></div>' +
+      '<button type="button" class="sticker" id="sticker" aria-label="' + S.sticker + '"><span data-lz-seal>A&amp;L</span></button>' +
+      '<div class="seeds" aria-hidden="true">' + seeds + '</div>' +
+    '</div>' +
+    '<p class="hint" id="hint" aria-live="polite">' + S.hint + '</p>' +
+    '<span id="closing" data-lz="envClosing" data-lz-keep hidden>' + S.envClosing + '</span>' +
+  '</div>' +
+
+  // ======================= INVITACIÓN =======================
+  '<main id="invite">' +
+    '<section class="hero paper" id="portada" data-lz-anchor="portada">' +
+      '<div class="deco" style="left:-36px;top:-24px">' + sprig(140, 100) + '</div>' +
+      '<div class="deco" style="right:-30px;top:40px">' + sprig(120, 190, -1) + '</div>' +
+      '<div class="in-w">' + BFLY +
+        '<p class="eb">' + S.getting + '</p>' +
+        '<div class="wreath"><div class="oval"><img class="ph-img" src="/assets/fotos/paseo.jpg" data-lz-src="photo:0" alt="' + S.photoAlt + '" style="object-position:center 60%"></div>' + wreath() + '</div>' +
+        '<h1 class="script"><span data-lz="n1">' + S.n1 + '</span><span class="y">' + S.y + '</span><span data-lz="n2">' + S.n2 + '</span></h1>' +
+        '<p class="date" data-lz-date="{d} · {Mc} · {Y}">' + S.date + '</p><p class="eb" style="margin-top:10px" data-lz="city">' + S.city + '</p>' +
+        '<p class="msg" data-lz="msg">' + S.msg + '</p>' +
+      '</div>' +
+    '</section>' +
+
+    '<section class="sec edge" id="historia" data-lz-anchor="historia" style="background:var(--paper)"><div class="in-w">' +
+      bouquet(120) +
+      '<p class="eb" style="margin-top:8px">' + S.story + '</p><h2 data-lz="storyTitle">' + S.storyTitle + '</h2><p data-lz="story">' + S.storyTxt + '</p>' +
+      '<div class="polas" data-lz-list="gallery">' + photos.map(function (g, i) { return '<div class="pola" data-lz-item data-rv="' + ['left', '', 'right'][i] + '"><div><img class="ph-img" data-lz-f="img" src="' + g + '" alt="" loading="lazy"></div><span class="hand">' + S.caps[i] + '</span></div>'; }).join('') + '</div>' +
+    '</div></section>' +
+
+    '<section class="sec cd edge"><div class="in-w">' +
+      '<p class="eb">' + S.bigDay + '</p><h2 data-lz="cdName">' + S.cdName + '</h2><p class="time" data-lz="time0">' + S.time0 + '</p>' +
+      '<p class="note" data-lz="countdownNote">' + S.cdNote + '</p>' +
+      '<div class="twine" aria-hidden="true"><i></i><i></i><i></i><i></i></div>' +
+      '<div class="tags4" aria-live="off">' + S.units.map(function (u, i) { return '<div class="tag4 kraft"><b data-cd="' + 'dhms'[i] + '">--</b><span>' + u + '</span></div>'; }).join('') + '</div>' +
+    '</div></section>' +
+
+    '<section class="sec paper edge" id="itinerario" data-lz-anchor="itinerario musica">' +
+      '<div class="deco" style="right:-34px;top:20px;opacity:.9">' + sprig(120, 200, -1) + '</div>' +
+      '<div class="in-w"><p class="eb" data-lz-date="' + S.dayPat + '">' + S.dayTxt + '</p><h2>' + S.schedule + '</h2>' +
+      '<ul class="tl" data-lz-list="events">' + S.events.map(function (e) { return '<li data-lz-item data-rv><span class="t" data-lz-f="time">' + e[0] + '</span><h3 data-lz-f="name">' + e[1] + '</h3><p data-lz-f="place">' + e[2] + '</p><a data-lz-f="map" href="' + maps(e[2]) + '" target="_blank" rel="noopener"><span data-lz-f="mapText">' + e[3] + '</span> ↗</a></li>'; }).join('') + '</ul>' +
+      '<div class="ncard" data-rv data-lz-group="dressCode dressNotes dressColors"><div class="seedpaper deckle">' +
+        '<p class="eb">' + S.dress + '</p><h2 style="margin:8px 0" data-lz="dressCode">' + S.dressCode + '</h2><p data-lz="dressNotes">' + S.dressNotes + '</p>' +
+        '<p style="margin-top:10px;font-size:13px" data-lz-group="dressColors"><b style="font-weight:500">' + S.reserved + '</b> <span data-lz="dressColors">' + S.dressColors + '</span></p>' +
+        '<div class="blobs" aria-hidden="true"><i style="background:#F4F1EA"></i><i style="background:#E8D9C0"></i></div>' +
+      '</div></div></div>' +
+    '</section>' +
+
+    '<section class="sec edge" id="viaje" data-lz-anchor="viaje" data-lz-show="viajeOn" style="background:var(--paper)"><div class="in-w">' +
+      '<p class="eb">' + S.fromAway + '</p><h2>' + S.travel + '</h2><p data-lz="travelIntro">' + S.travelIntro + '</p>' +
+      '<div class="tagcards">' +
+        '<div class="tagc kraft" data-rv="left" data-lz-group="hotel hotelAddress hotelCode hotelNotes"><p class="eb">' + S.stay + '</p><h3 data-lz="hotel">' + S.hotel + '</h3><p data-lz="hotelAddress">' + S.hotelAddress + '</p><p data-lz-group="hotelCode">' + S.rate + ' <b data-lz="hotelCode">' + S.hotelCode + '</b></p><p data-lz="hotelNotes">' + S.hotelNotes + '</p><a class="btn" style="margin-top:12px;padding:11px 18px" href="#viaje" data-lz-href="hotelLink" data-lz-if="hotelLink">' + S.book + '</a></div>' +
+        '<div class="tagc kraft" data-rv="right" data-lz-group="airport transport"><p class="eb">' + S.getThere + '</p><h3>' + S.getThereT + '</h3><p data-lz-group="airport"><b>' + S.airportL + '</b> <span data-lz="airport">' + S.airport + '</span></p><p data-lz-group="transport"><b>' + S.transportL + '</b> <span data-lz="transport">' + S.transport + '</span></p></div>' +
+        '<div class="tagc kraft" data-rv="left" data-lz-group="guideFood guideCulture guidePlans"><p class="eb">' + S.guide + '</p><h3>' + S.guideT + '</h3><p data-lz-group="guideFood"><b>' + S.foodL + '</b> <span data-lz="guideFood">' + S.food + '</span></p><p data-lz-group="guideCulture"><b>' + S.cultureL + '</b> <span data-lz="guideCulture">' + S.culture + '</span></p><p data-lz-group="guidePlans"><b>' + S.plansL + '</b> <span data-lz="guidePlans">' + S.plans + '</span></p></div>' +
+      '</div>' +
+    '</div></section>' +
+
+    '<section class="sec paper edge" data-lz-group="quote">' + wash +
+      '<div class="in-w"><blockquote>“<span data-lz="quote">' + S.quote + '</span>”</blockquote><p class="eb" data-lz="quoteAuthor">' + S.quoteAuthor + '</p></div>' +
+    '</section>' +
+
+    '<section class="sec paper" id="faq" data-lz-anchor="faq" data-lz-hide-empty style="padding-top:20px"><div class="in-w">' +
+      '<p class="eb">' + S.faqK + '</p><h2>' + S.faqT + '</h2>' +
+      '<div class="faq" data-lz-list="faqs">' + S.faqs.map(function (f) { return '<details data-lz-item><summary data-lz-f="q">' + f[0] + '</summary><p data-lz-f="a">' + f[1] + '</p></details>'; }).join('') + '</div>' +
+    '</div></section>' +
+
+    '<section class="sec paper" id="rsvp" data-lz-anchor="rsvp" style="padding-top:20px"><div class="in-w">' +
+      '<div class="ncard"><div class="seedpaper deckle" style="padding:74px 22px 30px;position:relative">' +
+        '<div class="stamp" data-rv="stamp" aria-hidden="true">R.S.V.P.</div>' +
+        '<p class="eb"><span data-lz-date="' + S.rsvpDatePat + '">' + S.rsvpDate + '</span> · <span data-lz="city">' + S.city + '</span></p><h2>' + S.rsvpT + '</h2>' +
+        '<p class="serif" style="font-size:26px;margin-top:10px">' + S.guest + '</p><p style="font-size:12px">' + S.seatsRes + '</p>' +
+        '<div id="rsForm">' +
+          '<p style="margin:16px 0 8px;text-align:left"><span data-lz="rsvpMsg">' + S.rsvpMsg + '</span> <span data-lz-if="rsvpDeadline">' + S.until + ' <span data-lz-date="' + S.rsvpDatePat + '" data-lz-from="rsvpDeadline">' + S.deadline + '</span>.</span></p>' +
+          '<div id="people"></div>' +
+          '<label data-lz-show="rsvpDiet">' + S.diet + '<textarea rows="2"></textarea></label><label data-lz-show="rsvpNote">' + S.note + '<textarea rows="2" id="note"></textarea></label>' +
+          '<p class="rs-err" id="rsErr" role="alert" hidden>' + S.err + '</p>' +
+          '<button type="button" class="btn" style="margin-top:22px" id="rsSave">' + S.save + '</button>' +
+        '</div>' +
+        '<div class="rs-done" id="rsDone" hidden><p class="script">' + S.thanks + '</p><p id="rsSum" style="margin:6px 0 18px"></p><button type="button" class="btn" id="rsEdit">' + S.edit + '</button></div>' +
+      '</div></div>' +
+      '<div class="meadow">' + garden(560, 150, 14, 11) + '</div>' +
+    '</div></section>' +
+
+    '<footer class="edge"><p class="script"><span data-lz="n1">' + S.n1 + '</span> &amp; <span data-lz="n2">' + S.n2 + '</span></p><p class="eb"><span data-lz-date="{dd}.{mm}.{Y}">' + S.footDate + '</span> · <span data-lz="city">' + S.city + '</span></p></footer>' +
+  '</main>';
+
+  document.getElementById('demoBar').innerHTML = '<span class="lbl">' + S.demo + '</span><button type="button" data-open-panel>' + S.panel + '</button><a href="' + S.storeUrl + '">' + S.store + '</a>';
+})();
+</script>
+<script src="/demo/shared/content.js"></script>
+<script src="/demo/shared/panel.js"></script>
+<script>
+(function () {
+  var S = window.JardinS, $ = function (id) { return document.getElementById(id); };
+  var PEOPLE = ['Carlos Rodríguez', 'Lucía Pérez', 'Sofía Rodríguez', 'Mateo Rodríguez'];
+  LazoPanel.init({ mono: 'A&L', couple: S.n1 + ' ' + S.y + ' ' + S.n2, link: location.pathname, guest: S.guest, people: PEOPLE });
+  LazoMusic.init({ src: '/assets/musica/demo.mp3' });
+
+  // Lo que aparece, crece o florece al llegar a la pantalla (después de abrir la invitación).
+  var io = null;
+  function observe(root) { if (io) root.querySelectorAll('[data-rv]:not(.in), .grow:not(.in)').forEach(function (el) { if (!el.closest('.opening')) io.observe(el); }); }
+  function watch() {
+    if (io) return;
+    if (!('IntersectionObserver' in window)) { document.querySelectorAll('#invite [data-rv], #invite .grow').forEach(function (el) { el.classList.add('in'); }); return; }
+    io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }); }, { threshold: .18 });
+    observe(document);
+  }
+  // Fotos con su frase escrita a mano (también cuando el editor cambia la galería).
+  function captions() { document.querySelectorAll('.pola .hand').forEach(function (el, i) { el.textContent = S.caps[i % S.caps.length]; }); }
+  document.addEventListener('lz-render', function (e) { captions(); observe(e.target); });
+  captions();
+
+  // Apertura: la estampilla se despega, caen las semillas, sube la tarjeta y nace el jardín.
+  var op = $('open'), pk = $('pk'), hint = $('hint'), timers = [];
+  var clear = function () { timers.forEach(clearTimeout); timers = []; };
+  setTimeout(function () { op.querySelectorAll('.grow').forEach(function (g) { if (!g.closest('.seedcard') && !g.closest('.ogarden')) g.classList.add('in'); }); }, 300);
+  function bloomCard() { pk.classList.add('open', 'rise', 'out'); op.classList.add('done'); hint.textContent = ''; op.querySelectorAll('.seedcard .grow, .ogarden .grow').forEach(function (g) { g.classList.add('in'); }); $('enter').tabIndex = 0; }
+  $('sticker').addEventListener('click', function () {
+    if (pk.classList.contains('open')) return;
+    clear(); LazoMusic.play();
+    pk.classList.add('open'); hint.textContent = $('closing').textContent;
+    timers.push(setTimeout(function () { pk.classList.add('rise'); }, 750));
+    timers.push(setTimeout(function () { bloomCard(); $('enter').focus({ preventScroll: true }); }, 1800));
+  });
+  function enter() { clear(); op.classList.add('gone'); document.body.classList.remove('locked'); setTimeout(watch, 350); }
+  $('enter').addEventListener('click', function () { enter(); $('demoBar').hidden = false; window.scrollTo(0, 0); });
+
+  // Para el editor de Lazo (demo/shared/content.js): saltar o volver a mostrar el sobre.
+  window.LzTemplate = {
+    open: function () { bloomCard(); enter(); },
+    envelope: function () { clear(); pk.classList.remove('open', 'rise', 'out'); op.classList.remove('done', 'gone'); $('enter').tabIndex = -1; hint.textContent = S.hint; op.querySelectorAll('.seedcard .grow, .ogarden .grow').forEach(function (g) { g.classList.remove('in'); }); document.body.classList.add('locked'); window.scrollTo(0, 0); },
+    scroll: function (el, now) { window.scrollTo({ top: el.getBoundingClientRect().top + window.pageYOffset - 10, behavior: now ? 'instant' : 'smooth' }); }
+  };
+
+  // Cuenta regresiva (la fecha del editor llega en window.LZ_T)
+  var TARGET = new Date(2027, 2, 14, 13, 0).getTime(), pad = function (n) { return String(n).padStart(2, '0'); }, cd = {};
+  document.querySelectorAll('[data-cd]').forEach(function (e) { cd[e.dataset.cd] = e; });
+  function tick() { var s = Math.floor(Math.max(0, (window.LZ_T || TARGET) - Date.now()) / 1000); cd.d.textContent = pad(Math.floor(s / 86400)); cd.h.textContent = pad(Math.floor(s / 3600) % 24); cd.m.textContent = pad(Math.floor(s / 60) % 60); cd.s.textContent = pad(s % 60); }
+  tick(); setInterval(tick, 1000);
+
+  // Confirmación por persona (demo: no se envía a ningún lado)
+  var att = PEOPLE.map(function () { return null; }), wrap = $('people');
+  PEOPLE.forEach(function (name, i) {
+    var row = document.createElement('div'); row.className = 'person'; row.setAttribute('role', 'group'); row.setAttribute('aria-label', name);
+    var n = document.createElement('span'); n.textContent = name;
+    var g = document.createElement('div');
+    [['✓', true, S.yes], ['✕', false, S.no]].forEach(function (o) {
+      var b = document.createElement('button'); b.type = 'button'; b.textContent = o[0]; b.setAttribute('aria-label', o[2]); b.setAttribute('aria-pressed', 'false'); if (!o[1]) b.className = 'no';
+      b.addEventListener('click', function () { att[i] = o[1]; g.querySelectorAll('button').forEach(function (x) { x.setAttribute('aria-pressed', String(x === b)); }); $('rsErr').hidden = true; });
+      g.appendChild(b);
+    });
+    row.appendChild(n); row.appendChild(g); wrap.appendChild(row);
+  });
+  $('rsSave').addEventListener('click', function () {
+    if (att.some(function (x) { return x === null; })) { $('rsErr').hidden = false; return; }
+    $('rsSum').textContent = S.will(att.filter(Boolean).length, PEOPLE.length);
+    $('rsForm').hidden = true; $('rsDone').hidden = false;
+    LazoPanel.setResponse(att, $('note').value.trim());
+  });
+  $('rsEdit').addEventListener('click', function () { $('rsDone').hidden = true; $('rsForm').hidden = false; });
+})();
+</script>
+</body>
+</html>

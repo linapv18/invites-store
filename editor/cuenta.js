@@ -31,7 +31,7 @@
       testBuy: 'Simular compra (prueba)', testHint: 'Solo para probar: activa el diseño en tu cuenta sin pagar.',
       order: 'Tu pedido', inv: 'Invitación', total: 'Total', includes: ['Efecto de apertura del diseño', 'Enlace único por invitado y confirmación por persona', 'Historia, itinerario, preguntas, música y viaje', 'Panel para organizar invitados'],
       already: 'Ya tienes este diseño', alreadyText: 'Puedes editarlo cuando quieras desde tu cuenta.', payNote: 'Pago único. Recibirás el recibo en tu correo.',
-      names: { clasico: ['Clásico', 'Sobre y carta'], moderno: ['Moderno', 'Puertas que se abren'], rosa: ['Romántico', 'Sobre lacrado'] }
+      names: { clasico: ['Clásico', 'Sobre y carta'], moderno: ['Moderno', 'Puertas que se abren'], rosa: ['Romántico', 'Sobre lacrado'], jardin: ['Jardín', 'Sobre de semillas'], costa: ['Costa', 'Pase de abordar'] }
     },
     en: {
       store: 'Back to the store', logout: 'Log out', account: 'My account',
@@ -51,10 +51,10 @@
       testBuy: 'Simulate purchase (test)', testHint: 'For testing only: activates the design on your account without paying.',
       order: 'Your order', inv: 'Invitation', total: 'Total', includes: ['The design’s opening effect', 'A unique link per guest and RSVP per person', 'Story, schedule, FAQ, music and travel', 'Dashboard to organize guests'],
       already: 'You already have this design', alreadyText: 'You can edit it anytime from your account.', payNote: 'One-time payment. You’ll get the receipt by email.',
-      names: { clasico: ['Classic', 'Envelope and letter'], moderno: ['Modern', 'Opening doors'], rosa: ['Romantic', 'Wax-sealed envelope'] }
+      names: { clasico: ['Classic', 'Envelope and letter'], moderno: ['Modern', 'Opening doors'], rosa: ['Romantic', 'Wax-sealed envelope'], jardin: ['Garden', 'Seed packet'], costa: ['Coast', 'Boarding pass'] }
     }
   }[LANG];
-  var IMG = { clasico: '/assets/clasico-demo-portada.jpg', moderno: '/assets/moderno-demo-portada.jpg', rosa: '/assets/romantico-portada.jpg' };
+  var IMG = { clasico: '/assets/clasico-demo-portada.jpg', moderno: '/assets/moderno-demo-portada.jpg', rosa: '/assets/romantico-portada.jpg', jardin: '/assets/jardin-portada.jpg', costa: '/assets/costa-portada.jpg' };
   var demoUrl = function (d) { return BASE + '/demo/' + d + '/'; };
   var editUrl = function (d) { return BASE + '/editor/?diseno=' + d; };
   var guestUrl = function (d) { return BASE + '/demo/' + d + '/?lz=vista&k=' + encodeURIComponent(A.invKey(d)); };

@@ -329,7 +329,9 @@
   var ENV_TEXT = {
     clasico: { es: ['Una invitación para un día inolvidable', 'Con todo nuestro cariño'], en: ['An invitation to an unforgettable day', 'With all our love'] },
     moderno: { es: ['Una invitación para un día inolvidable', ''], en: ['An invitation to an unforgettable day', ''] },
-    rosa: { es: ['Celebra con nosotros nuestro gran día', ''], en: ['Celebrate our big day with us', ''] }
+    rosa: { es: ['Celebra con nosotros nuestro gran día', ''], en: ['Celebrate our big day with us', ''] },
+    jardin: { es: ['Una invitación para un día inolvidable', 'Con todo nuestro cariño'], en: ['An invitation to an unforgettable day', 'With all our love'] },
+    costa: { es: ['Una invitación para un día inolvidable', 'Con todo nuestro cariño'], en: ['An invitation to an unforgettable day', 'With all our love'] }
   };
   // Paletas de Romántico (los colores los aplica demo/shared/content.js; aquí solo el nombre y la muestra).
   var ROSA_PALETTES = [
@@ -344,7 +346,18 @@
     { id: 'marino', hex: '#1B2433', ink: '#1B2433', sand: '#E3E6EB', es: 'Azul marino', en: 'Navy' },
     { id: 'vino', hex: '#3A1E24', ink: '#3A1E24', sand: '#EADFDC', es: 'Vino', en: 'Wine' }
   ];
-  var TPL_PALETTES = { rosa: ROSA_PALETTES, moderno: MOD_PALETTES };
+  // Paletas de Jardín y Costa (los colores los aplica demo/shared/content.js; aquí nombre y muestra; seal: color de la estampilla o el sello).
+  var JARDIN_PALETTES = [
+    { id: 'hoja', hex: '#2F3B2C', seal: '#B86B4B', es: 'Hoja', en: 'Leaf' },
+    { id: 'lavanda', hex: '#5B3A4A', seal: '#A85E6E', es: 'Lavanda', en: 'Lavender' },
+    { id: 'eucalipto', hex: '#2E4057', seal: '#C08B4A', es: 'Eucalipto', en: 'Eucalyptus' }
+  ];
+  var COSTA_PALETTES = [
+    { id: 'cobalto', hex: '#1F4E8C', seal: '#C8643B', es: 'Cobalto', en: 'Cobalt' },
+    { id: 'verde', hex: '#2F6F62', seal: '#C8643B', es: 'Verde agua', en: 'Sea green' },
+    { id: 'barro', hex: '#B5522E', seal: '#3E6B8A', es: 'Barro', en: 'Clay' }
+  ];
+  var TPL_PALETTES = { rosa: ROSA_PALETTES, moderno: MOD_PALETTES, jardin: JARDIN_PALETTES, costa: COSTA_PALETTES };
   var tplPal = function () { var l = TPL_PALETTES[state.design] || []; return l.filter(function (x) { return x.id === state.pal; })[0] || l[0]; };
   var PALETTES = [
     { id: 'salvia', hex: '#5F7360', es: 'Salvia', en: 'Sage' },
@@ -355,7 +368,9 @@
   var DESIGNS = {
     clasico: { kind: 'envelope', es: ['Clásico', 'Sobre y carta'], en: ['Classic', 'Envelope and letter'] },
     moderno: { kind: 'doors', es: ['Moderno', 'Puertas que se abren'], en: ['Modern', 'Opening doors'] },
-    rosa: { kind: 'envelope', es: ['Romántico', 'Sobre lacrado'], en: ['Romantic', 'Wax-sealed envelope'] }
+    rosa: { kind: 'envelope', es: ['Romántico', 'Sobre lacrado'], en: ['Romantic', 'Wax-sealed envelope'] },
+    jardin: { kind: 'envelope', es: ['Jardín', 'Sobre de semillas'], en: ['Garden', 'Seed packet'] },
+    costa: { kind: 'envelope', es: ['Costa', 'Pase de abordar'], en: ['Coast', 'Boarding pass'] }
   };
   // Sección de la vista previa a la que lleva cada complemento.
   var ADDON_SPOT = { playlist: 'musica', libro: 'itinerario', capsula: 'rsvp', encuestas: 'faq', galeria: 'historia', bilingue: 'portada', dominio: 'portada' };
@@ -562,12 +577,14 @@
   var mediaGet = function (k) { return mediaDo('readonly', function (st) { return st.get(k); }); };
   var mediaDel = function (k) { return mediaDo('readwrite', function (st) { return st.delete(k); }); };
   // Color del sello tal como sale en la plantilla, para mostrar los estilos de monograma en el formulario.
-  // Clásico: según la paleta (mismos cálculos que demo/shared/content.js); Moderno y Romántico: su sello fijo.
+  // Clásico: según la paleta (mismos cálculos que demo/shared/content.js); Moderno y Romántico: su sello fijo; Jardín y Costa: la estampilla o el sello de su paleta.
   var TPL_DARK = { rosa: '#4A2F2E', azul: '#26304A', terracota: '#4A2B1F' };
   function sealLook() {
     var serif = "font-family:'Instrument Serif',Georgia,serif;";
     if (state.design === 'moderno') { var mp = tplPal(); return serif + 'background:radial-gradient(circle at 35% 30%,#FFFFFF,' + mp.sand + ' 70%);color:' + mp.ink + ';box-shadow:inset 0 0 0 1px ' + mp.ink + '33'; }
     if (state.design === 'rosa') return serif + 'background:radial-gradient(circle at 35% 30%,#D8AE76,#A8743E 70%);color:#FFF4DF';
+    if (state.design === 'jardin') return serif + 'background:radial-gradient(circle at 32% 26%,#ffffff40,transparent 40%),' + tplPal().seal + ';color:#FBF1E6';
+    if (state.design === 'costa') return serif + 'background:#FFFCF5;color:' + tplPal().seal + ';box-shadow:inset 0 0 0 2px ' + tplPal().seal;
     var hex = state.pal === 'custom' ? state.palCustom : TPL_DARK[state.pal], m = /^#?([0-9a-f]{6})$/i.exec(hex || '');
     if (!m) return 'font-family:Georgia,serif;background:radial-gradient(circle at 30% 20%,#64745a,#2b4437);color:#f5f2ea';
     var n = parseInt(m[1], 16), c = [n >> 16 & 255, n >> 8 & 255, n & 255];

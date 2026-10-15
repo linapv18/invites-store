@@ -1,4 +1,4 @@
-/* Lleva el contenido del editor a las plantillas reales (clásico, moderno, romántico).
+/* Lleva el contenido del editor a las plantillas reales (clásico, moderno, romántico, jardín y costa).
    Solo actúa si la URL trae ?lz=editor (vista previa dentro del editor) o ?lz=vista (ver como invitado),
    junto con &k=<clave de localStorage> donde el editor guardó la invitación. Sin esos parámetros
    la demo de la tienda se ve exactamente igual que siempre.
@@ -45,6 +45,17 @@
       { id: 'oliva', es: 'Oliva', en: 'Olive', sw: '#262B22', vars: { 't-ink': '#262B22', 't-ivory': '#F2F1EA', 't-sand': '#E2E3D7', 't-stone': '#B9BBA8', 't-muted': '#6A6E5F', 't-body': '#464A3E', 't-soft': '#8C907F', 'sand2': '#D3D5C6', 'tone1': '#1D211A', 'tone2': '#2A3026', 'tone3': '#3B4235', 'p-bg': '#F2F1EA', 'p-ink': '#262B22', 'p-muted': '#6A6E5F', 'p-accent': '#262B22', 'p-on-accent': '#F2F1EA', 'm-bg': '#262B22', 'm-fg': '#F2F1EA' } },
       { id: 'marino', es: 'Azul marino', en: 'Navy', sw: '#1B2433', vars: { 't-ink': '#1B2433', 't-ivory': '#F3F4F6', 't-sand': '#E3E6EB', 't-stone': '#B7BDC8', 't-muted': '#626B7A', 't-body': '#3F4756', 't-soft': '#868E9C', 'sand2': '#D3D8DF', 'tone1': '#151C28', 'tone2': '#212B3B', 'tone3': '#2F3B4E', 'p-bg': '#F3F4F6', 'p-ink': '#1B2433', 'p-muted': '#626B7A', 'p-accent': '#1B2433', 'p-on-accent': '#F3F4F6', 'm-bg': '#1B2433', 'm-fg': '#F3F4F6' } },
       { id: 'vino', es: 'Vino', en: 'Wine', sw: '#3A1E24', vars: { 't-ink': '#3A1E24', 't-ivory': '#F6F0EE', 't-sand': '#EADFDC', 't-stone': '#C7B2AD', 't-muted': '#7A5F63', 't-body': '#523A3E', 't-soft': '#9B8285', 'sand2': '#DDCDC9', 'tone1': '#2C161B', 'tone2': '#402329', 'tone3': '#553139', 'p-bg': '#F6F0EE', 'p-ink': '#3A1E24', 'p-muted': '#7A5F63', 'p-accent': '#3A1E24', 'p-on-accent': '#F6F0EE', 'm-bg': '#3A1E24', 'm-fg': '#F6F0EE' } }
+    ],
+    // Jardín y Costa: las ilustraciones, el papel y el panel salen de estas variables.
+    jardin: [
+      { id: 'hoja', es: 'Hoja', en: 'Leaf', sw: '#2F3B2C' },
+      { id: 'lavanda', es: 'Lavanda', en: 'Lavender', sw: '#5B3A4A', vars: { ink: '#4A2F3C', leaf: '#8A6274', soft: '#C7A9B5', accent: '#A85E6E', bloom: '#C97B93', bloom2: '#E8B9C6', bg: '#F5EEEA', paper: '#FCF7F5' } },
+      { id: 'eucalipto', es: 'Eucalipto', en: 'Eucalyptus', sw: '#2E4057', vars: { ink: '#24344A', leaf: '#5C7A8F', soft: '#A9BCC9', accent: '#C08B4A', bloom: '#7E9CC4', bloom2: '#E4C88F', bg: '#F1F1EA', paper: '#FAFAF5' } }
+    ],
+    costa: [
+      { id: 'cobalto', es: 'Cobalto', en: 'Cobalt', sw: '#1F4E8C' },
+      { id: 'verde', es: 'Verde agua', en: 'Sea green', sw: '#2F6F62', vars: { ink: '#1F3B36', blue: '#2F6F62', blue2: '#DCEBE6', sun: '#E9B949', clay: '#C8643B' } },
+      { id: 'barro', es: 'Barro', en: 'Clay', sw: '#B5522E', vars: { ink: '#4A2A1C', blue: '#B5522E', blue2: '#F3E1D6', sun: '#E3A43A', clay: '#3E6B8A' } }
     ]
   };
   function hexRgb(h) { var m = /^#?([0-9a-f]{6})$/i.exec(h || ''); if (!m) return null; var n = parseInt(m[1], 16); return [n >> 16 & 255, n >> 8 & 255, n & 255]; }
@@ -73,7 +84,7 @@
     Object.keys(themeVars).concat(Object.keys(vars)).forEach(function (k) { html.style.setProperty(k, vars[k] || ''); });
     themeVars = vars;
     var tc = document.querySelector('meta[name="theme-color"]');
-    if (tc) { if (tc._lz === undefined) tc._lz = tc.content; tc.content = vars['--env-bg'] || vars['--r-bg2'] || vars['--t-ink'] || tc._lz; }
+    if (tc) { if (tc._lz === undefined) tc._lz = tc.content; tc.content = vars['--env-bg'] || vars['--r-bg2'] || vars['--t-ink'] || vars['--bg'] || vars['--blue'] || tc._lz; }
   }
   window.LazoTheme = { list: function () { return THEMES[TPL] || []; }, apply: applyTheme };
 
