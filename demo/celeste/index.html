@@ -1,0 +1,421 @@
+<!doctype html>
+<html lang="es" data-lz-tpl="celeste">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ana &amp; León · Demo diseño Celeste — Lazo</title>
+<meta name="description" content="Demo de invitación web de boda bajo una noche estrellada: al tocar la luna las estrellas forman un corazón, foto con órbitas, cuenta regresiva en cuatro lunas, itinerario como constelación y confirmación por persona.">
+<meta name="theme-color" content="#0B1430">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%230B1430'/%3E%3Ccircle cx='32' cy='32' r='14' fill='%23F4E9C8'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Italiana&amp;family=Tenor+Sans&amp;family=Spectral:ital,wght@0,300;0,400;1,300&amp;display=swap" rel="stylesheet">
+<style>
+/* Celeste: noche estrellada. Los colores salen de estas variables (paletas en demo/shared/content.js). */
+:root{
+  --bg:#0B1430;--bg2:#131F48;--ink:#EEF1FA;--silver:#C9D2E6;--moon:#F4E9C8;--accent:#8FA7E0;--neb1:#3A4C9A;--neb2:#7A4C9A;--soft:#E4E9F7dd;
+  /* Panel de los novios y música (demo/shared/panel.css) */
+  --p-bg:#EEF1FA;--p-surface:#FFFFFF;--p-ink:var(--bg);--p-muted:#5B6585;--p-line:#C9D2E6;--p-accent:var(--bg);--p-on-accent:var(--moon);
+  --p-serif:Italiana,Georgia,serif;--p-sans:'Tenor Sans',Helvetica,sans-serif;--m-bg:var(--bg2);--m-fg:var(--moon);--m-border:#ffffff44
+}
+*,*::before,*::after{box-sizing:border-box}
+[hidden]{display:none !important}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;font-family:Spectral,Georgia,serif;font-weight:300;color:var(--ink);background-color:var(--bg)}
+body.locked{overflow:hidden}
+h1,h2,h3,p,blockquote{margin:0}
+img{display:block;max-width:100%}
+a{color:inherit}
+button{font-family:inherit}
+details summary{list-style:none;cursor:pointer}
+details summary::-webkit-details-marker{display:none}
+a:focus-visible,button:focus-visible,summary:focus-visible,textarea:focus-visible{outline:2px solid var(--moon);outline-offset:3px}
+.ph-img{width:100%;height:100%;object-fit:cover}
+.in-w{position:relative;max-width:560px;margin:0 auto}
+.it{font-family:Italiana,serif}
+.tn{font:400 11px 'Tenor Sans',sans-serif;letter-spacing:.32em;text-transform:uppercase;color:var(--accent)}
+.sky,body{background-image:var(--st1),var(--st2),radial-gradient(ellipse at 15% 8%,color-mix(in srgb,var(--neb1),transparent 55%),transparent 50%),radial-gradient(ellipse at 90% 55%,color-mix(in srgb,var(--neb2),transparent 62%),transparent 55%),radial-gradient(ellipse at 35% 100%,#1C6E8A40,transparent 60%);background-size:320px,520px,100% 100%,100% 100%,100% 100%;background-attachment:fixed}
+.sky{background-color:var(--bg)}
+.silver{background:linear-gradient(110deg,#9AA6C2,#FFFFFF 30%,#B9C3DB 45%,#F4F6FF 55%,#8E9AB8 70%,#E6EBF7 85%,#9AA6C2);background-size:250% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:mShine 7s ease-in-out infinite alternate}
+@keyframes mShine{to{background-position:100% 0}}
+.sec{position:relative;padding:68px 24px;text-align:center}
+.sec h2{font:400 clamp(34px,5vw,42px)/1.1 Italiana,serif;letter-spacing:.04em;margin:12px 0 14px}
+.sec p{font-size:16.5px;line-height:1.8;color:var(--soft)}
+.glass{background:linear-gradient(160deg,#ffffff14,#ffffff06);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border:1px solid #ffffff26;border-radius:22px;box-shadow:inset 0 1px 0 #ffffff22,0 20px 40px -24px #000c}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:15px 26px;border:1px solid #ffffff66;border-radius:999px;background:linear-gradient(#ffffff26,#ffffff0a);color:var(--ink);font:400 11px 'Tenor Sans';letter-spacing:.24em;text-transform:uppercase;text-decoration:none;cursor:pointer;box-shadow:0 0 24px #9FB6FF33}
+.twk{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.twk span{position:absolute;width:var(--s);height:var(--s);opacity:0;animation:tw var(--du) ease-in-out var(--de) infinite}
+.twk svg{display:block;width:100%;height:100%}
+@keyframes tw{0%,100%{opacity:0;transform:scale(.2) rotate(0)}50%{opacity:1;transform:scale(1) rotate(45deg)}}
+.shoot{position:absolute;width:130px;height:1.5px;background:linear-gradient(90deg,transparent,#fff);border-radius:2px;pointer-events:none;opacity:0;rotate:28deg;filter:drop-shadow(0 0 4px #fff);animation:shoot var(--du,9s) ease-in var(--de,0s) infinite}
+@keyframes shoot{0%{opacity:0;transform:translateX(-160px)}2%{opacity:1}9%{opacity:0;transform:translateX(320px)}100%{opacity:0;transform:translateX(320px)}}
+.moonball{border-radius:50%;background:radial-gradient(circle at 36% 32%,#ffffff1f,transparent 45%),radial-gradient(circle at 50% 50%,transparent 58%,#2a24183d 88%,#1a160e70),var(--moonimg) center/cover,#E6E1D3;box-shadow:0 0 34px #F4E9C855,0 0 90px #F4E9C82b,inset -6px -8px 18px #00000038}
+.phases{display:flex;justify-content:center;gap:9px}
+.phases i{width:12px;height:12px;border-radius:50%;background:var(--moon);box-shadow:inset var(--x) 0 0 0 var(--bg),0 0 6px #F4E9C855}
+@keyframes mGlow{to{box-shadow:0 0 60px #F4E9C899,0 0 120px #F4E9C844}}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ---------- Apertura: luna y constelación ---------- */
+.opening{position:fixed;inset:0;z-index:60;overflow:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:22px;text-align:center;transition:opacity .9s,visibility 0s .9s,transform .9s,filter .9s}
+.opening>*{position:relative}
+.opening>.twk,.opening>.shoot{position:absolute}
+.opening.gone{opacity:0;visibility:hidden;pointer-events:none}
+.opening.warp{transform:scale(1.7);filter:blur(6px);opacity:0}
+.moonbtn{width:96px;height:96px;flex:none;border:0;padding:0;cursor:pointer;animation:mGlow 3s ease-in-out infinite alternate;transition:transform .8s cubic-bezier(.4,0,.2,1)}
+.lit .moonbtn{transform:scale(.62) translateY(-10px)}
+.constel{width:250px;height:230px;flex:none;margin:-6px 0}
+.constel .ln{fill:none;stroke:#DDE5FF;stroke-width:.9;stroke-dasharray:1;stroke-dashoffset:1;opacity:.85;transition:stroke-dashoffset 2.2s cubic-bezier(.5,0,.3,1)}
+.constel circle{fill:#fff;opacity:.45;filter:drop-shadow(0 0 3px #fff);transition:opacity .6s}
+.lit .constel .ln{stroke-dashoffset:0}
+.lit .constel circle{opacity:1}
+.constel .ini{opacity:0;transition:opacity 1.2s 1.6s}
+.lit .constel .ini{opacity:1}
+.told{opacity:0;max-height:0;overflow:hidden;transition:opacity 1s,max-height 1s}
+.lit .told{opacity:1;max-height:280px;transition-delay:1.8s}
+.ask{transition:opacity .5s,max-height .5s;max-height:120px}
+.lit .ask{opacity:0;max-height:0;overflow:hidden}
+.told .cl{text-transform:lowercase}
+@media (max-height:720px){.constel{width:200px;height:184px}.opening{gap:8px}}
+
+/* ---------- Invitación ---------- */
+.mbar{position:fixed;z-index:50;left:max(10px,calc(50% - 290px));right:max(10px,calc(50% - 290px));top:10px;height:48px;padding:0 20px;border-radius:999px;display:flex;align-items:center;justify-content:space-between;opacity:0;transform:translateY(-70px);transition:opacity .5s,transform .6s cubic-bezier(.22,1,.36,1);pointer-events:none;background:#ffffff14;-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);box-shadow:inset 0 0 0 1px #ffffff30,0 10px 24px -14px #000}
+.mbar.show{opacity:1;transform:none}
+.hero{position:relative;padding:70px 24px 60px;text-align:center;overflow:hidden}
+.aurora{position:absolute;left:-40%;right:-40%;top:-60px;height:320px;pointer-events:none;background:linear-gradient(100deg,transparent 15%,color-mix(in srgb,var(--accent),transparent 45%) 32%,#7FE0C855 45%,color-mix(in srgb,var(--neb2),transparent 40%) 60%,transparent 78%);filter:blur(36px);opacity:.55;animation:aur 14s ease-in-out infinite alternate}
+@keyframes aur{0%{transform:translateX(-12%) skewY(-7deg)}100%{transform:translateX(12%) skewY(5deg)}}
+.orbit{position:relative;width:280px;height:280px;margin:18px auto 14px}
+.orbit .pic{position:absolute;inset:40px;border-radius:50%;overflow:hidden;box-shadow:0 0 0 1px #ffffff55,0 0 50px #F4E9C855,0 0 120px #8FA7E033}
+.orbit .pic img{position:relative;height:124%;top:-12%;filter:saturate(.85) contrast(1.05)}
+.ring{position:absolute;inset:0;border-radius:50%;border:1px solid #ffffff2a;animation:spin var(--du) linear infinite}
+.ring::after{content:"";position:absolute;top:50%;left:-4px;width:8px;height:8px;margin-top:-4px;border-radius:50%;background:var(--c);box-shadow:0 0 10px var(--c)}
+.ring.r2{inset:16px;border-style:dashed;border-color:#ffffff1c;animation-direction:reverse}
+.ring.r2::after{left:auto;right:-3px;width:6px;height:6px}
+.hero h1{font:400 clamp(58px,8vw,72px)/1 Italiana,serif;letter-spacing:.02em}
+.hero h1 .amp{display:block;font:italic 300 24px Spectral;color:var(--moon);margin:4px 0}
+.hero .date{display:flex;justify-content:center;align-items:center;gap:10px;margin-top:16px;font:400 13px 'Tenor Sans';letter-spacing:.28em}
+.star4{display:inline-block;width:9px;height:9px;background:var(--moon);clip-path:polygon(50% 0,62% 38%,100% 50%,62% 62%,50% 100%,38% 62%,0 50%,38% 38%)}
+.hero .msg{margin-top:16px;font:italic 300 19px/1.5 Spectral}
+.hero .in-w>*{position:relative}
+.planets{position:relative;height:250px;margin-top:20px}
+.planets svg{position:absolute;inset:0;width:100%;height:100%}
+.planets .p{position:absolute;border-radius:50%;overflow:hidden;box-shadow:0 0 0 1px #ffffff44,0 0 26px #8FA7E055}
+.planets .p:nth-of-type(1){width:118px;height:118px;left:4%;top:70px}
+.planets .p:nth-of-type(2){width:92px;height:92px;left:40%;top:6px}
+.planets .p:nth-of-type(3){width:104px;height:104px;right:2%;top:120px}
+.planets .p:nth-of-type(n+4){display:none}
+.moons{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:28px auto 0;max-width:440px}
+.moons>div{display:flex;flex-direction:column;align-items:center;gap:10px}
+.moons .moonball{width:66px;height:66px;display:grid;place-items:center;animation:mGlow 3s ease-in-out infinite alternate}
+.moons>div:nth-child(2) .moonball{animation-delay:-.8s}.moons>div:nth-child(3) .moonball{animation-delay:-1.6s}.moons>div:nth-child(4) .moonball{animation-delay:-2.4s}
+.moons b{font:400 26px Italiana;color:#1B2348;text-shadow:0 0 6px #F4EFE2,0 0 2px #F4EFE2;font-variant-numeric:tabular-nums}
+.moons span{font:400 9px 'Tenor Sans';letter-spacing:.24em;text-transform:uppercase;color:var(--silver)}
+.tl{position:relative;margin-top:24px;text-align:left;padding-left:44px}
+.tl svg.line{position:absolute;left:12px;top:6px;height:calc(100% - 20px);width:12px;overflow:visible}
+.tl>div{position:relative;padding-bottom:26px}
+.tl>div::before{content:"";position:absolute;left:-40px;top:4px;width:16px;height:16px;background:var(--moon);clip-path:polygon(50% 0,62% 38%,100% 50%,62% 62%,50% 100%,38% 62%,0 50%,38% 38%);filter:drop-shadow(0 0 6px #fff);animation:pulseS 2.4s ease-in-out infinite alternate}
+@keyframes pulseS{to{transform:scale(1.3) rotate(45deg)}}
+.tl .tm{font:400 11px 'Tenor Sans';letter-spacing:.26em;color:var(--accent);text-transform:uppercase}
+.tl h3{font:400 28px Italiana;margin:4px 0}
+.sec .tl p{font-size:15px;line-height:1.6}
+.tl a{display:inline-block;margin-top:6px;font:400 10px 'Tenor Sans';letter-spacing:.22em;color:var(--moon);text-decoration:none;border-bottom:1px solid #F4E9C866;padding-bottom:3px}
+.gc{padding:30px 22px;margin-top:18px}
+.planetchips{display:flex;justify-content:center;gap:12px;margin-top:14px}
+.planetchips i{width:30px;height:30px;border-radius:50%;background-image:radial-gradient(circle at 35% 30%,#ffffffcc,transparent 45%);box-shadow:0 0 14px #ffffff55}
+.lz-content .planetchips{display:none}
+.gcs{display:flex;flex-direction:column;gap:14px;margin-top:22px;text-align:left}
+.gcs>div{padding:24px 22px}
+.gcs svg{color:var(--moon)}
+.gcs h3{font:400 24px Italiana;margin:8px 0 6px}
+.sec .gcs p{font-size:15px;line-height:1.65}
+.gcs b{font-weight:400;color:#fff}
+blockquote{margin:6px 0 12px;font:400 30px/1.3 Italiana,serif}
+.cst{position:absolute;width:110px;pointer-events:none;opacity:.8;z-index:0}
+.cst line{stroke:#DDE5FF;stroke-width:.7;stroke-opacity:.55}
+.cst circle{fill:#fff;filter:drop-shadow(0 0 3px #fff)}
+.faq{text-align:left;margin-top:16px}
+.faq details{border-bottom:1px solid #ffffff22}
+.faq summary{display:flex;justify-content:space-between;gap:12px;padding:17px 0;font:400 18px Spectral}
+.faq summary::after{content:"";flex:none;width:12px;height:12px;margin-top:5px;background:var(--moon);clip-path:polygon(50% 0,62% 38%,100% 50%,62% 62%,50% 100%,38% 62%,0 50%,38% 38%);transition:rotate .4s}
+.faq details[open] summary::after{rotate:45deg}
+.sec .faq p{font-size:15px;padding-bottom:16px}
+.person{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:13px 0;border-bottom:1px solid #ffffff1c;text-align:left}
+.person span{font:400 17px Spectral}
+.person>div{display:flex;gap:6px;flex:none}
+.person button{min-height:36px;padding:7px 12px;border:1px solid #ffffff55;border-radius:999px;background:none;color:var(--ink);font:400 10px 'Tenor Sans';letter-spacing:.14em;text-transform:uppercase;cursor:pointer}
+.person button[aria-pressed=true]{background:var(--moon);border-color:var(--moon);color:#1B2348;box-shadow:0 0 14px #F4E9C888}
+label{display:block;text-align:left;font:400 10px 'Tenor Sans';letter-spacing:.22em;text-transform:uppercase;color:var(--accent);margin-top:18px}
+textarea{width:100%;margin-top:8px;border:1px solid #ffffff2a;border-radius:12px;background:#ffffff0d;padding:10px;font:300 16px Spectral;color:var(--ink);resize:none}
+.rs-err{margin-top:14px;font-size:14px;color:var(--moon)}
+.wish{position:fixed;z-index:70;width:110px;height:1.5px;border-radius:2px;background:linear-gradient(90deg,transparent,#fff);filter:drop-shadow(0 0 4px #fff);pointer-events:none;transform-origin:0 50%}
+footer{position:relative;padding:64px 20px 120px;text-align:center}
+
+/* ---------- Movimiento ---------- */
+[data-rv]{opacity:0;transform:translateY(26px);transition:opacity .9s ease,transform 1s cubic-bezier(.22,1,.36,1)}
+[data-rv].in,.lz-editor [data-rv]{opacity:1;transform:none}
+.draw path,.draw line{stroke-dasharray:1;stroke-dashoffset:1;transition:stroke-dashoffset 2s cubic-bezier(.5,0,.3,1)}
+.draw.in path,.draw.in line{stroke-dashoffset:0}
+.letters b{display:inline-block;font-weight:inherit;opacity:0;filter:blur(8px);transform:translateY(16px) scale(1.4);transition:opacity .9s,filter .9s,transform .9s cubic-bezier(.22,1,.36,1);transition-delay:calc(var(--i) * 90ms + .2s)}
+.letters.in b{opacity:1;filter:none;transform:none}
+@media (min-width:700px){.sec{padding-left:40px;padding-right:40px}}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none !important;transition:none !important}[data-rv]{opacity:1;transform:none}.draw path,.draw line{stroke-dashoffset:0}.letters b{opacity:1;filter:none;transform:none}.twk,.shoot{display:none}}
+</style>
+<link rel="stylesheet" href="/demo/shared/panel.css">
+</head>
+<body class="locked">
+<div id="app"></div>
+<div class="demo-bar" id="demoBar" hidden></div>
+
+<script>
+/* Plantilla Celeste. El HTML se arma aquí (cielo, luna y constelaciones son SVG generados) ANTES de cargar
+   demo/shared/content.js, para que el editor encuentre las marcas data-lz… al llenar el contenido.
+   Los nombres que aparecen letra por letra (data-split) se copian de elementos ocultos con data-lz. */
+(function () {
+  var LANG = (document.documentElement.lang || 'es').slice(0, 2) === 'en' ? 'en' : 'es';
+  var S = {
+    es: {
+      envIntro: 'Una invitación para un día inolvidable', envClosing: 'Con todo nuestro cariño', openAria: 'Invitación bajo una noche estrellada', moon: 'Tocar la luna', tapMoon: 'Toca la luna', for: 'Para', seats: '4 cupos', enter: 'Abrir invitación',
+      guest: 'Familia Rodríguez', n1: 'Ana', n2: 'León', y: 'y', city: 'Oaxaca, México', getting: 'Nos vamos a casar', msg: 'Nos casamos y queremos celebrarlo contigo.', photoAlt: 'Ana y León', MU: 'MARZO',
+      story: 'Nuestra historia', storyTitle: 'Cómo empezó todo', storyTxt: 'Nos conocimos en una boda —qué ironía— y desde ese baile no hemos dejado de caminar juntos. Ahora queremos que estén con nosotros en el capítulo más bonito.',
+      bigDay: 'El gran día', cdName: 'Ceremonia civil', time0: '1:00 p. m.', cdNote: 'Cada vez falta menos para celebrar juntos.', units: ['Días', 'Horas', 'Min', 'Seg'],
+      dayPat: '{W}, {d} de {M} de {Y}', dayTxt: 'Domingo, 14 de marzo de 2027', schedule: 'Nuestra constelación', how: 'Cómo llegar ↗',
+      events: [['1:00 p. m.', 'Ceremonia civil', 'Jardín Etnobotánico', 'Reforma s/n, Centro'], ['2:30 p. m.', 'Comida familiar', 'Casa Oaxaca', 'García Vigil 407, Centro'], ['8:00 p. m.', 'Fiesta', 'Hacienda Los Laureles', 'Hidalgo 21, San Felipe del Agua']],
+      dress: 'Código de vestimenta', dressCode: 'Formal', dressNotes: 'Telas frescas: en marzo Oaxaca es cálida de día y fresca de noche.', reserved: 'Colores reservados:', dressColors: 'Blanco y marfil',
+      fromAway: 'Si vienen de fuera', travel: 'Viaje y alojamiento', travelIntro: 'Si vienen de fuera, aquí tienen todo para organizar su viaje.',
+      stay: 'Alojamiento', hotel: 'Hotel Casa Antigua', hotelAddress: 'Calle Macedonio Alcalá 304, Centro', rate: 'Código de tarifa', hotelCode: 'BODA-AL', hotelNotes: 'Tarifa válida hasta el 1 de febrero.', book: 'Reservar',
+      getThere: 'Cómo llegar', getThereT: 'Aeropuerto y transporte', airportL: 'Aeropuerto.', airport: 'Aeropuerto Internacional de Oaxaca (OAX), a 20 minutos del centro.', transportL: 'Transporte.', transport: 'Habrá camionetas del hotel a la fiesta y de regreso.',
+      guide: 'Guía de la ciudad', guideT: 'Turismo y actividades', foodL: 'Restaurantes.', food: 'Levadura de Olla, Casa Oaxaca y los mercados.', cultureL: 'Cultura.', culture: 'Santo Domingo y el Museo Textil.', plansL: 'Actividades.', plans: 'Hierve el Agua y Monte Albán.',
+      quote: 'Amar no es mirarse el uno al otro; es mirar juntos en la misma dirección.', quoteAuthor: 'Antoine de Saint-Exupéry',
+      faqK: 'Todo lo que necesitas saber', faqT: 'Preguntas frecuentes',
+      faqs: [['¿Cuál es el código de vestimenta?', 'Formal. Evita el blanco, por favor.'], ['¿Pueden ir niños?', 'Nuestra celebración es solo para adultos.'], ['¿Hay mesa de regalos?', 'Su compañía es nuestro mejor regalo. Si desean tener un detalle, encontrarán los datos aquí.']],
+      before: 'Confirma antes del', rsvpDatePat: '{d} de {M} de {Y}', deadline: '14 de febrero de 2027', seatsRes: '4 cupos reservados', rsvpMsg: 'Confirma quiénes de esta invitación podrán acompañarnos.',
+      yes: 'Asistirá', no: 'No asistirá', diet: 'Restricciones alimentarias (opcional)', note: 'Un mensaje para nosotros (opcional)', save: 'Enviar confirmación', err: 'Indiquen si asistirá o no cada persona.',
+      wish: 'Pide un deseo: ¡confirmado!', edit: 'Editar respuesta', will: function (y, n) { return y ? 'Asistirán ' + y + ' de ' + n + ' personas. Nos vemos bajo las estrellas.' : 'Gracias por avisarnos. Los extrañaremos.'; },
+      demo: 'Demo', panel: 'Panel de novios', store: 'Tienda', storeUrl: '/#disenos'
+    },
+    en: {
+      envIntro: 'An invitation to an unforgettable day', envClosing: 'With all our love', openAria: 'Invitation under a starry night', moon: 'Tap the moon', tapMoon: 'Tap the moon', for: 'For', seats: '4 seats', enter: 'Open invitation',
+      guest: 'The Rodríguez family', n1: 'Anna', n2: 'Leo', y: 'and', city: 'Oaxaca, Mexico', getting: 'We’re getting married', msg: 'We’re getting married and want to celebrate with you.', photoAlt: 'Anna and Leo', MU: 'MARCH',
+      story: 'Our story', storyTitle: 'How it all began', storyTxt: 'We met at a wedding —how ironic— and since that dance we haven’t stopped walking together. Now we want you with us for the most beautiful chapter.',
+      bigDay: 'The big day', cdName: 'Civil ceremony', time0: '1:00 PM', cdNote: 'Every day brings us closer to celebrating together.', units: ['Days', 'Hours', 'Min', 'Sec'],
+      dayPat: '{W}, {Mc} {d}, {Y}', dayTxt: 'Sunday, March 14, 2027', schedule: 'Our constellation', how: 'Directions ↗',
+      events: [['1:00 PM', 'Civil ceremony', 'Ethnobotanical Garden', 'Reforma s/n, Centro'], ['2:30 PM', 'Family lunch', 'Casa Oaxaca', 'García Vigil 407, Centro'], ['8:00 PM', 'Party', 'Hacienda Los Laureles', 'Hidalgo 21, San Felipe del Agua']],
+      dress: 'Dress code', dressCode: 'Formal', dressNotes: 'Light fabrics: in March Oaxaca is warm by day and cool at night.', reserved: 'Reserved colors:', dressColors: 'White and ivory',
+      fromAway: 'If you’re traveling', travel: 'Travel and stay', travelIntro: 'If you’re coming from out of town, here’s everything to plan your trip.',
+      stay: 'Where to stay', hotel: 'Hotel Casa Antigua', hotelAddress: 'Calle Macedonio Alcalá 304, Centro', rate: 'Rate code', hotelCode: 'BODA-AL', hotelNotes: 'Rate valid until February 1.', book: 'Book',
+      getThere: 'Getting there', getThereT: 'Airport and transport', airportL: 'Airport.', airport: 'Oaxaca International Airport (OAX), 20 minutes from downtown.', transportL: 'Transport.', transport: 'Shuttles will run from the hotel to the party and back.',
+      guide: 'City guide', guideT: 'Sights and activities', foodL: 'Restaurants.', food: 'Levadura de Olla, Casa Oaxaca and the markets.', cultureL: 'Culture.', culture: 'Santo Domingo and the Textile Museum.', plansL: 'Activities.', plans: 'Hierve el Agua and Monte Albán.',
+      quote: 'Love does not consist in gazing at each other, but in looking outward together in the same direction.', quoteAuthor: 'Antoine de Saint-Exupéry',
+      faqK: 'Everything you need to know', faqT: 'Frequently asked questions',
+      faqs: [['What is the dress code?', 'Formal. Please avoid white.'], ['Are kids welcome?', 'Our celebration is adults only.'], ['Is there a gift registry?', 'Your presence is our best gift. If you’d like to give something, you’ll find the details here.']],
+      before: 'Please reply by', rsvpDatePat: '{Mc} {d}, {Y}', deadline: 'February 14, 2027', seatsRes: '4 seats reserved', rsvpMsg: 'Let us know who from this invitation can join us.',
+      yes: 'Attending', no: 'Not attending', diet: 'Dietary restrictions (optional)', note: 'A message for us (optional)', save: 'Send RSVP', err: 'Please answer for each person.',
+      wish: 'Make a wish: confirmed!', edit: 'Edit answer', will: function (y, n) { return y ? y + ' of ' + n + ' people will attend. See you under the stars.' : 'Thanks for letting us know. We’ll miss you.'; },
+      demo: 'Demo', panel: 'Couple’s dashboard', store: 'Store', storeUrl: '/en/#designs'
+    }
+  }[LANG];
+  window.CelesteS = S;
+
+  var rng = function (seed) { var r = seed; return function () { return (r = (r * 9301 + 49297) % 233280) / 233280; }; };
+  var esc = function (s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); };
+  var root = document.documentElement.style;
+  // Cielo: dos capas de estrellas
+  function starfield(w, h, n, seed, maxR) {
+    var Q = rng(seed), s = '';
+    for (var i = 0; i < n; i++) s += "<circle cx='" + (Q() * w).toFixed(1) + "' cy='" + (Q() * h).toFixed(1) + "' r='" + (.3 + Q() * maxR).toFixed(2) + "' fill='%23fff' opacity='" + (.25 + Q() * .75).toFixed(2) + "'/>";
+    return "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='" + w + "' height='" + h + "'%3E" + s.replace(/</g, '%3C').replace(/>/g, '%3E') + '%3C/svg%3E")';
+  }
+  root.setProperty('--st1', starfield(320, 320, 70, 5, .9));
+  root.setProperty('--st2', starfield(520, 520, 40, 9, 1.4));
+  // Luna realista: mares, textura de cráteres en relieve, rayos de Tycho y oscurecimiento del borde.
+  (function () {
+    var mare = [[46, 100, 20, 42, 12, .5], [72, 60, 24, 19, -15, .62], [121, 58, 17, 14, 10, .55], [132, 92, 20, 16, 0, .5], [164, 72, 9, 12, 0, .62], [153, 118, 11, 16, 20, .42], [127, 129, 8, 7, 0, .42], [84, 141, 16, 10, -10, .36], [57, 138, 8, 7, 0, .45], [98, 74, 10, 8, 0, .3]]
+      .map(function (m) { return "<ellipse cx='" + m[0] + "' cy='" + m[1] + "' rx='" + m[2] + "' ry='" + m[3] + "' fill-opacity='" + m[5] + "' transform='rotate(" + m[4] + ' ' + m[0] + ' ' + m[1] + ")'/>"; }).join('');
+    var Q = rng(12), craters = '', rays = '', i;
+    for (i = 0; i < 12; i++) { var x = 20 + Q() * 160, y = 20 + Q() * 160, r = 1.2 + Q() * 4.5; craters += "<circle cx='" + x.toFixed(1) + "' cy='" + y.toFixed(1) + "' r='" + r.toFixed(1) + "' fill='none' stroke='#000' stroke-opacity='.09' stroke-width='" + (r * .35).toFixed(1) + "'/><circle cx='" + (x - r * .25).toFixed(1) + "' cy='" + (y - r * .25).toFixed(1) + "' r='" + (r * .8).toFixed(1) + "' fill='none' stroke='#fff' stroke-opacity='.14' stroke-width='.5'/>"; }
+    for (i = 0; i < 14; i++) { var a = i / 14 * Math.PI * 2 + .2, l = 18 + (i % 3) * 14; rays += "<line x1='96' y1='160' x2='" + (96 + Math.cos(a) * l).toFixed(1) + "' y2='" + (160 + Math.sin(a) * l).toFixed(1) + "'/>"; }
+    var svg = "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'><defs>" +
+      "<filter id='m' x='-20%' y='-20%' width='140%' height='140%'><feTurbulence type='fractalNoise' baseFrequency='.05' numOctaves='3' seed='3'/><feDisplacementMap in='SourceGraphic' scale='12'/><feGaussianBlur stdDeviation='3'/></filter>" +
+      "<filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.045' numOctaves='5' seed='8'/><feColorMatrix type='saturate' values='0'/><feComponentTransfer><feFuncA type='table' tableValues='0 .55'/></feComponentTransfer></filter>" +
+      "<filter id='b'><feTurbulence type='fractalNoise' baseFrequency='.55' numOctaves='3' seed='2' result='t'/><feDiffuseLighting in='t' surfaceScale='2.2' lighting-color='#fff'><feDistantLight azimuth='225' elevation='48'/></feDiffuseLighting><feComponentTransfer><feFuncA type='table' tableValues='.5 .5'/></feComponentTransfer></filter>" +
+      "<filter id='s'><feGaussianBlur stdDeviation='1.2'/></filter><clipPath id='c'><circle cx='100' cy='100' r='100'/></clipPath></defs>" +
+      "<g clip-path='url(#c)'><rect width='200' height='200' fill='#ECE7D9'/><g fill='#807B6C' filter='url(#m)'>" + mare + "</g>" +
+      "<rect width='200' height='200' filter='url(#n)' opacity='.6' style='mix-blend-mode:multiply'/><rect width='200' height='200' filter='url(#b)' opacity='.35' style='mix-blend-mode:multiply'/>" + craters +
+      "<g stroke='#fff' stroke-opacity='.35' stroke-width='1.6' filter='url(#s)'>" + rays + "</g><circle cx='96' cy='160' r='3' fill='#fff' opacity='.85'/><circle cx='64' cy='86' r='2.4' fill='#fff' opacity='.6'/></g></svg>";
+    root.setProperty('--moonimg', 'url("data:image/svg+xml,' + svg.replace(/#/g, '%23').replace(/</g, '%3C').replace(/>/g, '%3E').replace(/"/g, '%22') + '")');
+  })();
+  var CSTAR = '<svg viewBox="0 0 20 20"><path d="M10 0C11 7 13 9 20 10C13 11 11 13 10 20C9 13 7 11 0 10C7 9 9 7 10 0Z" fill="#fff"/></svg>';
+  var twk = function (n, seed) { var Q = rng(seed), s = ''; for (var i = 0; i < n; i++) s += '<span style="left:' + (3 + Q() * 92).toFixed(0) + '%;top:' + (3 + Q() * 92).toFixed(0) + '%;--s:' + (6 + Q() * 10).toFixed(0) + 'px;--du:' + (2.4 + Q() * 3).toFixed(1) + 's;--de:-' + (Q() * 5).toFixed(1) + 's">' + CSTAR + '</span>'; return '<div class="twk" aria-hidden="true">' + s + '</div>'; };
+  // Pequeñas constelaciones que se dibujan al aparecer
+  var cst = function (seed, style) { var Q = rng(seed), pts = [], i, s = ''; for (i = 0; i < 6; i++) pts.push([10 + i * 18 + Q() * 8, 14 + Q() * 70]); for (i = 1; i < 6; i++) s += '<line pathLength="1" x1="' + pts[i - 1][0].toFixed(1) + '" y1="' + pts[i - 1][1].toFixed(1) + '" x2="' + pts[i][0].toFixed(1) + '" y2="' + pts[i][1].toFixed(1) + '" style="transition-delay:' + (i - 1) * .25 + 's"/>'; pts.forEach(function (p, k) { s += '<circle cx="' + p[0].toFixed(1) + '" cy="' + p[1].toFixed(1) + '" r="' + (k % 2 ? 1.4 : 2.2) + '"/>'; }); return '<svg class="cst draw" viewBox="0 0 120 100" style="' + style + '" aria-hidden="true">' + s + '</svg>'; };
+  var shoot = function (top, left, du, de) { return '<i class="shoot" aria-hidden="true" style="top:' + top + 'px;left:' + left + 'px;--du:' + du + 's;--de:' + de + 's"></i>'; };
+  var phases = '<div class="phases" aria-hidden="true">' + [10, 6, 2, -1, 0, 1, -2, -6, -10].map(function (x) { return '<i style="--x:' + x + 'px' + (x === 0 ? ';box-shadow:0 0 10px #F4E9C8aa' : '') + '"></i>'; }).join('') + '</div>';
+  // Constelación en forma de corazón
+  var heartPts = []; for (var h = 0; h < 14; h++) { var t = h / 14 * Math.PI * 2; heartPts.push([125 + 6.6 * 16 * Math.pow(Math.sin(t), 3), 112 - 6.6 * (13 * Math.cos(t) - 5 * Math.cos(2 * t) - 2 * Math.cos(3 * t) - Math.cos(4 * t))]); }
+  var CONST = '<svg class="constel" viewBox="0 0 250 230" aria-hidden="true"><path class="ln" pathLength="1" d="M' + heartPts.map(function (p) { return p[0].toFixed(1) + ' ' + p[1].toFixed(1); }).join('L') + 'Z"/>' + heartPts.map(function (p, i) { return '<circle cx="' + p[0].toFixed(1) + '" cy="' + p[1].toFixed(1) + '" r="' + (i % 3 ? 1.8 : 3) + '"/>'; }).join('') + '<text class="ini" x="125" y="128" text-anchor="middle" font-family="Italiana" font-size="30" fill="#F4E9C8" data-lz-mono>A · L</text></svg>';
+  var ICON = [
+    '<svg width="30" viewBox="0 0 30 30" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true"><path d="M20 4a11 11 0 1 0 6 16A9 9 0 0 1 20 4Z"/><path d="M8 6l.7 1.8L10.5 8.5l-1.8.7L8 11l-.7-1.8L5.5 8.5l1.8-.7Z" fill="currentColor"/></svg>',
+    '<svg width="30" viewBox="0 0 30 30" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true"><path d="M3 17 24 11q4-1 3 2L7 21Z"/><path d="M12 14 8 5h3l7 8M13 19l-2 7h3l4-8"/><circle cx="25" cy="25" r="1" fill="currentColor"/><circle cx="4" cy="6" r=".8" fill="currentColor"/></svg>',
+    '<svg width="30" viewBox="0 0 30 30" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true"><circle cx="15" cy="15" r="12"/><path d="M15 3v24M3 15h24" stroke-dasharray="1 3"/><path d="M15 7l2 8-2 8-2-8Z" fill="currentColor" fill-opacity=".4"/></svg>'
+  ];
+  var spl = function (t, k) { return Array.from(t).map(function (ch, i) { return '<b class="silver" style="--i:' + (i + (k || 0)) + '">' + (ch === ' ' ? '&nbsp;' : esc(ch)) + '</b>'; }).join(''); };
+  window.CelesteSplit = spl;
+  var maps = function (q) { return 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(q + ', Oaxaca'); };
+  var photos = ['/assets/fotos/beso.jpg', '/assets/fotos/escalera.jpg', '/assets/fotos/muro.jpg'];
+  var N = function (k) { return '<span data-lz="' + k + '">' + S[k] + '</span>'; };
+  var dateL = '<span data-lz-date="{d}">14</span><i class="star4"></i><span data-lz-date="{MU}">' + S.MU + '</span><i class="star4"></i><span data-lz-date="{Y}">2027</span>';
+
+  document.getElementById('app').innerHTML =
+  '<div hidden><span data-lz="n1" id="srcN1">' + S.n1 + '</span><span data-lz="n2" id="srcN2">' + S.n2 + '</span></div>' +
+  // ======================= APERTURA =======================
+  '<div class="opening sky" id="open" role="dialog" aria-modal="true" aria-label="' + S.openAria + '">' +
+    twk(16, 2) + shoot(90, -40, 7, 1) + shoot(380, -80, 11, 5) + phases +
+    '<p class="tn" data-lz="envIntro" data-lz-keep>' + S.envIntro + '</p>' +
+    '<button type="button" class="moonbtn moonball" id="moon" aria-label="' + S.moon + '"></button>' + CONST +
+    '<div class="ask"><p class="it" style="font-size:22px">' + S.for + ' ' + S.guest + '</p><p class="tn" style="margin-top:8px;color:var(--silver)">' + S.tapMoon + '</p></div>' +
+    '<div class="told">' +
+      '<p class="it silver" style="font-size:42px;line-height:1">' + N('n1') + ' &amp; ' + N('n2') + '</p>' +
+      '<p class="tn" style="margin:10px 0 6px" data-lz-date="{d} · {MU} · {Y}">14 · ' + S.MU + ' · 2027</p>' +
+      '<p style="font-style:italic;font-size:15px">' + S.for + ' ' + S.guest + ' · ' + S.seats + ' · <span class="cl" data-lz="envClosing" data-lz-keep>' + S.envClosing + '</span></p>' +
+      '<button type="button" class="btn" style="margin-top:14px" id="enter" tabindex="-1">' + S.enter + '</button>' +
+    '</div>' +
+  '</div>' +
+
+  // ======================= INVITACIÓN =======================
+  '<div class="mbar" id="mbar" aria-hidden="true"><span class="it silver" style="font-size:22px">' + N('n1') + ' &amp; ' + N('n2') + '</span><span class="tn" data-lz-date="{dd} · {mm} · {Y}">14 · 03 · 2027</span></div>' +
+  '<main id="invite">' +
+    '<section class="hero" id="portada" data-lz-anchor="portada"><div class="aurora" aria-hidden="true"></div>' + twk(12, 13) + shoot(160, -60, 10, 3) +
+      '<div class="in-w">' + phases + '<p class="tn" style="margin-top:18px">' + S.getting + '</p>' +
+      '<div class="orbit"><div class="ring" style="--du:28s;--c:#F4E9C8"></div><div class="ring r2" style="--du:18s;--c:var(--accent)"></div><div class="pic"><img class="ph-img" id="heroImg" src="/assets/fotos/paseo.jpg" data-lz-src="photo:0" alt="' + S.photoAlt + '" style="object-position:center 60%"></div></div>' +
+      '<h1 class="letters"><span data-split="srcN1">' + spl(S.n1) + '</span><span class="amp">' + S.y + '</span><span data-split="srcN2" data-off="4">' + spl(S.n2, 4) + '</span></h1>' +
+      '<div class="date">' + dateL + '</div>' +
+      '<p class="tn" style="margin-top:12px;color:var(--silver)" data-lz="city">' + S.city + '</p>' +
+      '<p class="msg" data-lz="msg">' + S.msg + '</p></div>' +
+    '</section>' +
+
+    '<section class="sec" id="historia" data-lz-anchor="historia"><div class="in-w"><div class="glass" style="padding:32px 22px 20px" data-rv><p class="tn">' + S.story + '</p><h2 data-lz="storyTitle">' + S.storyTitle + '</h2><p data-lz="story">' + S.storyTxt + '</p>' +
+      '<div class="planets" data-lz-list="gallery"><svg class="draw" viewBox="0 0 300 250" preserveAspectRatio="none" fill="none" stroke="#ffffff40" stroke-dasharray="2 5" aria-hidden="true"><path pathLength="1" d="M20 210C80 60 220 30 290 120"/></svg>' + photos.map(function (g) { return '<div class="p" data-lz-item><img class="ph-img" data-lz-f="img" src="' + g + '" alt="" loading="lazy"></div>'; }).join('') + '</div>' +
+    '</div></div></section>' +
+
+    '<section class="sec">' + twk(8, 21) + '<div class="in-w"><p class="tn">' + S.bigDay + '</p><h2 data-lz="cdName">' + S.cdName + '</h2><p class="it silver" style="font-size:48px;line-height:1.1" data-lz="time0">' + S.time0 + '</p><p style="margin-top:10px;font-style:italic" data-lz="countdownNote">' + S.cdNote + '</p>' +
+      '<div class="moons" aria-live="off">' + S.units.map(function (u, i) { return '<div><div class="moonball"><b data-cd="' + 'dhms'[i] + '">--</b></div><span>' + u + '</span></div>'; }).join('') + '</div></div></section>' +
+
+    '<section class="sec" id="itinerario" data-lz-anchor="itinerario musica">' + cst(29, 'right:4px;top:4px;width:90px') + '<div class="in-w"><p class="tn" data-lz-date="' + S.dayPat + '">' + S.dayTxt + '</p><h2>' + S.schedule + '</h2>' +
+      '<div class="tl" data-lz-list="events"><svg class="line draw" viewBox="0 0 12 100" preserveAspectRatio="none" fill="none" stroke="#F4E9C888" stroke-width="1" aria-hidden="true"><path pathLength="1" d="M6 0C0 25 12 40 6 55S0 85 6 100"/></svg>' + S.events.map(function (e) { return '<div data-lz-item data-rv><p class="tm" data-lz-f="time">' + e[0] + '</p><h3 data-lz-f="name">' + e[1] + '</h3><p><span data-lz-f="place">' + e[2] + '</span><br><span data-lz-f="address">' + e[3] + '</span></p><a data-lz-f="map" href="' + maps(e[2]) + '" target="_blank" rel="noopener">' + S.how + '</a></div>'; }).join('') + '</div>' +
+      '<div class="glass gc" data-rv data-lz-group="dressCode dressNotes dressColors"><p class="tn">' + S.dress + '</p><h2 style="margin:8px 0" data-lz="dressCode">' + S.dressCode + '</h2><p data-lz="dressNotes">' + S.dressNotes + '</p><p style="margin-top:8px;font-size:15px" data-lz-group="dressColors"><i>' + S.reserved + '</i> <span data-lz="dressColors">' + S.dressColors + '</span></p><div class="planetchips" aria-hidden="true"><i style="background-color:#F4F1EA"></i><i style="background-color:#E8D9C0"></i></div></div>' +
+    '</div></section>' +
+
+    '<section class="sec" id="viaje" data-lz-anchor="viaje" data-lz-show="viajeOn">' + cst(7, 'right:6px;top:18px') + '<div class="in-w"><p class="tn">' + S.fromAway + '</p><h2>' + S.travel + '</h2><p data-lz="travelIntro">' + S.travelIntro + '</p>' +
+      '<div class="gcs">' +
+        '<div class="glass" data-rv data-lz-group="hotel hotelAddress hotelCode hotelNotes">' + ICON[0] + '<p class="tn" style="margin-top:6px">' + S.stay + '</p><h3 data-lz="hotel">' + S.hotel + '</h3><p data-lz="hotelAddress">' + S.hotelAddress + '</p><p data-lz-group="hotelCode">' + S.rate + ' <b data-lz="hotelCode">' + S.hotelCode + '</b></p><p data-lz="hotelNotes">' + S.hotelNotes + '</p><a class="btn" style="margin-top:14px;padding:12px 20px" href="#viaje" data-lz-href="hotelLink" data-lz-if="hotelLink">' + S.book + '</a></div>' +
+        '<div class="glass" data-rv data-lz-group="airport transport">' + ICON[1] + '<p class="tn" style="margin-top:6px">' + S.getThere + '</p><h3>' + S.getThereT + '</h3><p data-lz-group="airport"><b>' + S.airportL + '</b> <span data-lz="airport">' + S.airport + '</span></p><p data-lz-group="transport"><b>' + S.transportL + '</b> <span data-lz="transport">' + S.transport + '</span></p></div>' +
+        '<div class="glass" data-rv data-lz-group="guideFood guideCulture guidePlans">' + ICON[2] + '<p class="tn" style="margin-top:6px">' + S.guide + '</p><h3>' + S.guideT + '</h3><p data-lz-group="guideFood"><b>' + S.foodL + '</b> <span data-lz="guideFood">' + S.food + '</span></p><p data-lz-group="guideCulture"><b>' + S.cultureL + '</b> <span data-lz="guideCulture">' + S.culture + '</span></p><p data-lz-group="guidePlans"><b>' + S.plansL + '</b> <span data-lz="guidePlans">' + S.plans + '</span></p></div>' +
+      '</div></div></section>' +
+
+    '<section class="sec" data-lz-group="quote">' + shoot(30, -40, 8, 2) + '<div class="in-w">' + phases + '<blockquote class="silver" style="margin-top:20px">“<span data-lz="quote">' + S.quote + '</span>”</blockquote><p class="tn" data-lz="quoteAuthor">' + S.quoteAuthor + '</p></div></section>' +
+
+    '<section class="sec" id="faq" data-lz-anchor="faq" data-lz-hide-empty>' + cst(19, 'left:6px;top:10px') + '<div class="in-w"><p class="tn">' + S.faqK + '</p><h2>' + S.faqT + '</h2>' +
+      '<div class="faq" data-lz-list="faqs">' + S.faqs.map(function (f) { return '<details data-lz-item><summary data-lz-f="q">' + f[0] + '</summary><p data-lz-f="a">' + f[1] + '</p></details>'; }).join('') + '</div></div></section>' +
+
+    '<section class="sec" id="rsvp" data-lz-anchor="rsvp"><div class="in-w"><div class="glass" style="padding:32px 22px" data-rv><p class="tn" data-lz-if="rsvpDeadline">' + S.before + ' <span data-lz-date="' + S.rsvpDatePat + '" data-lz-from="rsvpDeadline">' + S.deadline + '</span></p><h2>' + S.guest + '</h2><p class="tn" style="color:var(--silver)">' + S.seatsRes + '</p>' +
+      '<div id="rsForm"><p style="margin:14px 0 4px;text-align:left" data-lz="rsvpMsg">' + S.rsvpMsg + '</p><div id="people"></div>' +
+        '<label data-lz-show="rsvpDiet">' + S.diet + '<textarea rows="2"></textarea></label><label data-lz-show="rsvpNote">' + S.note + '<textarea rows="2" id="note"></textarea></label>' +
+        '<p class="rs-err" id="rsErr" role="alert" hidden>' + S.err + '</p>' +
+        '<button type="button" class="btn" style="margin-top:22px" id="rsSave">' + S.save + '</button></div>' +
+      '<div id="rsDone" hidden style="padding-top:14px"><p class="it silver" style="font-size:26px">' + S.wish + '</p><p id="rsSum" style="margin:10px 0 0"></p><button type="button" class="btn" style="margin-top:18px" id="rsEdit">' + S.edit + '</button></div>' +
+    '</div></div></section>' +
+
+    '<footer>' + twk(8, 41) + '<div class="moonball" style="width:70px;height:70px;margin:0 auto 18px"></div><p class="it silver" style="font-size:40px">' + N('n1') + ' &amp; ' + N('n2') + '</p><p class="tn" style="margin-top:8px;color:var(--silver)"><span data-lz-date="{d} · {MU} · {Y}">14 · ' + S.MU + ' · 2027</span> · <span data-lz="city">' + S.city + '</span></p></footer>' +
+  '</main>';
+
+  document.getElementById('demoBar').innerHTML = '<span class="lbl">' + S.demo + '</span><button type="button" data-open-panel>' + S.panel + '</button><a href="' + S.storeUrl + '">' + S.store + '</a>';
+})();
+</script>
+<script src="/demo/shared/content.js"></script>
+<script src="/demo/shared/panel.js"></script>
+<script>
+(function () {
+  var S = window.CelesteS, $ = function (id) { return document.getElementById(id); };
+  var PEOPLE = ['Carlos Rodríguez', 'Lucía Pérez', 'Sofía Rodríguez', 'Mateo Rodríguez'];
+  LazoPanel.init({ mono: 'A&L', couple: S.n1 + ' ' + S.y + ' ' + S.n2, link: location.pathname, guest: S.guest, people: PEOPLE });
+  LazoMusic.init({ src: '/assets/musica/demo.mp3' });
+  var still = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Nombres letra por letra: se copian de las fuentes que llena el editor.
+  function copy() { document.querySelectorAll('[data-split]').forEach(function (el) { var t = $(el.dataset.split).textContent.trim(); if (el._t !== t) { el._t = t; el.innerHTML = window.CelesteSplit(t, +(el.dataset.off || 0)); } }); }
+  copy();
+  ['srcN1', 'srcN2'].forEach(function (id) { new MutationObserver(copy).observe($(id), { childList: true, characterData: true, subtree: true }); });
+
+  // Lo que aparece, se dibuja o se escribe al llegar a la pantalla (después de abrir la invitación).
+  var io = null;
+  function observe(root) { if (io) root.querySelectorAll('[data-rv]:not(.in), .draw:not(.in), .letters:not(.in)').forEach(function (el) { if (!el.closest('.opening')) io.observe(el); }); }
+  function watch() {
+    if (io) return;
+    if (!('IntersectionObserver' in window)) { document.querySelectorAll('#invite [data-rv], #invite .draw, #invite .letters').forEach(function (el) { el.classList.add('in'); }); return; }
+    io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }); }, { threshold: .18 });
+    observe(document);
+  }
+  document.addEventListener('lz-render', function (e) { observe(e.target); });
+
+  // Barra con los nombres al bajar, y la foto de portada que se mueve más lento (profundidad).
+  var bar = $('mbar'), img = $('heroImg'), raf = 0, opened = false;
+  window.addEventListener('scroll', function () {
+    if (raf) return;
+    raf = requestAnimationFrame(function () { raf = 0; var y = window.pageYOffset; bar.classList.toggle('show', opened && y > 520); if (y < 900) img.style.translate = '0 ' + Math.min(y * .06, img.parentNode.clientHeight * .12).toFixed(1) + 'px'; });
+  }, { passive: true });
+
+  // Apertura: al tocar la luna las estrellas se unen en un corazón; al entrar, el cielo se abre.
+  var op = $('open'), timer = null;
+  $('moon').addEventListener('click', function () {
+    if (op.classList.contains('lit')) return;
+    LazoMusic.play(); op.classList.add('lit'); $('enter').tabIndex = 0;
+    setTimeout(function () { $('enter').focus({ preventScroll: true }); }, 1900);
+  });
+  function enter() { clearTimeout(timer); opened = true; op.classList.add('gone'); document.body.classList.remove('locked'); setTimeout(watch, 350); }
+  $('enter').addEventListener('click', function () { op.classList.add('warp'); timer = setTimeout(function () { enter(); $('demoBar').hidden = false; window.scrollTo(0, 0); }, 700); });
+
+  // Para el editor de Lazo (demo/shared/content.js): saltar o volver a mostrar la luna.
+  window.LzTemplate = {
+    open: function () { op.classList.add('lit'); enter(); },
+    envelope: function () { clearTimeout(timer); opened = false; bar.classList.remove('show'); op.classList.remove('gone', 'lit', 'warp'); $('enter').tabIndex = -1; document.body.classList.add('locked'); window.scrollTo(0, 0); },
+    scroll: function (el, now) { window.scrollTo({ top: el.getBoundingClientRect().top + window.pageYOffset - 70, behavior: now ? 'instant' : 'smooth' }); }
+  };
+
+  // Cuenta regresiva en cuatro lunas (la fecha del editor llega en window.LZ_T)
+  var TARGET = new Date(2027, 2, 14, 13, 0).getTime(), pad = function (n) { return String(n).padStart(2, '0'); }, cd = {};
+  document.querySelectorAll('[data-cd]').forEach(function (e) { cd[e.dataset.cd] = e; });
+  function tick() { var s = Math.floor(Math.max(0, (window.LZ_T || TARGET) - Date.now()) / 1000); cd.d.textContent = pad(Math.floor(s / 86400)); cd.h.textContent = pad(Math.floor(s / 3600) % 24); cd.m.textContent = pad(Math.floor(s / 60) % 60); cd.s.textContent = pad(s % 60); }
+  tick(); setInterval(tick, 1000);
+
+  // Confirmación por persona (demo: no se envía a ningún lado); al confirmar cruzan estrellas fugaces.
+  function wishes(x, y) {
+    if (still) return;
+    for (var i = 0; i < 9; i++) {
+      var s = document.createElement('i'), a = -Math.PI / 2 + (i - 4) * .28, d = 220 + Math.random() * 120, deg = a * 180 / Math.PI;
+      s.className = 'wish'; s.style.left = x + 'px'; s.style.top = y + 'px'; document.body.appendChild(s);
+      s.animate([{ transform: 'rotate(' + deg + 'deg) translateX(0) scaleX(.2)', opacity: 0 }, { opacity: 1, offset: .2 }, { transform: 'rotate(' + deg + 'deg) translateX(' + d + 'px) scaleX(1)', opacity: 0 }], { duration: 1100 + i * 60, delay: i * 70, easing: 'cubic-bezier(.2,.7,.3,1)', fill: 'backwards' }).onfinish = (function (n) { return function () { n.remove(); }; })(s);
+    }
+  }
+  var att = PEOPLE.map(function () { return null; }), wrap = $('people');
+  PEOPLE.forEach(function (name, i) {
+    var row = document.createElement('div'); row.className = 'person'; row.setAttribute('role', 'group'); row.setAttribute('aria-label', name);
+    var n = document.createElement('span'); n.textContent = name;
+    var g = document.createElement('div');
+    [[S.yes, true], [S.no, false]].forEach(function (o) {
+      var b = document.createElement('button'); b.type = 'button'; b.textContent = o[0]; b.setAttribute('aria-pressed', 'false');
+      b.addEventListener('click', function () { att[i] = o[1]; g.querySelectorAll('button').forEach(function (x) { x.setAttribute('aria-pressed', String(x === b)); }); $('rsErr').hidden = true; });
+      g.appendChild(b);
+    });
+    row.appendChild(n); row.appendChild(g); wrap.appendChild(row);
+  });
+  $('rsSave').addEventListener('click', function () {
+    if (att.some(function (x) { return x === null; })) { $('rsErr').hidden = false; return; }
+    var r = this.getBoundingClientRect(); wishes(r.left + r.width / 2, r.top);
+    $('rsSum').textContent = S.will(att.filter(Boolean).length, PEOPLE.length);
+    $('rsForm').hidden = true; $('rsDone').hidden = false;
+    LazoPanel.setResponse(att, $('note').value.trim());
+  });
+  $('rsEdit').addEventListener('click', function () { $('rsDone').hidden = true; $('rsForm').hidden = false; });
+})();
+</script>
+</body>
+</html>

@@ -10,7 +10,8 @@
       { id: 'moderno', es: 'Moderno', en: 'Modern' },
       { id: 'botanico', es: 'Botánico', en: 'Botanical' },
       { id: 'colorido', es: 'Colorido', en: 'Colorful' },
-      { id: 'natural', es: 'Natural', en: 'Natural' }
+      { id: 'natural', es: 'Natural', en: 'Natural' },
+      { id: 'mexicano', es: 'Mexicano', en: 'Mexican' }
     ] },
     { key: 'lugar', es: 'Para una boda en', en: 'For a wedding at', opts: [
       { id: 'ciudad', es: 'Ciudad o salón', en: 'City or venue' },
@@ -23,7 +24,10 @@
       { id: 'pase', es: 'Pase de abordar', en: 'Boarding pass' },
       { id: 'medallon', es: 'Medallón', en: 'Medallion' },
       { id: 'carpeta', es: 'Carpeta', en: 'Folder' },
-      { id: 'tarjetas', es: 'Juego de tarjetas', en: 'Card set' }
+      { id: 'tarjetas', es: 'Juego de tarjetas', en: 'Card set' },
+      { id: 'lazo', es: 'Lazo de seda', en: 'Silk bow' },
+      { id: 'carta', es: 'Carta de lotería', en: 'Lotería card' },
+      { id: 'luna', es: 'Luna', en: 'Moon' }
     ] },
     { key: 'tono', es: 'Colores', en: 'Colors', opts: [
       { id: 'claros', es: 'Claros', en: 'Light' },
@@ -61,6 +65,18 @@
       tags: { estilo: ['elegante', 'moderno'], lugar: ['ciudad'], apertura: ['puertas'], tono: ['oscuros'] },
       es: { name: 'Noir', title: 'Diseño noir', desc: 'Etiqueta negra: negro profundo, marfil y plata. Una tarjeta de puerta doble con el monograma en relieve; al quitar la faja de plata se abre hacia arriba y hacia abajo. Fotos en blanco y negro.', opening: 'Apertura: puerta doble', colors: 'Negro, verde bosque o medianoche', alt: ['Diseño noir: tarjeta negra con monograma en relieve y faja de plata', 'Diseño noir: portada con foto en blanco y negro'] },
       en: { name: 'Noir', title: 'Noir', desc: 'Black tie: deep black, ivory and silver. A double-door card with an embossed monogram; remove the silver band and it opens up and down. Black-and-white photos.', opening: 'Opening: double door', colors: 'Black, forest green or midnight', alt: ['Noir design: black card with an embossed monogram and a silver band', 'Noir design: cover with a black-and-white photo'] } },
+    { id: 'marfil', bg: '#E6DFD1', shadow: 'rgba(58,44,26,0.55)', img: ['/assets/marfil-lazo.jpg', '/assets/marfil-portada.jpg'],
+      tags: { estilo: ['elegante', 'romantico'], lugar: ['ciudad', 'campo'], apertura: ['lazo'], tono: ['claros'] },
+      es: { name: 'Marfil', title: 'Diseño marfil', desc: 'Clásica y elegante: papel de algodón, filos dorados, caligrafía y un escudo de laurel. Llega envuelta en papel vegetal con un lazo de seda; al desatarlo, el papel se abre y los nombres se escriben solos.', opening: 'Apertura: lazo de seda', colors: 'Burdeos, azul noche o verde inglés', alt: ['Diseño marfil: tarjeta envuelta en papel vegetal con lazo de seda', 'Diseño marfil: portada con escudo de laurel y marco dorado'] },
+      en: { name: 'Marfil', title: 'Marfil', desc: 'Classic and elegant: cotton paper, gilded edges, calligraphy and a laurel crest. It arrives wrapped in vellum with a silk bow; untie it, the vellum opens and the names write themselves.', opening: 'Opening: silk bow', colors: 'Burgundy, midnight blue or British green', alt: ['Marfil design: card wrapped in vellum with a silk bow', 'Marfil design: cover with a laurel crest and gold frame'] } },
+    { id: 'celeste', bg: '#1A2448', shadow: 'rgba(0,0,0,0.75)', img: ['/assets/celeste-luna.jpg', '/assets/celeste-portada.jpg'],
+      tags: { estilo: ['romantico'], lugar: ['playa', 'campo'], apertura: ['luna'], tono: ['oscuros'] },
+      es: { name: 'Celeste', title: 'Diseño celeste', desc: 'Noche estrellada: nebulosas, estrellas que titilan y estrellas fugaces. Al tocar la luna, las estrellas forman un corazón. Adentro, la foto es una luna con órbitas y la cuenta regresiva son cuatro lunas.', opening: 'Apertura: luna y constelación', colors: 'Medianoche, aurora o lavanda', alt: ['Diseño celeste: luna sobre un cielo estrellado', 'Diseño celeste: portada con foto en órbita y nombres plateados'] },
+      en: { name: 'Celeste', title: 'Celeste', desc: 'A starry night: nebulas, twinkling and shooting stars. Tap the moon and the stars form a heart. Inside, the photo is a moon with orbits and the countdown is four moons.', opening: 'Opening: moon and constellation', colors: 'Midnight, aurora or lavender', alt: ['Celeste design: moon over a starry sky', 'Celeste design: cover with an orbiting photo and silver names'] } },
+    { id: 'fiesta', bg: '#FCE3C4', shadow: 'rgba(42,27,61,0.6)', img: ['/assets/fiesta-carta.jpg', '/assets/fiesta-portada.jpg'],
+      tags: { estilo: ['colorido', 'mexicano'], lugar: ['campo', 'ciudad'], apertura: ['carta'], tono: ['vivos'] },
+      es: { name: 'Fiesta', title: 'Diseño fiesta', desc: 'Alegre y muy mexicana: papel picado que ondea, una carta de lotería con un corazón en llamas y rayas de sarape. Al tocar la carta se voltea; al entrar, estalla el confeti.', opening: 'Apertura: carta de lotería', colors: 'Fiesta, pastel o rosa mexicano', alt: ['Diseño fiesta: carta de lotería entre papel picado', 'Diseño fiesta: portada con foto tipo carta de lotería'] },
+      en: { name: 'Fiesta', title: 'Fiesta', desc: 'Joyful and very Mexican: fluttering papel picado, a lotería card with a flaming heart and sarape stripes. Tap the card and it flips; step inside and confetti bursts.', opening: 'Opening: lotería card', colors: 'Fiesta, pastel or Mexican pink', alt: ['Fiesta design: lotería card among papel picado', 'Fiesta design: cover with a lotería-card photo'] } },
     { id: 'clasico', bg: '#D9DDD0', shadow: 'rgba(34,32,28,0.6)', img: ['/assets/clasico-sobre.jpg', '/assets/clasico-demo-portada.jpg'],
       tags: { estilo: ['elegante'], lugar: ['ciudad', 'campo'], apertura: ['sobre'], tono: ['claros', 'oscuros'] },
       es: { name: 'Clásico', title: 'Diseño clásico', desc: 'Verde salvia y marfil, nombres en serif grande y un sobre que se abre para mostrar una carta con el nombre de cada familia. Atemporal.', opening: 'Apertura: sobre con carta', colors: 'Paleta a elección', alt: ['Diseño clásico: sobre con sello verde para la familia invitada', 'Diseño clásico: portada con los nombres y foto en arco'] },

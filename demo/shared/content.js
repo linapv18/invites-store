@@ -76,6 +76,21 @@
       { id: 'salvia', es: 'Salvia', en: 'Sage', sw: '#8C9A86' },
       { id: 'arena', es: 'Arena', en: 'Sand', sw: '#B49B7E', vars: { sage: '#A88D6E', bg: '#ECE6DC' } },
       { id: 'piedra', es: 'Piedra', en: 'Stone', sw: '#8A939B', vars: { sage: '#7E8891', bg: '#E4E5E6' } }
+    ],
+    marfil: [
+      { id: 'burdeos', es: 'Burdeos', en: 'Burgundy', sw: '#5E1F2B' },
+      { id: 'azul', es: 'Azul noche', en: 'Midnight blue', sw: '#1F2A44', vars: { wine: '#1F2A44' } },
+      { id: 'verde', es: 'Verde inglés', en: 'British green', sw: '#23392E', vars: { wine: '#23392E' } }
+    ],
+    fiesta: [
+      { id: 'fiesta', es: 'Fiesta', en: 'Fiesta', sw: 'conic-gradient(#E8457C 0 25%,#F28C28 0 50%,#19A39A 0 75%,#3B5BDB 0)' },
+      { id: 'pastel', es: 'Pastel', en: 'Pastel', sw: 'conic-gradient(#F2A7BF 0 25%,#F7C59F 0 50%,#8FD3C8 0 75%,#A9B8F2 0)', vars: { pink: '#E07A9E', orange: '#F2A774', yellow: '#F6D88A', teal: '#5DBFB2', blue: '#7F94E3', green: '#93C98A', red: '#E88A94', ink: '#3D2F52', bg: '#FFF7EE' } },
+      { id: 'rosa', es: 'Rosa mexicano', en: 'Mexican pink', sw: 'conic-gradient(#C2185B 0 33%,#E91E63 0 66%,#F8BBD0 0)', vars: { pink: '#C2185B', orange: '#E91E63', yellow: '#F8BBD0', teal: '#AD1457', blue: '#880E4F', green: '#F06292', red: '#D81B60', bg: '#FFF1F5' } }
+    ],
+    celeste: [
+      { id: 'medianoche', es: 'Medianoche', en: 'Midnight', sw: '#0B1430' },
+      { id: 'aurora', es: 'Aurora', en: 'Aurora', sw: '#0A2630', vars: { bg: '#081E26', bg2: '#0F2E3A', accent: '#7FE0C8', neb1: '#1D7A6A', neb2: '#3B5FA0' } },
+      { id: 'lavanda', es: 'Lavanda', en: 'Lavender', sw: '#241B42', vars: { bg: '#1C1636', bg2: '#2A2150', accent: '#C3A8F0', neb1: '#7A4C9A', neb2: '#B0607E' } }
     ]
   };
   function hexRgb(h) { var m = /^#?([0-9a-f]{6})$/i.exec(h || ''); if (!m) return null; var n = parseInt(m[1], 16); return [n >> 16 & 255, n >> 8 & 255, n & 255]; }

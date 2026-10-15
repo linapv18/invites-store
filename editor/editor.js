@@ -335,7 +335,10 @@
     gala: { es: ['Una invitación para un día inolvidable', 'Con todo nuestro cariño'], en: ['An invitation to an unforgettable day', 'With all our love'] },
     aurelia: { es: ['Una invitación para un día inolvidable', 'Con todo nuestro cariño'], en: ['An invitation to an unforgettable day', 'With all our love'] },
     noir: { es: ['Una invitación para un día inolvidable', 'Con todo nuestro cariño'], en: ['An invitation to an unforgettable day', 'With all our love'] },
-    lino: { es: ['Una invitación para un día inolvidable', 'Con todo nuestro cariño'], en: ['An invitation to an unforgettable day', 'With all our love'] }
+    lino: { es: ['Una invitación para un día inolvidable', 'Con todo nuestro cariño'], en: ['An invitation to an unforgettable day', 'With all our love'] },
+    marfil: { es: ['Una invitación para un día inolvidable', 'Con todo nuestro cariño'], en: ['An invitation to an unforgettable day', 'With all our love'] },
+    fiesta: { es: ['Una invitación para un día inolvidable', 'Con todo nuestro cariño'], en: ['An invitation to an unforgettable day', 'With all our love'] },
+    celeste: { es: ['Una invitación para un día inolvidable', 'Con todo nuestro cariño'], en: ['An invitation to an unforgettable day', 'With all our love'] }
   };
   // Paletas de Romántico (los colores los aplica demo/shared/content.js; aquí solo el nombre y la muestra).
   var ROSA_PALETTES = [
@@ -383,7 +386,23 @@
     { id: 'arena', hex: '#B49B7E', seal: '#A88D6E', es: 'Arena', en: 'Sand' },
     { id: 'piedra', hex: '#8A939B', seal: '#7E8891', es: 'Piedra', en: 'Stone' }
   ];
-  var TPL_PALETTES = { rosa: ROSA_PALETTES, moderno: MOD_PALETTES, jardin: JARDIN_PALETTES, costa: COSTA_PALETTES, gala: GALA_PALETTES, aurelia: AURELIA_PALETTES, noir: NOIR_PALETTES, lino: LINO_PALETTES };
+  // Marfil: lacre del color de la paleta; Fiesta: sello rosa; Celeste: la luna.
+  var MARFIL_PALETTES = [
+    { id: 'burdeos', hex: '#5E1F2B', seal: '#5E1F2B', es: 'Burdeos', en: 'Burgundy' },
+    { id: 'azul', hex: '#1F2A44', seal: '#1F2A44', es: 'Azul noche', en: 'Midnight blue' },
+    { id: 'verde', hex: '#23392E', seal: '#23392E', es: 'Verde inglés', en: 'British green' }
+  ];
+  var FIESTA_PALETTES = [
+    { id: 'fiesta', hex: 'conic-gradient(#E8457C 0 25%,#F28C28 0 50%,#19A39A 0 75%,#3B5BDB 0)', seal: '#E8457C', es: 'Fiesta', en: 'Fiesta' },
+    { id: 'pastel', hex: 'conic-gradient(#F2A7BF 0 25%,#F7C59F 0 50%,#8FD3C8 0 75%,#A9B8F2 0)', seal: '#E07A9E', es: 'Pastel', en: 'Pastel' },
+    { id: 'rosa', hex: 'conic-gradient(#C2185B 0 33%,#E91E63 0 66%,#F8BBD0 0)', seal: '#C2185B', es: 'Rosa mexicano', en: 'Mexican pink' }
+  ];
+  var CELESTE_PALETTES = [
+    { id: 'medianoche', hex: '#0B1430', seal: '#0B1430', es: 'Medianoche', en: 'Midnight' },
+    { id: 'aurora', hex: '#0A2630', seal: '#081E26', es: 'Aurora', en: 'Aurora' },
+    { id: 'lavanda', hex: '#241B42', seal: '#1C1636', es: 'Lavanda', en: 'Lavender' }
+  ];
+  var TPL_PALETTES = { rosa: ROSA_PALETTES, moderno: MOD_PALETTES, jardin: JARDIN_PALETTES, costa: COSTA_PALETTES, gala: GALA_PALETTES, aurelia: AURELIA_PALETTES, noir: NOIR_PALETTES, lino: LINO_PALETTES, marfil: MARFIL_PALETTES, fiesta: FIESTA_PALETTES, celeste: CELESTE_PALETTES };
   var tplPal = function () { var l = TPL_PALETTES[state.design] || []; return l.filter(function (x) { return x.id === state.pal; })[0] || l[0]; };
   var PALETTES = [
     { id: 'salvia', hex: '#5F7360', es: 'Salvia', en: 'Sage' },
@@ -400,7 +419,10 @@
     gala: { kind: 'envelope', es: ['Gala', 'Medallón dorado'], en: ['Gala', 'Gold medallion'] },
     aurelia: { kind: 'doors', es: ['Aurelia', 'Carpeta con faja dorada'], en: ['Aurelia', 'Folder with a gold band'] },
     noir: { kind: 'doors', es: ['Noir', 'Puerta doble con faja de plata'], en: ['Noir', 'Double door with a silver band'] },
-    lino: { kind: 'envelope', es: ['Lino', 'Juego de tarjetas'], en: ['Lino', 'Card set'] }
+    lino: { kind: 'envelope', es: ['Lino', 'Juego de tarjetas'], en: ['Lino', 'Card set'] },
+    marfil: { kind: 'envelope', es: ['Marfil', 'Papel vegetal y lazo de seda'], en: ['Marfil', 'Vellum and silk bow'] },
+    fiesta: { kind: 'envelope', es: ['Fiesta', 'Carta de lotería'], en: ['Fiesta', 'Lotería card'] },
+    celeste: { kind: 'envelope', es: ['Celeste', 'Luna y constelación'], en: ['Celeste', 'Moon and constellation'] }
   };
   // Sección de la vista previa a la que lleva cada complemento.
   var ADDON_SPOT = { playlist: 'musica', libro: 'itinerario', capsula: 'rsvp', encuestas: 'faq', galeria: 'historia', bilingue: 'portada', dominio: 'portada' };
@@ -619,6 +641,9 @@
     if (state.design === 'aurelia') return serif + 'background:#FFFFFF;color:#1D1B19;box-shadow:inset 0 0 0 1px ' + tplPal().seal;
     if (state.design === 'noir') return serif + 'background:' + tplPal().seal + ';color:#CFCFCA;box-shadow:inset 0 0 0 1px #CFCFCA55';
     if (state.design === 'lino') return serif + 'background:radial-gradient(circle at 35% 30%,#ffffff55,' + tplPal().seal + ' 60%);color:#fff';
+    if (state.design === 'marfil') return serif + 'background:radial-gradient(circle at 35% 30%,#ffffff40,' + tplPal().seal + ' 60%);color:#F1DDD0';
+    if (state.design === 'fiesta') return serif + 'background:' + tplPal().seal + ';color:#fff;box-shadow:inset 0 0 0 2px #2A1B3D';
+    if (state.design === 'celeste') return serif + 'background:' + tplPal().seal + ';color:#F4E9C8;box-shadow:inset 0 0 0 1px #F4E9C866';
     var hex = state.pal === 'custom' ? state.palCustom : TPL_DARK[state.pal], m = /^#?([0-9a-f]{6})$/i.exec(hex || '');
     if (!m) return 'font-family:Georgia,serif;background:radial-gradient(circle at 30% 20%,#64745a,#2b4437);color:#f5f2ea';
     var n = parseInt(m[1], 16), c = [n >> 16 & 255, n >> 8 & 255, n & 255];
