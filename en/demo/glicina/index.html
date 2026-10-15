@@ -184,7 +184,7 @@ footer .mc{color:var(--cream);text-shadow:0 1px 8px #3f4a2a99}
 body.garden{background-size:160px,100% 100%,100% 100%,100% 100%,100% 100%,100% 100%;background-attachment:fixed}
 .wis{position:absolute;left:0;width:100%;height:0;pointer-events:none;overflow:visible;z-index:1}
 /* La rama se ve completa (sin recortar) y se repite a lo ancho; una copia sí y otra en espejo para que las uniones coincidan. */
-.wis .ramas{position:absolute;left:0;right:0;top:-12px;display:flex;justify-content:center}
+.wis .ramas{position:absolute;z-index:2;left:0;right:0;top:-12px;display:flex;justify-content:center;pointer-events:none}
 .wis .ramas img{flex:none;width:auto;height:130px;max-width:none}
 .wis .ramas img:nth-child(even){scale:-1 1}
 .wis .rc{position:absolute;max-width:none;transform-origin:50% 0;filter:var(--wis-filter,none);animation:glSway var(--du) ease-in-out var(--de) infinite alternate}
@@ -231,6 +231,7 @@ footer{padding-bottom:120px !important}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none !important;transition:none !important}[data-rv]{opacity:1;transform:none}.grow .st,.draw path{stroke-dashoffset:0}.grow .lf,.grow .bl{transform:none}.write{clip-path:none}.typer i{opacity:1}}
 
 .dk{display:none}
+.pill{position:relative;z-index:3;display:inline-block;padding:5px 14px;border-radius:99px;background:#FBF6EAd9;box-shadow:0 4px 12px -6px #0003}
 /* Opción «sin fotos» (editor: photosOn; demo: botón Sin fotos o ?fotos=no): html.lz-no-photos */
 html:not(.lz-no-photos) .np-only,.lz-no-photos .ph-only{display:none !important}
 /* ---------- Computador: glicinas a lo ancho y los paneles en una sola columna más ancha ---------- */
@@ -240,8 +241,10 @@ html:not(.lz-no-photos) .np-only,.lz-no-photos .ph-only{display:none !important}
   .mbar{left:max(10px,calc(50% - 370px));right:max(10px,calc(50% - 370px))}
   .mb{display:none}.dk{display:block}
   .wis .ramas img{height:170px}
-  .wis .rc{margin-top:26px}
-  .ghero{padding:250px 20px 70px;overflow:visible}
+  .wis .rc{margin-top:4px}
+  .ghero{padding-top:170px}
+  .opening{padding-top:120px}
+  .ghero{padding:170px 20px 70px;overflow:visible}
   .ghero>.wis{height:340px;left:calc(50% - 50vw);width:100vw}
   .ghero .loval{width:400px;height:500px}
   .ghero .loval.np{width:420px;height:525px;padding:0 100px}
@@ -387,7 +390,7 @@ const brush = c => `<svg viewBox="0 0 70 26" aria-hidden="true"><path d="M5 11C2
   // ======================= APERTURA: cortina de glicinas =======================
   '<div class="opening garden" id="open" role="dialog" aria-modal="true" aria-label="' + S.openAria + '">' +
     drape(21, 8, 60, 130, [1, 2, 3], 0, 'mb') + drape(22, 18, 70, 170, [1, 2, 3], 0, 'dk') + petals(12, 4) +
-    '<p class="mc" style="margin-top:40px;position:relative;z-index:1" data-lz="envIntro" data-lz-keep>' + S.envIntro + '</p>' +
+    '<p class="mc pill" style="margin-top:40px" data-lz="envIntro" data-lz-keep>' + S.envIntro + '</p>' +
     '<div class="loval">' + LACE + ovalNames(.35) + '</div>' + bush() +
     '<div class="after"><p>' + S.for + ' <b style="font-weight:600">' + S.guest + '</b> · ' + S.seats + '</p><button type="button" class="btn" id="enter" tabindex="-1">' + S.enter + '</button><p class="lz-closing" data-lz="envClosing" data-lz-keep hidden>' + S.envClosing + '</p></div>' +
     '<div class="curt l" data-part role="button" tabindex="0" aria-label="' + S.part + '">' + drape(31, 11, 380, 720, [0, 4, 1, 0], 10, '', 'vh') + '</div>' +
@@ -398,7 +401,7 @@ const brush = c => `<svg viewBox="0 0 70 26" aria-hidden="true"><path d="M5 11C2
   // ======================= INVITACIÓN =======================
   '<div class="mbar" id="mbar" aria-hidden="true"><span class="pa" style="font-size:24px;color:var(--sage)">' + N('n1') + ' &amp; ' + N('n2') + '</span><span class="mc" data-lz-date="' + S.datePat + '">' + S.dateTxt + '</span></div>' +
   '<main id="invite">' +
-    '<section class="ghero" id="portada" data-lz-anchor="portada">' + drape(13, 9, 100, 230, [0, 1, 2, 3, 4], 0, 'mb') + drape(14, 20, 120, 320, [0, 1, 2, 3, 4], 0, 'dk') + petals(10, 9) +
+    '<section class="ghero" id="portada" data-lz-anchor="portada">' + drape(13, 9, 100, 230, [0, 1, 2, 3, 4], 0, 'mb') + drape(14, 20, 100, 230, [0, 1, 2, 3, 4], 0, 'dk') + petals(10, 9) +
       '<p class="mc" style="position:relative;z-index:1;margin-bottom:14px">' + S.getting + '</p>' +
       // Con fotos: la foto de portada en el óvalo. Sin fotos (opción del editor y de la demo): los nombres en el óvalo.
       '<div class="loval ph-only" data-rv>' + LACE + '<div class="pic"><img class="ph-img" id="heroImg" src="/assets/fotos/paseo.jpg" data-lz-src="photo:0" alt="' + S.photoAlt + '" style="object-position:center 55%"></div></div>' +
