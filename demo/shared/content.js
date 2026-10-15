@@ -66,6 +66,16 @@
       { id: 'oro', es: 'Oro', en: 'Gold', sw: '#B4955E' },
       { id: 'plata', es: 'Plata', en: 'Silver', sw: '#A3A7AC', vars: { gold: '#9EA3A8', gold2: '#E4E7EA', bg: '#F7F7F5' } },
       { id: 'rosa', es: 'Oro rosa', en: 'Rose gold', sw: '#C39488', vars: { gold: '#B98374', gold2: '#EBCFC4', bg: '#FBF7F4' } }
+    ],
+    noir: [
+      { id: 'negro', es: 'Negro', en: 'Black', sw: '#121211' },
+      { id: 'bosque', es: 'Verde bosque', en: 'Forest green', sw: '#0F1A15', vars: { bg: '#0E1813' } },
+      { id: 'medianoche', es: 'Medianoche', en: 'Midnight', sw: '#0E1422', vars: { bg: '#0D1320' } }
+    ],
+    lino: [
+      { id: 'salvia', es: 'Salvia', en: 'Sage', sw: '#8C9A86' },
+      { id: 'arena', es: 'Arena', en: 'Sand', sw: '#B49B7E', vars: { sage: '#A88D6E', bg: '#ECE6DC' } },
+      { id: 'piedra', es: 'Piedra', en: 'Stone', sw: '#8A939B', vars: { sage: '#7E8891', bg: '#E4E5E6' } }
     ]
   };
   function hexRgb(h) { var m = /^#?([0-9a-f]{6})$/i.exec(h || ''); if (!m) return null; var n = parseInt(m[1], 16); return [n >> 16 & 255, n >> 8 & 255, n & 255]; }

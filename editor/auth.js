@@ -13,7 +13,7 @@
 (function () {
   'use strict';
   var USERS = 'lazo.accounts.v1', SESSION = 'lazo.session.v1';
-  var DESIGNS = ['clasico', 'moderno', 'rosa', 'jardin', 'costa', 'gala', 'aurelia'];
+  var DESIGNS = ['clasico', 'moderno', 'rosa', 'jardin', 'costa', 'gala', 'aurelia', 'noir', 'lino'];
   function load(k) { try { var v = localStorage.getItem(k); return v ? JSON.parse(v) : null; } catch (e) { return null; } }
   function store(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); return true; } catch (e) { return false; } }
   var norm = function (e) { return String(e || '').trim().toLowerCase(); };

@@ -333,7 +333,9 @@
     jardin: { es: ['Una invitación para un día inolvidable', 'Con todo nuestro cariño'], en: ['An invitation to an unforgettable day', 'With all our love'] },
     costa: { es: ['Una invitación para un día inolvidable', 'Con todo nuestro cariño'], en: ['An invitation to an unforgettable day', 'With all our love'] },
     gala: { es: ['Una invitación para un día inolvidable', 'Con todo nuestro cariño'], en: ['An invitation to an unforgettable day', 'With all our love'] },
-    aurelia: { es: ['Una invitación para un día inolvidable', 'Con todo nuestro cariño'], en: ['An invitation to an unforgettable day', 'With all our love'] }
+    aurelia: { es: ['Una invitación para un día inolvidable', 'Con todo nuestro cariño'], en: ['An invitation to an unforgettable day', 'With all our love'] },
+    noir: { es: ['Una invitación para un día inolvidable', 'Con todo nuestro cariño'], en: ['An invitation to an unforgettable day', 'With all our love'] },
+    lino: { es: ['Una invitación para un día inolvidable', 'Con todo nuestro cariño'], en: ['An invitation to an unforgettable day', 'With all our love'] }
   };
   // Paletas de Romántico (los colores los aplica demo/shared/content.js; aquí solo el nombre y la muestra).
   var ROSA_PALETTES = [
@@ -370,7 +372,18 @@
     { id: 'plata', hex: '#A3A7AC', seal: '#9EA3A8', es: 'Plata', en: 'Silver' },
     { id: 'rosa', hex: '#C39488', seal: '#B98374', es: 'Oro rosa', en: 'Rose gold' }
   ];
-  var TPL_PALETTES = { rosa: ROSA_PALETTES, moderno: MOD_PALETTES, jardin: JARDIN_PALETTES, costa: COSTA_PALETTES, gala: GALA_PALETTES, aurelia: AURELIA_PALETTES };
+  // Noir: monograma en relieve sobre negro; Lino: lacre del color de la paleta.
+  var NOIR_PALETTES = [
+    { id: 'negro', hex: '#121211', seal: '#121211', es: 'Negro', en: 'Black' },
+    { id: 'bosque', hex: '#0F1A15', seal: '#0E1813', es: 'Verde bosque', en: 'Forest green' },
+    { id: 'medianoche', hex: '#0E1422', seal: '#0D1320', es: 'Medianoche', en: 'Midnight' }
+  ];
+  var LINO_PALETTES = [
+    { id: 'salvia', hex: '#8C9A86', seal: '#8C9A86', es: 'Salvia', en: 'Sage' },
+    { id: 'arena', hex: '#B49B7E', seal: '#A88D6E', es: 'Arena', en: 'Sand' },
+    { id: 'piedra', hex: '#8A939B', seal: '#7E8891', es: 'Piedra', en: 'Stone' }
+  ];
+  var TPL_PALETTES = { rosa: ROSA_PALETTES, moderno: MOD_PALETTES, jardin: JARDIN_PALETTES, costa: COSTA_PALETTES, gala: GALA_PALETTES, aurelia: AURELIA_PALETTES, noir: NOIR_PALETTES, lino: LINO_PALETTES };
   var tplPal = function () { var l = TPL_PALETTES[state.design] || []; return l.filter(function (x) { return x.id === state.pal; })[0] || l[0]; };
   var PALETTES = [
     { id: 'salvia', hex: '#5F7360', es: 'Salvia', en: 'Sage' },
@@ -385,7 +398,9 @@
     jardin: { kind: 'envelope', es: ['Jardín', 'Sobre de semillas'], en: ['Garden', 'Seed packet'] },
     costa: { kind: 'envelope', es: ['Costa', 'Pase de abordar'], en: ['Coast', 'Boarding pass'] },
     gala: { kind: 'envelope', es: ['Gala', 'Medallón dorado'], en: ['Gala', 'Gold medallion'] },
-    aurelia: { kind: 'doors', es: ['Aurelia', 'Carpeta con faja dorada'], en: ['Aurelia', 'Folder with a gold band'] }
+    aurelia: { kind: 'doors', es: ['Aurelia', 'Carpeta con faja dorada'], en: ['Aurelia', 'Folder with a gold band'] },
+    noir: { kind: 'doors', es: ['Noir', 'Puerta doble con faja de plata'], en: ['Noir', 'Double door with a silver band'] },
+    lino: { kind: 'envelope', es: ['Lino', 'Juego de tarjetas'], en: ['Lino', 'Card set'] }
   };
   // Sección de la vista previa a la que lleva cada complemento.
   var ADDON_SPOT = { playlist: 'musica', libro: 'itinerario', capsula: 'rsvp', encuestas: 'faq', galeria: 'historia', bilingue: 'portada', dominio: 'portada' };
@@ -602,6 +617,8 @@
     if (state.design === 'costa') return serif + 'background:#FFFCF5;color:' + tplPal().seal + ';box-shadow:inset 0 0 0 2px ' + tplPal().seal;
     if (state.design === 'gala') return serif + 'background:radial-gradient(circle at 35% 30%,#F7E7B8,' + tplPal().seal + ' 70%);color:#2A1F0C';
     if (state.design === 'aurelia') return serif + 'background:#FFFFFF;color:#1D1B19;box-shadow:inset 0 0 0 1px ' + tplPal().seal;
+    if (state.design === 'noir') return serif + 'background:' + tplPal().seal + ';color:#CFCFCA;box-shadow:inset 0 0 0 1px #CFCFCA55';
+    if (state.design === 'lino') return serif + 'background:radial-gradient(circle at 35% 30%,#ffffff55,' + tplPal().seal + ' 60%);color:#fff';
     var hex = state.pal === 'custom' ? state.palCustom : TPL_DARK[state.pal], m = /^#?([0-9a-f]{6})$/i.exec(hex || '');
     if (!m) return 'font-family:Georgia,serif;background:radial-gradient(circle at 30% 20%,#64745a,#2b4437);color:#f5f2ea';
     var n = parseInt(m[1], 16), c = [n >> 16 & 255, n >> 8 & 255, n & 255];

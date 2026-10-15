@@ -9,7 +9,8 @@
       { id: 'romantico', es: 'Romántico', en: 'Romantic' },
       { id: 'moderno', es: 'Moderno', en: 'Modern' },
       { id: 'botanico', es: 'Botánico', en: 'Botanical' },
-      { id: 'colorido', es: 'Colorido', en: 'Colorful' }
+      { id: 'colorido', es: 'Colorido', en: 'Colorful' },
+      { id: 'natural', es: 'Natural', en: 'Natural' }
     ] },
     { key: 'lugar', es: 'Para una boda en', en: 'For a wedding at', opts: [
       { id: 'ciudad', es: 'Ciudad o salón', en: 'City or venue' },
@@ -21,7 +22,8 @@
       { id: 'puertas', es: 'Puertas', en: 'Doors' },
       { id: 'pase', es: 'Pase de abordar', en: 'Boarding pass' },
       { id: 'medallon', es: 'Medallón', en: 'Medallion' },
-      { id: 'carpeta', es: 'Carpeta', en: 'Folder' }
+      { id: 'carpeta', es: 'Carpeta', en: 'Folder' },
+      { id: 'tarjetas', es: 'Juego de tarjetas', en: 'Card set' }
     ] },
     { key: 'tono', es: 'Colores', en: 'Colors', opts: [
       { id: 'claros', es: 'Claros', en: 'Light' },
@@ -51,6 +53,14 @@
       tags: { estilo: ['elegante'], lugar: ['ciudad'], apertura: ['medallon'], tono: ['oscuros'] },
       es: { name: 'Gala', title: 'Diseño gala', desc: 'Art déco de noche: terciopelo negro, oro y destellos. Al tocar el medallón estalla confeti dorado y la invitación se abre en círculo; los nombres aparecen letra por letra.', opening: 'Apertura: medallón dorado', colors: 'Negro, esmeralda o burdeos', alt: ['Diseño gala: medallón dorado sobre terciopelo negro', 'Diseño gala: portada art déco con arco dorado'] },
       en: { name: 'Gala', title: 'Gala', desc: 'Art deco by night: black velvet, gold and sparkles. Tap the medallion and gold confetti bursts as the invitation opens in a circle; the names appear letter by letter.', opening: 'Opening: gold medallion', colors: 'Black, emerald or burgundy', alt: ['Gala design: gold medallion on black velvet', 'Gala design: art deco cover with a gold arch'] } },
+    { id: 'lino', bg: '#DCD8CC', shadow: 'rgba(47,52,48,0.55)', img: ['/assets/lino-tarjetas.jpg', '/assets/lino-portada.jpg'],
+      tags: { estilo: ['natural', 'botanico'], lugar: ['campo'], apertura: ['tarjetas'], tono: ['claros'] },
+      es: { name: 'Lino', title: 'Diseño lino', desc: 'Natural y artesanal: fondo de lino, papel de algodón, fotos con esquineros y flores prensadas. Llega como un juego de tres tarjetas con faja de papel vegetal; al retirarla, se abren en abanico.', opening: 'Apertura: juego de tarjetas', colors: 'Salvia, arena o piedra', alt: ['Diseño lino: juego de tarjetas con faja de papel vegetal y lacre', 'Diseño lino: portada con foto con esquineros y flores prensadas'] },
+      en: { name: 'Lino', title: 'Lino', desc: 'Natural and handmade: linen background, cotton paper, photo corners and pressed flowers. It arrives as a set of three cards with a vellum band; remove it and they fan out.', opening: 'Opening: card set', colors: 'Sage, sand or stone', alt: ['Lino design: card set with a vellum band and wax seal', 'Lino design: cover with photo corners and pressed flowers'] } },
+    { id: 'noir', bg: '#1E1E1C', shadow: 'rgba(0,0,0,0.8)', img: ['/assets/noir-puerta.jpg', '/assets/noir-portada.jpg'],
+      tags: { estilo: ['elegante', 'moderno'], lugar: ['ciudad'], apertura: ['puertas'], tono: ['oscuros'] },
+      es: { name: 'Noir', title: 'Diseño noir', desc: 'Etiqueta negra: negro profundo, marfil y plata. Una tarjeta de puerta doble con el monograma en relieve; al quitar la faja de plata se abre hacia arriba y hacia abajo. Fotos en blanco y negro.', opening: 'Apertura: puerta doble', colors: 'Negro, verde bosque o medianoche', alt: ['Diseño noir: tarjeta negra con monograma en relieve y faja de plata', 'Diseño noir: portada con foto en blanco y negro'] },
+      en: { name: 'Noir', title: 'Noir', desc: 'Black tie: deep black, ivory and silver. A double-door card with an embossed monogram; remove the silver band and it opens up and down. Black-and-white photos.', opening: 'Opening: double door', colors: 'Black, forest green or midnight', alt: ['Noir design: black card with an embossed monogram and a silver band', 'Noir design: cover with a black-and-white photo'] } },
     { id: 'clasico', bg: '#D9DDD0', shadow: 'rgba(34,32,28,0.6)', img: ['/assets/clasico-sobre.jpg', '/assets/clasico-demo-portada.jpg'],
       tags: { estilo: ['elegante'], lugar: ['ciudad', 'campo'], apertura: ['sobre'], tono: ['claros', 'oscuros'] },
       es: { name: 'Clásico', title: 'Diseño clásico', desc: 'Verde salvia y marfil, nombres en serif grande y un sobre que se abre para mostrar una carta con el nombre de cada familia. Atemporal.', opening: 'Apertura: sobre con carta', colors: 'Paleta a elección', alt: ['Diseño clásico: sobre con sello verde para la familia invitada', 'Diseño clásico: portada con los nombres y foto en arco'] },
