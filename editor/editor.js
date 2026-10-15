@@ -338,7 +338,11 @@
     lino: { es: ['Una invitación para un día inolvidable', 'Con todo nuestro cariño'], en: ['An invitation to an unforgettable day', 'With all our love'] },
     marfil: { es: ['Una invitación para un día inolvidable', 'Con todo nuestro cariño'], en: ['An invitation to an unforgettable day', 'With all our love'] },
     fiesta: { es: ['Una invitación para un día inolvidable', 'Con todo nuestro cariño'], en: ['An invitation to an unforgettable day', 'With all our love'] },
-    celeste: { es: ['Una invitación para un día inolvidable', 'Con todo nuestro cariño'], en: ['An invitation to an unforgettable day', 'With all our love'] }
+    celeste: { es: ['Una invitación para un día inolvidable', 'Con todo nuestro cariño'], en: ['An invitation to an unforgettable day', 'With all our love'] },
+    cisne: { es: ['Una invitación para un día inolvidable', 'Con todo nuestro cariño'], en: ['An invitation to an unforgettable day', 'With all our love'] },
+    tinta: { es: ['Una invitación para un día inolvidable', 'Con todo nuestro cariño'], en: ['An invitation to an unforgettable day', 'With all our love'] },
+    glicina: { es: ['Una invitación para un día inolvidable', 'Con todo nuestro cariño'], en: ['An invitation to an unforgettable day', 'With all our love'] },
+    'glicina-sin-fotos': { es: ['Una invitación para un día inolvidable', 'Con todo nuestro cariño'], en: ['An invitation to an unforgettable day', 'With all our love'] }
   };
   // Paletas de Romántico (los colores los aplica demo/shared/content.js; aquí solo el nombre y la muestra).
   var ROSA_PALETTES = [
@@ -402,7 +406,21 @@
     { id: 'aurora', hex: '#0A2630', seal: '#081E26', es: 'Aurora', en: 'Aurora' },
     { id: 'lavanda', hex: '#241B42', seal: '#1C1636', es: 'Lavanda', en: 'Lavender' }
   ];
-  var TPL_PALETTES = { rosa: ROSA_PALETTES, moderno: MOD_PALETTES, jardin: JARDIN_PALETTES, costa: COSTA_PALETTES, gala: GALA_PALETTES, aurelia: AURELIA_PALETTES, noir: NOIR_PALETTES, lino: LINO_PALETTES, marfil: MARFIL_PALETTES, fiesta: FIESTA_PALETTES, celeste: CELESTE_PALETTES };
+  // Cisne: lacre burdeos (una sola paleta); Tinta: el sello es la tinta; Glicina: el color de las glicinas.
+  var CISNE_PALETTES = [
+    { id: 'burdeos', hex: 'conic-gradient(#6E1A27 0 50%,#66682F 0)', seal: '#6E1A27', es: 'Burdeos y oliva', en: 'Burgundy and olive' }
+  ];
+  var TINTA_PALETTES = [
+    { id: 'rojo', hex: '#B42A30', seal: '#B42A30', es: 'Rojo', en: 'Red' },
+    { id: 'azul', hex: '#23468C', seal: '#23468C', es: 'Azul tinta', en: 'Ink blue' },
+    { id: 'verde', hex: '#2F6A48', seal: '#2F6A48', es: 'Verde botella', en: 'Bottle green' }
+  ];
+  var GLICINA_PALETTES = [
+    { id: 'lavanda', hex: 'conic-gradient(#8E79BD 0 50%,#7C8454 0)', seal: '#7C8454', es: 'Lavanda y oliva', en: 'Lavender and olive' },
+    { id: 'rosa', hex: 'conic-gradient(#D48DA4 0 50%,#7C8454 0)', seal: '#7C8454', es: 'Rosa', en: 'Pink' },
+    { id: 'azul', hex: 'conic-gradient(#7E9BD1 0 50%,#6C7C62 0)', seal: '#6C7C62', es: 'Azul', en: 'Blue' }
+  ];
+  var TPL_PALETTES = { rosa: ROSA_PALETTES, moderno: MOD_PALETTES, jardin: JARDIN_PALETTES, costa: COSTA_PALETTES, gala: GALA_PALETTES, aurelia: AURELIA_PALETTES, noir: NOIR_PALETTES, lino: LINO_PALETTES, marfil: MARFIL_PALETTES, fiesta: FIESTA_PALETTES, celeste: CELESTE_PALETTES, cisne: CISNE_PALETTES, tinta: TINTA_PALETTES, glicina: GLICINA_PALETTES, 'glicina-sin-fotos': GLICINA_PALETTES };
   var tplPal = function () { var l = TPL_PALETTES[state.design] || []; return l.filter(function (x) { return x.id === state.pal; })[0] || l[0]; };
   var PALETTES = [
     { id: 'salvia', hex: '#5F7360', es: 'Salvia', en: 'Sage' },
@@ -422,7 +440,11 @@
     lino: { kind: 'envelope', es: ['Lino', 'Juego de tarjetas'], en: ['Lino', 'Card set'] },
     marfil: { kind: 'envelope', es: ['Marfil', 'Papel vegetal y lazo de seda'], en: ['Marfil', 'Vellum and silk bow'] },
     fiesta: { kind: 'envelope', es: ['Fiesta', 'Carta de lotería'], en: ['Fiesta', 'Lotería card'] },
-    celeste: { kind: 'envelope', es: ['Celeste', 'Luna y constelación'], en: ['Celeste', 'Moon and constellation'] }
+    celeste: { kind: 'envelope', es: ['Celeste', 'Luna y constelación'], en: ['Celeste', 'Moon and constellation'] },
+    cisne: { kind: 'envelope', es: ['Cisne', 'Sobre con sello de lacre'], en: ['Cisne', 'Envelope with a wax seal'] },
+    tinta: { kind: 'envelope', es: ['Tinta', 'Círculo en el calendario'], en: ['Tinta', 'A circle on the calendar'] },
+    glicina: { kind: 'doors', es: ['Glicina', 'Cortina de glicinas'], en: ['Glicina', 'Wisteria curtain'] },
+    'glicina-sin-fotos': { kind: 'doors', es: ['Glicina sin fotos', 'Cortina de glicinas'], en: ['Glicina without photos', 'Wisteria curtain'] }
   };
   // Sección de la vista previa a la que lleva cada complemento.
   var ADDON_SPOT = { playlist: 'musica', libro: 'itinerario', capsula: 'rsvp', encuestas: 'faq', galeria: 'historia', bilingue: 'portada', dominio: 'portada' };
@@ -644,6 +666,9 @@
     if (state.design === 'marfil') return serif + 'background:radial-gradient(circle at 35% 30%,#ffffff40,' + tplPal().seal + ' 60%);color:#F1DDD0';
     if (state.design === 'fiesta') return serif + 'background:' + tplPal().seal + ';color:#fff;box-shadow:inset 0 0 0 2px #2A1B3D';
     if (state.design === 'celeste') return serif + 'background:' + tplPal().seal + ';color:#F4E9C8;box-shadow:inset 0 0 0 1px #F4E9C866';
+    if (state.design === 'cisne') return serif + 'background:radial-gradient(circle at 35% 30%,#ffffff40,' + tplPal().seal + ' 60%);color:#E8D5A8';
+    if (state.design === 'tinta') return serif + 'background:#FBF8F3;color:' + tplPal().seal + ';box-shadow:inset 0 0 0 1.5px ' + tplPal().seal;
+    if (state.design === 'glicina' || state.design === 'glicina-sin-fotos') return serif + 'background:#FFFDF6;color:' + tplPal().seal + ';box-shadow:inset 0 0 0 1px ' + tplPal().seal + ',inset 0 0 0 4px #FFFDF6,inset 0 0 0 5px #AEB38C';
     var hex = state.pal === 'custom' ? state.palCustom : TPL_DARK[state.pal], m = /^#?([0-9a-f]{6})$/i.exec(hex || '');
     if (!m) return 'font-family:Georgia,serif;background:radial-gradient(circle at 30% 20%,#64745a,#2b4437);color:#f5f2ea';
     var n = parseInt(m[1], 16), c = [n >> 16 & 255, n >> 8 & 255, n & 255];

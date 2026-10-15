@@ -91,8 +91,24 @@
       { id: 'medianoche', es: 'Medianoche', en: 'Midnight', sw: '#0B1430' },
       { id: 'aurora', es: 'Aurora', en: 'Aurora', sw: '#0A2630', vars: { bg: '#081E26', bg2: '#0F2E3A', accent: '#7FE0C8', neb1: '#1D7A6A', neb2: '#3B5FA0' } },
       { id: 'lavanda', es: 'Lavanda', en: 'Lavender', sw: '#241B42', vars: { bg: '#1C1636', bg2: '#2A2150', accent: '#C3A8F0', neb1: '#7A4C9A', neb2: '#B0607E' } }
+    ],
+    // Cisne: una sola paleta (las flores, la bandeja y el óvalo son fotos burdeos y oliva).
+    cisne: [
+      { id: 'burdeos', es: 'Burdeos y oliva', en: 'Burgundy and olive', sw: 'conic-gradient(#6E1A27 0 50%,#66682F 0)' }
+    ],
+    tinta: [
+      { id: 'rojo', es: 'Rojo', en: 'Red', sw: '#B42A30' },
+      { id: 'azul', es: 'Azul tinta', en: 'Ink blue', sw: '#23468C', vars: { red: '#23468C' } },
+      { id: 'verde', es: 'Verde botella', en: 'Bottle green', sw: '#2F6A48', vars: { red: '#2F6A48', paper: '#EFEEE6' } }
+    ],
+    // Glicina: los racimos son imágenes lavanda; en rosa y azul se les cambia el tono con un filtro.
+    glicina: [
+      { id: 'lavanda', es: 'Lavanda y oliva', en: 'Lavender and olive', sw: 'conic-gradient(#8E79BD 0 50%,#7C8454 0)' },
+      { id: 'rosa', es: 'Rosa', en: 'Pink', sw: 'conic-gradient(#D48DA4 0 50%,#7C8454 0)', vars: { lav: '#D48DA4', lav2: '#F3C9D6', rose: '#F0B8C4', 'wis-filter': 'hue-rotate(68deg) saturate(.85)' } },
+      { id: 'azul', es: 'Azul', en: 'Blue', sw: 'conic-gradient(#7E9BD1 0 50%,#6C7C62 0)', vars: { lav: '#7E9BD1', lav2: '#C3D4F2', sage: '#6C7C62', sage2: '#A6B3A0', 'wis-filter': 'hue-rotate(-38deg) saturate(.9)' } }
     ]
   };
+  THEMES['glicina-sin-fotos'] = THEMES.glicina;
   function hexRgb(h) { var m = /^#?([0-9a-f]{6})$/i.exec(h || ''); if (!m) return null; var n = parseInt(m[1], 16); return [n >> 16 & 255, n >> 8 & 255, n & 255]; }
   function lum(c) { return [0, 1, 2].reduce(function (sum, i) { var x = c[i] / 255; x = x <= 0.03928 ? x / 12.92 : Math.pow((x + 0.055) / 1.055, 2.4); return sum + x * [0.2126, 0.7152, 0.0722][i]; }, 0); }
   var mix = function (c, t, a) { return c.map(function (x, i) { return Math.round(x + (t[i] - x) * a); }); };
