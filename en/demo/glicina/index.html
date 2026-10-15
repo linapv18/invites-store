@@ -183,7 +183,10 @@ footer .mc{color:var(--cream);text-shadow:0 1px 8px #3f4a2a99}
 /* ---------- Imágenes de Glicina (assets/glicina/) ---------- */
 body.garden{background-size:160px,100% 100%,100% 100%,100% 100%,100% 100%,100% 100%;background-attachment:fixed}
 .wis{position:absolute;left:0;width:100%;height:0;pointer-events:none;overflow:visible;z-index:1}
-.wis .rama{position:absolute;left:-4%;top:-14px;width:108%;height:118px;object-fit:cover;object-position:center top;max-width:none}
+/* La rama se ve completa (sin recortar) y se repite a lo ancho; una copia sí y otra en espejo para que las uniones coincidan. */
+.wis .ramas{position:absolute;left:0;right:0;top:-12px;display:flex;justify-content:center}
+.wis .ramas img{flex:none;width:auto;height:130px;max-width:none}
+.wis .ramas img:nth-child(even){scale:-1 1}
 .wis .rc{position:absolute;max-width:none;transform-origin:50% 0;filter:var(--wis-filter,none);animation:glSway var(--du) ease-in-out var(--de) infinite alternate}
 .wis .rc.f{scale:-1 1}
 .curt{position:absolute;top:0;bottom:0;width:64%;z-index:3;cursor:pointer;transition:transform 1.7s cubic-bezier(.6,0,.3,1)}
@@ -236,6 +239,8 @@ html:not(.lz-no-photos) .np-only,.lz-no-photos .ph-only{display:none !important}
   body{overflow-x:hidden}
   .mbar{left:max(10px,calc(50% - 370px));right:max(10px,calc(50% - 370px))}
   .mb{display:none}.dk{display:block}
+  .wis .ramas img{height:170px}
+  .wis .rc{margin-top:26px}
   .ghero{padding:250px 20px 70px;overflow:visible}
   .ghero>.wis{height:340px;left:calc(50% - 50vw);width:100vw}
   .ghero .loval{width:400px;height:500px}
@@ -363,7 +368,7 @@ const brush = c => `<svg viewBox="0 0 70 26" aria-hidden="true"><path d="M5 11C2
   var G = '/assets/glicina/', RAC = [['racimo-largo', .667], ['racimo-medio', .667], ['racimo-corto', .667], ['racimo-curvo', .667], ['racimo-tupido', .5]];
   // unit 'vh': alto relativo a la pantalla (la cortina llena la pantalla en celular y en computador)
   function drape(seed, n, minH, maxH, kinds, top, cls, unit) {
-    var Q = rng(seed), s = '<img class="rama" src="' + G + 'rama.webp" alt="">';
+    var Q = rng(seed), s = '<div class="ramas">' + new Array(8).join('<img src="' + G + 'rama.webp" alt="">') + '</div>';
     for (var i = 0; i < n; i++) {
       var k = RAC[kinds[Math.floor(Q() * kinds.length)]], h = minH + Q() * (maxH - minH), w = h * k[1], x = (i + .5) / n * 100 + (Q() - .5) * (60 / n);
       s += '<img class="rc' + (Q() < .5 ? ' f' : '') + '" src="' + G + k[0] + '.webp" alt="" style="left:' + x.toFixed(1) + '%;translate:-50% 0;top:' + ((top || 18) + Q() * 12).toFixed(0) + 'px;height:' + (unit === 'vh' ? (h / 8.12).toFixed(1) + 'vh' : h.toFixed(0) + 'px') + ';--du:' + (3 + Q() * 2.6).toFixed(1) + 's;--de:-' + (Q() * 4).toFixed(1) + 's">';
