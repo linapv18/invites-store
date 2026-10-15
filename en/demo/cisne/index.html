@@ -249,15 +249,49 @@ footer{position:relative;padding:56px 20px 50px;text-align:center;color:var(--go
 footer{padding-bottom:110px !important}
 .lz-content .fabric{display:none}
 .rs-err{margin-top:14px;font-size:15px;color:var(--wine)}
+.wreath b{display:flex;align-items:center;justify-content:center}
+.wreath b i{font-style:normal}
 @media (max-height:700px){.cwrap{scale:.86}}
 .lz-editor [data-rv]{opacity:1;transform:none}
 .lz-editor .grow .st,.lz-editor .draw path{stroke-dashoffset:0}.lz-editor .grow .lf,.lz-editor .grow .bl{transform:none;animation:none}.lz-editor .write{clip-path:none}.lz-editor .typer i{opacity:1}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none !important;transition:none !important}[data-rv]{opacity:1;transform:none}.grow .st,.draw path{stroke-dashoffset:0}.grow .lf,.grow .bl{transform:none}.write{clip-path:none}.typer i{opacity:1}}
 
+/* ---------- Computador: portada a dos columnas y el resto como papelería repartida en dos columnas ---------- */
+@media (min-width:900px){
+  body{overflow-x:hidden}
+  main{max-width:1180px;overflow:visible}
+  .mbar{left:max(10px,calc(50% - 560px));right:max(10px,calc(50% - 560px))}
+  .hero{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:center;column-gap:60px;max-width:1000px;margin:0 auto;padding:120px 40px 100px;overflow:visible}
+  .hero .hcard{grid-column:1;grid-row:1;width:420px;margin:0 0 0 auto;rotate:-3deg}
+  .hero .hcard .nc{padding:48px 30px 44px}
+  .hero .hcard h1{font-size:72px}
+  .hero .hcard .cz{font-size:11px}
+  .hero .pola{grid-column:2;grid-row:1;width:360px;margin:40px 0 0;rotate:4deg;padding:14px 14px 52px}
+  .hero .pola .cap{font-size:28px;bottom:10px}
+  .hero .pola .wax{width:70px;height:70px;right:-22px;bottom:-22px;font-size:20px}
+  .hero .lead{grid-column:1/3;font-size:28px;margin-top:64px}
+  .hbq{width:220px;left:calc(50% - 520px);top:70px}
+  .hbq2{width:170px;left:auto;right:calc(50% - 540px);top:auto;bottom:150px}
+  .flow{columns:2;column-gap:56px;padding:10px 40px 60px}
+  .flow>section{break-inside:avoid;display:block;padding:56px 30px}
+  .std{width:320px}
+  .std .n{font-size:56px}.std .m{font-size:36px}
+  .tray{width:340px;height:328px}
+  .dcard{width:136px;height:172px;margin:-86px 0 0 -68px}
+  .dcard h3{font-size:34px}
+  .rov{width:280px;height:356px}
+  .rov .r{font-size:84px}
+  .key{right:calc(50% - 250px)}
+  .opening .cwrap{scale:1.12}
+  /* el pie verde ocupa todo el ancho de la pantalla */
+  footer{box-shadow:0 0 0 100vmax var(--olive);clip-path:inset(0 -100vmax)}
+}
+@media (min-width:900px) and (max-height:760px){.opening .cwrap{scale:.9}}
+
 </style>
 <link rel="stylesheet" href="/demo/shared/panel.css">
 </head>
-<body class="cs locked">
+<body class="cs table locked">
 <div id="app"></div>
 <div class="demo-bar" id="demoBar" hidden></div>
 
@@ -439,6 +473,7 @@ const notch = (cls, inner, style = '') => `<div class="notch ${cls}" style="${st
       '<p class="lead" data-lz="msg">' + S.msg + '</p>' +
     '</section>' +
 
+    '<div class="flow">' +
     '<section class="sec">' +
       '<div class="std" data-frame="cs-scal" data-rv>' + SWAN(70) + '<p class="cz">' + S.save + '</p>' +
         '<p class="n" data-lz-date="{d}">' + S.d + '</p><p class="m" data-lz-date="{MU}">' + S.M + '</p><p class="n" data-lz-date="{Y}">' + S.Y + '</p>' +
@@ -484,6 +519,8 @@ const notch = (cls, inner, style = '') => `<div class="notch ${cls}" style="${st
           '<p class="rs-err" id="rsErr" role="alert" hidden>' + S.err + '</p><button type="button" class="btn" style="margin-top:22px" id="rsSave">' + S.send + '</button></div>' +
         '<div id="rsDone" hidden style="padding-top:18px"><p class="ps" style="font-size:46px;color:var(--wine)">' + S.thanks + '</p><p id="rsSum" style="margin:6px 0 18px"></p><button type="button" class="btn" id="rsEdit">' + S.edit + '</button></div>') + '</div>' +
     '</section>' +
+
+    '</div>' +
 
     '<footer><div class="wreath">' + wreath() + '<b data-lz-mono>' + MONOTXT + '</b></div><p class="ps gtxt" style="font-size:48px;margin-top:6px">' + N('n1') + ' &amp; ' + N('n2') + '</p><p class="cz" style="margin-top:6px"><span data-lz-date="' + S.footPat + '">14 · ' + S.M + ' · 2027</span> · <span data-lz="city">' + S.city + '</span></p></footer>' +
   '</main>';

@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Ana &amp; León · Demo diseño Glicina — Lazo</title>
-<meta name="description" content="Demo de invitación web de boda en un jardín de glicinas: una cortina de glicinas que se abre, óvalo de encaje, hortensias, programa con íconos, cita en un corazón de encaje y confirmación por persona.">
+<meta name="description" content="Demo de invitación web de boda en un jardín de glicinas: una cortina de glicinas que se abre, óvalo de encaje, hortensias, programa con íconos, cita en un corazón de encaje y confirmación por persona. Con o sin fotos.">
 <meta name="theme-color" content="#D6DEC6">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%237C8454'/%3E%3Ctext x='32' y='43' font-family='Georgia,serif' font-style='italic' font-size='30' fill='%23FBF6EA' text-anchor='middle'%3E%26%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -181,7 +181,7 @@ footer .mc{color:var(--cream);text-shadow:0 1px 8px #3f4a2a99}
 
 
 /* ---------- Imágenes de Glicina (assets/glicina/) ---------- */
-body.garden{background-size:160px,100% 760px,100% 760px,100% 760px,100% 760px,100% 760px;background-attachment:fixed}
+body.garden{background-size:160px,100% 100%,100% 100%,100% 100%,100% 100%,100% 100%;background-attachment:fixed}
 .wis{position:absolute;left:0;width:100%;height:0;pointer-events:none;overflow:visible;z-index:1}
 .wis .rama{position:absolute;left:-4%;top:-14px;width:108%;height:118px;object-fit:cover;object-position:center top;max-width:none}
 .wis .rc{position:absolute;max-width:none;transform-origin:50% 0;filter:var(--wis-filter,none);animation:glSway var(--du) ease-in-out var(--de) infinite alternate}
@@ -227,6 +227,37 @@ footer{padding-bottom:120px !important}
 .lz-editor .grow .st,.lz-editor .draw path{stroke-dashoffset:0}.lz-editor .grow .lf,.lz-editor .grow .bl{transform:none;animation:none}.lz-editor .write{clip-path:none}.lz-editor .typer i{opacity:1}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none !important;transition:none !important}[data-rv]{opacity:1;transform:none}.grow .st,.draw path{stroke-dashoffset:0}.grow .lf,.grow .bl{transform:none}.write{clip-path:none}.typer i{opacity:1}}
 
+.dk{display:none}
+/* Opción «sin fotos» (editor: photosOn; demo: botón Sin fotos o ?fotos=no): html.lz-no-photos */
+html:not(.lz-no-photos) .np-only,.lz-no-photos .ph-only{display:none !important}
+/* ---------- Computador: glicinas a lo ancho y los paneles en dos columnas, como en la referencia ---------- */
+@media (min-width:900px){
+  main{max-width:1180px;overflow:visible}
+  body{overflow-x:hidden}
+  .mbar{left:max(10px,calc(50% - 560px));right:max(10px,calc(50% - 560px))}
+  .mb{display:none}.dk{display:block}
+  .ghero{padding:250px 20px 70px;overflow:visible}
+  .ghero>.wis{height:340px}
+  .ghero .loval{width:400px;height:500px}
+  .ghero .loval.np{width:420px;height:525px;padding:0 100px}
+  .ghero .loval.np h1{font-size:60px}
+  .ghero .loval.np .mc{font-size:11px}
+  .ghero .loval.np .dt{font-size:15px}
+  .ghero .bush{width:560px;margin-top:-120px}
+  .flow{columns:2;column-gap:40px;padding:10px 32px 40px}
+  .flow>*{break-inside:avoid;display:block}
+  .flow>.panel{margin:0 0 40px;box-shadow:0 0 0 1px #ffffff90,0 24px 40px -30px #3d4a2a66}
+  .flow>.gap:not(.q){display:none}
+  .flow>.gap.q{padding:110px 0 40px !important;margin-bottom:40px}
+  .panel{padding:56px 40px}
+  footer{padding:300px 20px 140px !important}
+  footer>.wis{height:340px}
+  footer .names{font-size:76px}
+  .opening .loval{width:360px;height:450px;padding:0 82px}
+  .opening .loval h1{font-size:54px}
+  .opening .bush{width:440px;margin-top:-100px}
+}
+
 </style>
 <link rel="stylesheet" href="/demo/shared/panel.css">
 </head>
@@ -239,7 +270,6 @@ footer{padding-bottom:120px !important}
    son imágenes de assets/glicina/ (los racimos se mecen con CSS); los íconos y el corazón de encaje son SVG.
    El HTML se arma aquí ANTES de cargar demo/shared/content.js, para que el editor encuentre las marcas data-lz…. */
 (function () {
-  var PHOTOS = true;
   var LANG = (document.documentElement.lang || 'es').slice(0, 2) === 'en' ? 'en' : 'es';
   var S = {
     es: {
@@ -326,13 +356,14 @@ const brush = c => `<svg viewBox="0 0 70 26" aria-hidden="true"><path d="M5 11C2
 
   // Racimos de glicina (imágenes con fondo transparente) colgando de una rama; cada uno se mece por su cuenta.
   var G = '/assets/glicina/', RAC = [['racimo-largo', .667], ['racimo-medio', .667], ['racimo-corto', .667], ['racimo-curvo', .667], ['racimo-tupido', .5]];
-  function drape(seed, n, minH, maxH, kinds, top) {
+  // unit 'vh': alto relativo a la pantalla (la cortina llena la pantalla en celular y en computador)
+  function drape(seed, n, minH, maxH, kinds, top, cls, unit) {
     var Q = rng(seed), s = '<img class="rama" src="' + G + 'rama.webp" alt="">';
     for (var i = 0; i < n; i++) {
       var k = RAC[kinds[Math.floor(Q() * kinds.length)]], h = minH + Q() * (maxH - minH), w = h * k[1], x = (i + .5) / n * 100 + (Q() - .5) * (60 / n);
-      s += '<img class="rc' + (Q() < .5 ? ' f' : '') + '" src="' + G + k[0] + '.webp" alt="" style="left:calc(' + x.toFixed(1) + '% - ' + (w / 2).toFixed(0) + 'px);top:' + ((top || 18) + Q() * 12).toFixed(0) + 'px;height:' + h.toFixed(0) + 'px;--du:' + (3 + Q() * 2.6).toFixed(1) + 's;--de:-' + (Q() * 4).toFixed(1) + 's">';
+      s += '<img class="rc' + (Q() < .5 ? ' f' : '') + '" src="' + G + k[0] + '.webp" alt="" style="left:' + x.toFixed(1) + '%;translate:-50% 0;top:' + ((top || 18) + Q() * 12).toFixed(0) + 'px;height:' + (unit === 'vh' ? (h / 8.12).toFixed(1) + 'vh' : h.toFixed(0) + 'px') + ';--du:' + (3 + Q() * 2.6).toFixed(1) + 's;--de:-' + (Q() * 4).toFixed(1) + 's">';
     }
-    return '<div class="wis" aria-hidden="true">' + s + '</div>';
+    return '<div class="wis' + (cls ? ' ' + cls : '') + '" aria-hidden="true">' + s + '</div>';
   }
   var bush = function (style) { return '<img class="bush" src="' + G + 'hortensias.webp" alt=""' + (style ? ' style="' + style + '"' : '') + '>'; };
   var LACE = '<img class="lace" src="' + G + 'encaje-ovalo.webp" alt="">';
@@ -345,34 +376,36 @@ const brush = c => `<svg viewBox="0 0 70 26" aria-hidden="true"><path d="M5 11C2
   document.getElementById('app').innerHTML = '<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><filter id="glRough" x="-10%" y="-30%" width="120%" height="160%"><feTurbulence type="fractalNoise" baseFrequency=".09" numOctaves="2" seed="4"/><feDisplacementMap in="SourceGraphic" scale="6"/></filter><radialGradient id="glGlow"><stop offset="0" stop-color="#FFE3A0" stop-opacity=".8"/><stop offset="1" stop-color="#FFE3A0" stop-opacity="0"/></radialGradient><filter id="glLaceSh" x="-5%" y="-5%" width="110%" height="115%"><feDropShadow dx=".7" dy="1.3" stdDeviation=".9" flood-color="#3d3a20" flood-opacity=".38"/></filter><pattern id="glNet" width="4" height="4" patternUnits="userSpaceOnUse"><path d="M0 0L4 4M4 0L0 4" stroke="#8a8460" stroke-opacity=".2" stroke-width=".35"/></pattern></defs></svg>' +
   // ======================= APERTURA: cortina de glicinas =======================
   '<div class="opening garden" id="open" role="dialog" aria-modal="true" aria-label="' + S.openAria + '">' +
-    drape(21, 8, 60, 130, [1, 2, 3]) + petals(12, 4) +
+    drape(21, 8, 60, 130, [1, 2, 3], 0, 'mb') + drape(22, 18, 70, 170, [1, 2, 3], 0, 'dk') + petals(12, 4) +
     '<p class="mc" style="margin-top:40px;position:relative;z-index:1" data-lz="envIntro" data-lz-keep>' + S.envIntro + '</p>' +
     '<div class="loval">' + LACE + ovalNames(.35) + '</div>' + bush() +
     '<div class="after"><p>' + S.for + ' <b style="font-weight:600">' + S.guest + '</b> · ' + S.seats + '</p><button type="button" class="btn" id="enter" tabindex="-1">' + S.enter + '</button><p class="lz-closing" data-lz="envClosing" data-lz-keep hidden>' + S.envClosing + '</p></div>' +
-    '<div class="curt l" data-part role="button" tabindex="0" aria-label="' + S.part + '">' + drape(31, 11, 380, 720, [0, 4, 1, 0], 10) + '</div>' +
-    '<div class="curt r" data-part aria-hidden="true">' + drape(47, 11, 360, 700, [0, 4, 1, 3], 10) + '</div>' +
+    '<div class="curt l" data-part role="button" tabindex="0" aria-label="' + S.part + '">' + drape(31, 11, 380, 720, [0, 4, 1, 0], 10, '', 'vh') + '</div>' +
+    '<div class="curt r" data-part aria-hidden="true">' + drape(47, 11, 360, 700, [0, 4, 1, 3], 10, '', 'vh') + '</div>' +
     '<p class="ohint" id="hint" aria-live="polite"><span>' + S.hint + '</span></p>' +
   '</div>' +
 
   // ======================= INVITACIÓN =======================
   '<div class="mbar" id="mbar" aria-hidden="true"><span class="pa" style="font-size:24px;color:var(--sage)">' + N('n1') + ' &amp; ' + N('n2') + '</span><span class="mc" data-lz-date="' + S.datePat + '">' + S.dateTxt + '</span></div>' +
   '<main id="invite">' +
-    '<section class="ghero" id="portada" data-lz-anchor="portada">' + drape(13, 9, 100, 230, [0, 1, 2, 3, 4]) + petals(10, 9) +
+    '<section class="ghero" id="portada" data-lz-anchor="portada">' + drape(13, 9, 100, 230, [0, 1, 2, 3, 4], 0, 'mb') + drape(14, 20, 120, 320, [0, 1, 2, 3, 4], 0, 'dk') + petals(10, 9) +
       '<p class="mc" style="position:relative;z-index:1;margin-bottom:14px">' + S.getting + '</p>' +
-      (PHOTOS ? '<div class="loval" data-rv>' + LACE + '<div class="pic"><img class="ph-img" id="heroImg" src="/assets/fotos/paseo.jpg" data-lz-src="photo:0" alt="' + S.photoAlt + '" style="object-position:center 55%"></div></div>'
-              : '<div class="loval np" data-rv>' + LACE + ovalNames(.6) + '</div>') + bush() +
+      // Con fotos: la foto de portada en el óvalo. Sin fotos (opción del editor y de la demo): los nombres en el óvalo.
+      '<div class="loval ph-only" data-rv>' + LACE + '<div class="pic"><img class="ph-img" id="heroImg" src="/assets/fotos/paseo.jpg" data-lz-src="photo:0" alt="' + S.photoAlt + '" style="object-position:center 55%"></div></div>' +
+      '<div class="loval np np-only" data-rv>' + LACE + ovalNames(.6) + '</div>' + bush() +
     '</section>' +
+    '<div class="flow">' +
     '<section class="panel">' +
       '<div class="cameo"><span data-lz-mono>A<i style="font-style:normal">&amp;</i>L</span></div>' +
-      (PHOTOS ? '<p class="names writes"><span class="write" data-lz="n1">' + S.n1 + '</span> ' + S.y + ' <span class="write" style="transition-delay:.8s" data-lz="n2">' + S.n2 + '</span></p>' : '') +
+      '<p class="names writes ph-only"><span class="write" data-lz="n1">' + S.n1 + '</span> ' + S.y + ' <span class="write" style="transition-delay:.8s" data-lz="n2">' + S.n2 + '</span></p>' +
       '<p class="mc" data-lz-date="' + S.heroPat + '">' + S.heroTxt + '</p><p style="font-style:italic" data-lz="city">' + S.city + '</p>' + ORN(170) +
       '<h2>' + S.dear + '</h2><p data-lz="msg">' + S.msg + '</p>' +
     '</section>' +
     '<div class="gap">' + drape(17, 7, 50, 110, [1, 2, 3]) + '</div>' +
     '<section class="panel" id="historia" data-lz-anchor="historia">' +
       '<p class="mc">' + S.story + '</p><h2 data-lz="storyTitle">' + S.storyTitle + '</h2><p data-lz="story">' + S.storyTxt + '</p>' +
-      (PHOTOS ? '<div class="arches">' + ['/assets/fotos/beso.jpg', '/assets/fotos/escalera.jpg', '/assets/fotos/muro.jpg'].map(function (g, i) { return '<div class="arch" data-rv style="transition-delay:' + i * .15 + 's"><div class="pic"><img class="ph-img" src="' + g + '" data-lz-src="photo:' + (i + 1) + '" alt="" loading="lazy"></div></div>'; }).join('') + '</div>'
-              : '<div class="vign garden" data-rv>' + drape(23, 6, 110, 190, [0, 1, 3]) + bush() + '</div>') +
+      '<div class="arches ph-only">' + ['/assets/fotos/beso.jpg', '/assets/fotos/escalera.jpg', '/assets/fotos/muro.jpg'].map(function (g, i) { return '<div class="arch" data-rv style="transition-delay:' + i * .15 + 's"><div class="pic"><img class="ph-img" src="' + g + '" data-lz-src="photo:' + (i + 1) + '" alt="" loading="lazy"></div></div>'; }).join('') + '</div>' +
+      '<div class="vign garden np-only" data-rv>' + drape(23, 6, 110, 190, [0, 1, 3]) + bush() + '</div>' +
     '</section>' +
     '<section class="panel" style="padding-top:10px">' + ORN(150) +
       '<h2 data-lz-date="' + S.monthPat + '">' + S.monthTxt + '</h2>' +
@@ -400,7 +433,7 @@ const brush = c => `<svg viewBox="0 0 70 26" aria-hidden="true"><path d="M5 11C2
         '<div class="ti" data-rv data-lz-group="guideFood guideCulture guidePlans">' + tIcon.map + '<h3>' + S.guide + '</h3><p data-lz-group="guideFood"><b>' + S.foodL + '</b> <span data-lz="guideFood">' + S.food + '</span></p><p data-lz-group="guideCulture"><b>' + S.cultureL + '</b> <span data-lz="guideCulture">' + S.culture + '</span></p><p data-lz-group="guidePlans"><b>' + S.plansL + '</b> <span data-lz="guidePlans">' + S.plans + '</span></p></div>' +
       '</div>' +
     '</section>' +
-    '<div class="gap" style="height:auto;padding:120px 0 40px" data-lz-group="quote">' + drape(29, 8, 60, 120, [1, 2, 3]) + petals(6, 14) +
+    '<div class="gap q" style="height:auto;padding:120px 0 40px" data-lz-group="quote">' + drape(29, 8, 60, 120, [1, 2, 3]) + petals(6, 14) +
       '<div class="heart" data-frame="gl-heart" data-rv><blockquote>“<span data-lz="quote">' + S.quote + '</span>”</blockquote><p class="mc" style="font-size:7.5px;letter-spacing:.12em" data-lz="quoteAuthor">' + S.quoteAuthor + '</p></div>' +
     '</div>' +
     '<section class="panel" id="faq" data-lz-anchor="faq" data-lz-hide-empty>' +
@@ -416,7 +449,8 @@ const brush = c => `<svg viewBox="0 0 70 26" aria-hidden="true"><path d="M5 11C2
         '<p class="rs-err" id="rsErr" role="alert" hidden>' + S.err + '</p><button type="button" class="btn" style="margin-top:22px" id="rsSave">' + S.send + '</button></div>' +
       '<div id="rsDone" hidden style="padding-top:16px"><p class="pa" style="font-size:46px;color:var(--sage)">' + S.thanks + '</p><p id="rsSum" style="margin:6px 0 18px"></p><button type="button" class="btn" id="rsEdit">' + S.edit + '</button></div>' +
     '</section>' +
-    '<footer>' + drape(37, 9, 90, 200, [0, 1, 2, 3, 4]) + petals(8, 19) +
+    '</div>' +
+    '<footer>' + drape(37, 9, 90, 200, [0, 1, 2, 3, 4], 0, 'mb') + drape(38, 20, 120, 300, [0, 1, 2, 3, 4], 0, 'dk') + petals(8, 19) +
       '<p class="names">' + N('n1') + ' &amp; ' + N('n2') + '</p><p class="mc"><span data-lz-date="' + S.datePat + '">' + S.dateTxt + '</span> · <span data-lz="city">' + S.city + '</span></p></footer>' +
   '</main>';
 

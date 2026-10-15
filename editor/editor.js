@@ -88,6 +88,7 @@
       envK: 'Textos del sobre', envIntro: 'Frase del sobre', envClosing: 'Despedida', envClosingPh: 'p. ej. Con todo nuestro cariño',
       envKeepHint: 'Si lo dejas vacío, se usa el texto del diseño.', envOptHint: 'Opcional: aparece bajo el nombre de cada familia.',
       photoBW: 'Fotos en blanco y negro', photoBWOn: 'Como en el diseño original.', photoBWOff: 'Las fotos se ven con sus colores originales.',
+      photosOn: 'Usar fotos', photosOnOn: 'La portada y la historia llevan sus fotos.', photosOnOff: 'Sin fotos: sus nombres van en el óvalo de encaje y la historia lleva una ventana del jardín.',
       cancel: 'Cancelar', gUpload: 'Subir archivo (CSV)', gManual: 'Crear a mano', gHow: '¿Cómo se arma el archivo?',
       gSteps: ['Descarga el archivo de ejemplo y ábrelo en Excel o Google Sheets.', 'Escribe una fila por persona. Las personas con el mismo nombre de invitación quedan juntas (por ejemplo, toda la Familia Rodríguez).', 'Guárdalo como CSV y súbelo aquí. Teléfono y correo son opcionales.'],
       gCols: ['Invitación', 'Persona', 'Teléfono', 'Correo'], gExample: 'Descargar el ejemplo (CSV)', gExampleFile: '/editor/invitados-ejemplo.csv',
@@ -218,6 +219,7 @@
       envK: 'Envelope text', envIntro: 'Envelope line', envClosing: 'Sign-off', envClosingPh: 'e.g. With all our love',
       envKeepHint: 'Leave it empty to use the design’s text.', envOptHint: 'Optional: shown under each family’s name.',
       photoBW: 'Black-and-white photos', photoBWOn: 'As in the original design.', photoBWOff: 'Photos show their original colors.',
+      photosOn: 'Use photos', photosOnOn: 'The cover and the story show your photos.', photosOnOff: 'No photos: your names go in the lace oval and the story shows a window onto the garden.',
       cancel: 'Cancel', gUpload: 'Upload file (CSV)', gManual: 'Create by hand', gHow: 'How do I build the file?',
       gSteps: ['Download the example file and open it in Excel or Google Sheets.', 'Write one row per guest. Guests with the same invitation name are grouped together (e.g. the whole Rodríguez family).', 'Save it as CSV and upload it here. Phone and email are optional.'],
       gCols: ['Invitation', 'Guest', 'Phone', 'Email'], gExample: 'Download the example (CSV)', gExampleFile: '/editor/guests-example.csv',
@@ -341,8 +343,7 @@
     celeste: { es: ['Una invitación para un día inolvidable', 'Con todo nuestro cariño'], en: ['An invitation to an unforgettable day', 'With all our love'] },
     cisne: { es: ['Una invitación para un día inolvidable', 'Con todo nuestro cariño'], en: ['An invitation to an unforgettable day', 'With all our love'] },
     tinta: { es: ['Una invitación para un día inolvidable', 'Con todo nuestro cariño'], en: ['An invitation to an unforgettable day', 'With all our love'] },
-    glicina: { es: ['Una invitación para un día inolvidable', 'Con todo nuestro cariño'], en: ['An invitation to an unforgettable day', 'With all our love'] },
-    'glicina-sin-fotos': { es: ['Una invitación para un día inolvidable', 'Con todo nuestro cariño'], en: ['An invitation to an unforgettable day', 'With all our love'] }
+    glicina: { es: ['Una invitación para un día inolvidable', 'Con todo nuestro cariño'], en: ['An invitation to an unforgettable day', 'With all our love'] }
   };
   // Paletas de Romántico (los colores los aplica demo/shared/content.js; aquí solo el nombre y la muestra).
   var ROSA_PALETTES = [
@@ -420,7 +421,7 @@
     { id: 'rosa', hex: 'conic-gradient(#D48DA4 0 50%,#7C8454 0)', seal: '#7C8454', es: 'Rosa', en: 'Pink' },
     { id: 'azul', hex: 'conic-gradient(#7E9BD1 0 50%,#6C7C62 0)', seal: '#6C7C62', es: 'Azul', en: 'Blue' }
   ];
-  var TPL_PALETTES = { rosa: ROSA_PALETTES, moderno: MOD_PALETTES, jardin: JARDIN_PALETTES, costa: COSTA_PALETTES, gala: GALA_PALETTES, aurelia: AURELIA_PALETTES, noir: NOIR_PALETTES, lino: LINO_PALETTES, marfil: MARFIL_PALETTES, fiesta: FIESTA_PALETTES, celeste: CELESTE_PALETTES, cisne: CISNE_PALETTES, tinta: TINTA_PALETTES, glicina: GLICINA_PALETTES, 'glicina-sin-fotos': GLICINA_PALETTES };
+  var TPL_PALETTES = { rosa: ROSA_PALETTES, moderno: MOD_PALETTES, jardin: JARDIN_PALETTES, costa: COSTA_PALETTES, gala: GALA_PALETTES, aurelia: AURELIA_PALETTES, noir: NOIR_PALETTES, lino: LINO_PALETTES, marfil: MARFIL_PALETTES, fiesta: FIESTA_PALETTES, celeste: CELESTE_PALETTES, cisne: CISNE_PALETTES, tinta: TINTA_PALETTES, glicina: GLICINA_PALETTES };
   var tplPal = function () { var l = TPL_PALETTES[state.design] || []; return l.filter(function (x) { return x.id === state.pal; })[0] || l[0]; };
   var PALETTES = [
     { id: 'salvia', hex: '#5F7360', es: 'Salvia', en: 'Sage' },
@@ -443,8 +444,7 @@
     celeste: { kind: 'envelope', es: ['Celeste', 'Luna y constelación'], en: ['Celeste', 'Moon and constellation'] },
     cisne: { kind: 'envelope', es: ['Cisne', 'Sobre con sello de lacre'], en: ['Cisne', 'Envelope with a wax seal'] },
     tinta: { kind: 'envelope', es: ['Tinta', 'Círculo en el calendario'], en: ['Tinta', 'A circle on the calendar'] },
-    glicina: { kind: 'doors', es: ['Glicina', 'Cortina de glicinas'], en: ['Glicina', 'Wisteria curtain'] },
-    'glicina-sin-fotos': { kind: 'doors', es: ['Glicina sin fotos', 'Cortina de glicinas'], en: ['Glicina without photos', 'Wisteria curtain'] }
+    glicina: { kind: 'doors', es: ['Glicina', 'Cortina de glicinas'], en: ['Glicina', 'Wisteria curtain'] }
   };
   // Sección de la vista previa a la que lleva cada complemento.
   var ADDON_SPOT = { playlist: 'musica', libro: 'itinerario', capsula: 'rsvp', encuestas: 'faq', galeria: 'historia', bilingue: 'portada', dominio: 'portada' };
@@ -467,7 +467,7 @@
       musicOn: true, musicSource: 'library', musicTrack: 'demo', musicTrackSrc: '/assets/musica/demo.mp3', musicFileName: '', musicFileSize: 0,
       palCustom: '#8A4F5C',
       // Todos los diseños reciben y muestran estos mismos campos (ver demo/shared/content.js).
-      invitations: [], photoBW: true, envIntro: '', envClosing: '', countdownId: 1, countdownNote: '', quote: '', quoteAuthor: '', dressCode: '', dressNotes: '', dressColors: '',
+      invitations: [], photoBW: true, photosOn: true, envIntro: '', envClosing: '', countdownId: 1, countdownNote: '', quote: '', quoteAuthor: '', dressCode: '', dressNotes: '', dressColors: '',
       viajeOn: true, travelIntro: '', hotel: '', hotelAddress: '', hotelCode: '', hotelLink: '', hotelNotes: '',
       airport: '', transport: '', guideFood: '', guideCulture: '', guidePlans: '',
       rsvpDeadline: '', rsvpMsg: '', rsvpDiet: true, rsvpNote: true,
@@ -668,7 +668,7 @@
     if (state.design === 'celeste') return serif + 'background:' + tplPal().seal + ';color:#F4E9C8;box-shadow:inset 0 0 0 1px #F4E9C866';
     if (state.design === 'cisne') return serif + 'background:radial-gradient(circle at 35% 30%,#ffffff40,' + tplPal().seal + ' 60%);color:#E8D5A8';
     if (state.design === 'tinta') return serif + 'background:#FBF8F3;color:' + tplPal().seal + ';box-shadow:inset 0 0 0 1.5px ' + tplPal().seal;
-    if (state.design === 'glicina' || state.design === 'glicina-sin-fotos') return serif + 'background:#FFFDF6;color:' + tplPal().seal + ';box-shadow:inset 0 0 0 1px ' + tplPal().seal + ',inset 0 0 0 4px #FFFDF6,inset 0 0 0 5px #AEB38C';
+    if (state.design === 'glicina') return serif + 'background:#FFFDF6;color:' + tplPal().seal + ';box-shadow:inset 0 0 0 1px ' + tplPal().seal + ',inset 0 0 0 4px #FFFDF6,inset 0 0 0 5px #AEB38C';
     var hex = state.pal === 'custom' ? state.palCustom : TPL_DARK[state.pal], m = /^#?([0-9a-f]{6})$/i.exec(hex || '');
     if (!m) return 'font-family:Georgia,serif;background:radial-gradient(circle at 30% 20%,#64745a,#2b4437);color:#f5f2ea';
     var n = parseInt(m[1], 16), c = [n >> 16 & 255, n >> 8 & 255, n & 255];
@@ -900,6 +900,7 @@
           '<label class="ed-pal ed-pal-custom' + (state.pal === 'custom' ? ' is-on' : '') + '"><input type="color" data-k="palCustom" value="' + esc(state.palCustom) + '" aria-label="' + esc(S.palCustomLbl) + '"><span>' + esc(S.palCustom) + '</span></label>' +
         '</div><span class="ed-hint" id="palNote"' + (state.pal === 'custom' && isLight(state.palCustom) ? '' : ' hidden') + '>' + esc(S.palLight) + '</span></div>') +
         (state.design === 'moderno' ? toggleRow('photoBW', S.photoBW, S.photoBWOn, S.photoBWOff) : '') +
+        (state.design === 'glicina' ? toggleRow('photosOn', S.photosOn, S.photosOnOn, S.photosOnOff) : '') +
         cartUpsell('dominio', { light: true, k: S.domainK, t: esc(S.domainT(slug(state))) });
     },
     apertura: function () {
