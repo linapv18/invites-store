@@ -202,33 +202,30 @@ footer{padding-bottom:110px !important}
 .lz-editor .grow .st,.lz-editor .draw path{stroke-dashoffset:0}.lz-editor .grow .lf,.lz-editor .grow .bl{transform:none;animation:none}.lz-editor .write{clip-path:none}.lz-editor .typer i{opacity:1}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none !important;transition:none !important}[data-rv]{opacity:1;transform:none}.grow .st,.draw path{stroke-dashoffset:0}.grow .lf,.grow .bl{transform:none}.write{clip-path:none}.typer i{opacity:1}}
 
-/* ---------- Computador: portada a dos columnas y el resto como revista en dos columnas ---------- */
+/* ---------- Computador: una sola columna, más ancha y con todo más grande ---------- */
 @media (min-width:900px){
-  main{max-width:1180px}
-  .mbar{left:max(10px,calc(50% - 560px));right:max(10px,calc(50% - 560px))}
-  .hero{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);grid-template-rows:1fr auto 1fr;column-gap:40px;padding:90px 56px 80px;text-align:left}
-  .hero>.cap:first-child{grid-column:2;grid-row:1;align-self:end;font-size:15px}
-  .hero .loops{grid-column:1;grid-row:1/4;height:560px;margin:0 -20px 0 -56px;overflow:hidden;-webkit-mask:linear-gradient(90deg,transparent,#000 14%,#000 86%,transparent);mask:linear-gradient(90deg,transparent,#000 14%,#000 86%,transparent)}
-  .hero .loops .ph{-webkit-mask:none}
-  .hero .loops .loop{font-size:92px}
-  .hero .loops .loop:nth-child(1){top:20px}.hero .loops .loop:nth-child(2){top:150px}.hero .loops .loop:nth-child(3){top:280px}.hero .loops .loop:nth-child(4){top:410px}
-  .hero .loops .ph{width:320px;height:420px;margin-left:-160px;top:60px}
-  .hero .htxt{grid-column:2;grid-row:2}
-  .hero .htxt .cap{font-size:15px}
-  .hero h1{font-size:82px;line-height:1.05;margin:18px 0 14px}
-  .hero h1 .ms{font-size:120px}
-  .hero .htxt>p:last-child{font-size:13px !important}
-  .flow{columns:2;column-gap:64px;padding:0 40px 40px;column-rule:1px solid #2B28251a}
-  .flow>section{break-inside:avoid;display:block;padding:56px 28px}
-  .renv{scale:1.12;margin-top:80px;margin-bottom:30px}
-  .cal .dn{font-size:76px}
-  .wish{width:100%}
-  footer{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:center;column-gap:56px;max-width:900px;margin:0 auto;text-align:left;padding-top:80px}
-  footer .fph{grid-row:1/4;width:300px;height:400px;margin:0 0 0 auto}
-  footer .with{margin-top:0}
-  footer .with b{font-size:96px}
-  footer .with .ms{font-size:120px;margin-left:110px}
-  footer .cap{font-size:15px}
+  main{max-width:760px}
+  .mbar{left:max(10px,calc(50% - 370px));right:max(10px,calc(50% - 370px))}
+  .hero{padding:80px 40px 70px}
+  .hero .loops{height:470px;margin:20px -40px 24px;-webkit-mask:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent);mask:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent)}
+  .hero .loops .loop{font-size:76px}
+  .hero .loops .loop:nth-child(1){top:10px}.hero .loops .loop:nth-child(2){top:125px}.hero .loops .loop:nth-child(3){top:240px}.hero .loops .loop:nth-child(4){top:355px}
+  .hero .loops .ph{width:280px;height:370px;margin-left:-140px;top:44px}
+  .hero .cap{font-size:14px}
+  .hero h1{font-size:68px}
+  .hero h1 .ms{font-size:100px}
+  .flow{max-width:620px;margin:0 auto}
+  .sec{padding:70px 40px}
+  .sec p{font-size:14px}
+  .sec h2{font-size:26px}
+  .renv{scale:1.18;margin-top:90px;margin-bottom:40px}
+  .cal .dn{font-size:78px}
+  .prints .print{width:140px}
+  .cheers{height:380px}
+  .cheers .ph{width:210px;height:270px;margin-left:-105px}
+  footer .fph{width:300px;height:400px}
+  footer .with b{font-size:84px}
+  footer .with .ms{font-size:110px}
 }
 
 </style>

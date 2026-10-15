@@ -230,28 +230,33 @@ footer{padding-bottom:120px !important}
 .dk{display:none}
 /* Opción «sin fotos» (editor: photosOn; demo: botón Sin fotos o ?fotos=no): html.lz-no-photos */
 html:not(.lz-no-photos) .np-only,.lz-no-photos .ph-only{display:none !important}
-/* ---------- Computador: glicinas a lo ancho y los paneles en dos columnas, como en la referencia ---------- */
+/* ---------- Computador: glicinas a lo ancho y los paneles en una sola columna más ancha ---------- */
 @media (min-width:900px){
-  main{max-width:1180px;overflow:visible}
+  main{max-width:760px;overflow:visible}
   body{overflow-x:hidden}
-  .mbar{left:max(10px,calc(50% - 560px));right:max(10px,calc(50% - 560px))}
+  .mbar{left:max(10px,calc(50% - 370px));right:max(10px,calc(50% - 370px))}
   .mb{display:none}.dk{display:block}
   .ghero{padding:250px 20px 70px;overflow:visible}
-  .ghero>.wis{height:340px}
+  .ghero>.wis{height:340px;left:calc(50% - 50vw);width:100vw}
   .ghero .loval{width:400px;height:500px}
   .ghero .loval.np{width:420px;height:525px;padding:0 100px}
   .ghero .loval.np h1{font-size:60px}
   .ghero .loval.np .mc{font-size:11px}
   .ghero .loval.np .dt{font-size:15px}
   .ghero .bush{width:560px;margin-top:-120px}
-  .flow{columns:2;column-gap:40px;padding:10px 32px 40px}
-  .flow>*{break-inside:avoid;display:block}
-  .flow>.panel{margin:0 0 40px;box-shadow:0 0 0 1px #ffffff90,0 24px 40px -30px #3d4a2a66}
-  .flow>.gap:not(.q){display:none}
-  .flow>.gap.q{padding:110px 0 40px !important;margin-bottom:40px}
-  .panel{padding:56px 40px}
+  .flow{max-width:660px;margin:0 auto}
+  .panel{margin:0;padding:64px 56px}
+  .panel p{font-size:18px}
+  .panel h2{font-size:46px}
+  .panel .cdov{max-width:380px;height:340px;padding:0 92px}
+  .panel .cdov h2{font-size:25px}
+  .panel .cdov .gcd b{font-size:21px}
+  .gap{height:120px}
+  .gap .wis{height:150px}
+  .arch:nth-child(1),.arch:nth-child(3){width:120px}.arch:nth-child(2){width:150px}
+  .vign{width:280px;height:340px}
   footer{padding:300px 20px 140px !important}
-  footer>.wis{height:340px}
+  footer>.wis{height:340px;left:calc(50% - 50vw);width:100vw}
   footer .names{font-size:76px}
   .opening .loval{width:360px;height:450px;padding:0 82px}
   .opening .loval h1{font-size:54px}
