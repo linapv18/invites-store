@@ -244,6 +244,7 @@ h3.fit.wrap{white-space:normal;text-wrap:balance;line-height:1.05}
 .infoc{padding:24px 22px;border-radius:6px;background:var(--surface);box-shadow:inset 0 0 0 1px var(--line),var(--sh1)}
 @media (min-width:760px){.infos{grid-template-columns:repeat(2,minmax(0,1fr))}.tagc{padding:30px 30px 28px 64px}.tagc::before{left:22px}}
 .wash{position:absolute;inset:30px 20px;width:calc(100% - 40px);height:calc(100% - 60px);pointer-events:none}
+@media (min-width:860px){.quote .wash{left:50%;right:auto;width:min(640px,60%);top:56px;height:calc(100% - 112px);translate:-50% 0;opacity:.6}}
 
 /* Cita: palabras de los novios con una rama prensada */
 .quote .in-w{max-width:640px;padding:0 6px}
@@ -325,7 +326,7 @@ textarea:focus-visible{outline:2px solid var(--accent-ink);outline-offset:1px;bo
 .wc .l-bloom{background:var(--bloom);--m:url(/assets/jardin/jardin-rama-bloom.webp)}
 .wc .l-eye{background:#B9862A;--m:url(/assets/jardin/jardin-rama-eye.webp)}
 html.art-webp .wc{display:block}html.art-webp .deco>.sv{display:none}
-.db-btn[aria-pressed=true]{background:var(--ink) !important;color:var(--paper) !important;border-color:var(--ink) !important}
+
 .hero-demo .pill{font-size:14px;min-height:44px;background:transparent}
 .meadow{height:150px;margin:34px -24px -68px;pointer-events:none}
 @media (max-width:360px){.sec{padding-left:16px;padding-right:16px}.ncard>.rs-card{padding-left:16px;padding-right:16px}.meadow{margin-left:-16px;margin-right:-16px}.ncard>div{padding-left:18px;padding-right:18px}}
@@ -453,12 +454,12 @@ body.in-hero .lz-music .txt{display:none}
       faqs: [['¿Cuál es el código de vestimenta?', 'Formal. Por favor eviten el blanco y el marfil, que son para la novia.'], ['¿Pueden ir niños?', 'Nuestra celebración es solo para adultos.'], ['¿Hay mesa de regalos?', 'Su compañía es nuestro mejor regalo. Si desean tener un detalle, aquí compartiremos nuestra mesa de regalos (pendiente en esta demo).']],
       rsvpDatePat: '{d} de {M} de {Y}', rsvpDate: '14 de marzo de 2027', rsvpT: 'Nos encantará<br><span class="script" style="font-size:1.2em">celebrar con ustedes</span>', seatsRes: '4 cupos reservados',
       rsvpMsg: 'Marca para cada persona si podrá acompañarnos.', deadlineK: 'Responde antes del', deadline: '14 de febrero de 2027',
-      diet: 'Restricciones alimentarias (opcional)', note: 'Un mensaje para nosotros (opcional)', save: 'Guardar confirmación',
+      diet: 'Restricciones alimentarias (opcional)', note: 'Un mensaje para nosotros (opcional)', save: 'Confirmar asistencia',
       errOne: function (n) { return 'Elige si ' + n + ' asistirá o no.'; },
       errSum: function (k) { return k === 1 ? 'Falta la respuesta de 1 persona.' : 'Faltan las respuestas de ' + k + ' personas.'; },
       yes: 'Asistirá', no: 'No asistirá', yesShort: 'Asiste', noShort: 'No asiste', change: 'Cambiar', changeOf: 'Cambiar la respuesta de', dietK: 'Restricciones:', noteK: 'Mensaje:',
-      thanks: '¡Gracias!', edit: 'Editar respuesta', saved: 'Demostración: esta respuesta no se envía y se reinicia al recargar.', rsvpK: 'Respuestas del RSVP', art: 'Ramas en acuarela (prueba)',
-      rsvpStyles: { texto: { n: 'Asistirá / No asistirá', yes: 'Asistirá', no: 'No asistirá', yesShort: 'Asiste', noShort: 'No asiste' }, sino: { n: 'Sí / No', yes: 'Sí', no: 'No', yesShort: 'Sí', noShort: 'No' }, voy: { n: 'Voy / No voy', yes: 'Voy', no: 'No voy', yesShort: 'Va', noShort: 'No va' }, elegante: { n: 'Elegante', yes: 'Con gusto asistirá', no: 'Lamenta no asistir', yesShort: 'Con gusto', noShort: 'Lo lamenta' }, iconos: { n: 'Íconos', yes: '✓', no: '✕', yesShort: 'Asiste', noShort: 'No asiste' } },
+      thanks: '¡Gracias!', edit: 'Editar respuesta', saved: 'Demostración: esta respuesta no se envía y se reinicia al recargar.', rsvpK: 'Respuestas del RSVP',
+      rsvpStyles: { texto: { n: 'Asistirá / No asistirá', yes: 'Asistirá', no: 'No asistirá', yesShort: 'Asiste', noShort: 'No asiste' }, sino: { n: 'Sí / No', yes: 'Sí', no: 'No', yesShort: 'Sí', noShort: 'No' }, voy: { n: 'Voy / No voy', yes: 'Voy', no: 'No voy', yesShort: 'Va', noShort: 'No va' }, elegante: { n: 'Cálida', yes: 'Con mucho gusto', no: 'Esta vez no podrá', yesShort: 'Con gusto', noShort: 'No podrá' }, iconos: { n: 'Íconos', yes: '✓', no: '✕', yesShort: 'Asiste', noShort: 'No asiste' } },
       will: function (y, n) { return y === n ? '¡Asistirán las ' + n + ' personas! Nos vemos pronto.' : y ? 'Asistirán ' + y + ' de ' + n + ' personas. ¡Nos vemos pronto!' : 'Gracias por avisarnos. Los extrañaremos.'; },
       qnav: 'Accesos rápidos', qSchedule: 'Itinerario', qRsvp: 'Confirmar',
       fnav: 'Enlaces de la invitación', fSchedule: 'Itinerario', fMap: 'Ubicación ↗', fRsvp: 'Confirmar asistencia',
@@ -486,12 +487,12 @@ body.in-hero .lz-music .txt{display:none}
       faqs: [['What is the dress code?', 'Formal. Please avoid white and ivory, they’re for the bride.'], ['Are kids welcome?', 'Our celebration is adults only.'], ['Is there a gift registry?', 'Your presence is our best gift. If you’d like to give something, we’ll share our registry here (pending in this demo).']],
       rsvpDatePat: '{Mc} {d}, {Y}', rsvpDate: 'March 14, 2027', rsvpT: 'We’d love to<br><span class="script" style="font-size:1.2em">celebrate with you</span>', seatsRes: '4 seats reserved',
       rsvpMsg: 'Let us know, for each person, whether they can join us.', deadlineK: 'Please reply by', deadline: 'February 14, 2027',
-      diet: 'Dietary restrictions (optional)', note: 'A message for us (optional)', save: 'Save RSVP',
+      diet: 'Dietary restrictions (optional)', note: 'A message for us (optional)', save: 'Confirm attendance',
       errOne: function (n) { return 'Choose whether ' + n + ' will attend.'; },
       errSum: function (k) { return k === 1 ? '1 person still needs an answer.' : k + ' people still need an answer.'; },
       yes: 'Will attend', no: 'Won’t attend', yesShort: 'Attending', noShort: 'Not attending', change: 'Change', changeOf: 'Change the answer for', dietK: 'Restrictions:', noteK: 'Message:',
-      thanks: 'Thank you!', edit: 'Edit answer', saved: 'Demo: this answer isn’t sent and resets when you reload.', rsvpK: 'RSVP answers', art: 'Watercolor sprigs (test)',
-      rsvpStyles: { texto: { n: 'Will attend / Won’t attend', yes: 'Will attend', no: 'Won’t attend', yesShort: 'Attending', noShort: 'Not attending' }, sino: { n: 'Yes / No', yes: 'Yes', no: 'No', yesShort: 'Yes', noShort: 'No' }, voy: { n: 'Going / Not going', yes: 'Going', no: 'Not going', yesShort: 'Going', noShort: 'Not going' }, elegante: { n: 'Formal', yes: 'Joyfully accepts', no: 'Regretfully declines', yesShort: 'Accepts', noShort: 'Declines' }, iconos: { n: 'Icons', yes: '✓', no: '✕', yesShort: 'Attending', noShort: 'Not attending' } },
+      thanks: 'Thank you!', edit: 'Edit answer', saved: 'Demo: this answer isn’t sent and resets when you reload.', rsvpK: 'RSVP answers',
+      rsvpStyles: { texto: { n: 'Will attend / Won’t attend', yes: 'Will attend', no: 'Won’t attend', yesShort: 'Attending', noShort: 'Not attending' }, sino: { n: 'Yes / No', yes: 'Yes', no: 'No', yesShort: 'Yes', noShort: 'No' }, voy: { n: 'Going / Not going', yes: 'Going', no: 'Not going', yesShort: 'Going', noShort: 'Not going' }, elegante: { n: 'Warm', yes: 'Gladly', no: 'Sadly can’t make it', yesShort: 'Gladly', noShort: 'Can’t make it' }, iconos: { n: 'Icons', yes: '✓', no: '✕', yesShort: 'Attending', noShort: 'Not attending' } },
       will: function (y, n) { return y === n ? 'All ' + n + ' people will attend! See you soon.' : y ? y + ' of ' + n + ' people will attend. See you soon!' : 'Thanks for letting us know. We’ll miss you.'; },
       qnav: 'Quick links', qSchedule: 'Schedule', qRsvp: 'RSVP',
       fnav: 'Invitation links', fSchedule: 'Schedule', fMap: 'Location ↗', fRsvp: 'RSVP',
@@ -561,7 +562,7 @@ body.in-hero .lz-music .txt{display:none}
     return '<svg class="grow" viewBox="0 0 ' + w + ' ' + h + '" preserveAspectRatio="xMidYMax slice" aria-hidden="true"><g filter="url(#wc)">' + s + '</g></svg>';
   }
   // Exploración de dirección artística: rama de acuarela horneada en capas WebP (máscaras de pigmento teñidas con la paleta).
-  // Solo se ve con ?acuarela=webp o desde «Explorar demo»; el SVG sigue siendo la versión por defecto.
+  // Solo se ve con ?acuarela=webp (laboratorio); la demo comercial usa siempre el SVG.
   var wcSprig = function (w, rot, flip) { return '<div class="wc grow" aria-hidden="true" style="width:' + w + 'px;transform:rotate(' + rot + 'deg) scaleX(' + (flip || 1) + ')"><i class="l-soft"></i><i class="l-leaf"></i><i class="l-bloom"></i><i class="l-eye"></i></div>'; };
   var cornerSprig = function (w, rot, flip) { return '<div class="sv">' + sprig(w, rot, flip) + '</div>' + wcSprig(w * 1.15, rot, flip); };
   var BFLY = '<div class="bfly" aria-hidden="true"><svg viewBox="0 0 30 24" width="30"><g class="w"><path d="M15 12C9 0 0 2 2 9s9 5 13 3Z" style="fill:var(--bloom)" opacity=".9"/><path d="M15 12C21 0 30 2 28 9s-9 5-13 3Z" style="fill:var(--bloom)" opacity=".9"/><path d="M15 12C10 16 6 22 10 22s5-6 5-10ZM15 12c5 4 9 10 5 10s-5-6-5-10Z" style="fill:var(--bloom2)"/></g><path d="M15 6v13" style="stroke:var(--ink)" stroke-width="1.4" stroke-linecap="round"/></svg></div>';
@@ -720,7 +721,6 @@ body.in-hero .lz-music .txt{display:none}
     '<button type="button" class="db-tg" id="dbToggle" aria-expanded="false" aria-controls="dbSheet"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m15.5 8.5-2 5-5 2 2-5z"/></svg>' + S.demo + '</button>' +
     '<div class="db-sheet" id="dbSheet" role="group" aria-label="' + S.demo + '" hidden><div class="db-head"><b>' + S.demo + '</b><button type="button" class="db-min" id="dbMin" aria-label="' + S.minimize + '">–</button></div>' +
       '<div class="db-colors" id="dbColors"></div>' +
-      '<button type="button" class="db-btn" id="dbArt" aria-pressed="false">' + S.art + ' <span aria-hidden="true">◐</span></button>' +
       '<label class="db-sel"><span>' + S.rsvpK + '</span><select id="dbRsvp">' + Object.keys(S.rsvpStyles).map(function (k) { return '<option value="' + k + '">' + S.rsvpStyles[k].n + '</option>'; }).join('') + '</select></label>' +
       '<button type="button" class="db-btn" data-open-panel>' + S.panel + ' <span aria-hidden="true">→</span></button><a class="db-btn" href="' + S.storeUrl + '">' + S.store + ' <span aria-hidden="true">↗</span></a></div>';
 })();
@@ -941,10 +941,9 @@ body.in-hero .lz-music .txt{display:none}
     wrap.appendChild(f);
   });
   paintOpts();
-  // Exploración de acuarela en WebP: ?acuarela=webp o el botón de «Explorar demo».
+  // Exploración de acuarela en WebP: laboratorio interno, solo con ?acuarela=webp (no se ofrece en la demo de la tienda).
   var art = /^(webp|si|sí|1)$/.test(q.get('acuarela') || '');
-  function setArt(on) { art = on; html.classList.toggle('art-webp', on); $('dbArt').setAttribute('aria-pressed', String(on)); }
-  setArt(art); $('dbArt').addEventListener('click', function () { setArt(!art); });
+  html.classList.toggle('art-webp', art);
   // Selector de variante dentro de «Explorar demo».
   var sel = $('dbRsvp');
   if (sel) { sel.value = style; sel.addEventListener('change', function () { style = sel.value; paintOpts(); }); }
