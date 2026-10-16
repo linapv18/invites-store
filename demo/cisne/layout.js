@@ -101,29 +101,7 @@ const csIcon = {
   // Mapa plegado con ruta y punto
   map: icoSvg('<path d="M5 13l12-5 14 5 12-5v28l-12 5-14-5-12 5Z" fill="currentColor" fill-opacity=".07"/><path d="M17 8v28M31 13v28" opacity=".5"/><path d="M9 32c4-1 6-6 10-6s5 4 9 3" stroke-dasharray="1.4 2.6"/><path d="M34 27s-5-5.2-5-9a5 5 0 0 1 10 0c0 3.8-5 9-5 9Z" fill="currentColor" fill-opacity=".18"/><circle cx="34" cy="18" r="1.8"/>')
 };
-const tasselHTML = (() => {
-  const Q = rng(17); let cord = '', th = '';
-  [0, Math.PI].forEach((ph, j) => { let d = ''; for (let i = 0; i <= 40; i++) { const t = i / 40; d += `${i ? 'L' : 'M'}${f1(30 + 1.5 * Math.sin(t * Math.PI * 12 + ph))} ${f1(48 + t * 46)}`; } cord += `<path d="${d}" fill="none" style="stroke:color-mix(in srgb,var(--wine),${j ? '#fff 12%' : '#000 30%'})" stroke-width="1.7"/>`; });
-  for (let i = 0; i < 34; i++) {
-    const u = i / 33, e = Math.abs(u - .5) * 2, x0 = 22 + u * 16, x1 = 17 + u * 26 + (Q() - .5) * 2, y1 = 166 + Q() * 8;
-    const mix = i % 4 === 1 && e < .6 ? '#fff 16%' : `#000 ${Math.round(12 + e * 42)}%`;
-    th += `<path d="M${f1(x0)} 116C${f1(x0 + (x1 - x0) * .2)} 136 ${f1(x1 - (x1 - x0) * .1)} 150 ${f1(x1)} ${f1(y1)}" fill="none" style="stroke:color-mix(in srgb,var(--wine),${mix})" stroke-width="1.15"/>`;
-  }
-  return `<g transform="rotate(26 30 45)"><g class="tas">${cord}${th}
-    <ellipse cx="30" cy="104" rx="8.5" ry="10" fill="url(#csTas)"/>
-    <path d="M22.5 99q7.5 3 15 0M22 104q8 3 16 0M22.5 109q7.5 2.6 15 0" fill="none" style="stroke:color-mix(in srgb,var(--wine),#000 45%)" stroke-width=".6" opacity=".7"/>
-    <ellipse cx="27" cy="99" rx="2.6" ry="4" fill="#fff" opacity=".18" filter="url(#csBlur1)"/>
-    <rect x="20.5" y="112" width="19" height="4.5" rx="1.5" fill="url(#csGoldV)" stroke="#6E5424" stroke-width=".5"/>
-    <ellipse cx="30" cy="45.5" rx="3.4" ry="3.8" style="fill:color-mix(in srgb,var(--wine),#000 20%)"/><path d="M28 43.5q2 1.6 4 0" fill="none" stroke="#fff" stroke-opacity=".3" stroke-width=".6"/>
-  </g></g>`;
-})();
-const KEY = `<svg class="key" viewBox="0 0 90 190" overflow="visible" aria-hidden="true">
-  <g stroke="#6E5424" stroke-width=".7"><circle cx="45" cy="30" r="13" fill="none" stroke="url(#csGold)" stroke-width="8"/><circle cx="45" cy="30" r="17" fill="none"/><circle cx="45" cy="30" r="9" fill="none"/>${[0, 90, 180, 270].map(a => `<circle cx="45" cy="13" r="4.2" transform="rotate(${a} 45 30)" fill="url(#csGold)"/>`).join('')}<path d="M41 47h8v112h-8z" fill="url(#csGoldV)"/><path d="M49 134h12v7h-6v6h6v8H49" fill="url(#csGold)"/><path d="M38 50h14v4H38zM38 57h14v4H38z" fill="url(#csGold)"/></g>
-  <path d="M43 62v90" stroke="#fff" stroke-opacity=".45" stroke-width="1"/>
-  <path d="M43.5 25.5C36 25 31 33 30.5 42.5" fill="none" style="stroke:color-mix(in srgb,var(--wine),#000 25%)" stroke-width="2.2" stroke-linecap="round"/>
-  <path d="M46.5 35C42 39.5 36 41.5 31 43" fill="none" style="stroke:color-mix(in srgb,var(--wine),#000 10%)" stroke-width="2.2" stroke-linecap="round"/>
-  ${tasselHTML}
-</svg>`;
+const KEY = '<img class="key key-photo" src="/assets/cisne/llave.webp" alt="" width="512" height="768" loading="lazy" decoding="async" aria-hidden="true">';
 const MONO = '<svg viewBox="0 0 66 52" fill="none" stroke="currentColor" stroke-width=".8"><ellipse cx="33" cy="26" rx="30" ry="23"/><ellipse cx="33" cy="26" rx="27" ry="20" stroke-dasharray="1 2.4"/></svg>';
 const wreath = () => {
   // Dos ramas de laurel que suben por los lados del óvalo y casi se juntan arriba.
@@ -142,18 +120,17 @@ const notch = (cls, inner, style = '') => `<div class="notch ${cls}" style="${st
   // ======================= APERTURA: sobre oliva con sello de lacre =======================
   '<div class="opening table" id="open" role="dialog" aria-modal="true" aria-label="' + S.openAria + '">' +
     '<div class="opening-content"><p class="cz" style="color:var(--wine)" data-lz="envIntro" data-lz-keep>' + S.envIntro + '</p>' +
-    '<div class="cwrap" id="csWrap">' +
+    '<div class="opening-suite"><div class="suite-underlay" aria-hidden="true"></div>' + BQ(200, 'suite-flowers', '', false) + '<img class="suite-key" src="/assets/cisne/llave.webp" alt="" width="512" height="768" aria-hidden="true"><div class="cwrap" id="csWrap">' +
       '<div class="eclip"><div class="eback"></div>' +
         '<div class="piece ocard" inert>' + notch('lacey', SWAN(66) + '<p class="cz" style="margin-top:8px">' + S.invite + '</p>' + names(.8) +
           '<p class="cz" data-lz-date="' + S.openPat + '">' + S.openTxt + '</p><p class="cz" style="opacity:.8" data-lz="city">' + S.city + '</p>' +
           '<div class="after"><p style="margin-top:10px;font-size:15px;color:#F4E7D2">' + S.for + ' <b style="font-weight:600">' + S.guest + '</b> · ' + S.seats + '</p><button type="button" class="btn" style="margin-top:12px" id="enter" tabindex="-1" disabled>' + S.enter + '</button></div>') + '</div>' +
-        '<div class="epocket">' + FOLDS + '</div><p class="envelope-recipient ps">' + S.for + ' ' + S.guest + '</p><div class="efsh"><i></i></div>' +
+        '<div class="epocket">' + FOLDS + '<svg class="envelope-filet" viewBox="0 0 410 250" preserveAspectRatio="none" aria-hidden="true"><path d="M13 32V237H397V32M20 48V230H390V48M28 221h35m284 0h35"/><path d="M185 220q20-10 40 0m-24-1 4-4 4 4-4 4Z"/></svg></div><p class="envelope-recipient ps">' + S.for + ' ' + S.guest + '</p><div class="efsh"><i></i></div>' +
       '</div>' +
-      '<div class="eflap"><div class="ef front"></div><div class="ef back"><svg viewBox="0 0 290 114" preserveAspectRatio="xMidYMax slice" aria-hidden="true">' + LINER + '</svg></div></div>' +
-      '<button type="button" class="seal wax" id="csSeal" aria-label="' + S.seal + '">' + WAX(2) + '<span class="emb" data-lz-seal>' + SWAN(40, 1.4, .55) + '</span></button>' +
-      BQ(150, 'obq', 'left:-40px;top:-6px;rotate:-16deg', false) + BQ(118, 'obq', 'right:-44px;top:318px;scale:-1 1;rotate:10deg', false) +
+      '<div class="eflap"><div class="ef front"><svg class="envelope-engraving" viewBox="0 0 410 160" preserveAspectRatio="none" aria-hidden="true"><path d="M16 9H394L205 150ZM34 16H376L205 141Z"/><path d="M170 37q35-28 70 0M176 41q29-20 58 0M191 30l14-12 14 12"/><path d="M60 24q25 3 43 23m-32-18 1 12m12-6-1 13m-2-17 14-1M350 24q-25 3-43 23m32-18-1 12m-12-6 1 13m2-17-14-1"/></svg><span class="flap-emblem">' + SWAN(58) + '</span></div><div class="ef back"><svg viewBox="0 0 290 114" preserveAspectRatio="xMidYMax slice" aria-hidden="true">' + LINER + '</svg></div></div>' +
+      '<button type="button" class="seal wax gold photographic-seal" id="csSeal" aria-label="' + S.seal + '"><img class="wax-photo" src="/assets/rosa/lacre-dorado.webp" alt="" width="512" height="512"><span class="emb" data-lz-seal><span class="lz-seal">A<i>&amp;</i>L</span></span></button>' +
     '</div>' +
-    '<p class="hint" id="hint" aria-live="polite">' + S.hint + '</p></div>' +
+    '</div><p class="hint" id="hint" aria-live="polite">' + S.hint + '</p></div>' +
   '</div>' +
 
   // ======================= INVITACIÓN =======================
@@ -162,7 +139,7 @@ const notch = (cls, inner, style = '') => `<div class="notch ${cls}" style="${st
     '<section class="hero" id="portada" data-lz-anchor="portada">' + BQ(150, 'hbq') +
       '<div class="piece hcard" data-frame="cs-crest">' + notch('lacey', SWAN(70) + '<p class="cz" style="margin-top:10px">' + S.getting + '</p>' + names(.9) +
         '<p class="cz" data-lz-date="' + S.heroPat + '">' + S.heroTxt + '</p><p class="cz" style="opacity:.8" data-lz="city">' + S.city + '</p>') + '</div>' +
-      '<div class="pola"><div class="pic"><img class="ph-img" id="heroImg" src="/assets/fotos/paseo.jpg" data-lz-src="photo:0" alt="' + S.photoAlt + '" style="object-position:center 60%"></div><p class="cap">' + N('n1') + ' &amp; ' + N('n2') + '</p><div class="wax gold">' + WAX(5, true) + '<span class="emb" data-lz-seal>AL</span></div></div>' +
+      '<div class="pola"><div class="pic"><img class="ph-img" id="heroImg" src="/assets/fotos/paseo.jpg" data-lz-src="photo:0" alt="' + S.photoAlt + '" style="object-position:center 60%"></div><p class="cap">' + N('n1') + ' &amp; ' + N('n2') + '</p><div class="wax gold photographic-seal"><img class="wax-photo" src="/assets/rosa/lacre-dorado.webp" alt="" width="512" height="512"><span class="emb" data-lz-seal>AL</span></div></div>' +
       BQ(116, 'hbq2') +
       '<p class="lead" data-lz="msg">' + S.msg + '</p>' +
     '</section>' +

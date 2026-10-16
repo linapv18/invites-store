@@ -487,3 +487,36 @@ footer p.cz{max-width:460px;margin-inline:auto;line-height:2}
 .form .rsvp-deadline{font-size:16px;line-height:1.6;color:var(--wine);margin-top:14px}
 .footer-links{display:flex;justify-content:center;gap:14px 28px;flex-wrap:wrap;margin-top:24px}
 .footer-links a{display:inline-flex;align-items:center;min-height:44px;font:11px/1.5 Cinzel;letter-spacing:.1em;text-underline-offset:5px}
+
+/* The closed invitation is a complete still life, not an empty envelope. */
+.opening-content{gap:32px;padding-top:50px;padding-bottom:100px}
+.opening-suite{position:relative;isolation:isolate;width:min(100%,680px);margin:20px auto 12px;padding:0}
+.opening-suite .cwrap{position:relative;z-index:2;margin-inline:auto;width:min(78vw,410px);height:270px}
+.opening-suite .cwrap.open{height:calc(var(--card-height,390px) + 238px)}
+.opening-suite .eback,.opening-suite .epocket{height:250px}
+.opening-suite .eback{box-shadow:0 2px 1px #2c311a40,0 14px 28px #2c311a20,0 35px 45px -20px #2c311a40}
+.opening-suite .eflap{bottom:90px;height:160px}
+.opening-suite .efsh{bottom:89px;height:160px;opacity:.35}
+.opening-suite .ocard{top:calc(100% - 238px)}
+.suite-underlay{position:absolute;z-index:0;left:50%;bottom:-18px;width:440px;max-width:90%;height:224px;transform:translateX(-50%) rotate(-8deg);background:linear-gradient(#49101c44,#49101c44),url(/assets/cisne/encaje.webp) center/cover,var(--wine);border:7px solid var(--wine);outline:1px solid #c2a26a60;outline-offset:-12px;box-shadow:0 12px 28px #3b20252b;pointer-events:none}
+.suite-flowers{position:absolute;z-index:4;left:18px;bottom:124px;width:200px;max-width:35%;rotate:-19deg;pointer-events:none;transition:opacity .35s,transform .6s;filter:drop-shadow(0 3px 2px #3b202522) drop-shadow(0 9px 10px #3b202522)}
+.suite-key{position:absolute;z-index:4;right:22px;bottom:-28px;width:150px;height:auto;pointer-events:none;rotate:8deg;filter:drop-shadow(1px 3px 2px #3b20251c);mix-blend-mode:multiply}
+.opening-suite:has(.cwrap.open) .suite-flowers{opacity:0;transform:translate(-12px,12px)}
+.opening-suite .seal{width:96px;height:96px;margin-left:-48px;bottom:88px;filter:drop-shadow(0 2px 1px #25301755) drop-shadow(0 6px 7px #25301733)}
+.wax-photo{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;pointer-events:none}
+.photographic-seal .emb{color:#725020!important;filter:none;text-shadow:.6px .7px 0 #fff5,-.3px -.4px 0 #62411955;font-size:26px;z-index:1;max-width:56%;max-height:56%}
+.opening-suite .seal .emb{font-size:28px}
+.envelope-engraving,.envelope-filet{position:absolute;inset:0;width:100%;height:100%;fill:none;stroke:var(--gold2);stroke-width:.7;opacity:.6;pointer-events:none}
+.envelope-engraving{stroke-width:.65;opacity:.55}
+.flap-emblem{position:absolute;left:50%;top:48px;transform:translateX(-50%);color:var(--gold2);opacity:.7;filter:drop-shadow(0 1px 0 #2c311a55)}
+.opening-suite .ef.front{background-color:color-mix(in srgb,var(--olive),#fff 3%);background-image:linear-gradient(140deg,#ffffff25,transparent 45%,#0000001a),var(--grain);background-blend-mode:normal,multiply}
+.opening-suite .epocket{background-color:var(--olive);background-image:linear-gradient(125deg,#ffffff08,transparent 50%,#00000013),var(--grain);background-blend-mode:normal,multiply}
+.opening-suite .envelope-recipient{bottom:28px;left:30px;right:30px;font-size:27px;line-height:1.1;text-shadow:0 1px #26301644}
+.opening .hint{position:relative;z-index:1;margin-top:24px;font-size:20px}
+.key-photo{width:135px;height:auto;top:150px;right:calc(50% - 215px);rotate:9deg;mix-blend-mode:multiply;filter:drop-shadow(1px 3px 2px #3b20251c)}
+@media(max-width:600px){.opening-content{gap:26px;padding-top:42px;padding-inline:20px}.opening-suite{margin-block:16px 10px}.opening-suite .cwrap{width:78vw}.suite-underlay{height:220px;bottom:-14px;max-width:90%;border-width:5px}.suite-flowers{width:138px;max-width:41%;left:-19px;bottom:146px}.suite-key{width:98px;right:-14px;bottom:-28px}.opening-suite .seal{width:86px;height:86px;margin-left:-43px;bottom:92px}.opening-suite .seal .emb{font-size:25px}.opening-suite .envelope-recipient{font-size:23px;left:20px;right:20px;bottom:30px}.flap-emblem{top:44px}.flap-emblem .swan{width:49px}.opening .hint{font-size:18px;margin-top:22px}.key-photo{right:-3px;width:104px;top:160px}}
+@media(max-height:650px){.opening-content{padding-top:28px;gap:22px}.opening-suite{margin-top:10px}.opening-content>p.cz{max-width:350px}.opening .hint{margin-top:18px}}
+@media(prefers-reduced-motion:reduce){.suite-flowers{transition:none}}
+@media(max-width:600px){.suite-key{width:94px;right:-2px}.suite-flowers{left:-8px;max-width:39%}}
+.key-photo{rotate:0deg;right:calc(50% - 250px)}
+@media(max-width:600px){.key-photo{right:8px;top:205px;width:98px}}
