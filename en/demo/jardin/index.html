@@ -314,8 +314,6 @@ textarea:focus-visible{outline:2px solid var(--accent-ink);outline-offset:1px;bo
 .lz-content .rs-saved,.lz-content .hero-demo{display:none}
 .opt{white-space:normal;text-align:center;line-height:1.15}
 .is-icons .opt{font-size:20px}.is-icons .opt .ic{display:inline}
-.db-sel{display:block;margin:14px 0 10px;font:500 11px Jost,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--leaf-ink)}
-.db-sel select{display:block;width:100%;height:44px;margin-top:6px;padding:0 12px;border:1px solid var(--line2);border-radius:12px;background:var(--surface);color:var(--ink);font:400 15px Jost,sans-serif;letter-spacing:0;text-transform:none}
 .hero-demo{margin-top:26px}
 /* Rama de acuarela en WebP (exploración): capas de pigmento teñidas con la paleta; crece desde la base */
 .wc{display:none;position:relative;aspect-ratio:1;clip-path:circle(0% at 8% 94%);transition:clip-path 1.6s cubic-bezier(.3,.7,.3,1)}
@@ -458,7 +456,7 @@ body.in-hero .lz-music .txt{display:none}
       errOne: function (n) { return 'Elige si ' + n + ' asistirá o no.'; },
       errSum: function (k) { return k === 1 ? 'Falta la respuesta de 1 persona.' : 'Faltan las respuestas de ' + k + ' personas.'; },
       yes: 'Asistirá', no: 'No asistirá', yesShort: 'Asiste', noShort: 'No asiste', change: 'Cambiar', changeOf: 'Cambiar la respuesta de', dietK: 'Restricciones:', noteK: 'Mensaje:',
-      thanks: '¡Gracias!', edit: 'Editar respuesta', saved: 'Demostración: esta respuesta no se envía y se reinicia al recargar.', rsvpK: 'Respuestas del RSVP',
+      thanks: '¡Gracias!', edit: 'Editar respuesta', saved: 'Demostración: esta respuesta no se envía y se reinicia al recargar.',
       rsvpStyles: { texto: { n: 'Asistirá / No asistirá', yes: 'Asistirá', no: 'No asistirá', yesShort: 'Asiste', noShort: 'No asiste' }, sino: { n: 'Sí / No', yes: 'Sí', no: 'No', yesShort: 'Sí', noShort: 'No' }, voy: { n: 'Voy / No voy', yes: 'Voy', no: 'No voy', yesShort: 'Va', noShort: 'No va' }, elegante: { n: 'Cálida', yes: 'Con mucho gusto', no: 'Esta vez no podrá', yesShort: 'Con gusto', noShort: 'No podrá' }, iconos: { n: 'Íconos', yes: '✓', no: '✕', yesShort: 'Asiste', noShort: 'No asiste' } },
       will: function (y, n) { return y === n ? '¡Asistirán las ' + n + ' personas! Nos vemos pronto.' : y ? 'Asistirán ' + y + ' de ' + n + ' personas. ¡Nos vemos pronto!' : 'Gracias por avisarnos. Los extrañaremos.'; },
       qnav: 'Accesos rápidos', qSchedule: 'Itinerario', qRsvp: 'Confirmar',
@@ -491,7 +489,7 @@ body.in-hero .lz-music .txt{display:none}
       errOne: function (n) { return 'Choose whether ' + n + ' will attend.'; },
       errSum: function (k) { return k === 1 ? '1 person still needs an answer.' : k + ' people still need an answer.'; },
       yes: 'Will attend', no: 'Won’t attend', yesShort: 'Attending', noShort: 'Not attending', change: 'Change', changeOf: 'Change the answer for', dietK: 'Restrictions:', noteK: 'Message:',
-      thanks: 'Thank you!', edit: 'Edit answer', saved: 'Demo: this answer isn’t sent and resets when you reload.', rsvpK: 'RSVP answers',
+      thanks: 'Thank you!', edit: 'Edit answer', saved: 'Demo: this answer isn’t sent and resets when you reload.',
       rsvpStyles: { texto: { n: 'Will attend / Won’t attend', yes: 'Will attend', no: 'Won’t attend', yesShort: 'Attending', noShort: 'Not attending' }, sino: { n: 'Yes / No', yes: 'Yes', no: 'No', yesShort: 'Yes', noShort: 'No' }, voy: { n: 'Going / Not going', yes: 'Going', no: 'Not going', yesShort: 'Going', noShort: 'Not going' }, elegante: { n: 'Warm', yes: 'Gladly', no: 'Sadly can’t make it', yesShort: 'Gladly', noShort: 'Can’t make it' }, iconos: { n: 'Icons', yes: '✓', no: '✕', yesShort: 'Attending', noShort: 'Not attending' } },
       will: function (y, n) { return y === n ? 'All ' + n + ' people will attend! See you soon.' : y ? y + ' of ' + n + ' people will attend. See you soon!' : 'Thanks for letting us know. We’ll miss you.'; },
       qnav: 'Quick links', qSchedule: 'Schedule', qRsvp: 'RSVP',
@@ -721,7 +719,6 @@ body.in-hero .lz-music .txt{display:none}
     '<button type="button" class="db-tg" id="dbToggle" aria-expanded="false" aria-controls="dbSheet"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m15.5 8.5-2 5-5 2 2-5z"/></svg>' + S.demo + '</button>' +
     '<div class="db-sheet" id="dbSheet" role="group" aria-label="' + S.demo + '" hidden><div class="db-head"><b>' + S.demo + '</b><button type="button" class="db-min" id="dbMin" aria-label="' + S.minimize + '">–</button></div>' +
       '<div class="db-colors" id="dbColors"></div>' +
-      '<label class="db-sel"><span>' + S.rsvpK + '</span><select id="dbRsvp">' + Object.keys(S.rsvpStyles).map(function (k) { return '<option value="' + k + '">' + S.rsvpStyles[k].n + '</option>'; }).join('') + '</select></label>' +
       '<button type="button" class="db-btn" data-open-panel>' + S.panel + ' <span aria-hidden="true">→</span></button><a class="db-btn" href="' + S.storeUrl + '">' + S.store + ' <span aria-hidden="true">↗</span></a></div>';
 })();
 </script>
@@ -910,7 +907,7 @@ body.in-hero .lz-music .txt{display:none}
   try { for (var k = localStorage.length - 1; k >= 0; k--) { var key = localStorage.key(k); if (key && key.indexOf('lazo-demo-rsvp:') === 0) localStorage.removeItem(key); } } catch (err) {}
   var wrap = $('people'), form = $('rsForm');
   var att = PEOPLE.map(function () { return null; });
-  // Variante de los controles: la elegirá el editor; en la demo se prueba desde «Explorar demo» o con ?rsvp=.
+  // Variante de los controles: la elegirá el editor (data-lz-rsvp); la demo de la tienda usa «Asistirá / No asistirá». ?rsvp= sirve para pruebas internas.
   var STYLES = Object.keys(S.rsvpStyles), q = new URLSearchParams(location.search);
   var style = STYLES.indexOf(q.get('rsvp') || html.getAttribute('data-lz-rsvp')) >= 0 ? (q.get('rsvp') || html.getAttribute('data-lz-rsvp')) : 'texto';
   function opt(v) { var st = S.rsvpStyles[style]; return { label: v ? st.yes : st.no, short: v ? st.yesShort : st.noShort, aria: v ? S.yes : S.no }; }
@@ -944,9 +941,6 @@ body.in-hero .lz-music .txt{display:none}
   // Exploración de acuarela en WebP: laboratorio interno, solo con ?acuarela=webp (no se ofrece en la demo de la tienda).
   var art = /^(webp|si|sí|1)$/.test(q.get('acuarela') || '');
   html.classList.toggle('art-webp', art);
-  // Selector de variante dentro de «Explorar demo».
-  var sel = $('dbRsvp');
-  if (sel) { sel.value = style; sel.addEventListener('change', function () { style = sel.value; paintOpts(); }); }
   function summarizeErr(show) {
     var miss = att.filter(function (x) { return x === null; }).length;
     if (!show && $('rsErr').hidden) return;
