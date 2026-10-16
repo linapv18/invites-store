@@ -140,3 +140,9 @@ body.sheet-open .demo-bar,body.sheet-open .lz-music{display:none !important}
 /* Explicit SVG pause glyph avoids platform-dependent emoji rendering. */
 .lz-music .pause{display:none}
 .lz-music.is-playing .pause{display:block}
+
+/* Room for persistent demo/music tools, with the original photo fitted without cropping. */
+.lz-viewer{padding:72px 16px 110px}
+.lz-v-frame img{width:auto;height:auto;max-width:min(calc(100vw - 140px),1200px);max-height:calc(100dvh - 220px);object-fit:contain;filter:none}
+.lz-v-count{font-size:13px;letter-spacing:.12em}
+@media(max-width:600px){.lz-v-frame img{max-width:calc(100vw - 24px);max-height:calc(100dvh - 240px)}.lz-v-btn.is-prev,.lz-v-btn.is-next{top:auto;bottom:96px;translate:none}.lz-v-btn.is-prev{left:calc(50% - 64px)}.lz-v-btn.is-next{right:calc(50% - 64px)}}

@@ -73,9 +73,9 @@
       { id: 'medianoche', es: 'Medianoche', en: 'Midnight', sw: '#0E1422', vars: { bg: '#0D1320' } }
     ],
     lino: [
-      { id: 'salvia', es: 'Salvia', en: 'Sage', sw: '#8C9A86' },
-      { id: 'arena', es: 'Arena', en: 'Sand', sw: '#B49B7E', vars: { sage: '#A88D6E', bg: '#ECE6DC' } },
-      { id: 'piedra', es: 'Piedra', en: 'Stone', sw: '#8A939B', vars: { sage: '#7E8891', bg: '#E4E5E6' } }
+      { id: 'salvia', es: 'Salvia', en: 'Sage', sw: '#52634C' },
+      { id: 'arena', es: 'Arena', en: 'Sand', sw: '#B49B7E', vars: { sage: '#72583D', bg: '#ECE6DC' } },
+      { id: 'piedra', es: 'Piedra', en: 'Stone', sw: '#8A939B', vars: { sage: '#505F6B', bg: '#E4E5E6' } }
     ],
     marfil: [
       { id: 'burdeos', es: 'Burdeos', en: 'Burgundy', sw: '#5E1F2B' },
@@ -309,6 +309,7 @@
   function apply(c) {
     C = c || C || {};
     var c0 = C, ph = photos(c0), evs = c0.events || [];
+    window.LZ_GALLERY = Array.isArray(c0.gallery) ? c0.gallery.filter(has).slice(0,12) : null;
     // Evento elegido en el editor para la cuenta regresiva (si no hay, el primero).
     var cdEv = evs.filter(function (e) { return e.id === c0.countdownId; })[0] || evs[0];
     var v = {
@@ -370,6 +371,7 @@
       if (k === 'gallery' && !rows.length) return;
       renderList(box, rows);
     });
+    document.dispatchEvent(new CustomEvent('lz-gallery-change'));
     applyTheme(c0.pal, c0.palCustom);
     html.classList.toggle('lz-photo-color', TPL === 'moderno' && c0.photoBW === false);
     html.classList.toggle('lz-no-photos', TPL === 'glicina' && c0.photosOn === false);
