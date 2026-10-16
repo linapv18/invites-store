@@ -107,11 +107,11 @@ h1:focus:not(:focus-visible){outline:0}
 .seal{width:56px;height:56px;flex:none;border-radius:50%;border:2px solid var(--clay);color:var(--clay-ink);display:grid;place-items:center;font:italic 16px 'Playfair Display';rotate:-12deg;filter:url(#rough);overflow:hidden}
 .seal .lz-seal{font-size:15px}
 /* El talón se desprende y el pase sube; todo en una sola etapa */
-/* Rotura: el talón gira desde un extremo y la separación avanza a lo largo de la perforación; se aleja con una leve flexión y solo al final se desvanece */
+/* Rotura: el talón gira desde un extremo y la separación avanza a lo largo de la perforación; se aleja con una leve flexión, opaco hasta el 88 % y solo entonces se desvanece (~120 ms) */
 .torn-pass .stub{animation:tearV 1s cubic-bezier(.45,.05,.4,1) forwards}
 .torn-pass .pass-body{animation:lift 1s cubic-bezier(.45,.05,.4,1) forwards}
-@keyframes tearV{0%{transform:none}38%{transform:rotate(4deg)}72%{transform:translate(6px,30px) rotate(9deg) rotateX(16deg);opacity:1}100%{transform:translate(12px,64px) rotate(13deg) rotateX(24deg);opacity:0}}
-@keyframes tearH{0%{transform:none}38%{transform:rotate(-4deg)}72%{transform:translate(30px,6px) rotate(-9deg) rotateY(-16deg);opacity:1}100%{transform:translate(64px,12px) rotate(-13deg) rotateY(-24deg);opacity:0}}
+@keyframes tearV{0%{transform:none}38%{transform:rotate(4deg)}75%{transform:translate(6px,30px) rotate(9deg) rotateX(14deg)}88%{transform:translate(9px,44px) rotate(11deg) rotateX(18deg);opacity:1}100%{transform:translate(11px,56px) rotate(12.5deg) rotateX(20deg);opacity:0}}
+@keyframes tearH{0%{transform:none}38%{transform:rotate(-4deg)}75%{transform:translate(30px,6px) rotate(-9deg) rotateY(-14deg)}88%{transform:translate(44px,9px) rotate(-11deg) rotateY(-18deg);opacity:1}100%{transform:translate(56px,11px) rotate(-12.5deg) rotateY(-20deg);opacity:0}}
 @keyframes lift{0%{transform:none}40%{transform:translateY(-2px) rotate(-.4deg)}100%{transform:translateY(-8px) rotate(-.8deg)}}
 .march{animation:march .9s linear infinite}
 @keyframes march{to{stroke-dashoffset:-7}}
@@ -438,7 +438,7 @@ footer .pf{font-size:clamp(28px,7vw,36px);font-style:italic;overflow-wrap:anywhe
       events: [['1:00 p. m.', 'Ceremonia civil', 'Jardín Etnobotánico', 'Reforma s/n, Centro'], ['2:30 p. m.', 'Comida familiar', 'Casa Oaxaca', 'García Vigil 407, Centro'], ['8:00 p. m.', 'Fiesta', 'Hacienda Los Laureles', 'Hidalgo 21, San Felipe del Agua']],
       wear: 'Qué ponerse', dressT: 'Código de <em>vestimenta</em>', dressCode: 'Formal', dressNotes: 'Telas frescas: en marzo Oaxaca es cálida de día y fresca de noche.', avoid: 'Evita', dressColors: 'blanco y marfil',
       fromAway: 'Si vienen de fuera', travel: 'Viaje y <em>alojamiento</em>', travelIntro: 'Si vienen de fuera, aquí tienen lo necesario para organizar su viaje.',
-      stay: 'Alojamiento', hotel: 'Hotel Casa Antigua', hotelAddress: 'Calle Macedonio Alcalá 304, Centro', code: 'Código de tarifa ·', hotelCode: 'BODA-AL', hotelNotes: 'Tarifa válida hasta el 1 de febrero.', book: 'Reservar en el hotel ↗', bookDemo: 'Enlace de reserva pendiente · demo',
+      stay: 'Alojamiento', hotel: 'Hotel Casa Antigua', hotelAddress: 'Calle Macedonio Alcalá 304, Centro', code: 'Código de tarifa ·', hotelCode: 'BODA-AL', hotelNotes: 'Tarifa válida hasta el 1 de febrero.', book: 'Reservar en el hotel <svg width="1em" height="1em" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" style="vertical-align:-.15em;flex:none"><path d="M5 11 11 5M6 5h5v5"/></svg>', bookDemo: 'Enlace de reserva pendiente · demo',
       getThere: 'Cómo llegar', getThereT: 'Aeropuerto y transporte', airportL: 'Aeropuerto:', airport: 'Aeropuerto Internacional de Oaxaca (OAX), a 20 minutos del centro.', transportL: 'Transporte:', transport: 'Habrá camionetas del hotel a la fiesta y de regreso.',
       guide: 'Guía de la ciudad', guideT: 'Qué hacer', foodL: 'Comer:', food: 'Levadura de Olla, Casa Oaxaca y los mercados.', cultureL: 'Cultura:', culture: 'Santo Domingo y el Museo Textil.', plansL: 'Planes:', plans: 'Hierve el Agua y Monte Albán.',
       quote: 'El mejor viaje es el que hacemos juntos. Queremos que ustedes estén en este.', quoteAuthor: 'Ana y León',
@@ -450,9 +450,9 @@ footer .pf{font-size:clamp(28px,7vw,36px);font-style:italic;overflow-wrap:anywhe
       yes: 'Asistirá', no: 'No asistirá', change: 'Cambiar', changeOf: 'Cambiar la respuesta de', dietK: 'Restricciones:', noteK: 'Mensaje:',
       thanks: 'Check-in listo', edit: 'Editar respuesta', demoNote: 'Demostración: esta respuesta no se envía y se reinicia al recargar.',
       will: function (y, n) { return y === n ? 'Asistirán las ' + n + ' personas. ¡Buen viaje!' : y ? 'Asistirán ' + y + ' de ' + n + ' personas. ¡Buen viaje!' : 'Gracias por avisarnos. Los extrañaremos.'; },
-      rsvpStyles: { voy: { yes: 'Voy', no: 'No voy', yesShort: 'Va', noShort: 'No va' }, texto: { yes: 'Asistirá', no: 'No asistirá', yesShort: 'Asiste', noShort: 'No asiste' }, sino: { yes: 'Sí', no: 'No', yesShort: 'Sí', noShort: 'No' }, elegante: { yes: 'Con mucho gusto', no: 'Esta vez no podrá', yesShort: 'Con gusto', noShort: 'No podrá' }, iconos: { yes: '✓', no: '✕', yesShort: 'Asiste', noShort: 'No asiste' } },
-      fnav: 'Enlaces de la invitación', fSched: 'Itinerario', fMap: 'Ubicación ↗', fRsvp: 'Confirmar asistencia', qnav: 'Accesos rápidos',
-      footDate: '14.03.2027', panel: 'Panel de novios', store: 'Volver a la tienda', storeUrl: '/#disenos', minimize: 'Minimizar', swipe: 'Desliza para ver más →'
+      rsvpStyles: { voy: { yes: 'Voy', no: 'No voy', yesShort: 'Va', noShort: 'No va' }, texto: { yes: 'Asistirá', no: 'No asistirá', yesShort: 'Asiste', noShort: 'No asiste' }, sino: { yes: 'Sí', no: 'No', yesShort: 'Sí', noShort: 'No' }, elegante: { yes: 'Con mucho gusto', no: 'Esta vez no podrá', yesShort: 'Con gusto', noShort: 'No podrá' }, iconos: { yes: '', no: '', yesShort: 'Asiste', noShort: 'No asiste' } },
+      fnav: 'Enlaces de la invitación', fSched: 'Itinerario', fMap: 'Ubicación <svg width="1em" height="1em" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" style="vertical-align:-.15em;flex:none"><path d="M5 11 11 5M6 5h5v5"/></svg>', fRsvp: 'Confirmar asistencia', qnav: 'Accesos rápidos',
+      footDate: '14.03.2027', panel: 'Panel de novios', store: 'Volver a la tienda', storeUrl: '/#disenos', minimize: 'Minimizar', swipe: 'Desliza para ver más'
     },
     en: {
       envIntro: 'An invitation to an unforgettable day', envClosing: 'With all our love', openAria: 'Invitation as a boarding pass',
@@ -468,7 +468,7 @@ footer .pf{font-size:clamp(28px,7vw,36px);font-style:italic;overflow-wrap:anywhe
       events: [['1:00 PM', 'Civil ceremony', 'Ethnobotanical Garden', 'Reforma s/n, Centro'], ['2:30 PM', 'Family lunch', 'Casa Oaxaca', 'García Vigil 407, Centro'], ['8:00 PM', 'Party', 'Hacienda Los Laureles', 'Hidalgo 21, San Felipe del Agua']],
       wear: 'What to wear', dressT: 'Dress <em>code</em>', dressCode: 'Formal', dressNotes: 'Light fabrics: in March Oaxaca is warm by day and cool at night.', avoid: 'Avoid', dressColors: 'white and ivory',
       fromAway: 'If you’re traveling', travel: 'Travel and <em>stay</em>', travelIntro: 'If you’re coming from out of town, here’s what you need to plan your trip.',
-      stay: 'Where to stay', hotel: 'Hotel Casa Antigua', hotelAddress: 'Calle Macedonio Alcalá 304, Centro', code: 'Rate code ·', hotelCode: 'BODA-AL', hotelNotes: 'Rate valid until February 1.', book: 'Book the hotel ↗', bookDemo: 'Booking link pending · demo',
+      stay: 'Where to stay', hotel: 'Hotel Casa Antigua', hotelAddress: 'Calle Macedonio Alcalá 304, Centro', code: 'Rate code ·', hotelCode: 'BODA-AL', hotelNotes: 'Rate valid until February 1.', book: 'Book the hotel <svg width="1em" height="1em" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" style="vertical-align:-.15em;flex:none"><path d="M5 11 11 5M6 5h5v5"/></svg>', bookDemo: 'Booking link pending · demo',
       getThere: 'Getting there', getThereT: 'Airport and transport', airportL: 'Airport:', airport: 'Oaxaca International Airport (OAX), 20 minutes from downtown.', transportL: 'Transport:', transport: 'Shuttles will run from the hotel to the party and back.',
       guide: 'City guide', guideT: 'Things to do', foodL: 'Eat:', food: 'Levadura de Olla, Casa Oaxaca and the markets.', cultureL: 'Culture:', culture: 'Santo Domingo and the Textile Museum.', plansL: 'Plans:', plans: 'Hierve el Agua and Monte Albán.',
       quote: 'The best journey is the one we take together. We want you on this one.', quoteAuthor: 'Anna and Leo',
@@ -480,9 +480,9 @@ footer .pf{font-size:clamp(28px,7vw,36px);font-style:italic;overflow-wrap:anywhe
       yes: 'Will attend', no: 'Won’t attend', change: 'Change', changeOf: 'Change the answer for', dietK: 'Restrictions:', noteK: 'Message:',
       thanks: 'You’re checked in', edit: 'Edit answer', demoNote: 'Demo: this answer isn’t sent and resets when you reload.',
       will: function (y, n) { return y === n ? 'All ' + n + ' people will attend. Safe travels!' : y ? y + ' of ' + n + ' people will attend. Safe travels!' : 'Thanks for letting us know. We’ll miss you.'; },
-      rsvpStyles: { voy: { yes: 'Going', no: 'Not going', yesShort: 'Going', noShort: 'Not going' }, texto: { yes: 'Will attend', no: 'Won’t attend', yesShort: 'Attending', noShort: 'Not attending' }, sino: { yes: 'Yes', no: 'No', yesShort: 'Yes', noShort: 'No' }, elegante: { yes: 'Gladly', no: 'Sadly can’t make it', yesShort: 'Gladly', noShort: 'Can’t make it' }, iconos: { yes: '✓', no: '✕', yesShort: 'Attending', noShort: 'Not attending' } },
-      fnav: 'Invitation links', fSched: 'Schedule', fMap: 'Location ↗', fRsvp: 'RSVP', qnav: 'Quick links',
-      footDate: '03.14.2027', panel: 'Couple’s dashboard', store: 'Back to the store', storeUrl: '/en/#designs', minimize: 'Minimize', swipe: 'Swipe to see more →'
+      rsvpStyles: { voy: { yes: 'Going', no: 'Not going', yesShort: 'Going', noShort: 'Not going' }, texto: { yes: 'Will attend', no: 'Won’t attend', yesShort: 'Attending', noShort: 'Not attending' }, sino: { yes: 'Yes', no: 'No', yesShort: 'Yes', noShort: 'No' }, elegante: { yes: 'Gladly', no: 'Sadly can’t make it', yesShort: 'Gladly', noShort: 'Can’t make it' }, iconos: { yes: '', no: '', yesShort: 'Attending', noShort: 'Not attending' } },
+      fnav: 'Invitation links', fSched: 'Schedule', fMap: 'Location <svg width="1em" height="1em" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" style="vertical-align:-.15em;flex:none"><path d="M5 11 11 5M6 5h5v5"/></svg>', fRsvp: 'RSVP', qnav: 'Quick links',
+      footDate: '03.14.2027', panel: 'Couple’s dashboard', store: 'Back to the store', storeUrl: '/en/#designs', minimize: 'Minimize', swipe: 'Swipe to see more'
     }
   }[LANG];
   window.CostaS = S;
@@ -526,7 +526,7 @@ footer .pf{font-size:clamp(28px,7vw,36px);font-style:italic;overflow-wrap:anywhe
         '</div></div>' +
         '<div class="stub" aria-hidden="true"><div class="barcode"></div>' + postmark + '<div class="seal" data-lz-seal>A&amp;L</div></div>' +
       '</div>' +
-      '<div class="op-acts"><button type="button" class="btn" id="board">' + S.board + ' →</button></div>' +
+      '<div class="op-acts"><button type="button" class="btn" id="board">' + S.board + ' <svg width="1em" height="1em" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" style="vertical-align:-.15em;flex:none"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button></div>' +
       '<p class="hint" data-lz="envClosing" data-lz-keep>' + S.envClosing + '</p>' +
     '</div>' +
   '</div>' +
@@ -548,7 +548,7 @@ footer .pf{font-size:clamp(28px,7vw,36px);font-style:italic;overflow-wrap:anywhe
     '<section class="sec paper" id="historia" data-lz-anchor="historia" style="padding-top:40px"><div class="in-w">' +
       '<div class="story-txt"><p class="eb">' + S.story + '</p><h2 data-lz="storyTitle">' + S.storyTitle + '</h2><p data-lz="story">' + S.storyTxt + '</p></div>' +
       '<div class="gal" id="gal"><div class="cards-post" id="posts" data-lz-list="gallery" tabindex="0" role="region" aria-label="' + S.photos + '">' + photos.map(function (g) { return '<figure class="post" data-lz-item data-rv><div><img class="ph-img" data-lz-f="img" src="' + g + '" alt="" loading="lazy"></div><figcaption class="cap"></figcaption></figure>'; }).join('') + '</div>' +
-        '<div class="gal-ctl"><button type="button" id="galPrev" aria-label="' + S.prev + '">‹</button><output id="galN" aria-live="polite">1 / 4</output><button type="button" id="galNext" aria-label="' + S.next + '">›</button></div></div>' +
+        '<div class="gal-ctl"><button type="button" id="galPrev" aria-label="' + S.prev + '"><svg width="1em" height="1em" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" style="vertical-align:-.15em;flex:none"><path d="M10 3.5 5.5 8l4.5 4.5"/></svg></button><output id="galN" aria-live="polite">1 / 4</output><button type="button" id="galNext" aria-label="' + S.next + '"><svg width="1em" height="1em" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" style="vertical-align:-.15em;flex:none"><path d="M6 3.5 10.5 8 6 12.5"/></svg></button></div></div>' +
     '</div></section>' +
 
     '<section class="sec board edge" id="itinerario" data-lz-anchor="itinerario musica"><div class="in-w">' +
@@ -557,7 +557,7 @@ footer .pf{font-size:clamp(28px,7vw,36px);font-style:italic;overflow-wrap:anywhe
       '<div class="flaps" aria-hidden="true">' + S.units.map(function (u, i) { return '<div><b data-cd="' + 'dhm'[i] + '">--</b><span>' + u + '</span></div>'; }).join('') + '</div>' +
       '<p class="sr" id="cdSr"></p><p class="cd-note" data-lz="countdownNote">' + S.cdNote + '</p>' +
       '<div class="sched-h"><p class="eb">' + S.schedK + ' · <span data-lz-date="' + S.dayPat + '">' + S.dayTxt + '</span></p></div>' +
-      '<div class="sched" data-lz-list="events">' + S.events.map(function (e) { return '<div class="ev" data-lz-item data-rv><p class="tm" data-lz-f="time">' + e[0] + '</p><div><h3 data-lz-f="name">' + e[1] + '</h3><p class="pl" data-lz-f="place">' + e[2] + '</p><p class="ad" data-lz-f="address">' + e[3] + '</p></div><a class="map" data-lz-f="map" href="' + maps(e[2]) + '" target="_blank" rel="noopener">' + S.map + '<span class="sr"> · <span data-lz-f="place">' + e[2] + '</span></span> ↗</a></div>'; }).join('') + '</div>' +
+      '<div class="sched" data-lz-list="events">' + S.events.map(function (e) { return '<div class="ev" data-lz-item data-rv><p class="tm" data-lz-f="time">' + e[0] + '</p><div><h3 data-lz-f="name">' + e[1] + '</h3><p class="pl" data-lz-f="place">' + e[2] + '</p><p class="ad" data-lz-f="address">' + e[3] + '</p></div><a class="map" data-lz-f="map" href="' + maps(e[2]) + '" target="_blank" rel="noopener">' + S.map + '<span class="sr"> · <span data-lz-f="place">' + e[2] + '</span></span> <svg width="1em" height="1em" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" style="vertical-align:-.15em;flex:none"><path d="M5 11 11 5M6 5h5v5"/></svg></a></div>'; }).join('') + '</div>' +
     '</div></section>' +
 
     '<section class="sec paper edge" data-lz-group="dressCode dressNotes dressColors"><div class="in-w">' +
@@ -602,9 +602,9 @@ footer .pf{font-size:clamp(28px,7vw,36px);font-style:italic;overflow-wrap:anywhe
   '</main>';
 
   document.getElementById('demoBar').innerHTML =
-    '<div class="db-sheet" id="dbSheet" role="group" aria-label="' + S.explore + '" hidden><div class="db-head"><b>' + S.explore + '</b><button type="button" class="db-min" id="dbMin" aria-label="' + S.minimize + '">–</button></div>' +
+    '<div class="db-sheet" id="dbSheet" role="group" aria-label="' + S.explore + '" hidden><div class="db-head"><b>' + S.explore + '</b><button type="button" class="db-min" id="dbMin" aria-label="' + S.minimize + '"><svg width="1em" height="1em" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" style="vertical-align:-.15em;flex:none"><path d="M4 8h8"/></svg></button></div>' +
       '<div class="db-colors" id="dbColors"></div>' +
-      '<button type="button" class="db-btn" data-open-panel>' + S.panel + ' <span aria-hidden="true">→</span></button><a class="db-btn" href="' + S.storeUrl + '">' + S.store + ' <span aria-hidden="true">↗</span></a></div>';
+      '<button type="button" class="db-btn" data-open-panel>' + S.panel + ' <svg width="1em" height="1em" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" style="vertical-align:-.15em;flex:none"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button><a class="db-btn" href="' + S.storeUrl + '">' + S.store + ' <svg width="1em" height="1em" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" style="vertical-align:-.15em;flex:none"><path d="M5 11 11 5M6 5h5v5"/></svg></a></div>';
 })();
 </script>
 <script src="/demo/shared/content.js"></script>
@@ -618,7 +618,7 @@ footer .pf{font-size:clamp(28px,7vw,36px);font-style:italic;overflow-wrap:anywhe
   LazoPanel.init({ mono: 'A&L', couple: S.n1 + ' ' + S.y + ' ' + S.n2, link: location.pathname, guest: S.guest, people: PEOPLE });
   LazoMusic.init({ src: '/assets/musica/demo.mp3' });
 
-  // Código de aeropuerto y matasellos a partir de la ciudad que escriben los novios ("Oaxaca, México" → OAX).
+  // Código de aeropuerto y matasellos a partir de la ciudad que escriben los novios ("Oaxaca, México" da «OAX»).
   var citySrc = document.querySelector('.route [data-lz="city"]');
   function cityBits() {
     var c = (citySrc.textContent || '').trim(), first = c.split(',')[0].trim();
@@ -709,15 +709,19 @@ footer .pf{font-size:clamp(28px,7vw,36px);font-style:italic;overflow-wrap:anywhe
     var body = pass.querySelector('.pass-body'), stub = pass.querySelector('.stub'), row = getComputedStyle(pass).flexDirection === 'row';
     var bw = body.offsetWidth, bh = body.offsetHeight, sw = stub.offsetWidth, sh = stub.offsetHeight;
     if (!bw || !sw) return;
-    var L = row ? bh : bw, R = 10, r = 1.7, gap = 8, rad = 16, seed = 17;
-    var rnd = function () { return (seed = (seed * 9301 + 49297) % 233280) / 233280; }, p1 = rnd() * 6, p2 = rnd() * 6, holes = [];
-    var n = Math.max(0, Math.floor((L - 2 * R - 8) / gap) + 1), first = (L - (n - 1) * gap) / 2;
-    for (var i = 0; i < n; i++) holes.push(first + i * gap);
+    var L = row ? bh : bw, R = 10, rad = 16, seed = 17;
+    var rnd = function () { return (seed = (seed * 9301 + 49297) % 233280) / 233280; }, p1 = rnd() * 6, holes = [];
+    // Perforación fina y algo irregular: agujeros pequeños (Ø 1,6–2,6 px) cada 7–11 px, para que el borde no parezca dentado.
+    for (var hu = R + 5 + rnd() * 3; hu < L - R - 5; hu += 7 + rnd() * 4) holes.push([hu, .8 + rnd() * .5]);
+    // Fibras del papel entre agujeros: ruido suave de baja amplitud, distinto en cada tramo.
+    var NS = 1.7, nv = []; for (var q = 0; q <= L / NS + 2; q++) nv.push(rnd() * 2 - 1);
+    function noise(u) { var x = u / NS, i0 = Math.floor(x), t = x - i0; t = (1 - Math.cos(t * Math.PI)) / 2; return nv[i0] + (nv[i0 + 1] - nv[i0]) * t; }
     function v(u, side) {
       if (u < R) return side * Math.sqrt(R * R - u * u);
       if (u > L - R) return side * Math.sqrt(Math.max(0, R * R - (L - u) * (L - u)));
-      for (var k = 0; k < holes.length; k++) { var d = u - holes[k]; if (Math.abs(d) < r) return side * Math.sqrt(r * r - d * d); }
-      return .5 * Math.sin(u * .9 + p1) + .35 * Math.sin(u * 2.6 + p2);
+      var fiber = .5 * noise(u) + .25 * Math.sin(u * .23 + p1);
+      for (var k = 0; k < holes.length; k++) { var d = u - holes[k][0], r = holes[k][1]; if (Math.abs(d) < r) return side * Math.sqrt(r * r - d * d) * .85 + fiber * .3; }
+      return fiber;
     }
     var U = []; for (var u = 0; u < L; u += .5) U.push(u); U.push(L);
     var f = function (x) { return (+x).toFixed(2); }, bp, sp;
@@ -797,7 +801,7 @@ footer .pf{font-size:clamp(28px,7vw,36px);font-style:italic;overflow-wrap:anywhe
     var more = el.scrollWidth - el.clientWidth > 4, r = more && el.scrollLeft < el.scrollWidth - el.clientWidth - 4, l = more && el.scrollLeft > 4;
     el.classList.toggle('is-more-r', r); el.classList.toggle('is-more-l', l);
     var n = el.nextElementSibling, has = n && n.classList.contains('lz-swipe');
-    if (more && !has) { var p = document.createElement('p'); p.className = 'lz-swipe'; p.textContent = S.swipe; p.setAttribute('aria-hidden', 'true'); el.after(p); }
+    if (more && !has) { var p = document.createElement('p'); p.className = 'lz-swipe'; p.textContent = S.swipe + ' '; p.insertAdjacentHTML('beforeend', '<svg width="1em" height="1em" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" style="vertical-align:-.15em;flex:none"><path d="M3 8h10M9 4l4 4-4 4"/></svg>'); p.setAttribute('aria-hidden', 'true'); el.after(p); }
     else if (!more && has) n.remove();
   }
   function cues() { document.querySelectorAll('.lz-panel .lz-cards, .lz-panel .lz-chips').forEach(cue); }
@@ -826,7 +830,7 @@ footer .pf{font-size:clamp(28px,7vw,36px);font-style:italic;overflow-wrap:anywhe
       var l = document.createElement('label'); l.className = 'opt ' + o[1];
       var r = document.createElement('input'); r.type = 'radio'; r.name = 'p' + i; r.value = o[0] ? '1' : '0';
       r.addEventListener('change', function () { att[i] = o[0]; f.classList.remove('invalid'); f.removeAttribute('aria-invalid'); $('p' + i + 'e').hidden = true; summarizeErr(false); });
-      var ic = document.createElement('span'); ic.className = 'ic'; ic.setAttribute('aria-hidden', 'true'); ic.textContent = o[0] ? '✓' : '✕';
+      var ic = document.createElement('span'); ic.className = 'ic'; ic.setAttribute('aria-hidden', 'true'); ic.innerHTML = o[0] ? '<svg width="1em" height="1em" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" style="vertical-align:-.15em;flex:none"><path d="M3.5 8.5l3 3 6-7"/></svg>' : '<svg width="1em" height="1em" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" style="vertical-align:-.15em;flex:none"><path d="M4 4l8 8M12 4l-8 8"/></svg>';
       var t = document.createElement('span'), lb = opt(o[0]); t.textContent = style === 'iconos' ? lb.aria : lb.label; if (style === 'iconos') t.className = 'sr';
       l.appendChild(r); l.appendChild(ic); l.appendChild(t); g.appendChild(l);
     });
