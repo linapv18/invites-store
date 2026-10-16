@@ -2,8 +2,7 @@
 /* Plantilla Aurelia. El HTML se arma aquí ANTES de cargar demo/shared/content.js, para que el editor
    encuentre las marcas data-lz… al llenar el contenido. Los nombres que aparecen letra por letra
    (data-split), el texto que gira en el sello y la leyenda vertical de la foto se copian de elementos
-   ocultos con data-lz, que son los que llena el editor. Los números romanos de las secciones y de las
-   preguntas son contadores de CSS: si una sección no se muestra, la numeración sigue sin saltos. */
+   ocultos con data-lz, que son los que llena el editor. Los encabezados y las preguntas no llevan numeración. */
 (function () {
   var LANG = (document.documentElement.lang || 'es').slice(0, 2) === 'en' ? 'en' : 'es';
   var S = {
@@ -58,13 +57,13 @@
   var spl = function (t, k) { return Array.from(t).map(function (ch, i) { return '<b style="--i:' + (i + (k || 0)) + '">' + (ch === ' ' ? '&nbsp;' : esc(ch)) + '</b>'; }).join(''); };
   window.AureliaSplit = spl;
   var ICONS = [
-    '<svg viewBox="0 0 34 34" fill="none" stroke="currentColor" stroke-width="1"><circle cx="11" cy="17" r="6"/><circle cx="11" cy="17" r="2.4"/><path d="M17 17h14M27 17v5M23 17v4"/></svg>',
-    '<svg viewBox="0 0 34 34" fill="none" stroke="currentColor" stroke-width="1"><path d="M4 20 27 13q5-1 4 3L8 24Z"/><path d="M14 17 9 6h4l9 9M15 22l-3 8h4l6-9"/></svg>',
-    '<svg viewBox="0 0 34 34" fill="none" stroke="currentColor" stroke-width="1"><path d="M17 31s10-9.5 10-17A10 10 0 0 0 7 14c0 7.5 10 17 10 17Z"/><circle cx="17" cy="14" r="3.5"/></svg>'
+    '<svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.15" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 34V13h26v21M5 34h30M13 13V7h14v6M13 7V4h14v3"/><path d="M13 18h3v3h-3zm11 0h3v3h-3zm-11 7h3v3h-3zm11 0h3v3h-3zM18 34v-8h4v8"/><path d="M18 9h4"/></svg>',
+    '<svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.15" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 4c1.2 0 2 1.8 2 4v8l13 8v3l-13-4v7l5 4v2l-7-2-7 2v-2l5-4v-7L5 27v-3l13-8V8c0-2.2.8-4 2-4Z"/><path d="M10 20v-3m20 3v-3M18 10h4"/></svg>',
+    '<svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.15" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 10 10-4 12 4 10-4v26l-10 4-12-4-10 4V10Z"/><path d="M14 6v26m12-4v8M8 17l3-1m-3 7 3-1m7 6 4 1"/><path d="M30 15c0 4-6 10-6 10s-6-6-6-10a6 6 0 0 1 12 0Z"/><circle cx="24" cy="15" r="2"/></svg>'
   ];
   var maps = function (q) { return 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(q + ', Oaxaca'); };
   var photos = ['/assets/fotos/beso.jpg', '/assets/fotos/escalera.jpg', '/assets/fotos/muro.jpg'];
-  var sh = function (eb, title, anchorAttr) { return '<div class="sh" data-rv><span class="idx"></span><p class="eb"' + (anchorAttr || '') + '>' + eb + '</p><h2>' + title + '</h2></div>'; };
+  var sh = function (eb, title, anchorAttr) { return '<div class="sh" data-rv><p class="eb"' + (anchorAttr || '') + '>' + eb + '</p><h2>' + title + '</h2></div>'; };
   var mono = '<span data-lz-mono>A<i>—</i>L</span>';
 
   document.getElementById('app').innerHTML =
@@ -126,7 +125,7 @@
       '</div>' +
     '</div></section>' +
 
-    '<section class="sec s-q" data-lz-group="quote"><div class="in-w" data-rv><span class="qm foil">“</span><blockquote data-lz="quote">' + S.quote + '</blockquote><p class="eb" data-lz="quoteAuthor">' + S.quoteAuthor + '</p></div></section>' +
+    '<section class="sec s-q" data-lz-group="quote"><div class="in-w" data-rv><span class="qm" aria-hidden="true"><svg viewBox="0 0 64 48" fill="currentColor"><path d="M27 5C13 11 7 20 7 32c0 8 4 12 10 12 6 0 10-4 10-10 0-6-4-10-10-10h-2c1-7 5-12 14-17L27 5Zm30 0C43 11 37 20 37 32c0 8 4 12 10 12 6 0 10-4 10-10 0-6-4-10-10-10h-2c1-7 5-12 14-17L57 5Z"/></svg></span><blockquote data-lz="quote">' + S.quote + '</blockquote><p class="eb" data-lz="quoteAuthor">' + S.quoteAuthor + '</p></div></section>' +
 
     '<section class="sec" id="faq" data-lz-anchor="faq" data-lz-hide-empty><div class="in-w">' + sh(S.faqK, S.faqT) +
       '<div class="faq" data-lz-list="faqs">' + S.faqs.map(function (f) { return '<details data-lz-item><summary><span data-lz-f="q">' + f[0] + '</span></summary><p data-lz-f="a">' + f[1] + '</p></details>'; }).join('') + '</div>' +

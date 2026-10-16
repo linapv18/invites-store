@@ -83,11 +83,9 @@ a:focus-visible,button:focus-visible,summary:focus-visible,textarea:focus-visibl
 .hero h1{font:italic 300 clamp(66px,9vw,80px)/.95 Fraunces,serif}
 .hero h1 small{display:block;font:italic 300 24px Fraunces;color:var(--sage);margin:4px 0}
 .hero .msg{font:italic 300 20px/1.5 Fraunces,serif;margin-top:16px}
-main{counter-reset:sec}
+
 .sec{padding:60px 22px;text-align:center}
-.sh{margin-bottom:20px;counter-increment:sec}
-.sh .idx{display:block;font:italic 300 16px Fraunces;color:var(--sage);margin-bottom:10px}
-.sh .idx::before{content:"No. " counter(sec,decimal-leading-zero)}
+.sh{margin-bottom:20px;}
 .sh h2{font:300 clamp(34px,5vw,42px)/1.1 Fraunces,serif;margin-top:10px}
 .lead{font-size:15px;line-height:1.85}
 .gal{position:relative;height:270px;max-width:420px;margin:26px auto 0}
@@ -226,7 +224,7 @@ footer{padding:64px 24px 120px;text-align:center}
   var PRESSED = function (w, style) { return '<svg class="pressed" viewBox="0 0 120 150" width="' + w + '" style="' + style + '" aria-hidden="true"><g filter="url(#wc)"><path d="M14 146C36 112 54 78 92 26" fill="none" stroke="#8C8467" stroke-width="1.4"/><path d="M50 92C64 86 74 76 80 62" fill="none" stroke="#8C8467" stroke-width="1"/>' + pleaf(24, 128, 22, -120, '#9AA48A') + pleaf(34, 112, 24, -20, '#A9B297') + pleaf(46, 96, 20, -130, '#8F9B7E') + pleaf(60, 72, 20, -30, '#A9B297') + pleaf(70, 58, 18, -140, '#9AA48A') + pflower(92, 24, 20, '#C9A39A') + pflower(80, 60, 13, '#D8C29A') + pflower(104, 52, 9, '#C9A39A') + '</g></svg>'; };
   var maps = function (q) { return 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(q + ', Oaxaca'); };
   var photos = ['/assets/fotos/beso.jpg', '/assets/fotos/escalera.jpg', '/assets/fotos/muro.jpg'];
-  var sh = function (eb, title, attr) { return '<div class="sh" data-rv><span class="idx"></span><p class="eb"' + (attr || '') + '>' + eb + '</p><h2>' + title + '</h2></div>'; };
+  var sh = function (eb, title, attr) { return '<div class="sh" data-rv><p class="eb"' + (attr || '') + '>' + eb + '</p><h2>' + title + '</h2></div>'; };
   var N = function (k) { return '<span data-lz="' + k + '">' + S[k] + '</span>'; };
   var dots = function (mid) { return '<div class="dots"><span data-lz-date="{d}">14</span><i></i><span data-lz-date="' + (mid ? '{MU}' : '{mm}') + '">' + (mid ? S.MU : '03') + '</span><i></i><span data-lz-date="{Y}">2027</span></div>'; };
 

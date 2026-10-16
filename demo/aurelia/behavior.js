@@ -7,7 +7,7 @@
   LazoPanel.init({ mono: 'A&L', couple: S.n1 + ' ' + S.y + ' ' + S.n2, link: location.pathname, guest: S.guest, people: PEOPLE });
   LazoMusic.init({ src: '/assets/musica/demo.mp3' });
 
-  // Nombres letra por letra, texto que gira en el sello y leyenda de la foto (ciudad y año en romanos).
+  // Editable names, the stationary typographic seal and the photograph caption.
   function roman(n) { var r = '', m = [[1000, 'M'], [900, 'CM'], [500, 'D'], [400, 'CD'], [100, 'C'], [90, 'XC'], [50, 'L'], [40, 'XL'], [10, 'X'], [9, 'IX'], [5, 'V'], [4, 'IV'], [1, 'I']]; m.forEach(function (p) { while (n >= p[0]) { r += p[1]; n -= p[0]; } }); return r; }
   function copy() {
     document.querySelectorAll('[data-split]').forEach(function (el) { var t = $(el.dataset.split).textContent.trim(); if (el._t !== t) { el._t = t; el.innerHTML = window.AureliaSplit(t, +(el.dataset.off || 0)); } });

@@ -91,11 +91,9 @@ a:focus-visible,button:focus-visible,summary:focus-visible,textarea:focus-visibl
 .dt{display:flex;align-items:center;justify-content:center;gap:14px;margin:22px 0 10px;font:400 14px Manrope;letter-spacing:.34em}
 .dt i{flex:0 1 54px;height:1px;background:var(--sil)}
 .hero .msg{font:300 16px/1.7 Manrope;color:var(--soft);margin-top:16px}
-main{counter-reset:sec}
+
 .sec{padding:72px 26px;border-top:1px solid var(--line);position:relative}
-.sh{margin-bottom:22px;counter-increment:sec}
-.sh .idx{display:block;font:400 12px Manrope;letter-spacing:.3em;color:var(--sil);margin-bottom:14px}
-.sh .idx::before{content:counter(sec,decimal-leading-zero) " —"}
+.sh{margin-bottom:22px;}
 .sh h2{font:400 clamp(34px,5vw,42px)/1.1 Prata,serif;margin-top:12px}
 .lead{font-size:14.5px;line-height:1.95;color:var(--soft)}
 .gal{display:flex;gap:10px;overflow-x:auto;margin:28px -26px 0;padding:0 26px 8px;scrollbar-width:none}
@@ -138,13 +136,12 @@ main{counter-reset:sec}
 .s-q{text-align:center;padding:90px 30px}
 .s-q blockquote{margin:0 0 18px;font:400 26px/1.45 Prata,serif}
 .qm{display:block;font:400 90px/.5 Prata,serif;height:44px;color:var(--sil)}
-.faq{border-top:1px solid var(--line);counter-reset:q}
-.faq details{border-bottom:1px solid var(--line);counter-increment:q}
+.faq{border-top:1px solid var(--line);}
+.faq details{border-bottom:1px solid var(--line);}
 .faq summary{display:flex;gap:14px;align-items:baseline;padding:18px 0;font:400 16px Prata,serif}
-.faq summary::before{content:counter(q,decimal-leading-zero);font:500 10px Manrope;letter-spacing:.2em;color:var(--muted);min-width:22px}
 .faq summary::after{content:"";flex:none;margin-left:auto;width:9px;height:9px;border-right:1px solid var(--sil);border-bottom:1px solid var(--sil);rotate:45deg;transition:rotate .3s}
 .faq details[open] summary::after{rotate:225deg}
-.faq p{font-size:14px;line-height:1.8;padding:0 0 18px 36px;color:var(--soft)}
+.faq p{font-size:14px;line-height:1.8;padding:0 0 18px 0;color:var(--soft)}
 .rcard{padding:46px 22px 36px;text-align:center;color:var(--cink);background-color:var(--card);background-image:var(--grain);background-blend-mode:multiply;outline:1px solid #1A1A1830;outline-offset:-10px}
 .rcard .eb{color:var(--cmuted)}
 .rcard h2{font:400 34px Prata,serif;margin:12px 0 4px}
@@ -240,7 +237,7 @@ footer{padding:72px 24px 120px;text-align:center;border-top:1px solid var(--line
   ];
   var maps = function (q) { return 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(q + ', Oaxaca'); };
   var photos = ['/assets/fotos/beso.jpg', '/assets/fotos/escalera.jpg', '/assets/fotos/muro.jpg'];
-  var sh = function (eb, title, attr) { return '<div class="sh" data-rv><span class="idx"></span><p class="eb"' + (attr || '') + '>' + eb + '</p><h2>' + title + '</h2></div>'; };
+  var sh = function (eb, title, attr) { return '<div class="sh" data-rv><p class="eb"' + (attr || '') + '>' + eb + '</p><h2>' + title + '</h2></div>'; };
   var names = function (id) { return '<h1 class="letters"' + (id ? ' id="' + id + '"' : '') + '><span data-split="srcN1">' + spl(S.n1) + '</span><em>' + S.y + '</em><span data-split="srcN2" data-off="4">' + spl(S.n2, 4) + '</span></h1>'; };
 
   document.getElementById('app').innerHTML =

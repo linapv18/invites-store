@@ -148,13 +148,12 @@ a:focus-visible,button:focus-visible,summary:focus-visible,textarea:focus-visibl
 .sec .tcards p{font-size:16px;line-height:1.65}
 .tcards b{font-weight:500}
 blockquote{margin:6px 0 10px;font:400 38px/1.2 'Great Vibes',cursive;color:var(--wine)}
-.faq{text-align:left;margin-top:16px;border-top:1px solid #B08D5755;counter-reset:q}
-.faq details{border-bottom:1px solid #B08D5755;counter-increment:q}
+.faq{text-align:left;margin-top:16px;border-top:1px solid #B08D5755;}
+.faq details{border-bottom:1px solid #B08D5755;}
 .faq summary{display:flex;gap:14px;align-items:baseline;padding:16px 0;font:italic 20px 'EB Garamond',serif}
-.faq summary::before{content:counter(q,upper-roman) ".";font:400 14px 'Bodoni Moda';font-style:normal;color:var(--gold);min-width:24px}
 .faq summary::after{content:"+";margin-left:auto;font:300 22px 'Bodoni Moda';font-style:normal;color:var(--gold);transition:rotate .3s}
 .faq details[open] summary::after{rotate:45deg}
-.sec .faq p{font-size:16px;padding:0 0 16px 38px}
+.sec .faq p{font-size:16px;padding:0 0 16px 0}
 .reply{position:relative;padding:42px 24px 32px;text-align:center;box-shadow:0 0 0 1px #B08D5766,0 20px 34px -22px #3a2c1a99}
 .reply .rsvp{font:400 42px 'Bodoni Moda',serif;letter-spacing:.12em}
 .wax{position:absolute;right:-8px;top:-14px;width:66px;height:66px;border-radius:47% 53% 50% 50%/52% 48% 52% 48%;background:radial-gradient(circle at 35% 30%,color-mix(in srgb,var(--wine),#fff 30%),var(--wine) 55%,color-mix(in srgb,var(--wine),#000 35%));box-shadow:0 4px 8px #0004,inset 0 0 0 5px #0000001a;display:grid;place-items:center;color:#F1DDD0;font:400 20px 'Bodoni Moda';rotate:12deg}
