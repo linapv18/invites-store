@@ -31,7 +31,7 @@
     var svg = box.querySelector(':scope > .gala-border');
     if (!svg) {
       svg = document.createElementNS(SVG_NS,'svg'); svg.classList.add('gala-border'); svg.setAttribute('aria-hidden','true');
-      for (var i=0;i<2;i++) { var path=document.createElementNS(SVG_NS,'path'); path.setAttribute('fill','none'); path.setAttribute('stroke','currentColor'); path.setAttribute('stroke-width',i ? '.6' : '1'); path.setAttribute('opacity',i ? '.32' : '.65'); svg.appendChild(path); }
+      for (var i=0;i<2;i++) { var path=document.createElementNS(SVG_NS,'path'); path.setAttribute('pathLength','1'); path.setAttribute('fill','none'); path.setAttribute('stroke','currentColor'); path.setAttribute('stroke-width',i ? '.6' : '1'); path.setAttribute('opacity',i ? '.32' : '.65'); svg.appendChild(path); }
       box.prepend(svg);
     }
     var w=box.clientWidth,h=box.clientHeight; if (!w || !h) return;
@@ -57,15 +57,23 @@
   ['srcN1', 'srcN2', 'srcIntro'].forEach(function (id) { new MutationObserver(copy).observe($(id), { childList: true, characterData: true, subtree: true }); });
 
   // Lo que aparece, se dibuja o se escribe al llegar a la pantalla (después de abrir la invitación).
-  var io = null;
-  function observe(root) { if (io) root.querySelectorAll('[data-rv]:not(.in), .fan:not(.in), .letters:not(.in)').forEach(function (el) { if (!el.closest('.opening')) io.observe(el); }); }
+  var io = null, ambientObserver = null;
+  function ambient(root) {
+    if (!ambientObserver) return;
+    root.querySelectorAll('section,footer').forEach(function(section){ambientObserver.observe(section);});
+  }
+  function observe(root) { if (io) root.querySelectorAll('[data-rv]:not(.in), .frame:not(.in), .fan:not(.in), .letters:not(.in)').forEach(function (el) { if (!el.closest('.opening')) io.observe(el); }); }
   function watch() {
     if (io) return;
-    if (!('IntersectionObserver' in window)) { document.querySelectorAll('#invite [data-rv], #invite .fan, #invite .letters').forEach(function (el) { el.classList.add('in'); }); return; }
+    if (!('IntersectionObserver' in window)) { document.querySelectorAll('#invite [data-rv], #invite .frame, #invite .fan, #invite .letters').forEach(function (el) { el.classList.add('in'); }); return; }
     io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }); }, { threshold: .18 });
+    if (!reduce.matches) {
+      ambientObserver = new IntersectionObserver(function(entries){entries.forEach(function(e){e.target.classList.toggle('gala-visible',e.isIntersecting);});},{threshold:0});
+      ambient(invite);
+    }
     observe(document);
   }
-  document.addEventListener('lz-render', function (e) { observe(e.target); });
+  document.addEventListener('lz-render', function (e) { observe(e.target); ambient(e.target); });
 
   // Satin light and a gentle suspended motion; opening never creates particles.
   var op = $('open'), medal = $('medal'), timer = null;

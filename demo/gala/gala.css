@@ -345,7 +345,7 @@ textarea{font-size:16px;line-height:1.7;min-height:86px;padding:12px;background:
  .hero h1.gala-long-name .amp{display:block;margin:8px 0}
 }
 
-/* The closed invitation moves as one crafted object; the reading surface stays quiet. */
+/* The closed invitation moves as one crafted object. */
 .opening .medal-wrap{animation:galaSuspended 6s ease-in-out infinite}
 .medal::after{content:"";position:absolute;inset:3%;border-radius:50%;pointer-events:none;background:linear-gradient(115deg,transparent 41%,#FFF8EE12 45%,#FFF8EE66 49%,#FFF8EE12 53%,transparent 57%);background-size:300% 100%;background-position:120% 0;mix-blend-mode:soft-light;animation:galaSatinLight 8s ease-in-out infinite}
 @keyframes galaSuspended{0%,100%{transform:translateY(3px)}50%{transform:translateY(-3px)}}
@@ -361,3 +361,26 @@ textarea{font-size:16px;line-height:1.7;min-height:86px;padding:12px;background:
 .tv>div>i{rotate:none;transform:none}
 .tv>div>i svg{rotate:none;transform:none;transform-origin:center}
 .tv>div:nth-child(2)>i svg{rotate:35deg}
+
+/* Scene choreography: draw geometry once, keep metal and photography subtly alive in view. */
+.hero .hero-city{text-align:center;justify-self:stretch;width:100%}
+#invite .fan line,#invite .fan path{stroke-dasharray:1;stroke-dashoffset:1;transition:stroke-dashoffset 1.05s ease}
+#invite .fan line{transition-delay:.08s}
+#invite .fan.in line,#invite .fan.in path{stroke-dashoffset:0}
+.gala-border path{stroke-dasharray:1;stroke-dashoffset:1;transition:stroke-dashoffset 1.35s cubic-bezier(.22,.61,.36,1)}
+.gala-border path+path{transition-delay:.14s}
+.frame.in>.gala-border path{stroke-dashoffset:0}
+#invite h2.foil{background-size:240% 100%;animation:galaGilded 9s ease-in-out infinite;animation-play-state:paused}
+#invite .gala-visible h2.foil{animation-play-state:running}
+@keyframes galaGilded{0%,100%{background-position:0% 50%}45%,65%{background-position:100% 50%}}
+.arch::after{content:"";position:absolute;inset:0;pointer-events:none;clip-path:polygon(50% 0,64% 5%,74% 5%,84% 11%,92% 11%,100% 20%,100% 100%,0 100%,0 20%,8% 11%,16% 11%,26% 5%,36% 5%);background:linear-gradient(110deg,transparent 40%,#FFF6E510 46%,#FFF6E52B 50%,#FFF6E510 54%,transparent 60%);background-size:300% 100%;opacity:0;animation:galaPortraitLight 10s ease-in-out infinite;animation-play-state:paused}
+.gala-visible .arch::after{animation-play-state:running}
+@keyframes galaPortraitLight{0%,12%{background-position:120% 0;opacity:0}18%{opacity:.6}38%{background-position:-20% 0;opacity:.6}44%,100%{background-position:-20% 0;opacity:0}}
+.mosaic img{animation:galaPhotoDrift 12s ease-in-out infinite alternate;animation-play-state:paused;transform-origin:50% 55%}
+.gala-visible .mosaic img{animation-play-state:running}
+@keyframes galaPhotoDrift{from{transform:scale(1)}to{transform:scale(1.035)}}
+.btn{transition:transform .22s ease,filter .22s ease}
+@media(hover:hover){.btn:hover{transform:translateY(-2px);filter:brightness(1.08)}.tv>div:hover>i svg{translate:0 -3px;transition:translate .3s ease}}
+@media(prefers-reduced-motion:reduce){#invite .fan line,#invite .fan path,.gala-border path{stroke-dashoffset:0;transition:none}#invite h2.foil,.arch::after,.mosaic img{animation:none!important}.arch::after{display:none}.mosaic img{transform:none}.btn:hover{transform:none}.tv>div:hover>i svg{translate:none}}
+.lz-editor .fan line,.lz-editor .fan path,.lz-editor .gala-border path{stroke-dashoffset:0}
+body.locked #invite h2.foil,body.locked #invite .mosaic img,body.locked #invite .arch::after{animation-play-state:paused}
