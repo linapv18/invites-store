@@ -376,3 +376,36 @@ footer>.mc{position:relative;z-index:2;font-size:12px;line-height:1.9;color:var(
 .heart.is-long{width:min(90vw,680px);height:auto;min-height:0;padding:48px 42px;background:var(--cream);color:var(--ink);border:1px solid #aeb38c88;box-shadow:inset 0 0 0 7px var(--cream),inset 0 0 0 8px #aeb38c40;filter:none}
 .heart.is-long>.fr{display:none}.heart.is-long blockquote{font-size:22px;line-height:1.6;max-width:46ch}.heart.is-long>p.mc{color:var(--sage);font-size:12px!important}
 @media(max-width:600px){.heart.is-long{padding:40px 28px}.heart.is-long blockquote{font-size:20px}}
+
+/* A quiet floral entrance: one lace card, a light canopy and no bouquet stack. */
+.opening.garden{background:#efeee5;background-image:radial-gradient(ellipse at 50% 40%,#fffdf4 0%,#eeeee4 72%)}
+.opening .estate-scene{display:none}
+.opening-content{padding:115px 20px 110px;gap:18px;justify-content:center}
+.opening-intro{margin:0!important;max-width:290px;line-height:1.8;font-size:10px;letter-spacing:.12em}
+.opening .loval{width:min(82vw,300px);min-height:340px;padding:65px 62px;gap:10px}
+.opening .loval::before{background:#fffdf4;opacity:.65}
+.opening .loval .lace{opacity:.78;filter:none}
+.opening .loval h1{font-size:43px;line-height:1.15}
+.opening .loval .mc{font-size:10px}
+.opening .loval .dt{font-size:12px;letter-spacing:.06em}
+.opening .curt{height:200px;width:52%;top:-15px;bottom:auto;overflow:clip}
+.opening .curt.l{left:0}.opening .curt.r{right:0}
+.opening .curt .ramas img{height:85px;opacity:.8}
+.opening .curt>.wis{height:200px;overflow:clip}
+.opening .after{max-height:0;overflow:hidden;margin:0;transition:opacity .4s,max-height .5s}
+.opening.parted .after{max-height:250px;overflow:visible;transition-delay:0s}
+.opening .after p{font-size:17px;margin:0 0 14px;line-height:1.5}
+.opening .after .btn{min-height:48px;padding:12px 26px;border-radius:2px;box-shadow:none;font-size:12px}
+.ohint{bottom:90px}.ohint span{border:0;background:transparent;font-size:19px}
+.flow{max-width:800px;background:var(--cream);margin-inline:auto}
+.panel{margin-inline:0;background-color:var(--cream);box-shadow:none;border-radius:0}
+.gap:not(.q){height:34px;background:var(--cream)}
+.gap:not(.q)>.wis{display:none}
+.ghero{padding-top:130px;padding-bottom:45px}
+.ghero>.wis{height:210px}
+.ghero .bush{width:min(90vw,430px);margin-top:-65px}
+footer{padding:150px 30px 120px!important;background-color:#697347;margin-top:0}
+footer>.wis{height:170px;opacity:.75}
+@media(min-width:900px){.panel{margin-inline:0;padding:64px 65px}.opening .loval{width:310px;min-height:355px;padding:68px 65px}.opening .loval h1{font-size:47px}.opening-content{padding-top:100px}.opening .curt{width:44%;height:210px}.opening .curt.l{left:6%}.opening .curt.r{right:6%}.ghero .bush{width:460px;margin-top:-75px}}
+@media(max-width:600px){.opening-content{padding:105px 18px 115px;gap:14px}.opening .loval{width:min(82vw,290px);min-height:310px;padding:58px 55px}.opening .loval h1{font-size:39px}.opening .curt{height:155px;opacity:.85}.opening .curt .rc{max-height:140px}.opening .curt .ramas img{height:65px}.panel{margin-inline:0;padding:48px 26px}.ghero{padding-top:120px}.ghero .bush{width:340px;margin-top:-60px}footer{padding:140px 26px 120px!important}}
+@media(max-height:700px){.opening-content{padding-top:65px;padding-bottom:100px;gap:10px}.opening .loval{min-height:270px;width:250px;padding:48px 50px;gap:6px}.opening .loval h1{font-size:35px}.opening-intro{font-size:9px}.opening .curt{height:110px;opacity:.6}.opening .curt .rc{max-height:100px}.ohint{bottom:80px}}

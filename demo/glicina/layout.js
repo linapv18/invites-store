@@ -109,19 +109,18 @@ const brush = c => `<svg viewBox="0 0 70 26" aria-hidden="true"><path d="M5 11C2
   document.getElementById('app').innerHTML = '<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><filter id="glRough" x="-10%" y="-30%" width="120%" height="160%"><feTurbulence type="fractalNoise" baseFrequency=".09" numOctaves="2" seed="4"/><feDisplacementMap in="SourceGraphic" scale="6"/></filter><radialGradient id="glGlow"><stop offset="0" stop-color="#FFE3A0" stop-opacity=".8"/><stop offset="1" stop-color="#FFE3A0" stop-opacity="0"/></radialGradient><filter id="glLaceSh" x="-5%" y="-5%" width="110%" height="115%"><feDropShadow dx=".7" dy="1.3" stdDeviation=".9" flood-color="#3d3a20" flood-opacity=".38"/></filter><pattern id="glNet" width="4" height="4" patternUnits="userSpaceOnUse"><path d="M0 0L4 4M4 0L0 4" stroke="#8a8460" stroke-opacity=".2" stroke-width=".35"/></pattern></defs></svg>' +
   // ======================= APERTURA: cortina de glicinas =======================
   '<div class="opening garden" id="open" role="dialog" aria-modal="true" aria-label="' + S.openAria + '">' +
-    drape(21, 8, 65, 145, [1, 2, 3], 0) + petals(5, 4) +
     '<div class="estate-scene" aria-hidden="true"></div><div class="opening-content"><p class="mc opening-intro" style="margin-top:40px" data-lz="envIntro" data-lz-keep>' + S.envIntro + '</p>' +
-    '<div class="loval">' + LACE + ovalNames(.35) + '</div>' + bush() +
+    '<div class="loval">' + LACE + ovalNames(.35) + '</div>' +
     '<div class="after" inert><p>' + S.for + ' <b style="font-weight:600">' + S.guest + '</b> · ' + S.seats + '</p><button type="button" class="btn" id="enter" tabindex="-1" disabled>' + S.enter + '</button><p class="lz-closing" data-lz="envClosing" data-lz-keep hidden>' + S.envClosing + '</p></div></div>' +
-    '<div class="curt l" aria-hidden="true">' + drape(31, 8, 380, 720, [0, 4, 1, 0], 10, '', 'vh') + '</div>' +
-    '<div class="curt r" aria-hidden="true">' + drape(47, 8, 360, 700, [0, 4, 1, 3], 10, '', 'vh') + '</div>' +
+    '<div class="curt l" aria-hidden="true">' + drape(31, 3, 100, 180, [1, 3], 0) + '</div>' +
+    '<div class="curt r" aria-hidden="true">' + drape(47, 3, 100, 180, [1, 3], 0) + '</div>' +
     '<button type="button" class="curtain-trigger" data-part aria-label="' + S.part + '"></button><p class="ohint" id="hint" aria-live="polite"><span>' + S.hint + '</span></p>' +
   '</div>' +
 
   // ======================= INVITACIÓN =======================
   '<div class="mbar" id="mbar" aria-hidden="true"><span class="pa" style="font-size:24px;color:var(--sage)">' + N('n1') + ' &amp; ' + N('n2') + '</span><span class="mc" data-lz-date="' + S.datePat + '">' + S.dateTxt + '</span></div>' +
   '<main id="invite" inert>' +
-    '<section class="ghero" id="portada" data-lz-anchor="portada">' + drape(13, 11, 100, 220, [0, 1, 2, 3, 4], 0) + petals(4, 9) +
+    '<section class="ghero" id="portada" data-lz-anchor="portada">' + drape(13, 7, 85, 170, [1, 2, 3], 0) +
       '<p class="mc" style="position:relative;z-index:1;margin-bottom:14px">' + S.getting + '</p>' +
       '<div class="estate-scene" aria-hidden="true"></div><div class="loval invitation-oval">' + LACE + ovalNames(0) + '</div>' + bush() +
     '</section>' +
@@ -131,7 +130,7 @@ const brush = c => `<svg viewBox="0 0 70 26" aria-hidden="true"><path d="M5 11C2
       '<p class="mc" data-lz-date="' + S.heroPat + '">' + S.heroTxt + '</p><p style="font-style:italic" data-lz="city">' + S.city + '</p>' + ORN(170) +
       '<h2>' + S.dear + '</h2><p data-lz="msg">' + S.msg + '</p><div class="cover-photo ph-only" data-rv><img class="ph-img" id="heroImg" loading="lazy" decoding="async" src="/assets/fotos/paseo.jpg" data-lz-src="photo:0" alt="' + S.photoAlt + '" style="object-position:center 55%"></div>' +
     '</section>' +
-    '<div class="gap">' + drape(17, 7, 50, 110, [1, 2, 3]) + '</div>' +
+    '<div class="gap" aria-hidden="true"></div>' +
     '<section class="panel" id="historia" data-lz-anchor="historia">' +
       '<p class="mc">' + S.story + '</p><h2 data-lz="storyTitle">' + S.storyTitle + '</h2><p data-lz="story">' + S.storyTxt + '</p>' +
       '<div class="arches ph-only" data-lz-list="gallery">' + ['/assets/fotos/beso.jpg','/assets/fotos/escalera.jpg','/assets/fotos/muro.jpg'].map(function(src){return '<div class="arch" data-lz-item data-rv><div class="pic"><img class="ph-img" data-lz-f="img" src="'+src+'" alt="" loading="lazy"></div></div>';}).join('') + '</div><button type="button" class="gallery-link ph-only" data-gallery-open>' + (LANG==='en'?'Open our photo album':'Abrir nuestro álbum') + '</button>' +
@@ -163,7 +162,7 @@ const brush = c => `<svg viewBox="0 0 70 26" aria-hidden="true"><path d="M5 11C2
         '<div class="ti" data-rv data-lz-group="guideFood guideCulture guidePlans">' + tIcon.map + '<h3>' + S.guide + '</h3><p data-lz-group="guideFood"><b>' + S.foodL + '</b> <span data-lz="guideFood">' + S.food + '</span></p><p data-lz-group="guideCulture"><b>' + S.cultureL + '</b> <span data-lz="guideCulture">' + S.culture + '</span></p><p data-lz-group="guidePlans"><b>' + S.plansL + '</b> <span data-lz="guidePlans">' + S.plans + '</span></p></div>' +
       '</div>' +
     '</section>' +
-    '<div class="gap q" style="height:auto;padding:120px 0 40px" data-lz-group="quote">' + drape(29, 8, 60, 120, [1, 2, 3]) + petals(6, 14) +
+    '<div class="gap q" style="height:auto;padding:120px 0 40px" data-lz-group="quote">' + drape(29, 4, 50, 85, [1, 2, 3]) + petals(6, 14) +
       '<div class="heart" data-frame="gl-heart" data-rv><blockquote>“<span data-lz="quote">' + S.quote + '</span>”</blockquote><p class="mc" style="font-size:7.5px;letter-spacing:.12em" data-lz="quoteAuthor">' + S.quoteAuthor + '</p></div>' +
     '</div>' +
     '<section class="panel" id="faq" data-lz-anchor="faq" data-lz-hide-empty>' +
@@ -180,7 +179,7 @@ const brush = c => `<svg viewBox="0 0 70 26" aria-hidden="true"><path d="M5 11C2
       '<div id="rsDone" hidden style="padding-top:16px"><p class="pa" style="font-size:46px;color:var(--sage)">' + S.thanks + '</p><p id="rsSum" style="margin:6px 0 18px"></p><button type="button" class="btn" id="rsEdit">' + S.edit + '</button></div>' +
     '</section>' +
     '</div>' +
-    '<footer><div class="estate-scene" aria-hidden="true"></div>' + drape(37, 10, 100, 230, [0, 1, 2, 3, 4], 0) + petals(3, 19) +
+    '<footer><div class="estate-scene" aria-hidden="true"></div>' + drape(37, 5, 70, 130, [0, 1, 2, 3, 4], 0) + petals(3, 19) +
       '<p class="names">' + N('n1') + ' &amp; ' + N('n2') + '</p><p class="mc"><span data-lz-date="' + S.datePat + '">' + S.dateTxt + '</span> · <span data-lz="city">' + S.city + '</span></p><nav class="footer-links" aria-label="' + (LANG==='en'?'Wedding information':'Información de la boda') + '"><a href="#itinerario">' + (LANG==='en'?'Schedule':'Itinerario') + '</a><a href="#rsvp">' + (LANG==='en'?'RSVP':'Confirmar asistencia') + '</a></nav></footer>' +
   '</main>';
 
