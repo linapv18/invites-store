@@ -58,9 +58,9 @@
       { id: 'barro', es: 'Barro', en: 'Clay', sw: '#B5522E', vars: { ink: '#4A2A1C', blue: '#B5522E', blue2: '#F3E1D6', sun: '#E3A43A', clay: '#3E6B8A' } }
     ],
     gala: [
-      { id: 'negro', es: 'Negro y oro', en: 'Black and gold', sw: '#0F0F0E' },
-      { id: 'esmeralda', es: 'Esmeralda', en: 'Emerald', sw: '#0F2A24', vars: { bg: '#0B1F1A', bg2: '#10291F' } },
-      { id: 'burdeos', es: 'Burdeos y oro rosa', en: 'Burgundy and rose gold', sw: '#2A1020', vars: { bg: '#1C0A14', bg2: '#26101C', gold: '#D1A88A', gold2: '#EDD3C0' } }
+      { id: 'burdeos', es: 'Ciruela y oro rosa', en: 'Plum and rose gold', sw: '#301B2B', vars: { bg: '#241321', bg2: '#301B2B', gold: '#D1A88A', gold2: '#EDD3C0' } },
+      { id: 'negro', es: 'Negro y oro', en: 'Black and gold', sw: '#0F0F0E', vars: { bg: '#0F0E0C', bg2: '#181612', gold: '#C9A45C', gold2: '#E6CF97' } },
+      { id: 'esmeralda', es: 'Esmeralda', en: 'Emerald', sw: '#0F2A24', vars: { bg: '#0B1F1A', bg2: '#10291F', gold: '#C9A45C', gold2: '#E6CF97' } }
     ],
     aurelia: [
       { id: 'oro', es: 'Oro', en: 'Gold', sw: '#B4955E' },
