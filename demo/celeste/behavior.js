@@ -32,10 +32,20 @@
   // The moon travels using transforms only; the reveal never reserves initial layout space.
   var op = $('open'), timer = null, revealTimer = null, main = $('invite');
   function moonPosition() {
-    var rise = Math.max(0, op.clientHeight / 2 - 76);
+    var details = op.querySelector('.told');
+    var baseTop = matchMedia('(max-height:650px)').matches ? 280 : 344;
+    var moonTop = 76 - parseFloat(getComputedStyle($('moon')).width) * .13;
+    var bottom = baseTop + details.offsetHeight;
+    // Centre the complete revealed composition, leaving room for floating controls.
+    var offset = Math.max(0, (op.clientHeight - 64 - moonTop - bottom) / 2);
+    op.style.setProperty('--reveal-offset', offset + 'px');
+    op.style.setProperty('--reveal-bottom', (bottom + offset + 32) + 'px');
+    var rise = Math.max(0, op.clientHeight / 2 - 76 - offset);
     op.style.setProperty('--moon-rise', -rise + 'px');
   }
   moonPosition(); window.addEventListener('resize', moonPosition);
+  if (document.fonts) document.fonts.ready.then(moonPosition);
+  if ('ResizeObserver' in window) new ResizeObserver(moonPosition).observe(op.querySelector('.told'));
   $('moon').addEventListener('click', function () {
     if (op.classList.contains('lit')) return;
     LazoMusic.play(); op.classList.add('lit'); this.disabled = true;
