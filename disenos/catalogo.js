@@ -29,7 +29,8 @@
       { id: 'carta', es: 'Carta de lotería', en: 'Lotería card' },
       { id: 'luna', es: 'Luna', en: 'Moon' },
       { id: 'calendario', es: 'Calendario', en: 'Calendar' },
-      { id: 'cortina', es: 'Cortina de flores', en: 'Flower curtain' }
+      { id: 'cortina', es: 'Cortina de flores', en: 'Flower curtain' },
+      { id: 'funda', es: 'Funda de terciopelo', en: 'Velvet sleeve' }
     ] },
     { key: 'tono', es: 'Colores', en: 'Colors', opts: [
       { id: 'claros', es: 'Claros', en: 'Light' },
@@ -91,6 +92,10 @@
       tags: { estilo: ['botanico', 'romantico'], lugar: ['campo'], apertura: ['cortina'], tono: ['claros'] },
       es: { name: 'Glicina', title: 'Diseño glicina', desc: 'Un jardín de cuento: la invitación está detrás de una cortina de glicinas que se mecen; al tocarla se abre y aparece un óvalo de encaje con los nombres. Hortensias, paneles con encaje, programa con íconos y la cita en un corazón. Se puede usar con o sin fotos.', opening: 'Apertura: cortina de glicinas', colors: 'Lavanda y oliva', alt: ['Diseño glicina: cortina de glicinas', 'Diseño glicina: portada con foto en un óvalo de encaje y hortensias'] },
       en: { name: 'Glicina', title: 'Glicina', desc: 'A fairy-tale garden: the invitation hides behind a swaying wisteria curtain; tap it and it parts to reveal a lace oval with the names. Hydrangeas, lace-trimmed panels, a program with icons and the quote in a heart. Works with or without photos.', opening: 'Opening: wisteria curtain', colors: 'Lavender and olive', alt: ['Glicina design: wisteria curtain', 'Glicina design: cover with a photo in a lace oval and hydrangeas'] } },
+    { id: 'estreno', bg: '#2A1D1D', shadow: 'rgba(0,0,0,0.75)', img: ['/assets/estreno-funda.jpg', '/assets/estreno-portada.jpg'],
+      tags: { estilo: ['elegante', 'moderno'], lugar: ['ciudad'], apertura: ['funda'], tono: ['oscuros'] },
+      es: { name: 'Estreno', title: 'Diseño estreno', desc: 'La boda como noche de estreno: la invitación llega en una funda de terciopelo con un corazón troquelado por el que asoma la fecha. Adentro, marquesina de bombillas, fotos en blanco y negro que se revelan, tira de película, cartelera con la cuenta regresiva y una butaca para cada invitado.', opening: 'Apertura: funda de terciopelo', colors: 'Granate, noche o champán', alt: ['Diseño estreno: funda de terciopelo con un corazón troquelado y la fecha', 'Diseño estreno: portada con foto en blanco y negro dentro de una marquesina de bombillas'] },
+      en: { name: 'Estreno', title: 'Estreno', desc: 'The wedding as an opening night: the invitation arrives in a velvet sleeve with a heart cut-out that shows the date. Inside, marquee lights, black-and-white photos that develop, a film strip, a countdown on the marquee board and a seat for every guest.', opening: 'Opening: velvet sleeve', colors: 'Garnet, night or champagne', alt: ['Estreno design: velvet sleeve with a heart cut-out and the date', 'Estreno design: cover with a black-and-white photo inside marquee lights'] } },
     { id: 'clasico', bg: '#D9DDD0', shadow: 'rgba(34,32,28,0.6)', img: ['/assets/clasico-sobre.jpg', '/assets/clasico-demo-portada.jpg'],
       tags: { estilo: ['elegante'], lugar: ['ciudad', 'campo'], apertura: ['sobre'], tono: ['claros', 'oscuros'] },
       es: { name: 'Clásico', title: 'Diseño clásico', desc: 'Verde salvia y marfil, nombres en serif grande y un sobre que se abre para mostrar una carta con el nombre de cada familia. Atemporal.', opening: 'Apertura: sobre con carta', colors: 'Paleta a elección', alt: ['Diseño clásico: sobre con sello verde para la familia invitada', 'Diseño clásico: portada con los nombres y foto en arco'] },

@@ -343,7 +343,8 @@
     celeste: { es: ['Una invitación para un día inolvidable', 'Con todo nuestro cariño'], en: ['An invitation to an unforgettable day', 'With all our love'] },
     cisne: { es: ['Una invitación para un día inolvidable', 'Con todo nuestro cariño'], en: ['An invitation to an unforgettable day', 'With all our love'] },
     tinta: { es: ['Una invitación para un día inolvidable', 'Con todo nuestro cariño'], en: ['An invitation to an unforgettable day', 'With all our love'] },
-    glicina: { es: ['Una invitación para un día inolvidable', 'Con todo nuestro cariño'], en: ['An invitation to an unforgettable day', 'With all our love'] }
+    glicina: { es: ['Una invitación para un día inolvidable', 'Con todo nuestro cariño'], en: ['An invitation to an unforgettable day', 'With all our love'] },
+    estreno: { es: ['Una noche de estreno', 'Con todo nuestro cariño'], en: ['An opening night', 'With all our love'] }
   };
   // Paletas de Romántico (los colores los aplica demo/shared/content.js; aquí solo el nombre y la muestra).
   var ROSA_PALETTES = [
@@ -419,7 +420,13 @@
   var GLICINA_PALETTES = [
     { id: 'lavanda', hex: 'conic-gradient(#8E79BD 0 50%,#7C8454 0)', seal: '#7C8454', es: 'Lavanda y oliva', en: 'Lavender and olive' }
   ];
-  var TPL_PALETTES = { rosa: ROSA_PALETTES, moderno: MOD_PALETTES, jardin: JARDIN_PALETTES, costa: COSTA_PALETTES, gala: GALA_PALETTES, aurelia: AURELIA_PALETTES, noir: NOIR_PALETTES, lino: LINO_PALETTES, marfil: MARFIL_PALETTES, fiesta: FIESTA_PALETTES, celeste: CELESTE_PALETTES, cisne: CISNE_PALETTES, tinta: TINTA_PALETTES, glicina: GLICINA_PALETTES };
+  // Estreno: el terciopelo cambia; el sello es el terciopelo.
+  var ESTRENO_PALETTES = [
+    { id: 'granate', hex: '#5E0F1A', seal: '#5E0F1A', es: 'Granate', en: 'Garnet' },
+    { id: 'noche', hex: '#1F1C24', seal: '#1F1C24', es: 'Noche', en: 'Night' },
+    { id: 'champan', hex: '#8A7354', seal: '#8A7354', es: 'Champán', en: 'Champagne' }
+  ];
+  var TPL_PALETTES = { rosa: ROSA_PALETTES, moderno: MOD_PALETTES, jardin: JARDIN_PALETTES, costa: COSTA_PALETTES, gala: GALA_PALETTES, aurelia: AURELIA_PALETTES, noir: NOIR_PALETTES, lino: LINO_PALETTES, marfil: MARFIL_PALETTES, fiesta: FIESTA_PALETTES, celeste: CELESTE_PALETTES, cisne: CISNE_PALETTES, tinta: TINTA_PALETTES, glicina: GLICINA_PALETTES, estreno: ESTRENO_PALETTES };
   var tplPal = function () { var l = TPL_PALETTES[state.design] || []; return l.filter(function (x) { return x.id === state.pal; })[0] || l[0]; };
   var PALETTES = [
     { id: 'salvia', hex: '#5F7360', es: 'Salvia', en: 'Sage' },
@@ -442,7 +449,8 @@
     celeste: { kind: 'envelope', es: ['Celeste', 'Luna y constelación'], en: ['Celeste', 'Moon and constellation'] },
     cisne: { kind: 'envelope', es: ['Cisne', 'Sobre con sello de lacre'], en: ['Cisne', 'Envelope with a wax seal'] },
     tinta: { kind: 'envelope', es: ['Tinta', 'Círculo en el calendario'], en: ['Tinta', 'A circle on the calendar'] },
-    glicina: { kind: 'doors', es: ['Glicina', 'Cortina de glicinas'], en: ['Glicina', 'Wisteria curtain'] }
+    glicina: { kind: 'doors', es: ['Glicina', 'Cortina de glicinas'], en: ['Glicina', 'Wisteria curtain'] },
+    estreno: { kind: 'envelope', es: ['Estreno', 'Funda de terciopelo'], en: ['Estreno', 'Velvet sleeve'] }
   };
   // Sección de la vista previa a la que lleva cada complemento.
   var ADDON_SPOT = { playlist: 'musica', libro: 'itinerario', capsula: 'rsvp', encuestas: 'faq', galeria: 'historia', bilingue: 'portada', dominio: 'portada' };
@@ -666,6 +674,7 @@
     if (state.design === 'celeste') return serif + 'background:' + tplPal().seal + ';color:#F4E9C8;box-shadow:inset 0 0 0 1px #F4E9C866';
     if (state.design === 'cisne') return serif + 'background:radial-gradient(circle at 35% 30%,#ffffff40,' + tplPal().seal + ' 60%);color:#E8D5A8';
     if (state.design === 'tinta') return serif + 'background:#FBF8F3;color:' + tplPal().seal + ';box-shadow:inset 0 0 0 1.5px ' + tplPal().seal;
+    if (state.design === 'estreno') return "font-family:'Bodoni Moda',Georgia,serif;font-style:italic;" + 'background:' + tplPal().seal + ';color:#F6D9A0;box-shadow:inset 0 0 0 1px #F6D9A066';
     if (state.design === 'glicina') return serif + 'background:#FFFDF6;color:' + tplPal().seal + ';box-shadow:inset 0 0 0 1px ' + tplPal().seal + ',inset 0 0 0 4px #FFFDF6,inset 0 0 0 5px #AEB38C';
     var hex = state.pal === 'custom' ? state.palCustom : TPL_DARK[state.pal], m = /^#?([0-9a-f]{6})$/i.exec(hex || '');
     if (!m) return 'font-family:Georgia,serif;background:radial-gradient(circle at 30% 20%,#64745a,#2b4437);color:#f5f2ea';

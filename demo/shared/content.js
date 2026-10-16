@@ -101,6 +101,12 @@
       { id: 'azul', es: 'Azul tinta', en: 'Ink blue', sw: '#23468C', vars: { red: '#23468C' } },
       { id: 'verde', es: 'Verde botella', en: 'Bottle green', sw: '#2F6A48', vars: { red: '#2F6A48', paper: '#EFEEE6' } }
     ],
+    // Estreno: el terciopelo cambia, la luz de las bombillas no.
+    estreno: [
+      { id: 'granate', es: 'Granate', en: 'Garnet', sw: '#5E0F1A' },
+      { id: 'noche', es: 'Noche', en: 'Night', sw: '#1F1C24', vars: { vel: '#1F1C24', acc: '#B0202F', paper: '#EFEAE2', ink: '#141217', bulb: '#F3DDB0' } },
+      { id: 'champan', es: 'Champán', en: 'Champagne', sw: '#8A7354', vars: { vel: '#8A7354', acc: '#6E1220', paper: '#F7F1E7', ink: '#231D17', bulb: '#FBE7C0' } }
+    ],
     // Glicina: una sola paleta (los racimos, la rama y las hortensias son imágenes).
     glicina: [
       { id: 'lavanda', es: 'Lavanda y oliva', en: 'Lavender and olive', sw: 'conic-gradient(#8E79BD 0 50%,#7C8454 0)' }
