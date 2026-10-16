@@ -67,34 +67,23 @@
   }
   document.addEventListener('lz-render', function (e) { observe(e.target); });
 
-  // Apertura: el medallón estalla en confeti dorado y la invitación se abre en círculo.
+  // Satin light and a gentle suspended motion; opening never creates particles.
   var op = $('open'), medal = $('medal'), timer = null;
-  setTimeout(function () { op.querySelectorAll('.fan').forEach(function (f) { f.classList.add('in'); }); }, 300);
-  function burst(x, y) {
-    if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    var theme=getComputedStyle(document.documentElement); var cols = [theme.getPropertyValue('--gold'),theme.getPropertyValue('--gold2')];
-    for (var i = 0; i < 18; i++) {
-      var p = document.createElement('i'), a = Math.random() * Math.PI * 2, d = 80 + Math.random() * 200, w = 4 + Math.random() * 6, dx = Math.cos(a) * d, dy = Math.sin(a) * d;
-      p.className = 'conf'; p.style.cssText = 'left:' + x + 'px;top:' + y + 'px;width:' + w + 'px;height:' + (w * (Math.random() < .5 ? 2.4 : 1)).toFixed(1) + 'px;background:' + cols[i % cols.length];
-      document.body.appendChild(p);
-      p.animate([{ transform: 'translate(-50%,-50%) rotate(0)', opacity: 1 }, { transform: 'translate(calc(-50% + ' + dx + 'px), calc(-50% + ' + dy + 'px)) rotate(' + Math.random() * 720 + 'deg)', opacity: 1, offset: .55 }, { transform: 'translate(calc(-50% + ' + dx * 1.1 + 'px), calc(-50% + ' + (dy + 220) + 'px)) rotate(' + Math.random() * 1080 + 'deg)', opacity: 0 }], { duration: 700 + Math.random() * 350, easing: 'cubic-bezier(.2,.7,.3,1)' }).onfinish = (function (n) { return function () { n.remove(); }; })(p);
-    }
-  }
-  function enter() { clearTimeout(timer); invite.inert=false; invite.classList.add('is-open'); op.inert=true; op.classList.add('gone'); document.body.classList.remove('locked'); watch(); }
+  function enter() { clearTimeout(timer); invite.inert=false; invite.classList.add('is-open'); op.classList.add('is-leaving'); op.inert=true; op.classList.add('gone'); document.body.classList.remove('locked'); watch(); }
   op.removeAttribute('aria-modal');
-  op.addEventListener('transitionend',function(e){if(e.target===op && e.propertyName==='opacity' && op.classList.contains('gone')) medal.classList.remove('pop');});
+  op.addEventListener('transitionend',function(e){if(e.target===op && e.propertyName==='opacity' && op.classList.contains('gone')) {medal.classList.remove('pop');op.classList.add('is-settled');}});
   medal.addEventListener('click', function () {
     if (op.classList.contains('gone') || medal.classList.contains('pop')) return;
     LazoMusic.play();
     if (reduce.matches) { enter(); $('demoBar').hidden = document.documentElement.classList.contains('lz-content'); document.querySelector('.hero h1').focus({preventScroll:true}); return; }
-    var r = medal.getBoundingClientRect(); medal.classList.add('pop'); burst(r.left + r.width / 2, r.top + r.height / 2);
+    medal.classList.add('pop');
     timer = setTimeout(function () { enter(); $('demoBar').hidden = document.documentElement.classList.contains('lz-content'); window.scrollTo({top:0,behavior:'instant'}); document.querySelector('.hero h1').focus({preventScroll:true}); }, 180);
   });
 
   // Para el editor de Lazo (demo/shared/content.js): saltar o volver a mostrar el medallón.
   window.LzTemplate = {
     open: function () { enter(); },
-    envelope: function () { clearTimeout(timer); op.inert=false; invite.inert=true; invite.classList.remove('is-open'); medal.classList.remove('pop'); op.classList.remove('gone'); document.body.classList.add('locked'); window.scrollTo(0, 0); },
+    envelope: function () { clearTimeout(timer); op.classList.remove('is-leaving','is-settled'); op.inert=false; invite.inert=true; invite.classList.remove('is-open'); medal.classList.remove('pop'); op.classList.remove('gone'); document.body.classList.add('locked'); window.scrollTo(0, 0); },
     scroll: function (el, now) { window.scrollTo({ top: el.getBoundingClientRect().top + window.pageYOffset - 10, behavior: now ? 'instant' : 'smooth' }); }
   };
 

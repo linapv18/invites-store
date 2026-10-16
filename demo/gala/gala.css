@@ -58,7 +58,6 @@ a:focus-visible,button:focus-visible,summary:focus-visible,textarea:focus-visibl
 @keyframes mPop{40%{transform:scale(1.18)}100%{transform:scale(.6);opacity:.2}}
 .opening .to{font:400 24px Cinzel,serif;letter-spacing:.1em}
 .hint{font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted)}
-.conf{position:fixed;z-index:70;pointer-events:none;border-radius:1px}
 
 /* ---------- Invitación ---------- */
 .hero{padding:64px 24px 60px;text-align:center;position:relative;overflow:hidden}
@@ -95,7 +94,7 @@ a:focus-visible,button:focus-visible,summary:focus-visible,textarea:focus-visibl
 .lz-content .colors{display:none}
 .tv{text-align:left;margin-top:20px;border-top:1px solid color-mix(in srgb,var(--gold) 33%,transparent);counter-reset:none}
 .tv>div{position:relative;padding:22px 0 22px 50px;border-bottom:1px solid color-mix(in srgb,var(--gold) 33%,transparent);counter-increment:none}
-.tv>div>i{position:absolute;left:0;top:24px;width:30px;height:30px;rotate:45deg;border:1px solid var(--gold);display:grid;place-items:center;font-style:normal}
+.tv>div>i{position:absolute;left:0;top:24px;width:30px;height:30px;rotate:none;border:1px solid var(--gold);display:grid;place-items:center;font-style:normal}
 .tv>div>i span{rotate:-45deg;font:400 13px Cinzel;color:var(--gold2)}
 
 .tv h3{font:400 17px Cinzel,serif;letter-spacing:.08em;color:var(--gold2);margin:6px 0}
@@ -217,7 +216,7 @@ html{scroll-behavior:smooth}
 .colors{display:none}
 .tv{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:32px;counter-reset:none;border-top:0;margin-top:40px}
 .tv>div{padding:74px 0 20px;counter-increment:none;border-top:1px solid color-mix(in srgb,var(--gold) 30%,transparent);border-bottom:0}
-.tv>div>i{top:22px;width:36px;height:36px;rotate:0;border:0}
+.tv>div>i{top:22px;width:36px;height:36px;rotate:none;border:0}
 .tv>div>i svg{display:block;width:100%;height:100%}
 .tv>div>i span::before{content:none}
 .tv h3{font-size:22px;line-height:1.5;letter-spacing:.03em;margin:12px 0 16px}
@@ -345,3 +344,20 @@ textarea{font-size:16px;line-height:1.7;min-height:86px;padding:12px;background:
  .hero h1.gala-long-name>span[data-split]{display:block}
  .hero h1.gala-long-name .amp{display:block;margin:8px 0}
 }
+
+/* The closed invitation moves as one crafted object; the reading surface stays quiet. */
+.opening .medal-wrap{animation:galaSuspended 6s ease-in-out infinite}
+.medal::after{content:"";position:absolute;inset:3%;border-radius:50%;pointer-events:none;background:linear-gradient(115deg,transparent 41%,#FFF8EE12 45%,#FFF8EE66 49%,#FFF8EE12 53%,transparent 57%);background-size:300% 100%;background-position:120% 0;mix-blend-mode:soft-light;animation:galaSatinLight 8s ease-in-out infinite}
+@keyframes galaSuspended{0%,100%{transform:translateY(3px)}50%{transform:translateY(-3px)}}
+@keyframes galaSatinLight{0%,12%{background-position:120% 0;opacity:0}18%{opacity:.9}42%{background-position:-20% 0;opacity:.9}48%,100%{background-position:-20% 0;opacity:0}}
+.opening .fan-top .fan{animation:galaFanArrival 1.2s ease-out both}
+@keyframes galaFanArrival{from{opacity:0;transform:translateY(-5px)}to{opacity:.85;transform:none}}
+.opening.is-leaving .medal-wrap,.opening.is-leaving .medal::after{animation-play-state:paused}
+.opening.is-settled .medal-wrap,.opening.is-settled .medal::after,.opening.is-settled .fan-top .fan{animation:none}
+.medal.pop::after{opacity:0;animation:none}
+@media(prefers-reduced-motion:reduce){.opening .medal-wrap,.medal::after,.opening .fan-top .fan{animation:none!important}.medal::after{display:none}.medal:hover{transform:none}}
+
+/* Keep architectural and map icons upright; only the aircraft takes a flight angle. */
+.tv>div>i{rotate:none;transform:none}
+.tv>div>i svg{rotate:none;transform:none;transform-origin:center}
+.tv>div:nth-child(2)>i svg{rotate:35deg}
