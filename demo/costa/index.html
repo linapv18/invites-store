@@ -21,7 +21,8 @@
   /* Grano y moteado: mosaicos que empalman, a intensidad baja; se alinean con la página para no cortar entre secciones */
   --grain:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncR type='linear' slope='.2' intercept='.86'/%3E%3CfeFuncG type='linear' slope='.2' intercept='.86'/%3E%3CfeFuncB type='linear' slope='.2' intercept='.86'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
   --mottle:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='520' height='520'%3E%3Cfilter id='n' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.008' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncR type='linear' slope='.16' intercept='.88'/%3E%3CfeFuncG type='linear' slope='.16' intercept='.88'/%3E%3CfeFuncB type='linear' slope='.16' intercept='.88'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='520' height='520' filter='url(%23n)'/%3E%3C/svg%3E");
-  --wave:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='16'%3E%3Cpath d='M0 16V11C10 1 30 1 40 11V16Z'/%3E%3C/svg%3E");
+  --wave:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='14'%3E%3Cpath d='M0 7C26.7 1 53.3 1 80 7S133.3 13 160 7V14H0Z'/%3E%3C/svg%3E");
+  --shore:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='18'%3E%3Cpath d='M0 9C40 2 80 2 120 9S200 16 240 9V18H0Z'/%3E%3C/svg%3E");
   /* Azulejo: repetición intencional de 56 px; el trazo y el centro se pintan con la paleta (máscaras) */
   --tile:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='56' viewBox='0 0 56 56'%3E%3Cg fill='none' stroke='%23000' stroke-width='1.6' stroke-linecap='round'%3E%3Cpath d='M28 6c5 9 13 17 22 22-9 5-17 13-22 22-5-9-13-17-22-22 9-5 17-13 22-22Z'/%3E%3Cpath d='M28 16c3 5 7 9 12 12-5 3-9 7-12 12-3-5-7-9-12-12 5-3 9-7 12-12Z' fill='%23000' fill-opacity='.18'/%3E%3Cpath d='M0 0h56v56H0z' stroke-opacity='.35'/%3E%3Cpath d='M0 9A9 9 0 0 0 9 0M47 0a9 9 0 0 0 9 9M56 47a9 9 0 0 0-9 9M9 56a9 9 0 0 0-9-9'/%3E%3C/g%3E%3C/svg%3E");
   --tiledot:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='56'%3E%3Ccircle cx='28' cy='28' r='3.5'/%3E%3C/svg%3E");
@@ -47,7 +48,7 @@ h1:focus:not(:focus-visible){outline:0}
 .ph-img{width:100%;height:100%;object-fit:cover}
 .in-w{position:relative;max-width:600px;margin:0 auto}
 .paper{background-color:var(--pbase,var(--bg));background-image:var(--grain),var(--mottle);background-blend-mode:multiply;background-position:0 var(--ty,0)}
-.edge{position:relative;z-index:1;margin-top:-15px;-webkit-mask:var(--wave) top left/40px 16px repeat-x,linear-gradient(#000 0 0) left 15px/100% 100% no-repeat;mask:var(--wave) top left/40px 16px repeat-x,linear-gradient(#000 0 0) left 15px/100% 100% no-repeat}
+.edge{position:relative;z-index:1;margin-top:-13px;-webkit-mask:var(--wave) top left/160px 14px repeat-x,linear-gradient(#000 0 0) left 13px/100% 100% no-repeat;mask:var(--wave) top left/160px 14px repeat-x,linear-gradient(#000 0 0) left 13px/100% 100% no-repeat}
 .tiles{position:relative;background-color:var(--blue2);background-image:var(--grain);background-blend-mode:multiply}
 .tiles::before,.tiles::after{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;-webkit-mask:var(--tile) 0 0/56px 56px;mask:var(--tile) 0 0/56px 56px}
 .tiles::before{background:var(--blue);filter:url(#rough);opacity:.9}
@@ -73,16 +74,18 @@ h1:focus:not(:focus-visible){outline:0}
 
 /* ---------- Apertura: pase de abordar ---------- */
 /* La apertura se desplaza por dentro si no cabe: nada se recorta en pantallas bajas */
-.opening{position:fixed;inset:0;z-index:60;overflow-x:hidden;overflow-y:auto;overscroll-behavior:contain;transition:opacity .45s,visibility 0s .45s}
+.opening{position:fixed;inset:0;z-index:60;overflow-x:hidden;overflow-y:auto;overscroll-behavior:contain;transition:opacity .35s,visibility 0s .35s}
 .opening.gone{opacity:0;visibility:hidden;pointer-events:none}
 .opening.gone.now{transition:none}
 .op-in{position:relative;z-index:3;min-height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:max(20px,env(safe-area-inset-top)) 16px max(20px,env(safe-area-inset-bottom))}
 .op-in>p.intro{font:500 12px/1.5 'DM Mono',monospace;letter-spacing:.14em;text-transform:uppercase;text-align:center;background:var(--bg);padding:6px 12px;border-radius:4px;box-shadow:0 2px 0 var(--line);max-width:34ch}
 .op-in>p.hint{font:italic 400 17px 'Playfair Display',serif;padding:4px 14px;border-radius:99px;background:color-mix(in srgb,var(--bg) 85%,transparent)}
 .op-acts{display:flex;flex-direction:column;align-items:center;gap:6px}
-.skip{min-height:44px;padding:0 16px;border:0;border-radius:99px;background:color-mix(in srgb,var(--bg) 88%,transparent);color:var(--ink);font:500 15px 'DM Sans',sans-serif;text-decoration:underline;text-underline-offset:4px;cursor:pointer}
-.boarding .skip,.boarding #board{pointer-events:none}
-.pass{position:relative;width:min(340px,100%);flex:none;border-radius:16px;box-shadow:4px 26px 40px -20px color-mix(in srgb,var(--ink) 65%,transparent);transition:transform .6s cubic-bezier(.4,0,.2,1);background-color:var(--card);background-image:var(--grain);background-blend-mode:multiply}
+.boarding #board{pointer-events:none}
+.pass{position:relative;z-index:1;width:min(340px,100%);flex:none;display:flex;flex-direction:column;perspective:1000px;filter:drop-shadow(3px 14px 14px color-mix(in srgb,var(--ink) 28%,transparent)) drop-shadow(1px 2px 2px color-mix(in srgb,var(--ink) 16%,transparent))}
+/* Cuerpo y talón son dos piezas de papel: cada una con su máscara (esquinas, muescas y la línea de rotura complementaria) */
+.pass-body,.stub{background-color:var(--card);background-image:var(--grain);background-blend-mode:multiply;-webkit-mask-size:100% 100%;mask-size:100% 100%;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat}
+.pass-body{position:relative;border-radius:16px 16px 0 0}
 .pass-top{position:relative;background:var(--blue);color:#fff;border-radius:16px 16px 0 0;padding:14px 18px;display:flex;justify-content:space-between;align-items:center;gap:12px;overflow:hidden}
 .pass-top::after{content:"";position:absolute;inset:0;background:var(--grain);mix-blend-mode:multiply;opacity:.6}
 .pass-top b{position:relative;z-index:1;min-width:0;font:italic 600 19px/1.2 'Playfair Display',serif;overflow-wrap:anywhere}
@@ -98,16 +101,18 @@ h1:focus:not(:focus-visible){outline:0}
 .fields small{display:block;margin-bottom:2px;font:500 12px 'DM Mono';letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
 .fields b{font:500 16px/1.35 'DM Sans';overflow-wrap:anywhere}
 .fields .wide{grid-column:1/-1}
-.stub{position:relative;border-top:2px dashed var(--line2);padding:14px 18px;display:flex;align-items:center;justify-content:space-between;gap:10px;transition:transform .6s cubic-bezier(.4,0,.2,1),opacity .35s .2s}
-.stub::before,.stub::after{content:"";position:absolute;top:-11px;width:20px;height:20px;border-radius:50%;background:var(--blue2)}
-.stub::before{left:-10px}.stub::after{right:-10px}
+.stub{position:relative;margin-top:-3px;padding:17px 18px 14px;display:flex;align-items:center;justify-content:space-between;gap:10px;border-radius:0 0 16px 16px;transform-origin:100% 0}
 .barcode{height:36px;width:112px;flex:none;background:repeating-linear-gradient(90deg,var(--ink) 0 2px,transparent 2px 4px,var(--ink) 4px 5px,transparent 5px 8px,var(--ink) 8px 11px,transparent 11px 12px)}
 .postmark{width:64px;flex:none;color:var(--ink);opacity:.55;filter:url(#rough);rotate:-10deg}
 .seal{width:56px;height:56px;flex:none;border-radius:50%;border:2px solid var(--clay);color:var(--clay-ink);display:grid;place-items:center;font:italic 16px 'Playfair Display';rotate:-12deg;filter:url(#rough);overflow:hidden}
 .seal .lz-seal{font-size:15px}
 /* El talón se desprende y el pase sube; todo en una sola etapa */
-.torn-pass .stub{transform:translateY(90px) rotate(12deg);opacity:0}
-.torn-pass{transform:translateY(-24px) rotate(-1.5deg)}
+/* Rotura: el talón gira desde un extremo y la separación avanza a lo largo de la perforación; se aleja con una leve flexión y solo al final se desvanece */
+.torn-pass .stub{animation:tearV 1s cubic-bezier(.45,.05,.4,1) forwards}
+.torn-pass .pass-body{animation:lift 1s cubic-bezier(.45,.05,.4,1) forwards}
+@keyframes tearV{0%{transform:none}38%{transform:rotate(4deg)}72%{transform:translate(6px,30px) rotate(9deg) rotateX(16deg);opacity:1}100%{transform:translate(12px,64px) rotate(13deg) rotateX(24deg);opacity:0}}
+@keyframes tearH{0%{transform:none}38%{transform:rotate(-4deg)}72%{transform:translate(30px,6px) rotate(-9deg) rotateY(-16deg);opacity:1}100%{transform:translate(64px,12px) rotate(-13deg) rotateY(-24deg);opacity:0}}
+@keyframes lift{0%{transform:none}40%{transform:translateY(-2px) rotate(-.4deg)}100%{transform:translateY(-8px) rotate(-.8deg)}}
 .march{animation:march .9s linear infinite}
 @keyframes march{to{stroke-dashoffset:-7}}
 .pl-ic{animation:plBob 1.4s ease-in-out infinite alternate}
@@ -120,24 +125,21 @@ h1:focus:not(:focus-visible){outline:0}
 @keyframes gullFlap{to{transform:scaleY(.3)}}
 .opening>.lemons{position:fixed}
 /* Estela y avión: cruzan la pantalla mientras el pase se abre */
-.flight{position:fixed;left:50%;top:50%;width:342px;height:722px;translate:-50% -50%;z-index:6;pointer-events:none}
+.flight{position:fixed;left:50%;top:50%;width:342px;height:722px;translate:-50% -50%;z-index:2;pointer-events:none}
 .flight .trail{position:absolute;inset:0;width:100%;height:100%;fill:none;stroke:#fff;stroke-width:4;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:1;filter:drop-shadow(0 0 6px #fff)}
 .flight .jet{position:absolute;left:0;top:0;width:46px;color:var(--ink);opacity:0;offset-path:path('M-30 660C70 580 150 480 220 340S320 90 390 -60');offset-distance:0%;offset-rotate:auto}
 .flight .jet svg{display:block;width:100%;filter:drop-shadow(3px 6px 6px #0004)}
-.boarding .trail{stroke-dashoffset:0;transition:stroke-dashoffset .9s cubic-bezier(.5,0,.6,1)}
-.boarding .jet{opacity:1;offset-distance:100%;transition:offset-distance .9s cubic-bezier(.5,0,.6,1),opacity .1s}
+.boarding .trail{stroke-dashoffset:0;transition:stroke-dashoffset .9s .3s cubic-bezier(.5,0,.6,1)}
+.boarding .jet{opacity:1;offset-distance:100%;transition:offset-distance .9s .3s cubic-bezier(.5,0,.6,1),opacity .1s .3s}
 /* Pase horizontal, como uno real, cuando hay ancho: talón a la derecha */
 @media (min-width:640px){
-  .pass{width:min(720px,100%);display:grid;grid-template-columns:minmax(0,1fr) 168px;grid-template-rows:auto 1fr}
-  .pass-top{grid-column:1;border-radius:16px 0 0 0}
-  .pass-main{grid-column:1}
+  .pass{width:min(720px,100%);flex-direction:row;align-items:stretch}
+  .pass-body{flex:1;min-width:0;border-radius:16px 0 0 16px}
+  .pass-top{border-radius:16px 0 0 0}
   .fields{grid-template-columns:1.4fr 1fr 1fr}
   .fields .wide{grid-column:span 2}
-  .stub{grid-column:2;grid-row:1/3;border-top:0;border-left:2px dashed var(--line2);flex-direction:column;justify-content:center;gap:12px;padding:18px 14px;background:color-mix(in srgb,var(--blue2) 45%,transparent);border-radius:0 16px 16px 0}
-  .stub::before,.stub::after{left:-11px;right:auto}
-  .stub::before{top:-10px}.stub::after{top:auto;bottom:-10px}
-  .torn-pass .stub{transform:translateX(120px) rotate(10deg)}
-  .torn-pass{transform:translateX(-30px) rotate(-1deg)}
+  .stub{flex:0 0 168px;margin:0 0 0 -3px;flex-direction:column;justify-content:center;gap:12px;padding:18px 14px 18px 17px;background-color:color-mix(in srgb,var(--blue2) 45%,var(--card));border-radius:0 16px 16px 0;transform-origin:0 100%}
+  .torn-pass .stub{animation-name:tearH}
 }
 @media (min-width:1000px) and (min-height:760px){.pass{width:780px}.route>div b{font-size:42px}.pass-top b{font-size:22px}.fields b{font-size:17px}}
 /* Pantallas bajas (horizontal): sin textos accesorios; botón y acceso directo en una fila */
@@ -208,11 +210,15 @@ body.panel-open .cbar,body.viewer-open .cbar{display:none}
 @media (min-width:900px){.hero{padding-left:48px;padding-right:48px}.pstamp{width:100px;right:36px;top:32px}.pstamp>div{height:120px}}
 .sea{position:absolute;left:0;right:0;bottom:0;height:86px;overflow:hidden;pointer-events:none}
 .wv{position:absolute;left:0;bottom:0;width:200%}
-.w1{height:80px;fill:var(--blue);opacity:.55;animation:wv 11s linear infinite}
-.w2{height:56px;fill:var(--blue2);opacity:.85;animation:wv 7s linear infinite reverse}
+/* El agua tiene su propio color (marino desaturado) en las tres paletas; la paleta queda para papelería y acentos */
+.w1{height:80px;fill:#3E5E70;opacity:.5;animation:wv 20s linear infinite}
+.w2{height:56px;fill:#A9C3C7;opacity:.72;animation:wv 14s linear infinite reverse}
 @keyframes wv{to{transform:translateX(-50%)}}
-.w3{position:absolute;left:0;right:0;bottom:0;height:18px;-webkit-mask:var(--wave) 0 0/36px 18px repeat-x;mask:var(--wave) 0 0/36px 18px repeat-x;animation:wvm 4s linear infinite}
-@keyframes wvm{to{-webkit-mask-position:36px 0;mask-position:36px 0}}
+/* Orilla: ola larga y suave entre mar y papel, con una línea de espuma marfil */
+.w3,.foam{position:absolute;left:0;right:0;-webkit-mask:var(--shore) 0 0/240px 18px repeat-x;mask:var(--shore) 0 0/240px 18px repeat-x;animation:wvm 16s linear infinite}
+.w3{bottom:0;height:18px}
+.foam{bottom:5px;height:18px;background:#FBF7EE;opacity:.75;animation-duration:22s}
+@keyframes wvm{to{-webkit-mask-position:240px 0;mask-position:240px 0}}
 .boat{position:absolute;left:0;bottom:30px;animation:sail 34s linear infinite}
 .boat svg{display:block;animation:bob 2.2s ease-in-out infinite alternate}
 @keyframes sail{from{transform:translateX(-60px)}to{transform:translateX(calc(100vw + 20px))}}
@@ -397,7 +403,7 @@ footer .pf{font-size:clamp(28px,7vw,36px);font-style:italic;overflow-wrap:anywhe
 [data-rv]{opacity:0;transform:translateY(12px);transition:opacity .35s ease-out,transform .4s cubic-bezier(.22,1,.36,1)}
 [data-rv].in,.lz-editor [data-rv]{opacity:1;transform:none}
 @media (min-width:700px){.sec{padding-left:40px;padding-right:40px}}
-@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation:none !important;transition:none !important}[data-rv]{opacity:1;transform:none}.gull,.flight{display:none}}
+@media (prefers-reduced-motion:reduce){.opening.gone{transition:opacity .2s,visibility 0s .2s !important}html{scroll-behavior:auto}*,*::before,*::after{animation:none !important;transition:none !important}[data-rv]{opacity:1;transform:none}.gull,.flight{display:none}}
 </style>
 <link rel="stylesheet" href="/demo/shared/panel.css">
 </head>
@@ -420,7 +426,7 @@ footer .pf{font-size:clamp(28px,7vw,36px);font-style:italic;overflow-wrap:anywhe
   var S = {
     es: {
       envIntro: 'Una invitación para un día inolvidable', envClosing: 'Con todo nuestro cariño', openAria: 'Invitación en un pase de abordar',
-      pass: 'PASE DE ABORDAR', you: 'TÚ', youSub: 'Donde estés', passengers: 'Pasajeros', seatsL: 'Asientos', seats: '4 cupos', dateL: 'Fecha', boardingL: 'Ceremonia', dest: 'Mensaje', board: 'Abordar', skip: 'Ver la invitación directamente',
+      pass: 'PASE DE ABORDAR', you: 'TÚ', youSub: 'Donde estés', passengers: 'Pasajeros', seatsL: 'Asientos', seats: '4 cupos', dateL: 'Fecha', boardingL: 'Ceremonia', dest: 'Mensaje', board: 'Abordar',
       guest: 'Familia Rodríguez', n1: 'Ana', n2: 'León', y: 'y', city: 'Oaxaca, México', date: '14 Marzo 2027', getting: 'Nos vamos a casar', msg: 'Nos casamos y queremos celebrarlo contigo.',
       seeSched: 'Ver itinerario', confirm: 'Confirmar asistencia', explore: 'Explorar demo', music: 'Música', musicOff: 'Pausar música',
       story: 'Nuestra historia', storyTitle: 'Cómo empezó todo', storyTxt: 'Nos conocimos en una boda —qué ironía— y desde ese baile no hemos dejado de caminar juntos. Ahora queremos que estén con nosotros en el capítulo más bonito.',
@@ -450,7 +456,7 @@ footer .pf{font-size:clamp(28px,7vw,36px);font-style:italic;overflow-wrap:anywhe
     },
     en: {
       envIntro: 'An invitation to an unforgettable day', envClosing: 'With all our love', openAria: 'Invitation as a boarding pass',
-      pass: 'BOARDING PASS', you: 'YOU', youSub: 'Wherever you are', passengers: 'Passengers', seatsL: 'Seats', seats: '4 seats', dateL: 'Date', boardingL: 'Ceremony', dest: 'Message', board: 'Board', skip: 'View the invitation directly',
+      pass: 'BOARDING PASS', you: 'YOU', youSub: 'Wherever you are', passengers: 'Passengers', seatsL: 'Seats', seats: '4 seats', dateL: 'Date', boardingL: 'Ceremony', dest: 'Message', board: 'Board',
       guest: 'The Rodríguez family', n1: 'Anna', n2: 'Leo', y: 'and', city: 'Oaxaca, Mexico', date: 'March 14 2027', getting: 'We’re getting married', msg: 'We’re getting married and want to celebrate with you.',
       seeSched: 'See schedule', confirm: 'RSVP', explore: 'Explore demo', music: 'Music', musicOff: 'Pause music',
       story: 'Our story', storyTitle: 'How it all began', storyTxt: 'We met at a wedding —how ironic— and since that dance we haven’t stopped walking together. Now we want you with us for the most beautiful chapter.',
@@ -511,16 +517,16 @@ footer .pf{font-size:clamp(28px,7vw,36px);font-style:italic;overflow-wrap:anywhe
     '<div class="op-in">' +
       '<p class="intro" data-lz="envIntro" data-lz-keep>' + S.envIntro + '</p>' +
       '<div class="pass" id="pass">' +
-        '<div class="pass-top"><b>' + N('n1') + ' &amp; ' + N('n2') + '</b><span>' + S.pass + '</span></div>' +
+        '<div class="pass-body"><div class="pass-top"><b>' + N('n1') + ' &amp; ' + N('n2') + '</b><span>' + S.pass + '</span></div>' +
         '<div class="pass-main">' +
           '<div class="route"><div class="from"><b>' + S.you + '</b><small>' + S.youSub + '</small></div>' + PLANE + '<div class="to"><b data-city-code>OAX</b><small data-lz="city">' + S.city + '</small></div></div>' +
           '<div class="fields"><div><small>' + S.passengers + '</small><b>' + S.guest + '</b></div><div><small>' + S.seatsL + '</small><b>' + S.seats + '</b></div>' +
             '<div><small>' + S.dateL + '</small><b data-lz-date="{dd}.{mm}.{Y}">14.03.2027</b></div><div><small>' + S.boardingL + '</small><b data-lz="time0">' + S.time0 + '</b></div>' +
             '<div class="wide"><small>' + S.dest + '</small><b data-lz="msg">' + S.msg + '</b></div></div>' +
-        '</div>' +
+        '</div></div>' +
         '<div class="stub" aria-hidden="true"><div class="barcode"></div>' + postmark + '<div class="seal" data-lz-seal>A&amp;L</div></div>' +
       '</div>' +
-      '<div class="op-acts"><button type="button" class="btn" id="board">' + S.board + ' →</button><button type="button" class="skip" id="skip">' + S.skip + '</button></div>' +
+      '<div class="op-acts"><button type="button" class="btn" id="board">' + S.board + ' →</button></div>' +
       '<p class="hint" data-lz="envClosing" data-lz-keep>' + S.envClosing + '</p>' +
     '</div>' +
   '</div>' +
@@ -536,7 +542,7 @@ footer .pf{font-size:clamp(28px,7vw,36px);font-style:italic;overflow-wrap:anywhe
       '<p class="msg" data-lz="msg">' + S.msg + '</p>' +
       '<div class="hero-acts"><a class="btn" href="#rsvp">' + S.confirm + '</a><a class="btn ghost" href="#itinerario">' + S.seeSched + '</a></div>' +
       '<div class="hero-tools"><button type="button" class="link db" aria-controls="dbSheet" aria-expanded="false">' + S.explore + '</button><button type="button" class="link mus" aria-pressed="false" hidden>' + EQ + '<span>' + S.music + '</span></button></div></div>' +
-      '<div class="sea" aria-hidden="true">' + WAVE('w1') + BOAT + WAVE('w2') + '<div class="w3 paper"></div></div>' +
+      '<div class="sea" aria-hidden="true">' + WAVE('w1') + BOAT + WAVE('w2') + '<div class="foam"></div><div class="w3 paper"></div></div>' +
     '</section>' +
 
     '<section class="sec paper" id="historia" data-lz-anchor="historia" style="padding-top:40px"><div class="in-w">' +
@@ -691,11 +697,50 @@ footer .pf{font-size:clamp(28px,7vw,36px);font-style:italic;overflow-wrap:anywhe
   $('board').addEventListener('click', function () {
     if (op.classList.contains('boarding')) return;
     LazoMusic.play();
-    if (reduce) { enterAsGuest(true); return; } // sin timers ni esperas
+    if (reduce) { enterAsGuest(false); return; } // sin rotura ni timers: un fundido breve
+    // La rotura se lee primero (≈1 s); el avión cruza detrás del pase; luego entra la invitación.
     pass.classList.add('torn-pass'); op.classList.add('boarding');
-    timer = setTimeout(function () { enterAsGuest(false); }, 650);
+    timer = setTimeout(function () { enterAsGuest(false); }, 1050);
   });
-  $('skip').addEventListener('click', function () { enterAsGuest(true); });
+
+  // Perforación y rotura: cuerpo y talón llevan máscaras complementarias con la misma línea de rotura
+  // (medios agujeros de la perforación, pequeñas irregularidades entre ellos y las dos muescas de los extremos).
+  function tearMasks() {
+    var body = pass.querySelector('.pass-body'), stub = pass.querySelector('.stub'), row = getComputedStyle(pass).flexDirection === 'row';
+    var bw = body.offsetWidth, bh = body.offsetHeight, sw = stub.offsetWidth, sh = stub.offsetHeight;
+    if (!bw || !sw) return;
+    var L = row ? bh : bw, R = 10, r = 1.7, gap = 8, rad = 16, seed = 17;
+    var rnd = function () { return (seed = (seed * 9301 + 49297) % 233280) / 233280; }, p1 = rnd() * 6, p2 = rnd() * 6, holes = [];
+    var n = Math.max(0, Math.floor((L - 2 * R - 8) / gap) + 1), first = (L - (n - 1) * gap) / 2;
+    for (var i = 0; i < n; i++) holes.push(first + i * gap);
+    function v(u, side) {
+      if (u < R) return side * Math.sqrt(R * R - u * u);
+      if (u > L - R) return side * Math.sqrt(Math.max(0, R * R - (L - u) * (L - u)));
+      for (var k = 0; k < holes.length; k++) { var d = u - holes[k]; if (Math.abs(d) < r) return side * Math.sqrt(r * r - d * d); }
+      return .5 * Math.sin(u * .9 + p1) + .35 * Math.sin(u * 2.6 + p2);
+    }
+    var U = []; for (var u = 0; u < L; u += .5) U.push(u); U.push(L);
+    var f = function (x) { return (+x).toFixed(2); }, bp, sp;
+    if (!row) {
+      var Y0 = bh - 1.5;
+      bp = 'M0 ' + rad + 'Q0 0 ' + rad + ' 0L' + (bw - rad) + ' 0Q' + bw + ' 0 ' + bw + ' ' + rad;
+      for (var a = U.length - 1; a >= 0; a--) bp += 'L' + f(U[a]) + ' ' + f(Y0 + v(U[a], -1));
+      sp = 'M0 ' + f(1.5 + v(0, 1)); U.forEach(function (x) { sp += 'L' + f(x) + ' ' + f(1.5 + v(x, 1)); });
+      sp += 'L' + sw + ' ' + (sh - rad) + 'Q' + sw + ' ' + sh + ' ' + (sw - rad) + ' ' + sh + 'L' + rad + ' ' + sh + 'Q0 ' + sh + ' 0 ' + (sh - rad);
+    } else {
+      var X0 = bw - 1.5;
+      bp = 'M' + rad + ' 0Q0 0 0 ' + rad + 'L0 ' + (bh - rad) + 'Q0 ' + bh + ' ' + rad + ' ' + bh;
+      for (var b = U.length - 1; b >= 0; b--) bp += 'L' + f(X0 + v(U[b], -1)) + ' ' + f(U[b]);
+      sp = 'M' + f(1.5 + v(0, 1)) + ' 0L' + (sw - rad) + ' 0Q' + sw + ' 0 ' + sw + ' ' + rad + 'L' + sw + ' ' + (sh - rad) + 'Q' + sw + ' ' + sh + ' ' + (sw - rad) + ' ' + sh;
+      for (var c = U.length - 1; c >= 0; c--) sp += 'L' + f(1.5 + v(U[c], 1)) + ' ' + f(U[c]);
+    }
+    var svg = function (w, h, d) { return 'url("data:image/svg+xml,' + encodeURIComponent("<svg xmlns='http://www.w3.org/2000/svg' width='" + w + "' height='" + h + "' viewBox='0 0 " + w + ' ' + h + "'><path d='" + d + "Z'/></svg>") + '")'; };
+    body.style.webkitMaskImage = body.style.maskImage = svg(bw, bh, bp);
+    stub.style.webkitMaskImage = stub.style.maskImage = svg(sw, sh, sp);
+  }
+  tearMasks();
+  if ('ResizeObserver' in window) new ResizeObserver(function () { if (!pass.classList.contains('torn-pass')) tearMasks(); }).observe(pass);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(tearMasks);
 
   // Para el editor de Lazo (demo/shared/content.js): saltar o volver a mostrar el pase.
   window.LzTemplate = {
