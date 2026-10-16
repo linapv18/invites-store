@@ -107,6 +107,12 @@
       { id: 'noche', es: 'Noche', en: 'Night', sw: '#1F1C24', vars: { vel: '#1F1C24', acc: '#B0202F', paper: '#EFEAE2', ink: '#141217', bulb: '#F3DDB0' } },
       { id: 'champan', es: 'Champán', en: 'Champagne', sw: '#8A7354', vars: { vel: '#8A7354', acc: '#6E1220', paper: '#F7F1E7', ink: '#231D17', bulb: '#FBE7C0' } }
     ],
+    // Nácar: el ante y la sección oscura cambian; el nácar no.
+    nacar: [
+      { id: 'nacar', es: 'Nácar', en: 'Nacre', sw: '#8F8270' },
+      { id: 'bruma', es: 'Bruma', en: 'Mist', sw: '#7F8A96', vars: { dark: '#5F6B78', suede: '#7F8A96', paper: '#F3F1EC', ink: '#22262B', silver: '#B9BCC0', sand: '#E4E4E0' } },
+      { id: 'oliva', es: 'Oliva', en: 'Olive', sw: '#7B826A', vars: { dark: '#5E6650', suede: '#7B826A', paper: '#F4F0E6', ink: '#25271F', silver: '#B5B3A8', sand: '#E6E3D5' } }
+    ],
     // Glicina: una sola paleta (los racimos, la rama y las hortensias son imágenes).
     glicina: [
       { id: 'lavanda', es: 'Lavanda y oliva', en: 'Lavender and olive', sw: 'conic-gradient(#8E79BD 0 50%,#7C8454 0)' }
