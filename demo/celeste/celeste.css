@@ -247,3 +247,4 @@ textarea{padding:12px;font:16px/1.6 'Tenor Sans';resize:vertical;min-height:96px
 #invite .ring,#invite .twk span,#invite .shoot,#invite .aurora{animation-play-state:paused}
 #invite .motion-active .ring,#invite .motion-active .twk span,#invite .motion-active>.shoot,#invite .motion-active .aurora{animation-play-state:running}
 body.locked #invite *,html.motion-paused *{animation-play-state:paused!important}
+.sec p.tn{font:400 12px/1.7 'Tenor Sans',sans-serif;letter-spacing:.2em;color:var(--accent)}
