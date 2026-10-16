@@ -26,6 +26,7 @@
       rsvpT: 'Confirma tu asistencia', before: 'Antes del', rsvpDatePat: '{d} de {M} de {Y}', deadline: '14 de febrero de 2027', seatsRes: '4 cupos reservados', rsvpMsg: 'Confirma quiénes de esta invitación podrán acompañarnos.',
       yes: 'Asistiré con gusto', no: 'No podré asistir', diet: 'Restricciones alimentarias (opcional)', note: 'Un mensaje para nosotros (opcional)', send: 'Enviar respuesta', err: 'Indiquen la respuesta de cada persona.',
       thanks: 'Gracias', edit: 'Editar respuesta', will: function (y, n) { return y ? 'Asistirán ' + y + ' de ' + n + ' personas. Nos vemos pronto.' : 'Gracias por avisarnos. Los extrañaremos.'; },
+      dateK: 'Guarden la fecha', dayK: 'El día', dressK: 'Qué ponerse', hotelK: 'Hotel sugerido', rsvpH: 'Los esperamos', colYes: 'Asistirá', colNo: 'No podrá', allPhotos: 'Ver todas las fotos', scroll: 'Desliza', sections: 'Secciones', storyNav: 'Historia', progNav: 'Programa', travelNav: 'Viaje', faqNav: 'Preguntas', confirm: 'Confirmar', demoNote: 'Demostración: las respuestas no se envían ni se guardan.', demoBooking: 'Demostración · reserva por personalizar', coverPat: '{W} · {d} de {M} de {Y}', coverTxt: 'Domingo · 14 de marzo de 2027', endPat: '{dd} · {mm} · {Y}', endTxt: '14 · 03 · 2027',
       demo: 'Demo', panel: 'Panel de novios', store: 'Tienda', storeUrl: '/#disenos'
     },
     en: {
@@ -49,6 +50,7 @@
       rsvpT: 'Please reply', before: 'Kindly reply by', rsvpDatePat: '{Mc} {d}, {Y}', deadline: 'February 14, 2027', seatsRes: '4 seats reserved', rsvpMsg: 'Let us know who from this invitation can join us.',
       yes: 'Will gladly attend', no: 'Unable to attend', diet: 'Dietary restrictions (optional)', note: 'A message for us (optional)', send: 'Send reply', err: 'Please answer for each person.',
       thanks: 'Thank you', edit: 'Edit answer', will: function (y, n) { return y ? y + ' of ' + n + ' people will attend. See you soon.' : 'Thanks for letting us know. We’ll miss you.'; },
+      dateK: 'Save the date', dayK: 'The day', dressK: 'What to wear', hotelK: 'Suggested hotel', rsvpH: 'We hope to see you', colYes: 'Attending', colNo: 'Not attending', allPhotos: 'See all photos', scroll: 'Scroll', sections: 'Sections', storyNav: 'Story', progNav: 'Program', travelNav: 'Travel', faqNav: 'FAQ', confirm: 'RSVP', demoNote: 'Demo: responses are neither sent nor saved.', demoBooking: 'Demo · booking link to be personalized', coverPat: '{W} · {Mc} {d}, {Y}', coverTxt: 'Sunday · March 14, 2027', endPat: '{mm} · {dd} · {Y}', endTxt: '03 · 14 · 2027',
       demo: 'Demo', panel: 'Couple’s dashboard', store: 'Store', storeUrl: '/en/#designs'
     }
   }[LANG];
@@ -94,6 +96,11 @@ const brush = c => `<svg viewBox="0 0 70 26" aria-hidden="true"><path d="M5 11C2
   var ovalNames = function (d) { return '<p class="mc">' + S.invite + '</p>' + names(d) + '<p class="dt" data-lz-date="' + S.datePat + '">' + S.dateTxt + '</p>'; };
   var ICONS = ['rings', 'dinner', 'glasses', 'candles'].map(function (k, i) { return GLI(k).replace('class="ic"', 'class="ic i' + i + '"'); }).join('');
 
+  var ICO = function (d) { return '<svg class="gx-ic" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="' + d + '"/></svg>'; };
+  var GRID = ICO('M3 3h4v4H3zM9 3h4v4H9zM3 9h4v4H3zM9 9h4v4H9z'), PIN = ICO('M8 14s-4.5-4-4.5-7.5a4.5 4.5 0 0 1 9 0C12.5 10 8 14 8 14zM8 8.2a1.6 1.6 0 1 0 0-3.2 1.6 1.6 0 0 0 0 3.2z'), EXT = ICO('M5 11 11 5M6 5h5v5'), WARN = ICO('M8 2.5 14 13H2zM8 6.5v3M8 11.2v.1');
+  var DIV = '<div class="gx-div" aria-hidden="true"><i></i><img src="' + G + 'racimo-largo.webp" alt="" loading="lazy" decoding="async"><i></i></div>';
+  var dl = function (k, label, text) { return '<div class="gx-dl" data-lz-group="' + k + '"><p class="gx-k gx-mute">' + label.replace(/\.$/, '') + '</p><p class="gx-p" data-lz="' + k + '">' + text + '</p></div>'; };
+
   document.getElementById('app').innerHTML = '<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><filter id="glRough" x="-10%" y="-30%" width="120%" height="160%"><feTurbulence type="fractalNoise" baseFrequency=".09" numOctaves="2" seed="4"/><feDisplacementMap in="SourceGraphic" scale="6"/></filter><radialGradient id="glGlow"><stop offset="0" stop-color="#FFE3A0" stop-opacity=".8"/><stop offset="1" stop-color="#FFE3A0" stop-opacity="0"/></radialGradient><filter id="glLaceSh" x="-5%" y="-5%" width="110%" height="115%"><feDropShadow dx=".7" dy="1.3" stdDeviation=".9" flood-color="#3d3a20" flood-opacity=".38"/></filter><pattern id="glNet" width="4" height="4" patternUnits="userSpaceOnUse"><path d="M0 0L4 4M4 0L0 4" stroke="#8a8460" stroke-opacity=".2" stroke-width=".35"/></pattern></defs></svg>' +
   // ======================= APERTURA: cortina de glicinas =======================
   '<div class="opening garden" id="open" role="dialog" aria-modal="true" aria-label="' + S.openAria + '">' +
@@ -106,69 +113,63 @@ const brush = c => `<svg viewBox="0 0 70 26" aria-hidden="true"><path d="M5 11C2
   '</div>' +
 
   // ======================= INVITACIÓN =======================
-  '<div class="mbar" id="mbar" aria-hidden="true"><span class="pa" style="font-size:24px;color:var(--sage)">' + N('n1') + ' &amp; ' + N('n2') + '</span><span class="mc" data-lz-date="' + S.datePat + '">' + S.dateTxt + '</span></div>' +
+  // Papel de lino, filetes finos y la glicina como único adorno. En escritorio la portada queda fija a la izquierda.
+  '<header class="mbar" id="mbar"><span class="gx-bar-names" aria-hidden="true">' + N('n1') + ' &amp; ' + N('n2') + '</span><nav aria-label="' + S.sections + '">' +
+    [['historia', S.storyNav], ['itinerario', S.progNav], ['viaje', S.travelNav], ['faq', S.faqNav]].map(function (l) { return '<a class="gx-dk" href="#' + l[0] + '">' + l[1] + '</a>'; }).join('') +
+    '<a class="gx-bar-cta" href="#rsvp">' + S.confirm + '</a></nav></header>' +
   '<main id="invite" inert>' +
-    '<section class="ghero" id="portada" data-lz-anchor="portada">' +
-      '<p class="mc" style="position:relative;z-index:1;margin-bottom:14px">' + S.getting + '</p>' +
-      '<div class="estate-scene" aria-hidden="true"></div><div class="loval invitation-oval">' + LACE + ovalNames(0) + '</div>' +
-    '</section>' +
-    '<div class="flow">' +
-    '<section class="panel welcome-panel">' +
-      '<div class="cameo"><span data-lz-seal><span class="lz-seal">A<i>&amp;</i>L</span></span></div>' +
-      '<p class="mc" data-lz-date="' + S.heroPat + '">' + S.heroTxt + '</p><p style="font-style:italic" data-lz="city">' + S.city + '</p>' + ORN(170) +
-      '<h2>' + S.dear + '</h2><p data-lz="msg">' + S.msg + '</p><div class="cover-photo ph-only" data-rv><img class="ph-img" id="heroImg" loading="lazy" decoding="async" src="/assets/fotos/paseo.jpg" data-lz-src="photo:0" alt="' + S.photoAlt + '" style="object-position:center 55%"></div>' +
-    '</section>' +
-    '<div class="gap" aria-hidden="true"></div>' +
-    '<section class="panel story-panel" id="historia" data-lz-anchor="historia">' +
-      '<p class="mc">' + S.story + '</p><h2 data-lz="storyTitle">' + S.storyTitle + '</h2><p data-lz="story">' + S.storyTxt + '</p>' +
-      '<div class="arches ph-only" data-lz-list="gallery">' + ['/assets/fotos/beso.jpg','/assets/fotos/escalera.jpg','/assets/fotos/muro.jpg'].map(function(src){return '<div class="arch" data-lz-item data-rv><div class="pic"><img class="ph-img" data-lz-f="img" src="'+src+'" alt="" loading="lazy"></div></div>';}).join('') + '</div><button type="button" class="gallery-link ph-only" data-gallery-open>' + (LANG==='en'?'Open our photo album':'Abrir nuestro álbum') + '</button>' +
-      '<div class="vign garden np-only" data-rv><div class="estate-scene" aria-hidden="true"></div>' + floral() + '<span class="vign-flourish" aria-hidden="true">' + ORN(130) + '</span>' + '</div>' +
-    '</section>' +
-    '<section class="panel calendar-panel" style="padding-top:10px">' + ORN(150) +
-      '<h2 data-lz-date="' + S.monthPat + '">' + S.monthTxt + '</h2>' +
+    '<section class="gx-cover" id="portada" data-lz-anchor="portada"><div class="gx-cover-art" aria-hidden="true"></div><div class="gx-cover-in">' +
+      '<div class="gx-oval ph-only">' + LACE + '<div class="gx-oval-in"><img class="ph-img" id="heroImg" src="/assets/fotos/paseo.jpg" data-lz-src="photo:0" alt="' + S.photoAlt + '" decoding="async"></div></div>' +
+      '<div class="gx-oval np-only" aria-hidden="true">' + LACE + '<div class="gx-oval-in gx-oval-text"><p class="gx-k">' + S.invite + '</p><p class="gx-oval-names">' + N('n1') + '<span>' + S.y + '</span>' + N('n2') + '</p></div></div>' +
+      '<h1 class="gx-names" tabindex="-1">' + N('n1') + ' <span class="y">' + S.y + '</span> ' + N('n2') + '</h1>' +
+      '<p class="gx-k gx-ink" data-lz-date="' + S.coverPat + '">' + S.coverTxt + '</p><p class="gx-city" data-lz="city">' + S.city + '</p>' +
+      '<p class="gx-cue" aria-hidden="true"><span>' + S.scroll + '</span><i></i></p>' +
+    '</div></section>' +
+    '<div class="gx-flow">' +
+    '<section class="gx-sec gx-welcome"><p class="gx-k">' + S.for + '</p><p class="gx-guest">' + S.guest + '</p>' +
+      '<h2 class="gx-h">' + S.dear + '</h2><p class="gx-p" data-lz="msg">' + S.msg + '</p></section>' +
+    DIV +
+    '<section class="gx-sec" id="historia" data-lz-anchor="historia"><p class="gx-k">' + S.story + '</p><h2 class="gx-h" data-lz="storyTitle">' + S.storyTitle + '</h2><p class="gx-p gx-narrow" data-lz="story">' + S.storyTxt + '</p>' +
+      '<div class="gx-collage ph-only" data-lz-list="gallery" data-rv>' + ['beso', 'escalera', 'muro'].map(function (f) { return '<div class="gx-arch" data-lz-item><img class="ph-img" data-lz-f="img" src="/assets/fotos/' + f + '.jpg" alt="" loading="lazy" decoding="async"></div>'; }).join('') + '</div>' +
+      '<button type="button" class="gx-link ph-only" data-gallery-open>' + GRID + S.allPhotos + '</button></section>' +
+    '<div class="gx-band"><section class="gx-sec" id="cuando"><p class="gx-k">' + S.dateK + '</p><h2 class="gx-h" data-lz-date="' + S.monthPat + '">' + S.monthTxt + '</h2>' +
       '<div class="week" id="week">' + S.wd.map(function (d) { return '<span>' + d + '</span>'; }).join('') + [0, 1, 2, 3, 4, 5, 6].map(function () { return '<b></b>'; }).join('') + '</div>' +
-    '</section>' +
-    '<section class="panel olive countdown-panel" style="padding:50px 16px">' +
-      '<i class="ledge"></i><i class="ledge b"></i>' +
-      '<div class="cdov"><img class="lace" src="' + G + 'encaje-ovalo.webp" alt=""><p class="mc"><span data-lz="cdName">' + S.cdName + '</span> · <span data-lz="time0">' + S.time0 + '</span></p><h2>' + S.yes2 + '</h2>' +
-        '<div class="gcd" aria-live="off">' + S.units.map(function (u, i) { return '<div><b data-cd="' + 'dhms'[i] + '">--</b><span>' + u + '</span></div>'; }).join('') + '</div></div>' +
-      '<p style="font-style:italic;margin-top:14px" data-lz="countdownNote">' + S.cdNote + '</p>' +
-    '</section>' +
-    '<section class="panel" id="itinerario" data-lz-anchor="itinerario musica">' + CHANDELIER +
-      '<h2>' + S.program + '</h2>' +
-      '<div class="prog" data-lz-list="events">' + S.events.map(function (e) { return '<div class="pe" data-lz-item data-rv>' + ICONS + '<div><h3><span data-lz-f="name">' + e[1] + '</span><small data-lz-f="time">' + e[0] + '</small></h3><p data-lz-f="place">' + e[2] + '</p><p style="font-size:14px;opacity:.8" data-lz-f="address">' + e[3] + '</p><a class="btn" data-lz-f="map" href="' + maps(e[2]) + '" target="_blank" rel="noopener">' + S.map + '</a></div></div>'; }).join('') + '</div>' +
-    '</section>' +
-    '<section class="panel dress-panel" style="padding-top:10px" data-lz-group="dressCode dressNotes dressColors">' + ORN(150) +
-      '<h2>' + S.dress + '</h2><p class="mc" data-lz="dressCode">' + S.dressCode + '</p><p style="margin-top:8px" data-lz="dressNotes">' + S.dressNotes + '</p>' +
-      '<div class="brush" hidden aria-hidden="true">' + ['#F4F1EA', '#E8D9C0'].map(brush).join('') + '</div><p style="font-size:14.5px;margin-top:8px" data-lz-group="dressColors"><i>' + S.reserved + '</i> <span data-lz="dressColors">' + S.dressColors + '</span></p>' +
-    '</section>' +
-    '<section class="panel olive" id="viaje" data-lz-anchor="viaje" data-lz-show="viajeOn" style="padding-top:56px">' +
-      '<i class="ledge"></i><p class="mc">' + S.fromAway + '</p><h2>' + S.travel + '</h2><p data-lz="travelIntro">' + S.travelIntro + '</p>' +
-      '<div style="margin-top:18px">' +
-        '<div class="ti" data-rv data-lz-group="hotel hotelAddress hotelCode hotelNotes">' + tIcon.hotel + '<h3 data-lz="hotel">' + S.hotel + '</h3><p><span data-lz="hotelAddress">' + S.hotelAddress + '</span><br><span data-lz-group="hotelCode">' + S.rate + ' <b data-lz="hotelCode">' + S.hotelCode + '</b></span><br><i data-lz="hotelNotes">' + S.hotelNotes + '</i></p><a class="btn" hidden href="#viaje" data-lz-href="hotelLink" data-lz-if="hotelLink">' + S.book + '</a><p class="demo-booking">' + (LANG==='en'?'Demo · booking link to be personalized':'Demostración · reserva por personalizar') + '</p></div>' +
-        '<div class="ti" data-rv data-lz-group="airport transport">' + tIcon.plane + '<h3>' + S.getThere + '</h3><p data-lz-group="airport"><b>' + S.airportL + '</b> <span data-lz="airport">' + S.airport + '</span></p><p data-lz-group="transport"><b>' + S.transportL + '</b> <span data-lz="transport">' + S.transport + '</span></p></div>' +
-        '<div class="ti" data-rv data-lz-group="guideFood guideCulture guidePlans">' + tIcon.map + '<h3>' + S.guide + '</h3><p data-lz-group="guideFood"><b>' + S.foodL + '</b> <span data-lz="guideFood">' + S.food + '</span></p><p data-lz-group="guideCulture"><b>' + S.cultureL + '</b> <span data-lz="guideCulture">' + S.culture + '</span></p><p data-lz-group="guidePlans"><b>' + S.plansL + '</b> <span data-lz="guidePlans">' + S.plans + '</span></p></div>' +
-      '</div>' +
-    '</section>' +
-    '<div class="gap q" style="height:auto;padding:120px 0 40px" data-lz-group="quote">' + floral() +
-      '<div class="heart" data-frame="gl-heart" data-rv><blockquote>“<span data-lz="quote">' + S.quote + '</span>”</blockquote><p class="mc" style="font-size:7.5px;letter-spacing:.12em" data-lz="quoteAuthor">' + S.quoteAuthor + '</p></div>' +
+      '<p class="gx-k gx-cd-k"><span data-lz="cdName">' + S.cdName + '</span> · <span data-lz="time0">' + S.time0 + '</span></p><p class="gx-h gx-h-s">' + S.yes2 + '</p>' +
+      '<div class="gx-cd" aria-live="off">' + S.units.map(function (u, i) { return '<div><b data-cd="' + 'dhms'[i] + '">--</b><span>' + u + '</span></div>'; }).join('') + '</div>' +
+      '<p class="gx-m gx-it" data-lz="countdownNote">' + S.cdNote + '</p></section></div>' +
+    '<section class="gx-sec" id="itinerario" data-lz-anchor="itinerario musica"><p class="gx-k">' + S.dayK + '</p><h2 class="gx-h">' + S.program + '</h2>' +
+      '<div class="gx-prog" data-lz-list="events">' + S.events.map(function (e) { return '<div class="gx-ev" data-lz-item data-rv>' + ICONS + '<p class="gx-k gx-ink" data-lz-f="time">' + e[0] + '</p><h3 class="gx-h gx-h-s" data-lz-f="name">' + e[1] + '</h3><p class="gx-p" data-lz-f="place">' + e[2] + '</p><p class="gx-m" data-lz-f="address">' + e[3] + '</p><a class="gx-link" data-lz-f="map" href="' + maps(e[2]) + '" target="_blank" rel="noopener">' + PIN + S.map + '</a></div>'; }).join('') + '</div></section>' +
+    DIV +
+    '<section class="gx-sec" data-lz-group="dressCode dressNotes dressColors"><p class="gx-k">' + S.dressK + '</p><h2 class="gx-h">' + S.dress + '</h2><p class="gx-code" data-lz="dressCode">' + S.dressCode + '</p>' +
+      '<p class="gx-p gx-narrow" data-lz="dressNotes">' + S.dressNotes + '</p><p class="gx-m" data-lz-group="dressColors"><i>' + S.reserved + '</i> <span data-lz="dressColors">' + S.dressColors + '</span></p></section>' +
+    DIV +
+    '<section class="gx-sec" id="viaje" data-lz-anchor="viaje" data-lz-show="viajeOn"><p class="gx-k">' + S.fromAway + '</p><h2 class="gx-h">' + S.travel + '</h2><p class="gx-p gx-narrow" data-lz="travelIntro">' + S.travelIntro + '</p>' +
+      '<div class="gx-hotel" data-rv data-lz-group="hotel hotelAddress hotelCode hotelNotes"><p class="gx-k">' + S.hotelK + '</p><h3 class="gx-h gx-h-s" data-lz="hotel">' + S.hotel + '</h3><p class="gx-p" data-lz="hotelAddress">' + S.hotelAddress + '</p>' +
+        '<div data-lz-group="hotelCode"><p class="gx-k gx-mute">' + S.rate + '</p><p class="gx-chip" data-lz="hotelCode">' + S.hotelCode + '</p></div><p class="gx-m gx-it" data-lz="hotelNotes">' + S.hotelNotes + '</p>' +
+        '<a class="gx-btno" hidden href="#viaje" data-lz-href="hotelLink" data-lz-if="hotelLink">' + S.book + EXT + '</a><p class="gx-m gx-it gx-demo-booking">' + S.demoBooking + '</p></div>' +
+      '<i class="gx-rule" aria-hidden="true"></i>' +
+      '<div class="gx-info" data-lz-group="airport transport"><h3 class="gx-h gx-h-xs">' + S.getThere + '</h3>' + dl('airport', S.airportL, S.airport) + dl('transport', S.transportL, S.transport) + '</div>' +
+      '<div class="gx-info" data-lz-group="guideFood guideCulture guidePlans"><h3 class="gx-h gx-h-xs">' + S.guide + '</h3>' + dl('guideFood', S.foodL, S.food) + dl('guideCulture', S.cultureL, S.culture) + dl('guidePlans', S.plansL, S.plans) + '</div></section>' +
+    DIV +
+    '<section class="gx-sec gx-quote" data-lz-group="quote"><div class="gx-vista" data-rv aria-hidden="true"><i></i></div>' +
+      '<blockquote>“<span data-lz="quote">' + S.quote + '</span>”</blockquote><p class="gx-k" data-lz="quoteAuthor">' + S.quoteAuthor + '</p></section>' +
+    DIV +
+    '<section class="gx-sec" id="faq" data-lz-anchor="faq" data-lz-hide-empty><p class="gx-k">' + S.faqK + '</p><h2 class="gx-h">' + S.faqT + '</h2>' +
+      '<div class="gx-faq" data-lz-list="faqs">' + S.faqs.map(function (f) { return '<details data-lz-item><summary><span data-lz-f="q">' + f[0] + '</span></summary><p data-lz-f="a">' + f[1] + '</p></details>'; }).join('') + '</div></section>' +
+    '<section class="gx-sec gx-reply" id="rsvp" data-lz-anchor="rsvp"><div class="gx-card" data-rv>' +
+      '<p class="gx-k">' + S.rsvpT + '</p><h2 class="gx-h">' + S.rsvpH + '</h2><p class="gx-k gx-mute" data-lz-if="rsvpDeadline">' + S.before + ' <span data-lz-date="' + S.rsvpDatePat + '" data-lz-from="rsvpDeadline">' + S.deadline + '</span></p>' +
+      '<p class="gx-guest">' + S.guest + '</p><p class="gx-k gx-mute">' + S.seatsRes + '</p>' +
+      '<div id="rsForm"><p class="gx-m gx-rsvp-msg" data-lz="rsvpMsg">' + S.rsvpMsg + '</p>' +
+        '<div class="gx-table"><div class="gx-thead" aria-hidden="true"><span></span><span>' + S.colYes + '</span><span>' + S.colNo + '</span></div><div id="people"></div></div>' +
+        '<div class="gx-fields"><label class="gx-fld" data-lz-show="rsvpDiet"><span>' + S.diet + '</span><textarea rows="1"></textarea></label><label class="gx-fld" data-lz-show="rsvpNote"><span>' + S.note + '</span><textarea rows="1" id="note"></textarea></label></div>' +
+        '<p class="gx-err" id="rsErr" role="alert" hidden>' + WARN + S.err + '</p><button type="button" class="gx-btn" id="rsSave">' + S.send + '</button></div>' +
+      '<div id="rsDone" hidden><p class="gx-thanks">' + S.thanks + '</p><div id="rsSum" class="gx-p"></div><button type="button" class="gx-link" id="rsEdit">' + S.edit + '</button></div>' +
+      '<p class="gx-m gx-it gx-demo">' + S.demoNote + '</p></div></section>' +
     '</div>' +
-    '<section class="panel" id="faq" data-lz-anchor="faq" data-lz-hide-empty>' +
-      '<p class="mc">' + S.faqK + '</p><h2>' + S.faqT + '</h2>' +
-      '<div class="faq" data-lz-list="faqs">' + S.faqs.map(function (f) { return '<details data-lz-item><summary><span data-lz-f="q">' + f[0] + '</span></summary><p data-lz-f="a">' + f[1] + '</p></details>'; }).join('') + '</div>' +
-    '</section>' +
-    '<section class="panel" id="rsvp" data-lz-anchor="rsvp" style="padding-bottom:64px">' +
-      '<i class="ledge b"></i>' + ORN(150) +
-      '<h2>' + S.rsvpT + '</h2><p class="mc" data-lz-if="rsvpDeadline">' + S.before + ' <span data-lz-date="' + S.rsvpDatePat + '" data-lz-from="rsvpDeadline">' + S.deadline + '</span></p>' +
-      '<p class="pa" style="font-size:34px;color:var(--sage);margin-top:14px">' + S.guest + '</p><p class="mc">' + S.seatsRes + '</p>' +
-      '<p class="demo-note">' + (LANG==='en'?'Demo: responses are neither sent nor saved.':'Demostración: las respuestas no se envían ni se guardan.') + '</p><div id="rsForm"><p style="margin:16px 0 6px;text-align:left" data-lz="rsvpMsg">' + S.rsvpMsg + '</p><div id="people"></div>' +
-        '<label data-lz-show="rsvpDiet">' + S.diet + '<textarea rows="2"></textarea></label><label data-lz-show="rsvpNote">' + S.note + '<textarea rows="2" id="note"></textarea></label>' +
-        '<p class="rs-err" id="rsErr" role="alert" hidden>' + S.err + '</p><button type="button" class="btn" style="margin-top:22px" id="rsSave">' + S.send + '</button></div>' +
-      '<div id="rsDone" hidden style="padding-top:16px"><p class="pa" style="font-size:46px;color:var(--sage)">' + S.thanks + '</p><p id="rsSum" style="margin:6px 0 18px"></p><button type="button" class="btn" id="rsEdit">' + S.edit + '</button></div>' +
-    '</section>' +
-    '</div>' +
-    '<footer><div class="estate-scene" aria-hidden="true"></div>' + floral() +
-      '<p class="names">' + N('n1') + ' &amp; ' + N('n2') + '</p><p class="mc"><span data-lz-date="' + S.datePat + '">' + S.dateTxt + '</span> · <span data-lz="city">' + S.city + '</span></p><nav class="footer-links" aria-label="' + (LANG==='en'?'Wedding information':'Información de la boda') + '"><a href="#itinerario">' + (LANG==='en'?'Schedule':'Itinerario') + '</a><a href="#rsvp">' + (LANG==='en'?'RSVP':'Confirmar asistencia') + '</a></nav></footer>' +
+    '<section class="gx-end"><div class="gx-end-in"><p class="gx-k" data-lz="envClosing" data-lz-keep>' + S.envClosing + '</p><p class="gx-end-names">' + N('n1') + ' &amp; ' + N('n2') + '</p>' +
+      '<p class="gx-k gx-ink"><span data-lz-date="' + S.endPat + '">' + S.endTxt + '</span> · <span data-lz="city">' + S.city + '</span></p>' +
+      '<nav class="gx-end-links" aria-label="' + (LANG === 'en' ? 'Wedding information' : 'Información de la boda') + '"><a class="gx-link" href="#itinerario">' + S.progNav + '</a><a class="gx-link" href="#rsvp">' + S.confirm + '</a></nav></div>' +
+      '<img class="gx-end-flowers" src="' + G + 'hortensias.webp" alt="" loading="lazy" decoding="async"></section>' +
   '</main>';
 
   document.getElementById('demoBar').innerHTML = '<span class="lbl">' + S.demo + '</span><button type="button" data-open-panel>' + S.panel + '</button><a href="' + S.storeUrl + '">' + S.store + '</a>';

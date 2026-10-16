@@ -443,147 +443,9 @@ footer>.wis{height:170px;opacity:.75}
 /* The revealed invitation continues the ivory and pale-lilac botanical suite. */
 :root{--cream:#fcfaf3;--ink:#454b43;--sage:#606c53;--sage2:#afb6a0;--lav:#80738e;--lav2:#ddd5e8}
 body.gl{background-color:#efeee8;background-image:radial-gradient(ellipse at 0 12%,#e7e2ec88,transparent 45%),radial-gradient(ellipse at 100% 65%,#e3e8dc88,transparent 45%);background-size:100% 1800px;background-repeat:repeat-y;background-blend-mode:normal}
-#invite{background:var(--cream);width:100%;max-width:none;border-inline:0;box-shadow:0 0 65px #6965580a}
-#invite .flow{max-width:800px;background:transparent}
-#invite .panel{background-image:none;background-color:transparent;padding-block:64px}
-#invite .panel h2{color:var(--sage);font-size:clamp(40px,4.6vw,50px);margin-bottom:22px}
-#invite .panel>p{max-width:52ch;margin-inline:auto}
-#invite .mc{letter-spacing:.1em;color:var(--sage)}
-.floral-border{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:0}
-.floral-border img{position:absolute;top:-38px;left:-20px;width:31%;max-width:270px;height:auto;opacity:.95;transform-origin:50% 0}
-.floral-border img+img{left:auto;right:-20px;transform:scaleX(-1);top:-22px}
-#invite .ghero{padding:145px 24px 65px;background:linear-gradient(#f5f2f7a6,#fcfaf300);overflow:hidden}
-#invite .ghero>.mc,#invite .ghero>.loval{z-index:1}
-#invite .ghero .loval{filter:drop-shadow(0 5px 8px #514e3d12)}
-#invite .ghero .lace{filter:none;opacity:.9}
-#invite .ghero .loval::before{background:var(--cream)}
-#invite .cameo{background:#eeeaf24d;border-color:#b1aaaf;outline-color:#c2bbc580;box-shadow:inset 0 0 0 5px var(--cream);color:var(--sage)}
-#invite .orn{color:#a8ad99;opacity:.75}
-#invite .cover-photo{rotate:0deg;padding:10px;border-color:#c8c5bc99;box-shadow:0 16px 30px -22px #50485c55}
-#invite .arches{gap:7%;align-items:center;margin-top:38px}
-#invite .arch{border-radius:48% 48% 2px 2px;rotate:0deg;box-shadow:0 0 0 1px #c6c2ba99,0 12px 22px -18px #51485a66;padding:7px}
-#invite .arch:nth-child(2){margin-bottom:0;transform:translateY(18px)}
-#invite .gallery-link{margin-top:26px;border-color:#a9a2b555}
-#invite .vign{width:min(100%,360px);height:330px;background:linear-gradient(#e9e4ef88,#f7f6ee);border:1px solid #c5c1ca77;border-radius:50% 50% 4px 4px;box-shadow:0 0 0 7px var(--cream),0 0 0 8px #c5c1ca55;isolation:isolate}
-#invite .vign .estate-scene{display:none}
-#invite .vign .floral-border img{width:58%;max-width:none;left:-15px;top:-15px}
-#invite .vign .floral-border img+img{left:auto;right:-15px;top:0}
-.vign-flourish{position:absolute;bottom:30px;left:0;right:0}
-#invite .week{padding-block:20px;border-block:1px solid #c4bdcc66}
-#invite .week b{color:var(--ink)}
-#invite .week b svg{opacity:.65}
-#invite .panel.olive{color:var(--ink);background:linear-gradient(135deg,#eeebf3,#f4f1f5 55%,#eceee6);border-block:1px solid #c8c0cf55;margin-block:28px}
-#invite .olive h2,#invite .olive .mc{color:var(--sage)}
-#invite .ledge{display:none}
-#invite .countdown-panel{padding:50px 22px!important}
-#invite .gcd{border-block:1px solid #afa6bc55;padding-block:24px;margin-top:24px}
-#invite .gcd>div+div{border-left:1px solid #afa6bc55}
-#invite .gcd b{color:#6d6379}
-#invite .gcd span{color:#57525e}
-#invite .countdown-panel>p{font-size:17px}
-#invite .prog{margin-top:40px}
-#invite .pe .ic{color:#8a7d94;width:52px;height:52px}
-#invite .pe:not(:last-child)::before{border-left:1px solid #c5bdce;left:26px;top:62px}
-#invite .pe h3{font-size:34px}
-#invite .pe h3 small{color:var(--ink);font-size:15px;white-space:nowrap}
-#invite .pe .btn{background:transparent;color:var(--sage);border:1px solid #a9b09c88;box-shadow:none}
-#invite .dress-panel{margin:0 36px 40px;padding:40px 28px!important;border-block:1px solid #c8c0cf66;background:#f1eef43b}
-#invite #viaje{margin-inline:22px;padding:48px 35px;border:1px solid #c8c0cf66;background:#f1eef466}
-#invite .ti{border-color:#b3a9bf55}
-#invite .ti>svg{color:#8a7d94}
-#invite .ti h3{color:var(--sage)}
-#invite .ti .btn{background:var(--sage);color:var(--cream)}
-#invite .gap.q{padding:60px 0!important;background:var(--cream)}
-#invite .gap.q .floral-border img{width:24%;max-width:170px;top:0;opacity:.8}
-#invite .heart{--sage:#e8e3ed;color:var(--ink);filter:drop-shadow(0 4px 5px #5a526412)}
-#invite .heart .mc{color:#62596e}
-#invite .heart.is-long{background:#f3eff6;border-color:#c9c0d0;box-shadow:inset 0 0 0 7px var(--cream),inset 0 0 0 8px #c9c0d088}
-#invite .faq{border-top:1px solid #c5bdce66}
-#invite .faq details{border-bottom:1px solid #c5bdce66}
-#invite .faq details[open]{background:#f1eef34d;padding-inline:14px}
-#invite #rsvp{margin-inline:22px;border:1px solid #c5bdce88;padding:48px 38px 56px!important;background:#fdfbf6;box-shadow:inset 0 0 0 6px #fcfaf3,inset 0 0 0 7px #c5bdce44}
-#invite .person{border-color:#c5bdce66}
-#invite .person button{border-color:#aab29e;background:transparent;box-shadow:none}
-#invite .person button[aria-pressed=true]{background:var(--sage);color:var(--cream);border-color:var(--sage)}
-#invite textarea{background:#f8f6fa77;border:1px solid #bfb8c899;color:var(--ink)}
-#invite footer{padding:130px 30px 120px!important;margin-top:65px;background:linear-gradient(#f2eef5,#eeeee5);color:var(--sage);border-top:1px solid #c5bdce55}
-#invite footer .floral-border img{width:32%;max-width:260px;top:-30px}
-#invite footer .names{font-size:clamp(48px,6vw,68px);max-width:65%;color:var(--sage)}
-#invite footer>.mc,#invite .footer-links a{color:var(--sage)}
-#invite .footer-links{gap:12px 26px;margin-top:24px}
-@media(max-width:600px){#invite .ghero{padding:130px 16px 45px}#invite .ghero .floral-border img{width:35%;top:-15px}#invite .panel{padding:48px 26px}#invite .panel h2{font-size:40px}#invite .arches{gap:7%;align-items:flex-end}#invite .arch:nth-child(2){transform:none;margin-bottom:16px}#invite .arch:nth-child(3){width:66%;margin-top:16px}#invite .pe .ic{width:44px;height:48px}#invite .pe:not(:last-child)::before{left:22px;top:58px}#invite .pe h3{font-size:30px}#invite .dress-panel{margin-inline:22px;padding:34px 22px!important}#invite #viaje{margin-inline:14px;padding:42px 24px}#invite .gap.q .floral-border img{width:29%;opacity:.7}#invite #rsvp{margin-inline:14px;padding:42px 24px 50px!important}#invite footer{padding-top:110px!important}#invite footer .names{max-width:76%;font-size:48px}#invite footer .floral-border img{width:35%;top:-10px;opacity:.75}}
-
-@media(prefers-reduced-motion:no-preference){.motion-active>.floral-border img{animation:curtain-breathe 9s ease-in-out infinite alternate}.motion-active>.floral-border img+img{animation-name:curtain-breathe-right;animation-delay:-4s}}
 
 /* Rich garden stationery inside; the approved opening is deliberately untouched. */
 body.gl:not(.locked){overflow-x:clip;overflow-y:visible}
-#invite{--estate-art:url('/assets/glicina/optimized/jardin-villa.webp');overflow:visible;background:var(--cream);border-inline:0}
-#invite .flow{padding:40px 0;background-image:linear-gradient(90deg,transparent 18px,#b5ae8a55 18px,#b5ae8a55 19px,transparent 19px,transparent calc(100% - 19px),#b5ae8a55 calc(100% - 19px),#b5ae8a55 calc(100% - 18px),transparent calc(100% - 18px));}
-#invite .ghero{padding:65px 24px 58px;min-height:660px;display:flex;flex-direction:column;align-items:center;justify-content:center;background-image:linear-gradient(#f6f3e915,#f6f3e908),var(--estate-art);background-size:cover;background-position:center;isolation:isolate;border-bottom:5px double #aba17e}
-#invite .ghero .estate-scene{display:none}
-#invite .ghero>.mc{background:#fffaf0e8;padding:8px 22px;border:1px solid #c5b999aa;margin:0 0 18px!important;font-size:11px;color:#515b43}
-#invite .ghero .invitation-oval{width:min(88vw,370px);min-height:450px;padding:78px 79px;gap:12px;filter:drop-shadow(0 8px 12px #50483338)}
-#invite .ghero .loval::before{inset:9% 17%;background:#fffaf0;opacity:1;border-radius:50%;box-shadow:inset 0 0 0 1px #b9b18c44}
-#invite .ghero .loval h1{font-size:55px}
-#invite .ghero .lace{opacity:1;filter:drop-shadow(0 1px 1px #50483333)}
-#invite .welcome-panel{padding-top:55px;padding-bottom:40px}
-#invite .welcome-panel .cameo{width:90px;height:108px;background:#e8e9dc;border:1px solid #a6ad8d;outline:3px double #b3ac8e;outline-offset:5px;margin-bottom:34px;box-shadow:inset 0 0 0 6px #fcfaf3,inset 0 0 0 7px #b3ac8e77}
-#invite .story-panel{margin:25px 42px;padding:55px 36px;border:4px double #b2ad9466;background:linear-gradient(135deg,#f5f2e9,#fffdf7 45%,#f4f2e8);box-shadow:0 10px 24px -23px #4a4e30}
-#invite .story-panel::before,#invite .dress-panel::before{content:'';position:absolute;width:74px;height:16px;left:calc(50% - 37px);top:-9px;background:var(--cream);border:1px solid #b2ad94;border-radius:50%;box-shadow:inset 0 0 0 4px var(--cream)}
-#invite .arches{gap:7%;padding:6px 8px 28px;justify-content:center}
-#invite .arch:nth-child(n){width:26%;flex-shrink:1}
-#invite .arch:nth-child(2){width:32%;transform:translateY(18px)}
-#invite .arches>.arch:only-child{width:min(80%,360px)}
-#invite .arch{padding:7px;background:#fffdf3;box-shadow:0 0 0 1px #b5ae8b,0 0 0 4px #f9f5e9,0 0 0 5px #b5ae8b66,0 12px 18px -15px #51483366}
-#invite .vign{background-image:var(--estate-art);background-size:cover;background-position:center;border-color:#afa785;box-shadow:0 0 0 6px var(--cream),0 0 0 7px #afa785}
-#invite .vign .floral-border{display:none}
-#invite .vign-flourish{background:#fffbefdf;margin-inline:48px;border-radius:50%;bottom:22px}
-#invite .calendar-panel{padding-bottom:46px}
-#invite .week{max-width:500px;padding:22px 12px;border-block:3px double #b6b18d88}
-#invite .countdown-panel{margin:20px 32px 35px;padding:42px 20px!important;background:linear-gradient(#f5f2e866,#f5f2e866),var(--estate-art);background-size:cover;background-position:center;border:4px double #a9a38499;isolation:isolate}
-#invite .cdov{width:min(100%,540px);min-height:465px;padding:104px 100px 95px;display:flex;flex-direction:column;justify-content:center;position:relative;isolation:isolate}
-#invite .cdov::before{content:'';position:absolute;inset:10% 18%;z-index:-2;border-radius:50%;background:#68714d;box-shadow:inset 0 0 0 1px #bfc49e}
-#invite .cdov>.lace{display:block;inset:0;width:100%;height:100%;z-index:-1;filter:drop-shadow(0 3px 3px #3b402633)}
-#invite .cdov h2{font-size:41px;line-height:1.15;color:#fffaf0;margin:17px 0}
-#invite .cdov .mc{color:#f9f6ea;font-size:10px!important}
-#invite .gcd{padding:16px 0;margin-top:4px;border-color:#d7d7b655}
-#invite .gcd>div{padding-inline:7px}#invite .gcd>div+div{border-color:#d7d7b655}
-#invite .cdov .gcd b{color:#fffaf0;font-size:37px}#invite .cdov .gcd span{font-size:10px;color:#f3eddb;letter-spacing:.01em}
-#invite .countdown-panel>p{background:#fffbf0e8;padding:10px 18px;display:table;border:1px solid #bbb18e66}
-#invite #itinerario{margin-inline:46px;border-inline:1px solid #b1ad8e88;padding:50px 28px}
-#invite #itinerario>.draw{width:98px;height:76px;color:#8e9271!important}
-#invite .prog{max-width:560px}
-#invite .pe{grid-template-columns:64px minmax(0,1fr);gap:25px;padding-bottom:42px}
-#invite .pe .ic{width:58px;height:58px;color:#7c8664}
-#invite .pe:not(:last-child)::before{left:29px;top:68px;border-left:1px solid #b4b68e}
-#invite .pe h3{font-size:35px}
-#invite .pe .btn{border:3px double #a5ad8c;background:#f2f2e7;padding:9px 19px}
-#invite .dress-panel{position:relative;margin:50px 46px;padding:42px 30px!important;background:#e9eadc;border:4px double #a8ad88;box-shadow:inset 0 0 0 8px #f8f6ec,inset 0 0 0 9px #b7ba9e88}
-#invite #viaje{margin:45px 32px;padding:50px 40px 205px;background-image:linear-gradient(var(--cream) 0%,var(--cream) 68%,#fcfaf300 100%),var(--estate-art);background-size:cover;background-position:center bottom;border:4px double #b5ae8d}
-#invite #viaje>div{position:relative;z-index:1}#invite .ti{border-color:#b2b69888}
-#invite .ti>svg{color:#7a8462}
-#invite .gap.q{margin-block:35px;padding:48px 0!important;background:#e7e9dc;overflow:visible;border-block:3px double #aab08a77}
-#invite .gap.q .floral-border img{width:25%;max-width:175px;opacity:1}
-#invite .heart{--sage:#79815d;color:#fffaf0;filter:drop-shadow(0 6px 7px #46502a22)}
-#invite .heart .mc{color:#f7f2df}
-#invite .heart.is-long{--sage:#606c53;background:#f6f4e8;color:var(--ink);border-color:#aeb294}
-#invite .heart.is-long .mc{color:var(--sage)}
-#invite #faq{margin-inline:42px}
-#invite #rsvp{margin:35px 40px 25px;padding:55px 40px 60px!important;background:#fffaf0;border:4px double #aeb18d;box-shadow:inset 0 0 0 9px #fbf8ec,inset 0 0 0 10px #b9bc9a66}
-#invite #rsvp>.orn{width:175px}
-#invite footer{margin-top:0;padding:115px 25px 120px!important;min-height:420px;background:linear-gradient(#f5f1e344,#f5f1e366),var(--estate-art);background-size:cover;background-position:center 55%;border-top:5px double #a8a17c}
-#invite footer .floral-border{display:none}
-#invite footer .names{width:fit-content;max-width:85%;padding:22px 45px;margin-bottom:0;background:#fffaf0f2;border:4px double #afa784;border-bottom:0;color:#606c53}
-#invite footer>.mc{width:fit-content;max-width:85%;margin:auto;padding:0 30px 18px;background:#fffaf0f2;color:#606c53;border-bottom:3px double #afa784}
-#invite .footer-links{background:#fffaf0ed;width:fit-content;max-width:85%;padding:8px 20px;margin-inline:auto;border:1px solid #b4ac8d88}
-@media(min-width:900px) and (max-height:800px){#invite .ghero{min-height:0;padding-block:40px}#invite .ghero .invitation-oval{min-height:390px;width:330px;padding:70px}#invite .ghero .loval h1{font-size:48px}}
-@media(max-width:600px){#invite .flow{padding-top:25px;background-image:linear-gradient(90deg,transparent 8px,#b5ae8a55 8px,#b5ae8a55 9px,transparent 9px,transparent calc(100% - 9px),#b5ae8a55 calc(100% - 9px),#b5ae8a55 calc(100% - 8px),transparent calc(100% - 8px))}#invite .ghero{min-height:580px;padding:55px 16px 45px;background-position:52% center}#invite .ghero .invitation-oval{width:min(90vw,335px);min-height:410px;padding:74px 73px}#invite .ghero .loval h1{font-size:47px}#invite .ghero>.mc{font-size:10px;padding-inline:15px}#invite .story-panel{margin-inline:22px;padding:42px 22px}#invite .arches{gap:7%;flex-wrap:wrap}#invite .arch:nth-child(1){width:43%}#invite .arch:nth-child(2){width:48%;transform:none}#invite .arch:nth-child(3){width:66%;margin-top:18px}#invite .countdown-panel{margin-inline:14px;padding:25px 6px!important}#invite .cdov{min-height:365px;padding:80px 51px 75px}#invite .cdov h2{font-size:32px}#invite .cdov .mc{font-size:9px!important;letter-spacing:.01em!important}#invite .gcd>div{padding-inline:4px}#invite .cdov .gcd b{font-size:29px}#invite .cdov .gcd span{font-size:9px}#invite #itinerario{margin-inline:22px;padding:42px 17px}#invite .pe{grid-template-columns:44px minmax(0,1fr);gap:13px}#invite .pe .ic{width:42px;height:48px}#invite .pe:not(:last-child)::before{left:21px;top:58px}#invite .pe h3{font-size:30px}#invite .dress-panel{margin-inline:22px;padding:35px 25px!important}#invite #viaje{margin-inline:14px;padding:40px 23px 165px}#invite #faq{margin-inline:4px}#invite #rsvp{margin-inline:20px;padding:45px 22px 50px!important}#invite .gap.q .floral-border img{width:24%;opacity:.75}#invite footer{min-height:390px;padding-top:95px!important}#invite footer .names{font-size:44px;padding:20px 20px 12px;max-width:94%}#invite footer>.mc{max-width:94%;padding-inline:14px}}
-
-#invite .cdov .gcd span{font-size:12px}
-#invite #rsvp::before,#invite #rsvp::after{content:'';position:absolute;left:16px;right:16px;top:8px;height:25px;background:url('/assets/glicina/optimized/encaje-borde.webp') center/auto 25px repeat-x;opacity:.85;pointer-events:none}
-#invite #rsvp::after{top:auto;bottom:8px;transform:rotate(180deg)}
-@media(max-width:600px){#invite .cdov{padding-inline:42px}#invite .cdov .gcd span{font-size:11px}}
-
 /* What the curtain uncovers is a garden invitation, not an empty backdrop. */
 .opening .estate-scene{display:block;position:fixed;inset:0;z-index:0;background-image:linear-gradient(#f6f1e60a,#f6f1e618),url('/assets/glicina/optimized/jardin-villa.webp');background-size:cover;background-position:center;opacity:0;transition:opacity 1.05s ease;pointer-events:none}
 .opening.parted .estate-scene{opacity:1}
@@ -604,3 +466,215 @@ body.gl:not(.locked){overflow-x:clip;overflow-y:visible}
 @media(max-height:740px){.opening .opening-content{padding-top:25px;padding-bottom:100px;gap:10px}.opening .loval{width:280px;min-height:310px;padding:56px 59px;gap:8px}.opening .loval h1{font-size:39px}.opening .opening-intro{font-size:9px;padding:7px 15px}.opening .loval .mc{font-size:10px}.opening .loval .dt{font-size:12px}.opening.parted .after{padding-block:12px}.opening .after p{font-size:16px;margin-bottom:9px}}
 @media(max-height:500px){.opening .opening-content{padding-top:20px}.opening .loval{width:250px;min-height:275px;padding:50px}.opening .loval h1{font-size:34px}}
 @media(prefers-reduced-motion:reduce){.opening .estate-scene{transition:none}}
+
+/* ---------- Interior: papel de lino, filetes finos y la glicina como único adorno ----------
+   Una sola tarjeta (la respuesta), una sola banda de encaje (la fecha) y la pintura en la portada, la cita y el cierre.
+   En escritorio la portada queda fija a la izquierda y la invitación corre a la derecha. La apertura no cambia. */
+#invite{--gx-linen:#F7F3EA;--gx-card:#FBF8F1;--gx-ink:#38372A;--gx-mute:#67664F;--gx-sage:#5A6440;--gx-hair:#CDC6B1;--gx-lav:#5C4F86;--gx-rose:#C9808E;--gx-err:#8E3B31;--gx-pad:32px;
+  --gx-art:url('/assets/glicina/optimized/jardin-villa.webp');max-width:none;margin:0;overflow:visible;background:var(--gx-linen);color:var(--gx-ink);font-family:'Cormorant Garamond',Georgia,serif}
+body.gl:not(.locked){background:#F7F3EA}
+#invite .gx-ic{width:1em;height:1em;flex:none}
+.gx-k{margin:0;font:400 11px/1.6 Marcellus,serif;letter-spacing:.3em;text-transform:uppercase;color:var(--gx-sage)}
+.gx-k.gx-ink{color:var(--gx-ink)}.gx-k.gx-mute,.gx-mute{color:var(--gx-mute)}
+.gx-h{margin:14px 0 0;font:italic 300 44px/1.1 'Cormorant Garamond',serif;color:var(--gx-ink);text-wrap:balance;overflow-wrap:anywhere}
+.gx-h-s{font-size:31px;margin-top:6px}.gx-h-xs{font-size:28px;margin:0}
+.gx-p{margin:0;font:400 19px/1.7 'Cormorant Garamond',serif;color:var(--gx-ink);overflow-wrap:anywhere}
+.gx-m{margin:0;font:400 17px/1.6 'Cormorant Garamond',serif;color:var(--gx-mute);overflow-wrap:anywhere}
+.gx-it{font-style:italic}
+.gx-narrow{max-width:22em;margin-inline:auto}
+.gx-sec>.gx-p,.gx-sec>.gx-m{margin-top:16px}
+.gx-link{min-height:44px;display:inline-flex;align-items:center;gap:8px;margin-top:14px;padding:0;border:0;background:none;cursor:pointer;font:400 11px Marcellus,serif;letter-spacing:.26em;text-transform:uppercase;color:var(--gx-sage);text-decoration:underline;text-decoration-color:var(--gx-hair);text-underline-offset:7px;text-decoration-thickness:1px}
+.gx-link:hover{text-decoration-color:var(--gx-sage)}
+.gx-btn{display:flex;align-items:center;justify-content:center;width:100%;min-height:52px;margin-top:24px;padding:0 28px;border:0;border-radius:2px;background:var(--gx-sage);color:var(--gx-card);font:400 12px Marcellus,serif;letter-spacing:.26em;text-transform:uppercase;cursor:pointer}
+.gx-btno{display:inline-flex;align-items:center;gap:10px;min-height:48px;margin-top:18px;padding:0 26px;border:1px solid var(--gx-sage);border-radius:2px;color:var(--gx-sage);text-decoration:none;font:400 11px Marcellus,serif;letter-spacing:.26em;text-transform:uppercase}
+#invite a:focus-visible,#invite button:focus-visible,#invite summary:focus-visible,#invite input:focus-visible+svg,#invite textarea:focus-visible,#mbar a:focus-visible{outline:2px solid var(--gx-sage);outline-offset:3px}
+
+/* Barra al bajar: los nombres y «Confirmar» (en escritorio, también las secciones) */
+#mbar{left:0;right:0;top:0;height:60px;padding:0 10px 0 22px;border-radius:0;background:#F7F3EAf2;box-shadow:none;border-bottom:1px solid #CDC6B1;-webkit-backdrop-filter:none;backdrop-filter:none;visibility:hidden;transition:opacity .4s,transform .5s cubic-bezier(.22,1,.36,1),visibility 0s .5s}
+#mbar.show{visibility:visible;transition-delay:0s;pointer-events:auto}
+.gx-bar-names{font:400 26px/1 Parisienne,cursive;color:#5A6440;white-space:nowrap}
+#mbar nav{display:flex;align-items:center;gap:2px}
+#mbar a{min-height:44px;display:inline-flex;align-items:center;padding:0 10px;font:400 11px Marcellus,serif;letter-spacing:.24em;text-transform:uppercase;color:#38372A;text-decoration:none}
+#mbar .gx-bar-cta{color:#5A6440;text-decoration:underline;text-decoration-color:#CDC6B1;text-underline-offset:7px}
+#mbar .gx-dk{display:none}
+
+/* Portada: el final de la apertura */
+.gx-cover{position:relative;min-height:100svh;display:flex;flex-direction:column;align-items:center;text-align:center;overflow:hidden;background:var(--gx-linen)}
+.gx-cover-art{position:absolute;inset:0;background:var(--gx-art) 50% 0/auto 74% no-repeat}
+.gx-cover-art::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,#F7F3EA00 38%,#F7F3EAeb 62%,#F7F3EA 70%)}
+.gx-cover-in{position:relative;flex:1;width:100%;display:flex;flex-direction:column;align-items:center;padding:clamp(70px,17svh,150px) 24px 110px}
+.gx-oval{position:relative;width:280px;aspect-ratio:1070/1100;filter:drop-shadow(0 18px 22px #34321e38)}
+.gx-oval>.lace{position:absolute;inset:0;width:100%;height:100%;z-index:1;pointer-events:none}
+.gx-oval-in{position:absolute;inset:11% 19%;border-radius:50%;overflow:hidden;background:var(--gx-card)}
+.gx-oval-in img{width:100%;height:100%;object-fit:cover;object-position:50% 62%}
+.gx-oval-text{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 6%}
+.gx-oval-text .gx-k{font-size:9px;letter-spacing:.2em}
+.gx-oval-names{margin:6px 0 0;font:400 38px/1.05 Parisienne,cursive;color:var(--gx-sage);overflow-wrap:anywhere}
+.gx-oval-names span{display:block}.gx-oval-names .y{font:italic 20px/1.3 'Cormorant Garamond',serif;color:var(--gx-ink)}
+.gx-names{margin:26px 0 12px;font:400 58px/1.1 Parisienne,cursive;color:var(--gx-sage);overflow-wrap:anywhere;outline:0}
+.gx-names .y{font:italic 300 29px 'Cormorant Garamond',serif;color:var(--gx-ink)}
+.lz-no-photos .gx-names{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);margin:0}
+.lz-no-photos .gx-cover .gx-k.gx-ink{margin-top:26px}
+.gx-city{margin:6px 0 0;font:italic 17px/1.5 'Cormorant Garamond',serif;color:var(--gx-mute)}
+.gx-cue{position:absolute;left:50%;bottom:34px;translate:-50% 0;margin:0;display:flex;flex-direction:column;align-items:center;gap:10px;font:400 10px Marcellus,serif;letter-spacing:.3em;text-transform:uppercase;color:var(--gx-mute)}
+.gx-cue i{width:1px;height:40px;background:linear-gradient(#CDC6B1,#CDC6B100)}
+
+/* Capítulos */
+.gx-flow{padding:24px var(--gx-pad) 90px}
+.gx-sec{text-align:center}
+.gx-guest{margin:10px 0 0;font:400 36px/1.2 Parisienne,cursive;color:var(--gx-lav);overflow-wrap:anywhere}
+.gx-welcome .gx-h{margin-top:26px;font-size:40px}
+.gx-div{display:flex;align-items:center;justify-content:center;gap:18px;height:54px;margin:72px 0}
+.gx-div i{width:72px;height:0;border-top:1px solid var(--gx-hair)}
+.gx-div img{height:54px;width:auto}
+
+/* Historia: tres arcos superpuestos (la galería completa se abre en el visor) */
+.gx-collage{position:relative;width:min(100%,326px);aspect-ratio:326/380;margin:40px auto 0}
+.gx-arch{position:absolute;padding:6px;background:var(--gx-card);border-radius:999px 999px 4px 4px;box-shadow:0 0 0 1px var(--gx-hair),0 22px 30px -24px #0008}
+.gx-arch img{display:block;width:100%;height:auto;object-fit:cover;object-position:50% 80%;border-radius:999px 999px 2px 2px}
+.gx-arch:nth-child(1){left:0;top:6.8%;width:33.1%;z-index:1}.gx-arch:nth-child(1) img{aspect-ratio:96/140}
+.gx-arch:nth-child(2){left:27%;top:0;width:49.7%;z-index:2}.gx-arch:nth-child(2) img{aspect-ratio:150/240}
+.gx-arch:nth-child(3){right:0;top:39.5%;width:35.6%;z-index:3}.gx-arch:nth-child(3) img{aspect-ratio:104/150}
+.gx-arch:nth-child(n+4){display:none}
+.gx-arch:only-child{position:relative;left:auto;top:auto;width:62%;margin:0 auto}
+.gx-collage:has(.gx-arch:only-child){aspect-ratio:auto}
+.gx-collage:has(.gx-arch:nth-child(2):last-child){aspect-ratio:326/300}
+.gx-collage:has(.gx-arch:nth-child(2):last-child) .gx-arch:nth-child(2){left:auto;right:6%}
+
+/* La fecha: la única banda de papel, con el remate de encaje arriba y abajo */
+.gx-band{position:relative;margin:110px calc(-1 * var(--gx-pad));padding:64px var(--gx-pad);background:var(--gx-card);box-shadow:0 0 0 1px var(--gx-hair)}
+.gx-band::before,.gx-band::after{content:'';position:absolute;left:0;right:0;height:22px;background:url('/assets/glicina/optimized/encaje-borde.webp') center top/auto 22px repeat-x;pointer-events:none;filter:drop-shadow(0 2px 2px #3d3a2026)}
+.gx-band::before{top:-18px;transform:scaleY(-1)}.gx-band::after{bottom:-18px}
+#invite .week{max-width:none;margin:26px 0 0;padding:14px 0;display:grid;grid-template-columns:repeat(7,minmax(0,1fr));row-gap:6px;border-block:1px solid var(--gx-hair)}
+#invite .week span{font:400 11px Marcellus,serif;letter-spacing:.2em;text-transform:uppercase;color:var(--gx-mute)}
+#invite .week b{position:relative;height:48px;display:grid;place-items:center;font:300 24px 'Cormorant Garamond',serif;color:var(--gx-ink);isolation:isolate}
+#invite .week b.hit{font-style:italic;font-weight:500;color:var(--gx-rose)}
+#invite .week b svg{position:absolute;left:50%;top:50%;width:46px;height:42px;margin:0;translate:-50% -52%;z-index:-1;animation:none;opacity:1}
+.gx-cd-k{margin-top:40px}
+.gx-cd-k+.gx-h-s{margin:10px 0 24px;font-size:28px}
+.gx-cd{display:grid;grid-template-columns:repeat(4,minmax(0,1fr))}
+.gx-cd>div{display:flex;flex-direction:column;align-items:center;gap:6px;padding:4px 0;min-width:0}
+.gx-cd>div+div{border-left:1px solid var(--gx-hair)}
+.gx-cd b{font:300 46px/1 'Cormorant Garamond',serif;color:var(--gx-ink);font-variant-numeric:lining-nums tabular-nums}
+.gx-cd span{font:400 11px Marcellus,serif;letter-spacing:.2em;text-transform:uppercase;color:var(--gx-mute)}
+.gx-band .gx-m{margin-top:24px}
+
+/* Programa: una columna centrada, como el orden del día impreso */
+.gx-prog{margin-top:40px}
+.gx-ev{display:flex;flex-direction:column;align-items:center}
+.gx-ev .ic{display:none;width:46px;height:41px;margin-bottom:14px;color:var(--gx-sage);overflow:visible}
+.gx-ev:nth-of-type(4n+1) .i0,.gx-ev:nth-of-type(4n+2) .i1,.gx-ev:nth-of-type(4n+3) .i2,.gx-ev:nth-of-type(4n+4) .i3{display:block}
+.gx-ev .gx-p{margin-top:8px}
+.gx-ev .gx-link{margin-top:4px}
+.gx-ev+.gx-ev::before{content:'';display:block;width:1px;height:44px;margin:30px auto 26px;background:var(--gx-hair)}
+.gx-ev .lz-off{display:none}
+
+/* Vestimenta */
+.gx-code{margin:22px 0 0;padding-left:.5em;font:400 15px Marcellus,serif;letter-spacing:.5em;text-transform:uppercase;color:var(--gx-sage)}
+
+/* Viaje: todo sobre papel, nunca encima de la pintura */
+.gx-hotel{margin-top:40px;display:flex;flex-direction:column;align-items:center}
+.gx-hotel .gx-h-s{margin-top:10px;font-size:32px}.gx-hotel>.gx-p{margin-top:6px}
+.gx-hotel .gx-k.gx-mute{margin-top:18px}
+.gx-chip{margin:8px 0 0;padding:10px 18px 10px 22px;border:1px solid var(--gx-hair);font:400 17px Marcellus,serif;letter-spacing:.3em;color:var(--gx-ink);overflow-wrap:anywhere}
+.gx-hotel .gx-m{margin-top:12px}
+.gx-hotel:has([data-lz-href=hotelLink]:not([hidden])) .gx-demo-booking{display:none}
+.gx-demo-booking{font-size:15px}
+.gx-rule{display:block;width:64px;margin:44px auto 0;border-top:1px solid var(--gx-hair)}
+.gx-info{margin-top:40px}
+.gx-dl{margin-top:14px}.gx-dl .gx-p{margin-top:4px}
+
+/* Cita: la pintura enmarcada, con paspartú */
+.gx-vista{padding:10px;background:var(--gx-card);box-shadow:0 0 0 1px var(--gx-hair),0 26px 36px -28px #0009}
+.gx-vista i{display:block;height:300px;background:var(--gx-art) 44% 50%/cover no-repeat}
+.gx-quote blockquote{margin:40px auto 0;max-width:12em;font:italic 300 28px/1.35 'Cormorant Garamond',serif;color:var(--gx-ink);overflow-wrap:anywhere}
+.gx-quote.is-long blockquote{max-width:24em;font-size:21px;line-height:1.6}
+.gx-quote>.gx-k{margin-top:18px}
+
+/* Preguntas */
+.gx-faq{margin-top:32px;border-top:1px solid var(--gx-hair);text-align:left}
+.gx-faq details{border-bottom:1px solid var(--gx-hair)}
+.gx-faq summary{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:62px;padding:12px 0;font:italic 400 21px/1.35 'Cormorant Garamond',serif;color:var(--gx-ink)}
+.gx-faq summary::after{content:'';width:14px;height:14px;flex:none;background:linear-gradient(var(--gx-sage),var(--gx-sage)) center/100% 1px no-repeat,linear-gradient(var(--gx-sage),var(--gx-sage)) center/1px 100% no-repeat}
+.gx-faq details[open] summary::after{background-size:100% 1px,1px 0}
+.gx-faq p{margin:-2px 0 18px;font:400 17px/1.6 'Cormorant Garamond',serif;color:var(--gx-mute)}
+
+/* Tarjeta de respuesta: doble filete, remate de encaje y una fila por persona */
+.gx-reply{margin-top:80px}
+.gx-card{position:relative;padding:44px 26px 40px;background:var(--gx-card);box-shadow:0 28px 40px -32px #0007}
+.gx-card::before{content:'';position:absolute;inset:8px;border:1px solid var(--gx-hair);pointer-events:none}
+.gx-card::after{content:'';position:absolute;left:0;right:0;bottom:-18px;height:22px;background:url('/assets/glicina/optimized/encaje-borde.webp') center top/auto 22px repeat-x;pointer-events:none;filter:drop-shadow(0 2px 2px #3d3a2026)}
+.gx-card>.gx-h{font-size:40px;margin-top:12px}
+.gx-card>.gx-k.gx-mute{margin-top:12px;letter-spacing:.18em}
+.gx-card>.gx-guest{margin-top:16px;font-size:34px}
+.gx-card>.gx-guest+.gx-k{margin-top:6px}
+.gx-rsvp-msg{margin:18px 0 14px}
+.gx-thead,.gx-person{display:grid;grid-template-columns:minmax(0,1fr) 72px 72px;align-items:center}
+.gx-thead{align-items:end;padding-bottom:8px;border-bottom:1px solid var(--gx-hair)}
+.gx-thead span{text-align:center;font:400 10px/1.3 Marcellus,serif;letter-spacing:.1em;text-transform:uppercase;color:var(--gx-mute)}
+.gx-person{margin:0;padding:4px 0;border:0;border-bottom:1px solid var(--gx-hair);min-width:0}
+.gx-person legend{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.gx-person-name{display:flex;flex-direction:column;padding:8px 0;text-align:left;font:400 19px/1.25 'Cormorant Garamond',serif;color:var(--gx-ink);overflow-wrap:anywhere}
+.gx-person-err{display:flex;align-items:center;gap:5px;font:italic 15px/1.3 'Cormorant Garamond',serif;color:var(--gx-err)}
+#invite .gx-radio{position:relative;display:grid;place-items:center;width:72px;height:48px;margin:0;cursor:pointer}
+.gx-radio input{position:absolute;opacity:0;width:1px;height:1px}
+.gx-radio svg{width:22px;height:22px;overflow:visible}
+.gx-radio circle{fill:none;stroke:#9F9A84;stroke-width:1.2}
+.gx-radio .dot{fill:var(--gx-sage);stroke:none;opacity:0}
+.gx-radio input:checked+svg circle{stroke:var(--gx-sage)}.gx-radio input:checked+svg .dot{opacity:1}
+.gx-person.is-err .gx-radio circle{stroke:var(--gx-err)}
+.gx-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.gx-fields{margin-top:20px;display:flex;flex-direction:column;gap:14px}
+#invite .gx-fld{display:flex;flex-direction:column;gap:4px;margin:0;text-align:left;font:400 11px/1.5 Marcellus,serif;letter-spacing:.14em;text-transform:uppercase;color:var(--gx-sage)}
+#invite .gx-fld textarea{width:100%;min-height:40px;margin:0;padding:8px 0;border:0;border-bottom:1px solid var(--gx-hair);border-radius:0;background:transparent;font:italic 18px/1.5 'Cormorant Garamond',serif;color:var(--gx-ink);resize:vertical;text-transform:none;letter-spacing:0}
+.gx-err{margin:14px 0 0;display:flex;align-items:center;justify-content:center;gap:8px;font:italic 17px 'Cormorant Garamond',serif;color:var(--gx-err)}
+.gx-demo{margin-top:14px;font-size:15px}
+.gx-thanks{margin:22px 0 6px;font:400 58px/1.1 Parisienne,cursive;color:var(--gx-sage)}
+#rsDone .reply-list{list-style:none;margin:18px 0 0;padding:0;text-align:left}
+#rsDone .reply-list li{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:10px 0;border-bottom:1px solid var(--gx-hair);font-size:17px}
+#rsDone .reply-list b{font-weight:500}
+
+/* Cierre: vuelve al jardín (en escritorio, solo los nombres) */
+.gx-end{position:relative;min-height:640px;display:flex;flex-direction:column;align-items:center;padding-top:40px;text-align:center;overflow:hidden;background:var(--gx-art) 50% 100%/auto 64% no-repeat,var(--gx-linen)}
+.gx-end::before{content:"";position:absolute;inset:0;z-index:0;background:linear-gradient(180deg,#F7F3EA 38%,#F7F3EAcc 46%,#F7F3EA00 60%)}
+.gx-end-in{position:relative;display:flex;flex-direction:column;align-items:center;padding:0 20px}
+.gx-end-names{margin:12px 0 14px;font:400 52px/1.1 Parisienne,cursive;color:var(--gx-sage);overflow-wrap:anywhere}
+.gx-end-links{display:flex;gap:22px;margin-top:4px}
+.gx-end-flowers{position:absolute;left:50%;bottom:-14px;width:max(440px,90%);max-width:none;translate:-50% 0}
+
+@media(max-width:360px){#invite{--gx-pad:22px}.gx-cd b{font-size:38px}.gx-thead,.gx-person{grid-template-columns:minmax(0,1fr) 60px 60px}#invite .gx-radio{width:60px}}
+@media(max-height:700px) and (max-width:899px){.gx-oval{width:220px}.gx-names{font-size:48px;margin-top:20px}.gx-cover-in{padding-top:56px}}
+
+/* Escritorio: pantalla dividida, el jardín fijo a la izquierda */
+@media(min-width:900px){
+  #invite{display:grid;grid-template-columns:50% 50%;align-items:start}
+  .gx-cover{position:sticky;top:0;grid-row:1 / span 2;height:100vh;min-height:0;justify-content:center}
+  .gx-cover-art{background-position:50% 50%;background-size:cover}
+  .gx-cover-art::after{background:linear-gradient(180deg,#F7F3EA00 50%,#F7F3EAe6 74%,#F7F3EA 84%)}
+  .gx-cover-in{flex:none;justify-content:center;padding:40px 24px 0}
+  .gx-oval{width:min(330px,40vh)}
+  .gx-names{font-size:64px}.gx-names .y{font-size:32px}
+  .gx-city,.gx-cue{display:none}
+  .gx-flow{grid-column:2;--gx-pad:clamp(48px,7.8vw,112px);padding:150px var(--gx-pad) 96px}
+  .gx-flow>*{max-width:520px;margin-inline:auto}
+  .gx-flow>.gx-band{max-width:none;margin-inline:calc(-1 * var(--gx-pad))}
+  .gx-band>.gx-sec{max-width:520px;margin-inline:auto}
+  .gx-flow>.gx-div{margin-block:80px}
+  .gx-h{font-size:48px}.gx-welcome .gx-h{font-size:44px}.gx-p{font-size:20px}
+  .gx-collage{width:352px}
+  .gx-cd b{font-size:50px}
+  .gx-vista i{height:340px}
+  .gx-quote blockquote{font-size:30px}
+  .gx-card{padding:52px 48px 46px}
+  .gx-fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}
+  .gx-end{grid-column:2;min-height:0;padding:30px 0 110px;background:var(--gx-linen)}
+  .gx-end::before,.gx-end-flowers{display:none}
+  .gx-end-names{font-size:64px}
+  #mbar{left:50%;height:72px;justify-content:center;padding:0 30px;opacity:1;transform:none;visibility:visible;pointer-events:auto}
+  body.locked #mbar{visibility:hidden;opacity:0}
+  #mbar .gx-bar-names{display:none}
+  #mbar .gx-dk{display:inline-flex}
+  #mbar .gx-bar-cta{margin-left:12px;min-height:44px;padding:0 24px;border:1px solid #5A6440;border-radius:2px;text-decoration:none}
+}
+@media(min-width:900px) and (max-height:760px){.gx-names{font-size:52px;margin-top:18px}.gx-oval{width:min(280px,42vh)}}
+@media(prefers-reduced-motion:reduce){#mbar{transition:none}}
