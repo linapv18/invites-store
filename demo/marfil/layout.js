@@ -72,11 +72,12 @@
         s += gleaf(X(x), y, 11 - i * .45, A(a + 42), 'var(--gold2)', .25 + t * 1.3);
       }
     });
-    return '<svg class="grow" viewBox="0 0 120 100" width="' + w + '" aria-hidden="true">' + s + '</svg>';
+    return '<svg class="grow" viewBox="0 0 120 100" width="' + w + '" aria-hidden="true"><g fill="none" stroke="var(--gold)" stroke-width=".5"><ellipse cx="60" cy="53" rx="28" ry="33"/><ellipse cx="60" cy="53" rx="25.5" ry="30.5" stroke-opacity=".55"/><path d="m56 17 4-5 4 5-4 4zM54 90q6-5 12 0M60 91v6M47 94q7-1 13 3 6-4 13-3"/><path d="M34 43q-3 10 0 20M86 43q3 10 0 20" stroke-dasharray=".5 2"/></g>' + s + '</svg>';
   }
   var crest = function (style) { return '<div class="crest"' + (style ? ' style="' + style + '"' : '') + '>' + laurel(96) + '<b data-lz-seal>AL</b></div>'; };
   var FL = function (w) { return '<svg class="fl draw" viewBox="0 0 200 24" width="' + w + '" fill="none" stroke="currentColor" stroke-width="1" aria-hidden="true"><path pathLength="1" d="M4 12H70c8 0 12-8 20-8 6 0 8 6 3 7-4 1-5-4-1-5"/><path pathLength="1" d="M196 12H130c-8 0-12-8-20-8-6 0-8 6-3 7 4 1 5-4 1-5"/><path pathLength="1" d="M86 15c5 5 9 6 14 6s9-1 14-6"/><path d="M100 8l3.5 4-3.5 4-3.5-4z" fill="currentColor"/></svg>'; };
-  var CORNER = '<svg viewBox="0 0 26 26" fill="none" stroke="currentColor" stroke-width="1"><path d="M1 25V8c0-4 3-7 7-7h17"/><path d="M5 25V11c0-3 3-6 6-6h14"/><circle cx="9" cy="9" r="1.6" fill="currentColor"/></svg>';
+  var CORNER = '<svg viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width=".7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 42V14C2 6 6 2 14 2h28M7 42V17C7 10 10 7 17 7h25M11 34V20c0-6 3-9 9-9h14"/><path d="M3 27c10-2 17-8 20-17M12 24c-5-7-3-13 2-13 5 0 5 7 1 8M21 15c1-7 7-10 10-6 3 4-2 7-7 7M12 25c2 7 8 8 10 4 2-4-4-7-8-4M26 11c-2-5 0-8 3-8M11 26c-5 2-8 0-8-3"/><path d="m8 8 3-3 3 3-3 3zM17 31q6 2 11-3M31 17q2 6-3 11M29 28l3 3"/><circle cx="31" cy="31" r="1.4"/><path d="M16 40h24V16" stroke-opacity=".35"/></svg>';
+
   // Seda fotografiada; el tinte sigue el color elegido para la invitación.
   var BOW = '<img src="/assets/marfil/lazo-inicio.webp?v=2" width="240" height="240" alt="" aria-hidden="true"><span class="silk-tint" aria-hidden="true"></span>';
   var ICON = [
@@ -95,14 +96,14 @@
   '<div class="opening linen" id="open" role="region" aria-label="' + S.openAria + '">' +
     '<p class="sc" data-lz="envIntro" data-lz-keep>' + S.envIntro + '</p>' +
     '<div class="wrap" id="wrap">' +
-      '<div class="mcard cotton deboss">' + crest() +
+      '<div class="mcard cotton deboss"><div class="card-corners" aria-hidden="true"><i>' + CORNER + '</i><i>' + CORNER + '</i><i>' + CORNER + '</i><i>' + CORNER + '</i></div>' + crest() +
         '<p class="sc" style="margin-top:10px">' + S.joy + '</p>' + names(.9) +
         '<p class="date bd" data-lz-date="{d} · {MU} · {Y}">14 · ' + S.MU + ' · 2027</p>' +
         '<div class="after"><p style="margin-top:6px">' + S.for + ' <b style="font-weight:500">' + S.guest + '</b> · ' + S.seats + '</p><button type="button" class="btn" style="margin-top:14px" id="enter" tabindex="-1" disabled>' + S.enter + '</button></div>' +
       '</div>' +
       '<div class="vel vel-l"></div><div class="vel vel-r"></div>' +
-      '<div class="vprint"><p class="sc">' + S.for + '</p><h3 class="goldtxt">' + S.guest + '</h3><p class="sc" style="color:var(--muted)" data-lz="envClosing" data-lz-keep id="closing">' + S.envClosing + '</p></div>' +
-      '<div class="rib rib-l"></div><div class="rib rib-r"></div>' +
+      '<div class="vprint">' + crest().replace('class="grow"','class="engraved"') + '<p class="sc">' + S.for + '</p><h3 class="goldtxt">' + S.guest + '</h3><p class="sc" style="color:var(--muted)" data-lz="envClosing" data-lz-keep id="closing">' + S.envClosing + '</p></div>' +
+      '<div class="ribbon-contact" aria-hidden="true"></div><i class="ribbon-return return-l" aria-hidden="true"></i><i class="ribbon-return return-r" aria-hidden="true"></i>' +
       '<button type="button" class="bow" id="bow" aria-label="' + S.bow + '">' + BOW + '</button>' +
     '</div>' +
     '<p class="hint" id="hint" aria-live="polite">' + S.hint + '</p>' +

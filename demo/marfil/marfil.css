@@ -230,3 +230,49 @@ label{font-size:12px;line-height:1.7;letter-spacing:.1em}textarea{font:400 18px/
 .untie .bow{transform:translate(30px,-36%) rotate(3deg);opacity:0;transition:opacity .15s}
 .bow-film{z-index:6;pointer-events:none;opacity:0}.playing-bow .bow-film{opacity:1}.playing-bow .bow{opacity:0;transition:none}
 .bow-film{max-width:none}
+
+/* Material finish: cotton stock, overlapping vellum and silk under tension. */
+:root{--paper-edge:#cabc9f;--paper-shadow:#675338}
+.linen{background-image:radial-gradient(ellipse at 38% 22%,#fff7,transparent 65%),linear-gradient(#ede7dcba,#e7dfd1ba),url('/assets/aurelia/papel-algodon.webp');background-size:auto,auto,640px;background-blend-mode:normal,normal,multiply}
+.cotton{background-image:linear-gradient(#fcf9f26b,#fcf9f26b),url('/assets/aurelia/papel-algodon.webp');background-size:auto,640px}
+.wrap::before{content:"";position:absolute;inset:-2px -2px -4px 0;background:var(--card);border:1px solid #d2c6b2;box-shadow:2px 2px 0 #ebe4d5,3px 4px 0 #d4c7b1,4px 5px 0 #f5efe3,0 20px 34px -16px #58472f52;pointer-events:none}
+.mcard{border:1px solid #baa47d;box-shadow:inset 0 0 0 2px #fff8,inset 0 0 12px #8067450a,0 2px 3px #4e3b2526}
+.mcard::after{display:none}.mcard.deboss::before{inset:10px;border-color:#a48b5e55;box-shadow:inset 0 1px 0 #fff,0 1px 0 #fff9,0 0 0 3px #bda67a12}
+.card-corners{position:absolute;inset:14px;pointer-events:none}.card-corners i{position:absolute;width:28px;height:28px;color:var(--gold-ink)}.card-corners svg{width:100%;height:100%;filter:drop-shadow(0 1px 0 #fff)}
+.card-corners i:nth-child(1){top:0;left:0}.card-corners i:nth-child(2){top:0;right:0;transform:scaleX(-1)}.card-corners i:nth-child(3){bottom:0;left:0;transform:scaleY(-1)}.card-corners i:nth-child(4){bottom:0;right:0;transform:scale(-1)}
+.wrap:not(.open) .mcard>.crest,.wrap:not(.open) .mcard>.sc,.wrap:not(.open) .mcard>.writes,.wrap:not(.open) .mcard>.date{opacity:.12}
+.wrap.open .mcard>.crest,.wrap.open .mcard>.sc,.wrap.open .mcard>.writes,.wrap.open .mcard>.date{opacity:1;transition:opacity .35s}
+.vel{top:-6px;bottom:-6px;background:linear-gradient(105deg,#fffdf5dc,#f9f3e6b8 45%,#eee5d3d9);border:1px solid #fff8;backdrop-filter:blur(1px);-webkit-backdrop-filter:blur(1px);box-shadow:inset 1px 0 0 #fff9,inset -1px 0 0 #a08a6426,0 2px 3px #69533312}
+.vel::before{background:url('/assets/aurelia/papel-algodon.webp') center/640px;mix-blend-mode:multiply;opacity:.17}
+.vel-l{left:-8px;width:calc(50% + 12px);border-right-color:#bcae9455}.vel-r{right:-8px;width:calc(50% + 8px);border-left-color:#fff5;box-shadow:inset 2px 0 3px #9b84531a,inset -1px 0 0 #fff9}
+.vel::after{content:"";position:absolute;inset:7px;border-top:1px solid #fff5;border-bottom:1px solid #9a82581a;pointer-events:none}
+.vprint{top:22px;padding:0 14px}.vprint .crest{width:92px;height:77px;margin:0 auto 12px}.vprint .crest svg{filter:drop-shadow(0 1px 0 #fff);opacity:.9}.vprint .crest b{font-size:21px;color:#947c56;text-shadow:0 1px 0 #fff,0 -1px 1px #705c3a33;padding:9px 20px 0}.vprint .crest .lz-seal img{max-height:42px}
+.vprint>p.sc{font-size:10px;letter-spacing:.22em}.vprint h3{font-size:34px;margin:6px 0 12px;text-shadow:0 1px 0 #fff8}.vprint #closing{font-size:10px;letter-spacing:.12em;line-height:1.7}
+.bow,.bow-film{left:-8px;width:calc(100% + 16px)}
+.ribbon-return{position:absolute;z-index:2;top:calc(59% - 7px);height:17px;width:7px;border-radius:2px;background:linear-gradient(90deg,color-mix(in srgb,var(--wine),black 60%),var(--wine) 60%,color-mix(in srgb,var(--wine),white 10%));box-shadow:0 2px 3px #24120f33;pointer-events:none;transition:opacity .2s}
+.return-l{left:-11px;transform:skewY(12deg)}.return-r{right:-11px;transform:skewY(-12deg) scaleX(-1)}
+.ribbon-contact{position:absolute;z-index:4;left:-8px;right:-8px;top:calc(59% - 5px);height:13px;box-shadow:0 3px 3px #3c251d38;pointer-events:none;transition:opacity .2s}
+.playing-bow .ribbon-return,.playing-bow .ribbon-contact,.untie .ribbon-return,.untie .ribbon-contact{opacity:0}
+.crest{width:140px;height:116px}.crest svg{filter:drop-shadow(0 1px 0 #fff9)}.crest b{padding:10px 31px 0;font-size:25px;text-shadow:0 1px 0 #fff9}.crest .lz-seal img{max-height:58px}
+.mcard .crest{width:92px;height:76px}.mcard .crest b{padding:8px 20px 0;font-size:20px}.mcard .crest .lz-seal img{max-height:40px}
+.hero{background-color:var(--card);box-shadow:inset 0 1px 0 #fff,inset 0 -1px 0 #a58b5a33}
+.frameg{inset:22px;border-color:#a68a554d;outline:1px solid #fff9;outline-offset:2px;box-shadow:inset 0 0 0 5px #fcf9f280,inset 0 0 0 6px #a68a5526}.frameg i{width:42px;height:42px;color:var(--gold-ink);filter:drop-shadow(0 1px 0 white)}
+.hero .gold-frame{box-shadow:0 2px 3px #5a432825,0 22px 35px -23px #5a432870;transform:rotate(-.6deg)}
+.gold-frame>div{padding:18px;background-image:linear-gradient(#fcf9f26b,#fcf9f26b),url('/assets/aurelia/papel-algodon.webp');background-size:auto,640px;box-shadow:inset 0 0 0 1px #fff,inset 0 0 0 3px #a68a5520,inset 0 0 0 4px #fff8}
+.gold-frame .pic{box-shadow:0 0 0 1px #725b3f55,0 0 0 4px #ebe3d5,inset 0 2px 3px #0002}
+.gframe>div{background-image:linear-gradient(#fcf9f280,#fcf9f280),url('/assets/aurelia/papel-algodon.webp');background-size:auto,640px;box-shadow:inset 0 0 0 1px #fff8,inset 0 0 0 3px #a68a551c}.gframe .pic{outline:1px solid #7e6a4b44;outline-offset:2px}.gframe{box-shadow:0 2px 3px #5b45261a,0 17px 25px -20px #5b452666}
+.countdown{box-shadow:inset 0 1px 0 #ffffff22,inset 0 6px 0 #00000008,inset 0 -1px 0 #0003}
+.countdown::before,.countdown::after{content:"";position:absolute;inset:14px 22px auto;height:5px;border-top:1px solid #dcc18c66;border-bottom:1px solid #dcc18c22;pointer-events:none}.countdown::after{inset:auto 22px 14px}
+.ccard.deboss::before,.reply.deboss::before{border-color:#a78c5c55;box-shadow:inset 0 1px 0 #fff,0 1px 0 #fff,0 0 0 3px #bda67a15}
+.ccard{box-shadow:0 0 0 1px #bca77f55,0 2px 3px #5b45261a,0 18px 28px -24px #5b452666}
+.tcards>div:first-child{background-image:linear-gradient(#fcf9f275,#fcf9f275),url('/assets/aurelia/papel-algodon.webp');background-size:auto,640px;box-shadow:inset 0 0 0 5px #fcf9f280,inset 0 0 0 6px #bca77f40,0 16px 24px -23px #5b452666}
+.reply{box-shadow:0 0 0 1px #bca77f66,1px 2px 0 #eee5d5,2px 3px 0 #c5b59466,0 22px 34px -26px #5b452677}
+.wax{background:radial-gradient(ellipse at 32% 23%,#ffffff28,transparent 42%),radial-gradient(circle at 52% 56%,color-mix(in srgb,var(--wine),white 8%) 0 46%,color-mix(in srgb,var(--wine),black 18%) 49%,var(--wine) 56%,color-mix(in srgb,var(--wine),black 30%) 76%,var(--wine));box-shadow:inset 0 1px 2px #fff5,inset 0 -2px 3px #0005,0 3px 5px #35201144;border:1px solid #ffffff22}
+.wax>span{border-color:#ffffff33;box-shadow:inset 0 1px 2px #0005,0 1px 0 #ffffff22;text-shadow:0 -1px 1px #0006,0 1px 0 #fff3}
+footer.damask{box-shadow:inset 0 1px 0 #fff2}footer .crest svg{filter:drop-shadow(0 1px 0 #0003)}footer .crest b{text-shadow:0 1px 0 #0003}
+@media(max-width:760px){.frameg{inset:14px}.frameg i{width:34px;height:34px}.hero .crest{width:126px;height:105px}.hero .gold-frame{transform:none}.gold-frame>div{padding:14px}.vprint h3{font-size:30px}.vprint .crest{width:88px;height:73px;margin-bottom:10px}.vprint{top:24px}.vprint #closing{font-size:9px}.vprint>p.sc{font-size:10px}}
+@media(max-width:360px){.vprint h3{font-size:28px;padding-inline:4px}.vprint{padding-inline:10px}.vprint .crest{width:82px;height:68px}.vprint #closing{letter-spacing:.07em}.mcard .crest{width:86px;height:72px}}
+@media(prefers-reduced-motion:reduce){.ribbon-return,.ribbon-contact,.wrap.open .mcard>*{transition:none!important}}
+.wrap{--pack-width:310px;--ribbon-height:calc((var(--pack-width) + 16px)*.09);--ribbon-shift:calc((var(--pack-width) + 16px)*.0085)}
+.ribbon-return,.ribbon-contact{top:calc(59% - var(--ribbon-shift) - var(--ribbon-height)/2);height:var(--ribbon-height)}
+@media(max-width:760px){.wrap{--pack-width:min(280px,calc(100vw - 64px))}}
