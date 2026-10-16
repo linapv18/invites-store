@@ -37,25 +37,47 @@
   tintBow();new MutationObserver(tintBow).observe(document.documentElement,{attributes:true,attributeFilter:['style']});
 
   // Apertura en dos pasos: seda, papel vegetal y tarjeta.
-  var op = $('open'), wrap = $('wrap'), hint = $('hint'), timers = [], film = null, untying = false;
-  var clear = function () { timers.forEach(clearTimeout); timers = []; if(film){if(film.tagName==='VIDEO'){film.pause();film.removeAttribute('src');film.load();}film.remove();film=null;} wrap.classList.remove('playing-bow');untying=false; };
+  var op = $('open'), wrap = $('wrap'), hint = $('hint'), timers = [], film = null, filmUrl = '', untying = false;
+  var defaultClip = {animated:'/assets/marfil/lazo-desatar.webp?v=2',duration:2084}, animationCache = {};
+  // Cache bytes, never an animated image decoder: Safari can retain its final frame.
+  function animationBytes(src){
+    if(!animationCache[src])animationCache[src]=fetch(src,{cache:'force-cache'}).then(function(response){
+      if(!response.ok)throw new Error('Ribbon animation unavailable');return response.blob();
+    }).catch(function(){delete animationCache[src];return null;});
+    return animationCache[src];
+  }
+  if(!reduced)animationBytes((window.MarfilBowClip || defaultClip).animated || defaultClip.animated);
+  function removeFilm(){
+    var old=film;film=null;
+    if(old){if(old.tagName==='VIDEO'){old.pause();old.querySelectorAll('source').forEach(function(source){source.removeAttribute('src');});old.removeAttribute('src');old.load();}else old.removeAttribute('src');old.remove();}
+    if(filmUrl){URL.revokeObjectURL(filmUrl);filmUrl='';}
+  }
+  var clear = function () { timers.forEach(clearTimeout); timers = []; untying=false; removeFilm();wrap.classList.remove('playing-bow'); };
   function reveal() { wrap.classList.add('untie', 'open', 'reveal'); wrap.querySelectorAll('.grow, .draw, .writes').forEach(show); hint.textContent = $('closing').textContent; $('enter').tabIndex = 0; $('enter').disabled=false; $('bow').tabIndex=-1; }
   function finishUntie(){
     if(!untying)return;
-    untying=false;
-    if(film){if(film.tagName==='VIDEO')film.pause();film.remove();film=null;}
+    untying=false;timers.forEach(clearTimeout);timers=[];removeFilm();
     wrap.classList.remove('playing-bow');wrap.classList.add('untie');
     timers.push(setTimeout(function(){reveal();$('enter').focus({preventScroll:true});},reduced?0:400));
   }
   $('bow').addEventListener('click', function () {
     if (wrap.classList.contains('untie') || untying) return;
     clear(); LazoMusic.play();untying=true;
-    // Optional transparent clip: supplied by the asset pipeline, never shown as a product setting.
-    var clip=window.MarfilBowClip || {animated:'/assets/marfil/lazo-desatar.webp?v=2',duration:2084};
+    var clip=window.MarfilBowClip || defaultClip;
     if(!reduced && clip && clip.animated){
-      film=document.createElement('img');film.className='bow-film';film.alt='';film.setAttribute('aria-hidden','true');
-      film.addEventListener('load',function(){if(!untying || !film)return;wrap.classList.add('playing-bow');timers.push(setTimeout(finishUntie,clip.duration || 2084));},{once:true});
-      film.addEventListener('error',finishUntie,{once:true});wrap.appendChild(film);film.src=clip.animated;timers.push(setTimeout(finishUntie,4000));
+      var image=document.createElement('img'),loadTimeout;
+      film=image;image.className='bow-film';image.alt='';image.setAttribute('aria-hidden','true');
+      image.addEventListener('load',function(){
+        if(!untying || film!==image)return;
+        clearTimeout(loadTimeout);wrap.classList.add('playing-bow');timers.push(setTimeout(finishUntie,clip.duration || 2084));
+      },{once:true});
+      image.addEventListener('error',function(){if(film===image)finishUntie();},{once:true});
+      wrap.appendChild(image);loadTimeout=setTimeout(function(){if(film===image)finishUntie();},6000);timers.push(loadTimeout);
+      animationBytes(clip.animated).then(function(blob){
+        if(!untying || film!==image)return;
+        if(!blob){finishUntie();return;}
+        filmUrl=URL.createObjectURL(blob);image.src=filmUrl;
+      });
     }else if(!reduced && clip && (clip.webm || clip.hevc)){
       film=document.createElement('video');film.className='bow-film';film.muted=true;film.playsInline=true;film.preload='auto';film.setAttribute('aria-hidden','true');film.setAttribute('playsinline','');
       [['hevc','video/mp4; codecs="hvc1"'],['webm','video/webm; codecs="vp9"']].forEach(function(pair){if(clip[pair[0]]){var source=document.createElement('source');source.src=clip[pair[0]];source.type=pair[1];film.appendChild(source);}});
