@@ -13,10 +13,10 @@ a:focus-visible,button:focus-visible,summary:focus-visible,textarea:focus-visibl
 @keyframes sBreath{0%,100%{scale:1}50%{scale:1.025}}
 
 /* ---------- Sobre ---------- */
-.env{position:fixed;inset:0;z-index:50;overflow:hidden;background:var(--r-bg2,#EEE5D4);transition:opacity .25s ease,visibility 0s linear .25s}
+.env{--fh:54.5vh;--ss:clamp(120px,min(42vw,24vh),210px);--cx:50vw;--cy:54.5vh;position:fixed;inset:0;z-index:50;overflow:hidden;background:var(--r-bg2,#EEE5D4);transition:opacity .85s cubic-bezier(.22,.61,.36,1),visibility 0s linear .85s}
 .env.gone{opacity:0;visibility:hidden}
 .env svg{display:block}
-.scene{position:absolute;inset:0;perspective:2400px;transition:opacity .35s ease,transform .8s cubic-bezier(.4,0,.2,1)}
+.scene{position:absolute;inset:0;perspective:2400px;transition:opacity .95s ease,transform .8s cubic-bezier(.4,0,.2,1)}
 .base{position:absolute;inset:0;width:100%;height:100%}
 .liner-glow{opacity:0;transition:opacity .4s ease}
 .dim{position:absolute;inset:0;background:var(--r-shade,#6B5D48);mix-blend-mode:multiply;opacity:0;transition:opacity .45s ease}
@@ -42,7 +42,7 @@ a:focus-visible,button:focus-visible,summary:focus-visible,textarea:focus-visibl
 .wash{position:absolute;inset:0;background:var(--r-liner4,#F3EBDC);opacity:0;pointer-events:none;transition:opacity .7s ease}
 .env[data-phase="flash"] .wash{opacity:1}
 
-.card{position:absolute;inset:0;background:var(--r-liner4,#F3EBDC);opacity:0;pointer-events:none;overflow-y:auto;display:flex;flex-direction:column;transition:opacity .55s ease}
+.card{position:absolute;inset:0;background:var(--r-liner4,#F3EBDC);opacity:0;pointer-events:none;overflow-y:auto;display:flex;flex-direction:column;transition:opacity .95s ease}
 .env[data-phase="card"] .card{opacity:1;pointer-events:auto;background:var(--r-liner4,#F3EBDC)}
 .card .corner{position:absolute;width:clamp(90px,12vw,160px);height:clamp(90px,12vw,160px);opacity:0;transition:opacity .4s ease .1s}
 .env[data-phase="card"] .card .corner{opacity:1}
@@ -195,3 +195,7 @@ details.faq[open] .plus{rotate:45deg}
 /* All interior wax impressions use the same editable seal as the envelope. */
 .r-wax{position:relative;display:block;flex:none;width:var(--ss);height:var(--ss);letter-spacing:normal;text-transform:none}
 .r-wax>img{display:block;width:100%;height:100%;object-fit:contain}
+
+/* Cross-fade the letter over the departing envelope, then reveal the page beneath. */
+#invite{opacity:0;transform:translateY(10px);transition:opacity .95s ease,transform 1.1s cubic-bezier(.22,.61,.36,1)}
+#invite.is-revealed{opacity:1;transform:none}

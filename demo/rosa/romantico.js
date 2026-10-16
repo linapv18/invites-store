@@ -22,12 +22,9 @@
   var enter = $('enter'), replay = $('replay'), timers = [];
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
   function layout() {
-    var w = innerWidth, h = innerHeight, fh = Math.round(h * .545), tip = Math.round(h * .533), bot = Math.round(h * .6);
+    var w = innerWidth, h = innerHeight, fh = Math.round(h * .545);
     var ss = Math.round(Math.max(120, Math.min(210, Math.min(w * .42, h * .24))));
     base.setAttribute('viewBox', '0 0 ' + w + ' ' + h);
-    var pts = { liner: '0,0 ' + w + ',0 ' + w / 2 + ',' + (fh - 20), left: '0,0 ' + w / 2 + ',' + tip + ' 0,' + h,
-      right: w + ',0 ' + w / 2 + ',' + tip + ' ' + w + ',' + h, bottom: '0,' + h + ' ' + w / 2 + ',' + bot + ' ' + w + ',' + h };
-    base.querySelectorAll('polygon').forEach(function (p) { p.setAttribute('points', pts[p.dataset.p]); });
     env.style.setProperty('--fh', fh + 'px'); env.style.setProperty('--ss', ss + 'px');
     env.style.setProperty('--cx', w / 2 + 'px'); env.style.setProperty('--cy', fh + 'px');
   }
@@ -43,13 +40,13 @@
   // Only the invitation is inert. Persistent shared demo/music tools remain available.
   env.removeAttribute('aria-modal');
   function envelope() {
-    clear(); env.inert = false; phase('closed'); env.classList.remove('gone');
+    clear(); invite.classList.remove('is-revealed'); env.inert = false; phase('closed'); env.classList.remove('gone');
     env.setAttribute('aria-label', seal.getAttribute('aria-label'));
     invite.inert = true; document.body.classList.add('locked'); card.scrollTop = 0;
     window.scrollTo({ top: 0, behavior: 'instant' });
   }
   function open() {
-    clear(); env.classList.add('gone'); env.inert = true; invite.inert = false;
+    clear(); invite.classList.add('is-revealed'); env.classList.add('gone'); env.inert = true; invite.inert = false;
     document.body.classList.remove('locked');
   }
   envelope();
@@ -63,7 +60,7 @@
     if (reduce.matches) { phase('card'); env.setAttribute('aria-label', S.dialog); enter.focus({ preventScroll: true }); return; }
     phase('glow'); later(function () { phase('open'); }, 350);
     later(function () { phase('card'); env.setAttribute('aria-label', S.dialog); }, 1750);
-    later(function () { enter.focus({ preventScroll: true }); }, 2350);
+    later(function () { enter.focus({ preventScroll: true }); }, 2800);
   });
   replay.addEventListener('click', function () { envelope(); seal.focus({ preventScroll: true }); });
   enter.addEventListener('click', function () {

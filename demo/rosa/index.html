@@ -7,16 +7,20 @@
 <meta name="description" content="Demo de invitación web de boda: sobre lacrado que se abre, cuenta regresiva, el día, historia, confirmación por persona y preguntas frecuentes.">
 <meta name="theme-color" content="#EEE5D4">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%23C08A4F'/%3E%3Ctext x='32' y='44' font-family='Georgia,serif' font-style='italic' font-size='34' fill='%23FBEBD0' text-anchor='middle'%3E%26%3C/text%3E%3C/svg%3E">
+<link rel="preload" as="image" href="/assets/rosa/damasco.webp" fetchpriority="high">
+<link rel="preload" as="image" href="/assets/rosa/lacre-dorado.webp" fetchpriority="high">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&amp;family=Jost:wght@300;400;500&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&amp;family=Jost:wght@300;400;500&amp;display=swap" rel="stylesheet" media="print" onload="this.media='all'">
 <link rel="stylesheet" href="/demo/rosa/romantico.css">
 <link rel="stylesheet" href="/demo/shared/panel.css">
 </head>
 <body class="locked">
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
-  <defs>
+  <defs><pattern id="dmkEnvelope" width="201.5" height="279" patternUnits="userSpaceOnUse"><image href="/assets/rosa/damasco.webp" width="201.5" height="279" preserveAspectRatio="none"/></pattern>
+<pattern id="dmkEnvelopeGold" width="201.5" height="279" patternUnits="userSpaceOnUse"><image href="/assets/rosa/damasco-luz.webp" width="201.5" height="279" preserveAspectRatio="none"/></pattern>
+
     <g id="motif" fill="none" stroke-linecap="round" stroke-linejoin="round">
       <g transform="translate(65 75) scale(.7)" style="color:var(--r-pat,#BCA27E)"><use href="#emblem" style="color:inherit"/></g>
       <g stroke="currentColor" stroke-width=".7" opacity=".7">
@@ -132,18 +136,18 @@
   <div class="scene">
     <svg class="base" id="base" preserveAspectRatio="none" aria-hidden="true">
       <rect width="100%" height="100%" style="fill:var(--r-bg2,#EEE5D4)"/>
-      <polygon data-p="liner" fill="url(#linerG)"/>
-      <polygon data-p="liner" class="liner-glow" fill="url(#dmkGold)" filter="url(#bloomF)"/>
-      <polygon data-p="left" style="fill:var(--r-bg2,#EEE5D4)"/><polygon data-p="left" fill="url(#dmk)"/><polygon data-p="left" fill="url(#shL)"/>
-      <polygon data-p="right" style="fill:var(--r-bg2,#EEE5D4)"/><polygon data-p="right" fill="url(#dmk)"/><polygon data-p="right" fill="url(#shR)"/>
-      <polygon data-p="bottom" style="fill:var(--r-bg2,#EEE5D4)" stroke="rgba(120,80,70,.28)" stroke-width="1"/><polygon data-p="bottom" fill="url(#dmk)"/><polygon data-p="bottom" fill="url(#shB)"/>
+      <rect width="100%" height="100%" data-p="liner" fill="url(#linerG)" style="clip-path:polygon(0 0,100% 0,50% calc(54.5% - 20px));"/>
+      <rect width="100%" height="100%" data-p="liner" class="liner-glow" fill="url(#dmkEnvelopeGold)" style="clip-path:polygon(0 0,100% 0,50% calc(54.5% - 20px));"/>
+      <rect width="100%" height="100%" data-p="left" style="clip-path:polygon(0 0,50% 53.3%,0 100%);fill:var(--r-bg2,#EEE5D4)"/><rect width="100%" height="100%" data-p="left" fill="url(#dmkEnvelope)" style="clip-path:polygon(0 0,50% 53.3%,0 100%);"/><rect width="100%" height="100%" data-p="left" fill="url(#shL)" style="clip-path:polygon(0 0,50% 53.3%,0 100%);"/>
+      <rect width="100%" height="100%" data-p="right" style="clip-path:polygon(100% 0,50% 53.3%,100% 100%);fill:var(--r-bg2,#EEE5D4)"/><rect width="100%" height="100%" data-p="right" fill="url(#dmkEnvelope)" style="clip-path:polygon(100% 0,50% 53.3%,100% 100%);"/><rect width="100%" height="100%" data-p="right" fill="url(#shR)" style="clip-path:polygon(100% 0,50% 53.3%,100% 100%);"/>
+      <rect width="100%" height="100%" data-p="bottom" style="clip-path:polygon(0 100%,50% 60%,100% 100%);fill:var(--r-bg2,#EEE5D4)" stroke="rgba(120,80,70,.28)" stroke-width="1"/><rect width="100%" height="100%" data-p="bottom" fill="url(#dmkEnvelope)" style="clip-path:polygon(0 100%,50% 60%,100% 100%);"/><rect width="100%" height="100%" data-p="bottom" fill="url(#shB)" style="clip-path:polygon(0 100%,50% 60%,100% 100%);"/>
     </svg>
     <div class="dim"></div>
-    <div class="reach"><svg aria-hidden="true"><rect width="100%" height="100%" fill="url(#dmkGold)" filter="url(#bloomF)"/></svg></div>
+    <div class="reach"><svg aria-hidden="true"><rect width="100%" height="100%" fill="url(#dmkEnvelopeGold)"/></svg></div>
     <div class="flap">
-      <div class="tri"><svg aria-hidden="true"><rect width="100%" height="100%" style="fill:var(--r-bg2,#EEE5D4)"/><rect width="100%" height="100%" fill="url(#dmk)"/><rect width="100%" height="100%" fill="url(#shT)"/></svg></div>
+      <div class="tri"><svg aria-hidden="true"><rect width="100%" height="100%" style="fill:var(--r-bg2,#EEE5D4)"/><rect width="100%" height="100%" fill="url(#dmkEnvelope)"/><rect width="100%" height="100%" fill="url(#shT)"/></svg></div>
       <div class="tri dim"></div>
-      <div class="tri"><div class="reach"><svg aria-hidden="true"><rect width="100%" height="100%" fill="url(#dmkGold)" filter="url(#bloomF)"/></svg></div></div>
+      <div class="tri"><div class="reach"><svg aria-hidden="true"><rect width="100%" height="100%" fill="url(#dmkEnvelopeGold)"/></svg></div></div>
       <button class="seal-btn" id="sealBtn" type="button" aria-label="Abrir la invitación"><img class="wax" src="/assets/rosa/lacre-dorado.webp" width="512" height="512" alt=""><span class="lz-seal-over" data-lz-seal>M&amp;A</span></button>
     </div>
     <div class="bloom"></div>
