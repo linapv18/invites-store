@@ -10,97 +10,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&amp;family=Jost:wght@300;400;500&amp;display=swap" rel="stylesheet">
-<style>
-*,*::before,*::after{box-sizing:border-box}
-[hidden]{display:none !important}
-html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
-body{margin:0;background:var(--r-bg,#F5EFE4);font-family:Jost,Helvetica,sans-serif;font-weight:300;color:var(--r-ink,#3D352B)}
-body.locked{overflow:hidden}
-a{color:var(--r-ink,#3D352B);text-decoration:none}a:hover{opacity:.75}
-img{max-width:100%}
-textarea::placeholder{color:var(--r-sh2,#8E8371)}
-button{font-family:inherit}
-a:focus-visible,button:focus-visible,summary:focus-visible,textarea:focus-visible{outline:2px solid #B48650;outline-offset:3px}
-@keyframes rNudge{0%,100%{translate:0 0}50%{translate:0 6px}}
-@keyframes sBreath{0%,100%{scale:1}50%{scale:1.025}}
-
-/* ---------- Sobre ---------- */
-.env{position:fixed;inset:0;z-index:50;overflow:hidden;background:var(--r-bg2,#EEE5D4);transition:opacity .9s ease,visibility 0s linear .9s}
-.env.gone{opacity:0;visibility:hidden}
-.env svg{display:block}
-.scene{position:absolute;inset:0;perspective:2400px;transition:opacity 1s ease,transform 2.6s cubic-bezier(.4,0,.2,1)}
-.base{position:absolute;inset:0;width:100%;height:100%}
-.liner-glow{opacity:0;transition:opacity 1s ease .3s}
-.dim{position:absolute;inset:0;background:var(--r-shade,#6B5D48);mix-blend-mode:multiply;opacity:0;transition:opacity 1.4s ease}
-.reach{position:absolute;inset:0;clip-path:circle(0px at var(--cx) var(--cy));transition:clip-path 1.9s cubic-bezier(.3,0,.25,1)}
-.reach svg{width:100%;height:100%}
-.flap{position:absolute;left:0;top:0;width:100%;height:var(--fh);transform-origin:50% 0;transition:transform 1.3s cubic-bezier(.65,0,.35,1);filter:drop-shadow(0 10px 16px rgba(120,80,70,.28))}
-.flap .tri{position:absolute;inset:0;clip-path:polygon(0 0,100% 0,50% 100%)}
-.flap .tri svg{width:100%;height:100%}
-.seal-btn{position:absolute;left:50%;top:var(--fh);width:var(--ss);height:var(--ss);margin:calc(var(--ss) / -2) 0 0 calc(var(--ss) / -2);padding:0;border:0;background:none;cursor:pointer;animation:sBreath 3s ease-in-out infinite;transition:filter 1s ease}
-.seal-btn svg{width:100%;height:100%;overflow:visible}
-.bloom{position:absolute;left:var(--cx);top:var(--cy);width:10px;height:10px;margin:-5px 0 0 -5px;border-radius:50%;background:#FFF6E2;opacity:0;filter:blur(30px);pointer-events:none;transition:transform 1.9s cubic-bezier(.2,.7,.2,1),opacity 1.2s ease}
-.hint{position:absolute;left:0;right:0;bottom:clamp(28px,6vh,48px);margin:0;padding:0 20px;text-align:center;font-size:11px;font-weight:400;letter-spacing:.34em;text-transform:uppercase;color:var(--r-sh3,#6A5F4E);transition:opacity .5s ease}
-.env:not([data-phase="closed"]) .dim{opacity:.38}
-.env:not([data-phase="closed"]) .reach{clip-path:circle(2400px at var(--cx) var(--cy))}
-.env:not([data-phase="closed"]) .seal-btn{animation:none;filter:brightness(1.55) saturate(.25) drop-shadow(0 0 24px #FFF2D2);cursor:default}
-.env:not([data-phase="closed"]) .hint{opacity:0}
-.env[data-phase="glow"] .bloom{transform:scale(120);opacity:.5}
-.env[data-phase="open"] .bloom,.env[data-phase="flash"] .bloom,.env[data-phase="card"] .bloom{transform:scale(120);opacity:.3}
-.env[data-phase="open"] .scene,.env[data-phase="flash"] .scene{transform:scale(1.06)}
-.env[data-phase="open"] .flap,.env[data-phase="flash"] .flap,.env[data-phase="card"] .flap{transform:rotateX(180deg)}
-.env[data-phase="open"] .liner-glow,.env[data-phase="flash"] .liner-glow,.env[data-phase="card"] .liner-glow{opacity:.9}
-.env[data-phase="card"] .scene{opacity:0;transform:scale(1.06)}
-.wash{position:absolute;inset:0;background:#F1F1FB;opacity:0;pointer-events:none;transition:opacity .7s ease}
-.env[data-phase="flash"] .wash{opacity:1}
-
-.card{position:absolute;inset:0;background:#E3E2F4;opacity:0;pointer-events:none;overflow-y:auto;display:flex;flex-direction:column;transition:opacity 1.3s ease,background-color 3.2s ease .8s}
-.env[data-phase="card"] .card{opacity:1;pointer-events:auto;background:var(--r-liner4,#F3EBDC)}
-.card .corner{position:absolute;width:clamp(90px,12vw,160px);height:clamp(90px,12vw,160px);opacity:0;transition:opacity 1.4s ease 1.2s}
-.env[data-phase="card"] .card .corner{opacity:1}
-.card .bar{position:relative;height:72px;padding:0 clamp(20px,4vw,64px);display:flex;align-items:center;justify-content:space-between;font-size:11px;font-weight:400;letter-spacing:.34em;text-transform:uppercase;color:var(--r-text,#6E6354)}
-.card .inner{position:relative;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px clamp(20px,6vw,96px) 72px}
-.rv{opacity:0;translate:0 14px;transition:opacity 1.1s ease,translate 1.1s ease}
-.env[data-phase="card"] .rv{opacity:1;translate:0 0}
-.env[data-phase="card"] .d1{transition-delay:1s}
-.env[data-phase="card"] .d2{transition-delay:1.5s}
-.env[data-phase="card"] .d3{transition-delay:1.8s}
-.env[data-phase="card"] .d4{transition-delay:2.2s}
-.env[data-phase="card"] .d5{transition-delay:2.7s}
-
-/* ---------- Invitación ---------- */
-.pill{display:inline-flex;align-items:center;justify-content:center;border-radius:100px;font-size:11px;font-weight:400;letter-spacing:.28em;text-transform:uppercase}
-.kicker{margin:0;font-size:11px;font-weight:400;letter-spacing:.34em;text-transform:uppercase;color:#7A5530}
-.h2{margin:14px 0 0;font:400 clamp(40px,4.4vw,60px)/1.05 'Instrument Serif',serif;color:var(--r-ink,#3D352B)}
-.ph{position:relative;width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;background:var(--r-liner3,#EADDC5);overflow:hidden;color:var(--r-muted,#7F7361);text-align:center}
-.ph svg.bg{position:absolute;inset:0;width:100%;height:100%;opacity:.55}
-.ph .mono{position:relative;font:italic 400 clamp(40px,6vw,72px)/1 'Instrument Serif',serif;color:var(--r-sh1,#9C8C72)}
-.ph .cap{position:relative;font-size:10px;font-weight:400;letter-spacing:.3em;text-transform:uppercase}
-.att{width:60px;height:44px;border-radius:100px;border:1px solid var(--r-ink,#3D352B);background:transparent;color:var(--r-ink,#3D352B);font-size:12px;font-weight:400;letter-spacing:.12em;cursor:pointer}
-.att[aria-pressed="true"]{background:var(--r-ink,#3D352B);color:var(--r-on,#F8F2E6)}
-details.faq{border-top:1px solid var(--r-line,#E3D6BF)}
-details.faq summary{min-height:72px;padding:16px 0;display:flex;align-items:center;justify-content:space-between;gap:16px;cursor:pointer;list-style:none}
-details.faq summary::-webkit-details-marker{display:none}
-details.faq .plus{flex:none;font:400 30px/1 'Instrument Serif',serif;color:#B48650;transition:rotate .3s ease}
-details.faq[open] .plus{rotate:45deg}
-:root{--p-bg:var(--r-bg,#F5EFE4);--p-surface:var(--r-card,#FBF7EF);--p-ink:var(--r-ink,#3D352B);--p-muted:var(--r-muted,#7F7361);--p-line:var(--r-line,#E3D6BF);--p-accent:var(--r-ink,#3D352B);--p-on-accent:var(--r-on,#F8F2E6);--p-serif:'Instrument Serif',Georgia,serif;--p-sans:Jost,Helvetica,sans-serif;--m-bg:var(--r-ink,#3D352B);--m-fg:var(--r-on,#F8F2E6)}
-.travel-card{padding:40px 32px;background:var(--r-card,#FBF7EF);border:1px solid var(--r-line,#E3D6BF);border-radius:160px 160px 8px 8px;text-align:center}
-.travel-card ul{margin:14px 0 0;padding:0;list-style:none;display:flex;flex-direction:column;gap:12px}
-.travel-card li b{display:block;font:400 22px/1.2 'Instrument Serif',serif;color:var(--r-ink,#3D352B)}
-.travel-card li span{font-size:14px;line-height:1.6;color:var(--r-text,#6E6354)}
-.menu-btn{display:none;align-items:center;justify-content:center;width:48px;height:48px;padding:0;border:1px solid var(--r-field,#D9CCB4);border-radius:100px;background:transparent;color:var(--r-ink,#3D352B);cursor:pointer}
-.menu-btn .x{display:none}
-#siteHead.open .menu-btn .bars{display:none}
-#siteHead.open .menu-btn .x{display:block}
-@media (max-width:820px){
-  .menu-btn{display:flex}
-  #secNav,.head-cta{display:none !important}
-  #siteHead.open #secNav{display:flex !important;width:100%;flex-direction:column;font-size:12px !important}
-  #siteHead.open #secNav a{min-height:52px !important;border-top:1px solid var(--r-line,#E3D6BF)}
-  #siteHead.open .head-cta{display:flex !important;width:100%;height:52px !important;margin-top:8px;background:var(--r-ink,#3D352B);color:var(--r-on,#F8F2E6)}
-}
-@media (prefers-reduced-motion:reduce){*,*::before,*::after{transition-duration:.01s !important;animation:none !important}}
-</style>
+<link rel="stylesheet" href="/demo/rosa/romantico.css">
 <link rel="stylesheet" href="/demo/shared/panel.css">
 </head>
 <body class="locked">
@@ -223,13 +133,13 @@ details.faq[open] .plus{rotate:45deg}
       <div class="tri"><svg aria-hidden="true"><rect width="100%" height="100%" style="fill:var(--r-bg2,#EEE5D4)"/><rect width="100%" height="100%" fill="url(#dmk)"/><rect width="100%" height="100%" fill="url(#shT)"/></svg></div>
       <div class="tri dim"></div>
       <div class="tri"><div class="reach"><svg aria-hidden="true"><rect width="100%" height="100%" fill="url(#dmkGold)" filter="url(#bloomF)"/></svg></div></div>
-      <button class="seal-btn" id="sealBtn" type="button" aria-label="Open the invitation"><svg viewBox="0 0 160 160" aria-hidden="true"><use href="#seal"/></svg><span class="lz-seal-over" data-lz-seal></span></button>
+      <button class="seal-btn" id="sealBtn" type="button" aria-label="Open the invitation"><img class="wax" src="/assets/rosa/lacre-dorado.webp" width="512" height="512" alt=""><span class="lz-seal-over" data-lz-seal>M&amp;A</span></button>
     </div>
     <div class="bloom"></div>
     <p class="hint">Tap the seal to open</p>
   </div>
 
-  <div class="card" id="card">
+  <div class="card" id="card" inert>
     <svg class="corner" viewBox="0 0 160 160" style="left:clamp(16px,3vw,40px);top:84px;transform:scaleX(-1)" aria-hidden="true"><use href="#corner"/></svg>
     <svg class="corner" viewBox="0 0 160 160" style="right:clamp(16px,3vw,40px);top:84px" aria-hidden="true"><use href="#corner"/></svg>
     <svg class="corner" viewBox="0 0 160 160" style="left:clamp(16px,3vw,40px);bottom:clamp(16px,3vw,40px);transform:scale(-1,-1)" aria-hidden="true"><use href="#corner"/></svg>
@@ -242,21 +152,21 @@ details.faq[open] .plus{rotate:45deg}
       <p class="rv d3" style="margin:14px 0 0;font:italic 400 clamp(42px,5vw,64px)/1 'Instrument Serif',serif;color:var(--r-ink,#3D352B)">The Rodríguez Family</p><p class="rv d3" data-lz="envClosing" data-lz-if="envClosing" hidden style="margin:12px 0 0;font-size:11px;font-weight:400;letter-spacing:.32em;text-transform:uppercase;color:var(--r-text,#6E6354)"></p>
       <p class="rv d4" style="margin:clamp(28px,4vh,44px) 0 0;font:400 clamp(54px,8vw,96px)/1 'Instrument Serif',serif;letter-spacing:-.02em;color:var(--r-ink,#3D352B)"><span data-lz="n1">Melissa</span> <em style="color:#B48650">&amp;</em> <span data-lz="n2">Andrés</span></p>
       <p class="rv d4" style="margin:18px 0 0;font-size:11px;font-weight:400;letter-spacing:.32em;text-transform:uppercase;color:var(--r-text,#6E6354)"><span data-lz-date="{W} · {Mc} {d} · {Y}">Saturday · June 12 · 2027</span><span data-lz-if="city" hidden> · <span data-lz="city"></span></span></p>
-      <div class="rv d5" style="margin-top:clamp(32px,5vh,52px);display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:8px 20px">
-        <button type="button" id="enter" class="pill" style="height:56px;padding:0 44px;border:0;background:var(--r-ink,#3D352B);color:var(--r-on,#F8F2E6);font-size:12px;cursor:pointer">View invitation</button>
-        <button type="button" id="replay" style="height:56px;padding:0 20px;border:0;background:none;cursor:pointer;font-size:12px;font-weight:400;letter-spacing:.22em;text-transform:uppercase;color:var(--r-soft,#5E5548)">See the envelope again</button>
       </div>
-    </div>
+    <div class="rv d5 card-actions" style="margin-top:clamp(32px,5vh,52px);display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:8px 20px">
+        <button type="button" id="enter" tabindex="-1" class="pill" style="height:56px;padding:0 44px;border:0;background:var(--r-ink,#3D352B);color:var(--r-on,#F8F2E6);font-size:12px;cursor:pointer">View invitation</button>
+        <button type="button" id="replay" tabindex="-1" style="height:56px;padding:0 20px;border:0;background:none;cursor:pointer;font-size:12px;font-weight:400;letter-spacing:.22em;text-transform:uppercase;color:var(--r-soft,#5E5548)">See the envelope again</button>
+      </div>
   </div>
   <div class="wash"></div>
 </div>
 
 <!-- ======================= INVITACIÓN ======================= -->
-<div id="invite" style="position:relative;width:100%;display:flex;flex-direction:column;overflow:hidden;background:var(--r-bg,#F5EFE4)">
+<div id="invite" inert style="position:relative;width:100%;display:flex;flex-direction:column;overflow:hidden;background:var(--r-bg,#F5EFE4)">
 
   <header id="siteHead" style="position:relative;z-index:2;width:100%;max-width:1280px;margin:0 auto;padding:22px clamp(20px,4vw,56px);display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px 32px">
     <a href="#portada" style="display:flex;align-items:center;gap:12px;font-size:11px;font-weight:400;letter-spacing:.34em;text-transform:uppercase" data-lz-mono>
-      <svg width="40" height="40" viewBox="0 0 160 160" aria-hidden="true"><use href="#seal"/></svg>M — A
+      <img width="40" height="40" aria-hidden="true" src="/assets/rosa/lacre-dorado.webp" alt="">M — A
     </a>
     <button type="button" class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="secNav" aria-label="Open menu">
       <svg class="bars" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" aria-hidden="true"><path d="M4 8h16M4 16h16"/></svg>
@@ -276,14 +186,14 @@ details.faq[open] .plus{rotate:45deg}
     <svg viewBox="0 0 160 160" style="position:absolute;left:clamp(8px,2vw,28px);top:8px;width:clamp(100px,13vw,190px);height:clamp(100px,13vw,190px);transform:scaleX(-1)" aria-hidden="true"><use href="#corner"/></svg>
     <svg viewBox="0 0 160 160" style="position:absolute;right:clamp(8px,2vw,28px);top:8px;width:clamp(100px,13vw,190px);height:clamp(100px,13vw,190px)" aria-hidden="true"><use href="#corner"/></svg>
     <div style="position:relative;max-width:1120px;margin:0 auto;display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:56px 80px">
-      <div style="flex:1 1 420px;min-width:0;text-align:center">
+      <div class="r-hero-copy" style="flex:1 1 420px;min-width:0;text-align:center">
         <p style="margin:0;font:400 16px/1.6 'Instrument Serif',serif;letter-spacing:.22em;text-transform:uppercase;color:var(--r-muted,#7F7361)">Celebrate<br>our big day with us</p>
-        <h1 style="margin:28px 0 0;font:400 clamp(64px,8vw,120px)/.9 'Instrument Serif',serif;letter-spacing:-.02em;color:var(--r-ink,#3D352B)"><span data-lz="n1">Melissa</span><br><em style="font-size:.6em;color:#B48650">&amp;</em><br><span data-lz="n2">Andrés</span></h1>
+        <h1 tabindex="-1" style="margin:28px 0 0;font:400 clamp(64px,8vw,120px)/.9 'Instrument Serif',serif;letter-spacing:-.02em;color:var(--r-ink,#3D352B)"><span data-lz="n1">Melissa</span><br><em style="font-size:.6em;color:#B48650">&amp;</em><br><span data-lz="n2">Andrés</span></h1>
         <svg width="300" height="40" viewBox="-150 -20 300 40" style="display:block;max-width:100%;margin:28px auto 0" aria-hidden="true"><use href="#orn"/></svg>
         <p style="margin:18px 0 0;font-size:11px;font-weight:400;letter-spacing:.32em;text-transform:uppercase;color:var(--r-text,#6E6354)"><span data-lz-date="{W} · {Mc} {d} · {Y}">Saturday · June 12 · 2027</span><span data-lz-if="city" hidden> · <span data-lz="city"></span></span></p>
         <a href="#confirmar" class="pill" style="height:54px;margin-top:36px;padding:0 40px;background:var(--r-ink,#3D352B);color:var(--r-on,#F8F2E6)">RSVP</a>
       </div>
-      <div style="flex:0 1 440px;min-width:0;width:100%;max-width:440px">
+      <div class="r-hero-photo" style="flex:0 1 440px;min-width:0;width:100%;max-width:440px">
         <div style="width:100%;aspect-ratio:440 / 560;padding:9px;border:1px solid #C49A62;border-radius:220px 220px 12px 12px">
           <img src="/assets/fotos/beso.jpg" data-lz-src="photo:0" alt="Melissa and Andrés" style="display:block;width:100%;height:100%;object-fit:cover;object-position:center 60%;border-radius:212px 212px 6px 6px">
         </div>
@@ -295,8 +205,8 @@ details.faq[open] .plus{rotate:45deg}
     </div>
   </section>
 
-  <section style="position:relative;padding:96px clamp(20px,4vw,56px);background:var(--r-bg2,#EEE5D4)">
-    <svg style="position:absolute;inset:0;width:100%;height:100%;opacity:.6" aria-hidden="true"><rect width="100%" height="100%" fill="url(#dmk)"/></svg>
+  <section class="r-family" style="position:relative;padding:96px clamp(20px,4vw,56px);background:var(--r-bg2,#EEE5D4)">
+    <svg style="position:absolute;inset:0;width:100%;height:100%;opacity:.25" aria-hidden="true"><rect width="100%" height="100%" fill="url(#dmk)"/></svg>
     <div style="position:relative;max-width:760px;margin:0 auto;padding:56px clamp(24px,5vw,72px);background:var(--r-card,#FBF7EF);border:1px solid var(--r-line,#E3D6BF);border-radius:8px;box-shadow:0 24px 60px var(--r-shadow,#6B5D4818);text-align:center">
       <p class="kicker">An invitation for</p>
       <p style="margin:18px 0 0;font:italic 400 clamp(42px,5vw,64px)/1 'Instrument Serif',serif;color:var(--r-ink,#3D352B)">The Rodríguez Family</p>
@@ -305,7 +215,7 @@ details.faq[open] .plus{rotate:45deg}
     </div>
   </section>
 
-  <section style="padding:104px clamp(20px,4vw,56px);text-align:center">
+  <section class="r-countdown" style="padding:104px clamp(20px,4vw,56px);text-align:center">
     <svg width="300" height="40" viewBox="-150 -20 300 40" style="display:block;max-width:100%;margin:0 auto" aria-hidden="true"><use href="#orn"/></svg>
     <p class="kicker" style="margin-top:18px">Countdown</p>
     <h2 class="h2" data-lz="countdownNote">Almost <em>time</em></h2>
@@ -319,7 +229,7 @@ details.faq[open] .plus{rotate:45deg}
   </section>
 
   <section id="dia" data-lz-anchor="itinerario musica" style="position:relative;padding:104px clamp(20px,4vw,56px);background:var(--r-bg2,#EEE5D4)">
-    <svg style="position:absolute;inset:0;width:100%;height:100%;opacity:.4" aria-hidden="true"><rect width="100%" height="100%" fill="url(#dmk)"/></svg>
+    <svg style="position:absolute;inset:0;width:100%;height:100%;opacity:.18" aria-hidden="true"><rect width="100%" height="100%" fill="url(#dmk)"/></svg>
     <div style="position:relative;max-width:1120px;margin:0 auto">
       <div style="text-align:center">
         <p class="kicker">The day</p>
@@ -330,24 +240,24 @@ details.faq[open] .plus{rotate:45deg}
           <p style="margin:12px 0 0;font:400 44px/1 'Instrument Serif',serif" data-lz-f="time">4:00 p.m.</p>
           <div style="width:1px;height:36px;margin:18px auto;background:#C49A62"></div>
           <p class="kicker" style="letter-spacing:.32em" data-lz-f="name">Ceremony</p>
-          <p style="margin:12px 0 0;font:400 28px/1.2 'Instrument Serif',serif" data-lz-f="place">Ceremony venue</p>
-          <p style="margin:6px 0 0;font-size:15px;line-height:1.6;color:var(--r-text,#6E6354)" data-lz-f="address">Ceremony address</p>
-          <a href="#dia" data-lz-f="map" style="display:inline-flex;align-items:center;height:44px;margin-top:10px;font-size:11px;font-weight:400;letter-spacing:.24em;text-transform:uppercase;border-bottom:1px solid #C49A62">Getting there <svg width="1em" height="1em" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" style="vertical-align:-.15em;flex:none"><path d="M5 11 11 5M6 5h5v5"/></svg></a>
+          <p style="margin:12px 0 0;font:400 28px/1.2 'Instrument Serif',serif" data-lz-f="place">Jardín Etnobotánico</p>
+          <p style="margin:6px 0 0;font-size:15px;line-height:1.6;color:var(--r-text,#6E6354)" data-lz-f="address">Reforma s/n, Centro, Oaxaca</p>
+          <a href="https://www.google.com/maps/search/?api=1&amp;query=Jard%C3%ADn%20Etnobot%C3%A1nico%20Oaxaca" target="_blank" rel="noopener" data-lz-f="map" style="display:inline-flex;align-items:center;height:44px;margin-top:10px;font-size:11px;font-weight:400;letter-spacing:.24em;text-transform:uppercase;border-bottom:1px solid #C49A62">Getting there <svg width="1em" height="1em" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" style="vertical-align:-.15em;flex:none"><path d="M5 11 11 5M6 5h5v5"/></svg></a>
         </div>
         <div style="padding:40px 32px;background:var(--r-card,#FBF7EF);border:1px solid var(--r-line,#E3D6BF);border-radius:160px 160px 8px 8px;text-align:center" data-lz-item>
           <p style="margin:12px 0 0;font:italic 400 44px/1 'Instrument Serif',serif" data-lz-f="time">Afterwards</p>
           <div style="width:1px;height:36px;margin:18px auto;background:#C49A62"></div>
           <p class="kicker" style="letter-spacing:.32em" data-lz-f="name">Reception</p>
-          <p style="margin:12px 0 0;font:400 28px/1.2 'Instrument Serif',serif" data-lz-f="place">Reception venue</p>
-          <p style="margin:6px 0 0;font-size:15px;line-height:1.6;color:var(--r-text,#6E6354)" data-lz-f="address">Reception address</p>
-          <a href="#dia" data-lz-f="map" style="display:inline-flex;align-items:center;height:44px;margin-top:10px;font-size:11px;font-weight:400;letter-spacing:.24em;text-transform:uppercase;border-bottom:1px solid #C49A62">Getting there <svg width="1em" height="1em" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" style="vertical-align:-.15em;flex:none"><path d="M5 11 11 5M6 5h5v5"/></svg></a>
+          <p style="margin:12px 0 0;font:400 28px/1.2 'Instrument Serif',serif" data-lz-f="place">Casa Oaxaca</p>
+          <p style="margin:6px 0 0;font-size:15px;line-height:1.6;color:var(--r-text,#6E6354)" data-lz-f="address">García Vigil 407, Centro, Oaxaca</p>
+          <a href="https://www.google.com/maps/search/?api=1&amp;query=Casa%20Oaxaca%20Oaxaca" target="_blank" rel="noopener" data-lz-f="map" style="display:inline-flex;align-items:center;height:44px;margin-top:10px;font-size:11px;font-weight:400;letter-spacing:.24em;text-transform:uppercase;border-bottom:1px solid #C49A62">Getting there <svg width="1em" height="1em" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" style="vertical-align:-.15em;flex:none"><path d="M5 11 11 5M6 5h5v5"/></svg></a>
         </div>
         <div data-lz-group="dressCode dressNotes dressColors" style="padding:40px 32px;background:var(--r-ink,#3D352B);border-radius:160px 160px 8px 8px;color:var(--r-bg,#F5EFE4);text-align:center">
-          <svg width="56" height="56" viewBox="0 0 160 160" style="display:block;margin:0 auto" aria-hidden="true"><use href="#seal"/></svg>
+          <img width="56" height="56" style="display:block;margin:0 auto" aria-hidden="true" src="/assets/rosa/lacre-dorado.webp" alt="">
           <div style="width:1px;height:36px;margin:18px auto;background:#C49A62"></div>
           <p style="margin:0;font-size:11px;font-weight:400;letter-spacing:.32em;text-transform:uppercase;color:#E6C9A0">Dress code</p>
           <p style="margin:12px 0 0;font:italic 400 28px/1.2 'Instrument Serif',serif" data-lz="dressCode">Semi-formal</p>
-          <p style="margin:6px 0 0;font-size:15px;line-height:1.7;color:var(--r-on2,#E9E0CE)" data-lz="dressNotes">Add your dress code recommendations and reserved colors here.</p><p data-lz-group="dressColors" style="margin:10px 0 0;font-size:14px;line-height:1.7;color:var(--r-on2,#E9E0CE)"><b style="font-weight:500;color:#E6C9A0">Reserved colors:</b> <span data-lz="dressColors">List any reserved colors.</span></p>
+          <p style="margin:6px 0 0;font-size:15px;line-height:1.7;color:var(--r-on2,#E9E0CE)" data-lz="dressNotes">Light fabrics for a warm afternoon and a cooler evening.</p><p data-lz-group="dressColors" style="margin:10px 0 0;font-size:14px;line-height:1.7;color:var(--r-on2,#E9E0CE)"><b style="font-weight:500;color:#E6C9A0">Reserved colors:</b> <span data-lz="dressColors">White and ivory</span></p>
         </div>
       </div>
     </div>
@@ -359,7 +269,7 @@ details.faq[open] .plus{rotate:45deg}
         <svg width="200" height="40" viewBox="-150 -20 300 40" style="display:block" aria-hidden="true"><use href="#orn"/></svg>
         <p class="kicker" style="margin-top:18px">Our story</p>
         <h2 class="h2" data-lz="storyTitle">A story<br><em>written together</em></h2>
-        <p data-lz="story" style="margin:22px 0 0;max-width:440px;font-size:17px;line-height:1.8;color:var(--r-body,#4E463A)">Tell how the two of you met. Share your favorite memories together. Describe the new chapter you are about to begin.</p><blockquote data-lz-if="quote" hidden style="margin:28px 0 0;max-width:440px"><p data-lz="quote" style="margin:0;font:italic 400 26px/1.35 'Instrument Serif',serif;color:var(--r-ink,#3D352B)"></p><p data-lz="quoteAuthor" style="margin:10px 0 0;font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--r-muted,#7F7361)"></p></blockquote>
+        <p data-lz="story" style="margin:22px 0 0;max-width:440px;font-size:17px;line-height:1.8;color:var(--r-body,#4E463A)">We met at a wedding. Since that first dance, we have been building a life together. We would love you to join us for the next chapter.</p><blockquote data-lz-if="quote" hidden style="margin:28px 0 0;max-width:440px"><p data-lz="quote" style="margin:0;font:italic 400 26px/1.35 'Instrument Serif',serif;color:var(--r-ink,#3D352B)"></p><p data-lz="quoteAuthor" style="margin:10px 0 0;font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--r-muted,#7F7361)"></p></blockquote>
       </div>
       <div data-gallery data-lz-list="gallery" style="flex:2 1 520px;min-width:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(150px,100%),1fr));gap:16px">
         <div data-lz-item style="aspect-ratio:3 / 4;padding:5px;border:1px solid #C49A62;border-radius:200px 200px 8px 8px;background:var(--r-card,#FBF7EF)"><img data-lz-f="img" src="/assets/fotos/torre.jpg" alt="Melissa and Andrés holding hands" loading="lazy" style="display:block;width:100%;height:100%;object-fit:cover;object-position:center 70%;border-radius:195px 195px 5px 5px"></div>
@@ -371,14 +281,14 @@ details.faq[open] .plus{rotate:45deg}
   </section>
 
   <section id="confirmar" data-lz-anchor="rsvp" style="position:relative;padding:104px clamp(20px,4vw,56px);background:var(--r-bg2,#EEE5D4)">
-    <svg style="position:absolute;inset:0;width:100%;height:100%;opacity:.6" aria-hidden="true"><rect width="100%" height="100%" fill="url(#dmk)"/></svg>
+    <svg style="position:absolute;inset:0;width:100%;height:100%;opacity:.25" aria-hidden="true"><rect width="100%" height="100%" fill="url(#dmk)"/></svg>
     <div style="position:relative;max-width:1040px;margin:0 auto;padding:clamp(28px,5vw,64px);background:var(--r-card,#FBF7EF);border:1px solid var(--r-line,#E3D6BF);border-radius:8px;box-shadow:0 24px 60px var(--r-shadow,#6B5D4818);display:flex;flex-wrap:wrap;gap:40px 64px">
       <div style="flex:1 1 300px;min-width:0">
-        <svg width="96" height="96" viewBox="0 0 160 160" style="display:block" aria-hidden="true"><use href="#seal"/></svg>
+        <img width="96" height="96" style="display:block" aria-hidden="true" src="/assets/rosa/lacre-dorado.webp" alt="">
         <p class="kicker" style="margin-top:24px">RSVP</p>
         <h2 class="h2" id="rsTitle" style="font-size:clamp(40px,4.4vw,56px)">Will you join us?</h2>
-        <p id="rsText" style="margin:16px 0 0;font-size:16px;line-height:1.8;color:var(--r-text,#6E6354)">We have saved 4 seats for you. Please reply for each guest before the RSVP deadline.</p>
-        <p style="margin:16px 0 0;font-size:13px;line-height:1.6;color:var(--r-text,#6E6354)" data-lz="rsvpMsg">Our celebration is adults only.</p><p data-lz-if="rsvpDeadline" hidden style="margin:8px 0 0;font-size:13px;line-height:1.6;color:var(--r-text,#6E6354)">Please reply by <span data-lz-date="{Mc} {d}, {Y}" data-lz-from="rsvpDeadline"></span></p>
+        <p id="rsText" style="margin:16px 0 0;font-size:16px;line-height:1.8;color:var(--r-text,#6E6354)">We have saved 4 seats for you. Please reply for each guest.</p>
+        <p style="margin:16px 0 0;font-size:13px;line-height:1.6;color:var(--r-text,#6E6354)" data-lz="rsvpMsg">Our celebration is adults only.</p><p data-lz-if="rsvpDeadline" style="margin:8px 0 0;font-size:13px;line-height:1.6;color:var(--r-text,#6E6354)">Please reply by <span data-lz-date="{Mc} {d}, {Y}" data-lz-from="rsvpDeadline">May 12, 2027</span></p>
       </div>
       <div style="flex:1.3 1 360px;min-width:0">
         <form id="rsForm" novalidate>
@@ -390,7 +300,7 @@ details.faq[open] .plus{rotate:45deg}
           <p id="rsError" role="alert" hidden style="margin:14px 0 0;font-size:13px;color:#9B3B4A">Please choose Yes or No for each guest.</p>
           <button type="submit" class="pill" style="width:100%;height:54px;margin-top:20px;border:0;background:var(--r-ink,#3D352B);color:var(--r-on,#F8F2E6);cursor:pointer">RSVP</button>
         </form>
-        <div id="rsDone" hidden style="min-height:280px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:32px;border:1px solid var(--r-line,#E3D6BF);border-radius:160px 160px 8px 8px;text-align:center">
+        <div id="rsDone" tabindex="-1" hidden style="min-height:280px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:32px;border:1px solid var(--r-line,#E3D6BF);border-radius:160px 160px 8px 8px;text-align:center">
           <p style="margin:0;font:italic 400 34px/1.1 'Instrument Serif',serif">Thank you!</p>
           <p id="rsSummary" style="margin:0;max-width:340px;font-size:15px;line-height:1.7;color:var(--r-text,#6E6354)"></p>
           <button type="button" id="rsEdit" class="pill" style="height:44px;padding:0 22px;border:1px solid var(--r-ink,#3D352B);background:none;color:var(--r-ink,#3D352B);letter-spacing:.24em;cursor:pointer">Edit reply</button>
@@ -409,7 +319,7 @@ details.faq[open] .plus{rotate:45deg}
       <div data-lz-list="faqs" style="flex:2 1 480px;min-width:0;border-bottom:1px solid var(--r-line,#E3D6BF)">
         <details class="faq" data-lz-item><summary><span style="display:flex;flex-direction:column;gap:4px"><span data-lz-f="hide" class="kicker" style="font-size:10px;letter-spacing:.28em">Dress code</span><span data-lz-f="q" style="font:400 24px/1.2 'Instrument Serif',serif">Is there a dress code?</span></span><span class="plus" aria-hidden="true">+</span></summary><p data-lz-f="a" style="margin:0;padding:0 0 20px;max-width:620px;font-size:15px;line-height:1.7;color:var(--r-text,#6E6354)">Add your dress code recommendations for guests.</p></details>
         <details class="faq" data-lz-item><summary><span style="display:flex;flex-direction:column;gap:4px"><span data-lz-f="hide" class="kicker" style="font-size:10px;letter-spacing:.28em">Dress code</span><span data-lz-f="q" style="font:400 24px/1.2 'Instrument Serif',serif">Are any colors reserved?</span></span><span class="plus" aria-hidden="true">+</span></summary><p data-lz-f="a" style="margin:0;padding:0 0 20px;max-width:620px;font-size:15px;line-height:1.7;color:var(--r-text,#6E6354)">List any reserved colors and other attire tips.</p></details>
-        <details class="faq" data-lz-item><summary><span style="display:flex;flex-direction:column;gap:4px"><span data-lz-f="hide" class="kicker" style="font-size:10px;letter-spacing:.28em">Children</span><span data-lz-f="q" style="font:400 24px/1.2 'Instrument Serif',serif">Children at the celebration</span></span><span class="plus" aria-hidden="true">+</span></summary><p data-lz-f="a" style="margin:0;padding:0 0 20px;max-width:620px;font-size:15px;line-height:1.7;color:var(--r-text,#6E6354)">Let guests know whether children are invited.</p></details>
+        <details class="faq" data-lz-item><summary><span style="display:flex;flex-direction:column;gap:4px"><span data-lz-f="hide" class="kicker" style="font-size:10px;letter-spacing:.28em">Children</span><span data-lz-f="q" style="font:400 24px/1.2 'Instrument Serif',serif">Children at the celebration</span></span><span class="plus" aria-hidden="true">+</span></summary><p data-lz-f="a" style="margin:0;padding:0 0 20px;max-width:620px;font-size:15px;line-height:1.7;color:var(--r-text,#6E6354)">This celebration is for adults only.</p></details>
         <details class="faq" data-lz-item><summary><span style="display:flex;flex-direction:column;gap:4px"><span data-lz-f="hide" class="kicker" style="font-size:10px;letter-spacing:.28em">Food</span><span data-lz-f="q" style="font:400 24px/1.2 'Instrument Serif',serif">Dietary restrictions</span></span><span class="plus" aria-hidden="true">+</span></summary><p data-lz-f="a" style="margin:0;padding:0 0 20px;max-width:620px;font-size:15px;line-height:1.7;color:var(--r-text,#6E6354)">Add details about the menu and options for special dietary needs.</p></details>
         <details class="faq" data-lz-item><summary><span style="display:flex;flex-direction:column;gap:4px"><span data-lz-f="hide" class="kicker" style="font-size:10px;letter-spacing:.28em">Food</span><span data-lz-f="q" style="font:400 24px/1.2 'Instrument Serif',serif">Special requests</span></span><span class="plus" aria-hidden="true">+</span></summary><p data-lz-f="a" style="margin:0;padding:0 0 20px;max-width:620px;font-size:15px;line-height:1.7;color:var(--r-text,#6E6354)">Explain how to share any special request.</p></details>
       </div>
@@ -427,25 +337,25 @@ details.faq[open] .plus{rotate:45deg}
       <div style="margin-top:48px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(280px,100%),1fr));gap:20px">
         <div class="travel-card" data-lz-group="hotel hotelAddress hotelCode hotelNotes">
           <p class="kicker" style="letter-spacing:.32em">Where to stay</p>
-          <p style="margin:12px 0 0;font:400 28px/1.2 'Instrument Serif',serif" data-lz="hotel">Hotel name</p>
-          <p style="margin:6px 0 0;font-size:15px;line-height:1.6;color:var(--r-text,#6E6354)" data-lz="hotelAddress">Hotel address</p>
+          <p style="margin:12px 0 0;font:400 28px/1.2 'Instrument Serif',serif" data-lz="hotel">Hotel Casa Antigua</p>
+          <p style="margin:6px 0 0;font-size:15px;line-height:1.6;color:var(--r-text,#6E6354)" data-lz="hotelAddress">Calle Macedonio Alcalá 304, Centro, Oaxaca</p>
           <div style="width:1px;height:28px;margin:16px auto;background:#C49A62"></div>
           <p data-lz-group="hotelCode" style="margin:0;font-size:14px;line-height:1.7;color:var(--r-text,#6E6354)">Booking code: <strong data-lz="hotelCode" style="font-weight:500;color:var(--r-ink,#3D352B)">WEDDING-MA</strong></p><p data-lz="hotelNotes" data-lz-if="hotelNotes" hidden style="margin:10px 0 0;font-size:14px;line-height:1.7;color:var(--r-text,#6E6354)"></p>
-          <a data-lz-href="hotelLink" href="#viaje" style="display:inline-flex;align-items:center;height:44px;margin-top:8px;font-size:11px;font-weight:400;letter-spacing:.24em;text-transform:uppercase;border-bottom:1px solid #C49A62">Book <svg width="1em" height="1em" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" style="vertical-align:-.15em;flex:none"><path d="M5 11 11 5M6 5h5v5"/></svg></a>
+          <a data-lz-href="hotelLink" data-lz-if="hotelLink" hidden style="display:inline-flex;align-items:center;height:44px;margin-top:8px;font-size:11px;font-weight:400;letter-spacing:.24em;text-transform:uppercase;border-bottom:1px solid #C49A62">Book <svg width="1em" height="1em" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" style="vertical-align:-.15em;flex:none"><path d="M5 11 11 5M6 5h5v5"/></svg></a><p class="r-demo">Example accommodation · booking link pending in this demo.</p>
         </div>
         <div class="travel-card" data-lz-group="airport transport">
           <p class="kicker" style="letter-spacing:.32em">Getting there</p>
           <ul>
-            <li data-lz-group="airport"><b>Airport</b><span data-lz="airport">Add the nearest airport and travel time.</span></li>
-            <li data-lz-group="transport"><b>Transportation</b><span data-lz="transport">Let guests know if transportation will be provided.</span></li>
+            <li data-lz-group="airport"><b>Airport</b><span data-lz="airport">Oaxaca International Airport (OAX). Allow extra time for your arrival.</span></li>
+            <li data-lz-group="transport"><b>Transportation</b><span data-lz="transport">Hotel transfers will be confirmed here closer to the wedding.</span></li>
           </ul>
         </div>
         <div class="travel-card" data-lz-group="guideFood guideCulture guidePlans">
           <p class="kicker" style="letter-spacing:.32em">City guide</p>
           <ul>
-            <li data-lz-group="guideFood"><b>Restaurants</b><span data-lz="guideFood">Add local recommendations.</span></li>
-            <li data-lz-group="guideCulture"><b>Museums & culture</b><span data-lz="guideCulture">Places worth visiting.</span></li>
-            <li data-lz-group="guidePlans"><b>Activities</b><span data-lz="guidePlans">Things to enjoy while you’re in town.</span></li>
+            <li data-lz-group="guideFood"><b>Restaurants</b><span data-lz="guideFood">Casa Oaxaca and local markets.</span></li>
+            <li data-lz-group="guideCulture"><b>Museums & culture</b><span data-lz="guideCulture">Santo Domingo and the Textile Museum.</span></li>
+            <li data-lz-group="guidePlans"><b>Activities</b><span data-lz="guidePlans">Explore the historic city centre.</span></li>
           </ul>
         </div>
       </div>
@@ -453,15 +363,16 @@ details.faq[open] .plus{rotate:45deg}
   </section>
 
   <footer style="position:relative;padding:104px clamp(20px,4vw,56px) 140px;background:var(--r-bg2,#EEE5D4);text-align:center">
-    <svg style="position:absolute;inset:0;width:100%;height:100%;opacity:.75" aria-hidden="true"><rect width="100%" height="100%" fill="url(#dmk)"/></svg>
+    <svg style="position:absolute;inset:0;width:100%;height:100%;opacity:.35" aria-hidden="true"><rect width="100%" height="100%" fill="url(#dmk)"/></svg>
     <svg viewBox="0 0 160 160" style="position:absolute;left:clamp(12px,2vw,32px);top:32px;width:clamp(80px,10vw,150px);height:clamp(80px,10vw,150px);transform:scaleX(-1)" aria-hidden="true"><use href="#corner"/></svg>
     <svg viewBox="0 0 160 160" style="position:absolute;right:clamp(12px,2vw,32px);top:32px;width:clamp(80px,10vw,150px);height:clamp(80px,10vw,150px)" aria-hidden="true"><use href="#corner"/></svg>
     <svg viewBox="0 0 160 160" style="position:absolute;left:clamp(12px,2vw,32px);bottom:32px;width:clamp(80px,10vw,150px);height:clamp(80px,10vw,150px);transform:scale(-1,-1)" aria-hidden="true"><use href="#corner"/></svg>
     <svg viewBox="0 0 160 160" style="position:absolute;right:clamp(12px,2vw,32px);bottom:32px;width:clamp(80px,10vw,150px);height:clamp(80px,10vw,150px);transform:scaleY(-1)" aria-hidden="true"><use href="#corner"/></svg>
-    <svg width="150" height="150" viewBox="0 0 160 160" style="position:relative;display:block;margin:0 auto" aria-hidden="true"><use href="#seal"/></svg>
+    <img width="150" height="150" style="position:relative;display:block;margin:0 auto" aria-hidden="true" src="/assets/rosa/lacre-dorado.webp" alt="">
     <p style="position:relative;margin:32px 0 0;font:400 16px/1.6 'Instrument Serif',serif;letter-spacing:.22em;text-transform:uppercase;color:var(--r-muted,#7F7361)">With love</p>
     <p style="position:relative;margin:12px 0 0;font:400 clamp(44px,5vw,72px)/1 'Instrument Serif',serif"><span data-lz="n1">Melissa</span> <em style="color:#B48650">&amp;</em> <span data-lz="n2">Andrés</span></p>
     <p style="position:relative;margin:18px 0 0;font-size:11px;font-weight:400;letter-spacing:.32em;text-transform:uppercase;color:var(--r-text,#6E6354)" data-lz-date="{dd} · {mm} · {Y}">12 · 06 · 2027</p>
+    <nav class="r-footer-nav" aria-label="Invitation links"><a href="#dia">Schedule</a><a href="https://www.google.com/maps/search/?api=1&amp;query=Jard%C3%ADn%20Etnobot%C3%A1nico%20Oaxaca" target="_blank" rel="noopener">Location</a><a href="#confirmar">RSVP</a></nav>
   </footer>
 </div>
 
@@ -472,72 +383,8 @@ details.faq[open] .plus{rotate:45deg}
 <script>
 LazoPanel.init({mono:'M&A',couple:'Melissa & Andrés',link:'/en/demo/rosa/',guest:'The Rodríguez Family',people:['Carlos Rodríguez','Lucía Pérez','Sofía Rodríguez','Mateo Rodríguez']});
 LazoMusic.init({src:'/assets/musica/demo.mp3'});
-(function(){
-  var env=document.getElementById('env'),base=document.getElementById('base'),timers=[];
-  function layout(){
-    var w=window.innerWidth,h=window.innerHeight,fh=Math.round(h*.545),tip=Math.round(h*.533),bot=Math.round(h*.6);
-    var ss=Math.round(Math.max(120,Math.min(210,Math.min(w*.42,h*.24))));
-    base.setAttribute('viewBox','0 0 '+w+' '+h);
-    var pts={liner:'0,0 '+w+',0 '+w/2+','+(fh-20),left:'0,0 '+w/2+','+tip+' 0,'+h,right:w+',0 '+w/2+','+tip+' '+w+','+h,bottom:'0,'+h+' '+w/2+','+bot+' '+w+','+h};
-    base.querySelectorAll('polygon').forEach(function(p){p.setAttribute('points',pts[p.dataset.p]);});
-    env.style.setProperty('--fh',fh+'px');env.style.setProperty('--ss',ss+'px');
-    env.style.setProperty('--cx',(w/2)+'px');env.style.setProperty('--cy',fh+'px');
-  }
-  layout();window.addEventListener('resize',layout);
-  function set(p){env.dataset.phase=p;}
-  function go(p,ms){timers.push(setTimeout(function(){set(p);if(p==='card')document.getElementById('enter').focus({preventScroll:true});},ms));}
-  function clear(){timers.forEach(clearTimeout);timers=[];}
-  // Para el editor de Lazo (demo/shared/content.js): saltar o volver a mostrar el sobre.
-  window.LzTemplate={open:function(){clear();env.classList.add('gone');document.body.classList.remove('locked');},envelope:function(){clear();set('closed');env.classList.remove('gone');document.body.classList.add('locked');window.scrollTo(0,0);},scroll:function(el,now){window.scrollTo({top:el.getBoundingClientRect().top+window.pageYOffset-20,behavior:now?'instant':'smooth'});}};
-  document.getElementById('sealBtn').addEventListener('click',function(){
-    if(env.dataset.phase!=='closed')return;clear();LazoMusic.play();set('glow');go('open',1900);go('flash',3000);go('card',3600);
-  });
-  document.getElementById('replay').addEventListener('click',function(){clear();set('closed');document.getElementById('sealBtn').focus();});
-  document.getElementById('enter').addEventListener('click',function(){
-    env.classList.add('gone');document.body.classList.remove('locked');document.getElementById('demoBar').hidden=false;window.scrollTo(0,0);
-  });
-
-  // Menú colapsable en celular
-  var head=document.getElementById('siteHead'),mb=document.getElementById('menuBtn');
-  function menu(o){head.classList.toggle('open',o);mb.setAttribute('aria-expanded',String(o));mb.setAttribute('aria-label',o?'Close menu':'Open menu');}
-  mb.addEventListener('click',function(){menu(!head.classList.contains('open'));});
-  head.querySelectorAll('#secNav a,.head-cta').forEach(function(a){a.addEventListener('click',function(){menu(false);});});
-  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&head.classList.contains('open')){menu(false);mb.focus();}});
-
-  // Countdown
-  var TARGET=Date.parse('2027-06-12T16:00:00-05:00'),pad=function(n){return String(n).padStart(2,'0');};
-  var cd={};document.querySelectorAll('[data-cd]').forEach(function(e){cd[e.dataset.cd]=e;});
-  function tick(){var s=Math.floor(Math.max(0,(window.LZ_T||TARGET)-Date.now())/1000);
-    cd.d.textContent=Math.floor(s/86400);cd.h.textContent=pad(Math.floor(s/3600)%24);cd.m.textContent=pad(Math.floor(s/60)%60);cd.s.textContent=pad(s%60);}
-  tick();setInterval(tick,1000);
-
-  // Confirmación (demo: no se envía a ningún lado)
-  var PEOPLE=['Carlos Rodríguez','Lucía Pérez','Sofía Rodríguez','Mateo Rodríguez'],att=PEOPLE.map(function(){return null;});
-  var wrap=document.getElementById('people');
-  PEOPLE.forEach(function(name,i){
-    var row=document.createElement('div');
-    row.setAttribute('role','group');row.setAttribute('aria-label',name);
-    row.style.cssText='display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 0;border-top:1px solid var(--r-row,#E8DDC9)';
-    var n=document.createElement('span');n.textContent=name;n.style.cssText="font:400 22px/1.2 'Instrument Serif',serif";
-    var g=document.createElement('div');g.style.cssText='display:flex;gap:6px;flex:none';
-    [['Yes',true],['No',false]].forEach(function(o){var b=document.createElement('button');b.type='button';b.className='att';b.textContent=o[0];b.setAttribute('aria-pressed','false');
-      b.addEventListener('click',function(){att[i]=o[1];g.querySelectorAll('button').forEach(function(x){x.setAttribute('aria-pressed',String(x===b));});document.getElementById('rsError').hidden=true;});g.appendChild(b);});
-    row.appendChild(n);row.appendChild(g);wrap.appendChild(row);
-  });
-  var form=document.getElementById('rsForm'),done=document.getElementById('rsDone');
-  form.addEventListener('submit',function(e){e.preventDefault();
-    if(att.some(function(x){return x===null;})){document.getElementById('rsError').hidden=false;return;}
-    var yes=att.filter(Boolean).length;
-    document.getElementById('rsTitle').textContent=yes>0?'See you soon':'We’ll miss you';
-    document.getElementById('rsText').textContent='We received your reply. You can change it any time before the RSVP deadline.';
-    document.getElementById('rsSummary').textContent=yes>0?(yes+' of '+PEOPLE.length+' guests will attend.'):'Thank you for letting us know.';
-    form.hidden=true;done.hidden=false;done.style.display='flex';
-    LazoPanel.setResponse(att,document.getElementById('msg').value.trim());
-  });
-  document.getElementById('rsEdit').addEventListener('click',function(){done.hidden=true;done.style.display='none';form.hidden=false;
-    document.getElementById('rsTitle').textContent='Will you join us?';
-    document.getElementById('rsText').textContent='We have saved 4 seats for you. Please reply for each guest before the RSVP deadline.';});
-})();
 </script>
+<script src="/demo/rosa/romantico.js"></script>
+
 </body>
 </html>
