@@ -1,0 +1,367 @@
+
+/* Aurelia: editorial, blanco y oro. Los colores salen de estas variables (paletas en demo/shared/content.js). */
+:root{
+  --bg:#FAF8F3;--paper:#FFFFFF;--ink:#1D1B19;--muted:#8A847A;--gold:#B4955E;--gold2:#E6D3A6;--line:#1D1B1920;
+  --grain:url('/assets/aurelia/papel-algodon.webp');
+  /* Panel de los novios y música (demo/shared/panel.css) */
+  --p-bg:var(--bg);--p-surface:var(--paper);--p-ink:var(--ink);--p-muted:var(--muted);--p-line:var(--line);--p-accent:var(--ink);--p-on-accent:#fff;
+  --p-serif:'Bodoni Moda',Georgia,serif;--p-sans:Montserrat,Helvetica,sans-serif;--m-bg:var(--ink);--m-fg:#fff
+}
+*,*::before,*::after{box-sizing:border-box}
+[hidden]{display:none !important}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;font-family:Montserrat,Helvetica,sans-serif;font-weight:300;color:var(--ink);background:var(--bg)}
+body.locked{overflow:hidden}
+h1,h2,h3,p,figure,blockquote{margin:0}
+img{display:block;max-width:100%}
+a{color:inherit}
+button{font-family:inherit}
+details summary{list-style:none;cursor:pointer}
+details summary::-webkit-details-marker{display:none}
+a:focus-visible,button:focus-visible,summary:focus-visible,textarea:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+.ph-img{width:100%;height:100%;object-fit:cover}
+.in-w{position:relative;max-width:560px;margin:0 auto}
+.bd{font-family:'Bodoni Moda',serif}
+.foil{background:linear-gradient(110deg,color-mix(in srgb,var(--gold),#000 28%),var(--gold2) 30%,var(--gold) 45%,#FFF8E6 52%,color-mix(in srgb,var(--gold),#000 15%) 66%,var(--gold2) 82%,color-mix(in srgb,var(--gold),#000 28%));background-size:250% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:shine 6s ease-in-out infinite alternate}
+.foilbg{background:linear-gradient(115deg,color-mix(in srgb,var(--gold),#000 22%),var(--gold2) 28%,var(--gold) 46%,#FFF8E6 54%,color-mix(in srgb,var(--gold),#000 12%) 68%,var(--gold2) 84%,color-mix(in srgb,var(--gold),#000 22%));background-size:250% 250%;animation:shine 6s ease-in-out infinite alternate}
+@keyframes shine{to{background-position:100% 0}}
+.eb{font:500 9.5px Montserrat,sans-serif;letter-spacing:.38em;text-transform:uppercase;color:var(--muted)}
+.hl{height:1px;background:var(--ink)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:16px 28px;border:1px solid var(--ink);background:var(--ink);color:#fff;font:500 10px Montserrat;letter-spacing:.3em;text-transform:uppercase;cursor:pointer;text-decoration:none;margin-top:22px}
+
+/* ---------- Apertura: carpeta con faja dorada ---------- */
+.opening{position:fixed;inset:0;z-index:60;overflow:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;padding:20px;text-align:center;background:radial-gradient(ellipse at 50% 35%,#FFFFFF,#E9E4DA 80%);transition:opacity .8s,visibility 0s .8s}
+.opening.gone{opacity:0;visibility:hidden;pointer-events:none}
+.fold{position:relative;width:256px;height:396px;flex:none;perspective:1500px}
+.inside{position:absolute;inset:0;padding:24px 22px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;background:#fff;box-shadow:0 30px 60px -30px #0006,0 0 0 1px #0000000d}
+.inside::before{content:"";position:absolute;inset:10px;border:1px solid var(--gold);opacity:.55;pointer-events:none}
+.inside h1{font:400 44px/.95 'Bodoni Moda',serif;letter-spacing:-.02em;margin:10px 0 2px}
+.inside h1 em{display:block;font:italic 400 22px 'Cormorant Garamond',serif;margin:4px 0}
+.inside p{font-size:12px;line-height:1.7}
+.inside .btn{margin-top:10px;padding:12px 20px}
+.cover{position:absolute;inset:0;z-index:3;transform-origin:left center;transform-style:preserve-3d;transition:transform 1.5s cubic-bezier(.6,.05,.25,1)}
+.cv{position:absolute;inset:0;-webkit-backface-visibility:hidden;backface-visibility:hidden}
+.cv-f{display:grid;place-items:center;background-color:#FDFCF9;background-image:var(--grain);background-blend-mode:multiply;box-shadow:0 30px 60px -30px #0007,0 0 0 1px #00000010}
+.cv-f::before{content:"";position:absolute;inset:14px;border:1px solid transparent;border-image:linear-gradient(135deg,color-mix(in srgb,var(--gold),#000 20%),var(--gold2),var(--gold),#FFF8E6,var(--gold)) 1}
+.cv-f .ring{position:absolute;left:50%;top:50%;width:150px;height:150px;margin:-115px 0 0 -75px;border-radius:50%;border:1px solid transparent;background:linear-gradient(#FDFCF9,#FDFCF9) padding-box,linear-gradient(135deg,color-mix(in srgb,var(--gold),#000 20%),var(--gold2),var(--gold),#FFF8E6,var(--gold)) border-box}
+.emb{position:relative;font:400 104px/1 'Bodoni Moda',serif;letter-spacing:-.05em;color:#F6F3EC;text-shadow:-1px -1px 0 #fff,1px 1px 1px #00000030,2px 3px 4px #00000012;margin-top:-80px}
+.emb i{font:italic 400 54px 'Cormorant Garamond',serif}
+.cv-b{transform:rotateY(180deg);background:#fff;background-image:repeating-linear-gradient(45deg,color-mix(in srgb,var(--gold),transparent 72%) 0 1px,transparent 1px 11px),repeating-linear-gradient(-45deg,color-mix(in srgb,var(--gold),transparent 72%) 0 1px,transparent 1px 11px)}
+.band{position:absolute;z-index:4;left:-8px;right:-8px;top:57%;height:78px;border:0;padding:0 14px;cursor:pointer;color:#2A2416;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;box-shadow:0 8px 16px -8px #0007;transition:transform .9s cubic-bezier(.6,-.25,.4,1),opacity .7s}
+.band .eb{color:#3D3420;font-size:8px}
+.band b{font:400 20px 'Bodoni Moda',serif;letter-spacing:.02em}
+.slid .band{transform:translateY(280px) rotate(-5deg);opacity:0;pointer-events:none}
+.fold.open .cover{transform:rotateY(-179deg)}
+.hint{min-height:22px;font:italic 17px 'Cormorant Garamond',serif;color:var(--muted)}
+@media (max-height:700px){.fold{scale:.88;margin:-20px 0}}
+
+/* ---------- Invitación ---------- */
+.mbar{position:fixed;z-index:50;left:max(10px,calc(50% - 290px));right:max(10px,calc(50% - 290px));top:10px;height:48px;padding:0 20px;border-radius:999px;display:flex;align-items:center;justify-content:space-between;opacity:0;transform:translateY(-70px);transition:opacity .5s,transform .6s cubic-bezier(.22,1,.36,1);pointer-events:none;background:color-mix(in srgb,var(--bg) 88%,transparent);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);box-shadow:0 0 0 1px #1D1B1914,0 10px 24px -14px #0004}
+.mbar.show{opacity:1;transform:none}
+.mono{font:400 18px 'Bodoni Moda',serif;letter-spacing:.08em}
+.mono i{font-style:normal;color:var(--gold);margin:0 5px}
+.hero{padding:30px 26px 60px;background:var(--bg)}
+.topbar{display:flex;justify-content:space-between;align-items:center;padding-bottom:14px;border-bottom:1px solid var(--line)}
+.names{font:400 clamp(78px,11vw,96px)/.86 'Bodoni Moda',serif;letter-spacing:-.035em;margin:16px 0 20px}
+.names .ln{display:block}
+.names em{display:block;font:italic 400 36px/1.15 'Cormorant Garamond',serif;letter-spacing:0;margin:4px 0 6px 44px}
+.photo{position:relative;margin:24px 0 22px;padding-right:28px}
+.photo .pic{aspect-ratio:4/5;overflow:hidden}
+.photo .pic img{position:relative;height:124%;top:-12%;filter:contrast(1.04) saturate(.88)}
+.vcap{position:absolute;right:0;top:0;writing-mode:vertical-rl;font:500 8px Montserrat;letter-spacing:.42em;color:var(--muted);white-space:nowrap;max-height:100%;overflow:hidden}
+.stamp{position:absolute;left:-14px;bottom:-30px;width:104px;height:104px;border-radius:50%;background:var(--bg);box-shadow:0 0 0 1px var(--line);display:grid;place-items:center}
+.stamp svg{position:absolute;inset:6px;width:calc(100% - 12px);height:calc(100% - 12px);animation:spin 28s linear infinite}
+.stamp b{font:400 20px 'Bodoni Moda',serif;letter-spacing:.04em}
+.stamp b i{font:italic 400 15px 'Cormorant Garamond',serif;color:var(--gold)}
+@keyframes spin{to{transform:rotate(360deg)}}
+.meta{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--ink);border-bottom:1px solid var(--line);margin:44px 0 22px}
+.meta>div{padding:14px 0;min-width:0}
+.meta>div+div{border-left:1px solid var(--line);padding-left:14px}
+.meta p{font:400 16px 'Bodoni Moda',serif;margin-top:6px}
+.hero .msg{font:italic 400 21px/1.45 'Cormorant Garamond',serif}
+.divd{display:flex;align-items:center;gap:12px;color:var(--gold);max-width:560px;margin:0 auto;padding:0 28px}
+.divd::before,.divd::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,transparent,currentColor,transparent)}
+.divd i{width:7px;height:7px;rotate:45deg;border:1px solid currentColor}
+main{counter-reset:sec}
+.sec{padding:72px 28px;border-top:1px solid var(--line);background:var(--bg)}
+.sh{margin-bottom:22px;counter-increment:sec}
+.sh .idx{display:block;font:italic 400 16px 'Bodoni Moda',serif;color:var(--gold);margin-bottom:12px}
+.sh .idx::before{content:counter(sec,upper-roman) "."}
+.sh h2{font:400 clamp(36px,5vw,44px)/1.05 'Bodoni Moda',serif;letter-spacing:-.01em;margin-top:10px}
+.lead{font-size:14.5px;line-height:1.95;color:color-mix(in srgb,var(--ink) 85%,transparent)}
+.gal{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:10px;margin-top:28px}
+.gi:first-child{grid-row:span 2}
+.gi .pic{height:100%;min-height:130px;overflow:hidden;outline:1px solid var(--line);outline-offset:4px}
+.gi:first-child .pic{aspect-ratio:3/4.4}
+.big{font:400 56px/1 'Bodoni Moda',serif}
+.cnote{font:italic 19px 'Cormorant Garamond',serif;color:var(--muted);margin-top:6px}
+.cdx{display:grid;grid-template-columns:repeat(4,1fr);margin-top:30px;border-top:1px solid var(--ink);border-bottom:1px solid var(--line)}
+.cdx>div{padding:18px 0 14px;text-align:center}
+.cdx>div+div{border-left:1px solid var(--line)}
+.cdx b{display:block;font:400 36px 'Bodoni Moda',serif;font-variant-numeric:tabular-nums}
+.cdx span{font:500 8px Montserrat;letter-spacing:.3em;text-transform:uppercase;color:var(--muted)}
+.evs{border-top:1px solid var(--ink)}
+.ev{display:grid;grid-template-columns:84px 1fr;gap:12px;padding:20px 0;border-bottom:1px solid var(--line)}
+.ev .t{font:400 17px 'Bodoni Moda',serif}
+.ev h3{font:500 12px Montserrat;letter-spacing:.24em;text-transform:uppercase;margin-bottom:6px}
+.ev p{font-size:14px;line-height:1.6}
+.ev .addr{color:var(--muted)}
+.ev a{display:inline-block;margin-top:8px;font:500 9px Montserrat;letter-spacing:.28em;text-transform:uppercase;color:var(--ink);text-decoration:none;border-bottom:1px solid var(--gold);padding-bottom:3px}
+.dress{margin-top:34px;padding:32px 22px;text-align:center;background:var(--paper);outline:1px solid var(--line);outline-offset:-8px}
+.dress h3{font:400 32px 'Bodoni Moda',serif;margin:8px 0}
+.dress p{font-size:14px;line-height:1.7}
+.small{font-size:12.5px !important;color:var(--muted);margin-top:6px}
+.sws{display:flex;justify-content:center;gap:12px;margin-top:14px}
+.sws i{width:26px;height:26px;border-radius:50%;box-shadow:0 0 0 1px var(--line),0 0 0 4px var(--paper),0 0 0 5px var(--gold)}
+.lz-content .sws{display:none}
+.trv{margin-top:22px}
+.tc{position:relative;padding:24px 0 24px 54px;border-top:1px solid var(--line)}
+.tc .ic{position:absolute;left:0;top:24px;width:34px;color:var(--gold)}
+.tc h3{font:400 22px 'Bodoni Moda',serif;margin:6px 0}
+.tc p{font-size:14px;line-height:1.75}
+.tc b{font-weight:500}
+.s-q{text-align:center;padding:90px 32px}
+.s-q blockquote{margin:0 0 18px;font:italic 400 26px/1.4 'Bodoni Moda',serif}
+.qm{display:block;font:400 96px/.5 'Bodoni Moda',serif;height:48px}
+.faq{border-top:1px solid var(--ink);counter-reset:q}
+.faq details{border-bottom:1px solid var(--line);counter-increment:q}
+.faq summary{display:flex;gap:14px;align-items:baseline;padding:18px 0;font:400 17px 'Bodoni Moda',serif}
+.faq summary::before{content:counter(q,upper-roman) ".";font:italic 400 14px 'Bodoni Moda',serif;color:var(--gold);min-width:22px}
+.faq summary::after{content:"+";margin-left:auto;font-weight:300;transition:rotate .3s}
+.faq details[open] summary::after{rotate:45deg}
+.faq p{font-size:14px;line-height:1.8;padding:0 0 18px 36px}
+.rcard{padding:46px 24px 36px;background:var(--paper);text-align:center;outline:1px solid var(--ink);outline-offset:-10px;box-shadow:0 0 0 1px var(--line),0 24px 50px -30px #0005}
+.rcard h2{font:400 34px 'Bodoni Moda',serif;margin:12px 0 4px}
+.seats{font:500 10px Montserrat;letter-spacing:.28em;text-transform:uppercase;color:var(--gold)}
+.rmsg{font-size:14px;margin:18px 0 6px;text-align:left}
+.person{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:14px 0;border-bottom:1px solid var(--line);text-align:left}
+.person span{font:400 17px 'Bodoni Moda',serif}
+.person>div{display:flex;gap:6px;flex:none}
+.person button{min-height:36px;padding:8px 11px;border:1px solid color-mix(in srgb,var(--ink) 25%,transparent);background:none;font:500 8.5px Montserrat;letter-spacing:.2em;text-transform:uppercase;color:var(--ink);cursor:pointer}
+.person button[aria-pressed=true]{background:var(--ink);color:#fff;border-color:var(--ink)}
+label{display:block;text-align:left;font:500 9.5px Montserrat;letter-spacing:.26em;text-transform:uppercase;color:var(--muted);margin-top:22px}
+textarea{width:100%;margin-top:8px;border:0;border-bottom:1px solid color-mix(in srgb,var(--ink) 25%,transparent);background:none;padding:6px 0;font:300 15px Montserrat;color:var(--ink);resize:none}
+.rs-err{margin-top:14px;font-size:13px;color:#9B3B4A}
+footer{padding:72px 24px 120px;text-align:center;border-top:1px solid var(--ink);background:var(--bg)}
+
+/* ---------- Movimiento ---------- */
+[data-rv]{opacity:0;transform:translateY(24px);transition:opacity 1s ease,transform 1.1s cubic-bezier(.22,1,.36,1)}
+[data-rv=line]{opacity:1;transform:scaleX(0);transform-origin:left;transition:transform 1.6s cubic-bezier(.6,0,.2,1)}
+[data-rv].in,.lz-editor [data-rv]{opacity:1;transform:none}
+.letters b{display:inline-block;font-weight:inherit;opacity:0;filter:blur(8px);transform:translateY(14px);transition:opacity 1s,filter 1s,transform 1s cubic-bezier(.22,1,.36,1);transition-delay:calc(var(--i) * 80ms + .15s)}
+.letters.in b{opacity:1;filter:none;transform:none}
+.zoomin .pic img{transform:scale(1.14);transition:transform 2.6s cubic-bezier(.2,.7,.2,1)}
+.zoomin.in .pic img,.lz-editor .zoomin .pic img{transform:scale(1)}
+@media (min-width:700px){.sec{padding-left:40px;padding-right:40px}}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none !important;transition:none !important}[data-rv]{opacity:1;transform:none}.letters b{opacity:1;filter:none;transform:none}.zoomin .pic img{transform:none}}
+
+/* Aurelia — a private edition, in cotton paper and satin foil. */
+:root{--grain:url('/assets/aurelia/papel-algodon.webp')}
+html{scroll-behavior:smooth}
+.in-w{max-width:1080px}
+.eb{font-size:11px;letter-spacing:.22em;line-height:1.6}
+.lead{font-size:16px;line-height:1.85;max-width:56ch}
+.btn{min-height:48px;font-size:11px;letter-spacing:.17em;padding:14px 24px}
+.foil,.foilbg{animation:none}
+.foil{background-size:100% 100%}
+.opening{gap:22px;background:radial-gradient(ellipse at 45% 35%,#fff 5%,#F1EEE7 65%,#E4DED2);transition:opacity .9s ease,visibility 0s linear .9s}
+.opening>p{max-width:350px}
+.fold{height:min(470px,calc(100svh - 230px));width:auto;aspect-ratio:2/3;scale:1;margin:0;transition:transform 1.35s cubic-bezier(.22,.61,.36,1)}
+.cv-f{background-image:url('/assets/aurelia/cubierta-relieve.webp');background-size:100% 100%;background-blend-mode:normal;box-shadow:2px 0 0 #D7CFBF,4px 1px 0 #EEE8DD,0 30px 50px -28px #2F281B60;isolation:isolate}
+.cv-f::before{inset:12px;border-image:none;border:1px solid #B79B6755}
+.cv-f::after{content:"";position:absolute;top:0;bottom:0;left:7px;width:3px;background:linear-gradient(90deg,#8B7B5B16,#fff9,#6F60401A);pointer-events:none}
+.cv-f .ring{display:none}
+.emb{position:absolute;left:15%;right:15%;top:40%;margin:0;transform:translateY(-50%);font-size:clamp(64px,10vh,98px);letter-spacing:-.035em;color:#E7DFD0;text-shadow:-1px -1px 1px #FFFCF5,1px 1px 1px #8C7D6255,0 2px 2px #8C7D621C}
+.emb i{font-size:.52em}
+.au-monogram{display:flex;justify-content:center;align-items:center;min-width:0;line-height:1}
+.au-monogram>.lz-seal{max-width:100%;max-height:100%;font-family:'Bodoni Moda',Georgia,serif!important}
+.au-monogram img{max-width:100%;max-height:100%;object-fit:contain}
+.emb>.lz-seal{height:1.2em}
+.cover{transition:transform 1.45s cubic-bezier(.35,.05,.2,1)}
+.cv-b{background-image:linear-gradient(#FAF8F3AA,#FAF8F3AA),url('/assets/aurelia/papel-algodon.webp');background-size:auto,380px;display:grid;place-items:center;box-shadow:inset -8px 0 12px -12px #4A382C70}
+.cv-b .au-engraving{width:65%;height:auto;color:var(--gold);opacity:.55}
+.band{left:-12px;right:-12px;top:59%;height:100px;background:transparent url('/assets/aurelia/faja-oro.webp') center/100% 158% no-repeat;box-shadow:none;padding:13px 22px;gap:3px;touch-action:pan-y;transition:transform .95s cubic-bezier(.4,0,.2,1),opacity .8s}
+.band .eb{font-size:9px;letter-spacing:.2em;line-height:1.35;color:#493B24}
+.band b{font-size:22px;line-height:1.15;color:#302617}
+.slid .band{transform:translateY(210px) rotate(-3deg);opacity:0}
+.fold.open{transform:translateX(12%)}
+.inside{padding:22px 20px;gap:3px;background:#FFFEFB url('/assets/aurelia/papel-algodon.webp') center/500px;background-blend-mode:soft-light;overflow-y:auto}
+.inside::before{inset:10px;opacity:.4}
+.inside>.mono{display:none}
+.inside h1{font-size:clamp(34px,5.3vh,48px);line-height:1;margin:7px 0}
+.inside h1 em{font-size:22px;line-height:1;margin:3px 0}
+.inside p{font-size:12px;line-height:1.5}
+.inside .btn{position:relative;flex:none;margin-top:10px;min-height:44px;padding:10px 18px;font-size:10px;letter-spacing:.13em}
+.hint{font-size:18px;line-height:1.4}
+#invite{opacity:0;transform:translateY(12px);transition:opacity 1s ease,transform 1.1s cubic-bezier(.22,.61,.36,1)}
+#invite.is-open{opacity:1;transform:none}
+.hero{padding:36px max(28px,5vw) 88px}
+.hero>.in-w{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:0 72px;align-items:start}
+.topbar{grid-column:1/-1;margin-bottom:64px}
+.hero .in-w>.eb{grid-column:1;grid-row:2;margin-top:42px!important}
+.names{grid-column:1;grid-row:3;font-size:clamp(80px,8.2vw,116px);margin:24px 0 30px;overflow-wrap:anywhere}
+.names:focus{outline:none}
+.names em{margin:12px 0 16px 50px;font-size:44px}
+.hero-rule{grid-column:1;grid-row:4}
+.photo{grid-column:2;grid-row:2/8;margin:0;padding-right:24px}
+.photo .pic{aspect-ratio:4/5}
+.photo .pic img{height:100%;top:0;object-position:center 62%!important;filter:saturate(.78) contrast(1.02)}
+.vcap{font-size:10px;letter-spacing:.22em}
+.stamp{width:100px;height:100px;left:-28px;bottom:-20px}
+.stamp svg{animation:none}
+.stamp b{width:48%;height:48%;font-size:21px}
+.stamp .lz-seal-ring{font-size:.65em!important}
+.meta{grid-column:1;grid-row:5;margin:24px 0 20px;border-top:0}
+.meta .eb{font-size:10px;letter-spacing:.18em}
+.meta p{font-size:19px;line-height:1.4}
+.hero .msg{grid-column:1;grid-row:6;font-size:23px;max-width:30ch}
+.divd{max-width:1080px;padding:0 28px 32px;gap:28px}
+.au-engraving{width:126px;height:44px;flex:none;stroke-width:.65;opacity:.8}
+.sec{padding:88px max(28px,5vw)}
+.sh{margin-bottom:28px}
+.sh h2{font-size:clamp(36px,4vw,52px);line-height:1.1;max-width:20ch}
+.sh .idx{font-size:17px;margin-bottom:14px}
+#historia .in-w{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:0 64px}
+#historia .sh{grid-column:1;align-self:end}
+#historia .lead{grid-column:1;align-self:start}
+.gal{grid-column:2;grid-row:1/3;margin-top:0;gap:16px}
+.gi .pic{min-height:0;outline-offset:5px}
+.au-countdown{background:var(--ink);color:var(--bg)}
+.au-countdown .in-w{display:grid;grid-template-columns:1fr 1fr;gap:0 64px;align-items:center}
+.au-countdown .sh{grid-column:1;grid-row:1/4;margin:0}
+.au-countdown .eb,.au-countdown .cnote,.au-countdown .cdx span{color:#D9D0BD}
+.au-countdown .big{grid-column:2;font-size:64px}
+.au-countdown .cnote{grid-column:2;font-size:20px}
+.cdx{grid-column:2;border-top-color:#B89A64;border-bottom-color:#FFFFFF30;margin-top:24px}
+.cdx>div+div{border-color:#FFFFFF30}
+.cdx span{font-size:10px;letter-spacing:.15em}
+.cdx b{font-size:38px}
+#itinerario .in-w{display:grid;grid-template-columns:1fr 1fr;gap:0 64px}
+#itinerario .sh{grid-column:1;grid-row:1}
+.evs{grid-column:2;grid-row:1/3}
+.ev{grid-template-columns:100px minmax(0,1fr);gap:16px;padding:24px 0}
+.ev .t{font-size:22px}
+.ev h3{font-size:13px;letter-spacing:.13em;line-height:1.5}
+.ev p{font-size:16px;line-height:1.7}
+.ev .addr{color:#736B5E}
+.ev a{min-height:44px;display:inline-flex;align-items:center;font-size:11px;letter-spacing:.15em;margin:4px 0 0;padding:0}
+.dress{grid-column:1;grid-row:2;margin:0;align-self:start;text-align:left;padding:28px;background:var(--paper)}
+.dress p{font-size:16px}
+.dress .small{font-size:14px!important;color:#736B5E}
+.sws{display:none}
+#viaje .in-w>.lead{max-width:60ch}
+.trv{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:32px;margin-top:40px}
+.tc{padding:66px 0 0;border-top:1px solid var(--line)}
+.tc .ic{top:20px;width:28px}
+.tc h3{font-size:27px;line-height:1.2;margin:10px 0 16px}
+.tc p{font-size:15px;line-height:1.8;overflow-wrap:anywhere}
+.au-booking{margin-top:16px;color:var(--muted);font-style:italic;font-family:'Cormorant Garamond',serif}
+.s-q{padding-block:100px}
+.s-q .in-w{max-width:720px}
+.s-q blockquote{font-size:clamp(26px,3vw,38px);line-height:1.4}
+#faq .in-w{display:grid;grid-template-columns:1fr 1.2fr;gap:64px}
+.faq summary{font-size:22px;min-height:64px;line-height:1.35}
+.faq p{font-size:16px}
+#rsvp .in-w{max-width:760px}
+.rcard{padding:52px clamp(24px,6vw,64px);box-shadow:0 0 0 1px var(--line),0 22px 48px -35px #0004}
+.rcard h2{font-size:clamp(34px,4vw,46px);line-height:1.2;margin:18px 0 10px}
+.seats{font-size:11px;letter-spacing:.18em;line-height:1.5}
+.rmsg{font-size:16px;line-height:1.7;margin-top:26px}
+.person{flex-wrap:wrap;gap:12px;padding:20px 0}
+.person>span{min-width:0;flex:1 1 180px;font-size:23px;line-height:1.3;overflow-wrap:anywhere}
+.person>div{gap:8px}
+.person button{min-height:48px;font-size:10px;padding:12px 16px;letter-spacing:.1em;line-height:1.4}
+.person button[aria-pressed=true]::before{content:"";display:inline-block;width:5px;height:5px;border:1px solid currentColor;transform:rotate(45deg);margin:0 7px 1px 0}
+.person.is-invalid{border-bottom-color:#9B3B4A}
+.au-person-error{flex:1 0 100%;font-size:14px!important;line-height:1.5;color:#9B3B4A;margin:0}
+label{font-size:11px;line-height:1.6;letter-spacing:.16em}
+textarea{font-size:16px;line-height:1.7;padding:12px 0;min-height:80px}
+.au-notice{font-size:13px;line-height:1.6;color:var(--muted);margin-top:20px}
+.lz-content .au-demo{display:none}
+.au-summary{list-style:none;padding:0;margin:22px 0;text-align:left;font-size:15px;line-height:1.6}
+.au-summary li{padding:10px 0;border-bottom:1px solid var(--line)}
+.au-footer-mono{font:400 48px 'Bodoni Moda',serif;color:var(--gold);width:100px;height:90px;margin:0 auto 28px}
+.au-footnav{display:flex;justify-content:center;gap:12px 28px;flex-wrap:wrap;margin-top:28px}
+.au-footnav a{font-size:11px;letter-spacing:.1em;min-height:44px;display:inline-flex;align-items:center;text-decoration:none;border-bottom:1px solid var(--gold)}
+.mbar{height:42px;box-shadow:0 0 0 1px #1D1B1914;backdrop-filter:none;-webkit-backdrop-filter:none;background:var(--bg)}
+[data-rv]{transform:translateY(14px);transition:opacity .55s ease,transform .65s cubic-bezier(.22,1,.36,1)}
+[data-rv=line]{transition:transform .75s ease}
+.letters b{filter:none;transition:opacity .45s,transform .6s cubic-bezier(.22,1,.36,1);transition-delay:calc(min(var(--i),8) * 25ms)}
+.zoomin .pic img{transform:scale(1.025);transition:transform 1.15s ease}
+@media(max-width:820px){
+ .in-w{max-width:600px}
+ .hero{padding:24px 26px 58px}
+ .hero>.in-w{display:flex;flex-direction:column;gap:0;align-items:stretch}
+ .topbar{margin-bottom:30px}
+ .hero .in-w>.eb{margin-top:0!important}
+ .names{font-size:clamp(64px,18vw,90px);margin:18px 0 24px}
+ .names em{font-size:32px;margin:8px 0 10px 36px}
+ .photo{margin:26px 0 16px;padding-right:22px}
+ .photo .pic{aspect-ratio:5/4}
+ .photo .pic img{object-position:center 72%!important}
+ .vcap{font-size:9px;letter-spacing:.17em}
+ .stamp{width:78px;height:78px;left:-10px;bottom:-20px}
+ .stamp b{font-size:17px}
+ .meta{margin:28px 0 18px}
+ .meta p{font-size:17px}
+ .hero .msg{font-size:22px}
+ .sec{padding:58px 26px}
+ #historia .in-w,#itinerario .in-w,#faq .in-w,.au-countdown .in-w{display:block}
+ .gal{margin-top:32px;gap:12px}
+ .au-countdown .sh{margin-bottom:28px}
+ .au-countdown .big{font-size:54px}
+ .cdx{margin-top:26px}
+ .cdx b{font-size:32px}
+ .dress{margin-top:28px;padding:26px}
+ .trv{display:block;margin-top:28px}
+ .tc{padding:24px 0 28px 48px}
+ .tc .ic{top:26px}
+ .tc h3{font-size:26px}
+ .s-q{padding:72px 30px}
+ .faq{margin-top:30px}
+ .rcard{padding:40px 24px 32px;outline-offset:-7px}
+ .rcard .eb{font-size:10px;letter-spacing:.16em}
+ .person>div{width:100%}
+ .person button{flex:1}
+ .person>span{flex-basis:100%}
+ .rcard h2{font-size:36px}
+ .au-footnav{gap:12px 20px}
+ .fold.open{transform:translateX(5%)}
+ .fold{height:min(420px,calc(100svh - 225px))}
+}
+@media(max-height:700px){
+ .opening{gap:12px;padding-bottom:84px}
+ .opening>p.eb{font-size:10px}
+ .fold{height:min(380px,calc(100svh - 180px))}
+ .inside{padding:18px 16px;gap:2px}
+ .inside>.eb,.inside>p[style*="Cormorant"]{display:none}
+ .inside h1{font-size:34px;margin:4px 0}
+ .inside h1 em{font-size:18px}
+ .inside .btn{font-size:9px;padding-inline:12px}
+ .inside p{font-size:11px}
+ .band{height:84px}
+ .band b{font-size:19px}
+ .band .eb{font-size:8px}
+ .hint{font-size:16px}
+}
+@media(max-height:470px) and (min-width:600px){
+ .opening{flex-direction:row;gap:32px;padding:16px 24px}
+ .opening>p{width:160px}
+ .fold{height:calc(100svh - 40px)}
+ .opening .hint{margin-right:20px}
+}
+@media(prefers-reduced-motion:reduce){#invite{transform:none}.fold.open{transform:none}.letters b{transition-delay:0s}}
+.band{background:none;isolation:isolate;touch-action:none}
+.band::before{content:"";position:absolute;inset:0;z-index:-1;background:url('/assets/aurelia/faja-oro.webp') center/100% 158% no-repeat;pointer-events:none}
+[data-au-metal="silver"] .band::before{filter:grayscale(1) brightness(1.12)}
+[data-au-metal="rose"] .band::before{filter:hue-rotate(-24deg) saturate(.65)}
+.emb{height:clamp(72px,12vh,120px)}
+.au-long-name{font-size:clamp(54px,6vw,86px)}
+#inLetters{max-width:100%;overflow-wrap:anywhere}
+@media(max-width:820px){.names.au-long-name{font-size:clamp(44px,12vw,66px)}}
+.emb>.lz-seal{height:auto;max-height:100%}
+.emb .lz-seal-stack,.emb .lz-seal-ring{font-size:.44em!important}
+.emb .lz-seal-ring{height:2.3em}
+/* A tight belly band: the front face reaches both folder edges; the turns sit behind. */
+.band{left:-4px;right:-5px;padding-inline:18px;box-shadow:0 5px 9px -7px #3B2B1766}
+.band::before{background-size:100% 240%;background-position:50% 46%;border-radius:2px}
