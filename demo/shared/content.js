@@ -143,7 +143,7 @@
     if (themes.length < 2 && TPL !== 'glicina') return;
     var start = q.get('color');
     if (start) applyTheme(start);
-    var photoColor = TPL === 'moderno' && /^(color|colour)$/.test(q.get('fotos') || q.get('photos') || '');
+    var photoColor = (TPL === 'moderno' || TPL === 'noir') && /^(color|colour)$/.test(q.get('fotos') || q.get('photos') || '');
     html.classList.toggle('lz-photo-color', photoColor);
     // Glicina: verla sin fotos (?fotos=no o el botón de la barra).
     var noPhotos = TPL === 'glicina' && /^(no|sin|none)$/.test(q.get('fotos') || q.get('photos') || '');
@@ -169,8 +169,8 @@
         b.addEventListener('click', function () { applyTheme(t.id); g.querySelectorAll('button').forEach(function (x) { x.setAttribute('aria-pressed', String(x === b)); }); });
         g.appendChild(b);
       });
-      if (TPL === 'moderno') {
-        // Moderno: ver las fotos en blanco y negro (original) o con sus colores.
+      if (TPL === 'moderno' || TPL === 'noir') {
+        // Moderno y Noir: fotos en blanco y negro o con sus colores originales.
         var pb = document.createElement('button'); pb.type = 'button'; pb.className = 'lz-photo';
         pb.textContent = LANG === 'en' ? 'Color photos' : 'Fotos a color'; pb.setAttribute('aria-pressed', String(photoColor));
         pb.addEventListener('click', function () { photoColor = !photoColor; html.classList.toggle('lz-photo-color', photoColor); pb.setAttribute('aria-pressed', String(photoColor)); });
@@ -371,10 +371,10 @@
       if (k === 'gallery' && !rows.length) return;
       renderList(box, rows);
     });
-    document.dispatchEvent(new CustomEvent('lz-gallery-change'));
     applyTheme(c0.pal, c0.palCustom);
-    html.classList.toggle('lz-photo-color', TPL === 'moderno' && c0.photoBW === false);
+    html.classList.toggle('lz-photo-color', (TPL === 'moderno' || TPL === 'noir') && c0.photoBW === false);
     html.classList.toggle('lz-no-photos', TPL === 'glicina' && c0.photosOn === false);
+    document.dispatchEvent(new CustomEvent('lz-gallery-change'));
     // Cuenta regresiva: las plantillas leen window.LZ_T en cada segundo.
     var d = dateObj(c0.date);
     if (d) { var m = /^(\d{1,2}):(\d{2})$/.exec(cdEv && cdEv.time || ''); if (m) d.setHours(+m[1], +m[2]); window.LZ_T = d.getTime(); }

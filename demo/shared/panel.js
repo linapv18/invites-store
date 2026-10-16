@@ -370,7 +370,7 @@
           if(el.closest('[hidden]') || !el.getClientRects().length)el.tabIndex=-1;
         });
       });
-      if(!box.hidden && activeGroup){list=sources(activeGroup);if(!list.length)close();else{idx=Math.min(idx,list.length-1);show();}}
+      if(!box.hidden && activeGroup){box.classList.toggle('is-mono',activeGroup.dataset.gallery==='mono' && !document.documentElement.classList.contains('lz-photo-color'));list=sources(activeGroup);if(!list.length)close();else{idx=Math.min(idx,list.length-1);show();}}
     }
     document.addEventListener('click',function(e){
       var el=e.target.closest('img.lz-zoomable,[data-gallery-open]');if(!el)return;
