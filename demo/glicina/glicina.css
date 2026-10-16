@@ -443,7 +443,7 @@ footer>.wis{height:170px;opacity:.75}
 /* The revealed invitation continues the ivory and pale-lilac botanical suite. */
 :root{--cream:#fcfaf3;--ink:#454b43;--sage:#606c53;--sage2:#afb6a0;--lav:#80738e;--lav2:#ddd5e8}
 body.gl{background-color:#efeee8;background-image:radial-gradient(ellipse at 0 12%,#e7e2ec88,transparent 45%),radial-gradient(ellipse at 100% 65%,#e3e8dc88,transparent 45%);background-size:100% 1800px;background-repeat:repeat-y;background-blend-mode:normal}
-#invite{background:var(--cream);max-width:980px;border-inline:1px solid #b8b7aa33;box-shadow:0 0 65px #6965580a}
+#invite{background:var(--cream);width:100%;max-width:none;border-inline:0;box-shadow:0 0 65px #6965580a}
 #invite .flow{max-width:800px;background:transparent}
 #invite .panel{background-image:none;background-color:transparent;padding-block:64px}
 #invite .panel h2{color:var(--sage);font-size:clamp(40px,4.6vw,50px);margin-bottom:22px}
@@ -517,7 +517,7 @@ body.gl{background-color:#efeee8;background-image:radial-gradient(ellipse at 0 1
 
 /* Rich garden stationery inside; the approved opening is deliberately untouched. */
 body.gl:not(.locked){overflow-x:clip;overflow-y:visible}
-#invite{--estate-art:url('/assets/glicina/optimized/jardin-villa.webp');overflow:visible;background:var(--cream);border-inline:1px solid #b0ad9855}
+#invite{--estate-art:url('/assets/glicina/optimized/jardin-villa.webp');overflow:visible;background:var(--cream);border-inline:0}
 #invite .flow{padding:40px 0;background-image:linear-gradient(90deg,transparent 18px,#b5ae8a55 18px,#b5ae8a55 19px,transparent 19px,transparent calc(100% - 19px),#b5ae8a55 calc(100% - 19px),#b5ae8a55 calc(100% - 18px),transparent calc(100% - 18px));}
 #invite .ghero{padding:65px 24px 58px;min-height:660px;display:flex;flex-direction:column;align-items:center;justify-content:center;background-image:linear-gradient(#f6f3e915,#f6f3e908),var(--estate-art);background-size:cover;background-position:center;isolation:isolate;border-bottom:5px double #aba17e}
 #invite .ghero .estate-scene{display:none}
