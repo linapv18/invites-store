@@ -1,6 +1,6 @@
 # Marfil opening media
 
-The opening uses the user-supplied transparent ribbon animation, trimmed from eight seconds to 50 frames (2.082 seconds). Encoding preserves alpha and reduces the canvas to 768 × 432.
+The opening uses the corrected user-supplied `lazo-transparente-corregido.webm` ribbon animation, trimmed from eight seconds to 50 frames (2.082 seconds). Encoding preserves alpha and reduces the canvas to 768 × 432.
 
 - `lazo-inicio.webp`: first frame, used by the interactive bow before playback.
 - `lazo-desatar.webp`: single-play animated WebP used across browsers, including iOS. It avoids depending on VP9 alpha support or autoplay permissions.

@@ -51,7 +51,7 @@
     if (wrap.classList.contains('untie') || untying) return;
     clear(); LazoMusic.play();untying=true;
     // Optional transparent clip: supplied by the asset pipeline, never shown as a product setting.
-    var clip=window.MarfilBowClip || {animated:'/assets/marfil/lazo-desatar.webp',duration:2084};
+    var clip=window.MarfilBowClip || {animated:'/assets/marfil/lazo-desatar.webp?v=2',duration:2084};
     if(!reduced && clip && clip.animated){
       film=document.createElement('img');film.className='bow-film';film.alt='';film.setAttribute('aria-hidden','true');
       film.addEventListener('load',function(){if(!untying || !film)return;wrap.classList.add('playing-bow');timers.push(setTimeout(finishUntie,clip.duration || 2084));},{once:true});
