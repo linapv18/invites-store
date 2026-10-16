@@ -439,3 +439,78 @@ footer>.wis{height:170px;opacity:.75}
 .opening .opening-content{opacity:0;visibility:hidden;transition:opacity .7s .2s,visibility 0s .2s}
 .opening.parted .opening-content{opacity:1;visibility:visible}
 @media(prefers-reduced-motion:reduce){.opening .opening-content{transition:none}}
+
+/* The revealed invitation continues the ivory and pale-lilac botanical suite. */
+:root{--cream:#fcfaf3;--ink:#454b43;--sage:#606c53;--sage2:#afb6a0;--lav:#80738e;--lav2:#ddd5e8}
+body.gl{background-color:#efeee8;background-image:radial-gradient(ellipse at 0 12%,#e7e2ec88,transparent 45%),radial-gradient(ellipse at 100% 65%,#e3e8dc88,transparent 45%);background-size:100% 1800px;background-repeat:repeat-y;background-blend-mode:normal}
+#invite{background:var(--cream);max-width:980px;border-inline:1px solid #b8b7aa33;box-shadow:0 0 65px #6965580a}
+#invite .flow{max-width:800px;background:transparent}
+#invite .panel{background-image:none;background-color:transparent;padding-block:64px}
+#invite .panel h2{color:var(--sage);font-size:clamp(40px,4.6vw,50px);margin-bottom:22px}
+#invite .panel>p{max-width:52ch;margin-inline:auto}
+#invite .mc{letter-spacing:.1em;color:var(--sage)}
+.floral-border{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:0}
+.floral-border img{position:absolute;top:-38px;left:-20px;width:31%;max-width:270px;height:auto;opacity:.95;transform-origin:50% 0}
+.floral-border img+img{left:auto;right:-20px;transform:scaleX(-1);top:-22px}
+#invite .ghero{padding:145px 24px 65px;background:linear-gradient(#f5f2f7a6,#fcfaf300);overflow:hidden}
+#invite .ghero>.mc,#invite .ghero>.loval{z-index:1}
+#invite .ghero .loval{filter:drop-shadow(0 5px 8px #514e3d12)}
+#invite .ghero .lace{filter:none;opacity:.9}
+#invite .ghero .loval::before{background:var(--cream)}
+#invite .cameo{background:#eeeaf24d;border-color:#b1aaaf;outline-color:#c2bbc580;box-shadow:inset 0 0 0 5px var(--cream);color:var(--sage)}
+#invite .orn{color:#a8ad99;opacity:.75}
+#invite .cover-photo{rotate:0deg;padding:10px;border-color:#c8c5bc99;box-shadow:0 16px 30px -22px #50485c55}
+#invite .arches{gap:7%;align-items:center;margin-top:38px}
+#invite .arch{border-radius:48% 48% 2px 2px;rotate:0deg;box-shadow:0 0 0 1px #c6c2ba99,0 12px 22px -18px #51485a66;padding:7px}
+#invite .arch:nth-child(2){margin-bottom:0;transform:translateY(18px)}
+#invite .gallery-link{margin-top:26px;border-color:#a9a2b555}
+#invite .vign{width:min(100%,360px);height:330px;background:linear-gradient(#e9e4ef88,#f7f6ee);border:1px solid #c5c1ca77;border-radius:50% 50% 4px 4px;box-shadow:0 0 0 7px var(--cream),0 0 0 8px #c5c1ca55;isolation:isolate}
+#invite .vign .estate-scene{display:none}
+#invite .vign .floral-border img{width:58%;max-width:none;left:-15px;top:-15px}
+#invite .vign .floral-border img+img{left:auto;right:-15px;top:0}
+.vign-flourish{position:absolute;bottom:30px;left:0;right:0}
+#invite .week{padding-block:20px;border-block:1px solid #c4bdcc66}
+#invite .week b{color:var(--ink)}
+#invite .week b svg{opacity:.65}
+#invite .panel.olive{color:var(--ink);background:linear-gradient(135deg,#eeebf3,#f4f1f5 55%,#eceee6);border-block:1px solid #c8c0cf55;margin-block:28px}
+#invite .olive h2,#invite .olive .mc{color:var(--sage)}
+#invite .ledge{display:none}
+#invite .countdown-panel{padding:50px 22px!important}
+#invite .gcd{border-block:1px solid #afa6bc55;padding-block:24px;margin-top:24px}
+#invite .gcd>div+div{border-left:1px solid #afa6bc55}
+#invite .gcd b{color:#6d6379}
+#invite .gcd span{color:#57525e}
+#invite .countdown-panel>p{font-size:17px}
+#invite .prog{margin-top:40px}
+#invite .pe .ic{color:#8a7d94;width:52px;height:52px}
+#invite .pe:not(:last-child)::before{border-left:1px solid #c5bdce;left:26px;top:62px}
+#invite .pe h3{font-size:34px}
+#invite .pe h3 small{color:var(--ink);font-size:15px;white-space:nowrap}
+#invite .pe .btn{background:transparent;color:var(--sage);border:1px solid #a9b09c88;box-shadow:none}
+#invite .dress-panel{margin:0 36px 40px;padding:40px 28px!important;border-block:1px solid #c8c0cf66;background:#f1eef43b}
+#invite #viaje{margin-inline:22px;padding:48px 35px;border:1px solid #c8c0cf66;background:#f1eef466}
+#invite .ti{border-color:#b3a9bf55}
+#invite .ti>svg{color:#8a7d94}
+#invite .ti h3{color:var(--sage)}
+#invite .ti .btn{background:var(--sage);color:var(--cream)}
+#invite .gap.q{padding:60px 0!important;background:var(--cream)}
+#invite .gap.q .floral-border img{width:24%;max-width:170px;top:0;opacity:.8}
+#invite .heart{--sage:#e8e3ed;color:var(--ink);filter:drop-shadow(0 4px 5px #5a526412)}
+#invite .heart .mc{color:#62596e}
+#invite .heart.is-long{background:#f3eff6;border-color:#c9c0d0;box-shadow:inset 0 0 0 7px var(--cream),inset 0 0 0 8px #c9c0d088}
+#invite .faq{border-top:1px solid #c5bdce66}
+#invite .faq details{border-bottom:1px solid #c5bdce66}
+#invite .faq details[open]{background:#f1eef34d;padding-inline:14px}
+#invite #rsvp{margin-inline:22px;border:1px solid #c5bdce88;padding:48px 38px 56px!important;background:#fdfbf6;box-shadow:inset 0 0 0 6px #fcfaf3,inset 0 0 0 7px #c5bdce44}
+#invite .person{border-color:#c5bdce66}
+#invite .person button{border-color:#aab29e;background:transparent;box-shadow:none}
+#invite .person button[aria-pressed=true]{background:var(--sage);color:var(--cream);border-color:var(--sage)}
+#invite textarea{background:#f8f6fa77;border:1px solid #bfb8c899;color:var(--ink)}
+#invite footer{padding:130px 30px 120px!important;margin-top:65px;background:linear-gradient(#f2eef5,#eeeee5);color:var(--sage);border-top:1px solid #c5bdce55}
+#invite footer .floral-border img{width:32%;max-width:260px;top:-30px}
+#invite footer .names{font-size:clamp(48px,6vw,68px);max-width:65%;color:var(--sage)}
+#invite footer>.mc,#invite .footer-links a{color:var(--sage)}
+#invite .footer-links{gap:12px 26px;margin-top:24px}
+@media(max-width:600px){#invite .ghero{padding:130px 16px 45px}#invite .ghero .floral-border img{width:35%;top:-15px}#invite .panel{padding:48px 26px}#invite .panel h2{font-size:40px}#invite .arches{gap:7%;align-items:flex-end}#invite .arch:nth-child(2){transform:none;margin-bottom:16px}#invite .arch:nth-child(3){width:66%;margin-top:16px}#invite .pe .ic{width:44px;height:48px}#invite .pe:not(:last-child)::before{left:22px;top:58px}#invite .pe h3{font-size:30px}#invite .dress-panel{margin-inline:22px;padding:34px 22px!important}#invite #viaje{margin-inline:14px;padding:42px 24px}#invite .gap.q .floral-border img{width:29%;opacity:.7}#invite #rsvp{margin-inline:14px;padding:42px 24px 50px!important}#invite footer{padding-top:110px!important}#invite footer .names{max-width:76%;font-size:48px}#invite footer .floral-border img{width:35%;top:-10px;opacity:.75}}
+
+@media(prefers-reduced-motion:no-preference){.motion-active>.floral-border img{animation:curtain-breathe 9s ease-in-out infinite alternate}.motion-active>.floral-border img+img{animation-name:curtain-breathe-right;animation-delay:-4s}}

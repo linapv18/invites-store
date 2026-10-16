@@ -53,9 +53,7 @@
     }
   }[LANG];
   window.GlicinaS = S;
-  var rng = function (seed) { var r = seed; return function () { return (r = (r * 9301 + 49297) % 233280) / 233280; }; };
   var f1 = function (v) { return v.toFixed(1); };
-const petals = (n, seed) => { const Q = rng(seed); return `<div class="petals">${Array.from({ length: n }, () => `<i style="left:${(Q() * 100).toFixed(0)}%;--x:${((Q() - .5) * 120).toFixed(0)}px;--du:${(9 + Q() * 8).toFixed(1)}s;--de:-${(Q() * 16).toFixed(1)}s;${Q() < .4 ? 'background:var(--rose)' : ''}"></i>`).join('')}</div>`; };
 const ORN = w => `<svg class="orn draw" viewBox="0 0 200 24" width="${w}" fill="none" stroke="currentColor" stroke-width="1"><path pathLength="1" d="M6 12H72c8 0 12-8 20-8 6 0 8 6 3 7-4 1-5-4-1-5"/><path pathLength="1" d="M194 12H128c-8 0-12-8-20-8-6 0-8 6-3 7 4 1 5-4 1-5"/><path pathLength="1" d="M88 15c5 5 9 6 12 6s7-1 12-6"/></svg>`;
 const glIcon = {
   // Argollas entrelazadas, una con brillante
@@ -87,18 +85,8 @@ const tIcon = {
 const HEART = '<svg viewBox="0 0 46 42" aria-hidden="true"><path d="M23 39C8 29 2 20 5 12c3-7 12-8 18-1 6-7 15-6 18 1 3 8-3 17-18 27Z" style="fill:var(--rose)" filter="url(#glSoft)"/></svg>';
 const brush = c => `<svg viewBox="0 0 70 26" aria-hidden="true"><path d="M5 11C20 4 46 3 64 7c4 1 4 9 0 11-18 4-42 5-58 2-5-1-5-7-1-9Z" style="fill:${c};stroke:var(--sage2)" stroke-width=".9" filter="url(#glRough)"/></svg>`;
 
-  // Racimos de glicina (imágenes con fondo transparente) colgando de una rama; cada uno se mece por su cuenta.
-  var G = '/assets/glicina/optimized/', RAC = [['racimo-largo', .224], ['racimo-medio', .267], ['racimo-corto', .547], ['racimo-curvo', .427], ['racimo-tupido', .19]];
-  // unit 'vh': alto relativo a la pantalla (la cortina llena la pantalla en celular y en computador)
-  function drape(seed, n, minH, maxH, kinds, top, cls, unit) {
-    var Q = rng(seed), s = '<div class="ramas">' + new Array(4).join('<img src="' + G + 'rama.webp" alt="">') + '</div>';
-    for (var i = 0; i < n; i++) {
-      var k = RAC[kinds[Math.floor(Q() * kinds.length)]], h = minH + Q() * (maxH - minH), w = h * k[1], x = (i + .5) / n * 100 + (Q() - .5) * (60 / n);
-      s += '<img class="rc' + (Q() < .5 ? ' f' : '') + '" src="' + G + k[0] + '.webp" alt="" style="left:' + x.toFixed(1) + '%;translate:-50% 0;top:' + ((top || 18) + Q() * 12).toFixed(0) + 'px;height:' + (unit === 'vh' ? (h / 8.12).toFixed(1) + 'vh' : h.toFixed(0) + 'px') + ';--du:' + (3 + Q() * 2.6).toFixed(1) + 's;--de:-' + (Q() * 4).toFixed(1) + 's">';
-    }
-    return '<div class="wis' + (cls ? ' ' + cls : '') + '" aria-hidden="true">' + s + '</div>';
-  }
-  var bush = function (style) { return '<img class="bush" src="' + G + 'hortensias.webp" alt=""' + (style ? ' style="' + style + '"' : '') + '>'; };
+  var G = '/assets/glicina/optimized/';
+  var floral = function () { return '<div class="floral-border" aria-hidden="true"><img src="' + G + 'glicinas-marfil.webp" alt="" loading="lazy" decoding="async"><img src="' + G + 'glicinas-marfil.webp" alt="" loading="lazy" decoding="async"></div>'; };
   var LACE = '<img class="lace" src="' + G + 'encaje-ovalo.webp" alt="">';
   var N = function (k) { return '<span data-lz="' + k + '">' + S[k] + '</span>'; };
   var maps = function (q) { return 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(q + ', Oaxaca'); };
@@ -120,9 +108,9 @@ const brush = c => `<svg viewBox="0 0 70 26" aria-hidden="true"><path d="M5 11C2
   // ======================= INVITACIÓN =======================
   '<div class="mbar" id="mbar" aria-hidden="true"><span class="pa" style="font-size:24px;color:var(--sage)">' + N('n1') + ' &amp; ' + N('n2') + '</span><span class="mc" data-lz-date="' + S.datePat + '">' + S.dateTxt + '</span></div>' +
   '<main id="invite" inert>' +
-    '<section class="ghero" id="portada" data-lz-anchor="portada">' + drape(13, 7, 85, 170, [1, 2, 3], 0) +
+    '<section class="ghero" id="portada" data-lz-anchor="portada">' + floral() +
       '<p class="mc" style="position:relative;z-index:1;margin-bottom:14px">' + S.getting + '</p>' +
-      '<div class="estate-scene" aria-hidden="true"></div><div class="loval invitation-oval">' + LACE + ovalNames(0) + '</div>' + bush() +
+      '<div class="estate-scene" aria-hidden="true"></div><div class="loval invitation-oval">' + LACE + ovalNames(0) + '</div>' +
     '</section>' +
     '<div class="flow">' +
     '<section class="panel">' +
@@ -134,13 +122,13 @@ const brush = c => `<svg viewBox="0 0 70 26" aria-hidden="true"><path d="M5 11C2
     '<section class="panel" id="historia" data-lz-anchor="historia">' +
       '<p class="mc">' + S.story + '</p><h2 data-lz="storyTitle">' + S.storyTitle + '</h2><p data-lz="story">' + S.storyTxt + '</p>' +
       '<div class="arches ph-only" data-lz-list="gallery">' + ['/assets/fotos/beso.jpg','/assets/fotos/escalera.jpg','/assets/fotos/muro.jpg'].map(function(src){return '<div class="arch" data-lz-item data-rv><div class="pic"><img class="ph-img" data-lz-f="img" src="'+src+'" alt="" loading="lazy"></div></div>';}).join('') + '</div><button type="button" class="gallery-link ph-only" data-gallery-open>' + (LANG==='en'?'Open our photo album':'Abrir nuestro álbum') + '</button>' +
-      '<div class="vign garden np-only" data-rv><div class="estate-scene" aria-hidden="true"></div>' + drape(23, 6, 110, 190, [0, 1, 3]) + bush() + '</div>' +
+      '<div class="vign garden np-only" data-rv><div class="estate-scene" aria-hidden="true"></div>' + floral() + '<span class="vign-flourish" aria-hidden="true">' + ORN(130) + '</span>' + '</div>' +
     '</section>' +
     '<section class="panel" style="padding-top:10px">' + ORN(150) +
       '<h2 data-lz-date="' + S.monthPat + '">' + S.monthTxt + '</h2>' +
       '<div class="week" id="week">' + S.wd.map(function (d) { return '<span>' + d + '</span>'; }).join('') + [0, 1, 2, 3, 4, 5, 6].map(function () { return '<b></b>'; }).join('') + '</div>' +
     '</section>' +
-    '<section class="panel olive" style="padding:50px 16px">' +
+    '<section class="panel olive countdown-panel" style="padding:50px 16px">' +
       '<i class="ledge"></i><i class="ledge b"></i>' +
       '<div class="cdov"><img class="lace" src="' + G + 'encaje-ovalo.webp" alt=""><p class="mc"><span data-lz="cdName">' + S.cdName + '</span> · <span data-lz="time0">' + S.time0 + '</span></p><h2>' + S.yes2 + '</h2>' +
         '<div class="gcd" aria-live="off">' + S.units.map(function (u, i) { return '<div><b data-cd="' + 'dhms'[i] + '">--</b><span>' + u + '</span></div>'; }).join('') + '</div></div>' +
@@ -150,7 +138,7 @@ const brush = c => `<svg viewBox="0 0 70 26" aria-hidden="true"><path d="M5 11C2
       '<h2>' + S.program + '</h2>' +
       '<div class="prog" data-lz-list="events">' + S.events.map(function (e) { return '<div class="pe" data-lz-item data-rv>' + ICONS + '<div><h3><span data-lz-f="name">' + e[1] + '</span><small data-lz-f="time">' + e[0] + '</small></h3><p data-lz-f="place">' + e[2] + '</p><p style="font-size:14px;opacity:.8" data-lz-f="address">' + e[3] + '</p><a class="btn" data-lz-f="map" href="' + maps(e[2]) + '" target="_blank" rel="noopener">' + S.map + '</a></div></div>'; }).join('') + '</div>' +
     '</section>' +
-    '<section class="panel" style="padding-top:10px" data-lz-group="dressCode dressNotes dressColors">' + ORN(150) +
+    '<section class="panel dress-panel" style="padding-top:10px" data-lz-group="dressCode dressNotes dressColors">' + ORN(150) +
       '<h2>' + S.dress + '</h2><p class="mc" data-lz="dressCode">' + S.dressCode + '</p><p style="margin-top:8px" data-lz="dressNotes">' + S.dressNotes + '</p>' +
       '<div class="brush" hidden aria-hidden="true">' + ['#F4F1EA', '#E8D9C0'].map(brush).join('') + '</div><p style="font-size:14.5px;margin-top:8px" data-lz-group="dressColors"><i>' + S.reserved + '</i> <span data-lz="dressColors">' + S.dressColors + '</span></p>' +
     '</section>' +
@@ -162,7 +150,7 @@ const brush = c => `<svg viewBox="0 0 70 26" aria-hidden="true"><path d="M5 11C2
         '<div class="ti" data-rv data-lz-group="guideFood guideCulture guidePlans">' + tIcon.map + '<h3>' + S.guide + '</h3><p data-lz-group="guideFood"><b>' + S.foodL + '</b> <span data-lz="guideFood">' + S.food + '</span></p><p data-lz-group="guideCulture"><b>' + S.cultureL + '</b> <span data-lz="guideCulture">' + S.culture + '</span></p><p data-lz-group="guidePlans"><b>' + S.plansL + '</b> <span data-lz="guidePlans">' + S.plans + '</span></p></div>' +
       '</div>' +
     '</section>' +
-    '<div class="gap q" style="height:auto;padding:120px 0 40px" data-lz-group="quote">' + drape(29, 4, 50, 85, [1, 2, 3]) + petals(6, 14) +
+    '<div class="gap q" style="height:auto;padding:120px 0 40px" data-lz-group="quote">' + floral() +
       '<div class="heart" data-frame="gl-heart" data-rv><blockquote>“<span data-lz="quote">' + S.quote + '</span>”</blockquote><p class="mc" style="font-size:7.5px;letter-spacing:.12em" data-lz="quoteAuthor">' + S.quoteAuthor + '</p></div>' +
     '</div>' +
     '<section class="panel" id="faq" data-lz-anchor="faq" data-lz-hide-empty>' +
@@ -179,7 +167,7 @@ const brush = c => `<svg viewBox="0 0 70 26" aria-hidden="true"><path d="M5 11C2
       '<div id="rsDone" hidden style="padding-top:16px"><p class="pa" style="font-size:46px;color:var(--sage)">' + S.thanks + '</p><p id="rsSum" style="margin:6px 0 18px"></p><button type="button" class="btn" id="rsEdit">' + S.edit + '</button></div>' +
     '</section>' +
     '</div>' +
-    '<footer><div class="estate-scene" aria-hidden="true"></div>' + drape(37, 5, 70, 130, [0, 1, 2, 3, 4], 0) + petals(3, 19) +
+    '<footer><div class="estate-scene" aria-hidden="true"></div>' + floral() +
       '<p class="names">' + N('n1') + ' &amp; ' + N('n2') + '</p><p class="mc"><span data-lz-date="' + S.datePat + '">' + S.dateTxt + '</span> · <span data-lz="city">' + S.city + '</span></p><nav class="footer-links" aria-label="' + (LANG==='en'?'Wedding information':'Información de la boda') + '"><a href="#itinerario">' + (LANG==='en'?'Schedule':'Itinerario') + '</a><a href="#rsvp">' + (LANG==='en'?'RSVP':'Confirmar asistencia') + '</a></nav></footer>' +
   '</main>';
 
