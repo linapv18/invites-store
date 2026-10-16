@@ -113,7 +113,7 @@ const notch = (cls, inner, style = '') => `<div class="notch ${cls}" style="${st
 
   var N = function (k) { return '<span data-lz="' + k + '">' + S[k] + '</span>'; };
   var maps = function (q) { return 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(q + ', Oaxaca'); };
-  var MONOTXT = 'A<i>&amp;</i>L';
+  var MONOTXT = '<span class="lz-seal">A<i>&amp;</i>L</span>';
   var names = function (d) { return '<h1 class="gtxt writes"><span class="write in" data-lz="n1">' + S.n1 + '</span> &amp;<br><span class="write in" style="transition-delay:' + d + 's" data-lz="n2">' + S.n2 + '</span></h1>'; };
 
   document.getElementById('app').innerHTML = '<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><filter id="lzPaper" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".85" numOctaves="2" result="n"/><feColorMatrix in="n" type="saturate" values="0" result="g"/><feComponentTransfer in="g" result="g2"><feFuncR type="linear" slope=".3" intercept=".78"/><feFuncG type="linear" slope=".3" intercept=".78"/><feFuncB type="linear" slope=".3" intercept=".78"/></feComponentTransfer><feBlend in="SourceGraphic" in2="g2" mode="multiply" result="b"/><feComposite in="b" in2="SourceGraphic" operator="in"/></filter></defs></svg>' + CSDEFS + '<span hidden id="envClosing" data-lz="envClosing" data-lz-keep>' + S.envClosing + '</span>' +
@@ -166,7 +166,7 @@ const notch = (cls, inner, style = '') => `<div class="notch ${cls}" style="${st
 
     '<section class="sec" id="viaje" data-lz-anchor="viaje" data-lz-show="viajeOn">' +
       '<div class="tenv painted-envelope" data-rv><div class="tflap"><div class="tlin"><svg viewBox="0 0 290 114" preserveAspectRatio="xMidYMax slice" aria-hidden="true">' + LINER + '</svg></div></div><div class="tback"></div>' +
-        '<div class="tcard"><p class="cz">' + S.fromAway + '</p><h2>' + S.travel + '</h2></div><div class="tpocket">' + FOLDS + '<div class="mono">' + MONO + '<b data-lz-seal>' + MONOTXT + '</b></div></div></div>' +
+        '<div class="tcard"><p class="cz">' + S.fromAway + '</p><h2>' + S.travel + '</h2></div><div class="tpocket">' + FOLDS + '<svg class="travel-filet" viewBox="0 0 300 126" preserveAspectRatio="none" aria-hidden="true"><path d="M12 18v96h276V18M18 28v80h264V28"/></svg><div class="mono">' + MONO + '<b data-lz-seal>' + MONOTXT + '</b></div></div></div>' +
       '<h2 class="travel-heading">' + (LANG==='en'?'Travel & stay':'Viaje y alojamiento') + '</h2><p data-lz="travelIntro">' + S.travelIntro + '</p>' +
       '<div class="tcs">' +
         '<div class="piece" data-rv data-lz-group="hotel hotelAddress hotelCode hotelNotes">' + notch('ivory', csIcon.bell + '<p class="cz">' + S.stay + '</p><h3 data-lz="hotel">' + S.hotel + '</h3><p><span data-lz="hotelAddress">' + S.hotelAddress + '</span><br><span data-lz-group="hotelCode">' + S.rate + ' <b data-lz="hotelCode">' + S.hotelCode + '</b></span><br><i data-lz="hotelNotes">' + S.hotelNotes + '</i></p><a class="btn" style="margin-top:14px" hidden href="#viaje" data-lz-href="hotelLink" data-lz-if="hotelLink">' + S.book + '</a><p class="demo-booking">' + (LANG==='en'?'Demo · booking link to be personalized':'Demostración · reserva por personalizar') + '</p>') + '</div>' +
@@ -191,7 +191,7 @@ const notch = (cls, inner, style = '') => `<div class="notch ${cls}" style="${st
 
     '</div>' +
 
-    '<footer><div class="wreath">' + wreath() + '<b data-lz-seal>' + MONOTXT + '</b></div><p class="ps gtxt" style="font-size:48px;margin-top:6px">' + N('n1') + ' &amp; ' + N('n2') + '</p><p class="cz" style="margin-top:6px"><span data-lz-date="' + S.footPat + '">14 · ' + S.M + ' · 2027</span> · <span data-lz="city">' + S.city + '</span></p><nav class="footer-links" aria-label="' + (LANG==='en'?'Wedding information':'Información de la boda') + '"><a href="#itinerario">' + (LANG==='en'?'Schedule':'Itinerario') + '</a><a href="#rsvp">' + (LANG==='en'?'RSVP':'Confirmar asistencia') + '</a></nav></footer>' +
+    '<footer class="keepsake-footer"><div class="footer-border" aria-hidden="true"></div>' + BQ(180,'footer-bouquet','',false) + '<div class="footer-inner"><div class="footer-swans">' + SWAN(82) + '</div><div class="wax gold photographic-seal footer-seal"><img class="wax-photo" src="/assets/rosa/lacre-dorado.webp" alt="" width="512" height="512"><span class="emb" data-lz-seal>' + MONOTXT + '</span></div><p class="ps footer-names">' + N('n1') + ' &amp; ' + N('n2') + '</p><p class="cz footer-date"><span data-lz-date="' + S.footPat + '">14 · ' + S.M + ' · 2027</span></p><p class="footer-city" data-lz="city">' + S.city + '</p><nav class="footer-links" aria-label="' + (LANG==='en'?'Wedding information':'Información de la boda') + '"><a href="#itinerario">' + (LANG==='en'?'Schedule':'Itinerario') + '</a><a href="#rsvp">' + (LANG==='en'?'RSVP':'Confirmar asistencia') + '</a></nav></div></footer>' +
   '</main>';
 
   document.getElementById('demoBar').innerHTML = '<span class="lbl">' + S.demo + '</span><button type="button" data-open-panel>' + S.panel + '</button><a href="' + S.storeUrl + '">' + S.store + '</a>';

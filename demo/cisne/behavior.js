@@ -7,6 +7,25 @@
 
   var still = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+  // Fit the editor's text/ring/stack monogram to the safe interior of each wax seal.
+  var monoFrame = 0;
+  function fitMonograms() {
+    monoFrame = 0;
+    document.querySelectorAll('.photographic-seal .emb,.painted-envelope .mono b').forEach(function(box) {
+      var mark = box.querySelector('.lz-seal'); if (!mark) return;
+      mark.style.setProperty('--mono-fit','1');
+      var r = mark.getBoundingClientRect(), safe = box.getBoundingClientRect();
+      if(r.width && r.height) mark.style.setProperty('--mono-fit',Math.min(1,safe.width/r.width,safe.height/r.height).toFixed(4));
+    });
+  }
+  function scheduleMonograms(){if(!monoFrame) monoFrame=requestAnimationFrame(fitMonograms);}
+  document.querySelectorAll('.photographic-seal .emb,.painted-envelope .mono b').forEach(function(box){
+    new MutationObserver(scheduleMonograms).observe(box,{childList:true,characterData:true,subtree:true});
+    if('ResizeObserver' in window) new ResizeObserver(scheduleMonograms).observe(box);
+  });
+  scheduleMonograms(); window.addEventListener('resize',scheduleMonograms);
+  if(document.fonts) document.fonts.ready.then(scheduleMonograms);
+
   // Lo que aparece, crece, se dibuja o se escribe al llegar a la pantalla (después de abrir la invitación).
   var io = null, show = function (el) { el.classList.add('in'); el.querySelectorAll(':scope > .write, .typer').forEach(function (w) { w.classList.add('in'); }); };
   function observe(root) { if (io) root.querySelectorAll('[data-rv]:not(.in), .grow:not(.in), .draw:not(.in), .writes:not(.in), .typer:not(.in)').forEach(function (el) { if (!el.closest('.opening')) io.observe(el); }); }
