@@ -1,14 +1,12 @@
 # Marfil opening media
 
-`lazo-seda.webp` is the transparent silk still used by the opening. Its grayscale luminance and a masked color layer follow the invitation palette without tinting the paper.
+The opening uses the user-supplied transparent ribbon animation, trimmed from eight seconds to 50 frames (2.082 seconds). Encoding preserves alpha and reduces the canvas to 768 × 432.
 
-A real untying clip can replace the still animation by setting `window.MarfilBowClip` before the opening is used:
+- `lazo-inicio.webp`: first frame, used by the interactive bow before playback.
+- `lazo-desatar.webp`: single-play animated WebP used across browsers, including iOS. It avoids depending on VP9 alpha support or autoplay permissions.
+- `lazo-desatar.webm`: VP9 alpha version, available for a video-specific integration.
+- `lazo-seda.webp`: earlier generated still, retained as a source asset; not requested by the page.
 
-```js
-window.MarfilBowClip = {
-  hevc: '/assets/marfil/lazo-desatar.mov', // HEVC with alpha for Safari
-  webm: '/assets/marfil/lazo-desatar.webm' // VP9 with alpha for supporting browsers
-};
-```
+Poster and animation share framing, position and a palette hue filter. The ribbon is included in the animation, so the former CSS ribbon strips are hidden. The vellum opens after playback; the guest then presses Open invitation. Reduced motion skips playback, and loading errors fall back to the still transition. Resetting the opening removes the playing media and restores the poster.
 
-These optional clips are not included. Supply both formats with matching transparent framing and initial knot position, no audio, and a duration around 1–1.8 seconds. Match the selected ribbon palette when supplying the clip. The player starts only after a tap, opens the vellum after playback, and falls back to the still animation on playback failure or timeout. Reduced motion skips the clip. Resetting the opening stops playback.
+For a replacement clip, `window.MarfilBowClip` can supply `{animated, duration}` or `{hevc, webm}`. Video sources should have alpha, matching framing and an appropriate palette; Safari may require an HEVC alpha variant. No video source is required for the default animated-WebP path.

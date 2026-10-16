@@ -29,14 +29,21 @@
     raf = requestAnimationFrame(function () { raf = 0; var y = window.pageYOffset; bar.classList.toggle('show', opened && y > 520); });
   }, { passive: true });
 
+  function tintBow(){
+    var rgb=getComputedStyle(document.querySelector('.silk-tint')).backgroundColor.match(/[\d.]+/g).slice(0,3).map(Number),r=rgb[0]/255,g=rgb[1]/255,b=rgb[2]/255,max=Math.max(r,g,b),min=Math.min(r,g,b),d=max-min,h=0;
+    if(d)h=max===r?((g-b)/d+6)%6:max===g?(b-r)/d+2:(r-g)/d+4;
+    document.querySelector('.wrap').style.setProperty('--bow-hue',(h*60-352).toFixed(1)+'deg');
+  }
+  tintBow();new MutationObserver(tintBow).observe(document.documentElement,{attributes:true,attributeFilter:['style']});
+
   // Apertura en dos pasos: seda, papel vegetal y tarjeta.
   var op = $('open'), wrap = $('wrap'), hint = $('hint'), timers = [], film = null, untying = false;
-  var clear = function () { timers.forEach(clearTimeout); timers = []; if(film){film.pause();film.removeAttribute('src');film.load();film.remove();film=null;} wrap.classList.remove('playing-bow');untying=false; };
+  var clear = function () { timers.forEach(clearTimeout); timers = []; if(film){if(film.tagName==='VIDEO'){film.pause();film.removeAttribute('src');film.load();}film.remove();film=null;} wrap.classList.remove('playing-bow');untying=false; };
   function reveal() { wrap.classList.add('untie', 'open', 'reveal'); wrap.querySelectorAll('.grow, .draw, .writes').forEach(show); hint.textContent = $('closing').textContent; $('enter').tabIndex = 0; $('enter').disabled=false; $('bow').tabIndex=-1; }
   function finishUntie(){
     if(!untying)return;
     untying=false;
-    if(film){film.pause();film.remove();film=null;}
+    if(film){if(film.tagName==='VIDEO')film.pause();film.remove();film=null;}
     wrap.classList.remove('playing-bow');wrap.classList.add('untie');
     timers.push(setTimeout(function(){reveal();$('enter').focus({preventScroll:true});},reduced?0:400));
   }
@@ -44,8 +51,12 @@
     if (wrap.classList.contains('untie') || untying) return;
     clear(); LazoMusic.play();untying=true;
     // Optional transparent clip: supplied by the asset pipeline, never shown as a product setting.
-    var clip=window.MarfilBowClip;
-    if(!reduced && clip && (clip.webm || clip.hevc)){
+    var clip=window.MarfilBowClip || {animated:'/assets/marfil/lazo-desatar.webp',duration:2084};
+    if(!reduced && clip && clip.animated){
+      film=document.createElement('img');film.className='bow-film';film.alt='';film.setAttribute('aria-hidden','true');
+      film.addEventListener('load',function(){if(!untying || !film)return;wrap.classList.add('playing-bow');timers.push(setTimeout(finishUntie,clip.duration || 2084));},{once:true});
+      film.addEventListener('error',finishUntie,{once:true});wrap.appendChild(film);film.src=clip.animated;timers.push(setTimeout(finishUntie,4000));
+    }else if(!reduced && clip && (clip.webm || clip.hevc)){
       film=document.createElement('video');film.className='bow-film';film.muted=true;film.playsInline=true;film.preload='auto';film.setAttribute('aria-hidden','true');film.setAttribute('playsinline','');
       [['hevc','video/mp4; codecs="hvc1"'],['webm','video/webm; codecs="vp9"']].forEach(function(pair){if(clip[pair[0]]){var source=document.createElement('source');source.src=clip[pair[0]];source.type=pair[1];film.appendChild(source);}});
       film.addEventListener('playing',function(){wrap.classList.add('playing-bow');},{once:true});

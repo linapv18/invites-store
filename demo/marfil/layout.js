@@ -78,7 +78,7 @@
   var FL = function (w) { return '<svg class="fl draw" viewBox="0 0 200 24" width="' + w + '" fill="none" stroke="currentColor" stroke-width="1" aria-hidden="true"><path pathLength="1" d="M4 12H70c8 0 12-8 20-8 6 0 8 6 3 7-4 1-5-4-1-5"/><path pathLength="1" d="M196 12H130c-8 0-12-8-20-8-6 0-8 6-3 7 4 1 5-4 1-5"/><path pathLength="1" d="M86 15c5 5 9 6 14 6s9-1 14-6"/><path d="M100 8l3.5 4-3.5 4-3.5-4z" fill="currentColor"/></svg>'; };
   var CORNER = '<svg viewBox="0 0 26 26" fill="none" stroke="currentColor" stroke-width="1"><path d="M1 25V8c0-4 3-7 7-7h17"/><path d="M5 25V11c0-3 3-6 6-6h14"/><circle cx="9" cy="9" r="1.6" fill="currentColor"/></svg>';
   // Seda fotografiada; el tinte sigue el color elegido para la invitación.
-  var BOW = '<img src="/assets/marfil/lazo-seda.webp" width="240" height="240" alt="" aria-hidden="true"><span class="silk-tint" aria-hidden="true"></span>';
+  var BOW = '<img src="/assets/marfil/lazo-inicio.webp" width="240" height="240" alt="" aria-hidden="true"><span class="silk-tint" aria-hidden="true"></span>';
   var ICON = [
     '<svg width="36" height="36" aria-hidden="true" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M6 35h28M10 35V10l10-5 10 5v25M15 35V25h10v10M14 11h12M16 15v3m8-3v3M16 21h0m8 0h0M20 25v10"/><path d="M7 13h3m20 0h3M7 13v22m26-22v22"/></svg>',
     '<svg width="36" height="36" aria-hidden="true" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="m6 23 11-5-3-11 3-2 8 9 8-4c4-2 5 1 2 4l-8 6 1 12-3 2-6-10-6 3-2 5-3 1 1-8z"/></svg>',
