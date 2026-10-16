@@ -77,6 +77,11 @@
   var KINDS = {
     // Cisne: tarjeta troquelada marfil con borde burdeos y filetes
     'cs-scal': function (w, h) { var O = function (a) { return ogee(w, h, a); }; return '<path d="' + O(0) + '" style="fill:var(--ivory)" filter="url(#lzPaper)"/><path d="' + O(0) + '" fill="url(#csSheen)"/><path d="' + O(2.5) + '" fill="none" style="stroke:var(--wine)" stroke-width="5"/><path d="' + O(.3) + '" fill="none" stroke="#3b202566" stroke-width=".6"/><path d="' + O(11) + '" fill="none" style="stroke:var(--wine)" stroke-width=".9"/><path d="' + O(14.5) + '" fill="none" style="stroke:var(--gold)" stroke-width=".7" stroke-dasharray="1 2.6" stroke-linecap="round"/>'; },
+    // Cisne hero: softly shouldered crest, resized for editable names and dates.
+    'cs-crest': function(w,h) {
+      var path=function(i){var l=10+i,r=w-10-i,top=22+i,b=h-10-i,c=w/2,s=Math.min(48,w*.14);return 'M'+l+' '+(top+44)+'Q'+l+' '+top+' '+(l+s)+' '+top+'H'+(c-s)+'Q'+c+' '+(-14+i)+' '+(c+s)+' '+top+'H'+(r-s)+'Q'+r+' '+top+' '+r+' '+(top+44)+'V'+(b-38)+'Q'+r+' '+b+' '+(r-36)+' '+b+'H'+(l+36)+'Q'+l+' '+b+' '+l+' '+(b-38)+'Z';};
+      return '<path d="'+path(0)+'" style="fill:var(--wine)" filter="url(#lzPaper)"/><path d="'+path(3)+'" fill="none" style="stroke:var(--gold)" stroke-width="1.3"/><path d="'+path(9)+'" fill="none" style="stroke:var(--gold2)" stroke-width=".55" opacity=".65"/>';
+    },
     // Tinta: globo dibujado a mano con tinta
     'tt-blob': function (w, h, el) { return '<path pathLength="1" d="' + wobble(w, h, 7, +(el.getAttribute('data-seed') || 3), 4, .55) + '" fill="none" style="stroke:var(--red)" stroke-width="1.3" stroke-linejoin="round" stroke-linecap="round"/>'; },
     // Glicina: corazón de encaje con la cita
