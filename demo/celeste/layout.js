@@ -59,23 +59,7 @@
   }
   root.setProperty('--st1', starfield(320, 320, 70, 5, .9));
   root.setProperty('--st2', starfield(520, 520, 40, 9, 1.4));
-  // Luna realista: mares, textura de cráteres en relieve, rayos de Tycho y oscurecimiento del borde.
-  (function () {
-    var mare = [[46, 100, 20, 42, 12, .5], [72, 60, 24, 19, -15, .62], [121, 58, 17, 14, 10, .55], [132, 92, 20, 16, 0, .5], [164, 72, 9, 12, 0, .62], [153, 118, 11, 16, 20, .42], [127, 129, 8, 7, 0, .42], [84, 141, 16, 10, -10, .36], [57, 138, 8, 7, 0, .45], [98, 74, 10, 8, 0, .3]]
-      .map(function (m) { return "<ellipse cx='" + m[0] + "' cy='" + m[1] + "' rx='" + m[2] + "' ry='" + m[3] + "' fill-opacity='" + m[5] + "' transform='rotate(" + m[4] + ' ' + m[0] + ' ' + m[1] + ")'/>"; }).join('');
-    var Q = rng(12), craters = '', rays = '', i;
-    for (i = 0; i < 12; i++) { var x = 20 + Q() * 160, y = 20 + Q() * 160, r = 1.2 + Q() * 4.5; craters += "<circle cx='" + x.toFixed(1) + "' cy='" + y.toFixed(1) + "' r='" + r.toFixed(1) + "' fill='none' stroke='#000' stroke-opacity='.09' stroke-width='" + (r * .35).toFixed(1) + "'/><circle cx='" + (x - r * .25).toFixed(1) + "' cy='" + (y - r * .25).toFixed(1) + "' r='" + (r * .8).toFixed(1) + "' fill='none' stroke='#fff' stroke-opacity='.14' stroke-width='.5'/>"; }
-    for (i = 0; i < 14; i++) { var a = i / 14 * Math.PI * 2 + .2, l = 18 + (i % 3) * 14; rays += "<line x1='96' y1='160' x2='" + (96 + Math.cos(a) * l).toFixed(1) + "' y2='" + (160 + Math.sin(a) * l).toFixed(1) + "'/>"; }
-    var svg = "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'><defs>" +
-      "<filter id='m' x='-20%' y='-20%' width='140%' height='140%'><feTurbulence type='fractalNoise' baseFrequency='.05' numOctaves='3' seed='3'/><feDisplacementMap in='SourceGraphic' scale='12'/><feGaussianBlur stdDeviation='3'/></filter>" +
-      "<filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.045' numOctaves='5' seed='8'/><feColorMatrix type='saturate' values='0'/><feComponentTransfer><feFuncA type='table' tableValues='0 .55'/></feComponentTransfer></filter>" +
-      "<filter id='b'><feTurbulence type='fractalNoise' baseFrequency='.55' numOctaves='3' seed='2' result='t'/><feDiffuseLighting in='t' surfaceScale='2.2' lighting-color='#fff'><feDistantLight azimuth='225' elevation='48'/></feDiffuseLighting><feComponentTransfer><feFuncA type='table' tableValues='.5 .5'/></feComponentTransfer></filter>" +
-      "<filter id='s'><feGaussianBlur stdDeviation='1.2'/></filter><clipPath id='c'><circle cx='100' cy='100' r='100'/></clipPath></defs>" +
-      "<g clip-path='url(#c)'><rect width='200' height='200' fill='#ECE7D9'/><g fill='#807B6C' filter='url(#m)'>" + mare + "</g>" +
-      "<rect width='200' height='200' filter='url(#n)' opacity='.6' style='mix-blend-mode:multiply'/><rect width='200' height='200' filter='url(#b)' opacity='.35' style='mix-blend-mode:multiply'/>" + craters +
-      "<g stroke='#fff' stroke-opacity='.35' stroke-width='1.6' filter='url(#s)'>" + rays + "</g><circle cx='96' cy='160' r='3' fill='#fff' opacity='.85'/><circle cx='64' cy='86' r='2.4' fill='#fff' opacity='.6'/></g></svg>";
-    root.setProperty('--moonimg', 'url("data:image/svg+xml,' + svg.replace(/#/g, '%23').replace(/</g, '%3C').replace(/>/g, '%3E').replace(/"/g, '%22') + '")');
-  })();
+  root.setProperty('--moonimg', 'url("/assets/celeste/luna.webp")');
   var CSTAR = '<svg viewBox="0 0 20 20"><path d="M10 0C11 7 13 9 20 10C13 11 11 13 10 20C9 13 7 11 0 10C7 9 9 7 10 0Z" fill="#fff"/></svg>';
   var twk = function (n, seed) { var Q = rng(seed), s = ''; for (var i = 0; i < n; i++) s += '<span style="left:' + (3 + Q() * 92).toFixed(0) + '%;top:' + (3 + Q() * 92).toFixed(0) + '%;--s:' + (6 + Q() * 10).toFixed(0) + 'px;--du:' + (2.4 + Q() * 3).toFixed(1) + 's;--de:-' + (Q() * 5).toFixed(1) + 's">' + CSTAR + '</span>'; return '<div class="twk" aria-hidden="true">' + s + '</div>'; };
   // Pequeñas constelaciones que se dibujan al aparecer
@@ -85,6 +69,12 @@
   // Constelación en forma de corazón
   var heartPts = []; for (var h = 0; h < 14; h++) { var t = h / 14 * Math.PI * 2; heartPts.push([125 + 6.6 * 16 * Math.pow(Math.sin(t), 3), 112 - 6.6 * (13 * Math.cos(t) - 5 * Math.cos(2 * t) - 2 * Math.cos(3 * t) - Math.cos(4 * t))]); }
   var CONST = '<div class="constellation"><svg class="constel" viewBox="0 0 250 230" aria-hidden="true"><path class="ln" pathLength="1" d="M' + heartPts.map(function (p) { return p[0].toFixed(1) + ' ' + p[1].toFixed(1); }).join('L') + 'Z"/>' + heartPts.map(function (p, i) { return '<circle cx="' + p[0].toFixed(1) + '" cy="' + p[1].toFixed(1) + '" r="' + (i % 3 ? 1.8 : 3) + '"/>'; }).join('') + '</svg><span class="constellation-mark" data-lz-seal>A · L</span></div>';
+  var ticks = '';
+  for (var k=0;k<72;k++) {
+    var angle=k*5*Math.PI/180, inner=k%6===0?207:214;
+    ticks+='<path d="M'+(240+Math.sin(angle)*inner).toFixed(2)+' '+(240-Math.cos(angle)*inner).toFixed(2)+'L'+(240+Math.sin(angle)*222).toFixed(2)+' '+(240-Math.cos(angle)*222).toFixed(2)+'"/>';
+  }
+  var dial='<svg class="celestial-dial" viewBox="0 0 480 480" fill="none" aria-hidden="true"><g stroke="currentColor" stroke-width=".6"><circle cx="240" cy="240" r="230"/><circle cx="240" cy="240" r="202"/>'+ticks+'<path d="M240 3v30M240 447v30M3 240h30m414 0h30"/><ellipse cx="240" cy="240" rx="229" ry="92" transform="rotate(-32 240 240)"/></g><g fill="currentColor"><path d="m240 0 3 9-3 9-3-9Z"/><circle cx="431" cy="367" r="3"/><circle cx="68" cy="89" r="2"/></g></svg>';
   var ICON = [
     '<svg width="30" viewBox="0 0 30 30" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true"><path d="M5 27V8l10-5 10 5v19M2 27h26M12 27v-7h6v7M9 11h3m6 0h3M9 15h3m6 0h3"/><path d="M15 7v5m-2.5-2.5h5"/></svg>',
     '<svg width="30" viewBox="0 0 30 30" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true"><path d="M3 17 24 11q4-1 3 2L7 21Z"/><path d="M12 14 8 5h3l7 8M13 19l-2 7h3l4-8"/><circle cx="25" cy="25" r="1" fill="currentColor"/><circle cx="4" cy="6" r=".8" fill="currentColor"/></svg>',
@@ -101,9 +91,9 @@
   '<div hidden><span data-lz="n1" id="srcN1">' + S.n1 + '</span><span data-lz="n2" id="srcN2">' + S.n2 + '</span></div>' +
   // ======================= APERTURA =======================
   '<div class="opening sky" id="open" role="dialog" aria-modal="true" aria-label="' + S.openAria + '">' +
-    twk(16, 2) + shoot(90, -40, 7, 1) + shoot(380, -80, 11, 5) + phases +
+    twk(9, 2) + shoot(90, -40, 7, 1) + shoot(380, -80, 11, 5) + phases +
     '<p class="tn" data-lz="envIntro" data-lz-keep>' + S.envIntro + '</p>' +
-    '<button type="button" class="moonbtn moonball" id="moon" aria-label="' + S.moon + '"></button>' + CONST +
+    '<div class="opening-dial">' + dial + '</div><button type="button" class="moonbtn moonball" id="moon" aria-label="' + S.moon + '"></button>' + CONST +
     '<div class="ask"><p class="it" style="font-size:22px">' + S.for + ' ' + S.guest + '</p><p class="tn" style="margin-top:8px;color:var(--silver)">' + S.tapMoon + '</p></div>' +
     '<div class="told" inert>' +
       '<p class="it silver" style="font-size:42px;line-height:1">' + N('n1') + ' &amp; ' + N('n2') + '</p>' +
@@ -118,18 +108,18 @@
   '<main id="invite" inert>' +
     '<section class="hero" id="portada" data-lz-anchor="portada"><div class="aurora" aria-hidden="true"></div>' + twk(12, 13) + shoot(160, -60, 10, 3) +
       '<div class="in-w">' + phases + '<p class="tn" style="margin-top:18px">' + S.getting + '</p>' +
-      '<div class="orbit"><div class="ring" style="--du:28s;--c:#F4E9C8"></div><div class="ring r2" style="--du:18s;--c:var(--accent)"></div><div class="pic"><img class="ph-img" id="heroImg" src="/assets/fotos/paseo.jpg" data-lz-src="photo:0" alt="' + S.photoAlt + '" style="object-position:center 60%"></div></div>' +
+      '<div class="orbit">' + dial + '<span class="orbital-moon moonball" aria-hidden="true"></span><div class="ring" style="--du:28s;--c:#F4E9C8"></div><div class="ring r2" style="--du:18s;--c:var(--accent)"></div><div class="pic"><img class="ph-img" id="heroImg" src="/assets/fotos/paseo.jpg" data-lz-src="photo:0" alt="' + S.photoAlt + '" style="object-position:center 60%"></div></div>' +
       '<h1 class="letters" tabindex="-1"><span data-split="srcN1">' + spl(S.n1) + '</span><span class="amp">' + S.y + '</span><span data-split="srcN2" data-off="4">' + spl(S.n2, 4) + '</span></h1>' +
       '<div class="date">' + dateL + '</div>' +
       '<p class="tn" style="margin-top:12px;color:var(--silver)" data-lz="city">' + S.city + '</p>' +
       '<p class="msg" data-lz="msg">' + S.msg + '</p></div>' +
     '</section>' +
 
-    '<section class="sec" id="historia" data-lz-anchor="historia"><div class="in-w"><div class="glass" style="padding:32px 22px 20px" data-rv><p class="tn">' + S.story + '</p><h2 data-lz="storyTitle">' + S.storyTitle + '</h2><p data-lz="story">' + S.storyTxt + '</p>' +
+    '<section class="sec story-section" id="historia" data-lz-anchor="historia"><div class="in-w"><div class="story-editorial" data-rv><div class="story-copy"><p class="tn">' + S.story + '</p><h2 data-lz="storyTitle">' + S.storyTitle + '</h2><p data-lz="story">' + S.storyTxt + '</p></div>' +
       '<div class="planets" data-lz-list="gallery"><svg class="draw" viewBox="0 0 300 250" preserveAspectRatio="none" fill="none" stroke="#ffffff40" stroke-dasharray="2 5" aria-hidden="true"><path pathLength="1" d="M20 210C80 60 220 30 290 120"/></svg>' + photos.map(function (g) { return '<div class="p" data-lz-item><img class="ph-img" data-lz-f="img" src="' + g + '" alt="" loading="lazy"></div>'; }).join('') + '</div><button class="gallery-link" type="button" data-gallery-open>' + (LANG === 'en' ? 'Explore our photographs' : 'Ver nuestras fotografías') + '</button>' +
     '</div></div></section>' +
 
-    '<section class="sec">' + twk(8, 21) + '<div class="in-w"><p class="tn">' + S.bigDay + '</p><h2>' + (LANG === 'en' ? 'Closer to our night' : 'Más cerca de nuestra noche') + '</h2><p style="margin-top:10px;font-style:italic" data-lz="countdownNote">' + S.cdNote + '</p>' +
+    '<section class="sec countdown-section">' + twk(5, 21) + '<div class="in-w"><p class="tn">' + S.bigDay + '</p><h2>' + (LANG === 'en' ? 'Closer to our night' : 'Más cerca de nuestra noche') + '</h2><p style="margin-top:10px;font-style:italic" data-lz="countdownNote">' + S.cdNote + '</p>' +
       '<div class="moons" aria-live="off">' + S.units.map(function (u, i) { return '<div><div class="moonball"><b data-cd="' + 'dhms'[i] + '">--</b></div><span>' + u + '</span></div>'; }).join('') + '</div></div></section>' +
 
     '<section class="sec" id="itinerario" data-lz-anchor="itinerario musica">' + cst(29, 'right:4px;top:4px;width:90px') + '<div class="in-w"><p class="tn" data-lz-date="' + S.dayPat + '">' + S.dayTxt + '</p><h2>' + S.schedule + '</h2>' +
@@ -144,7 +134,7 @@
         '<div class="glass" data-rv data-lz-group="guideFood guideCulture guidePlans">' + ICON[2] + '<p class="tn" style="margin-top:6px">' + S.guide + '</p><h3>' + S.guideT + '</h3><p data-lz-group="guideFood"><b>' + S.foodL + '</b> <span data-lz="guideFood">' + S.food + '</span></p><p data-lz-group="guideCulture"><b>' + S.cultureL + '</b> <span data-lz="guideCulture">' + S.culture + '</span></p><p data-lz-group="guidePlans"><b>' + S.plansL + '</b> <span data-lz="guidePlans">' + S.plans + '</span></p></div>' +
       '</div></div></section>' +
 
-    '<section class="sec" data-lz-group="quote">' + shoot(30, -40, 8, 2) + '<div class="in-w">' + phases + '<blockquote class="silver" style="margin-top:20px">“<span data-lz="quote">' + S.quote + '</span>”</blockquote><p class="tn" data-lz="quoteAuthor">' + S.quoteAuthor + '</p></div></section>' +
+    '<section class="sec quote-section" data-lz-group="quote">' + shoot(30, -40, 8, 2) + '<div class="in-w"><div class="quote-moon moonball" aria-hidden="true"></div>' + phases + '<blockquote class="silver" style="margin-top:20px">“<span data-lz="quote">' + S.quote + '</span>”</blockquote><p class="tn" data-lz="quoteAuthor">' + S.quoteAuthor + '</p></div></section>' +
 
     '<section class="sec" id="faq" data-lz-anchor="faq" data-lz-hide-empty>' + cst(19, 'left:6px;top:10px') + '<div class="in-w"><p class="tn">' + S.faqK + '</p><h2>' + S.faqT + '</h2>' +
       '<div class="faq" data-lz-list="faqs">' + S.faqs.map(function (f) { return '<details data-lz-item><summary data-lz-f="q">' + f[0] + '</summary><p data-lz-f="a">' + f[1] + '</p></details>'; }).join('') + '</div></div></section>' +
@@ -157,7 +147,7 @@
       '<div id="rsDone" hidden style="padding-top:14px"><p class="it silver" style="font-size:26px">' + S.wish + '</p><p id="rsSum" style="margin:10px 0 0"></p><button type="button" class="btn" style="margin-top:18px" id="rsEdit">' + S.edit + '</button></div>' +
     '</div></div></section>' +
 
-    '<footer>' + twk(8, 41) + '<div class="moonball" style="width:70px;height:70px;margin:0 auto 18px"></div><p class="it silver" style="font-size:40px">' + N('n1') + ' &amp; ' + N('n2') + '</p><p class="tn" style="margin-top:8px;color:var(--silver)"><span data-lz-date="{d} · {MU} · {Y}">14 · ' + S.MU + ' · 2027</span> · <span data-lz="city">' + S.city + '</span></p></footer>' +
+    '<footer><div class="footer-horizon" aria-hidden="true"></div>' + twk(8, 41) + '<div class="moonball" style="width:70px;height:70px;margin:0 auto 18px"></div><p class="it silver" style="font-size:40px">' + N('n1') + ' &amp; ' + N('n2') + '</p><p class="tn" style="margin-top:8px;color:var(--silver)"><span data-lz-date="{d} · {MU} · {Y}">14 · ' + S.MU + ' · 2027</span> · <span data-lz="city">' + S.city + '</span></p></footer>' +
   '</main>';
 
   document.getElementById('demoBar').innerHTML = '<span class="lbl">' + S.demo + '</span><button type="button" data-open-panel>' + S.panel + '</button><a href="' + S.storeUrl + '">' + S.store + '</a>';
