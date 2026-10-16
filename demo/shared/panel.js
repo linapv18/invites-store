@@ -139,7 +139,7 @@
           [[S.yes, true], [S.no, false], ['—', null]].map(function (o) {
             return '<button type="button" data-att="' + k + '" data-v="' + o[1] + '" aria-pressed="' + (p.att === o[1]) + '"' + (o[1] === null ? ' aria-label="' + S.none + '"' : '') + '>' + o[0] + '</button>';
           }).join('') + '</div>' +
-          '<button type="button" class="lz-x" data-rm="' + k + '" aria-label="' + S.remove + ' ' + esc(p.name || S.thisPerson) + '"' + (i.guests.length === 1 ? ' disabled' : '') + '>×</button></div>';
+          '<button type="button" class="lz-x" data-rm="' + k + '" aria-label="' + S.remove + ' ' + esc(p.name || S.thisPerson) + '"' + (i.guests.length === 1 ? ' disabled' : '') + '><svg width="1em" height="1em" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" style="vertical-align:-.15em;flex:none"><path d="M4 4l8 8M12 4l-8 8"/></svg></button></div>';
       }).join('') +
       '<div class="lz-actions"><button type="button" class="lz-btn is-ghost" data-act="add-guest">' + S.addPerson + '</button></div>' +
       '<div class="lz-actions" style="justify-content:space-between;border-top:1px solid var(--p-line);padding-top:18px">' +
@@ -181,7 +181,7 @@
       '<p class="lz-field" style="margin-bottom:6px">' + S.peopleShort + ' · ' + seatsLabel(draftNames.length) + '</p>' +
       draftNames.map(function (nm, k) {
         return '<div class="lz-guest is-simple"><input type="text" aria-label="' + S.personName + ' ' + (k + 1) + '" data-new="' + k + '" value="' + esc(nm) + '" placeholder="' + S.personName + ' ' + (k + 1) + '">' +
-          '<button type="button" class="lz-x" data-newrm="' + k + '" aria-label="' + S.removePerson + ' ' + (k + 1) + '"' + (draftNames.length === 1 ? ' disabled' : '') + '>×</button></div>';
+          '<button type="button" class="lz-x" data-newrm="' + k + '" aria-label="' + S.removePerson + ' ' + (k + 1) + '"' + (draftNames.length === 1 ? ' disabled' : '') + '><svg width="1em" height="1em" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" style="vertical-align:-.15em;flex:none"><path d="M4 4l8 8M12 4l-8 8"/></svg></button></div>';
       }).join('') +
       '<div class="lz-actions"><button type="button" class="lz-btn is-ghost" data-act="new-add">' + S.addPerson + '</button><button type="button" class="lz-btn" data-act="create">' + S.create + '</button></div></div>' +
 
@@ -314,9 +314,9 @@
     box.setAttribute('role', 'dialog'); box.setAttribute('aria-modal', 'true'); box.setAttribute('aria-label', S.photos);
     box.innerHTML = '<button type="button" class="lz-v-scrim" tabindex="-1" aria-label="' + S.close + '"></button>' +
       '<figure class="lz-v-frame"><img alt=""><figcaption class="lz-v-count" aria-live="polite"></figcaption></figure>' +
-      '<button type="button" class="lz-v-btn is-close" aria-label="' + S.close + '">×</button>' +
-      '<button type="button" class="lz-v-btn is-prev" aria-label="' + S.prev + '">‹</button>' +
-      '<button type="button" class="lz-v-btn is-next" aria-label="' + S.next + '">›</button>';
+      '<button type="button" class="lz-v-btn is-close" aria-label="' + S.close + '"><svg width="1em" height="1em" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" style="vertical-align:-.15em;flex:none"><path d="M4 4l8 8M12 4l-8 8"/></svg></button>' +
+      '<button type="button" class="lz-v-btn is-prev" aria-label="' + S.prev + '"><svg width="1em" height="1em" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" style="vertical-align:-.15em;flex:none"><path d="M10 3.5 5.5 8l4.5 4.5"/></svg></button>' +
+      '<button type="button" class="lz-v-btn is-next" aria-label="' + S.next + '"><svg width="1em" height="1em" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" style="vertical-align:-.15em;flex:none"><path d="M6 3.5 10.5 8 6 12.5"/></svg></button>';
     document.body.appendChild(box);
     var img = box.querySelector('img'), count = box.querySelector('.lz-v-count'), list = [], idx = 0, last = null, touchX = null;
     function show() {

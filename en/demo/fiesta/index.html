@@ -188,7 +188,7 @@ footer>.picado{position:absolute;left:0;right:0;top:0}
       caps: [['7', 'EL BAILE'], ['22', 'EL VIAJE'], ['14', 'EL SÍ']],
       almost: '¡Ya casi!', cdName: 'Ceremonia civil', time0: '1:00 p. m.', cdNote: 'Cada vez falta menos para celebrar juntos.', units: ['Días', 'Horas', 'Min', 'Seg'],
       cheer: '¡Que vivan los novios!',
-      dayPat: '{W}, {d} de {M} de {Y}', dayTxt: 'Domingo, 14 de marzo de 2027', program: 'El programa', how: 'Cómo llegar →',
+      dayPat: '{W}, {d} de {M} de {Y}', dayTxt: 'Domingo, 14 de marzo de 2027', program: 'El programa', how: 'Cómo llegar <svg width="1em" height="1em" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" style="vertical-align:-.15em;flex:none"><path d="M3 8h10M9 4l4 4-4 4"/></svg>',
       events: [['1:00 p. m.', 'Ceremonia civil', 'Jardín Etnobotánico', 'Reforma s/n, Centro'], ['2:30 p. m.', 'Comida familiar', 'Casa Oaxaca', 'García Vigil 407, Centro'], ['8:00 p. m.', 'Fiesta', 'Hacienda Los Laureles', 'Hidalgo 21, San Felipe del Agua']],
       dress: 'Código de vestimenta', dressCode: 'Formal', dressNotes: 'Telas frescas: en marzo Oaxaca es cálida de día y fresca de noche.', reserved: 'Colores reservados:', dressColors: 'Blanco y marfil',
       fromAway: 'Si vienen de fuera', travel: 'Viaje y alojamiento', travelIntro: 'Si vienen de fuera, aquí tienen todo para organizar su viaje.',
@@ -212,7 +212,7 @@ footer>.picado{position:absolute;left:0;right:0;top:0}
       caps: [['7', 'THE DANCE'], ['22', 'THE TRIP'], ['14', 'THE YES']],
       almost: 'Almost there!', cdName: 'Civil ceremony', time0: '1:00 PM', cdNote: 'Every day brings us closer to celebrating together.', units: ['Days', 'Hours', 'Min', 'Sec'],
       cheer: 'Long live the newlyweds!',
-      dayPat: '{W}, {Mc} {d}, {Y}', dayTxt: 'Sunday, March 14, 2027', program: 'The program', how: 'Directions →',
+      dayPat: '{W}, {Mc} {d}, {Y}', dayTxt: 'Sunday, March 14, 2027', program: 'The program', how: 'Directions <svg width="1em" height="1em" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" style="vertical-align:-.15em;flex:none"><path d="M3 8h10M9 4l4 4-4 4"/></svg>',
       events: [['1:00 PM', 'Civil ceremony', 'Ethnobotanical Garden', 'Reforma s/n, Centro'], ['2:30 PM', 'Family lunch', 'Casa Oaxaca', 'García Vigil 407, Centro'], ['8:00 PM', 'Party', 'Hacienda Los Laureles', 'Hidalgo 21, San Felipe del Agua']],
       dress: 'Dress code', dressCode: 'Formal', dressNotes: 'Light fabrics: in March Oaxaca is warm by day and cool at night.', reserved: 'Reserved colors:', dressColors: 'White and ivory',
       fromAway: 'If you’re traveling', travel: 'Travel and stay', travelIntro: 'If you’re coming from out of town, here’s everything to plan your trip.',
@@ -272,7 +272,7 @@ footer>.picado{position:absolute;left:0;right:0;top:0}
   var maps = function (q) { return 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(q + ', Oaxaca'); };
   var photos = ['/assets/fotos/beso.jpg', '/assets/fotos/escalera.jpg', '/assets/fotos/muro.jpg'];
   var N = function (k) { return '<span data-lz="' + k + '">' + S[k] + '</span>'; };
-  var cheer = ''; for (var i = 0; i < 16; i++) cheer += '<span>' + [S.cheer, '✦', N('n1') + ' &amp; ' + N('n2'), '✦'][i % 4] + '</span>';
+  var cheer = ''; for (var i = 0; i < 16; i++) cheer += '<span>' + [S.cheer, '<svg width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" focusable="false" style="vertical-align:-.15em"><path d="M8 1.5c.5 3.6 1.3 4.4 4.9 4.9-3.6.5-4.4 1.3-4.9 4.9-.5-3.6-1.3-4.4-4.9-4.9 3.6-.5 4.4-1.3 4.9-4.9Z"/></svg>', N('n1') + ' &amp; ' + N('n2'), '<svg width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" focusable="false" style="vertical-align:-.15em"><path d="M8 1.5c.5 3.6 1.3 4.4 4.9 4.9-3.6.5-4.4 1.3-4.9 4.9-.5-3.6-1.3-4.4-4.9-4.9 3.6-.5 4.4-1.3 4.9-4.9Z"/></svg>'][i % 4] + '</span>';
 
   document.getElementById('app').innerHTML =
   // ======================= APERTURA =======================
