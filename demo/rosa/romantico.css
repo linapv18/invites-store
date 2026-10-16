@@ -22,7 +22,7 @@ a:focus-visible,button:focus-visible,summary:focus-visible,textarea:focus-visibl
 .dim{position:absolute;inset:0;background:var(--r-shade,#6B5D48);mix-blend-mode:multiply;opacity:0;transition:opacity .45s ease}
 .reach{position:absolute;inset:0;clip-path:circle(0px at var(--cx) var(--cy));transition:clip-path .6s cubic-bezier(.3,0,.25,1)}
 .reach svg{width:100%;height:100%}
-.flap{position:absolute;left:0;top:0;width:100%;height:var(--fh);transform-origin:50% 0;transition:transform .7s cubic-bezier(.65,0,.35,1);filter:drop-shadow(0 10px 16px rgba(120,80,70,.28))}
+.flap{position:absolute;left:0;top:0;width:100%;height:var(--fh);transform-origin:50% 0;transition:transform 1.3s cubic-bezier(.45,0,.2,1);filter:drop-shadow(0 10px 16px rgba(120,80,70,.28))}
 .flap .tri{position:absolute;inset:0;clip-path:polygon(0 0,100% 0,50% 100%)}
 .flap .tri svg{width:100%;height:100%}
 .seal-btn{position:absolute;left:50%;top:var(--fh);width:var(--ss);height:var(--ss);margin:calc(var(--ss) / -2) 0 0 calc(var(--ss) / -2);padding:0;border:0;background:none;cursor:pointer;animation:sBreath 3s ease-in-out infinite;transition:filter .3s ease}
@@ -42,13 +42,13 @@ a:focus-visible,button:focus-visible,summary:focus-visible,textarea:focus-visibl
 .wash{position:absolute;inset:0;background:var(--r-liner4,#F3EBDC);opacity:0;pointer-events:none;transition:opacity .7s ease}
 .env[data-phase="flash"] .wash{opacity:1}
 
-.card{position:absolute;inset:0;background:var(--r-liner4,#F3EBDC);opacity:0;pointer-events:none;overflow-y:auto;display:flex;flex-direction:column;transition:opacity .3s ease}
+.card{position:absolute;inset:0;background:var(--r-liner4,#F3EBDC);opacity:0;pointer-events:none;overflow-y:auto;display:flex;flex-direction:column;transition:opacity .55s ease}
 .env[data-phase="card"] .card{opacity:1;pointer-events:auto;background:var(--r-liner4,#F3EBDC)}
 .card .corner{position:absolute;width:clamp(90px,12vw,160px);height:clamp(90px,12vw,160px);opacity:0;transition:opacity .4s ease .1s}
 .env[data-phase="card"] .card .corner{opacity:1}
 .card .bar{position:relative;min-height:56px;flex:none;padding:0 clamp(20px,4vw,64px);display:flex;align-items:center;justify-content:space-between;font-size:11px;font-weight:400;letter-spacing:.34em;text-transform:uppercase;color:var(--r-text,#6E6354)}
 .card .inner{position:relative;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:88px clamp(20px,6vw,96px) 100px}
-.rv{opacity:0;translate:0 14px;transition:opacity .25s ease,translate .25s ease}
+.rv{opacity:0;translate:0 14px;transition:opacity .5s ease,translate .5s ease}
 .env[data-phase="card"] .rv{opacity:1;translate:0 0}
 
 
@@ -184,3 +184,10 @@ details.faq[open] .plus{rotate:45deg}
  .card .inner>.d4{font-size:clamp(32px,7vh,48px)!important;margin-top:14px!important}
  .card .inner>.d4:last-child{font-size:10px!important;letter-spacing:.18em!important;line-height:1.5!important}
 }
+
+/* Position the editable monogram independently of editor-injected styles. */
+.seal-btn .lz-seal-over{position:absolute;inset:25%;width:50%;height:50%;display:flex;align-items:center;justify-content:center;text-align:center;border-radius:50%;pointer-events:none;transform:translateY(-1%)}
+.seal-btn .lz-seal-over .lz-seal{display:inline-flex;align-items:center;justify-content:center;line-height:1}
+.seal-btn .lz-seal-over img{display:block;max-width:100%;max-height:100%;object-fit:contain}
+#invite h1[tabindex="-1"]:focus{outline:none}
+@media(max-width:720px){.env .hint{bottom:104px;font-size:10px;letter-spacing:.24em}}

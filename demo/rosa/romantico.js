@@ -61,9 +61,9 @@
     if (env.dataset.phase !== 'closed') return;
     clear(); window.LazoMusic.play();
     if (reduce.matches) { phase('card'); env.setAttribute('aria-label', S.dialog); enter.focus({ preventScroll: true }); return; }
-    phase('glow'); later(function () { phase('open'); }, 100);
-    later(function () { phase('card'); env.setAttribute('aria-label', S.dialog); }, 800);
-    later(function () { enter.focus({ preventScroll: true }); }, 1120);
+    phase('glow'); later(function () { phase('open'); }, 350);
+    later(function () { phase('card'); env.setAttribute('aria-label', S.dialog); }, 1750);
+    later(function () { enter.focus({ preventScroll: true }); }, 2350);
   });
   replay.addEventListener('click', function () { envelope(); seal.focus({ preventScroll: true }); });
   enter.addEventListener('click', function () {
