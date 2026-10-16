@@ -67,15 +67,15 @@
   '<div class="opening linen" id="open" role="region" aria-label="' + S.openAria + '">' +
     '<p class="eb" data-lz="envIntro" data-lz-keep>' + S.envIntro + '</p>' +
     '<div class="suite" id="suite">' +
-      '<div class="sc sc3 pap"><p class="eb">R.S.V.P.</p><p class="fr" style="font:italic 300 17px Fraunces;margin-top:8px" data-lz-if="rsvpDeadline">' + S.pleaseBy + ' <span data-lz-date="' + S.rsvpDatePat + '" data-lz-from="rsvpDeadline">' + S.deadline + '</span></p><button class="card-link" data-card-target="rsvp" tabindex="-1">R.S.V.P.</button></div>' +
-      '<div class="sc sc2 pap"><p class="eb">' + S.details + '</p><p class="fr" style="font:italic 300 18px Fraunces;margin:8px 0 4px"><span data-lz="cdName">' + S.cdName + '</span> · <span data-lz="time0">' + S.time0 + '</span></p><p id="firstPlace">' + S.events[0][2] + '</p><button class="card-link" data-card-target="itinerario" tabindex="-1">' + S.schedule + '</button></div>' +
+      '<div class="sc sc3 pap" aria-hidden="true"></div>' +
+      '<div class="sc sc2 pap" aria-hidden="true"></div>' +
       '<div class="sc sc1 pap">' +
         '<p class="eb">' + S.married + '</p>' +
         '<h1>' + N('n1') + '<small>' + S.y + '</small>' + N('n2') + '</h1>' +
         dots().replace('class="dots"', 'class="dots" style="margin:10px 0 4px"') +
         '<p data-lz="msg">' + S.msg + '</p>' +
         '<p>' + S.for + ' <b style="font-weight:500">' + S.guest + '</b> · ' + S.seats + '</p>' +
-        '<button type="button" class="btn" id="enter" tabindex="-1">' + S.enter + '</button>' +
+        '<button type="button" class="btn" id="enter" tabindex="-1" disabled>' + S.enter + '</button>' +
       '</div>' +
       '<button type="button" class="vb" id="band" aria-label="' + S.band + '"><span class="eb">' + S.for + '</span><b>' + S.guest + '</b><span class="eb" style="color:var(--muted)" data-lz="envClosing" data-lz-keep id="closing">' + S.envClosing + '</span><span class="lseal"><span data-lz-seal>AL</span></span></button>' +
     '</div>' +

@@ -5,8 +5,7 @@
   LazoPanel.init({ mono: 'A&L', couple: S.n1 + ' ' + S.y + ' ' + S.n2, link: location.pathname, guest: S.guest, people: PEOPLE });
   LazoMusic.init({ src: '/assets/musica/demo.mp3' });
 
-  // La tarjeta de detalles muestra el lugar del primer evento del itinerario.
-  function firstPlace() { var p = document.querySelector('.evs [data-lz-item] [data-lz-f="place"]'); $('firstPlace').textContent = p ? p.textContent : ''; document.querySelector('.sc1').classList.toggle('long-names',[].some.call(document.querySelectorAll('.sc1 h1 [data-lz]'),function(e){return e.textContent.length>11;})); }
+  function fitNames() { document.querySelector('.sc1').classList.toggle('long-names',[].some.call(document.querySelectorAll('.sc1 h1 [data-lz]'),function(e){return e.textContent.length>11;})); }
 
   // Lo que aparece o se escribe al llegar a la pantalla (después de abrir la invitación).
   var io = null;
@@ -19,12 +18,12 @@
     io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { show(e.target); io.unobserve(e.target); } }); }, { threshold: .15 });
     observe(document);
   }
-  document.addEventListener('lz-render', function (e) { firstPlace(); observe(e.target); });
-  firstPlace();
+  document.addEventListener('lz-render', function (e) { fitNames(); observe(e.target); });
+  fitNames();
   function booking(){var a=document.querySelector('[data-lz-href=hotelLink]'), notice=document.querySelector('.demo-booking');var valid=a && a.getAttribute('href') && a.getAttribute('href')!=='#viaje';if(a && !valid) a.hidden=true;if(notice) notice.hidden=!!(valid && !a.hidden);}
   document.addEventListener('lz-render',booking); booking();
 
-  // Barra con los nombres al bajar, y la foto de portada que se mueve más lento (profundidad).
+  // Barra con los nombres al bajar.
   var bar = $('mbar'), raf = 0, opened = false;
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   window.addEventListener('scroll', function () {
@@ -32,10 +31,10 @@
     raf = requestAnimationFrame(function () { raf = 0; var y = window.pageYOffset; bar.classList.toggle('show', opened && y > 520); });
   }, { passive: true });
 
-  // Apertura: se retira la faja de papel vegetal y las tres tarjetas se abren en abanico.
+  // Apertura: se retira la faja de papel vegetal y las hojas se separan ligeramente.
   var op = $('open'), suite = $('suite'), hint = $('hint'), timers = [];
   var clear = function () { timers.forEach(clearTimeout); timers = []; };
-  function fanOut() { suite.classList.add('slid', 'fan'); $('band').tabIndex = -1; document.querySelectorAll('#suite .card-link, #enter').forEach(function(b){b.tabIndex=0;}); }
+  function fanOut() { suite.classList.add('slid', 'fan'); $('band').tabIndex = -1; $('enter').disabled=false; $('enter').tabIndex=0; }
   $('band').addEventListener('click', function () {
     if (suite.classList.contains('slid')) return;
     clear(); LazoMusic.play();
@@ -44,12 +43,11 @@
   });
   function enter() { clear(); opened = true; op.classList.add('gone'); op.inert = true; $('invite').inert = false; document.body.classList.remove('locked'); watch(); }
   $('enter').addEventListener('click', function () { enter(); $('demoBar').hidden = false; window.scrollTo(0, 0); document.querySelector('.hero h1').focus({preventScroll:true}); });
-  document.querySelectorAll('[data-card-target]').forEach(function(b){b.addEventListener('click',function(){ enter(); var el=$(b.dataset.cardTarget); el.scrollIntoView({behavior:reduced?'instant':'smooth'}); var heading=el.querySelector('h2'); heading.tabIndex=-1; heading.focus({preventScroll:true}); });});
 
   // Para el editor de Lazo (demo/shared/content.js): saltar o volver a mostrar las tarjetas.
   window.LzTemplate = {
     open: function () { fanOut(); enter(); },
-    envelope: function () { clear(); opened = false; bar.classList.remove('show'); suite.classList.remove('slid', 'fan'); document.querySelectorAll('#suite .card-link, #enter').forEach(function(b){b.tabIndex=-1;}); $('band').tabIndex=0; op.inert=false; $('invite').inert=true; hint.textContent = S.hint; op.classList.remove('gone'); document.body.classList.add('locked'); window.scrollTo(0, 0); },
+    envelope: function () { clear(); opened = false; bar.classList.remove('show'); suite.classList.remove('slid', 'fan'); $('enter').disabled=true; $('enter').tabIndex=-1; $('band').tabIndex=0; op.inert=false; $('invite').inert=true; hint.textContent = S.hint; op.classList.remove('gone'); document.body.classList.add('locked'); window.scrollTo(0, 0); },
     scroll: function (el, now) { window.scrollTo({ top: el.getBoundingClientRect().top + window.pageYOffset - 70, behavior: now ? 'instant' : 'smooth' }); }
   };
 
