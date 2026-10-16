@@ -338,35 +338,6 @@ footer .eb{color:color-mix(in srgb,var(--soft) 80%,#fff);margin-top:8px}
 .fnav a:last-child{background:var(--paper);color:var(--ink);border-color:var(--paper)}
 footer a:focus-visible{outline-color:var(--paper)}
 
-/* ---------- Herramientas de la demo: «Explorar demo» (minimizable) y la música aparte ---------- */
-#demoBar.demo-bar{display:block;padding:0;background:none;box-shadow:none;color:var(--ink);font:400 14px Jost,sans-serif;white-space:normal}
-#demoBar.demo-bar[hidden]{display:none !important}
-.db-tg{display:inline-flex !important;align-items:center;gap:8px;height:46px !important;padding:0 18px 0 14px !important;border:0 !important;border-radius:99px !important;background:var(--ink) !important;color:var(--paper) !important;font:500 12px Jost,sans-serif !important;letter-spacing:.14em;text-transform:uppercase;box-shadow:0 10px 26px -12px rgba(0,0,0,.5)}
-.db-tg svg{width:18px;height:18px}
-.db-tg[aria-expanded=true]{display:none !important}
-.db-sheet{width:min(300px,calc(100vw - 32px));padding:14px 14px 16px;border-radius:16px;background:var(--surface);color:var(--ink);box-shadow:0 0 0 1px var(--line),0 22px 44px -20px rgba(0,0,0,.45)}
-.db-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:8px}
-.db-head b{font:500 12px Jost,sans-serif;letter-spacing:.16em;text-transform:uppercase}
-.db-min{width:44px !important;height:44px !important;padding:0 !important;justify-content:center;border:0 !important;border-radius:50% !important;background:none !important;color:var(--ink) !important;font-size:22px !important}
-.db-min:hover{background:color-mix(in srgb,var(--ink) 7%,transparent) !important}
-.db-colors .lz-colors{position:static;border-radius:0;display:flex;flex-wrap:wrap;gap:10px;padding:0 0 12px;margin-bottom:10px;border-bottom:1px solid var(--line);background:none;color:var(--ink);box-shadow:none;font:500 11px Jost,sans-serif;letter-spacing:.14em}
-.db-colors .lz-colors span{flex-basis:100%;opacity:1;color:var(--leaf-ink)}
-.db-colors .lz-colors button{width:44px;height:44px;border:3px solid var(--surface);box-shadow:0 0 0 1px var(--line2)}
-.db-colors .lz-colors button[aria-pressed=true]{outline:2px solid var(--ink);outline-offset:2px}
-.db-btn{display:flex !important;width:100%;align-items:center;justify-content:space-between !important;height:48px !important;padding:0 16px !important;margin-top:6px;border-radius:12px !important;border:1px solid var(--line2) !important;background:transparent !important;color:var(--ink) !important;font:400 15px Jost,sans-serif !important;text-decoration:none}
-.db-btn:hover{border-color:var(--ink) !important;opacity:1 !important}
-.lz-music{height:46px}
-#demoBar{transition:translate .3s,opacity .3s}
-#demoBar,.lz-music{transition:translate .3s,opacity .3s,visibility 0s}
-body.in-hero #demoBar:not(:has(.db-sheet:not([hidden]))),body.tools-hide #demoBar:not(:focus-within):not(:has(.db-sheet:not([hidden]))),body.typing #demoBar{translate:0 90px;opacity:0;visibility:hidden;pointer-events:none;transition:translate .3s,opacity .3s,visibility 0s .3s}
-body.music-hide .lz-music:not(:focus-visible),body.typing .lz-music{opacity:0;visibility:hidden;pointer-events:none;transition:opacity .3s,visibility 0s .3s}
-body.typing .qnav{opacity:0;visibility:hidden}
-/* En la portada la música se aparta arriba a la derecha (solo el ícono), lejos de nombres y mensaje */
-body.in-hero .lz-music{top:max(12px,env(safe-area-inset-top));bottom:auto;padding:0 15px}
-body.in-hero .lz-music .txt{display:none}
-.cd .when span,.cd .when b{white-space:nowrap}
-.cd .when,.tag4 b{font-variant-numeric:lining-nums tabular-nums}
-
 /* ---------- Panel de los novios: más contraste y señales de desplazamiento ---------- */
 .lz-panel .lz-brand span,.lz-panel .lz-kicker,.lz-panel .lz-stats span,.lz-panel .lz-field{font-size:12px}
 .lz-panel .lz-note,.lz-panel .lz-legend,.lz-panel .lz-row small,.lz-panel .lz-sub,.lz-panel .lz-send small{font-size:14px;color:var(--p-ink)}
@@ -625,7 +596,6 @@ body.in-hero .lz-music .txt{display:none}
       '<div class="seeds" aria-hidden="true">' + seeds + '</div>' +
     '</div>' +
     '<p class="hint" id="hint" aria-live="polite">' + S.hint + '</p>' +
-    '<button type="button" class="skip" id="skip">' + S.skip + '</button>' +
     '<span id="closing" data-lz="envClosing" data-lz-keep hidden>' + S.envClosing + '</span>' +
   '</div>' +
 
@@ -641,7 +611,6 @@ body.in-hero .lz-music .txt{display:none}
         '<h1 class="script" id="names" tabindex="-1"><span class="fitl" data-lz="n1">' + S.n1 + '</span><span class="y">' + S.y + '</span><span class="fitl" data-lz="n2">' + S.n2 + '</span></h1>' +
         '<p class="date" data-lz-date="{d} · {Mc} · {Y}">' + S.date + '</p><p class="eb city" data-lz="city">' + S.city + '</p>' +
         '<p class="msg" data-lz="msg">' + S.msg + '</p>' +
-        '<p class="hero-demo"><button type="button" class="pill" id="heroDemo" aria-controls="dbSheet" aria-expanded="false">' + S.demo + '</button></p>' +
       '</div>' +
     '</section>' +
 
@@ -715,11 +684,7 @@ body.in-hero .lz-music .txt{display:none}
       '<nav class="fnav" aria-label="' + S.fnav + '"><a href="#itinerario">' + S.fSchedule + '</a><a id="fMap" href="#itinerario">' + S.fMap + '</a><a href="#rsvp">' + S.fRsvp + '</a></nav></footer>' +
   '</main>';
 
-  document.getElementById('demoBar').innerHTML =
-    '<button type="button" class="db-tg" id="dbToggle" aria-expanded="false" aria-controls="dbSheet"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m15.5 8.5-2 5-5 2 2-5z"/></svg>' + S.demo + '</button>' +
-    '<div class="db-sheet" id="dbSheet" role="group" aria-label="' + S.demo + '" hidden><div class="db-head"><b>' + S.demo + '</b><button type="button" class="db-min" id="dbMin" aria-label="' + S.minimize + '"><svg width="1em" height="1em" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" style="vertical-align:-.15em;flex:none"><path d="M4 8h8"/></svg></button></div>' +
-      '<div class="db-colors" id="dbColors"></div>' +
-      '<button type="button" class="db-btn" data-open-panel>' + S.panel + ' <svg width="1em" height="1em" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" style="vertical-align:-.15em;flex:none"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button><a class="db-btn" href="' + S.storeUrl + '">' + S.store + ' <svg width="1em" height="1em" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" style="vertical-align:-.15em;flex:none"><path d="M5 11 11 5M6 5h5v5"/></svg></a></div>';
+
 })();
 </script>
 <script src="/demo/shared/content.js"></script>
@@ -787,7 +752,7 @@ body.in-hero .lz-music .txt{display:none}
   var op = $('open'), pk = $('pk'), hint = $('hint'), timers = [];
   var clear = function () { timers.forEach(clearTimeout); timers = []; };
   setTimeout(function () { op.querySelectorAll('.grow').forEach(function (g) { if (!g.closest('.seedcard') && !g.closest('.ogarden')) g.classList.add('in'); }); }, 300);
-  function bloomCard() { pk.classList.add('open', 'rise', 'out'); op.classList.add('done'); hint.textContent = ''; op.querySelectorAll('.seedcard .grow, .ogarden .grow').forEach(function (g) { g.classList.add('in'); }); $('enter').tabIndex = 0; $('skip').tabIndex = -1; $('sticker').tabIndex = -1; fitNames(); }
+  function bloomCard() { pk.classList.add('open', 'rise', 'out'); op.classList.add('done'); hint.textContent = ''; op.querySelectorAll('.seedcard .grow, .ogarden .grow').forEach(function (g) { g.classList.add('in'); }); $('enter').tabIndex = 0; $('sticker').tabIndex = -1; fitNames(); }
   $('sticker').addEventListener('click', function () {
     if (pk.classList.contains('open')) return;
     clear(); LazoMusic.play();
@@ -801,63 +766,18 @@ body.in-hero .lz-music .txt{display:none}
   function enter() { clear(); op.classList.add('gone'); document.body.classList.remove('locked'); setInert(false); setTimeout(watch, 350); refresh(); }
   function enterAsGuest() { enter(); $('demoBar').hidden = CONTENT; window.scrollTo(0, 0); $('names').focus({ preventScroll: true }); }
   $('enter').addEventListener('click', enterAsGuest);
-  $('skip').addEventListener('click', function () { op.classList.add('now'); bloomCard(); enterAsGuest(); });
 
   // Para el editor de Lazo (demo/shared/content.js): saltar o volver a mostrar el sobre.
   window.LzTemplate = {
     open: function () { bloomCard(); enter(); },
-    envelope: function () { clear(); pk.classList.remove('open', 'rise', 'out'); op.classList.remove('done', 'gone', 'now'); $('enter').tabIndex = -1; $('skip').tabIndex = 0; $('sticker').tabIndex = 0; hint.textContent = S.hint; op.querySelectorAll('.seedcard .grow, .ogarden .grow').forEach(function (g) { g.classList.remove('in'); }); document.body.classList.add('locked'); setInert(true); window.scrollTo(0, 0); },
+    envelope: function () { clear(); pk.classList.remove('open', 'rise', 'out'); op.classList.remove('done', 'gone', 'now'); $('enter').tabIndex = -1; $('sticker').tabIndex = 0; hint.textContent = S.hint; op.querySelectorAll('.seedcard .grow, .ogarden .grow').forEach(function (g) { g.classList.remove('in'); }); document.body.classList.add('locked'); setInert(true); window.scrollTo(0, 0); },
     scroll: function (el, now) { window.scrollTo({ top: el.getBoundingClientRect().top + window.pageYOffset - 10, behavior: now ? 'instant' : 'smooth' }); }
   };
 
-  // Herramientas flotantes (accesos rápidos, «Explorar demo» y música): no se presentan sobre la portada,
-  // se retiran al bajar y al escribir, y al detenerse el desplazamiento solo aparecen si no taparían texto, fotos ni acciones.
-  document.body.classList.add('in-hero');
-  var B = document.body, pastHero = false, lastY = window.pageYOffset, dir = 0, wide = window.matchMedia('(min-width: 1000px)');
-  var INK = 'h1,h2,h3,p,li,blockquote,figcaption,span,b', SOLID = 'a,button,input,textarea,select,summary,label,img';
-  function hits(r) {
-    if (!r.width) return false;
-    r = { left: r.left - 6, top: r.top - 6, right: r.right + 6, bottom: r.bottom + 6 }; // un pequeño margen de aire
-    var over = function (a) { return a.right > r.left && a.left < r.right && a.bottom > r.top && a.top < r.bottom; };
-    return [].some.call(document.querySelectorAll('#invite :is(' + INK + ',' + SOLID + ')'), function (el) {
-      if (el.closest('.qnav,.sr,[aria-hidden=true]') || (el.closest('details:not([open])') && !el.closest('summary'))) return false;
-      var b = el.getBoundingClientRect();
-      if (!over(b) || !b.width) return false;
-      if (el.matches(SOLID)) {
-        // Fotos recortadas por su marco (óvalo, polaroid): cuenta solo la parte visible.
-        if (el.tagName === 'IMG') { var c = el.parentElement.getBoundingClientRect(); return over({ left: Math.max(b.left, c.left), right: Math.min(b.right, c.right), top: Math.max(b.top, c.top), bottom: Math.min(b.bottom, c.bottom) }); }
-        return getComputedStyle(el).visibility !== 'hidden';
-      }
-      // Texto: se comparan las líneas reales, no la caja del párrafo (que ocupa todo el ancho).
-      if (![].some.call(el.childNodes, function (n) { return n.nodeType === 3 && n.nodeValue.trim(); })) return false;
-      var rg = document.createRange(); rg.selectNodeContents(el);
-      return [].some.call(rg.getClientRects(), over);
-    });
-  }
-  function homeOf(el, w, h) { return { left: el.offsetLeft, top: el.offsetTop, right: el.offsetLeft + w, bottom: el.offsetTop + h, width: w, height: h }; }
-  function place() {
-    var bar = $('demoBar'), tgl = $('dbToggle'), mus = document.querySelector('.lz-music'), bottom = window.pageYOffset + innerHeight > document.documentElement.scrollHeight - 4;
-    B.classList.toggle('in-hero', !pastHero);
-    var away = !wide.matches && dir > 0 && !bottom;
-    B.classList.toggle('tools-hide', away || (pastHero && !bar.hidden && hits(homeOf(bar, tgl.offsetWidth, tgl.offsetHeight))));
-    if (mus) B.classList.toggle('music-hide', !mus.hidden && hits(homeOf(mus, mus.offsetWidth, mus.offsetHeight)));
-    $('qnav').classList.toggle('show', pastHero && !away && !hits(homeOf($('qnav'), $('qnav').offsetWidth, $('qnav').offsetHeight)));
-  }
-  window.addEventListener('scroll', function () {
-    var y = window.pageYOffset; if (Math.abs(y - lastY) > 2) { dir = y > lastY ? 1 : -1; lastY = y; }
-    if (dir > 0 && !wide.matches) { B.classList.add('tools-hide'); $('qnav').classList.remove('show'); }
-    clearTimeout(place.t); place.t = setTimeout(function () { dir = 0; place(); }, 140);
-    // Segunda comprobación cuando termina de aparecer el contenido que entró al bajar (~0,5 s).
-    clearTimeout(place.t2); place.t2 = setTimeout(function () { if (!dir) place(); }, 620);
-  }, { passive: true });
-  window.addEventListener('resize', function () { clearTimeout(place.t); place.t = setTimeout(place, 140); });
-  // Si el contenido se mueve (fotos que terminan de cargar, textos del editor) se vuelve a comprobar.
-  if ('ResizeObserver' in window) new ResizeObserver(function () { clearTimeout(place.t); place.t = setTimeout(place, 140); }).observe($('invite'));
-  document.addEventListener('load', function (e) { if (e.target.tagName === 'IMG') { clearTimeout(place.t); place.t = setTimeout(place, 140); } }, true);
-  if ('IntersectionObserver' in window) new IntersectionObserver(function (es) { pastHero = !es[0].isIntersecting; place(); }, { rootMargin: '-40% 0px 0px 0px' }).observe($('portada'));
-  // Con un campo de texto activo (y el teclado abierto en el teléfono) no flota nada.
-  document.addEventListener('focusin', function (e) { if (e.target.matches('#invite textarea, #invite input:not([type=radio])')) B.classList.add('typing'); });
-  document.addEventListener('focusout', function (e) { if (e.target.matches('#invite textarea, #invite input:not([type=radio])')) B.classList.remove('typing'); });
+  // Invitation navigation stays separate from the shared persistent demo controls.
+  if ('IntersectionObserver' in window) new IntersectionObserver(function (es) {
+    $('qnav').classList.toggle('show', !es[0].isIntersecting);
+  }, { rootMargin: '-40% 0px 0px 0px' }).observe($('portada'));
 
   // Cuenta regresiva hasta el evento elegido (la fecha del editor llega en window.LZ_T). Sin segundos: cambia cada minuto.
   var TARGET = new Date(2027, 2, 14, 13, 0).getTime(), pad = function (n) { return String(n).padStart(2, '0'); }, cd = {};
@@ -868,23 +788,6 @@ body.in-hero .lz-music .txt{display:none}
     $('cdSr').textContent = S.cdSr(d, h, m, (document.querySelector('[data-lz="cdName"]').textContent || '').toLowerCase());
   }
   tick(); setInterval(tick, 15000);
-
-  // Herramientas de la demo: «Explorar demo» agrupa color, respuestas, panel y tienda, y se minimiza. La música queda aparte.
-  // En la portada se abre desde su propio botón (en el flujo de la página), así nada flota sobre los nombres.
-  var tg = $('dbToggle'), sheet = $('dbSheet'), opener = tg;
-  function sheetOpen(on, focus, from) {
-    if (on) opener = from || tg;
-    sheet.hidden = !on; tg.setAttribute('aria-expanded', String(on)); $('heroDemo').setAttribute('aria-expanded', String(on));
-    if (focus) (on ? sheet.querySelector('button,a,select') : opener).focus();
-    if (!on) place();
-  }
-  tg.addEventListener('click', function () { sheetOpen(true, true, tg); });
-  $('heroDemo').addEventListener('click', function () { sheetOpen(sheet.hidden, true, $('heroDemo')); });
-  $('dbMin').addEventListener('click', function () { sheetOpen(false, true); });
-  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !sheet.hidden) sheetOpen(false, true); });
-  document.addEventListener('click', function (e) { if (!sheet.hidden && !$('demoBar').contains(e.target) && !e.target.closest('#heroDemo')) sheetOpen(false); });
-  sheet.addEventListener('click', function (e) { if (e.target.closest('[data-open-panel]')) sheetOpen(false); });
-  document.addEventListener('DOMContentLoaded', function () { var c = document.querySelector('.lz-colors'); if (c) $('dbColors').appendChild(c); });
 
   // Panel de los novios: las filas que se desplazan de lado (mensajes, filtros) avisan que hay más.
   function cue(el) {

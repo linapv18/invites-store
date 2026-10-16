@@ -163,25 +163,6 @@ h1:focus:not(:focus-visible){outline:0}
 body.typing .cbar{visibility:hidden;opacity:0}
 body.panel-open .cbar,body.viewer-open .cbar{display:none}
 @media (max-width:359px){.cbar .mono{display:none}.cbar a:not(.mono),.cbar button{padding:0 9px}}
-/* Música: control propio en la portada y en la barra; el botón flotante compartido queda oculto */
-.lz-music{display:none !important}
-.mus[aria-pressed=true] .eq i{animation:lzEq 1s ease-in-out infinite}
-.mus .eq{display:inline-flex;align-items:flex-end;gap:2px;height:14px}
-.mus .eq i{display:block;width:2px;height:8px;background:currentColor}
-.mus .eq i:nth-child(2){animation-delay:-.3s !important;height:12px}.mus .eq i:nth-child(3){animation-delay:-.6s !important}
-/* «Explorar demo»: hoja desplegable bajo la barra o desde la portada */
-#demoBar.demo-bar{position:fixed;left:auto;right:max(10px,env(safe-area-inset-right));top:calc(max(6px,env(safe-area-inset-top)) + 54px);bottom:auto;z-index:45;display:block;padding:0;background:none;box-shadow:none;color:var(--ink);font:400 14px 'DM Sans',sans-serif;white-space:normal}
-#demoBar.demo-bar[hidden]{display:none !important}
-.db-sheet{width:min(300px,calc(100vw - 20px));max-height:calc(100dvh - 80px);overflow:auto;padding:14px 14px 16px;border-radius:14px;background:var(--card);box-shadow:0 0 0 1px var(--line),0 22px 44px -20px rgba(0,0,0,.45)}
-.db-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:8px}
-.db-head b{font:500 12px 'DM Mono';letter-spacing:.14em;text-transform:uppercase}
-.db-min{width:44px !important;height:44px !important;padding:0 !important;display:inline-flex !important;align-items:center;justify-content:center;border:0 !important;border-radius:50% !important;background:none !important;color:var(--ink) !important;font-size:22px !important}
-.db-colors .lz-colors{position:static;display:flex;flex-wrap:wrap;gap:10px;padding:0 0 12px;margin-bottom:10px;border-bottom:1px solid var(--line);border-radius:0;background:none;color:var(--ink);box-shadow:none;font:500 12px 'DM Mono';letter-spacing:.12em}
-.db-colors .lz-colors span{flex-basis:100%;opacity:1;color:var(--muted)}
-.db-colors .lz-colors button{width:44px;height:44px;border:3px solid var(--card);box-shadow:0 0 0 1px var(--line2)}
-.db-colors .lz-colors button[aria-pressed=true]{outline:2px solid var(--ink);outline-offset:2px}
-.db-btn{display:flex !important;width:100%;align-items:center;justify-content:space-between !important;height:48px !important;padding:0 16px !important;margin-top:6px;border-radius:10px !important;border:1px solid var(--line2) !important;background:transparent !important;color:var(--ink) !important;font:400 15px 'DM Sans',sans-serif !important;text-decoration:none}
-
 /* ---------- Invitación ---------- */
 /* Portada: la foto manda; el punto de encuadre se ajusta con --hero-x / --hero-y */
 .hero{position:relative;z-index:0;min-height:clamp(560px,94svh,860px);color:#fff;display:flex;flex-direction:column;justify-content:flex-end;padding:96px 22px 112px;overflow:hidden}
@@ -203,8 +184,6 @@ body.panel-open .cbar,body.viewer-open .cbar{display:none}
 .hero-acts{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
 .hero-acts .btn{background:var(--sun);color:var(--ink);box-shadow:0 3px 0 color-mix(in srgb,var(--sun),#000 45%)}
 .hero-acts .btn.ghost{background:color-mix(in srgb,#0F1E33 35%,transparent);color:#fff;box-shadow:inset 0 0 0 1.5px #fffc}
-.hero-tools{display:flex;flex-wrap:wrap;gap:4px;margin-top:12px}
-.hero-tools .link{color:#fff}
 .lz-content .hero-tools,.lz-content .cbar .db,.lz-content .rs-demo{display:none !important}
 @media (max-height:500px){.hero{min-height:auto;padding-top:72px}}
 @media (min-width:900px){.hero{padding-left:48px;padding-right:48px}.pstamp{width:100px;right:36px;top:32px}.pstamp>div{height:120px}}
@@ -534,15 +513,14 @@ footer .pf{font-size:clamp(28px,7vw,36px);font-style:italic;overflow-wrap:anywhe
   // ======================= INVITACIÓN =======================
   '<main id="invite">' +
     '<nav class="cbar" id="cbar" aria-label="' + S.qnav + '"><a class="mono" href="#portada" data-lz-mono>A &amp; L</a><a href="#itinerario">' + S.fSched + '</a><a class="go" href="#rsvp">' + S.confirm + '</a>' +
-      '<button type="button" class="mus" aria-pressed="false" aria-label="' + S.music + '" hidden>' + EQ + '</button><button type="button" class="db" aria-controls="dbSheet" aria-expanded="false" aria-label="' + S.explore + '">' + COMPASS + '</button></nav>' +
+      '</nav>' +
     '<section class="hero" id="portada" data-lz-anchor="portada"><img src="/assets/fotos/paseo.jpg" data-lz-src="photo:0" alt="' + S.photoAlt + '">' +
       '<div class="pstamp stampd" aria-hidden="true"><div>' + lemonBranch() + '<small data-city-up>OAXACA · MX</small><b class="pf" style="font-size:15px;font-style:italic" data-lz-mono>A &amp; L</b></div></div>' +
       '<div class="in-w"><p class="eb" style="color:var(--sun);margin-bottom:12px">' + S.getting + '</p><h1 id="names" tabindex="-1"><span class="fitl" data-lz="n1">' + S.n1 + '</span> <em>&amp;</em><br><span class="fitl" data-lz="n2">' + S.n2 + '</span></h1>' +
       '<div class="meta"><span data-lz-date="{d} {Mc} {Y}">' + S.date + '</span><span data-lz="city">' + S.city + '</span></div>' +
       '<p class="msg" data-lz="msg">' + S.msg + '</p>' +
       '<div class="hero-acts"><a class="btn" href="#rsvp">' + S.confirm + '</a><a class="btn ghost" href="#itinerario">' + S.seeSched + '</a></div>' +
-      '<div class="hero-tools"><button type="button" class="link db" aria-controls="dbSheet" aria-expanded="false">' + S.explore + '</button><button type="button" class="link mus" aria-pressed="false" hidden>' + EQ + '<span>' + S.music + '</span></button></div></div>' +
-      '<div class="sea" aria-hidden="true">' + WAVE('w1') + BOAT + WAVE('w2') + '<div class="foam"></div><div class="w3 paper"></div></div>' +
+      '</div><div class="sea" aria-hidden="true">' + WAVE('w1') + BOAT + WAVE('w2') + '<div class="foam"></div><div class="w3 paper"></div></div>' +
     '</section>' +
 
     '<section class="sec paper" id="historia" data-lz-anchor="historia" style="padding-top:40px"><div class="in-w">' +
@@ -601,10 +579,7 @@ footer .pf{font-size:clamp(28px,7vw,36px);font-style:italic;overflow-wrap:anywhe
       '<nav class="fnav" aria-label="' + S.fnav + '"><a href="#itinerario">' + S.fSched + '</a><a id="fMap" href="#itinerario">' + S.fMap + '</a><a href="#rsvp">' + S.fRsvp + '</a></nav></div></footer>' +
   '</main>';
 
-  document.getElementById('demoBar').innerHTML =
-    '<div class="db-sheet" id="dbSheet" role="group" aria-label="' + S.explore + '" hidden><div class="db-head"><b>' + S.explore + '</b><button type="button" class="db-min" id="dbMin" aria-label="' + S.minimize + '"><svg width="1em" height="1em" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" style="vertical-align:-.15em;flex:none"><path d="M4 8h8"/></svg></button></div>' +
-      '<div class="db-colors" id="dbColors"></div>' +
-      '<button type="button" class="db-btn" data-open-panel>' + S.panel + ' <svg width="1em" height="1em" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" style="vertical-align:-.15em;flex:none"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button><a class="db-btn" href="' + S.storeUrl + '">' + S.store + ' <svg width="1em" height="1em" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" style="vertical-align:-.15em;flex:none"><path d="M5 11 11 5M6 5h5v5"/></svg></a></div>';
+
 })();
 </script>
 <script src="/demo/shared/content.js"></script>
@@ -761,16 +736,6 @@ footer .pf{font-size:clamp(28px,7vw,36px);font-style:italic;overflow-wrap:anywhe
   document.addEventListener('focusin', function (e) { if (e.target.matches(TYPE)) B.classList.add('typing'); });
   document.addEventListener('focusout', function (e) { if (e.target.matches(TYPE)) B.classList.remove('typing'); });
 
-  // Música: control propio en la portada y en la barra (el botón flotante compartido queda oculto).
-  var mbtn = document.querySelector('.lz-music');
-  function musSync() {
-    if (!mbtn) return;
-    var on = mbtn.classList.contains('is-playing');
-    document.querySelectorAll('.mus').forEach(function (b) { b.hidden = mbtn.hidden; b.setAttribute('aria-pressed', String(on)); b.setAttribute('aria-label', on ? S.musicOff : S.music); });
-  }
-  if (mbtn) { new MutationObserver(musSync).observe(mbtn, { attributes: true, attributeFilter: ['class', 'hidden'] }); musSync(); }
-  document.querySelectorAll('.mus').forEach(function (b) { b.addEventListener('click', function () { if (mbtn) mbtn.click(); }); });
-
   // Cuenta regresiva: días, horas y minutos (sin segundos); cada número gira como una paleta del tablero.
   var TARGET = new Date(2027, 2, 14, 13, 0).getTime(), pad = function (n) { return String(n).padStart(2, '0'); }, cd = {};
   document.querySelectorAll('[data-cd]').forEach(function (e) { cd[e.dataset.cd] = e; });
@@ -781,20 +746,6 @@ footer .pf{font-size:clamp(28px,7vw,36px);font-style:italic;overflow-wrap:anywhe
     $('cdSr').textContent = S.cdSr(d, h, m, (document.querySelector('#itinerario [data-lz="cdName"]').textContent || '').toLowerCase());
   }
   tick(); setInterval(tick, 15000);
-
-  // «Explorar demo»: paletas, panel y tienda; se abre desde la portada o la barra y se cierra con Escape.
-  var sheet = $('dbSheet'), opener = null;
-  function sheetOpen(on, focus, from) {
-    if (on) opener = from || opener;
-    sheet.hidden = !on; document.querySelectorAll('.db').forEach(function (b) { b.setAttribute('aria-expanded', String(on)); });
-    if (focus) (on ? sheet.querySelector('button,a') : opener || $('names')).focus();
-  }
-  document.querySelectorAll('.db').forEach(function (b) { b.addEventListener('click', function () { sheetOpen(sheet.hidden, true, b); }); });
-  $('dbMin').addEventListener('click', function () { sheetOpen(false, true); });
-  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !sheet.hidden) sheetOpen(false, true); });
-  document.addEventListener('click', function (e) { if (!sheet.hidden && !$('demoBar').contains(e.target) && !e.target.closest('.db')) sheetOpen(false); });
-  sheet.addEventListener('click', function (e) { if (e.target.closest('[data-open-panel]')) sheetOpen(false); });
-  document.addEventListener('DOMContentLoaded', function () { var c = document.querySelector('.lz-colors'); if (c) $('dbColors').appendChild(c); });
 
   // Panel de los novios: las filas que se desplazan de lado avisan que hay más.
   function cue(el) {

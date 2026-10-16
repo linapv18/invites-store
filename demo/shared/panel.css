@@ -136,3 +136,7 @@ body.viewer-open .lz-music,body.viewer-open .demo-bar{display:none !important}
 @media (max-width:420px){.demo-bar .lbl{display:none}}
 body.sheet-open .demo-bar,body.sheet-open .lz-music{display:none !important}
 @media (prefers-reduced-motion:reduce){.lz-panel,.lz-inner,.lz-toast{animation:none}.lz-music .bars i{animation:none;height:10px}}
+
+/* Explicit SVG pause glyph avoids platform-dependent emoji rendering. */
+.lz-music .pause{display:none}
+.lz-music.is-playing .pause{display:block}

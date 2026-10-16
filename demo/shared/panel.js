@@ -363,20 +363,75 @@
       if (!c || !c.src) return;
       audio = new Audio(); audio.loop = true; audio.preload = 'none'; audio.src = c.src;
       btn = document.createElement('button'); btn.type = 'button'; btn.className = 'lz-music'; btn.hidden = true;
-      btn.innerHTML = '<svg class="play" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" aria-hidden="true"><path d="M7 5v14l11-7z"/></svg><span class="bars" aria-hidden="true"><i></i><i></i><i></i></span><span class="txt">' + S.music + '</span>';
+      btn.innerHTML = '<svg class="play" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" aria-hidden="true"><path d="M7 5v14l11-7z"/></svg><svg class="pause" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M8 5v14M16 5v14"/></svg><span class="txt">' + S.music + '</span>';
       btn.addEventListener('click', function () { if (audio.paused) audio.play().catch(function () {}); else audio.pause(); });
       audio.addEventListener('play', sync); audio.addEventListener('pause', sync);
       audio.addEventListener('error', function () { available = false; btn.hidden = true; });
       document.body.appendChild(btn);
-      fetch(c.src, { method: 'HEAD' }).then(function (r) { available = r.ok; }).catch(function () {});
+      sync();
+      fetch(c.src, { method: 'HEAD' }).then(function (r) { available = r.ok; if (available && document.querySelector('.lz-explore')) btn.hidden = false; }).catch(function () {});
     },
     play: function () {
       if (!audio) return;
       audio.play().then(function () { available = true; btn.hidden = false; sync(); }).catch(function () { if (available) btn.hidden = false; });
     },
+    showControl: function () { if (available && btn) btn.hidden = false; },
     // Cambia la canción (la que eligieron en el editor: de la biblioteca o un MP3 subido).
     setSrc: function (src) { if (!audio || !src || audio.src === src) return; var was = !audio.paused; audio.src = src; available = true; if (was) audio.play().catch(function () {}); },
     suspend: function () { if (!audio) return false; var was = !audio.paused; audio.pause(); return was; },
     resume: function () { if (audio) audio.play().catch(function () {}); }
   };
+})();
+
+/* Shared Explore sheet, based on Jardín, for every demo and language. */
+(function () {
+  function mount() {
+    var bar = document.querySelector('.demo-bar');
+    if (!bar || document.documentElement.classList.contains('lz-content') || bar.classList.contains('lz-explore')) return;
+    var en = document.documentElement.lang.slice(0, 2) === 'en';
+    var title = en ? 'Explore demo' : 'Explorar demo';
+    var icon = function (path) { return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">' + path + '</svg>'; };
+    var arrow = icon('<path d="M5 12h14m-5-5 5 5-5 5"/>');
+    var compass = icon('<circle cx="12" cy="12" r="9"/><path d="m15.5 8.5-2 5-5 2 2-5z"/>');
+    var colors = document.querySelector('.lz-colors');
+    var store = bar.querySelector('a');
+    var href = store ? store.getAttribute('href') : (en ? '/en/#designs' : '/#disenos');
+    var css = document.createElement('link'); css.rel = 'stylesheet'; css.href = '/demo/shared/explore.css'; document.head.appendChild(css);
+    bar.classList.add('lz-explore');
+    bar.innerHTML = '<button type="button" id="dbToggle" class="lx-toggle" aria-expanded="false" aria-controls="lzExploreSheet">' + compass + title + '</button>' +
+      '<div id="lzExploreSheet" class="lx-sheet" role="group" aria-label="' + title + '" hidden><div class="lx-head"><b>' + title + '</b>' +
+      '<button type="button" class="lx-min" aria-label="' + (en ? 'Minimize' : 'Minimizar') + '">' + icon('<path d="M6 12h12"/>') + '</button></div>' +
+      '<div id="dbColors" class="lx-colors"></div><button type="button" class="lx-action" data-explore-panel>' + (en ? 'Couple’s dashboard' : 'Panel de novios') + arrow + '</button>' +
+      '<a class="lx-action" href="' + href + '">' + (en ? 'Back to the store' : 'Volver a la tienda') + arrow + '</a></div>';
+    if (colors) bar.querySelector('.lx-colors').appendChild(colors);
+    var toggle = bar.querySelector('.lx-toggle'), sheet = bar.querySelector('.lx-sheet');
+    function setOpen(on, focus) {
+      sheet.hidden = !on;
+      toggle.setAttribute('aria-expanded', String(on)); bar.classList.toggle('is-open', on);
+      if (focus) (on ? sheet.querySelector('button') : toggle).focus({ preventScroll: true });
+    }
+    toggle.addEventListener('click', function () { setOpen(sheet.hidden, true); });
+    bar.querySelector('.lx-min').addEventListener('click', function () { setOpen(false, true); });
+    bar.querySelector('[data-explore-panel]').addEventListener('click', function () {
+      setOpen(false, true); window.LazoPanel.open();
+    });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !sheet.hidden) { e.preventDefault(); setOpen(false, true); } });
+    document.addEventListener('click', function (e) { if (!sheet.hidden && !bar.contains(e.target)) setOpen(false, false); });
+    // Template opening/scroll code must never hide or disable the demo controls.
+    function keepAvailable(el) {
+      if (!el) return;
+      function restore() {
+        if (el === bar && el.hidden) el.hidden = false;
+        if (el.inert) el.inert = false;
+        if (el.hasAttribute('aria-hidden')) el.removeAttribute('aria-hidden');
+      }
+      new MutationObserver(restore).observe(el, { attributes: true, attributeFilter: ['hidden', 'inert', 'aria-hidden'] });
+      restore();
+    }
+    keepAvailable(bar); keepAvailable(document.querySelector('.lz-music'));
+    if (window.LazoMusic) window.LazoMusic.showControl();
+
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', mount);
+  else mount();
 })();
