@@ -112,8 +112,8 @@ const brush = c => `<svg viewBox="0 0 70 26" aria-hidden="true"><path d="M5 11C2
     '<div class="estate-scene" aria-hidden="true"></div><div class="opening-content"><p class="mc opening-intro" style="margin-top:40px" data-lz="envIntro" data-lz-keep>' + S.envIntro + '</p>' +
     '<div class="loval">' + LACE + ovalNames(.35) + '</div>' +
     '<div class="after" inert><p>' + S.for + ' <b style="font-weight:600">' + S.guest + '</b> · ' + S.seats + '</p><button type="button" class="btn" id="enter" tabindex="-1" disabled>' + S.enter + '</button><p class="lz-closing" data-lz="envClosing" data-lz-keep hidden>' + S.envClosing + '</p></div></div>' +
-    '<div class="curt l" aria-hidden="true">' + drape(31, 3, 100, 180, [1, 3], 0) + '</div>' +
-    '<div class="curt r" aria-hidden="true">' + drape(47, 3, 100, 180, [1, 3], 0) + '</div>' +
+    '<div class="curt l" aria-hidden="true">' + '<img class="curtain-botanical" src="' + G + 'cortina-velo.webp" alt="" fetchpriority="high" decoding="async">' + '</div>' +
+    '<div class="curt r" aria-hidden="true">' + '<img class="curtain-botanical" src="' + G + 'cortina-velo.webp" alt="" fetchpriority="high" decoding="async">' + '</div>' +
     '<button type="button" class="curtain-trigger" data-part aria-label="' + S.part + '"></button><p class="ohint" id="hint" aria-live="polite"><span>' + S.hint + '</span></p>' +
   '</div>' +
 
