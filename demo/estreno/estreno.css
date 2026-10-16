@@ -41,7 +41,17 @@ a:focus-visible,button:focus-visible,summary:focus-visible,input:focus-visible{o
 .velvet{color:var(--card)}
 
 /* Bombillas: puntos de luz sobre un marco oscuro */
-.marquee,.board,.sign{position:relative;background:#1E1616;background-image:radial-gradient(circle,var(--bulb) 0 2.6px,#f6d9a066 3.6px,transparent 5.5px);background-size:18px 18px;background-position:4px 4px;box-shadow:0 0 0 1px #00000040,0 20px 40px -24px #000c,0 0 28px -8px #f6d9a055}
+.marquee,.board,.sign{--b:22px;--g:28px;position:relative;isolation:isolate;padding:var(--b);background:#1E1616;border-radius:4px;box-shadow:0 0 0 1px #00000040,0 24px 44px -26px #000c,0 0 60px -14px #f6d9a066}
+.marquee::before,.marquee::after,.board::before,.board::after,.sign::before,.sign::after{content:'';position:absolute;inset:0;z-index:2;pointer-events:none;border-radius:inherit;background-image:radial-gradient(circle,#fffaf0 0 1.2px,var(--bulb) 2.4px,#f6d9a0aa 3.6px,#f6d9a000 7px),radial-gradient(circle,#fffaf0 0 1.2px,var(--bulb) 2.4px,#f6d9a0aa 3.6px,#f6d9a000 7px),radial-gradient(circle,#fffaf0 0 1.2px,var(--bulb) 2.4px,#f6d9a0aa 3.6px,#f6d9a000 7px),radial-gradient(circle,#fffaf0 0 1.2px,var(--bulb) 2.4px,#f6d9a0aa 3.6px,#f6d9a000 7px);background-repeat:repeat-x,repeat-x,repeat-y,repeat-y;background-size:var(--g) var(--b),var(--g) var(--b),var(--b) var(--g),var(--b) var(--g);background-position:center top,center bottom,left center,right center;filter:drop-shadow(0 0 3px var(--bulb)) drop-shadow(0 0 8px #f6d9a088)}
+.marquee::after,.board::after,.sign::after{background-position:calc(50% + var(--g) / 2) top,calc(50% + var(--g) / 2) bottom,left calc(50% + var(--g) / 2),right calc(50% + var(--g) / 2)}
+/* Bombillas de marquesina: se encienden al llegar y luego corren en cadena (dos juegos que se alternan) */
+.marquee::before,.marquee::after,.board::before,.board::after,.sign::before,.sign::after{opacity:.18;transition:opacity .5s}
+.lit::before,.lit::after{opacity:1;animation:es-chase 1.2s steps(1,end) infinite}
+.lit::after{animation-delay:-.6s}
+@keyframes es-chase{0%{opacity:1}50%{opacity:.22}}
+html.motion-paused .lit::before,html.motion-paused .lit::after{animation-play-state:paused}
+.hero-ph .ph{position:relative;z-index:1;box-shadow:0 0 0 2px #00000080}
+
 
 /* ======================= APERTURA ======================= */
 .opening{position:fixed;inset:0;z-index:60;overflow:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:26px;padding:40px 20px 110px;background:radial-gradient(ellipse at 50% 35%,#3a2a2a,#140f0f 70%);color:var(--card);transition:opacity .6s ease,visibility 0s .6s}
@@ -86,7 +96,7 @@ main{display:block}
 
 /* Portada: marquesina encendida alrededor de la foto */
 .hero{padding:30px 20px 64px;display:flex;flex-direction:column;align-items:center;gap:28px;text-align:center}
-.hero-ph{width:min(100%,380px);padding:14px}
+.hero-ph{width:min(100%,380px)}
 .hero-ph .ph{aspect-ratio:4/5;overflow:hidden;background:#222}
 .hero-ph img{width:100%;height:100%;object-fit:cover;object-position:50% 60%}
 .hero-txt{display:flex;flex-direction:column;align-items:center;gap:12px;max-width:520px}
@@ -105,7 +115,7 @@ main{display:block}
 .story-ph{position:relative;z-index:2;width:52%;max-width:230px;aspect-ratio:3/4.2;padding:8px 8px 26px;background:#fff;box-shadow:0 22px 34px -20px #0009;rotate:-3deg}
 .story-ph img{width:100%;height:100%;object-fit:cover}
 .story-txt{display:flex;flex-direction:column;gap:14px;max-width:560px}
-.story-txt .lead em{font:italic 400 19px var(--serif)}
+.story-txt .lead{font:italic 400 20px/1.5 var(--serif)}
 
 /* Galería: una tira de película que se desliza */
 .gal{padding-inline:0;overflow:hidden}
@@ -122,7 +132,7 @@ main{display:block}
 
 /* Cuenta regresiva: la cartelera sobre terciopelo */
 .cd{text-align:center}
-.board{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;margin-top:26px;padding:16px;max-width:440px}
+.board{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;margin-top:26px;max-width:440px}
 .tile{background:var(--card);color:var(--ink);padding:10px 2px 8px;display:flex;flex-direction:column;align-items:center;box-shadow:inset 0 -2px 0 #0000001f;min-width:0}
 .tile b{font:800 clamp(30px,9vw,44px)/1 var(--disp);font-variant-numeric:tabular-nums}
 .tile span{font:700 11px var(--disp);letter-spacing:.14em;text-transform:uppercase;color:var(--mute)}
@@ -153,7 +163,7 @@ main{display:block}
 .beams{position:absolute;inset:0;max-width:none;pointer-events:none}
 .beams i{position:absolute;top:-10%;width:40%;height:120%;background:linear-gradient(180deg,#f6d9a024,#f6d9a000 80%);clip-path:polygon(40% 0,60% 0,100% 100%,0 100%)}
 .beams i:first-child{left:-6%;rotate:-14deg}.beams i:last-child{right:-6%;rotate:14deg}
-.sign{display:inline-block;margin-top:22px;padding:14px;max-width:min(100%,520px)}
+.sign{display:inline-block;margin-top:22px;max-width:min(100%,520px)}
 .sign p{background:#120d0d;color:var(--card);padding:12px 22px;font:italic 400 clamp(28px,7.5vw,42px)/1.15 var(--serif);overflow-wrap:anywhere}
 .sala-addr{margin-top:18px;color:#DCD0C4;font-size:16px}
 .sala .btn{margin-top:20px}
@@ -209,8 +219,8 @@ main{display:block}
 #people{margin-top:14px}
 .person{margin:0;padding:16px 0;border:0;border-top:1px solid var(--line);display:flex;flex-direction:column;gap:10px;min-width:0}
 .person legend{float:left;width:100%;padding:0;font:italic 400 21px/1.3 var(--serif);overflow-wrap:anywhere}
-.opts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
-.opt{position:relative;display:flex;align-items:center;justify-content:center;gap:6px;min-height:48px;padding:0 10px;border:1px solid #1B151540;border-radius:4px;background:#fff;cursor:pointer;font:600 14px var(--sans);text-align:center}
+.opts{display:flex;flex-wrap:wrap;gap:8px}
+.opt{position:relative;display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:40px;padding:0 16px;border:1px solid #1B151540;border-radius:4px;background:#fff;cursor:pointer;font:600 13px var(--sans);text-align:center}
 .opt input{position:absolute;opacity:0;width:1px;height:1px}
 .opt .ic{display:none}
 .opt:has(input:checked){color:#fff;border-color:transparent}
@@ -223,7 +233,7 @@ main{display:block}
 .fld{display:flex;flex-direction:column;gap:6px;font:600 13px var(--sans)}
 .fld input{min-height:46px;padding:0 12px;border:1px solid #1B151540;border-radius:4px;background:#fff;font:400 16px var(--sans)}
 .rs-err{display:flex;align-items:center;gap:8px;margin-top:14px;color:var(--acc);font:600 15px var(--sans)}
-#rsSave{width:100%;margin-top:20px}
+#rsSave{display:flex;margin:20px auto 0;min-height:46px;font-size:14px}
 .demo-note{margin-top:14px;font-size:14px}
 .thanks{margin-top:18px;font:italic 400 56px/1 var(--serif);color:var(--acc)}
 #rsSum{margin-top:10px;font-size:16px}
@@ -258,7 +268,7 @@ main{display:block}
   .gal-foot{justify-content:flex-end;margin-top:28px}
   .frame{width:200px}
   .strip{padding-inline:max(24px,calc((100% - 1040px)/2))}
-  .board{max-width:560px;padding:18px}
+  .board{max-width:560px}
   .tile b{font-size:52px}
   .week{max-width:420px}
   .prog .evs{max-width:none;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:24px}
@@ -266,10 +276,8 @@ main{display:block}
   .ev::before{display:none}.ev::after{left:0;top:-8px}
   .ev-time{text-align:left}.ev-body{padding-left:0;margin-top:6px}
   .travel{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:60px;align-items:start}
-  .stay{position:sticky;top:96px}
   .seat{padding:48px 44px 36px}
   .fields{grid-template-columns:1fr 1fr}
-  #rsSave{width:auto}
 }
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition-duration:.01s!important}[data-rv]{opacity:1;transform:none}[data-rv] .ph-img{filter:grayscale(1) contrast(1.08)!important}.opening{transition:opacity .2s!important}}
 .lz-editor [data-rv]{opacity:1;transform:none}.lz-editor [data-rv] .ph-img{filter:grayscale(1) contrast(1.08)}

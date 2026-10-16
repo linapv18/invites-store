@@ -5,7 +5,7 @@
   var PEOPLE = ['Carlos Rodríguez', 'Lucía Pérez', 'Sofía Rodríguez', 'Mateo Rodríguez'];
   LazoPanel.init({ mono: 'A&L', couple: S.n1 + (LANG === 'en' ? ' and ' : ' y ') + S.n2, link: location.pathname, guest: S.guest, people: PEOPLE });
   LazoMusic.init({ src: '/assets/musica/demo.mp3' });
-  var still = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var still = matchMedia('(prefers-reduced-motion: reduce)').matches, lights = null;
 
   // Lo que aparece (y las fotos que se revelan) al llegar a la pantalla, después de abrir la invitación.
   var io = null, show = function (el) { el.classList.add('in'); };
@@ -50,6 +50,12 @@
   }
   weekFill();
 
+  // Las bombillas se encienden cuando la marquesina entra en pantalla (y corren en cadena mientras se ve).
+  if ('IntersectionObserver' in window && !still) {
+    lights = new IntersectionObserver(function (es) { es.forEach(function (e) { e.target.classList.toggle('lit', e.isIntersecting && opened); }); }, { threshold: .2 });
+    document.querySelectorAll('.marquee,.board,.sign').forEach(function (el) { lights.observe(el); });
+  } else document.querySelectorAll('.marquee,.board,.sign').forEach(function (el) { el.classList.add('lit'); });
+
   // La tira de película avanza de fotograma en fotograma con las flechas.
   var strip = $('strip');
   document.querySelectorAll('[data-strip]').forEach(function (b) {
@@ -63,6 +69,7 @@
     clear(); opened = true; op.classList.add('open', 'gone'); op.inert = true; op.setAttribute('aria-hidden', 'true');
     $('invite').inert = false; document.body.classList.remove('locked'); watch(); $('demoBar').hidden = false; window.scrollTo(0, 0);
     document.querySelector('.hero .names').focus({ preventScroll: true });
+    if (lights) document.querySelectorAll('.marquee,.board,.sign').forEach(function (el) { lights.unobserve(el); lights.observe(el); });
   }
   function part() { if (op.classList.contains('open')) return; clear(); LazoMusic.play(); op.classList.add('open'); timers.push(setTimeout(enter, still ? 0 : 1050)); }
   $('sleeve').addEventListener('click', part); $('enter').addEventListener('click', part);

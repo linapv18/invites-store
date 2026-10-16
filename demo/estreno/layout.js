@@ -101,7 +101,7 @@
     '<section class="sec story" id="historia" data-lz-anchor="historia">' +
       '<div class="story-art" aria-hidden="true"><span class="initials" data-lz-mono><span>A</span><span>L</span></span><div class="torn"></div><div class="story-ph bw" data-rv><img class="ph-img" src="/assets/fotos/escalera.jpg" data-lz-src="photo:1" alt="" loading="lazy"></div></div>' +
       '<div class="story-txt"><p class="k">' + S.storyK + '</p><h2 data-lz="storyTitle">' + S.storyTitle + '</h2>' +
-        '<p class="lead"><em>' + S.forG + ' ' + S.guest + ':</em> <span data-lz="msg">' + S.msg + '</span></p><p data-lz="story">' + S.storyTxt + '</p></div>' +
+        '<p class="lead" data-lz="msg">' + S.msg + '</p><p data-lz="story">' + S.storyTxt + '</p></div>' +
     '</section>' +
 
     '<section class="sec gal" id="galeria">' +
