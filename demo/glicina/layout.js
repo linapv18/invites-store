@@ -108,23 +108,23 @@ const brush = c => `<svg viewBox="0 0 70 26" aria-hidden="true"><path d="M5 11C2
   // ======================= INVITACIÓN =======================
   '<div class="mbar" id="mbar" aria-hidden="true"><span class="pa" style="font-size:24px;color:var(--sage)">' + N('n1') + ' &amp; ' + N('n2') + '</span><span class="mc" data-lz-date="' + S.datePat + '">' + S.dateTxt + '</span></div>' +
   '<main id="invite" inert>' +
-    '<section class="ghero" id="portada" data-lz-anchor="portada">' + floral() +
+    '<section class="ghero" id="portada" data-lz-anchor="portada">' +
       '<p class="mc" style="position:relative;z-index:1;margin-bottom:14px">' + S.getting + '</p>' +
       '<div class="estate-scene" aria-hidden="true"></div><div class="loval invitation-oval">' + LACE + ovalNames(0) + '</div>' +
     '</section>' +
     '<div class="flow">' +
-    '<section class="panel">' +
+    '<section class="panel welcome-panel">' +
       '<div class="cameo"><span data-lz-seal><span class="lz-seal">A<i>&amp;</i>L</span></span></div>' +
       '<p class="mc" data-lz-date="' + S.heroPat + '">' + S.heroTxt + '</p><p style="font-style:italic" data-lz="city">' + S.city + '</p>' + ORN(170) +
       '<h2>' + S.dear + '</h2><p data-lz="msg">' + S.msg + '</p><div class="cover-photo ph-only" data-rv><img class="ph-img" id="heroImg" loading="lazy" decoding="async" src="/assets/fotos/paseo.jpg" data-lz-src="photo:0" alt="' + S.photoAlt + '" style="object-position:center 55%"></div>' +
     '</section>' +
     '<div class="gap" aria-hidden="true"></div>' +
-    '<section class="panel" id="historia" data-lz-anchor="historia">' +
+    '<section class="panel story-panel" id="historia" data-lz-anchor="historia">' +
       '<p class="mc">' + S.story + '</p><h2 data-lz="storyTitle">' + S.storyTitle + '</h2><p data-lz="story">' + S.storyTxt + '</p>' +
       '<div class="arches ph-only" data-lz-list="gallery">' + ['/assets/fotos/beso.jpg','/assets/fotos/escalera.jpg','/assets/fotos/muro.jpg'].map(function(src){return '<div class="arch" data-lz-item data-rv><div class="pic"><img class="ph-img" data-lz-f="img" src="'+src+'" alt="" loading="lazy"></div></div>';}).join('') + '</div><button type="button" class="gallery-link ph-only" data-gallery-open>' + (LANG==='en'?'Open our photo album':'Abrir nuestro álbum') + '</button>' +
       '<div class="vign garden np-only" data-rv><div class="estate-scene" aria-hidden="true"></div>' + floral() + '<span class="vign-flourish" aria-hidden="true">' + ORN(130) + '</span>' + '</div>' +
     '</section>' +
-    '<section class="panel" style="padding-top:10px">' + ORN(150) +
+    '<section class="panel calendar-panel" style="padding-top:10px">' + ORN(150) +
       '<h2 data-lz-date="' + S.monthPat + '">' + S.monthTxt + '</h2>' +
       '<div class="week" id="week">' + S.wd.map(function (d) { return '<span>' + d + '</span>'; }).join('') + [0, 1, 2, 3, 4, 5, 6].map(function () { return '<b></b>'; }).join('') + '</div>' +
     '</section>' +

@@ -514,3 +514,72 @@ body.gl{background-color:#efeee8;background-image:radial-gradient(ellipse at 0 1
 @media(max-width:600px){#invite .ghero{padding:130px 16px 45px}#invite .ghero .floral-border img{width:35%;top:-15px}#invite .panel{padding:48px 26px}#invite .panel h2{font-size:40px}#invite .arches{gap:7%;align-items:flex-end}#invite .arch:nth-child(2){transform:none;margin-bottom:16px}#invite .arch:nth-child(3){width:66%;margin-top:16px}#invite .pe .ic{width:44px;height:48px}#invite .pe:not(:last-child)::before{left:22px;top:58px}#invite .pe h3{font-size:30px}#invite .dress-panel{margin-inline:22px;padding:34px 22px!important}#invite #viaje{margin-inline:14px;padding:42px 24px}#invite .gap.q .floral-border img{width:29%;opacity:.7}#invite #rsvp{margin-inline:14px;padding:42px 24px 50px!important}#invite footer{padding-top:110px!important}#invite footer .names{max-width:76%;font-size:48px}#invite footer .floral-border img{width:35%;top:-10px;opacity:.75}}
 
 @media(prefers-reduced-motion:no-preference){.motion-active>.floral-border img{animation:curtain-breathe 9s ease-in-out infinite alternate}.motion-active>.floral-border img+img{animation-name:curtain-breathe-right;animation-delay:-4s}}
+
+/* Rich garden stationery inside; the approved opening is deliberately untouched. */
+body.gl:not(.locked){overflow-x:clip;overflow-y:visible}
+#invite{--estate-art:url('/assets/glicina/optimized/jardin-villa.webp');overflow:visible;background:var(--cream);border-inline:1px solid #b0ad9855}
+#invite .flow{padding:40px 0;background-image:linear-gradient(90deg,transparent 18px,#b5ae8a55 18px,#b5ae8a55 19px,transparent 19px,transparent calc(100% - 19px),#b5ae8a55 calc(100% - 19px),#b5ae8a55 calc(100% - 18px),transparent calc(100% - 18px));}
+#invite .ghero{padding:65px 24px 58px;min-height:660px;display:flex;flex-direction:column;align-items:center;justify-content:center;background-image:linear-gradient(#f6f3e915,#f6f3e908),var(--estate-art);background-size:cover;background-position:center;isolation:isolate;border-bottom:5px double #aba17e}
+#invite .ghero .estate-scene{display:none}
+#invite .ghero>.mc{background:#fffaf0e8;padding:8px 22px;border:1px solid #c5b999aa;margin:0 0 18px!important;font-size:11px;color:#515b43}
+#invite .ghero .invitation-oval{width:min(88vw,370px);min-height:450px;padding:78px 79px;gap:12px;filter:drop-shadow(0 8px 12px #50483338)}
+#invite .ghero .loval::before{inset:9% 17%;background:#fffaf0;opacity:1;border-radius:50%;box-shadow:inset 0 0 0 1px #b9b18c44}
+#invite .ghero .loval h1{font-size:55px}
+#invite .ghero .lace{opacity:1;filter:drop-shadow(0 1px 1px #50483333)}
+#invite .welcome-panel{padding-top:55px;padding-bottom:40px}
+#invite .welcome-panel .cameo{width:90px;height:108px;background:#e8e9dc;border:1px solid #a6ad8d;outline:3px double #b3ac8e;outline-offset:5px;margin-bottom:34px;box-shadow:inset 0 0 0 6px #fcfaf3,inset 0 0 0 7px #b3ac8e77}
+#invite .story-panel{margin:25px 42px;padding:55px 36px;border:4px double #b2ad9466;background:linear-gradient(135deg,#f5f2e9,#fffdf7 45%,#f4f2e8);box-shadow:0 10px 24px -23px #4a4e30}
+#invite .story-panel::before,#invite .dress-panel::before{content:'';position:absolute;width:74px;height:16px;left:calc(50% - 37px);top:-9px;background:var(--cream);border:1px solid #b2ad94;border-radius:50%;box-shadow:inset 0 0 0 4px var(--cream)}
+#invite .arches{gap:7%;padding:6px 8px 28px;justify-content:center}
+#invite .arch:nth-child(n){width:26%;flex-shrink:1}
+#invite .arch:nth-child(2){width:32%;transform:translateY(18px)}
+#invite .arches>.arch:only-child{width:min(80%,360px)}
+#invite .arch{padding:7px;background:#fffdf3;box-shadow:0 0 0 1px #b5ae8b,0 0 0 4px #f9f5e9,0 0 0 5px #b5ae8b66,0 12px 18px -15px #51483366}
+#invite .vign{background-image:var(--estate-art);background-size:cover;background-position:center;border-color:#afa785;box-shadow:0 0 0 6px var(--cream),0 0 0 7px #afa785}
+#invite .vign .floral-border{display:none}
+#invite .vign-flourish{background:#fffbefdf;margin-inline:48px;border-radius:50%;bottom:22px}
+#invite .calendar-panel{padding-bottom:46px}
+#invite .week{max-width:500px;padding:22px 12px;border-block:3px double #b6b18d88}
+#invite .countdown-panel{margin:20px 32px 35px;padding:42px 20px!important;background:linear-gradient(#f5f2e866,#f5f2e866),var(--estate-art);background-size:cover;background-position:center;border:4px double #a9a38499;isolation:isolate}
+#invite .cdov{width:min(100%,540px);min-height:465px;padding:104px 100px 95px;display:flex;flex-direction:column;justify-content:center;position:relative;isolation:isolate}
+#invite .cdov::before{content:'';position:absolute;inset:10% 18%;z-index:-2;border-radius:50%;background:#68714d;box-shadow:inset 0 0 0 1px #bfc49e}
+#invite .cdov>.lace{display:block;inset:0;width:100%;height:100%;z-index:-1;filter:drop-shadow(0 3px 3px #3b402633)}
+#invite .cdov h2{font-size:41px;line-height:1.15;color:#fffaf0;margin:17px 0}
+#invite .cdov .mc{color:#f9f6ea;font-size:10px!important}
+#invite .gcd{padding:16px 0;margin-top:4px;border-color:#d7d7b655}
+#invite .gcd>div{padding-inline:7px}#invite .gcd>div+div{border-color:#d7d7b655}
+#invite .cdov .gcd b{color:#fffaf0;font-size:37px}#invite .cdov .gcd span{font-size:10px;color:#f3eddb;letter-spacing:.01em}
+#invite .countdown-panel>p{background:#fffbf0e8;padding:10px 18px;display:table;border:1px solid #bbb18e66}
+#invite #itinerario{margin-inline:46px;border-inline:1px solid #b1ad8e88;padding:50px 28px}
+#invite #itinerario>.draw{width:98px;height:76px;color:#8e9271!important}
+#invite .prog{max-width:560px}
+#invite .pe{grid-template-columns:64px minmax(0,1fr);gap:25px;padding-bottom:42px}
+#invite .pe .ic{width:58px;height:58px;color:#7c8664}
+#invite .pe:not(:last-child)::before{left:29px;top:68px;border-left:1px solid #b4b68e}
+#invite .pe h3{font-size:35px}
+#invite .pe .btn{border:3px double #a5ad8c;background:#f2f2e7;padding:9px 19px}
+#invite .dress-panel{position:relative;margin:50px 46px;padding:42px 30px!important;background:#e9eadc;border:4px double #a8ad88;box-shadow:inset 0 0 0 8px #f8f6ec,inset 0 0 0 9px #b7ba9e88}
+#invite #viaje{margin:45px 32px;padding:50px 40px 205px;background-image:linear-gradient(var(--cream) 0%,var(--cream) 68%,#fcfaf300 100%),var(--estate-art);background-size:cover;background-position:center bottom;border:4px double #b5ae8d}
+#invite #viaje>div{position:relative;z-index:1}#invite .ti{border-color:#b2b69888}
+#invite .ti>svg{color:#7a8462}
+#invite .gap.q{margin-block:35px;padding:48px 0!important;background:#e7e9dc;overflow:visible;border-block:3px double #aab08a77}
+#invite .gap.q .floral-border img{width:25%;max-width:175px;opacity:1}
+#invite .heart{--sage:#79815d;color:#fffaf0;filter:drop-shadow(0 6px 7px #46502a22)}
+#invite .heart .mc{color:#f7f2df}
+#invite .heart.is-long{--sage:#606c53;background:#f6f4e8;color:var(--ink);border-color:#aeb294}
+#invite .heart.is-long .mc{color:var(--sage)}
+#invite #faq{margin-inline:42px}
+#invite #rsvp{margin:35px 40px 25px;padding:55px 40px 60px!important;background:#fffaf0;border:4px double #aeb18d;box-shadow:inset 0 0 0 9px #fbf8ec,inset 0 0 0 10px #b9bc9a66}
+#invite #rsvp>.orn{width:175px}
+#invite footer{margin-top:0;padding:115px 25px 120px!important;min-height:420px;background:linear-gradient(#f5f1e344,#f5f1e366),var(--estate-art);background-size:cover;background-position:center 55%;border-top:5px double #a8a17c}
+#invite footer .floral-border{display:none}
+#invite footer .names{width:fit-content;max-width:85%;padding:22px 45px;margin-bottom:0;background:#fffaf0f2;border:4px double #afa784;border-bottom:0;color:#606c53}
+#invite footer>.mc{width:fit-content;max-width:85%;margin:auto;padding:0 30px 18px;background:#fffaf0f2;color:#606c53;border-bottom:3px double #afa784}
+#invite .footer-links{background:#fffaf0ed;width:fit-content;max-width:85%;padding:8px 20px;margin-inline:auto;border:1px solid #b4ac8d88}
+@media(min-width:900px) and (max-height:800px){#invite .ghero{min-height:0;padding-block:40px}#invite .ghero .invitation-oval{min-height:390px;width:330px;padding:70px}#invite .ghero .loval h1{font-size:48px}}
+@media(max-width:600px){#invite .flow{padding-top:25px;background-image:linear-gradient(90deg,transparent 8px,#b5ae8a55 8px,#b5ae8a55 9px,transparent 9px,transparent calc(100% - 9px),#b5ae8a55 calc(100% - 9px),#b5ae8a55 calc(100% - 8px),transparent calc(100% - 8px))}#invite .ghero{min-height:580px;padding:55px 16px 45px;background-position:52% center}#invite .ghero .invitation-oval{width:min(90vw,335px);min-height:410px;padding:74px 73px}#invite .ghero .loval h1{font-size:47px}#invite .ghero>.mc{font-size:10px;padding-inline:15px}#invite .story-panel{margin-inline:22px;padding:42px 22px}#invite .arches{gap:7%;flex-wrap:wrap}#invite .arch:nth-child(1){width:43%}#invite .arch:nth-child(2){width:48%;transform:none}#invite .arch:nth-child(3){width:66%;margin-top:18px}#invite .countdown-panel{margin-inline:14px;padding:25px 6px!important}#invite .cdov{min-height:365px;padding:80px 51px 75px}#invite .cdov h2{font-size:32px}#invite .cdov .mc{font-size:9px!important;letter-spacing:.01em!important}#invite .gcd>div{padding-inline:4px}#invite .cdov .gcd b{font-size:29px}#invite .cdov .gcd span{font-size:9px}#invite #itinerario{margin-inline:22px;padding:42px 17px}#invite .pe{grid-template-columns:44px minmax(0,1fr);gap:13px}#invite .pe .ic{width:42px;height:48px}#invite .pe:not(:last-child)::before{left:21px;top:58px}#invite .pe h3{font-size:30px}#invite .dress-panel{margin-inline:22px;padding:35px 25px!important}#invite #viaje{margin-inline:14px;padding:40px 23px 165px}#invite #faq{margin-inline:4px}#invite #rsvp{margin-inline:20px;padding:45px 22px 50px!important}#invite .gap.q .floral-border img{width:24%;opacity:.75}#invite footer{min-height:390px;padding-top:95px!important}#invite footer .names{font-size:44px;padding:20px 20px 12px;max-width:94%}#invite footer>.mc{max-width:94%;padding-inline:14px}}
+
+#invite .cdov .gcd span{font-size:12px}
+#invite #rsvp::before,#invite #rsvp::after{content:'';position:absolute;left:16px;right:16px;top:8px;height:25px;background:url('/assets/glicina/optimized/encaje-borde.webp') center/auto 25px repeat-x;opacity:.85;pointer-events:none}
+#invite #rsvp::after{top:auto;bottom:8px;transform:rotate(180deg)}
+@media(max-width:600px){#invite .cdov{padding-inline:42px}#invite .cdov .gcd span{font-size:11px}}
