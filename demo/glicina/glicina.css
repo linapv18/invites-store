@@ -583,3 +583,24 @@ body.gl:not(.locked){overflow-x:clip;overflow-y:visible}
 #invite #rsvp::before,#invite #rsvp::after{content:'';position:absolute;left:16px;right:16px;top:8px;height:25px;background:url('/assets/glicina/optimized/encaje-borde.webp') center/auto 25px repeat-x;opacity:.85;pointer-events:none}
 #invite #rsvp::after{top:auto;bottom:8px;transform:rotate(180deg)}
 @media(max-width:600px){#invite .cdov{padding-inline:42px}#invite .cdov .gcd span{font-size:11px}}
+
+/* What the curtain uncovers is a garden invitation, not an empty backdrop. */
+.opening .estate-scene{display:block;position:fixed;inset:0;z-index:0;background-image:linear-gradient(#f6f1e60a,#f6f1e618),url('/assets/glicina/optimized/jardin-villa.webp');background-size:cover;background-position:center;opacity:0;transition:opacity 1.05s ease;pointer-events:none}
+.opening.parted .estate-scene{opacity:1}
+.opening .opening-content{padding:40px 20px 105px;gap:14px;min-height:100svh}
+.opening .opening-intro{max-width:350px;padding:10px 22px;border:3px double #b9b08c99;background:#fffaf0ed;color:#515b43;box-shadow:0 4px 15px #444c3020;font-size:10px;line-height:1.7;letter-spacing:.12em}
+.opening .loval{width:min(86vw,390px);min-height:465px;padding:88px 82px;gap:14px;filter:drop-shadow(0 8px 12px #403f2940)}
+.opening .loval::before{inset:9% 17%;opacity:1;background:#fffaf0;border-radius:50%;box-shadow:inset 0 0 0 1px #c2b89166}
+.opening .loval .lace{opacity:1;filter:drop-shadow(0 1px 1px #403f2933)}
+.opening .loval h1{font-size:55px;color:#606c53}
+.opening .loval .mc{font-size:11px;color:#60664e}
+.opening .loval .dt{font-size:13px;color:#60664e}
+.opening .after{width:fit-content;max-width:min(90vw,440px);padding:0 26px;background:#fffaf0f2;border:0 solid #b7ad88;box-shadow:0 8px 20px -12px #45472c66}
+.opening.parted .after{padding-block:17px;border-width:3px;border-style:double;max-height:350px}
+.opening .after p{font-size:18px;line-height:1.5;color:#4c5541;margin-bottom:12px}
+.opening .after .btn{background:#66714e;border:3px double #e8e4c9;outline:1px solid #66714e;min-height:48px;padding:11px 25px;box-shadow:0 3px 6px #45472c20}
+@media(min-width:1100px) and (min-height:950px){.opening .loval{width:430px;min-height:520px;padding:100px 92px}.opening .loval h1{font-size:62px}.opening .opening-content{gap:20px}}
+@media(max-width:600px){.opening .estate-scene{background-position:51% center}.opening .opening-content{padding:40px 14px 110px;gap:12px}.opening .opening-intro{max-width:270px;padding:9px 15px;font-size:9px}.opening .loval{width:min(88vw,335px);min-height:395px;padding:74px 72px;gap:10px}.opening .loval h1{font-size:46px}.opening .loval .mc{font-size:10px}.opening .loval .dt{font-size:12px}.opening .after{max-width:90vw;padding-inline:18px}.opening .after p{font-size:17px}}
+@media(max-height:740px){.opening .opening-content{padding-top:25px;padding-bottom:100px;gap:10px}.opening .loval{width:280px;min-height:310px;padding:56px 59px;gap:8px}.opening .loval h1{font-size:39px}.opening .opening-intro{font-size:9px;padding:7px 15px}.opening .loval .mc{font-size:10px}.opening .loval .dt{font-size:12px}.opening.parted .after{padding-block:12px}.opening .after p{font-size:16px;margin-bottom:9px}}
+@media(max-height:500px){.opening .opening-content{padding-top:20px}.opening .loval{width:250px;min-height:275px;padding:50px}.opening .loval h1{font-size:34px}}
+@media(prefers-reduced-motion:reduce){.opening .estate-scene{transition:none}}
