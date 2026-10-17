@@ -111,7 +111,7 @@
       '<div class="hero-txt"><p class="ey">' + S.weddingOf + '</p><h1 class="names" tabindex="-1">' + N('n1') + ' <span class="amp">' + S.amp + '</span> ' + N('n2') + '</h1>' +
         '<div class="hero-when"><p class="hero-d m" data-lz-date="' + S.numPat + '">' + S.numTxt + '</p><p class="hero-d d" data-lz-date="' + S.dayPat + '">' + S.dayTxt + '</p><p class="hero-c" data-lz="city">' + S.city + '</p></div>' +
         '<div class="hero-ctas"><a class="cta light" href="#rsvp">' + S.confirm + '</a><a class="lnk hero-prog" href="#itinerario">' + S.seeProgram + DOWN + '</a></div></div>' +
-    '</div>' + edge('t-lace h-co') + '</section>' +
+    '</div>' + edge('hero-trim') + '</section>' +
 
     '<section class="sec lacebg-solid welcome"><div class="wel-txt"><p class="lead" data-lz="msg">' + S.msg + '</p>' + divider + '</div>' +
       '<div class="wel-cal" data-rv><p class="ey" data-lz-date="' + S.monthPat + '">' + S.monthTxt + '</p><div class="cal" id="cal" aria-hidden="true"></div>' +
@@ -126,7 +126,7 @@
         '<p class="p" data-lz="story">' + S.storyTxt + '</p><p class="sig">' + N('n1') + ' ' + S.y + ' ' + N('n2') + '</p></div>' +
     '</section>' +
 
-    '<section class="sec dark gal" id="galeria">' + edge('t-iv h-co flip top') +
+    '<section class="sec dark gal" id="galeria">' +
       '<div class="gal-head">' + head(S.galK, S.galT) + '<button type="button" class="cta light gal-all d" data-gallery-open>' + S.allPhotos + '</button></div>' +
       '<div class="frames" data-lz-list="gallery">' + ['beso', 'escalera', 'paseo', 'torre', 'muro'].map(function (f) { return '<div class="frame" data-lz-item><img data-lz-f="img" src="/assets/fotos/' + f + '.jpg" alt="" loading="lazy">' + edge('t-lace h-paper frame-edge') + '</div>'; }).join('') + '</div>' +
       '<button type="button" class="cta light gal-all m" data-gallery-open>' + S.allPhotos + '</button>' +
@@ -136,12 +136,12 @@
       '<div class="ovals" role="timer" aria-live="off">' + S.units.map(function (u, i) { return '<div class="ov-n"><b data-cd="' + 'dhm'[i] + '">--</b><span>' + u + '</span></div>'; }).join('') + '<b data-cd="s" hidden></b></div>' +
     '</section>' +
 
-    '<section class="sec dark2 prog" id="itinerario" data-lz-anchor="itinerario musica">' + edge('t-co h-co2 top') +
+    '<section class="sec dark2 prog" id="itinerario" data-lz-anchor="itinerario musica">' +
       head(S.progK, S.progT) +
       '<ol class="evs" data-lz-list="events">' + S.events.map(function (e) { return '<li class="ev" data-lz-item data-rv>' + heart('ev-h') + '<div><p class="ev-time" data-lz-f="time">' + e[0] + '</p><h3 data-lz-f="name">' + e[1] + '</h3><p class="ev-p" data-lz-f="place">' + e[2] + '</p><p class="ev-a" data-lz-f="address">' + e[3] + '</p><a class="lnk" data-lz-f="map" href="' + maps(e[2]) + '" target="_blank" rel="noopener">' + S.map + EXT + '</a></div></li>'; }).join('') + '</ol>' +
     '</section>' +
 
-    '<section class="sec ivory dress" data-lz-group="dressCode dressNotes dressColors">' + edge('t-co2 h-iv flip top') +
+    '<section class="sec ivory dress" data-lz-group="dressCode dressNotes dressColors">' +
       '<div class="dress-in" data-rv>' + head(S.dressK, S.dressT) + '<p class="dr-c" data-lz="dressCode">' + S.dressCode + '</p><p class="p" data-lz="dressNotes">' + S.dressNotes + '</p>' +
         '<div data-lz-group="dressColors">' + divider + '<p class="p dr-x"><b>' + S.reserved + ' <span data-lz="dressColors">' + S.dressColors + '</span>.</b></p></div></div>' +
     '</section>' +
@@ -170,7 +170,7 @@
       '<div id="rsDone" hidden>' + medal() + '<p class="sig thanks">' + S.thanks + '</p><div id="rsSum"></div><button type="button" class="lnk" id="rsEdit">' + S.edit + '</button></div>' +
       edge('t-lace h-iv card-edge') + '</div></section>' +
 
-    '<section class="sec dark fin">' + edge('t-iv h-co flip top') + medal('fin-m') +
+    '<section class="sec dark fin">' + edge('footer-trim') + medal('fin-m') +
       '<p class="fin-c" data-lz="envClosing" data-lz-keep>' + S.envClosing + '</p><p class="fin-n">' + N('n1') + ' ' + S.amp + ' ' + N('n2') + '</p><p class="fin-d"><span data-lz-date="' + S.numPat + '">' + S.numTxt + '</span> · <span data-lz="city">' + S.city + '</span></p>' +
       '<nav class="fin-links" aria-label="' + (LANG === 'en' ? 'Wedding information' : 'Información de la boda') + '"><a href="#itinerario">' + S.program + '</a><a href="#viaje" data-lz-show="viajeOn">' + S.travelK + '</a><a href="#rsvp">' + S.confirmShort + '</a></nav></section>' +
   '</main>';
