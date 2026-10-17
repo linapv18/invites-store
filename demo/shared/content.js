@@ -137,6 +137,12 @@
       { id: 'pizarra', es: 'Pizarra', en: 'Slate', sw: '#2A3138', vars: { dk: '#2A3138', dk2: '#323A42', dk3: '#38414A', iv: '#F1F0EC', iv2: '#E1E3E2' } },
       { id: 'bosque', es: 'Bosque', en: 'Forest', sw: '#1E2A23', vars: { dk: '#1E2A23', dk2: '#26342C', dk3: '#2B3A31', iv: '#F2F0E8', iv2: '#E2E3D9' } }
     ],
+    // Señal: cambian el fondo, el oro y el marfil; la tele y el blanco y negro de las fotos no.
+    senal: [
+      { id: 'noche', es: 'Noche', en: 'Night', sw: '#17181D' },
+      { id: 'vino', es: 'Vino', en: 'Wine', sw: '#241318', vars: { bg: '#241318', bg2: '#2E1A20', bg3: '#150A0E', iv: '#F1E6DD', txt: '#EADDD3', mute: '#B9A9A2' } },
+      { id: 'medianoche', es: 'Medianoche', en: 'Midnight', sw: '#111A2B', vars: { bg: '#111A2B', bg2: '#182337', bg3: '#0A1020', gold: '#D9C08A', gold2: '#EDDDB3', iv: '#ECE8DE', txt: '#E3E0D7', mute: '#AAB0BC' } }
+    ],
     // Glicina: una sola paleta (los racimos, la rama y las hortensias son imágenes).
     glicina: [
       { id: 'lavanda', es: 'Lavanda y oliva', en: 'Lavender and olive', sw: 'conic-gradient(#8E79BD 0 50%,#7C8454 0)' }
@@ -431,7 +437,7 @@
     // Cuenta regresiva: las plantillas leen window.LZ_T en cada segundo.
     var d = dateObj(c0.date);
     if (d) {
-      var zone = c0.timeZone || (['corazones','clasico','moderno','onix'].includes(TPL) ? 'America/Mexico_City' : '');
+      var zone = c0.timeZone || (['corazones','clasico','moderno','onix','senal'].includes(TPL) ? 'America/Mexico_City' : '');
       if (zone) window.LZ_T = window.LazoTime.target(c0.date, cdEv && cdEv.time || '00:00', zone);
       else { var m = /^(\d{1,2}):(\d{2})$/.exec(cdEv && cdEv.time || ''); if (m) d.setHours(+m[1], +m[2]); window.LZ_T = d.getTime(); }
     }

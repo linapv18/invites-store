@@ -34,7 +34,8 @@
       { id: 'estuche', es: 'Estuche', en: 'Gift box' },
       { id: 'ventana', es: 'Ventana empañada', en: 'Misted window' },
       { id: 'baraja', es: 'Baraja de cartas', en: 'Deck of cards' },
-      { id: 'estor', es: 'Estor de encaje', en: 'Lace blind' }
+      { id: 'estor', es: 'Estor de encaje', en: 'Lace blind' },
+      { id: 'tele', es: 'Tele antigua', en: 'Vintage TV' }
     ] },
     { key: 'tono', es: 'Colores', en: 'Colors', opts: [
       { id: 'claros', es: 'Claros', en: 'Light' },
@@ -96,6 +97,10 @@
       tags: { estilo: ['botanico', 'romantico'], lugar: ['campo'], apertura: ['cortina'], tono: ['claros'] },
       es: { name: 'Glicina', title: 'Diseño glicina', desc: 'Un jardín de cuento: la invitación está detrás de una cortina de glicinas que se mecen; al tocarla se abre y aparece un óvalo de encaje con los nombres. Hortensias, paneles con encaje, programa con íconos y la cita en un corazón. Se puede usar con o sin fotos.', opening: 'Apertura: cortina de glicinas', colors: 'Lavanda y oliva', alt: ['Diseño glicina: cortina de glicinas', 'Diseño glicina: portada con foto en un óvalo de encaje y hortensias'] },
       en: { name: 'Glicina', title: 'Glicina', desc: 'A fairy-tale garden: the invitation hides behind a swaying wisteria curtain; tap it and it parts to reveal a lace oval with the names. Hydrangeas, lace-trimmed panels, a program with icons and the quote in a heart. Works with or without photos.', opening: 'Opening: wisteria curtain', colors: 'Lavender and olive', alt: ['Glicina design: wisteria curtain', 'Glicina design: cover with a photo in a lace oval and hydrangeas'] } },
+    { id: 'senal', bg: '#E2DED8', shadow: 'rgba(23,24,29,0.65)', img: ['/assets/senal-tele.jpg', '/assets/senal-portada.jpg'],
+      tags: { estilo: ['elegante', 'moderno'], lugar: ['ciudad'], apertura: ['tele'], tono: ['oscuros'] },
+      es: { name: 'Señal', title: 'Diseño señal', desc: 'Retro y de noche, como un anuncio de televisión de época: una tele dorada se enciende sola y cambia de canal con las fotos de la pareja («Reserva», «la», «fecha» y la fecha); luego se apaga en una línea de luz y queda la estática. Adentro, todo es una transmisión: en vivo desde el lugar, guía de programación, repeticiones y fin de la transmisión.', opening: 'Apertura: tele que cambia de canal', colors: 'Noche, vino o medianoche', alt: ['Diseño señal: tele antigua dorada con la palabra «la» sobre una foto de la pareja', 'Diseño señal: portada con la foto de la pareja en un marco de pantalla y los nombres en caligrafía'] },
+      en: { name: 'Señal', title: 'Señal', desc: 'Retro and nocturnal, like a vintage TV commercial: a gold TV switches itself on and flips channels with the couple’s photos («Save», «the», «date» and the date); then it switches off into a line of light and leaves static. Inside, it’s all a broadcast: live from the venue, a TV guide, reruns and end of broadcast.', opening: 'Opening: TV that flips channels', colors: 'Night, wine or midnight', alt: ['Señal design: gold vintage TV showing a word over the couple’s photo', 'Señal design: cover with the couple’s photo in a screen frame and the names in calligraphy'] } },
     { id: 'onix', bg: '#E6E3DE', shadow: 'rgba(20,20,20,0.6)', img: ['/assets/onix-sobre.jpg', '/assets/onix-portada.jpg'],
       tags: { estilo: ['elegante', 'moderno'], lugar: ['ciudad', 'playa'], apertura: ['sobre'], tono: ['oscuros', 'claros'] },
       es: { name: 'Ónix', title: 'Diseño ónix', desc: 'Blanco y negro editorial, como papelería de lujo: llega en un sobre negro sellado con lacre marfil; al abrirlo, el sobre está forrado con la foto de la pareja y esa foto se vuelve la portada. Adentro, fotos en blanco y negro, la cuenta regresiva en una banda negra, un relicario de corazón junto al lugar y una bandeja de plata sobre las preguntas.', opening: 'Apertura: sobre negro con forro de foto', colors: 'Ónix, pizarra o bosque', alt: ['Diseño ónix: sobre negro con lacre marfil sobre papel claro', 'Diseño ónix: portada con la foto de la pareja en blanco y negro y los nombres en mayúsculas'] },
