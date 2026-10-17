@@ -7,7 +7,7 @@
   var LANG = (document.documentElement.lang || 'es').slice(0, 2) === 'en' ? 'en' : 'es';
   var S = {
     es: {
-      envIntro: 'Una invitación para un día inolvidable', envClosing: 'Con cariño, te esperamos en nuestra boda', openAria: 'Invitación detrás de una ventana empañada', open: 'Abrir la invitación', hint: 'Desliza el dedo por el cristal para descubrir la invitación', ready: 'Ya puedes abrirla. Puedes seguir limpiando el cristal.', for: 'Para',
+      envIntro: 'Una invitación para un día inolvidable', envClosing: 'Con cariño, te esperamos en nuestra boda', openAria: 'Invitación detrás de una ventana empañada', open: 'Abrir la invitación', hint: 'Limpia el cristal con el dedo. La invitación se abrirá al despejarlo.', ready: 'La ventana está limpia. Abriendo la invitación…', for: 'Para',
       seats: '4 cupos', y: 'y', amp: '&amp;', saveDate: 'Guarda la fecha',
       guest: 'Familia Rodríguez', n1: 'Ana', n2: 'León', city: 'Oaxaca, México', msg: 'Nos casamos y queremos celebrarlo contigo.', photoAlt: 'Ana y León',
       numPat: '{dd} · {mm} · {Y}', numTxt: '14 · 03 · 2027', monPat: '{M}', monTxt: 'marzo', dayPat: '{d}', dayTxt: '14', yearPat: '{Y}', yearTxt: '2027',
@@ -33,7 +33,7 @@
       demo: 'Demo', panel: 'Panel de novios', store: 'Tienda', storeUrl: '/#disenos'
     },
     en: {
-      envIntro: 'An invitation to an unforgettable day', envClosing: 'With love, we’ll see you at our wedding', openAria: 'Invitation behind a misted window', open: 'Open the invitation', hint: 'Slide your finger across the glass to reveal the invitation', ready: 'You can open it now, or keep clearing the glass.', for: 'For',
+      envIntro: 'An invitation to an unforgettable day', envClosing: 'With love, we’ll see you at our wedding', openAria: 'Invitation behind a misted window', open: 'Open the invitation', hint: 'Wipe the glass with your finger. The invitation opens when it is clear.', ready: 'The window is clear. Opening the invitation…', for: 'For',
       seats: '4 seats', y: '&amp;', amp: '&amp;', saveDate: 'Save the date',
       guest: 'The Rodríguez family', n1: 'Anna', n2: 'Leo', city: 'Oaxaca, Mexico', msg: 'We’re getting married and want to celebrate with you.', photoAlt: 'Anna and Leo',
       numPat: '{mm} · {dd} · {Y}', numTxt: '03 · 14 · 2027', monPat: '{Mc}', monTxt: 'March', dayPat: '{d}', dayTxt: '14', yearPat: '{Y}', yearTxt: '2027',
@@ -84,7 +84,7 @@
       '<span class="fog-txt" aria-hidden="true"><span class="sig">' + N('n1') + ' ' + S.y + ' ' + N('n2') + '</span><span class="fog-d" data-lz-date="' + S.numPat + '">' + S.numTxt + '</span></span>' +
     '</button>' +
     '<div class="op-ticket"><p class="k">' + S.for + '</p><p class="op-guest">' + S.guest + '</p><p class="op-seats">' + S.seats + '</p>' +
-      '<button type="button" class="btn btn-light" id="enter" disabled>' + S.open + '</button><p class="op-hint" id="wipeHint" role="status" aria-live="polite">' + S.hint + '</p>' +
+      '<p class="op-hint" id="wipeHint" role="status" aria-live="polite">' + S.hint + '</p>' +
       '<p class="lz-closing" data-lz="envClosing" data-lz-keep hidden>' + S.envClosing + '</p></div>' +
   '</div>' +
 
