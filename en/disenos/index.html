@@ -2,126 +2,244 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>All designs — Lazo</title>
-<meta name="description" content="All of Lazo’s wedding website invitation designs. Filter by style, wedding location, opening and colors, and open each demo.">
-<meta name="theme-color" content="#2B3A33">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>The designs — Invitesse</title>
+<meta name="description" content="All of Invitesse’s wedding website invitation designs. Filter by how they open, style, wedding location and colors, and open each demo.">
+<meta name="theme-color" content="#F7F3EE">
 <link rel="alternate" hreflang="es" href="/disenos/">
 <link rel="alternate" hreflang="en" href="/en/disenos/">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%232B3A33'/%3E%3Ctext x='32' y='44' font-family='Georgia,serif' font-style='italic' font-size='34' fill='%23F5F2EA' text-anchor='middle'%3E%26%3C/text%3E%3C/svg%3E">
+<link rel="icon" href="/assets/brand/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&amp;family=Jost:wght@400;500;600&amp;display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500;1,9..144,600&amp;family=Geist:wght@400;500;600&amp;display=swap">
+<link rel="stylesheet" href="/assets/brand/brand.css">
 <style>
 *,*::before,*::after{box-sizing:border-box}
 [hidden]{display:none !important}
 html{-webkit-text-size-adjust:100%}
-body{margin:0;background:#F5F2EA;font-family:'Jost',system-ui,sans-serif;color:#22201C}
-img{max-width:100%}
-a{color:#2B3A33}
-a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid #6B5444;outline-offset:3px}
-.top{border-bottom:1px solid #DED7C8}
-.top nav{max-width:1200px;margin:0 auto;padding:18px 24px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px}
-.logo{display:flex;align-items:center;gap:10px;text-decoration:none;color:#2B3A33}
-.logo span:first-child{width:40px;height:40px;border-radius:50%;border:1px solid #2B3A33;display:flex;align-items:center;justify-content:center;font:italic 24px/1 'Cormorant Garamond',serif}
-.logo span:last-child{font:italic 500 34px/1 'Cormorant Garamond',serif}
-.links{display:flex;flex-wrap:wrap;align-items:center;gap:8px 22px;font-size:15px}
-.links a{text-decoration:none;color:#22201C}
-.lang{display:flex;align-items:center;gap:6px;font-size:13px;letter-spacing:1px}
-.lang a{color:#5A5650;padding:12px 4px}
-.cta{background:#2B3A33;color:#F5F2EA !important;padding:13px 24px;border-radius:999px;font-weight:500}
-.wrap{max-width:1200px;margin:0 auto;padding:64px 24px 96px}
-.head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:20px 40px;margin-bottom:40px}
-.kicker{margin:0;font-size:13px;font-weight:500;letter-spacing:3px;text-transform:uppercase;color:#6B5444}
-h1{margin:12px 0 0;font:500 64px/1 'Cormorant Garamond',serif;color:#2B3A33}
-.head p.lead{margin:0;max-width:400px;font-size:16px;line-height:1.6;color:#4A4640}
-.layout{display:grid;grid-template-columns:260px minmax(0,1fr);gap:40px;align-items:start}
-.filters{position:sticky;top:20px;display:flex;flex-direction:column;gap:24px}
-.search{position:relative}
-.search svg{position:absolute;left:14px;top:50%;translate:0 -50%;color:#8A7F6E;pointer-events:none}
-.search input{width:100%;height:48px;padding:0 14px 0 42px;border:1px solid #CFC6B4;border-radius:999px;background:#FBF9F4;font:inherit;font-size:15px;color:#22201C}
-fieldset{margin:0;padding:0;border:0;min-width:0}
-legend{padding:0;margin-bottom:10px;font-size:12px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:#6B5444}
-.chips{display:flex;flex-wrap:wrap;gap:8px}
-.chip{font:inherit;font-size:14px;min-height:40px;padding:8px 14px;border-radius:999px;border:1px solid #CFC6B4;background:transparent;color:#4A4640;cursor:pointer}
-.chip:hover{border-color:#2B3A33}
-.chip[aria-pressed="true"]{background:#2B3A33;border-color:#2B3A33;color:#F5F2EA}
-.chip small{opacity:.65;margin-left:4px}
+body{margin:0;background:var(--iv-paper);font:400 16px/1.5 var(--iv-sans);color:var(--iv-ink)}
+body.sheet-open{overflow:hidden}
+img{max-width:100%;display:block}
+a{color:inherit}
+a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(--iv-lacre);outline-offset:3px}
+.w{max-width:1440px;margin:0 auto;padding:0 64px}
+.k{margin:0;font:600 12px/1.5 var(--iv-sans);letter-spacing:.16em;text-transform:uppercase;color:var(--iv-grey)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:0 20px;border-radius:999px;border:0;font:600 15px var(--iv-sans);text-decoration:none;white-space:nowrap;cursor:pointer;background:none;color:inherit}
+.btn-dark{background:var(--iv-ink);color:var(--iv-paper)}
+.btn-dark:hover{background:#000}
+.btn-line{box-shadow:inset 0 0 0 1.5px #17151C33}
+.btn-line:hover{box-shadow:inset 0 0 0 1.5px var(--iv-ink)}
+/* nav */
+.top nav{height:80px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.top .logo{font-size:34px;text-decoration:none}
+.links{display:flex;align-items:center;gap:28px;font-size:15px;font-weight:500}
+.links a{text-decoration:none}
+.links a:not(.btn):hover{color:var(--iv-lacre)}
+.links .on{text-decoration:underline;text-decoration-color:var(--iv-lacre);text-decoration-thickness:2px;text-underline-offset:7px}
+.lang{color:var(--iv-grey)}
+.lang b{color:var(--iv-ink);font-weight:600}
+/* cabecera */
+.head{padding-top:36px;display:flex;flex-direction:column;gap:22px}
+.head .row{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:20px 40px}
+.head h1{margin:12px 0 0;font:500 60px/1 var(--iv-serif);letter-spacing:-.025em}
+.head h1 i{color:var(--iv-lacre)}
+.search{position:relative;width:340px;max-width:100%}
+.search svg{position:absolute;left:16px;top:50%;translate:0 -50%;color:var(--iv-grey);pointer-events:none}
+.search input{width:100%;height:48px;padding:0 16px 0 44px;border:0;border-radius:999px;background:#fff;box-shadow:0 0 0 1px #17151C1f;font:400 15px var(--iv-sans);color:var(--iv-ink)}
+.incl{display:flex;flex-wrap:wrap;align-items:center;gap:10px 22px;padding:16px 20px;border-radius:16px;background:#fff;box-shadow:0 0 0 1px #17151C12;font-size:14px;font-weight:500;color:#2B2730}
+.incl b{font-weight:600;color:var(--iv-ink)}
+.incl span{display:inline-flex;align-items:center;gap:6px}
+.incl svg{color:var(--iv-lacre)}
+.tabs{display:flex;flex-wrap:wrap;align-items:center;gap:10px}
+.tabs .k{margin-right:6px}
+.tab{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 18px;border-radius:999px;border:0;background:#fff;box-shadow:0 0 0 1px #17151C14;font:500 15px var(--iv-sans);color:var(--iv-ink);cursor:pointer;white-space:nowrap;flex:none}
+.tab small{font-size:12px;color:var(--iv-grey)}
+.tab[aria-selected="true"]{background:var(--iv-ink);color:var(--iv-paper);box-shadow:none}
+.tab[aria-selected="true"] small{color:#CFC8D2}
+.tab:disabled{opacity:.45;cursor:default}
+/* cuerpo */
+.layout{padding-top:30px;padding-bottom:80px;display:grid;grid-template-columns:220px minmax(0,1fr);gap:40px;align-items:start}
+.filters{position:sticky;top:20px;display:flex;flex-direction:column;gap:26px}
+fieldset{margin:0;padding:0;border:0;min-width:0;display:flex;flex-direction:column;gap:2px}
+legend{padding:0;margin-bottom:8px;font:600 12px/1.5 var(--iv-sans);letter-spacing:.16em;text-transform:uppercase;color:var(--iv-grey)}
+.chk{display:flex;align-items:center;gap:10px;width:100%;min-height:36px;padding:0;border:0;background:none;font:400 15px var(--iv-sans);color:#2B2730;cursor:pointer;text-align:left}
+.chk i{flex:none;width:18px;height:18px;border-radius:5px;box-shadow:inset 0 0 0 1.5px #17151C55;display:flex;align-items:center;justify-content:center;color:var(--iv-paper)}
+.chk i svg{display:none}
+.chk[aria-pressed="true"] i{background:var(--iv-ink);box-shadow:none}
+.chk[aria-pressed="true"] i svg{display:block}
+.chk small{margin-left:auto;font-size:13px;font-weight:500;color:#8A838F}
+.chk:disabled{opacity:.45;cursor:default}
+.custom{padding:18px;border-radius:18px;background:var(--iv-lino);display:flex;flex-direction:column;gap:8px}
+.custom b{font:500 20px/1.15 var(--iv-serif)}
+.custom span{font-size:14px;line-height:1.5;color:#55505A}
+.custom a{display:inline-flex;align-items:center;gap:6px;font-size:14px;font-weight:600;color:var(--iv-lacre);text-decoration:none}
 .bar{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:12px;margin-bottom:20px;min-height:40px}
-.count{margin:0;font-size:15px;color:#4A4640}
-.clear{font:inherit;font-size:14px;border:0;background:none;color:#2B3A33;text-decoration:underline;text-underline-offset:4px;cursor:pointer;padding:10px 0}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(330px,100%),1fr));gap:28px}
-.empty{padding:56px 24px;border:1px dashed #CFC6B4;border-radius:20px;text-align:center;color:#4A4640}
-.empty p{margin:0 0 16px;font-size:16px}
-.ftoggle{display:none;font:inherit;font-size:15px;font-weight:500;height:48px;padding:0 20px;border-radius:999px;border:1px solid #2B3A33;background:transparent;color:#2B3A33;cursor:pointer;align-items:center;gap:8px}
-.ftoggle b{display:inline-grid;place-items:center;min-width:22px;height:22px;padding:0 6px;border-radius:999px;background:#2B3A33;color:#F5F2EA;font-size:12px}
-footer{background:#2B3A33;color:#CFCABE;padding:32px 24px;font-size:14px}
-footer div{max-width:1200px;margin:0 auto;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:16px}
-footer a{color:#CFCABE}
-@media (max-width:900px){
-  .layout{grid-template-columns:1fr;gap:20px}
-  .filters{position:static;display:none;padding:20px;border:1px solid #DED7C8;border-radius:20px;background:#FBF9F4}
-  .filters.open{display:flex}
-  .ftoggle{display:inline-flex}
+.count{margin:0;font-size:15px;font-weight:500;color:#55505A}
+.clear{border:0;background:none;padding:10px 0;font:500 14px var(--iv-sans);color:var(--iv-ink);text-decoration:underline;text-underline-offset:4px;cursor:pointer}
+.ftoggle{display:none}
+.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:34px 22px}
+.lz-card{display:flex;flex-direction:column;gap:14px;min-width:0}
+.lz-art{position:relative;height:380px;border-radius:22px;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.lz-ph{display:block;width:160px;aspect-ratio:554/1200;border-radius:26px;padding:5px;background:var(--iv-ink);transition:transform .25s ease}
+.lz-ph img{width:100%;height:100%;object-fit:cover;border-radius:21px}
+.lz-card:hover .lz-ph{transform:translateY(-4px)}
+.lz-new{position:absolute;left:14px;top:14px;display:inline-flex;align-items:center;min-height:28px;padding:0 12px;border-radius:999px;background:var(--iv-lacre);color:#FFF7F2;font-size:12px;font-weight:500}
+.lz-play{position:absolute;right:14px;bottom:14px;display:inline-flex;align-items:center;gap:6px;min-height:40px;padding:0 14px 0 12px;border-radius:999px;background:#fff;box-shadow:0 8px 20px -10px #17151C80;font-size:13px;font-weight:500;text-decoration:none}
+.lz-play:hover{background:var(--iv-ink);color:var(--iv-paper)}
+.lz-meta{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+.lz-meta h3{margin:0;font:500 24px/1.1 var(--iv-serif)}
+.lz-op{display:block;margin-top:6px;font:600 11px/1.4 var(--iv-sans);letter-spacing:.13em;text-transform:uppercase;color:var(--iv-grey)}
+.lz-price{display:block;margin-top:8px;font-size:15px;font-weight:600}
+.lz-buy{flex:none;display:inline-flex;align-items:center;min-height:40px;padding:0 16px;border-radius:999px;box-shadow:inset 0 0 0 1.5px #17151C33;font-size:14px;font-weight:600;text-decoration:none}
+.lz-buy:hover{background:var(--iv-ink);color:var(--iv-paper);box-shadow:none}
+.tailcard{grid-column:span 2;min-height:380px;border-radius:22px;background:var(--iv-ink);color:var(--iv-paper);padding:40px;display:flex;flex-direction:column;justify-content:space-between;gap:24px}
+.tailcard .k{color:#B3ABB8}
+.tailcard h3{margin:12px 0;font:500 40px/1.05 var(--iv-serif);letter-spacing:-.02em}
+.tailcard h3 i{color:var(--iv-lacre-3)}
+.tailcard p{margin:0;max-width:420px;font-size:16px;line-height:1.6;color:#CFC8D2}
+.empty{padding:56px 24px;border-radius:22px;background:#fff;box-shadow:0 0 0 1px #17151C12;text-align:center}
+.empty p{margin:0 0 16px;font-size:16px;color:#55505A}
+.foot{border-top:1px solid #17151C1f;padding-top:48px;padding-bottom:48px;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:20px;font-size:14px;color:var(--iv-grey)}
+.foot .logo{font-size:30px;text-decoration:none}
+.foot nav{display:flex;flex-wrap:wrap;gap:12px 24px;font-weight:500;color:#55505A}
+.foot nav a{text-decoration:none}
+.sheet-bg{display:none}
+.sheet-head,.sheet-foot{display:none}
+@media (max-width:1240px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}.tailcard{grid-column:span 3}}
+@media (max-width:960px){
+  .w{padding:0 24px}
   .links .hide-sm{display:none}
+  .layout{grid-template-columns:1fr;gap:16px}
+  .grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:24px 14px}
+  .tailcard{grid-column:span 2;padding:28px}
+  .ftoggle{display:inline-flex}
+  .filters{position:fixed;left:0;right:0;bottom:0;top:auto;z-index:60;max-height:88vh;overflow:auto;padding:12px 20px 0;border-radius:26px 26px 0 0;background:var(--iv-paper);box-shadow:0 -20px 50px -20px #000a;gap:20px;transform:translateY(105%);transition:transform .25s ease;visibility:hidden}
+  .filters.open{transform:none;visibility:visible}
+  .sheet-bg{display:block;position:fixed;inset:0;z-index:55;background:#17151C80;opacity:0;pointer-events:none;transition:opacity .2s}
+  .sheet-bg.open{opacity:1;pointer-events:auto}
+  .sheet-head{display:flex;flex-direction:column;gap:14px}
+  .sheet-head::before{content:"";align-self:center;width:40px;height:5px;border-radius:3px;background:#17151C26}
+  .sheet-head div{display:flex;justify-content:space-between;align-items:center}
+  .sheet-head b{font:500 28px var(--iv-serif)}
+  .sheet-foot{display:block;position:sticky;bottom:0;margin:0 -20px;padding:14px 20px calc(16px + env(safe-area-inset-bottom));background:var(--iv-paper);border-top:1px solid #17151C14}
+  .sheet-foot .btn{width:100%;min-height:50px}
+  .custom{display:none}
+  fieldset{flex-direction:row;flex-wrap:wrap;gap:8px}
+  legend{width:100%}
+  .chk{width:auto;min-height:40px;padding:0 14px;border-radius:999px;background:#fff;box-shadow:0 0 0 1px #17151C14;font-size:14px}
+  .chk i{display:none}
+  .chk small{margin-left:4px}
+  .chk[aria-pressed="true"]{background:var(--iv-ink);color:var(--iv-paper);box-shadow:none}
+  .chk[aria-pressed="true"] small{color:#CFC8D2}
 }
-@media (max-width:720px){h1{font-size:46px}.wrap{padding-top:40px}}
+@media (max-width:720px){
+  .w{padding:0 18px}
+  .top nav{height:64px}
+  .top .logo{font-size:26px}
+  .links{gap:16px;font-size:14px}
+  .links .btn{display:none}
+  .head{padding-top:14px;gap:14px}
+  .head h1{font-size:40px;line-height:1.02}
+  .search{width:100%}
+  .incl{display:none}
+  .tabs{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;margin:0 -18px;padding:0 18px}
+  .tabs::-webkit-scrollbar{display:none}
+  .tabs .k{display:none}
+  .tab{min-height:38px;padding:0 14px;font-size:14px}
+  .xs-hide{display:none}
+  .bar{position:sticky;top:0;z-index:20;margin:0 -18px 14px;padding:8px 18px;background:#F7F3EEee;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+  .lz-art{height:250px;border-radius:18px}
+  .lz-ph{width:104px;border-radius:18px;padding:4px}
+  .lz-ph img{border-radius:14px}
+  .lz-play{right:8px;bottom:8px;width:36px;height:36px;min-height:0;padding:0;justify-content:center}
+  .lz-play span{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+  .lz-new{left:8px;top:8px;min-height:22px;padding:0 8px;font-size:11px}
+  .lz-meta{flex-direction:column;gap:8px}
+  .lz-meta h3{font-size:19px}
+  .lz-op{font-size:10px}
+  .lz-price{margin-top:5px;font-size:13px}
+  .lz-buy{min-height:36px;padding:0 14px;font-size:13px}
+  .tailcard h3{font-size:30px}
+}
 </style>
 </head>
 <body>
-<header class="top"><nav id="nav"></nav></header>
-<main class="wrap">
-  <div class="head">
-    <div><p class="kicker" id="kicker"></p><h1 id="title"></h1></div>
-    <p class="lead" id="lead"></p>
-  </div>
-  <div class="layout">
-    <div>
-      <button type="button" class="ftoggle" id="ftoggle" aria-expanded="false" aria-controls="filters"></button>
-      <aside class="filters" id="filters"></aside>
+<header class="top"><nav class="w" id="nav"></nav></header>
+<main>
+  <div class="w head">
+    <div class="row">
+      <div><p class="k" id="kicker"></p><h1 id="title"></h1></div>
+      <div class="search"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input type="search" id="q"></div>
     </div>
+    <div class="incl" id="incl"></div>
+    <div class="tabs" id="tabs" role="tablist"></div>
+  </div>
+  <div class="w layout">
+    <div class="sheet-bg" id="sheetBg"></div>
+    <aside class="filters" id="filters"></aside>
     <div>
-      <div class="bar"><p class="count" id="count" aria-live="polite"></p><button type="button" class="clear" id="clear" hidden></button></div>
+      <div class="bar"><p class="count" id="count" aria-live="polite"></p><span style="display: flex; align-items: center; gap: 14px"><button type="button" class="clear" id="clear" hidden></button><button type="button" class="btn btn-line ftoggle" id="ftoggle" aria-expanded="false" aria-controls="filters"></button></span></div>
       <div class="grid" id="grid"></div>
-      <div class="empty" id="empty" hidden><p id="emptyTxt"></p><button type="button" class="chip" id="emptyClear"></button></div>
+      <div class="empty" id="empty" hidden><p id="emptyTxt"></p><button type="button" class="btn btn-line" id="emptyClear"></button></div>
     </div>
   </div>
 </main>
-<footer><div><span style="font:italic 28px 'Cormorant Garamond',serif;color:#F5F2EA">lazo</span><a id="back" href="/"></a></div></footer>
+<footer class="w foot" id="foot"></footer>
 
-<script src="/disenos/catalogo.js"></script>
+<script src="/disenos/catalogo.js?v=2"></script>
 <script>
-/* Galería de diseños con filtros. Los diseños y sus etiquetas viven en /disenos/catalogo.js.
-   Dentro de un grupo, los filtros suman (jardín o campo); entre grupos, se combinan (botánico y en el campo).
-   Los filtros quedan en la URL (?estilo=botanico&lugar=playa&q=sobre) para compartir una búsqueda. */
+/* Galería de diseños. Los diseños y sus etiquetas viven en /disenos/catalogo.js.
+   Las pestañas «Cómo se abre» eligen un grupo de aperturas (catalogo.js → openings).
+   Dentro de un grupo de filtros, las opciones suman (jardín o campo); entre grupos, se combinan (botánico y en el campo).
+   Los filtros quedan en la URL (?estilo=botanico&lugar=playa&apertura=sobre&q=…) para compartir una búsqueda. */
 (function () {
   var LANG = document.documentElement.lang === 'en' ? 'en' : 'es', base = LANG === 'en' ? '/en' : '';
   var S = {
-    es: { kicker: 'Los diseños', title: 'Todos los diseños', lead: 'Filtren por estilo, por el lugar de la boda o por cómo se abre la invitación. Abran la demo desde el celular: así la verán sus invitados.',
-      store: 'Tienda', login: 'Ingresar', cta: 'Crear mi invitación', search: 'Buscar diseño', searchPh: 'Buscar por nombre o estilo…', filters: 'Filtros', clear: 'Limpiar filtros',
-      count: function (n, t) { return n === t ? t + (t === 1 ? ' diseño' : ' diseños') : n + ' de ' + t + ' diseños'; }, empty: 'Ningún diseño coincide con esos filtros todavía.', back: '← Volver a la tienda', other: 'EN' },
-    en: { kicker: 'The designs', title: 'All designs', lead: 'Filter by style, by where the wedding is or by how the invitation opens. Open the demo on your phone: that’s how your guests will see it.',
-      store: 'Store', login: 'Log in', cta: 'Create my invitation', search: 'Search designs', searchPh: 'Search by name or style…', filters: 'Filters', clear: 'Clear filters',
-      count: function (n, t) { return n === t ? t + (t === 1 ? ' design' : ' designs') : n + ' of ' + t + ' designs'; }, empty: 'No design matches those filters yet.', back: '← Back to the store', other: 'ES' }
+    es: { kicker: 'Los diseños', title: 'Elijan el suyo. <i>Cada uno, completo.</i>', store: 'Inicio', designs: 'Diseños', addons: 'Complementos', pricing: 'Precios', login: 'Ingresar', cta: 'Crear mi invitación',
+      search: 'Buscar diseño', searchPh: 'Busquen por estilo, color o apertura', opening: 'Cómo se abre', all: 'Todos', tabsLbl: 'Cómo se abre la invitación',
+      incl: 'Todos incluyen:', inclList: ['Apertura', 'Portada', 'Nuestra historia', 'Itinerario y mapas', 'Preguntas', 'Música', 'Viaje y hospedaje', 'Confirmación por persona'],
+      filters: 'Filtros', clear: 'Borrar filtros', clearAll: 'Borrar todo', show: function (n) { return 'Ver ' + n + (n === 1 ? ' diseño' : ' diseños'); },
+      count: function (n, t) { return n === t ? t + ' diseños<span class="xs-hide"> · el precio de cada uno, a la vista</span>' : n + ' de ' + t + ' diseños'; }, empty: 'Ningún diseño coincide con esos filtros todavía.',
+      customH: '¿Ninguno es el suyo?', customP: 'Diseñamos uno a la medida de su boda.', customA: 'Escríbannos',
+      tailK: 'A la medida', tailH: 'Su invitación, <i>hecha desde cero.</i>', tailP: 'Con su paleta, su historia y una apertura que solo tenga su boda. Desde [Precio].', tailA: 'Pedir la mía', tailB: 'Ver cómo funciona',
+      foot: [['/', 'Inicio'], ['/#complementos', 'Complementos'], ['/#precios', 'Precios'], ['#', 'Términos'], ['/en/disenos/', 'English']], tagline: 'Invitaciones web de boda' },
+    en: { kicker: 'The designs', title: 'Choose yours. <i>Each one, complete.</i>', store: 'Home', designs: 'Designs', addons: 'Add-ons', pricing: 'Pricing', login: 'Log in', cta: 'Create my invitation',
+      search: 'Search designs', searchPh: 'Search by style, color or opening', opening: 'How it opens', all: 'All', tabsLbl: 'How the invitation opens',
+      incl: 'Every one includes:', inclList: ['Opening', 'Cover', 'Our story', 'Schedule and maps', 'FAQ', 'Music', 'Travel and hotels', 'RSVP per person'],
+      filters: 'Filters', clear: 'Clear filters', clearAll: 'Clear all', show: function (n) { return 'Show ' + n + (n === 1 ? ' design' : ' designs'); },
+      count: function (n, t) { return n === t ? t + ' designs<span class="xs-hide"> · each one’s price, upfront</span>' : n + ' of ' + t + ' designs'; }, empty: 'No design matches those filters yet.',
+      customH: 'None feels like yours?', customP: 'We design one just for your wedding.', customA: 'Message us',
+      tailK: 'Custom', tailH: 'Your invitation, <i>made from scratch.</i>', tailP: 'With your palette, your story and an opening only your wedding has. From [Precio].', tailA: 'Request mine', tailB: 'See how it works',
+      foot: [['/en/', 'Home'], ['/en/#add-ons', 'Add-ons'], ['/en/#pricing', 'Pricing'], ['#', 'Terms'], ['/disenos/', 'Español']], tagline: 'Wedding website invitations' }
   }[LANG];
   var C = window.LazoCatalog, $ = function (id) { return document.getElementById(id); };
   var esc = function (s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); };
   var fold = function (s) { return String(s || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase(); };
+  var LOOP = 'M2 48C10 34 22 26 31 30C39 34 35 45 27 43C19 41 21 26 36 17C46 11 58 10 66 15';
+  var WM = '<span class="iv-wm" role="img" aria-label="Invitesse"><span aria-hidden="true">invite</span><b aria-hidden="true">ss</b><span aria-hidden="true">e</span><svg viewBox="0 0 70 54" aria-hidden="true"><path d="' + LOOP + '" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg></span>';
+  var CHECK = function (s, w) { return '<svg width="' + s + '" height="' + s + '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="' + w + '" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>'; };
+  var ARROW = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
+  var FILTER = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M7 12h10M10 17h4"/></svg>';
+  var otherUrl = function (s) { return (LANG === 'es' ? '/en/disenos/' : '/disenos/') + (s ? '?' + s : ''); };
 
-  $('nav').innerHTML = '<a class="logo" href="' + base + '/" aria-label="Lazo"><span>&amp;</span><span>lazo</span></a>' +
-    '<div class="links"><a class="hide-sm" href="' + base + '/">' + S.store + '</a>' +
-    '<span class="lang">' + (LANG === 'es' ? '<strong>ES</strong><span style="color:#8C8577">/</span><a href="/en/disenos/' + location.search + '" hreflang="en">EN</a>' : '<a href="/disenos/' + location.search + '" hreflang="es">ES</a><span style="color:#8C8577">/</span><strong>EN</strong>') + '</span>' +
-    '<a href="' + base + '/cuenta/">' + S.login + '</a><a class="cta" href="' + base + (LANG === 'en' ? '/#pricing' : '/#precios') + '">' + S.cta + '</a></div>';
-  $('kicker').textContent = S.kicker; $('title').textContent = S.title; $('lead').textContent = S.lead;
+  $('nav').innerHTML = '<a class="logo" href="' + base + '/" aria-label="Invitesse">' + WM + '</a>' +
+    '<div class="links"><a class="on" href="' + base + '/disenos/" aria-current="page">' + S.designs + '</a><a class="hide-sm" href="' + base + (LANG === 'en' ? '/#add-ons' : '/#complementos') + '">' + S.addons + '</a><a class="hide-sm" href="' + base + (LANG === 'en' ? '/#pricing' : '/#precios') + '">' + S.pricing + '</a>' +
+    '<span class="lang">' + (LANG === 'es' ? '<b>ES</b> · <a href="' + otherUrl(location.search.slice(1)) + '" hreflang="en">EN</a>' : '<a href="' + otherUrl(location.search.slice(1)) + '" hreflang="es">ES</a> · <b>EN</b>') + '</span>' +
+    '<a href="' + base + '/cuenta/">' + S.login + '</a><a class="btn btn-dark" href="' + base + '/comprar/">' + S.cta + '</a></div>';
+  $('kicker').textContent = S.kicker; $('title').innerHTML = S.title;
+  $('q').setAttribute('aria-label', S.search); $('q').placeholder = S.searchPh;
+  $('incl').innerHTML = '<b>' + S.incl + '</b>' + S.inclList.map(function (x) { return '<span>' + CHECK(14, 2) + esc(x) + '</span>'; }).join('');
   $('clear').textContent = S.clear; $('emptyTxt').textContent = S.empty; $('emptyClear').textContent = S.clear;
-  $('back').href = base + '/'; $('back').textContent = S.back;
+  $('foot').innerHTML = '<span style="display: flex; flex-direction: column; gap: 8px"><a class="logo" href="' + base + '/" aria-label="Invitesse">' + WM + '</a><span>' + S.tagline + '</span></span><nav>' + S.foot.map(function (f) { return '<a href="' + f[0] + '">' + f[1] + '</a>'; }).join('') + '</nav>';
 
   // Estado de los filtros (desde la URL)
   var q = new URLSearchParams(location.search), sel = {}, text = q.get('q') || '';
   C.filters.forEach(function (g) { sel[g.key] = (q.get(g.key) || '').split(',').filter(function (v) { return g.opts.some(function (o) { return o.id === v; }); }); });
+  $('q').value = text;
 
-  // Tarjetas: se pintan una vez; filtrar solo las muestra u oculta.
-  $('grid').innerHTML = C.designs.map(function (d) { return C.card(d, LANG, { badge: true }); }).join('');
+  // Tarjetas: se pintan una vez; filtrar solo las muestra u oculta. Al final, la tarjeta del diseño a la medida.
+  $('grid').innerHTML = C.designs.map(function (d) { return C.card(d, LANG); }).join('') +
+    '<div class="tailcard" id="tail"><div><p class="k">' + S.tailK + '</p><h3>' + S.tailH + '</h3><p>' + esc(S.tailP) + '</p></div><div style="display: flex; flex-wrap: wrap; gap: 10px"><a class="btn" style="background: var(--iv-paper); color: var(--iv-ink)" href="' + base + (LANG === 'en' ? '/#contact' : '/#contacto') + '">' + S.tailA + '</a><a class="btn" style="color: var(--iv-paper); box-shadow: inset 0 0 0 1.5px #F7F3EE55" href="' + base + (LANG === 'en' ? '/#how' : '/#como') + '">' + S.tailB + '</a></div></div>';
   var cards = {}; $('grid').querySelectorAll('.lz-card').forEach(function (el) { cards[el.dataset.id] = el; });
   var words = {}; C.designs.forEach(function (d) {
     var t = d[LANG], w = [t.name, t.title, t.desc, t.opening, t.colors];
@@ -132,40 +250,74 @@ footer a{color:#CFCABE}
     if (text && fold(text).split(/\s+/).some(function (w) { return w && words[d.id].indexOf(w) < 0; })) return false;
     return C.filters.every(function (g) { return g.key === skip || !sel[g.key].length || sel[g.key].some(function (v) { return (d.tags[g.key] || []).indexOf(v) >= 0; }); });
   }
+  var hasAny = function (d, opts) { return (d.tags.apertura || []).some(function (a) { return opts.indexOf(a) >= 0; }); };
+  var sameSet = function (a, b) { return a.length === b.length && a.every(function (x) { return b.indexOf(x) >= 0; }); };
 
-  // Panel de filtros
-  $('filters').innerHTML = '<div class="search"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input type="search" id="q" aria-label="' + S.search + '" placeholder="' + S.searchPh + '" value="' + esc(text) + '"></div>' +
-    C.filters.map(function (g) { return '<fieldset><legend>' + g[LANG] + '</legend><div class="chips">' + g.opts.map(function (o) { return '<button type="button" class="chip" data-g="' + g.key + '" data-v="' + o.id + '" aria-pressed="false">' + esc(o[LANG]) + '<small></small></button>'; }).join('') + '</div></fieldset>'; }).join('');
+  // Pestañas de apertura
+  $('tabs').setAttribute('aria-label', S.tabsLbl);
+  $('tabs').innerHTML = '<span class="k">' + S.opening + '</span><button type="button" class="tab" role="tab" data-o="">' + S.all + ' <small></small></button>' +
+    C.openings.map(function (o) { return '<button type="button" class="tab" role="tab" data-o="' + o.id + '">' + esc(o[LANG]) + ' <small></small></button>'; }).join('');
+
+  // Filtros de la barra lateral (todos menos la apertura, que va en las pestañas)
+  $('filters').innerHTML = '<div class="sheet-head"><div><b>' + S.filters + '</b><button type="button" class="clear" data-clear>' + S.clearAll + '</button></div></div>' +
+    C.filters.filter(function (g) { return g.key !== 'apertura'; }).map(function (g) { return '<fieldset><legend>' + g[LANG] + '</legend>' + g.opts.map(function (o) { return '<button type="button" class="chk" data-g="' + g.key + '" data-v="' + o.id + '" aria-pressed="false"><i>' + CHECK(12, 2.4) + '</i>' + esc(o[LANG]) + '<small></small></button>'; }).join('') + '</fieldset>'; }).join('') +
+    '<div class="custom"><b>' + S.customH + '</b><span>' + S.customP + '</span><a href="' + base + (LANG === 'en' ? '/#contact' : '/#contacto') + '">' + S.customA + ARROW + '</a></div>' +
+    '<div class="sheet-foot"><button type="button" class="btn btn-dark" data-close></button></div>';
 
   function render() {
     var shown = 0, total = C.designs.length, active = text.trim() ? 1 : 0;
     C.designs.forEach(function (d) { var ok = matches(d); cards[d.id].hidden = !ok; if (ok) shown++; });
-    C.filters.forEach(function (g) { active += sel[g.key].length; });
-    // Cuántos diseños quedarían con cada opción (considerando los otros grupos).
-    $('filters').querySelectorAll('.chip').forEach(function (b) {
+    C.filters.forEach(function (g) { active += sel[g.key].length ? (g.key === 'apertura' ? 1 : sel[g.key].length) : 0; });
+    $('filters').querySelectorAll('.chk').forEach(function (b) {
       var g = b.dataset.g, v = b.dataset.v, on = sel[g].indexOf(v) >= 0;
       var n = C.designs.filter(function (d) { return matches(d, g) && (d.tags[g] || []).indexOf(v) >= 0; }).length;
-      b.setAttribute('aria-pressed', String(on)); b.querySelector('small').textContent = n; b.disabled = !n && !on; b.style.opacity = !n && !on ? .45 : '';
+      b.setAttribute('aria-pressed', String(on)); b.querySelector('small').textContent = n; b.disabled = !n && !on;
     });
-    $('count').textContent = S.count(shown, total);
-    $('clear').hidden = !active; $('empty').hidden = shown > 0;
-    $('ftoggle').innerHTML = S.filters + (active ? ' <b>' + active + '</b>' : '');
-    // URL compartible
+    $('tabs').querySelectorAll('.tab').forEach(function (b) {
+      var o = C.openings.filter(function (x) { return x.id === b.dataset.o; })[0];
+      var n = C.designs.filter(function (d) { return matches(d, 'apertura') && (!o || hasAny(d, o.opts)); }).length;
+      var on = o ? sameSet(sel.apertura, o.opts) : !sel.apertura.length;
+      b.setAttribute('aria-selected', String(on)); b.tabIndex = on ? 0 : -1; b.querySelector('small').textContent = n; b.disabled = !n && !on;
+    });
+    $('count').innerHTML = S.count(shown, total);
+    $('clear').hidden = !active; $('empty').hidden = shown > 0; $('tail').hidden = shown === 0;
+    $('ftoggle').innerHTML = FILTER + S.filters + (active ? ' <b style="display: inline-grid; place-items: center; min-width: 22px; height: 22px; padding: 0 6px; border-radius: 999px; background: var(--iv-ink); color: var(--iv-paper); font-size: 12px">' + active + '</b>' : '');
+    $('filters').querySelector('[data-close]').textContent = S.show(shown);
     var p = new URLSearchParams(); if (text.trim()) p.set('q', text.trim());
     C.filters.forEach(function (g) { if (sel[g.key].length) p.set(g.key, sel[g.key].join(',')); });
     var s = p.toString(); history.replaceState(null, '', location.pathname + (s ? '?' + s : ''));
-    var other = document.querySelector('.lang a'); if (other) other.href = (LANG === 'es' ? '/en/disenos/' : '/disenos/') + (s ? '?' + s : '');
+    var other = document.querySelector('.lang a'); if (other) other.href = otherUrl(s);
   }
   $('filters').addEventListener('click', function (e) {
-    var b = e.target.closest('.chip'); if (!b) return;
+    if (e.target.closest('[data-close]')) return sheet(false);
+    if (e.target.closest('[data-clear]')) return clearAll();
+    var b = e.target.closest('.chk'); if (!b) return;
     var l = sel[b.dataset.g], i = l.indexOf(b.dataset.v);
     if (i >= 0) l.splice(i, 1); else l.push(b.dataset.v);
     render();
   });
+  $('tabs').addEventListener('click', function (e) {
+    var b = e.target.closest('.tab'); if (!b || b.disabled) return;
+    var o = C.openings.filter(function (x) { return x.id === b.dataset.o; })[0];
+    sel.apertura = o ? o.opts.slice() : []; render();
+  });
+  $('tabs').addEventListener('keydown', function (e) {
+    if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+    var t = [].slice.call($('tabs').querySelectorAll('.tab:not(:disabled)')), i = t.indexOf(document.activeElement); if (i < 0) return;
+    e.preventDefault(); var n = t[(i + (e.key === 'ArrowRight' ? 1 : -1) + t.length) % t.length]; n.focus(); n.click();
+  });
   $('q').addEventListener('input', function () { text = this.value; render(); });
   function clearAll() { text = ''; $('q').value = ''; Object.keys(sel).forEach(function (k) { sel[k] = []; }); render(); }
   $('clear').addEventListener('click', clearAll); $('emptyClear').addEventListener('click', clearAll);
-  $('ftoggle').addEventListener('click', function () { var o = $('filters').classList.toggle('open'); this.setAttribute('aria-expanded', String(o)); });
+  // En el celular, los filtros se abren en una hoja desde abajo.
+  function sheet(o) {
+    $('filters').classList.toggle('open', o); $('sheetBg').classList.toggle('open', o); document.body.classList.toggle('sheet-open', o);
+    $('ftoggle').setAttribute('aria-expanded', String(o));
+    if (o) { var f = $('filters').querySelector('button'); if (f) f.focus(); } else $('ftoggle').focus();
+  }
+  $('ftoggle').addEventListener('click', function () { sheet(!$('filters').classList.contains('open')); });
+  $('sheetBg').addEventListener('click', function () { sheet(false); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && $('filters').classList.contains('open')) sheet(false); });
   render();
 })();
 </script>

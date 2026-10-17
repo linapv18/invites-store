@@ -11,14 +11,14 @@
   var LANG = (document.documentElement.lang || 'es').slice(0, 2) === 'en' ? 'en' : 'es';
   var STR = {
     es: {
-      panel: 'Panel de los novios', exit: 'Salir', tabsLabel: 'Secciones del panel', tabs: { resumen: 'Resumen', invitados: 'Invitados', envio: 'Envío' },
+      panel: 'Su panel', exit: 'Salir', tabsLabel: 'Secciones del panel', tabs: { resumen: 'Resumen', invitados: 'Invitados', envio: 'Envío' },
       note: 'Vista previa del panel: así ven los novios sus confirmaciones. Los cambios no se guardan.',
       confirmed: 'Personas confirmadas', of: 'de', willAttend: 'Asistirán', wontAttend: 'No asistirán', noReply: 'Sin responder',
       invYes: 'Invitaciones asisten', invNo: 'No asisten', invPend: 'Sin respuesta', invitations: 'invitaciones', seatsAssigned: 'cupos asignados',
       messages: 'Mensajes', seeGuests: 'Ver invitados', noMessages: 'Aún no hay mensajes.',
-      search: 'Buscar invitado', searchPh: 'Nombre o familia…', filterLabel: 'Filtrar por estado',
+      search: 'Buscar invitado', searchPh: 'Busquen por nombre o familia', filterLabel: 'Filtrar por estado',
       filters: { todos: 'Todos', asiste: 'Asisten', no: 'No asisten', pendiente: 'Sin respuesta' },
-      tapToEdit: 'Toca una invitación para editar nombres, cupos y asistencia.', noMatch: 'No hay invitados con ese filtro.',
+      tapToEdit: 'Toquen una invitación para editar nombres, cupos y asistencia.', noMatch: 'No hay invitados con ese filtro.',
       partial: 'Respuesta parcial', attending: 'Asisten', notAttending: 'No asisten', notSent: 'Sin enviar',
       newInv: '+ Nueva invitación', csv: 'Descargar CSV', invName: 'Nombre de la invitación', invNamePh: 'Ej. Familia Rodríguez',
       people: 'Personas y asistencia', peopleShort: 'Personas', personName: 'Nombre de la persona', name: 'Nombre',
@@ -28,7 +28,7 @@
       tokens: [['{nombre}', 'Nombre de la invitación'], ['{enlace}', 'Enlace único'], ['{novios}', 'Sus nombres']], preview: 'Vista previa',
       sendTitle: 'Enviar por WhatsApp', copy: 'Copiar mensaje', sent: 'Enviada', markSent: 'Marcar enviada', toSend: 'Por enviar',
       seat: ' cupo', seats: ' cupos', saved: 'Cambios guardados en la vista previa', deleted: 'Invitación eliminada', created: 'Invitación creada',
-      needTitle: 'Escribe el nombre de la invitación', needPerson: 'Agrega al menos una persona', copied: 'Mensaje copiado', copyFail: 'No se pudo copiar', csvDone: 'CSV descargado',
+      needTitle: 'Escriban el nombre de la invitación', needPerson: 'Agreguen al menos una persona', copied: 'Mensaje copiado', copyFail: 'No se pudo copiar', csvDone: 'CSV descargado',
       csvHead: ['Invitación', 'Persona', 'Asistencia', 'Mensaje', 'Enviada'], csvYes: 'Asiste', csvNo: 'No asiste', yesWord: 'Sí', noWord: 'No', csvFile: 'invitados-demo.csv', noName: 'Sin nombre',
       template: '¡Hola, {nombre}! Con mucha ilusión queremos invitarlos a celebrar nuestra boda.\n\nAquí encontrarán todos los detalles y podrán confirmar su asistencia:\n{enlace}\n\nEsperamos que puedan acompañarnos.\n{novios}',
       tk: { name: '{nombre}', link: '{enlace}', couple: '{novios}' }, linkParam: 'invitacion',
@@ -36,7 +36,7 @@
       music: 'Música', play: 'Reproducir música', pause: 'Pausar música'
     },
     en: {
-      panel: 'Couple’s dashboard', exit: 'Exit', tabsLabel: 'Dashboard sections', tabs: { resumen: 'Overview', invitados: 'Guests', envio: 'Sending' },
+      panel: 'Your dashboard', exit: 'Exit', tabsLabel: 'Dashboard sections', tabs: { resumen: 'Overview', invitados: 'Guests', envio: 'Sending' },
       note: 'Dashboard preview: this is how the couple sees their RSVPs. Changes are not saved.',
       confirmed: 'Confirmed guests', of: 'of', willAttend: 'Attending', wontAttend: 'Not attending', noReply: 'No reply',
       invYes: 'Invitations attending', invNo: 'Not attending', invPend: 'No reply', invitations: 'invitations', seatsAssigned: 'seats assigned',
@@ -289,7 +289,14 @@
       root = document.createElement('div');
       root.className = 'lz-panel'; root.hidden = true;
       root.setAttribute('role', 'dialog'); root.setAttribute('aria-modal', 'true'); root.setAttribute('aria-label', S.panel);
-      root.innerHTML = '<div class="lz-head"><div class="lz-brand"><b>' + esc(c.mono) + '</b><span>' + S.panel + '</span></div><button type="button" class="lz-exit" data-close>' + S.exit + '</button></div>' +
+      // El panel lleva la marca Invitesse (el sello «ss» con el lazo) y el nombre de la pareja.
+      if (!document.getElementById('lzBrandFonts')) {
+        var fl = document.createElement('link'); fl.id = 'lzBrandFonts'; fl.rel = 'stylesheet';
+        fl.href = 'https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;1,9..144,500;1,9..144,600&family=Geist:wght@400;500;600&display=swap';
+        document.head.appendChild(fl);
+      }
+      var mark = '<span class="lz-mark" aria-hidden="true"><b>ss</b><svg viewBox="0 0 70 54"><path d="M2 48C10 34 22 26 31 30C39 34 35 45 27 43C19 41 21 26 36 17C46 11 58 10 66 15" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round"/></svg></span>';
+      root.innerHTML = '<div class="lz-head"><div class="lz-brand">' + mark + '<div><b>' + esc(c.couple || c.mono) + '</b><span>' + S.panel + '</span></div></div><button type="button" class="lz-exit" data-close>' + S.exit + '</button></div>' +
         '<div class="lz-tabs" role="tablist" aria-label="' + S.tabsLabel + '"></div><div class="lz-body"><div class="lz-inner"></div></div>';
       document.body.appendChild(root);
       root.addEventListener('click', onClick);

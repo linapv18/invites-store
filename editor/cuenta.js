@@ -15,22 +15,22 @@
   var S = {
     es: {
       store: 'Volver a la tienda', logout: 'Cerrar sesión', account: 'Mi cuenta',
-      title: 'Tu cuenta', lead: 'Ingresa para editar las invitaciones que compraste.',
-      login: 'Ingresar', register: 'Crear cuenta', email: 'Correo electrónico', pass: 'Contraseña', pass2: 'Repite la contraseña',
+      title: 'Su cuenta', lead: 'Ingresen para editar las invitaciones que compraron.',
+      login: 'Ingresar', register: 'Crear cuenta', email: 'Correo electrónico', pass: 'Contraseña', pass2: 'Repitan la contraseña',
       passHint: 'Mínimo 8 caracteres.', show: 'Mostrar', hide: 'Ocultar',
-      demoNote: 'Versión de prueba: las cuentas se guardan solo en este navegador. No uses una contraseña que uses en otros sitios.',
-      err: { email: 'Escribe un correo válido.', short: 'La contraseña debe tener al menos 8 caracteres.', exists: 'Ya existe una cuenta con ese correo. Ingresa con tu contraseña.',
+      demoNote: 'Versión de prueba: las cuentas se guardan solo en este navegador. No usen una contraseña que usen en otros sitios.',
+      err: { email: 'Escriban un correo válido.', short: 'La contraseña debe tener al menos 8 caracteres.', exists: 'Ya existe una cuenta con ese correo. Ingresen con su contraseña.',
         nouser: 'No encontramos una cuenta con ese correo.', wrong: 'La contraseña no es correcta.', match: 'Las contraseñas no coinciden.', storage: 'Este navegador no permite guardar la cuenta.' },
       mine: 'Mis invitaciones', signedAs: 'Sesión iniciada como', edit: 'Editar', guest: 'Ver como invitado', notStarted: 'Aún sin editar',
-      weddingOf: 'Boda de', none: 'Todavía no tienes ningún diseño.', choose: 'Elegir un diseño', others: 'Otros diseños', demo: 'Ver demo', buy: 'Comprar',
-      design: 'Diseño', bought: 'Comprado', buyTitle: 'Comprar tu invitación', pick: 'Elige el diseño de tu invitación', pickBtn: 'Elegir este diseño',
-      step1: '1. Tu cuenta', step2: '2. Pago', changeAcc: 'Usar otra cuenta', needAcc: 'Primero crea tu cuenta o ingresa.',
+      weddingOf: 'Boda de', none: 'Todavía no tienen ningún diseño.', choose: 'Elegir un diseño', others: 'Otros diseños', demo: 'Ver demo', buy: 'Comprar',
+      design: 'Diseño', bought: 'Comprado', buyTitle: 'Comprar su invitación', pick: 'Elijan el diseño de su invitación', pickBtn: 'Elegir este diseño',
+      step1: '1. Su cuenta', step2: '2. Pago', changeAcc: 'Usar otra cuenta', needAcc: 'Primero creen su cuenta o ingresen.',
       method: 'Método de pago', card: 'Tarjeta', paypal: 'PayPal', cardName: 'Nombre en la tarjeta', cardNamePh: 'Como aparece en la tarjeta', cardNum: 'Número de tarjeta', exp: 'Vencimiento', expPh: 'MM / AA', cvc: 'CVC',
-      paypalText: 'Al pagar te llevaremos a PayPal para terminar y volverás aquí con tu diseño listo para editar.',
+      paypalText: 'Al pagar los llevaremos a PayPal para terminar y volverán aquí con su diseño listo para editar.',
       pay: 'Pagar [Precio]', payPaypal: 'Continuar con PayPal', notConnected: 'Los pagos todavía no están conectados, así que no se hizo ningún cargo. [Pendiente: enlace de pago]',
-      testBuy: 'Simular compra (prueba)', testHint: 'Solo para probar: activa el diseño en tu cuenta sin pagar.',
-      order: 'Tu pedido', inv: 'Invitación', total: 'Total', includes: ['Efecto de apertura del diseño', 'Enlace único por invitado y confirmación por persona', 'Historia, itinerario, preguntas, música y viaje', 'Panel para organizar invitados'],
-      already: 'Ya tienes este diseño', alreadyText: 'Puedes editarlo cuando quieras desde tu cuenta.', payNote: 'Pago único. Recibirás el recibo en tu correo.',
+      testBuy: 'Simular compra (prueba)', testHint: 'Solo para probar: activa el diseño en su cuenta sin pagar.',
+      order: 'Su pedido', inv: 'Invitación', total: 'Total', includes: ['Efecto de apertura del diseño', 'Enlace único por invitado y confirmación por persona', 'Historia, itinerario, preguntas, música y viaje', 'Panel para organizar invitados'],
+      already: 'Ya tienen este diseño', alreadyText: 'Pueden editarlo cuando quieran desde su cuenta.', payNote: 'Pago único. Recibirán el recibo en su correo.',
       names: { clasico: ['Clásico', 'Sobre y carta'], moderno: ['Moderno', 'Puertas que se abren'], rosa: ['Romántico', 'Sobre lacrado'], jardin: ['Jardín', 'Sobre de semillas'], costa: ['Costa', 'Pase de abordar'], gala: ['Gala', 'Medallón dorado'], aurelia: ['Aurelia', 'Carpeta con faja dorada'], noir: ['Noir', 'Puerta doble con faja de plata'], lino: ['Lino', 'Juego de tarjetas'], marfil: ['Marfil', 'Papel vegetal y lazo de seda'], fiesta: ['Fiesta', 'Carta de lotería'], celeste: ['Celeste', 'Luna y constelación'], cisne: ['Cisne', 'Sobre con sello de lacre'], tinta: ['Tinta', 'Círculo en el calendario'], glicina: ['Glicina', 'Cortina de glicinas'], estreno: ['Estreno', 'Funda de terciopelo'], nacar: ['Nácar', 'Estuche con hilo de perlas'], arco: ['Arco', 'Ventana empañada'], corazones: ['Corazones', 'Baraja en abanico'], encaje: ['Encaje', 'Estor de encaje'], onix: ['Ónix', 'Sobre negro con forro de foto'], senal: ['Señal', 'Tele que cambia de canal'] }
     },
     en: {
@@ -66,7 +66,7 @@
   function header() {
     var u = A.current();
     return '<header class="co-top"><a class="co-back" href="' + BASE + '/"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg>' + esc(S.store) + '</a>' +
-      '<div class="ed-spacer"></div><a class="ed-logo" href="' + BASE + '/" aria-label="Lazo"><span class="ed-logo-mark">&amp;</span><span class="ed-logo-word">lazo</span></a><div class="ed-spacer"></div>' +
+      '<div class="ed-spacer"></div><a class="ed-logo ed-logo-full" href="' + BASE + '/" aria-label="Invitesse"><span class="iv-wm" aria-hidden="true"><span>invite</span><b>ss</b><span>e</span><svg viewBox="0 0 70 54"><path d="M2 48C10 34 22 26 31 30C39 34 35 45 27 43C19 41 21 26 36 17C46 11 58 10 66 15" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg></span></a><div class="ed-spacer"></div>' +
       (u ? '<span class="ac-user"><a href="' + BASE + '/cuenta/">' + esc(S.account) + '</a><button type="button" class="ed-btn ed-btn-sm" data-act="logout">' + esc(S.logout) + '</button></span>' : '<span class="ac-user"></span>') +
       '</header>';
   }

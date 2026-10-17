@@ -1,0 +1,12 @@
+/* Invitesse: colores, tipografías y logo compartidos por la tienda, el catálogo, el editor y el panel.
+   El logo es «invite» + «ss» en lacre + «e», con un rizo de cinta que sale de la última letra. */
+:root{--iv-ink:#17151C;--iv-ink-2:#2A2730;--iv-paper:#F7F3EE;--iv-lino:#EFE9E1;--iv-rubor:#F6DDD3;--iv-lacre:#D24527;--iv-lacre-2:#B83A20;--iv-lacre-3:#F08A6C;--iv-grey:#6A6370;--iv-ok:#3F7A55;
+  --iv-serif:'Fraunces',Georgia,serif;--iv-sans:'Geist',system-ui,-apple-system,'Segoe UI',sans-serif}
+.iv-wm{position:relative;display:inline-flex;align-items:baseline;padding-right:.5em;font:italic 500 1em/1 var(--iv-serif);letter-spacing:-.02em;color:var(--iv-ink);white-space:nowrap;text-decoration:none}
+.iv-wm b{font-weight:600;color:var(--iv-lacre)}
+.iv-wm svg{position:absolute;right:0;top:-.28em;width:.62em;height:.5em;overflow:visible;color:var(--iv-lacre)}
+.iv-wm.on-dark{color:var(--iv-paper)}
+.iv-wm.on-dark b,.iv-wm.on-dark svg{color:var(--iv-lacre-3)}
+.iv-mark{position:relative;flex:none;width:1em;height:1em;border-radius:.25em;background:var(--iv-ink);display:inline-flex;align-items:center;justify-content:center;font-size:40px}
+.iv-mark b{font:italic 600 .58em/1 var(--iv-serif);color:var(--iv-lacre-3);letter-spacing:-.05em;margin-left:-.08em}
+.iv-mark svg{position:absolute;right:.1em;top:.12em;width:.34em;height:.27em;overflow:visible;color:var(--iv-lacre-3)}

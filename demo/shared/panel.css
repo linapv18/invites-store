@@ -146,3 +146,45 @@ body.sheet-open .demo-bar,body.sheet-open .lz-music{display:none !important}
 .lz-v-frame img{width:auto;height:auto;max-width:min(calc(100vw - 140px),1200px);max-height:calc(100dvh - 220px);object-fit:contain;filter:none}
 .lz-v-count{font-size:13px;letter-spacing:.12em}
 @media(max-width:600px){.lz-v-frame img{max-width:calc(100vw - 24px);max-height:calc(100dvh - 240px)}.lz-v-btn.is-prev,.lz-v-btn.is-next{top:auto;bottom:96px;translate:none}.lz-v-btn.is-prev{left:calc(50% - 64px)}.lz-v-btn.is-next{right:calc(50% - 64px)}}
+
+/* ---------- Invitesse: el panel de los novios con la marca (no cambia con el diseño de la invitación) ---------- */
+.lz-panel,.lz-toast{--p-bg:#F7F3EE;--p-surface:#FFFFFF;--p-ink:#17151C;--p-muted:#6A6370;--p-line:rgba(23,21,28,.12);--p-accent:#17151C;--p-on-accent:#F7F3EE;--p-serif:'Fraunces',Georgia,serif;--p-sans:'Geist',system-ui,-apple-system,'Segoe UI',sans-serif;--p-yes:#3F7A55;--p-no:#B83A20;--p-lacre:#D24527}
+.lz-panel{font-weight:400;font-size:15px}
+.lz-head{height:72px}
+.lz-brand{align-items:center;gap:12px}
+.lz-brand>div{display:flex;flex-direction:column;gap:2px}
+.lz-brand b{font:500 20px/1.1 var(--p-serif);font-style:normal}
+.lz-brand span:not(.lz-mark){font-size:12px;letter-spacing:0;text-transform:none;color:var(--p-muted)}
+.lz-mark{position:relative;flex:none;width:36px;height:36px;border-radius:9px;background:#17151C;display:inline-flex;align-items:center;justify-content:center}
+.lz-mark b{font:italic 600 21px/1 var(--p-serif) !important;color:#F08A6C;letter-spacing:-.05em;margin-left:-3px}
+.lz-mark svg{position:absolute;right:3.6px;top:4.3px;width:12.2px;height:9.7px;overflow:visible;color:#F08A6C}
+.lz-exit{height:40px;padding:0 16px;border:0;box-shadow:inset 0 0 0 1.5px var(--p-line);font-size:14px !important;font-weight:500;letter-spacing:0;text-transform:none}
+.lz-tabs{gap:6px;padding:12px clamp(18px,4vw,48px);border-bottom:0}
+.lz-tabs button{flex:1;height:44px;border:0;border-radius:999px;background:#fff;box-shadow:0 0 0 1px var(--p-line);font-size:14px !important;font-weight:500;letter-spacing:0;text-transform:none;color:var(--p-ink)}
+.lz-tabs button[aria-selected="true"]{background:var(--p-ink);color:var(--p-bg);box-shadow:none;font-weight:600}
+.lz-note{border-radius:14px;font-size:13px}
+.lz-kicker,.lz-stats span,.lz-field{font-size:12px;font-weight:600;letter-spacing:.14em}
+.lz-big b{font-weight:500;letter-spacing:-.03em}
+.lz-big i{font-style:normal;font-family:var(--p-sans);font-size:18px}
+.lz-meter{height:8px;border-radius:4px}
+.lz-stats strong,.lz-h2,.lz-row strong,.lz-send strong{font-weight:500}
+.lz-link,.lz-chips button,.lz-btn,.lz-send button,.lz-seg button{font-size:14px !important;font-weight:500;letter-spacing:0;text-transform:none}
+.lz-link{color:var(--p-lacre);text-decoration:none}
+.lz-chips button{height:38px;border:0;background:#fff;box-shadow:0 0 0 1px var(--p-line)}
+.lz-chips button[aria-pressed="true"]{box-shadow:none}
+.lz-search{font:400 16px var(--p-sans);padding:14px 18px;border:0;border-radius:999px;background:#fff;box-shadow:0 0 0 1px var(--p-line)}
+.lz-search:focus-visible{box-shadow:0 0 0 1.5px var(--p-ink)}
+.lz-dot{border:0;background:rgba(23,21,28,.25)}
+.lz-dot.is-yes{background:var(--p-yes)}
+.lz-dot.is-no{background:var(--p-no)}
+.lz-btn{height:46px;border:0;font-weight:600}
+.lz-btn.is-ghost{box-shadow:inset 0 0 0 1.5px var(--p-line)}
+.lz-box,.lz-card,.lz-tpl{border:0;border-radius:18px;box-shadow:0 0 0 1px var(--p-line)}
+.lz-card q{font-weight:400}
+.lz-field input,.lz-guest input,.lz-edit .lz-field input{font:400 16px var(--p-sans);padding:12px 14px;border:0;border-radius:12px;background:#fff;box-shadow:inset 0 0 0 1px var(--p-line);text-transform:none;letter-spacing:0}
+.lz-seg button[aria-pressed="true"][data-v="true"]{background:var(--p-yes);color:#fff}
+.lz-seg button[aria-pressed="true"][data-v="false"]{background:var(--p-no);color:#fff}
+.lz-send button.is-on{background:var(--p-yes);color:#fff;box-shadow:none;border-color:var(--p-yes)}
+.lz-btn.is-danger{background:var(--p-no);border-color:var(--p-no)}
+.lz-btn.is-danger-text{color:var(--p-no) !important}
+.lz-toast{font:500 14px var(--p-sans);letter-spacing:0;text-transform:none}

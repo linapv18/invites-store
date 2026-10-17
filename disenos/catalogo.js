@@ -97,15 +97,15 @@
       tags: { estilo: ['botanico', 'romantico'], lugar: ['campo'], apertura: ['cortina'], tono: ['claros'] },
       es: { name: 'Glicina', title: 'Diseño glicina', desc: 'Un jardín de cuento: la invitación está detrás de una cortina de glicinas que se mecen; al tocarla se abre y aparece un óvalo de encaje con los nombres. Hortensias, paneles con encaje, programa con íconos y la cita en un corazón. Se puede usar con o sin fotos.', opening: 'Apertura: cortina de glicinas', colors: 'Lavanda y oliva', alt: ['Diseño glicina: cortina de glicinas', 'Diseño glicina: portada con foto en un óvalo de encaje y hortensias'] },
       en: { name: 'Glicina', title: 'Glicina', desc: 'A fairy-tale garden: the invitation hides behind a swaying wisteria curtain; tap it and it parts to reveal a lace oval with the names. Hydrangeas, lace-trimmed panels, a program with icons and the quote in a heart. Works with or without photos.', opening: 'Opening: wisteria curtain', colors: 'Lavender and olive', alt: ['Glicina design: wisteria curtain', 'Glicina design: cover with a photo in a lace oval and hydrangeas'] } },
-    { id: 'senal', bg: '#E2DED8', shadow: 'rgba(23,24,29,0.65)', img: ['/assets/senal-tele.jpg', '/assets/senal-portada.jpg'],
+    { id: 'senal', isNew: true, bg: '#E2DED8', shadow: 'rgba(23,24,29,0.65)', img: ['/assets/senal-tele.jpg', '/assets/senal-portada.jpg'],
       tags: { estilo: ['elegante', 'moderno'], lugar: ['ciudad'], apertura: ['tele'], tono: ['oscuros'] },
       es: { name: 'Señal', title: 'Diseño señal', desc: 'Retro y de noche, como un anuncio de televisión de época: una tele dorada se enciende sola y cambia de canal con las fotos de la pareja («Reserva», «la», «fecha» y la fecha); luego se apaga en una línea de luz y queda la estática. Adentro, todo es una transmisión: en vivo desde el lugar, guía de programación, repeticiones y fin de la transmisión.', opening: 'Apertura: tele que cambia de canal', colors: 'Noche, vino o medianoche', alt: ['Diseño señal: tele antigua dorada con la palabra «la» sobre una foto de la pareja', 'Diseño señal: portada con la foto de la pareja en un marco de pantalla y los nombres en caligrafía'] },
       en: { name: 'Señal', title: 'Señal', desc: 'Retro and nocturnal, like a vintage TV commercial: a gold TV switches itself on and flips channels with the couple’s photos («Save», «the», «date» and the date); then it switches off into a line of light and leaves static. Inside, it’s all a broadcast: live from the venue, a TV guide, reruns and end of broadcast.', opening: 'Opening: TV that flips channels', colors: 'Night, wine or midnight', alt: ['Señal design: gold vintage TV showing a word over the couple’s photo', 'Señal design: cover with the couple’s photo in a screen frame and the names in calligraphy'] } },
-    { id: 'onix', bg: '#E6E3DE', shadow: 'rgba(20,20,20,0.6)', img: ['/assets/onix-sobre.jpg', '/assets/onix-portada.jpg'],
+    { id: 'onix', isNew: true, bg: '#E6E3DE', shadow: 'rgba(20,20,20,0.6)', img: ['/assets/onix-sobre.jpg', '/assets/onix-portada.jpg'],
       tags: { estilo: ['elegante', 'moderno'], lugar: ['ciudad', 'playa'], apertura: ['sobre'], tono: ['oscuros', 'claros'] },
       es: { name: 'Ónix', title: 'Diseño ónix', desc: 'Blanco y negro editorial, como papelería de lujo: llega en un sobre negro sellado con lacre marfil; al abrirlo, el sobre está forrado con la foto de la pareja y esa foto se vuelve la portada. Adentro, fotos en blanco y negro, la cuenta regresiva en una banda negra, un relicario de corazón junto al lugar y una bandeja de plata sobre las preguntas.', opening: 'Apertura: sobre negro con forro de foto', colors: 'Ónix, pizarra o bosque', alt: ['Diseño ónix: sobre negro con lacre marfil sobre papel claro', 'Diseño ónix: portada con la foto de la pareja en blanco y negro y los nombres en mayúsculas'] },
       en: { name: 'Ónix', title: 'Ónix', desc: 'Editorial black and white, like luxury stationery: it arrives in a black envelope sealed with ivory wax; open it and the envelope is lined with the couple’s photo, which becomes the cover. Inside, black-and-white photos, the countdown on a black band, a heart locket by the venue and a silver tray above the FAQ.', opening: 'Opening: black envelope lined with a photo', colors: 'Onyx, slate or forest', alt: ['Ónix design: black envelope with an ivory wax seal on light paper', 'Ónix design: cover with the couple’s black-and-white photo and the names in capitals'] } },
-    { id: 'encaje', bg: '#EDE6DC', shadow: 'rgba(74,58,46,0.55)', img: ['/assets/encaje-estor.jpg', '/assets/encaje-portada.jpg'],
+    { id: 'encaje', isNew: true, bg: '#EDE6DC', shadow: 'rgba(74,58,46,0.55)', img: ['/assets/encaje-estor.jpg', '/assets/encaje-portada.jpg'],
       tags: { estilo: ['romantico', 'elegante'], lugar: ['campo', 'ciudad'], apertura: ['estor'], tono: ['claros', 'oscuros'] },
       es: { name: 'Encaje', title: 'Diseño encaje', desc: 'Íntimo y romántico, como una ventana con visillo a la luz de la tarde: se tira de la borla, el estor de encaje sube en pliegues y aparece la pareja en un óvalo calado. Adentro, cacao y marfil con bordes de encaje, la semana de la boda con el día en un corazón, fotos con marco de papel y cuenta regresiva en óvalos.', opening: 'Apertura: estor de encaje', colors: 'Cacao, salvia o rosa', alt: ['Diseño encaje: estor de encaje con una borla verde y el nombre de la familia en un óvalo', 'Diseño encaje: portada cacao con la foto de la pareja en un óvalo de encaje'] },
       en: { name: 'Encaje', title: 'Encaje', desc: 'Intimate and romantic, like a window with a lace blind in the afternoon light: pull the tassel, the lace blind rises in folds and the couple appears in a lace oval. Inside, cocoa and ivory with lace trims, the wedding week with the day in a heart, paper-framed photos and a countdown in ovals.', opening: 'Opening: lace blind', colors: 'Cocoa, sage or rose', alt: ['Encaje design: lace blind with a sage tassel and the family name on an oval tag', 'Encaje design: cocoa cover with the couple’s photo in a lace oval'] } },
@@ -136,28 +136,35 @@
   ];
 
   var esc = function (s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); };
-  var UI = { es: { demo: 'Ver demo', buy: 'Elegir este diseño', featured: 'Destacado' }, en: { demo: 'View demo', buy: 'Choose this design', featured: 'Featured' } };
+  // Grupos de apertura: las pestañas «Cómo se abre» del catálogo y los accesos del inicio. Cada grupo junta opciones del filtro «apertura».
+  var OPENINGS = [
+    { id: 'sobres', es: 'Sobres', en: 'Envelopes', opts: ['sobre'] },
+    { id: 'puertas', es: 'Puertas y cortinas', en: 'Doors and curtains', opts: ['puertas', 'cortina', 'estor'] },
+    { id: 'cartas', es: 'Cartas y tarjetas', en: 'Cards', opts: ['pase', 'tarjetas', 'carta', 'calendario', 'baraja'] },
+    { id: 'estuches', es: 'Estuches y lazos', en: 'Boxes and bows', opts: ['carpeta', 'lazo', 'estuche', 'funda'] },
+    { id: 'tele', es: 'Tele y ventana', en: 'TV and window', opts: ['tele', 'ventana'] },
+    { id: 'luna', es: 'Luna y medallón', en: 'Moon and medallion', opts: ['luna', 'medallon'] }
+  ];
+  var UI = { es: { demo: 'Ver demo', demoOf: 'Ver cómo se abre', buy: 'Elegir', buyOf: 'Elegir el diseño', isNew: 'Nuevo', price: '[Precio]' }, en: { demo: 'View demo', demoOf: 'See how it opens:', buy: 'Choose', buyOf: 'Choose the design', isNew: 'New', price: '[Precio]' } };
+  var PLAY = '<svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l10.5-6.5z" fill="currentColor"/></svg>';
 
-  // Tarjeta de un diseño (el mismo estilo en la landing y en la galería).
-  function card(d, lang, o) {
-    var t = d[lang], u = UI[lang], base = lang === 'en' ? '/en' : '', o2 = o || {};
-    var phone = function (i, w, extra, r) { return '<div style="width: ' + w + 'px; flex-shrink: 0; ' + extra + 'padding: ' + (i ? 6 : 7) + 'px; background: #1C1A17; border-radius: ' + (i ? 32 : 36) + 'px; box-shadow: 0 24px 50px -26px ' + d.shadow + '"><img src="' + d.img[i] + '" alt="' + esc(t.alt[i]) + '" loading="lazy" style="display: block; width: 100%; height: auto; aspect-ratio: 375 / 812; object-fit: cover; border-radius: ' + r + 'px"></div>'; };
-    return '<article class="lz-card" data-id="' + d.id + '" style="background: #F5F2EA; border-radius: 20px; overflow: hidden; display: flex; flex-direction: column">' +
-      '<div style="position: relative; background: ' + d.bg + '; padding: 32px 12px 0; display: flex; justify-content: center; align-items: flex-start; gap: 14px; height: 380px; overflow: hidden">' +
-        (o2.badge && d.featured ? '<span style="position: absolute; top: 14px; left: 14px; font-size: 12px; font-weight: 500; padding: 6px 11px; border-radius: 999px; background: #2B3A33; color: #F5F2EA">' + u.featured + '</span>' : '') +
-        phone(0, 175, '', 29) + phone(1, 140, 'margin-top: 50px; ', 26) +
+  // Tarjeta de un diseño en el catálogo: la invitación cerrada, su apertura, su precio y los dos caminos (demo y elegir).
+  function card(d, lang) {
+    var t = d[lang], u = UI[lang], base = lang === 'en' ? '/en' : '';
+    var op = String(t.opening).replace(/^(Apertura|Opening):\s*/, '');
+    return '<article class="lz-card" data-id="' + d.id + '">' +
+      '<div class="lz-art" style="background: ' + d.bg + '">' +
+        '<a class="lz-ph" href="' + base + '/demo/' + d.id + '/" style="box-shadow: 0 24px 40px -22px ' + d.shadow + '" tabindex="-1" aria-hidden="true"><img src="' + d.img[0] + '" alt="" loading="lazy"></a>' +
+        (d.isNew ? '<span class="lz-new">' + u.isNew + '</span>' : '') +
+        '<a class="lz-play" href="' + base + '/demo/' + d.id + '/" aria-label="' + esc(u.demoOf + ' ' + t.name) + '">' + PLAY + '<span>' + u.demo + '</span></a>' +
       '</div>' +
-      '<div style="flex: 1; padding: 26px 28px 28px; display: flex; flex-direction: column; gap: 14px">' +
-        '<h3 style="margin: 0; font-family: \'Cormorant Garamond\', serif; font-weight: 600; font-size: 36px; color: #2B3A33">' + esc(t.title) + '</h3>' +
-        '<p style="margin: 0; font-size: 15px; line-height: 1.6; color: #4A4640">' + esc(t.desc) + '</p>' +
-        '<div style="display: flex; flex-wrap: wrap; gap: 8px">' + [t.opening, t.colors].map(function (x) { return '<span style="font-size: 12px; padding: 6px 11px; border-radius: 999px; background: #EAE4D7; color: #4A4640">' + esc(x) + '</span>'; }).join('') + '</div>' +
-        '<div style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: auto; padding-top: 6px"><a href="' + base + '/demo/' + d.id + '/" style="text-decoration: none; padding: 14px 26px; border-radius: 999px; border: 1px solid #22201C; color: #22201C; font-weight: 500; font-size: 15px">' + u.demo + '</a><a href="' + base + '/comprar/?diseno=' + d.id + '" style="text-decoration: none; padding: 14px 26px; border-radius: 999px; background: #2B3A33; color: #F5F2EA; font-weight: 500; font-size: 15px">' + u.buy + '</a></div>' +
-      '</div>' +
+      '<div class="lz-meta"><div><h3>' + esc(t.name) + '</h3><span class="lz-op">' + esc(op) + '</span><span class="lz-price">' + u.price + '</span></div>' +
+        '<a class="lz-buy" href="' + base + '/comprar/?diseno=' + d.id + '" aria-label="' + esc(u.buyOf + ' ' + t.name) + '">' + u.buy + '</a></div>' +
     '</article>';
   }
 
   window.LazoCatalog = {
-    designs: DESIGNS, filters: FILTERS, card: card,
+    designs: DESIGNS, filters: FILTERS, openings: OPENINGS, card: card,
     featured: function () { return DESIGNS.filter(function (d) { return d.featured; }).slice(0, 3); }
   };
 })();

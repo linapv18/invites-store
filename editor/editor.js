@@ -13,7 +13,7 @@
   var BASE = LANG === 'en' ? '/en' : '';
   var VIEW = root.getAttribute('data-view') || 'editor';
   // Las claves dependen de la cuenta y del diseño: las fija gate() (ver editor/auth.js).
-  var KEY = '', CART_KEY = '', AUTH = window.LazoAuth;
+  var KEY = '', CART_KEY = '', PREV_KEY = '', AUTH = window.LazoAuth;
 
   var esc = function (s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); };
   var pad = function (n) { return (n < 10 ? '0' : '') + n; };
@@ -25,48 +25,48 @@
   var STR = {
     es: {
       weddingOf: 'Boda de', designLbl: 'Diseño', myInv: 'Mis invitaciones',
-      gateT: function (d) { return 'Aún no tienes el diseño ' + d; }, gateP: 'Para editarlo, primero cómpralo. Las invitaciones que ya compraste están en tu cuenta.', gateBuy: 'Comprar este diseño',
+      gateT: function (d) { return 'Aún no tienen el diseño ' + d; }, gateP: 'Para editarlo, primero cómprenlo. Las invitaciones que ya compraron están en su cuenta.', gateBuy: 'Comprar este diseño',
       palFixed: function (d) { return 'Los colores vienen con el diseño ' + d + '.'; },
       saved: 'Cambios guardados', saving: 'Guardando…', saveFail: 'No se pudo guardar',
       saveFailLong: 'No pudimos guardar en este navegador. Si subiste muchas fotos, prueba con menos o más ligeras.',
       savedShort: 'guardado', savingShort: 'guardando…',
       addons: 'Complementos', guest: 'Ver como invitado', publish: 'Publicar', menu: 'Secciones', closeMenu: 'Cerrar secciones',
-      yourInv: 'Tu invitación', ready: function (n, t) { return n + ' de ' + t + ' secciones listas'; },
+      yourInv: 'Su invitación', ready: function (n, t) { return n + ' de ' + t + ' secciones listas'; },
       hidden: 'Oculta', done: 'Lista', seeAll: 'Ver todos', packsFrom: 'Paquetes · desde [Precio]', packsTitle: 'Ahorra combinando complementos', seePacks: 'Ver paquetes',
       section: 'Sección', optional: 'Opcional', inCart: 'En carrito', inCartRemove: 'En el carrito · Quitar', add: 'Añadir', remove: 'Quitar',
       addPrice: 'Añadir · [$]', addToInv: 'Añadir a mi invitación', seeAddon: 'Ver complemento', seePack: 'Ver paquete',
       edit: 'Editar', preview: 'Vista previa', mobile: 'Móvil', desktop: 'Escritorio', device: 'Dispositivo', modeLbl: 'Modo',
       viewingAs: 'Viendo como: Familia Rodríguez · 4 lugares', prev: 'Sección anterior', next: 'Siguiente', stepsLbl: 'Navegación entre secciones',
       sec: {
-        portada: ['Portada', 'Lo primero que verán tus invitados al abrir el sobre. Los cambios aparecen al instante en la vista previa.'],
-        apertura: ['Apertura y sello', 'Lo que tus invitados tocan para abrir la invitación.'],
-        historia: ['Nuestra historia', 'Cuenta cómo se conocieron y sube las fotos que quieras mostrar.'],
-        itinerario: ['Itinerario', 'Añade los eventos de tu boda en el orden en que suceden. Cada uno lleva su hora, lugar y mapa.'],
-        faq: ['Preguntas frecuentes', 'Código de vestimenta, niños, regalos… Lo que más te van a preguntar.'],
+        portada: ['Portada', 'Lo primero que ven sus invitados cuando termina la apertura. Lo que escriban aparece al instante en la vista previa.'],
+        apertura: ['Apertura y sello', 'Lo que sus invitados tocan para abrir la invitación.'],
+        historia: ['Nuestra historia', 'Cuenten cómo se conocieron y suban las fotos que quieran mostrar.'],
+        itinerario: ['Itinerario', 'Agreguen los momentos de su boda en el orden en que suceden. Cada uno lleva su hora, lugar y mapa.'],
+        faq: ['Preguntas frecuentes', 'Código de vestimenta, niños, regalos… Lo que más les van a preguntar.'],
         musica: ['Música de fondo', 'Su canción suena cuando se abre la invitación.'],
-        viaje: ['Viaje y hospedaje', 'Hoteles y planes para quienes vienen de fuera. Si todos tus invitados son locales, puedes ocultarla.'],
+        viaje: ['Viaje y hospedaje', 'Hoteles y planes para quienes vienen de fuera. Si todos sus invitados son locales, pueden ocultarla.'],
         rsvp: ['RSVP', 'Sí o no por invitado, más una nota para los novios.'],
-        invitados: ['Invitados', 'Tu lista de invitaciones: cada una tendrá su enlace único y sus personas. Súbela desde un archivo o créala aquí.']
+        invitados: ['Invitados', 'Su lista de invitaciones: cada una tendrá su enlace único y sus personas. Súbanla desde un archivo o créenla aquí.']
       },
       n1: 'Primer nombre', n2: 'Segundo nombre', date: 'Fecha de la boda', city: 'Ciudad', cityPh: 'Ciudad o lugar',
-      cover: 'Foto de portada', coverAlt: 'Foto de portada actual', drop: 'Arrastra una foto o elige un archivo', dropHint: 'JPG o PNG, vertical se ve mejor en el móvil',
-      msg: 'Mensaje de bienvenida', msgPh: 'Unas palabras para recibir a tus invitados', palette: 'Paleta',
-      domainK: 'Complemento · Dominio propio', domainT: function (d) { return 'Comparte ' + d + ' en vez de un enlace de Lazo'; },
-      effectNote: function (d) { return 'El efecto viene con el diseño ' + d + '. Para otro efecto, cambia de diseño.'; },
+      cover: 'Foto de portada', coverAlt: 'Foto de portada actual', drop: 'Arrastren una foto o elijan un archivo', dropHint: 'JPG o PNG. Vertical se ve mejor en el celular.',
+      msg: 'Mensaje de bienvenida', msgPh: 'Unas palabras para recibir a sus invitados', palette: 'Paleta',
+      domainK: 'Complemento · Dominio propio', domainT: function (d) { return 'Compartan ' + d + ' en vez de un enlace de Invitesse'; },
+      effectNote: function (d) { return 'El efecto viene con el diseño ' + d + '. Para otro efecto, cambien de diseño.'; },
       sealQ: '¿Qué lleva el sello?', sealGroup: 'Contenido del sello', text: 'Texto', mono: 'Monograma', sealText: 'Texto del sello', upTo8: 'Hasta 8 caracteres.',
       withInitials: 'Crear con sus iniciales', monoGroup: 'Estilo del monograma', amp: 'Con &', stack: 'Apiladas', ring: 'En marco',
-      upMono: 'O sube tu propio monograma', upMonoHint: 'SVG o PNG con fondo transparente', yourMono: 'Tu monograma', useIt: 'Usar este', inUse: 'En uso', delMono: 'Quitar monograma',
+      upMono: 'O suban su propio monograma', upMonoHint: 'SVG o PNG con fondo transparente', yourMono: 'Su monograma', useIt: 'Usar este', inUse: 'En uso', delMono: 'Quitar monograma',
       greeting: 'Saludo en la carta', greetingHint: '{apellido} se reemplaza con el nombre de cada familia.', token: '{apellido}',
-      storyTitle: 'Título', story: 'Su historia', storyPh: 'Escribe aquí cómo se conocieron, su primera cita o la propuesta.',
-      gallery: 'Galería', galCount: function (n, touch) { return n + ' de 12 fotos · ' + (touch ? 'ordénalas con las flechas' : 'arrastra para ordenar'); }, upPhotos: 'Subir fotos',
+      storyTitle: 'Título', story: 'Su historia', storyPh: 'Escriban aquí cómo se conocieron, su primera cita o la propuesta.',
+      gallery: 'Galería', galCount: function (n, touch) { return n + ' de 12 fotos · ' + (touch ? 'ordénalas con las flechas' : 'arrastren para ordenar'); }, upPhotos: 'Subir fotos',
       photoN: function (i) { return 'Foto ' + i; }, movePrev: 'Mover antes', moveNext: 'Mover después', delPhoto: 'Quitar foto', galFull: 'Llegaste a 12 fotos.',
-      galK: 'Complemento · Galería compartida', galT: '¿Y las fotos que tomen tus invitados?', galS: 'Que las suban a este mismo álbum, sin grupos de WhatsApp. [$]',
+      galK: 'Complemento · Galería compartida', galT: '¿Y las fotos que tomen sus invitados?', galS: 'Que las suban a este mismo álbum, sin grupos de WhatsApp. [$]',
       event: 'Evento', eventPh: 'Nombre del evento', time: 'Hora', place: 'Lugar', placePh: 'Nombre del lugar', address: 'Dirección', addressPh: 'Calle, número y ciudad',
-      cdUse: 'Cuenta regresiva hasta este evento', cdHint: 'Marca el evento que usa la cuenta regresiva: cuenta hasta la fecha de la boda a la hora de ese evento.',
-      mapUrl: 'Enlace de Google Maps (opcional)', mapUrlPh: 'https://maps.app.goo.gl/…', mapsHint: 'Para cada lugar puedes pegar su enlace de Google Maps (en Google Maps: Compartir → Copiar enlace). Si no lo pones, el botón "Cómo llegar" busca el lugar, la dirección y la ciudad.',
+      cdUse: 'Cuenta regresiva hasta este evento', cdHint: 'Marquen el momento que usa la cuenta regresiva: cuenta hasta la fecha de la boda a la hora de ese momento.',
+      mapUrl: 'Enlace de Google Maps (opcional)', mapUrlPh: 'https://maps.app.goo.gl/…', mapsHint: 'Para cada lugar pueden pegar su enlace de Google Maps (en Google Maps: Compartir → Copiar enlace). Si no lo ponen, el botón "Cómo llegar" busca el lugar, la dirección y la ciudad.',
       mapUrlBad: 'Ese enlace no es de Google Maps: se usará la búsqueda por lugar y dirección.', showMap: 'Ver en el mapa', hideMap: 'Ocultar mapa', searchMaps: 'Buscar en Google Maps', mapOf: function (n) { return 'Mapa: ' + n; },
-      needPlace: 'Escribe primero el lugar o la dirección.',
-      cityHint: 'También se usa para encontrar los lugares del itinerario en Google Maps.',
+      needPlace: 'Escriban primero el lugar o la dirección.',
+      cityHint: 'También la usamos para encontrar los lugares del itinerario en el mapa.',
       countdownNote: 'Frase de la cuenta regresiva', countdownNotePh: 'Cada vez falta menos para celebrar juntos.',
       quote: 'Una frase o cita (opcional)', quotePh: 'Una frase que los represente', quoteAuthor: 'Autor de la frase', quoteAuthorPh: 'Quién la dijo',
       dressK: 'Código de vestimenta', dressCode: 'Estilo', dressCodePh: 'Formal, cóctel, playa…', dressNotes: 'Recomendaciones', dressNotesPh: 'Lo que conviene saber para vestirse', dressColors: 'Colores reservados', dressColorsPh: 'p. ej. blanco y marfil',
@@ -74,44 +74,44 @@
       gettingK: 'Cómo llegar', airport: 'Aeropuerto', airportPh: 'Aeropuerto más cercano y tiempo de viaje', transport: 'Transporte', transportPh: '¿Habrá transporte para los invitados?',
       guideK: 'Guía de la ciudad', guideFood: 'Restaurantes', guideCulture: 'Museos y cultura', guidePlans: 'Actividades', guidePh: 'Sus recomendaciones',
       emptyHidden: 'Lo que dejes vacío no aparece en la invitación.',
-      moveUp: 'Mover arriba', moveDown: 'Mover abajo', delEvent: 'Eliminar evento', addEvent: 'Añadir evento', noEvents: 'Aún no hay eventos. Añade el primero con los atajos de abajo.',
-      libroK: 'Complemento · Libro de visitas QR', libroT: 'Un QR en las mesas para que te dejen mensajes y fotos durante la fiesta.',
-      q: 'Pregunta', qPh: 'Escribe la pregunta', a: 'Respuesta', aPh: 'Escribe la respuesta', delQ: 'Eliminar pregunta', addQ: '+ Añadir pregunta',
+      moveUp: 'Mover arriba', moveDown: 'Mover abajo', delEvent: 'Eliminar evento', addEvent: 'Añadir evento', noEvents: 'Aún no hay momentos. Agreguen el primero con los atajos de abajo.',
+      libroK: 'Complemento · Libro de visitas QR', libroT: 'Un QR en las mesas para que les dejen mensajes y fotos durante la fiesta.',
+      q: 'Pregunta', qPh: 'Escriban la pregunta', a: 'Respuesta', aPh: 'Escriban la respuesta', delQ: 'Eliminar pregunta', addQ: '+ Añadir pregunta',
       faqCount: function (n) { return n + ' de 7 preguntas'; }, faqFull: 'Llegaste al máximo. Elimina una para añadir otra.', noFaq: 'Aún no hay preguntas.',
       pollK: 'Complemento · Encuestas', pollT: 'Y para las preguntas divertidas: ¿quién llorará más?',
       musicOn: 'Música al abrir la invitación', musicOnHint: 'Suena cuando el invitado toca el sello.', musicOffHint: 'Sin música: la invitación se abre en silencio.',
-      musicSrc: '¿Qué música suena?', srcLibrary: 'Biblioteca Lazo', srcUpload: 'Subir mi canción', libraryK: 'Canciones de la biblioteca', libraryMore: 'Pronto habrá más canciones libres de derechos para elegir.',
-      musicUpload: 'Sube tu canción', musicReplace: 'Cambiar por otra canción', musicHint: 'MP3, hasta 15 MB', musicLocal: 'Por ahora la canción se guarda en este navegador.', musicDel: 'Quitar la canción',
+      musicSrc: '¿Qué música suena?', srcLibrary: 'Biblioteca Invitesse', srcUpload: 'Subir mi canción', libraryK: 'Canciones de la biblioteca', libraryMore: 'Pronto habrá más canciones libres de derechos para elegir.',
+      musicUpload: 'Suban su canción', musicReplace: 'Cambiar por otra canción', musicHint: 'MP3, hasta 15 MB', musicLocal: 'Por ahora la canción se guarda en este navegador.', musicDel: 'Quitar la canción',
       badMp3: 'El archivo debe ser un MP3.', mp3Big: 'La canción pesa más de 15 MB. Prueba con una versión más ligera.', mp3Fail: 'No se pudo guardar la canción en este navegador.',
       shareK: 'Vista previa al compartir', shareHint: 'Lo que aparece al mandar el enlace por WhatsApp, Instagram o mensaje.',
       shareSobre: 'Invitación cerrada', shareFoto: 'Una foto de ustedes', sharePick: '¿Cuál foto?', shareCover: 'Portada',
       envK: 'Textos del sobre', envIntro: 'Frase del sobre', envClosing: 'Despedida', envClosingPh: 'p. ej. Con todo nuestro cariño',
-      envKeepHint: 'Si lo dejas vacío, se usa el texto del diseño.', envOptHint: 'Opcional: aparece bajo el nombre de cada familia.',
+      envKeepHint: 'Si lo dejan vacío, se usa el texto del diseño.', envOptHint: 'Opcional: aparece bajo el nombre de cada familia.',
       photoBW: 'Fotos en blanco y negro', photoBWOn: 'Como en el diseño original.', photoBWOff: 'Las fotos se ven con sus colores originales.',
       photosOn: 'Usar fotos', photosOnOn: 'La portada y la historia llevan sus fotos.', photosOnOff: 'Sin fotos: sus nombres van en el óvalo de encaje y la historia lleva una ventana del jardín.',
       cancel: 'Cancelar', gUpload: 'Subir archivo (CSV)', gManual: 'Crear a mano', gHow: '¿Cómo se arma el archivo?',
-      gSteps: ['Descarga el archivo de ejemplo y ábrelo en Excel o Google Sheets.', 'Escribe una fila por persona. Las personas con el mismo nombre de invitación quedan juntas (por ejemplo, toda la Familia Rodríguez).', 'Guárdalo como CSV y súbelo aquí. Teléfono y correo son opcionales.'],
+      gSteps: ['Descarguen el archivo de ejemplo y ábranlo en Excel o Google Sheets.', 'Escriban una fila por persona. Las personas con el mismo nombre de invitación quedan juntas (por ejemplo, toda la Familia Rodríguez).', 'Guárdalo como CSV y súbelo aquí. Teléfono y correo son opcionales.'],
       gCols: ['Invitación', 'Persona', 'Teléfono', 'Correo'], gExample: 'Descargar el ejemplo (CSV)', gExampleFile: '/editor/invitados-ejemplo.csv',
-      gDrop: 'Sube tu lista de invitados', gDropHint: 'Archivo CSV (Excel o Google Sheets)', gBadFile: 'El archivo debe ser un CSV. En Excel: Archivo → Guardar como → CSV.',
+      gDrop: 'Suban su lista de invitados', gDropHint: 'Archivo CSV (Excel o Google Sheets)', gBadFile: 'El archivo debe ser un CSV. En Excel: Archivo → Guardar como → CSV.',
       gImported: function (n, p, sk) { return 'Importamos ' + n + (n === 1 ? ' invitación' : ' invitaciones') + ' con ' + p + (p === 1 ? ' persona' : ' personas') + (sk ? '. ' + sk + (sk === 1 ? ' fila sin nombre se omitió' : ' filas sin nombre se omitieron') : '') + '.'; },
       gNone: 'El archivo no tiene filas con invitación y persona.', gMerge: 'Si vuelves a subir un archivo, las invitaciones con el mismo nombre se combinan.',
-      gManualHint: 'Crea cada invitación con el nombre que verán (por ejemplo, Familia Rodríguez) y las personas que incluye.',
-      gList: 'Tu lista', gSummary: function (n, p) { return n + (n === 1 ? ' invitación' : ' invitaciones') + ' · ' + p + (p === 1 ? ' persona' : ' personas'); },
+      gManualHint: 'Creen cada invitación con el nombre que verán (por ejemplo, Familia Rodríguez) y las personas que incluye.',
+      gList: 'Su lista', gSummary: function (n, p) { return n + (n === 1 ? ' invitación' : ' invitaciones') + ' · ' + p + (p === 1 ? ' persona' : ' personas'); },
       gEmpty: 'Todavía no hay invitaciones.', gNew: '+ Nueva invitación', gName: 'Nombre de la invitación', gNamePh: 'p. ej. Familia Rodríguez', gPhone: 'Teléfono (WhatsApp)', gEmail: 'Correo',
       gPerson: 'Persona', gPersonPh: 'Nombre y apellido', gAddPerson: '+ Agregar persona', gDelPerson: 'Quitar a', gDelInv: 'Eliminar invitación', gClear: 'Borrar toda la lista', gClearAsk: '¿Borrar las {n} invitaciones de la lista?', gCleared: 'Lista borrada',
       gSearch: 'Buscar en la lista', gSearchPh: 'Nombre o familia…', gNoMatch: 'Nada coincide con la búsqueda.', gSeats: function (n) { return n + (n === 1 ? ' cupo' : ' cupos'); },
       palCustom: 'Personalizado', palCustomLbl: 'Elegir un color', palLight: 'Es un color claro: en la invitación lo oscurecemos un poco para que el texto se lea bien.',
       sample: 'Música de ejemplo', sampleHint: 'Así suena la música de fondo en las demos.', play: 'Escuchar', pause: 'Pausar',
-      playlistK: 'Complemento · Playlist colaborativa', playlistT: 'Deja que tus invitados armen la playlist de la fiesta.',
-      viajeShow: 'Mostrar esta sección en mi invitación', viajeOnHint: 'Visible para todos tus invitados.', viajeOffHint: 'Oculta: no aparecerá en tu invitación.',
+      playlistK: 'Complemento · Playlist colaborativa', playlistT: 'Dejen que sus invitados armen la playlist de la fiesta.',
+      viajeShow: 'Mostrar esta sección en mi invitación', viajeOnHint: 'Visible para todos sus invitados.', viajeOffHint: 'Oculta: no aparecerá en su invitación.',
       hotel: 'Hotel recomendado', hotelPh: 'Nombre del hotel', hotelLink: 'Enlace de reserva', hotelLinkPh: 'https://…',
       notes: 'Notas del hotel', notesPh: 'Tarifa especial, horarios de entrada y salida, contacto para reservar…',
-      destK: 'Paquete · Boda destino', destT: 'Sitio bilingüe y dominio propio para tus invitados de fuera',
+      destK: 'Paquete · Boda destino', destT: 'Sitio bilingüe y dominio propio para sus invitados de fuera',
       deadline: 'Fecha límite para confirmar', rsvpMsg: 'Nota para los invitados', rsvpMsgPh: 'p. ej. Nuestra celebración es solo para adultos.',
       diet: 'Preguntar por alergias o dieta', dietHint: 'Cada invitado puede indicar lo que no come.',
       note: 'Permitir una nota para los novios', noteHint: 'Un espacio libre al final del formulario.', offHint: 'Desactivado.',
-      capsulaK: 'Complemento · Cápsula de mensajes', capsulaT: 'Convierte las notas en una cápsula que se abre en su aniversario.',
-      addonK: 'Complemento', inYourCart: 'en tu carrito', available: 'disponible', alsoIn: 'También viene en el paquete', oneTime: 'Pago único · se activa al momento',
+      capsulaK: 'Complemento · Cápsula de mensajes', capsulaT: 'Conviertan las notas en una cápsula que se abre en su aniversario.',
+      addonK: 'Complemento', inYourCart: 'en su carrito', available: 'disponible', alsoIn: 'También viene en el paquete', oneTime: 'Pago único · se activa al momento',
       drawerSub: 'Añádelos ahora o cuando quieras, incluso después de publicar.', packsK: 'Paquetes', singlesK: 'Sueltos', saveP: 'Ahorras [$]',
       nAddons: function (n) { return n === 1 ? '1 complemento' : n + ' complementos'; }, pay: 'Pagar complementos', payNote: 'Pago único con tarjeta o PayPal · Precios en USD',
       close: 'Cerrar', closeAddons: 'Cerrar complementos', addedT: function (n) { return n + ': en el carrito'; }, removedT: function (n) { return n + ': fuera del carrito'; },
@@ -121,38 +121,38 @@
       rsvpK: 'Te esperamos', rsvpH: 'Confirma tu asistencia', rsvpBtn: 'Confirmar asistencia', rsvpBy: function (d) { return 'Antes del ' + d; },
       rsvpDemo: 'En la invitación publicada, aquí cada invitado confirma su asistencia.',
       guestTitle: 'Así la verá la familia Rodríguez', closeGuest: 'Volver al editor', replay: 'Ver la apertura otra vez',
-      pubTitle: 'Publicar tu invitación', pubText: 'Todavía no se puede publicar desde aquí: falta conectar la cuenta y el pago de la plantilla. Tus cambios quedan guardados en este navegador.',
+      pubTitle: 'Publicar su invitación', pubText: 'Todavía no se puede publicar desde aquí: falta conectar la cuenta y el pago de la plantilla. Sus cambios quedan guardados en este navegador.',
       pubPending: 'Secciones por completar:', pubAll: 'Todas las secciones están listas.', ok: 'Entendido',
       badFile: 'Ese archivo no es una imagen compatible.', badMono: 'El monograma debe ser SVG o PNG.',
-      demoPlaylist: 'Así la ven tus invitados', songAsk: '¿Qué canción no puede faltar?', songAskPh: 'Tu canción', suggest: 'Sugerir',
+      demoPlaylist: 'Así la ven sus invitados', songAsk: '¿Qué canción no puede faltar?', songAskPh: 'Su canción', suggest: 'Sugerir',
       songs: [['La canción del primer baile', 'Sugerida por Familia García'], ['Una para cantar todos', 'Sugerida por Tía Marta'], ['La de cuando se conocieron', 'Sugerida por Daniel']],
       approve: 'Por aprobar',
       qrScan: 'Escanea y déjanos un mensaje', qrMsg: '¡Que vivan los novios! Gracias por la mejor fiesta.', qrBy: 'Tía Marta · 23:14',
       sealedUntil: 'Sellada hasta el', capsuleMsgs: [['Familia García', 'Se abre en su aniversario'], ['Daniel y Sofía', 'Se abre en su aniversario'], ['Tía Marta', 'Se abre en su aniversario']],
       pollMain: '¿Quién llorará más en la ceremonia?', moreIdeas: 'Más ideas',
-      setupK: 'Déjalo listo', setupNote: 'Puedes prepararlo ahora: se activa en tu invitación cuando lo compres.',
-      pollsTitle: 'Tus preguntas', pollQ: 'Pregunta', pollQPh: 'Escribe una pregunta divertida', pollOpts: 'Respuestas (separadas por comas)',
+      setupK: 'Déjalo listo', setupNote: 'Pueden prepararlo ahora: se activa en su invitación cuando lo compren.',
+      pollsTitle: 'Sus preguntas', pollQ: 'Pregunta', pollQPh: 'Escriban una pregunta divertida', pollOpts: 'Respuestas (separadas por comas)',
       pollOptsPh: function (a, b) { return 'Si lo dejas vacío: ' + a + ' o ' + b; }, delPoll: 'Eliminar pregunta', addPoll: '+ Escribir otra pregunta',
-      pollIdeasK: 'Ideas para añadir', pollCount: function (n) { return n + ' de 6 preguntas'; }, pollFull: 'Llegaste a 6 preguntas. Elimina una para añadir otra.', noPolls: 'Aún no hay preguntas. Añade una idea o escribe la tuya.',
+      pollIdeasK: 'Ideas para añadir', pollCount: function (n) { return n + ' de 6 preguntas'; }, pollFull: 'Llegaste a 6 preguntas. Elimina una para añadir otra.', noPolls: 'Aún no hay preguntas. Agreguen una idea o escriban la suya.',
       reveal: '¿Cuándo ven los resultados?', revealParty: 'En la fiesta', revealVote: 'Al votar',
       revealPartyHint: 'Los resultados quedan en secreto hasta que ustedes los revelen en la fiesta.', revealVoteHint: 'Cada invitado ve cómo van las respuestas justo después de votar.',
-      guestsSee: 'Así lo verán tus invitados', vote: 'Votar', secretTill: 'Resultados en la fiesta',
-      capDate: 'Fecha de apertura', capDateHint: function (d) { return 'Si la dejas vacía, se abre en su primer aniversario' + (d ? ': ' + d : '') + '.'; },
+      guestsSee: 'Así lo verán sus invitados', vote: 'Votar', secretTill: 'Resultados en la fiesta',
+      capDate: 'Fecha de apertura', capDateHint: function (d) { return 'Si la dejan vacía, se abre en su primer aniversario' + (d ? ': ' + d : '') + '.'; },
       capPrompt: 'Lo que les piden a sus invitados', capPromptPh: 'Escríbenos algo para leer en nuestro primer aniversario.',
       capRsvp: 'Pedir el mensaje al confirmar asistencia', capRsvpOn: 'Aparece como un paso más del RSVP.', capRsvpOff: 'Tendrá su propio botón dentro de la invitación.', capWrite: 'Escribir mi mensaje',
       pollIdeas: ['¿Quién llegará tarde a la ceremonia?', '¿Quién será el último en la pista?', '¿Quién dijo «te quiero» primero?', '¿Cuántos minutos durará el discurso del padrino?'],
-      galUploaded: 'Subidas por tus invitados', galShot: function (n) { return 'Foto de invitado ' + n; },
+      galUploaded: 'Subidas por sus invitados', galShot: function (n) { return 'Foto de invitado ' + n; },
       biEs: 'Español', biEn: 'English', biEsT: 'Nos casamos', biEnT: 'We’re getting married', biEsMsg: 'y queremos celebrarlo contigo.', biEnMsg: 'and we want to celebrate with you.',
       // Pago
-      back: 'Volver al editor', secure: 'Pago seguro', coH1: 'Suma a tu invitación',
-      coLead: 'Se activan apenas pagues, en la misma invitación y con el mismo enlace que ya compartiste. No tienes que volver a enviarla.',
+      back: 'Volver al editor', secure: 'Pago seguro', coH1: 'Súmenle a su invitación',
+      coLead: 'Se activan apenas paguen, en la misma invitación y con el mismo enlace que ya compartieron. No tienen que volver a enviarla.',
       method: 'Método de pago', card: 'Tarjeta', paypal: 'PayPal', cardName: 'Nombre en la tarjeta', cardNamePh: 'Como aparece en la tarjeta',
       cardNum: 'Número de tarjeta', exp: 'Vencimiento', expPh: 'MM / AA', cvc: 'CVC',
-      paypalText: 'Al pagar te llevaremos a PayPal para terminar y volverás aquí con tus complementos activos.',
-      order: 'Tu pedido', pack: 'Paquete', upsellTxt: function (n) { return 'Con estos ya tienes ' + n + ' de 7. Pásate a <strong>Todo incluido</strong> y ahorra [$].'; },
-      change: 'Cambiar', total: 'Total', payBtn: 'Pagar y activar', payPaypal: 'Continuar con PayPal', payNote2: 'Pago único. Recibirás el recibo en tu correo.',
+      paypalText: 'Al pagar los llevaremos a PayPal para terminar y volverán aquí con sus complementos activos.',
+      order: 'Su pedido', pack: 'Paquete', upsellTxt: function (n) { return 'Con estos ya tienen ' + n + ' de 7. Pásate a <strong>Todo incluido</strong> y ahorra [$].'; },
+      change: 'Cambiar', total: 'Total', payBtn: 'Pagar y activar', payPaypal: 'Continuar con PayPal', payNote2: 'Pago único. Recibirán el recibo en su correo.',
       notConnected: 'Los pagos todavía no están conectados, así que no se hizo ningún cargo. [Pendiente: enlace de pago]',
-      empty: 'Tu carrito está vacío.', emptyCta: 'Elegir complementos', removeLine: 'Quitar del pedido:'
+      empty: 'Su carrito está vacío.', emptyCta: 'Elegir complementos', removeLine: 'Quitar del pedido:'
     },
     en: {
       weddingOf: 'Wedding of', designLbl: 'Design', myInv: 'My invitations',
@@ -182,7 +182,7 @@
       n1: 'First name', n2: 'Second name', date: 'Wedding date', city: 'City', cityPh: 'City or venue',
       cover: 'Cover photo', coverAlt: 'Current cover photo', drop: 'Drag a photo or choose a file', dropHint: 'JPG or PNG, portrait looks best on phones',
       msg: 'Welcome message', msgPh: 'A few words to welcome your guests', palette: 'Palette',
-      domainK: 'Add-on · Custom domain', domainT: function (d) { return 'Share ' + d + ' instead of a Lazo link'; },
+      domainK: 'Add-on · Custom domain', domainT: function (d) { return 'Share ' + d + ' instead of an Invitesse link'; },
       effectNote: function (d) { return 'The effect comes with the ' + d + ' design. For a different effect, change your design.'; },
       sealQ: 'What goes on the seal?', sealGroup: 'Seal content', text: 'Text', mono: 'Monogram', sealText: 'Seal text', upTo8: 'Up to 8 characters.',
       withInitials: 'Make one with your initials', monoGroup: 'Monogram style', amp: 'With &', stack: 'Stacked', ring: 'Framed',
@@ -211,7 +211,7 @@
       faqCount: function (n) { return n + ' of 7 questions'; }, faqFull: 'You reached the limit. Delete one to add another.', noFaq: 'No questions yet.',
       pollK: 'Add-on · Polls', pollT: 'And for the fun questions: who will cry the most?',
       musicOn: 'Music when the invitation opens', musicOnHint: 'Plays when the guest taps the seal.', musicOffHint: 'No music: the invitation opens in silence.',
-      musicSrc: 'What music plays?', srcLibrary: 'Lazo library', srcUpload: 'Upload my song', libraryK: 'Library songs', libraryMore: 'More royalty-free songs coming soon.',
+      musicSrc: 'What music plays?', srcLibrary: 'Invitesse library', srcUpload: 'Upload my song', libraryK: 'Library songs', libraryMore: 'More royalty-free songs coming soon.',
       musicUpload: 'Upload your song', musicReplace: 'Replace with another song', musicHint: 'MP3, up to 15 MB', musicLocal: 'For now the song is stored in this browser.', musicDel: 'Remove the song',
       badMp3: 'The file must be an MP3.', mp3Big: 'The song is larger than 15 MB. Try a lighter version.', mp3Fail: 'Could not save the song in this browser.',
       shareK: 'Link preview', shareHint: 'What people see when you send the link on WhatsApp, Instagram or by text.',
@@ -286,18 +286,35 @@
     }
   };
   var S = STR[LANG];
+  // Textos de la guía de cinco pasos y del panel para cambiar de diseño.
+  var G = {
+    es: { change: 'Cambiar diseño', designs: 'Diseños', guide: 'Guía', guideLbl: 'Guía para crear su invitación', of: 'de',
+      wK: 'Bienvenidos', wH: 'Su invitación, <i>en cinco pasos.</i>', wP: 'Les mostramos dónde está cada cosa. Todo se guarda solo, así que pueden dejarlo y volver cuando quieran.', wTime: 'Toma unos 2 minutos', wStart: 'Empezar el recorrido', wLater: 'Lo veo después',
+      steps: [['Elijan su diseño', 'Ya tienen uno. Pueden ver los demás y cambiar cuando quieran.'], ['Llenen cada sección', 'Portada, historia, itinerario, preguntas, música y hospedaje. Cada una lleva un check cuando está lista.'], ['Vean cómo queda', 'La vista previa cambia mientras escriben. Con «Ver como invitado» la recorren completa, desde la apertura.'], ['Agreguen a sus invitados', 'Una invitación por familia, con sus personas. También pueden subir su lista de Excel.'], ['Publiquen y envíen', 'Al publicar, cada familia recibe su enlace por WhatsApp y ustedes ven quién confirma.']],
+      stepN: function (i, n) { return 'Paso ' + i + ' de ' + n; }, skip: 'Saltar guía', prev: 'Paso anterior', next: 'Siguiente', done: 'Listo',
+      gH: 'Su guía', gN: function (d, n) { return d + ' de ' + n + ' pasos'; }, gSub: ['Diseño ', 'secciones listas', 'Revisen en celular y en escritorio', 'familias', 'Cuando todo esté listo'], gNone: 'Aún no hay familias', go: 'Ir', replay: 'Repetir el recorrido', help: 'Escríbannos',
+      dK: 'Cambiar diseño', dH: 'Los diseños, <i>con su boda adentro.</i>', all: 'Todos', current: 'Actual', yours: 'Suyo', open: 'Abrir', choose: 'Elegir', demo: 'Ver cómo se abre', close: 'Cerrar',
+      dNote: '<b>Sus textos, fotos e invitados se quedan.</b> Cada diseño tiene su precio; al abrir uno nuevo, llevamos su contenido para que no empiecen de cero.', price: '[Precio]' },
+    en: { change: 'Change design', designs: 'Designs', guide: 'Guide', guideLbl: 'Guide to create your invitation', of: 'of',
+      wK: 'Welcome', wH: 'Your invitation, <i>in five steps.</i>', wP: 'We’ll show you where everything is. It all saves itself, so you can leave and come back anytime.', wTime: 'Takes about 2 minutes', wStart: 'Start the tour', wLater: 'Maybe later',
+      steps: [['Choose your design', 'You already have one. You can see the others and switch anytime.'], ['Fill in each section', 'Cover, story, schedule, FAQ, music and travel. Each one gets a check when it’s ready.'], ['See how it looks', 'The preview changes as you type. “View as guest” lets you go through it all, from the opening.'], ['Add your guests', 'One invitation per family, with its people. You can also upload your Excel list.'], ['Publish and send', 'When you publish, each family gets its link on WhatsApp and you see who RSVPs.']],
+      stepN: function (i, n) { return 'Step ' + i + ' of ' + n; }, skip: 'Skip guide', prev: 'Previous step', next: 'Next', done: 'Done',
+      gH: 'Your guide', gN: function (d, n) { return d + ' of ' + n + ' steps'; }, gSub: ['Design: ', 'sections ready', 'Check on phone and desktop', 'families', 'When everything is ready'], gNone: 'No families yet', go: 'Go', replay: 'Replay the tour', help: 'Message us',
+      dK: 'Change design', dH: 'The designs, <i>with your wedding inside.</i>', all: 'All', current: 'Current', yours: 'Yours', open: 'Open', choose: 'Choose', demo: 'See how it opens', close: 'Close',
+      dNote: '<b>Your text, photos and guests stay.</b> Each design has its own price; when you open a new one, we bring your content so you don’t start from scratch.', price: '[Precio]' }
+  }[LANG];
 
   var SECS = ['portada', 'apertura', 'historia', 'itinerario', 'faq', 'musica', 'viaje', 'rsvp', 'invitados'];
   var ADDON_IDS = ['playlist', 'libro', 'capsula', 'encuestas', 'galeria', 'bilingue', 'dominio'];
   var ADDON_TXT = {
     es: {
-      playlist: ['Playlist colaborativa', 'Conectada a Spotify', 'Tus invitados sugieren canciones al confirmar y todo llega a una playlist de Spotify que ustedes controlan.', ['Sugerencias desde el RSVP', 'Ustedes aprueban cada canción', 'Lista lista para el DJ']],
+      playlist: ['Playlist colaborativa', 'Conectada a Spotify', 'Sus invitados sugieren canciones al confirmar y todo llega a una playlist de Spotify que ustedes controlan.', ['Sugerencias desde el RSVP', 'Ustedes aprueban cada canción', 'Lista lista para el DJ']],
       libro: ['Libro de visitas QR', 'Mensajes y fotos el día de la boda', 'Un código QR en las mesas abre un libro donde los invitados dejan mensajes y fotos durante la fiesta.', ['QR listo para imprimir', 'Mensajes con foto', 'Descarga en PDF']],
       capsula: ['Cápsula de mensajes', 'Se abre en su aniversario', 'Los invitados escriben mensajes que quedan sellados y se abren solos en su primer aniversario.', ['Mensajes sellados', 'Aviso el día del aniversario', 'Elige la fecha de apertura']],
-      encuestas: ['Encuestas divertidas', '¿Quién llorará más? ¿Quién llegará tarde?', 'Preguntas para reírse antes de la boda: tus invitados votan desde su invitación y los resultados se revelan en la fiesta.', ['Ideas listas o escribe las tuyas', 'Votan desde su enlace', 'Revelen los resultados en la fiesta']],
-      galeria: ['Galería compartida', 'Los invitados suben sus fotos', 'Todas las fotos de tus invitados en un solo álbum dentro de la invitación, sin grupos de WhatsApp.', ['Subida sin crear cuenta', 'Ustedes moderan', 'Descarga todo en un zip']],
-      bilingue: ['Sitio bilingüe', 'Español e inglés', 'Tus invitados eligen el idioma y tú escribes cada texto en ambos, lado a lado en el editor.', ['Selector de idioma', 'Editor lado a lado', 'RSVP en ambos idiomas']],
-      dominio: ['Dominio propio', 'p. ej. {d}', 'Tu invitación en tu propia dirección web en lugar de un enlace de Lazo.', ['Dominio incluido un año', 'Configuración automática', 'Enlaces por familia igual']]
+      encuestas: ['Encuestas divertidas', '¿Quién llorará más? ¿Quién llegará tarde?', 'Preguntas para reírse antes de la boda: sus invitados votan desde su invitación y los resultados se revelan en la fiesta.', ['Ideas listas o escribe las tuyas', 'Votan desde su enlace', 'Revelen los resultados en la fiesta']],
+      galeria: ['Galería compartida', 'Los invitados suben sus fotos', 'Todas las fotos de sus invitados en un solo álbum dentro de la invitación, sin grupos de WhatsApp.', ['Subida sin crear cuenta', 'Ustedes moderan', 'Descarga todo en un zip']],
+      bilingue: ['Sitio bilingüe', 'Español e inglés', 'Sus invitados eligen el idioma y ustedes escriben cada texto en ambos, lado a lado en el editor.', ['Selector de idioma', 'Editor lado a lado', 'RSVP en ambos idiomas']],
+      dominio: ['Dominio propio', 'p. ej. {d}', 'Su invitación en su propia dirección web en lugar de un enlace de Invitesse.', ['Dominio incluido un año', 'Configuración automática', 'Enlaces por familia igual']]
     },
     en: {
       playlist: ['Collaborative playlist', 'Connected to Spotify', 'Guests suggest songs when they RSVP and everything lands in a Spotify playlist you control.', ['Suggestions from the RSVP', 'You approve every song', 'A list ready for the DJ']],
@@ -306,7 +323,7 @@
       encuestas: ['Fun polls', 'Who will cry the most? Who will be late?', 'Questions for a laugh before the wedding: guests vote from their invitation and the results are revealed at the party.', ['Ready-made ideas or write your own', 'They vote from their link', 'Reveal the results at the party']],
       galeria: ['Shared gallery', 'Guests upload their photos', 'All your guests’ photos in one album inside the invitation, no group chats needed.', ['Upload without an account', 'You moderate', 'Download everything as a zip']],
       bilingue: ['Bilingual site', 'English and Spanish', 'Guests choose the language and you write each text in both, side by side in the editor.', ['Language switcher', 'Side-by-side editor', 'RSVP in both languages']],
-      dominio: ['Custom domain', 'e.g. {d}', 'Your invitation at your own web address instead of a Lazo link.', ['Domain included for a year', 'Automatic setup', 'Family links still work']]
+      dominio: ['Custom domain', 'e.g. {d}', 'Your invitation at your own web address instead of an Invitesse link.', ['Domain included for a year', 'Automatic setup', 'Family links still work']]
     }
   }[LANG];
   var PACKS = [
@@ -533,6 +550,7 @@
   }
   function loadState() {
     var d = defaults(), s = load(KEY);
+    if ((!s || typeof s !== 'object') && PREV_KEY) { s = load(PREV_KEY); if (s && typeof s === 'object') { s = clone(s); s.pal = d.pal; } }
     if (!s || typeof s !== 'object') return d;
     Object.keys(d).forEach(function (k) { if (s[k] === undefined || typeof s[k] !== typeof d[k] || Array.isArray(d[k]) !== Array.isArray(s[k])) s[k] = d[k]; });
     if (!DESIGNS[s.design]) s.design = 'clasico';
@@ -555,14 +573,18 @@
   var P = {
     gift: '<rect x="3" y="8" width="18" height="13" rx="2"/><path d="M12 8v13M3 12h18M12 8c-2-4-6-4-6-1.5S9 8 12 8Zm0 0c2-4 6-4 6-1.5S15 8 12 8Z"/>',
     lock: '<rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/>',
-    check: '<path d="M20 6 9 17l-5-5"/>', up: '<path d="m6 15 6-6 6 6"/>', down: '<path d="m6 9 6 6 6-6"/>', left: '<path d="M15 6l-6 6 6 6"/>', right: '<path d="M9 6l6 6-6 6"/>',
+    check: '<path d="M20 6 9 17l-5-5"/>', swap: '<path d="M4 8h16M16 4l4 4-4 4M20 16H4M8 12l-4 4 4 4"/>', help: '<circle cx="12" cy="12" r="9"/><path d="M9.6 9.4a2.6 2.6 0 1 1 3.6 2.4c-.7.3-1.2.9-1.2 1.7v.5"/><path d="M12 17.2h.01"/>',
+    grid: '<rect x="4" y="4" width="6.5" height="6.5" rx="1.5"/><rect x="13.5" y="4" width="6.5" height="6.5" rx="1.5"/><rect x="4" y="13.5" width="6.5" height="6.5" rx="1.5"/><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1.5"/>', eye: '<path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12Z"/><circle cx="12" cy="12" r="3"/>', play: '<path d="M8 5.5v13l10.5-6.5z" fill="currentColor" stroke="none"/>', arrow: '<path d="M5 12h14M13 6l6 6-6 6"/>', replay: '<path d="M4 12a8 8 0 1 0 2.4-5.7M4 4v4h4"/>', up: '<path d="m6 15 6-6 6 6"/>', down: '<path d="m6 9 6 6 6-6"/>', left: '<path d="M15 6l-6 6 6 6"/>', right: '<path d="M9 6l6 6-6 6"/>',
     trash: '<path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/>', x: '<path d="M6 6l12 12M18 6 6 18"/>',
     upload: '<path d="M12 16V4M7 9l5-5 5 5M4 16v3a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-3"/>', plus: '<path d="M12 5v14M5 12h14"/>', menu: '<path d="M4 7h16M4 12h16M4 17h10"/>',
     mail: '<rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/>', doors: '<path d="M4 21V11a8 8 0 0 1 16 0v10ZM12 3v18"/>',
     card: '<rect x="2.5" y="5" width="19" height="14" rx="2"/><path d="M2.5 10h19M6 15h4"/>', play: '<path d="M7 5v14l11-7Z"/>', pause: '<path d="M8 5v14M16 5v14"/>',
     music: '<path d="M9 18V5l11-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="17" cy="16" r="3"/>'
   };
-  var logo = '<span class="ed-logo-mark">&amp;</span><span class="ed-logo-word">lazo</span>';
+  // Logo de Invitesse: el sello «ss» con el lazo (barra del editor) y la palabra completa (accesos y pago).
+  var LOOP = 'M2 48C10 34 22 26 31 30C39 34 35 45 27 43C19 41 21 26 36 17C46 11 58 10 66 15';
+  var logo = '<span class="iv-mark" aria-hidden="true"><b>ss</b><svg viewBox="0 0 70 54"><path d="' + LOOP + '" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round"/></svg></span>';
+  var logoFull = '<span class="iv-wm" aria-hidden="true"><span>invite</span><b>ss</b><span>e</span><svg viewBox="0 0 70 54"><path d="' + LOOP + '" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg></span>';
   var addonName = function (id) { return ADDON_TXT[id][0]; };
   var initial = function (s) { return esc((String(s || '').trim().charAt(0) || ' ').toUpperCase()); };
   var accentOf = function (st) { return (PALETTES.filter(function (p) { return p.id === st.pal; })[0] || PALETTES[0]).hex; };
@@ -778,12 +800,14 @@
     if (!d) d = own.indexOf(u.last) > -1 ? u.last : own[0];
     if (!AUTH.owns(d)) {
       var name = DESIGNS[d] ? DESIGNS[d][LANG][0] : d;
-      document.title = S.gateT(name) + ' — Lazo';
-      root.innerHTML = '<div class="ed-gate"><a class="ed-logo" href="' + BASE + '/" aria-label="Lazo">' + logo + '</a><h1>' + esc(S.gateT(name)) + '</h1><p>' + esc(S.gateP) + '</p><div>' +
+      document.title = S.gateT(name) + ' — Invitesse';
+      root.innerHTML = '<div class="ed-gate"><a class="ed-logo ed-logo-full" href="' + BASE + '/" aria-label="Invitesse">' + logoFull + '</a><h1>' + esc(S.gateT(name)) + '</h1><p>' + esc(S.gateP) + '</p><div>' +
         (DESIGNS[d] ? '<a class="ed-btn ed-btn-dark" href="' + BASE + '/comprar/?diseno=' + d + '">' + esc(S.gateBuy) + '</a>' : '') +
         '<a class="ed-btn" href="' + BASE + '/cuenta/">' + esc(S.myInv) + '</a></div></div>';
       return null;
     }
+    // Si es la primera vez que abren este diseño, el editor trae el contenido del último que editaron.
+    if (u.last && u.last !== d && AUTH.owns(u.last)) PREV_KEY = AUTH.invKey(u.last);
     AUTH.setLast(d);
     KEY = AUTH.invKey(d); CART_KEY = AUTH.cartKey();
     return d;
@@ -830,13 +854,15 @@
     '<div class="ed" id="ed" data-mode="edit">' +
       '<header class="ed-top">' +
         '<button type="button" class="ed-icon-btn ed-menu" data-act="menu" aria-label="' + esc(S.menu) + '" aria-expanded="false" aria-controls="edNav">' + svg(P.menu, 18) + '</button>' +
-        '<a class="ed-logo" href="' + BASE + '/" aria-label="Lazo">' + logo + '</a><div class="ed-sep"></div>' +
-        '<div class="ed-title"><strong data-couple></strong><small>' + esc(S.designLbl) + ' <span data-design></span> · <a href="' + BASE + '/cuenta/">' + esc(S.myInv) + '</a></small></div>' +
+        '<a class="ed-logo" href="' + BASE + '/" aria-label="Invitesse">' + logo + '</a><div class="ed-sep"></div>' +
+        '<div class="ed-title"><strong data-couple></strong><small>' + esc(S.designLbl) + ' <span data-design></span> · <button type="button" class="ed-chg" data-act="designs">' + svg(P.swap, 14, 2) + esc(G.change) + '</button> · <a href="' + BASE + '/cuenta/">' + esc(S.myInv) + '</a></small></div>' +
         '<div class="ed-save" data-save aria-live="polite"></div>' +
         '<div class="ed-mtitle"><strong data-couple-short></strong><small data-msub></small></div>' +
         '<div class="ed-spacer"></div>' +
+        '<button type="button" class="ed-btn ed-guidebtn" data-act="guide" aria-haspopup="dialog" aria-label="' + esc(G.guideLbl) + '">' + svg(P.help, 16) + '<span class="ed-guide-word">' + esc(G.guide) + '</span><small data-guide-n></small></button>' +
+        '<button type="button" class="ed-btn ed-dsgbtn" data-act="designs">' + svg(P.grid, 16) + esc(G.designs) + '</button>' +
         '<button type="button" class="ed-btn ed-cartbtn" data-act="drawer">' + svg(P.gift) + esc(S.addons) + '<span class="ed-count" data-count></span></button>' +
-        '<button type="button" class="ed-btn ed-guestbtn" data-act="guest">' + esc(S.guest) + '</button>' +
+        '<button type="button" class="ed-btn ed-guestbtn" data-act="guest">' + svg(P.eye, 16) + esc(S.guest) + '</button>' +
         '<button type="button" class="ed-btn ed-btn-dark" data-act="publish">' + esc(S.publish) + '</button>' +
       '</header>' +
       '<div class="ed-tabs ed-seg" role="tablist" aria-label="' + esc(S.modeLbl) + '">' +
@@ -858,7 +884,7 @@
         '<button type="button" class="ed-btn" data-act="drawer">' + svg(P.gift) + esc(S.addons) + '<span class="ed-count" data-count></span></button>' +
         '<button type="button" class="ed-btn ed-btn-dark" data-act="step" data-d="1">' + esc(S.next) + svg(P.right, 16, 2) + '</button>' +
       '</nav>' +
-    '</div><div id="edLayer"></div><div id="edModal"></div>';
+    '</div><div id="edLayer"></div><div id="edModal"></div><div id="edGuide"></div>';
 
   var $ = function (s) { return root.querySelector(s); };
   var $$ = function (s) { return Array.prototype.slice.call(root.querySelectorAll(s)); };
@@ -875,6 +901,7 @@
     $$('[data-couple]').forEach(function (el) { el.textContent = S.weddingOf + ' ' + couple(state); });
     $$('[data-couple-short]').forEach(function (el) { el.textContent = couple(state); });
     $$('[data-design]').forEach(function (el) { el.textContent = design()[0]; });
+    var gd = guideDone().filter(Boolean).length; $$('[data-guide-n]').forEach(function (el) { el.textContent = gd + '/' + GUIDE_N; });
     $$('[data-count]').forEach(function (el) { el.textContent = n; el.hidden = !n; });
     $$('[data-msub]').forEach(function (el) { el.textContent = (idx > -1 ? pad(idx + 1) + ' · ' : '') + secName(state.sec) + ' · ' + (ui.saving === 'saving' ? S.savingShort : ui.saving === 'fail' ? S.saveFail : S.savedShort); });
     var sv = $('[data-save]');
@@ -893,7 +920,7 @@
     var done = SECS.filter(doneOf).length;
     var row = function (id, inner) { return '<button type="button" class="ed-row" data-act="sec" data-id="' + id + '" data-fk="nav-' + id + '"' + (state.sec === id ? ' aria-current="page"' : '') + '>' + inner + '</button>'; };
     nav.innerHTML =
-      '<div class="ed-nav-top ed-only-m"><span class="ed-logo">' + logo + '</span><button type="button" class="ed-icon-btn" data-act="menu-close" aria-label="' + esc(S.closeMenu) + '">' + svg(P.x, 16, 2) + '</button></div>' +
+      '<div class="ed-nav-top ed-only-m"><span class="ed-logo ed-logo-full" role="img" aria-label="Invitesse">' + logoFull + '</span><button type="button" class="ed-icon-btn" data-act="menu-close" aria-label="' + esc(S.closeMenu) + '">' + svg(P.x, 16, 2) + '</button></div>' +
       '<div class="ed-progress"><span class="ed-kicker">' + esc(S.yourInv) + '</span><div class="ed-bar"><span style="width:' + Math.round(done / SECS.length * 100) + '%"></span></div><small>' + esc(S.ready(done, SECS.length)) + '</small></div>' +
       '<div class="ed-list">' + SECS.map(function (id, i) {
         var hidden = id === 'viaje' && !state.viajeOn;
@@ -906,7 +933,7 @@
       }).join('') + '</div>' +
       '<div class="ed-promo"><span class="ed-kicker">' + esc(S.packsFrom) + '</span><span class="ed-promo-title">' + esc(S.packsTitle) + '</span><div class="ed-chips">' +
       PACKS.map(function (p) { return '<span class="ed-chip">' + esc(PACK_TXT[p.id][0]) + '</span>'; }).join('') + '</div><button type="button" class="ed-btn" data-act="drawer">' + esc(S.seePacks) + '</button></div>' +
-      '<div class="ed-only-m" style="flex-direction:column;gap:10px;padding:0 4px"><button type="button" class="ed-btn" data-act="guest">' + esc(S.guest) + '</button><a class="ed-btn" href="' + BASE + '/cuenta/">' + esc(S.myInv) + '</a></div>';
+      '<div class="ed-only-m" style="flex-direction:column;gap:10px;padding:0 4px"><button type="button" class="ed-btn" data-act="designs">' + svg(P.grid, 16) + esc(G.designs) + '</button><button type="button" class="ed-btn" data-act="guest">' + esc(S.guest) + '</button><a class="ed-btn" href="' + BASE + '/cuenta/">' + esc(S.myInv) + '</a></div>';
   }
 
   /* ---------- Piezas del formulario ---------- */
@@ -1506,8 +1533,20 @@
         var full = p.ids.every(function (x) { return c2[x]; });
         p.ids.forEach(function (x) { if (full) delete c2[x]; else c2[x] = true; });
         setCart(c2, (full ? S.removedT : S.addedT)(PACK_TXT[id][0])); break;
-      case 'guest': openGuest(b); break;
+      case 'guest': guideMark('viewed'); openGuest(b); break;
       case 'guest-close': closeGuest(); break;
+      case 'designs': openDesigns(b); break;
+      case 'designs-close': closeDesigns(); break;
+      case 'designs-tab': ui.dTab = id; renderDesigns(); var dt = $('[data-act="designs-tab"][data-id="' + id + '"]'); if (dt) dt.focus(); break;
+      case 'guide': guideOpen ? closeGuide() : openGuidePanel(b); break;
+      case 'guide-close': closeGuide(true); break;
+      case 'guide-start': closeModal(); guideSave({ seen: true }); tour(0); break;
+      case 'guide-later': guideSave({ seen: true }); closeModal(); break;
+      case 'guide-replay': closeGuide(); tour(0); break;
+      case 'tour-next': tour(tourAt + 1); break;
+      case 'tour-prev': tour(tourAt - 1); break;
+      case 'tour-skip': endTour(); break;
+      case 'guide-go': closeGuide(); guideGo(+id); break;
       case 'publish':
         var pending = SECS.filter(function (x) { return !doneOf(x); });
         // TODO: publicar de verdad cuando haya cuentas y backend (y el pago de la plantilla esté conectado).
@@ -1517,8 +1556,8 @@
         break;
       case 'modal-close': closeModal(); break;
       case 'modal-scrim': if (e.target === b) closeModal(); break;
-      case 'mode': ui.mode = id; stopSample(); renderChrome(); if (id === 'preview') renderPreview(true); break;
-      case 'device': ui.device = id; renderChrome(); setTimeout(function () { renderPreview(true); }, 350); break;
+      case 'mode': ui.mode = id; stopSample(); if (id === 'preview') guideMark('viewed'); renderChrome(); if (id === 'preview') renderPreview(true); break;
+      case 'device': ui.device = id; guideMark('viewed'); renderChrome(); setTimeout(function () { renderPreview(true); }, 350); break;
       case 'step':
         var idx = SECS.indexOf(state.sec), nx = idx < 0 ? (d > 0 ? 0 : -1) : idx + d;
         if (nx >= 0 && nx < SECS.length) go(SECS[nx]);
@@ -1596,8 +1635,9 @@
   function focusAfterDelete(sel, i, fallback) { var l = $$(sel); var el = l[Math.min(i, l.length - 1)] || $(fallback); if (el) el.focus(); }
 
   document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape') { if (closeModal() || closeGuest() || closeDrawer() || closeNav(true)) e.preventDefault(); return; }
-    var box = document.querySelector('.ed-modal-box') || document.querySelector('.ed-guest') || document.querySelector('.ed-drawer') || (ui.nav ? nav : null);
+    if (e.key === 'Escape') { if (endTour() || closeGuide(true) || closeModal() || closeDesigns() || closeGuest() || closeDrawer() || closeNav(true)) e.preventDefault(); return; }
+    if (tourAt > -1 && (e.key === 'ArrowRight' || e.key === 'ArrowLeft') && !/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName)) { e.preventDefault(); tour(tourAt + (e.key === 'ArrowRight' ? 1 : -1)); return; }
+    var box = document.querySelector('.ed-tour-pop') || document.querySelector('.ed-gpanel') || document.querySelector('.ed-modal-box') || document.querySelector('.ed-dz') || document.querySelector('.ed-guest') || document.querySelector('.ed-drawer') || (ui.nav ? nav : null);
     trap(e, box);
   });
   window.addEventListener('storage', function (e) { if (e.key === CART_KEY) { cart = loadCart(); keepFocus(function () { renderChrome(); renderNav(); renderMain(); renderDrawer(); }); } });
@@ -1612,8 +1652,137 @@
   window.addEventListener('resize', layoutFrame);
   window.addEventListener('resize', layoutShare);
   $('#edPhone').addEventListener('transitionend', layoutFrame); // el marco anima su ancho al cambiar de dispositivo
+
+  /* ---------- Guía de cinco pasos ----------
+     La primera vez se abre una bienvenida con los pasos; «Empezar el recorrido» ilumina cada parte del editor.
+     El botón «Guía» muestra el avance (se marca solo con lo que hacen) y lleva a lo que falta. */
+  var GKEY = KEY + ':guia', GUIDE_N = 5, tourAt = -1, guideOpen = false;
+  var guideState = function () { var g = load(GKEY); return g && typeof g === 'object' ? g : {}; };
+  function guideSave(patch) { var g = guideState(); Object.keys(patch).forEach(function (k) { g[k] = patch[k]; }); store(GKEY, g); }
+  function guideMark(k) { if (!guideState()[k]) { guideSave((function () { var o = {}; o[k] = true; return o; })()); renderChrome(); } }
+  function guideDone() {
+    var g = guideState(), secs = SECS.filter(function (x) { return x !== 'invitados'; });
+    return [true, secs.every(doneOf), !!g.viewed, state.invitations.length > 0, !!g.published];
+  }
+  var guideHost = function () { return document.getElementById('edGuide'); };
+  function welcome() {
+    var steps = G.steps.map(function (t, i) { return '<li><span class="ed-wn">' + (i + 1) + '</span><div><b>' + esc(t[0]) + '</b><span>' + esc(t[1]) + '</span></div></li>'; }).join('');
+    modal('<div class="ed-welcome"><div class="ed-welcome-top"><span class="ed-logo-full on-dark">' + logoFull.replace('class="iv-wm"', 'class="iv-wm on-dark"') + '</span><h2 id="mdTitle">' + G.wH + '</h2><p>' + esc(G.wP) + '</p></div>' +
+      '<ol class="ed-welcome-steps">' + steps + '</ol>' +
+      '<div class="ed-modal-actions ed-welcome-actions"><span class="ed-welcome-time">' + esc(G.wTime) + '</span><button type="button" class="ed-btn ed-btn-dark" data-act="guide-start">' + esc(G.wStart) + svg(P.arrow, 16, 2) + '</button><button type="button" class="ed-btn" data-act="guide-later">' + esc(G.wLater) + '</button></div></div>');
+    var mb = document.querySelector('#edModal .ed-modal-box'); if (mb) mb.classList.add('ed-welcome-box');
+  }
+  // Qué parte del editor ilumina cada paso (en el celular, el menú y las pestañas).
+  function tourTarget(i) {
+    var m = isMobile();
+    var sel = m ? ['.ed-mtitle', '.ed-menu', '.ed-tabs', '.ed-menu', '.ed-top [data-act="publish"]'] : ['.ed-title .ed-chg', '#edNav .ed-list', '#edPv .ed-pv-sticky', '#edNav [data-id="invitados"]', '.ed-top [data-act="publish"]'];
+    var el = root.querySelector(sel[i]); if (!el) return null;
+    var r = el.getBoundingClientRect(); return r.width && r.height ? r : null;
+  }
+  function tour(i) {
+    if (i < 0) i = 0;
+    if (i >= GUIDE_N) return endTour();
+    tourAt = i; closeNav(); closeDrawerSilently();
+    if (i === 3 && !isMobile()) { var t = root.querySelector('#edNav [data-id="invitados"]'); if (t) t.scrollIntoView({ block: 'nearest' }); }
+    paintTour(); document.body.classList.add('ed-locked');
+    var n = guideHost().querySelector('[data-act="tour-next"]'); if (n) n.focus();
+  }
+  function paintTour() {
+    if (tourAt < 0) return;
+    var r = tourTarget(tourAt), t = G.steps[tourAt], pad = 8, W = window.innerWidth, H = window.innerHeight, m = isMobile();
+    var dots = ''; for (var k = 0; k < GUIDE_N; k++) dots += '<span' + (k === tourAt ? ' class="on"' : '') + '></span>';
+    var spot = r ? '<div class="ed-tour-spot" style="left:' + (r.left - pad) + 'px;top:' + (r.top - pad) + 'px;width:' + (r.width + pad * 2) + 'px;height:' + (r.height + pad * 2) + 'px"></div>' : '<div class="ed-tour-dim"></div>';
+    var pw = Math.min(360, W - 24), pos;
+    if (m || !r) pos = (r && r.top + r.height / 2 > H / 2) ? 'left:12px;right:12px;top:12px' : 'left:12px;right:12px;bottom:12px';
+    else if (W - r.right > pw + 40) pos = 'left:' + (r.right + 20) + 'px;top:' + Math.max(12, Math.min(r.top, H - 280)) + 'px;width:' + pw + 'px';
+    else if (r.left > pw + 40) pos = 'left:' + (r.left - pw - 20) + 'px;top:' + Math.max(12, Math.min(r.top, H - 280)) + 'px;width:' + pw + 'px';
+    else pos = 'left:' + Math.max(12, Math.min(r.left, W - pw - 12)) + 'px;top:' + Math.min(r.bottom + 20, H - 280) + 'px;width:' + pw + 'px';
+    guideHost().innerHTML = '<div class="ed-tour">' + spot + '<div class="ed-tour-pop" role="dialog" aria-modal="true" aria-labelledby="tourT" aria-describedby="tourP" style="' + pos + '">' +
+      '<div class="ed-tour-top"><span class="ed-tour-n">' + esc(G.stepN(tourAt + 1, GUIDE_N)) + '</span><button type="button" class="ed-link" data-act="tour-skip">' + esc(G.skip) + '</button></div>' +
+      '<h2 id="tourT">' + esc(t[0]) + '</h2><p id="tourP">' + esc(t[1]) + '</p>' +
+      '<div class="ed-tour-foot"><div class="ed-dots" aria-hidden="true">' + dots + '</div><div style="display:flex;gap:8px">' +
+      (tourAt > 0 ? '<button type="button" class="ed-icon-btn" data-act="tour-prev" aria-label="' + esc(G.prev) + '">' + svg(P.left, 16, 2) + '</button>' : '') +
+      '<button type="button" class="ed-btn ed-btn-dark" data-act="tour-next">' + esc(tourAt === GUIDE_N - 1 ? G.done : G.next) + (tourAt === GUIDE_N - 1 ? '' : svg(P.arrow, 16, 2)) + '</button></div></div></div></div>';
+  }
+  function endTour() {
+    if (tourAt < 0) return false;
+    tourAt = -1; guideHost().innerHTML = ''; guideSave({ seen: true, toured: true });
+    if (!document.querySelector('.ed-overlay,.ed-guest,.ed-modal')) document.body.classList.remove('ed-locked');
+    var g = $('.ed-guidebtn'); if (g && g.offsetParent) g.focus();
+    return true;
+  }
+  function openGuidePanel(opener) {
+    guideOpen = true; ui.gOpener = opener || document.activeElement;
+    var done = guideDone(), n = done.filter(Boolean).length, secsDone = SECS.filter(function (x) { return x !== 'invitados' && doneOf(x); }).length;
+    var sub = [G.gSub[0] + design()[0], secsDone + ' ' + G.of + ' ' + (SECS.length - 1) + ' ' + G.gSub[1], G.gSub[2], state.invitations.length ? state.invitations.length + ' ' + G.gSub[3] : G.gNone, G.gSub[4]];
+    var rows = G.steps.map(function (t, i) {
+      return '<li class="' + (done[i] ? 'ok' : '') + '"><span class="ed-gbox">' + (done[i] ? svg(P.check, 12, 2.6) : '') + '</span><div><b>' + esc(t[0]) + '</b><small>' + esc(sub[i]) + '</small></div>' +
+        (done[i] ? '' : '<button type="button" class="ed-gogo" data-act="guide-go" data-id="' + i + '">' + esc(G.go) + svg(P.arrow, 13, 2) + '</button>') + '</li>';
+    }).join('');
+    var b = opener && opener.getBoundingClientRect ? opener.getBoundingClientRect() : null, m = isMobile();
+    var pos = m || !b ? '' : ' style="top:' + (b.bottom + 10) + 'px;left:' + Math.max(12, Math.min(b.left - 120, window.innerWidth - 392)) + 'px"';
+    guideHost().innerHTML = '<div class="ed-gscrim" data-act="guide-close"></div><section class="ed-gpanel' + (m ? ' sheet' : '') + '" role="dialog" aria-modal="true" aria-labelledby="gpT"' + pos + '>' +
+      '<div class="ed-gpanel-head"><h2 id="gpT">' + esc(G.gH) + '</h2><span>' + esc(G.gN(n, GUIDE_N)) + '</span></div>' +
+      '<div class="ed-bar"><span style="width:' + Math.round(n / GUIDE_N * 100) + '%"></span></div><ol>' + rows + '</ol>' +
+      '<div class="ed-gpanel-foot"><button type="button" class="ed-link" data-act="guide-replay">' + svg(P.replay, 15) + esc(G.replay) + '</button><button type="button" class="ed-icon-btn" data-act="guide-close" aria-label="' + esc(G.close) + '">' + svg(P.x, 14, 2) + '</button></div></section>';
+    var f = guideHost().querySelector('.ed-gogo') || guideHost().querySelector('[data-act="guide-replay"]'); if (f) f.focus();
+  }
+  function closeGuide(refocus) {
+    if (!guideOpen) return false;
+    guideOpen = false; guideHost().innerHTML = '';
+    if (refocus && ui.gOpener && document.body.contains(ui.gOpener)) ui.gOpener.focus();
+    return true;
+  }
+  function guideGo(i) {
+    if (i === 0) return openDesigns($('.ed-chg'));
+    if (i === 1) { var nx = SECS.filter(function (x) { return x !== 'invitados' && !doneOf(x); })[0]; return go(nx || 'portada', true); }
+    if (i === 2) { guideMark('viewed'); return openGuest($('.ed-guestbtn')); }
+    if (i === 3) return go('invitados', true);
+    var pb = $('.ed-top [data-act="publish"]'); if (pb) pb.click();
+  }
+
+  /* ---------- Cambiar diseño: los diseños sin salir del editor ----------
+     El que están editando va marcado; los que ya compraron se abren con «Abrir»; los demás llevan a comprarlos.
+     Al abrir un diseño nuevo, el editor trae el contenido del último que editaron (ver loadState). */
+  var CAT = window.LazoCatalog;
+  function designsHTML() {
+    var list = CAT ? CAT.designs : Object.keys(DESIGNS).map(function (id) { return { id: id, img: [], bg: '#EFE9E1', tags: { apertura: [] } }; });
+    var tab = ui.dTab || '', grp = CAT && CAT.openings ? CAT.openings : [];
+    var g = grp.filter(function (x) { return x.id === tab; })[0];
+    var shown = list.filter(function (d) { return !g || (d.tags.apertura || []).some(function (a) { return g.opts.indexOf(a) > -1; }); });
+    var tabs = '<button type="button" class="ed-dz-tab" role="tab" data-act="designs-tab" data-id="" aria-selected="' + !tab + '">' + esc(G.all) + ' <small>' + list.length + '</small></button>' +
+      grp.map(function (x) { var c = list.filter(function (d) { return (d.tags.apertura || []).some(function (a) { return x.opts.indexOf(a) > -1; }); }).length;
+        return '<button type="button" class="ed-dz-tab" role="tab" data-act="designs-tab" data-id="' + x.id + '" aria-selected="' + (tab === x.id) + '">' + esc(x[LANG]) + ' <small>' + c + '</small></button>'; }).join('');
+    var cards = shown.map(function (d) {
+      var name = DESIGNS[d.id] ? DESIGNS[d.id][LANG][0] : d.id, op = DESIGNS[d.id] ? DESIGNS[d.id][LANG][1] : '', cur = d.id === state.design, own = AUTH.owns(d.id);
+      var act = cur ? '<span class="ed-pill ed-pill-dark">' + svg(P.check, 12, 2.6) + esc(G.current) + '</span>' : own ? '<a class="ed-btn ed-btn-sm ed-btn-dark" href="' + BASE + '/editor/?diseno=' + d.id + '">' + esc(G.open) + '</a>' : '<a class="ed-btn ed-btn-sm" href="' + BASE + '/comprar/?diseno=' + d.id + '">' + esc(G.choose) + '</a>';
+      return '<article class="ed-dz-card' + (cur ? ' cur' : '') + '"><div class="ed-dz-art" style="background:' + (d.bg || '#EFE9E1') + '">' + (d.img && d.img[0] ? '<span class="ed-dz-ph"><img src="' + d.img[0] + '" alt="" loading="lazy"></span>' : '') +
+        (own && !cur ? '<span class="ed-dz-own">' + esc(G.yours) + '</span>' : '') +
+        '<a class="ed-dz-play" href="' + BASE + '/demo/' + d.id + '/" target="_blank" rel="noopener" aria-label="' + esc(G.demo + ': ' + name) + '">' + svg(P.play, 13) + '</a></div>' +
+        '<div class="ed-dz-meta"><div><b>' + esc(name) + '</b><span>' + esc(op) + '</span><em>' + (own ? '' : esc(G.price)) + '</em></div>' + act + '</div></article>';
+    }).join('');
+    return '<div class="ed-overlay ed-dz-wrap"><button type="button" class="scrim" data-act="designs-close" aria-label="' + esc(G.close) + '" tabindex="-1"></button>' +
+      '<section class="ed-dz" role="dialog" aria-modal="true" aria-labelledby="dzT"><div class="ed-dz-head"><div><span class="ed-kicker">' + esc(G.dK) + '</span><h2 id="dzT">' + G.dH + '</h2></div>' +
+      '<button type="button" class="ed-icon-btn" data-act="designs-close" aria-label="' + esc(G.close) + '">' + svg(P.x, 16, 2) + '</button></div>' +
+      '<div class="ed-dz-tabs" role="tablist" aria-label="' + esc(G.dK) + '">' + tabs + '</div>' +
+      '<div class="ed-dz-grid">' + cards + '</div><div class="ed-dz-foot"><p>' + G.dNote + '</p></div></section></div>';
+  }
+  function renderDesigns() { var h = root.querySelector('.ed-dz-wrap'); if (h) h.outerHTML = designsHTML(); }
+  function openDesigns(opener) {
+    closeNav(); closeGuide(); ui.dOpener = opener || document.activeElement; guideMark('designs');
+    layer.innerHTML = designsHTML(); ui.designs = true; document.body.classList.add('ed-locked');
+    var c = layer.querySelector('.ed-dz-head .ed-icon-btn'); if (c) c.focus();
+  }
+  function closeDesigns() {
+    if (!ui.designs) return false;
+    ui.designs = false; layer.innerHTML = ''; document.body.classList.remove('ed-locked');
+    if (ui.dOpener && document.body.contains(ui.dOpener)) ui.dOpener.focus();
+    return true;
+  }
+  window.addEventListener('resize', function () { if (tourAt > -1) paintTour(); });
   renderChrome(); renderNav(); renderMain();
   if (ui.drawer) openDrawer($('.ed-cartbtn'));
+  else if (!guideState().seen && !/[?&]guia=0/.test(location.search)) setTimeout(welcome, 400);
 
   /* =========================================================
      Pago de complementos
@@ -1622,7 +1791,7 @@
     var st = loadState(), cart = loadCart(), method = 'card', notice = false;
     root.innerHTML = '<div class="ed">' +
       '<header class="co-top"><a class="co-back" href="' + BASE + '/editor/">' + svg(P.left, 16, 2) + esc(S.back) + '</a><div class="ed-spacer"></div>' +
-      '<a class="ed-logo" href="' + BASE + '/" aria-label="Lazo">' + logo + '</a><div class="ed-spacer"></div>' +
+      '<a class="ed-logo ed-logo-full" href="' + BASE + '/" aria-label="Invitesse">' + logoFull + '</a><div class="ed-spacer"></div>' +
       '<span class="co-secure">' + svg(P.lock, 14) + esc(S.secure) + '</span></header><div class="co-wrap" id="coWrap"></div></div><div id="edModal"></div>';
     var wrap = document.getElementById('coWrap');
     var f = function (label, ph, cls, extra) { return '<label class="ed-field' + (cls ? ' ' + cls : '') + '">' + esc(label) + '<input placeholder="' + esc(ph) + '" autocomplete="off"' + (extra || '') + '></label>'; };

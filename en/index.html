@@ -2,290 +2,398 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Lazo — wedding website invitations</title>
-<meta name="description" content="Website invitations for weddings and events: animated opening, a unique link per guest, RSVP and a dashboard to organize everything.">
-<meta property="og:title" content="Lazo — wedding website invitations">
-<meta property="og:description" content="Website invitations for weddings and events: animated opening, a unique link per guest, RSVP and a dashboard to organize everything.">
-<meta name="theme-color" content="#2B3A33">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Invitesse — wedding website invitations</title>
+<meta name="description" content="Wedding website invitations to experience from start to finish: an opening that surprises, your story, the schedule with maps and an RSVP per person. You run it all from one dashboard.">
+<meta property="og:title" content="Invitesse — wedding website invitations">
+<meta property="og:description" content="Wedding website invitations to experience from start to finish: an opening that surprises, your story, the schedule with maps and an RSVP per person. You run it all from one dashboard.">
+<meta name="theme-color" content="#F7F3EE">
 <link rel="alternate" hreflang="es" href="/">
 <link rel="alternate" hreflang="en" href="/en/">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%232B3A33'/%3E%3Ctext x='32' y='44' font-family='Georgia,serif' font-style='italic' font-size='34' fill='%23F5F2EA' text-anchor='middle'%3E%26%3C/text%3E%3C/svg%3E">
+<link rel="icon" href="/assets/brand/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&amp;family=Jost:wght@400;500;600&amp;display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500;1,9..144,600&amp;family=Geist:wght@400;500;600&amp;display=swap">
+<link rel="stylesheet" href="/assets/brand/brand.css">
 <style>
 *,*::before,*::after{box-sizing:border-box}
 html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
-body{margin:0;background:#F5F2EA}
-img{max-width:100%}
-a{color:#2B3A33}a:hover{color:#1B2621}
-details summary{cursor:pointer;list-style:none}
-details summary::-webkit-details-marker{display:none}
-details[open] summary svg{transform:rotate(45deg)}
-summary svg{transition:transform .2s ease;flex-shrink:0}
-a:focus-visible,summary:focus-visible{outline:2px solid #6B5444;outline-offset:3px}
-.nav-toggle{display:none;align-items:center;justify-content:center;width:48px;height:48px;padding:0;border:1px solid #CFC6B4;border-radius:999px;background:transparent;color:#2B3A33;cursor:pointer}
+body{margin:0;background:var(--iv-paper);color:var(--iv-ink);font:400 16px/1.5 var(--iv-sans)}
+img{max-width:100%;display:block}
+a{color:inherit}
+[hidden]{display:none !important}
+a:focus-visible,button:focus-visible,summary:focus-visible{outline:2px solid var(--iv-lacre);outline-offset:3px}
+.w{max-width:1312px;margin:0 auto;padding:0 32px}
+.k{margin:0;font:600 12px/1.5 var(--iv-sans);letter-spacing:.16em;text-transform:uppercase;color:var(--iv-grey)}
+.h2{margin:0;font:500 56px/1.05 var(--iv-serif);letter-spacing:-.02em}
+.h2 i,h1 i{color:var(--iv-lacre)}
+.p{margin:0;font-size:17px;line-height:1.6;color:#3A3540}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:52px;padding:0 26px;border-radius:999px;border:0;font:600 16px var(--iv-sans);text-decoration:none;white-space:nowrap;cursor:pointer;transition:background .2s,box-shadow .2s,color .2s}
+.btn-dark{background:var(--iv-ink);color:var(--iv-paper)}
+.btn-dark:hover{background:#000}
+.btn-line{box-shadow:inset 0 0 0 1.5px currentColor;background:transparent}
+.btn-line:hover{background:#17151C0d}
+.btn-paper{background:var(--iv-paper);color:var(--iv-ink)}
+.btn-lacre{background:var(--iv-lacre);color:#FFF7F2}
+.btn-lacre:hover{background:var(--iv-lacre-2)}
+.lnk{display:inline-flex;align-items:center;gap:6px;font-weight:600;color:var(--iv-lacre);text-decoration:none}
+.lnk:hover{text-decoration:underline;text-underline-offset:4px}
+.head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:20px 40px}
+.head>div{display:flex;flex-direction:column;gap:10px}
+.ph{position:relative;border-radius:34px;padding:7px;background:var(--iv-ink);box-shadow:0 30px 50px -24px #17151C99;flex:none}
+.ph img{width:100%;height:100%;object-fit:cover;border-radius:28px}
+/* nav */
+.top{position:sticky;top:0;z-index:30;background:#F7F3EEee;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+.top nav{height:80px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.top .logo{font-size:34px;text-decoration:none}
+.links{display:flex;align-items:center;gap:28px;font-weight:500;font-size:15px}
+.links a{text-decoration:none}
+.links a:not(.btn):hover{color:var(--iv-lacre)}
+.badge{display:inline-flex;align-items:center;justify-content:center;min-width:22px;height:22px;padding:0 6px;margin-left:6px;border-radius:999px;background:var(--iv-lacre);color:#FFF7F2;font:600 11px var(--iv-sans)}
+.lang{color:var(--iv-grey)}
+.lang b{color:var(--iv-ink);font-weight:600}
+.nav-toggle{display:none;width:44px;height:44px;border:0;border-radius:50%;background:#17151C0d;color:var(--iv-ink);align-items:center;justify-content:center;cursor:pointer}
 .nav-toggle .x{display:none}
 nav.open .nav-toggle .bars{display:none}
 nav.open .nav-toggle .x{display:block}
-@media (max-width: 900px){
-  .nav-toggle{display:flex}
-  .nav-links{display:none !important;width:100%;flex-direction:column;align-items:stretch !important;gap:0 !important;padding:8px 0 4px;font-size:17px !important}
-  nav.open .nav-links{display:flex !important}
-  .nav-links > a,.nav-links > span{padding:14px 2px !important;border-top:1px solid #DED7C8}
-  .nav-links > a:last-child{margin-top:14px;padding:16px 24px !important;text-align:center;border-top:0}
-}
-@media (max-width: 720px){
-  h1{font-size:52px !important}
-  h2{font-size:38px !important}
-  section,footer{padding-top:64px !important;padding-bottom:64px !important}
-}
-.ad{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:0;background:#FBF9F4;border-radius:24px;overflow:hidden;min-height:420px}
-.ad-stage{position:relative;background:#F2EDE3;display:flex;align-items:center;justify-content:center;padding:40px;touch-action:pan-y}
+/* hero */
+.hero{display:grid;grid-template-columns:minmax(0,1fr) 560px;gap:40px;align-items:center;padding-top:40px;padding-bottom:80px}
+.hero-t{display:flex;flex-direction:column;gap:26px}
+.hero h1{margin:0;font:500 96px/.98 var(--iv-serif);letter-spacing:-.03em}
+.hero .lead{margin:0;font-size:21px;line-height:1.55;color:#3A3540;max-width:600px}
+.ctas{display:flex;flex-wrap:wrap;gap:14px;align-items:center}
+.ctas .ex{font-weight:500;text-underline-offset:4px}
+.trust{display:flex;flex-wrap:wrap;gap:8px 26px;font-size:14px;font-weight:500;color:#55505A}
+.stage{position:relative;height:640px}
+.stage .ph{position:absolute}
+.stage .a{left:0;top:110px;width:210px;height:455px;transform:rotate(-7deg)}
+.stage .b{left:162px;top:30px;width:240px;height:520px;z-index:1}
+.stage .c{right:0;top:110px;width:210px;height:455px;transform:rotate(7deg)}
+.stage .tag{position:absolute;left:50%;bottom:20px;translate:-50% 0;z-index:2;display:inline-flex;align-items:center;gap:8px;padding:10px 16px;border-radius:999px;background:#fff;box-shadow:0 10px 24px -12px #17151C66;font-size:14px;font-weight:500;white-space:nowrap}
+.stage .tag::before{content:"";width:9px;height:9px;border-radius:50%;background:var(--iv-lacre)}
+/* journey */
+.journey{padding-top:80px;padding-bottom:80px;display:flex;flex-direction:column;gap:34px}
+.journey .head p{max-width:440px}
+.steps{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:20px;margin:0;padding:0;list-style:none}
+.steps li{display:flex;flex-direction:column;gap:12px}
+.steps .ph{aspect-ratio:554/1200;width:100%}
+.steps b{display:flex;align-items:baseline;gap:10px;font:500 24px/1.1 var(--iv-serif)}
+.steps b span{color:var(--iv-lacre)}
+.steps p{margin:-4px 0 0;font-size:15px;line-height:1.5;color:#3A3540}
+.band{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:14px 24px;padding:18px 24px;border-radius:18px;background:var(--iv-lino);font-weight:500;font-size:17px}
+/* designs */
+.dsg{background:var(--iv-ink);color:var(--iv-paper);padding:90px 0}
+.dsg .w{display:flex;flex-direction:column;gap:34px}
+.dsg .k{color:#B3ABB8}
+.dsg .h2 i{color:var(--iv-lacre-3)}
+.chips{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.chips .k{margin-right:6px}
+.chip{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 18px;border-radius:999px;box-shadow:inset 0 0 0 1px #F7F3EE33;font-weight:500;font-size:15px;text-decoration:none}
+.chip:hover{box-shadow:inset 0 0 0 1px #F7F3EE99}
+.chip small{font-size:12px;color:#B3ABB8}
+.dcards{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:22px}
+.dcard{display:flex;flex-direction:column;gap:12px;text-decoration:none}
+.dcard .ph{aspect-ratio:554/1200;width:100%;background:#2A2730}
+.dcard>b{font:500 24px var(--iv-serif)}
+.dcard>span{font:600 11px/1.4 var(--iv-sans);letter-spacing:.14em;text-transform:uppercase;color:#B3ABB8}
+.dcard:hover .ph{box-shadow:0 0 0 2px var(--iv-lacre-3),0 30px 50px -24px #000}
+.more .ph{background:#2A2730;box-shadow:inset 0 0 0 1.5px #F7F3EE26;overflow:hidden;padding:0}
+.more .stack{position:absolute;inset:0}
+.more .stack img{position:absolute;width:48%;aspect-ratio:554/1200;height:auto;border-radius:16px;border:4px solid #0E0D12;box-shadow:0 20px 30px -18px #000}
+.more .stack img:nth-child(1){left:8%;top:12%;transform:rotate(-8deg)}
+.more .stack img:nth-child(2){right:6%;top:10%;transform:rotate(8deg)}
+.more .stack img:nth-child(3){left:26%;top:6%}
+.more .txt{position:absolute;left:20px;right:20px;bottom:22px;display:flex;flex-direction:column;gap:10px;z-index:1}
+.more .txt strong{font:500 34px/1.05 var(--iv-serif)}
+.more .txt em{font-style:normal;font-size:15px;line-height:1.5;color:#CFC8D2}
+.more .btn{min-height:46px}
+.dnote{margin:0;font-size:15px;color:#B3ABB8}
+/* how */
+.how{padding-top:90px;padding-bottom:90px;display:grid;grid-template-columns:420px minmax(0,1fr);gap:60px}
+.how ol{margin:0;padding:0;list-style:none;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.how li{display:flex;flex-direction:column;gap:12px;padding-top:18px;border-top:2px solid var(--iv-ink)}
+.how li>span{font:500 44px/1 var(--iv-serif);color:var(--iv-lacre)}
+.how li b{font-size:19px;font-weight:600}
+.how li p{margin:0;font-size:16px;line-height:1.55;color:#3A3540}
+/* included */
+.inc{background:var(--iv-lino);padding:90px 0}
+.inc .w{display:flex;flex-direction:column;gap:34px}
+.feats{margin:0;padding:0;list-style:none;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+.feats li{display:flex;flex-direction:column;gap:8px;padding:22px;border-radius:20px;background:#fff;box-shadow:0 0 0 1px #17151C12}
+.feats b{font-size:16px;font-weight:600}
+.feats span{font-size:15px;line-height:1.5;color:#55505A}
+/* editor y panel */
+.tools{padding-top:90px;padding-bottom:90px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:48px}
+.tool{display:flex;flex-direction:column;gap:20px}
+.tool .shot{border-radius:22px;overflow:hidden;box-shadow:0 0 0 1px #17151C14,0 30px 50px -30px #17151C88;background:#fff;aspect-ratio:16/10}
+.tool .shot img{width:100%;height:100%;object-fit:cover;object-position:0 0}
+.tool .shot.panel{background:var(--iv-lino);display:flex;justify-content:center;align-items:flex-start;padding:28px 0 0}
+.tool .shot.panel img{width:52%;height:auto;aspect-ratio:auto;border-radius:24px 24px 0 0;box-shadow:0 20px 40px -24px #17151C88}
+.tool p{display:flex;gap:10px;margin:0;font-size:16px;line-height:1.5;color:#2B2730}
+.tool p svg{flex:none;margin-top:3px;color:var(--iv-lacre)}
+/* complementos (carrusel) */
+.add{background:var(--iv-lino);padding:90px 0}
+.add .w{display:flex;flex-direction:column;gap:34px}
+.ad{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);background:#fff;border-radius:24px;overflow:hidden;min-height:420px;box-shadow:0 0 0 1px #17151C12}
+.ad-stage{position:relative;background:var(--iv-paper);display:flex;align-items:center;justify-content:center;padding:40px;touch-action:pan-y}
 .ad-mock{zoom:1.4;display:flex;align-items:center;justify-content:center;width:100%}
 .ad-mock>*{animation:ad-in .45s ease both}
 .ad-side{display:flex;flex-direction:column;justify-content:space-between;gap:28px;padding:40px 40px 32px}
 .ad-copy{display:flex;flex-direction:column;gap:12px}
-.ad-count{font-size:13px;letter-spacing:2px;color:#8A7F6E}
-.ad-copy h3{margin:0;font-family:'Cormorant Garamond',serif;font-weight:500;font-size:42px;line-height:1.05;color:#2B3A33}
-.ad-copy p{margin:0;font-size:16px;line-height:1.6;color:#4A4640}
-.ad-ctrl{display:flex;align-items:center;gap:10px}
-.ad-arrow{width:48px;height:48px;border-radius:999px;border:1px solid #CFC6B4;background:transparent;color:#2B3A33;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center}
-.ad-arrow:hover{background:#2B3A33;color:#F5F2EA;border-color:#2B3A33}
+.ad-count{font-size:13px;font-weight:600;letter-spacing:.14em;color:var(--iv-lacre)}
+.ad-copy h3{margin:0;font:500 40px/1.05 var(--iv-serif);letter-spacing:-.01em}
+.ad-copy p{margin:0;font-size:16px;line-height:1.6;color:#3A3540}
+.ad-ctrl{display:flex;gap:10px}
+.ad-arrow{width:48px;height:48px;border-radius:50%;border:0;box-shadow:inset 0 0 0 1.5px #17151C33;background:transparent;color:var(--iv-ink);cursor:pointer;display:flex;align-items:center;justify-content:center}
+.ad-arrow:hover{background:var(--iv-ink);color:var(--iv-paper);box-shadow:none}
 .ad-tabs{display:flex;flex-wrap:wrap;gap:8px}
-.ad-tab{font:inherit;font-size:14px;padding:9px 16px;border-radius:999px;border:1px solid #CFC6B4;background:transparent;color:#4A4640;cursor:pointer}
-.ad-tab[aria-selected="true"]{background:#2B3A33;border-color:#2B3A33;color:#F5F2EA}
-.ad-tab:focus-visible,.ad-arrow:focus-visible{outline:2px solid #6B5444;outline-offset:2px}
+.ad-tab{font:500 14px var(--iv-sans);min-height:40px;padding:0 16px;border-radius:999px;border:0;background:#fff;box-shadow:0 0 0 1px #17151C14;color:var(--iv-ink);cursor:pointer}
+.ad-tab[aria-selected="true"]{background:var(--iv-ink);color:var(--iv-paper);box-shadow:none}
 .ad-mock[hidden],.ad-copy[hidden]{display:none}
 @keyframes ad-in{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
-@media (prefers-reduced-motion:reduce){.ad-mock>*{animation:none}}
-@media (max-width: 860px){
+/* precios */
+.price{padding-top:100px;padding-bottom:100px;display:flex;flex-direction:column;gap:34px}
+.price .head{flex-direction:column;align-items:center;text-align:center}
+.price .head .p{max-width:620px}
+.pgrid{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:20px;max-width:1100px;width:100%;margin:0 auto}
+.pcard{padding:34px;border-radius:26px;display:flex;flex-direction:column;gap:16px}
+.pcard.main{background:var(--iv-ink);color:var(--iv-paper)}
+.pcard.main .top2{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap}
+.pcard h3{margin:0;font:500 30px var(--iv-serif)}
+.pcard .amt{display:flex;align-items:baseline;gap:8px;font:500 44px var(--iv-serif)}
+.pcard .amt small{font:500 15px var(--iv-sans);color:#CFC8D2}
+.pcard ul{margin:0;padding:0;list-style:none;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px 20px;font-size:15px;line-height:1.5}
+.pcard ul li{display:flex;gap:8px}
+.pcard ul svg{flex:none;margin-top:3px;color:var(--iv-lacre-3)}
+.pcard .note{margin:0;font-size:14px;color:#CFC8D2}
+.pcard.alt{background:#fff;box-shadow:0 0 0 1px #17151C14}
+.pcard.alt p{margin:0;font-size:16px;line-height:1.6;color:#3A3540}
+.pay{margin:0;text-align:center;font-size:14px;color:var(--iv-grey)}
+/* faq */
+.faq{padding-top:40px;padding-bottom:100px;display:grid;grid-template-columns:420px minmax(0,1fr);gap:60px}
+.faq details{border-top:1px solid #17151C1f}
+.faq details:last-child{border-bottom:1px solid #17151C1f}
+.faq summary{display:flex;justify-content:space-between;align-items:center;gap:16px;min-height:64px;padding:10px 0;font-size:18px;font-weight:500;cursor:pointer;list-style:none}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary svg{flex:none;transition:transform .2s}
+.faq details[open] summary svg{transform:rotate(45deg)}
+.faq details p{margin:0 0 18px;font-size:16px;line-height:1.6;color:#55505A}
+/* cierre y pie */
+.end{border-radius:30px;background:var(--iv-lacre);color:#FFF7F2;padding:56px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:24px 40px}
+.end h2{margin:0;font:500 60px/1.02 var(--iv-serif);letter-spacing:-.02em}
+.end h2 i{color:#FFF7F2}
+.end .r{display:flex;flex-direction:column;align-items:flex-end;gap:14px}
+.end .r a.wa{font-weight:500;font-size:15px;text-underline-offset:4px}
+.foot{padding-top:60px;padding-bottom:40px;display:flex;flex-direction:column;gap:22px}
+.foot .row{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:20px}
+.foot .logo{font-size:30px}
+.foot nav{display:flex;flex-wrap:wrap;gap:12px 28px;font-size:14px;font-weight:500;color:#55505A}
+.foot nav a{text-decoration:none}
+.foot nav a:hover{color:var(--iv-lacre)}
+.foot .by{display:flex;flex-wrap:wrap;gap:8px 18px;font-size:14px;color:var(--iv-grey)}
+.foot .by b{color:var(--iv-ink);font-weight:600}
+.foot .by a{text-decoration:none}
+.foot .by a.all{color:var(--iv-lacre);font-weight:600}
+.foot small{font-size:13px;color:var(--iv-grey)}
+/* barra fija en el celular */
+.sticky{display:none}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.ad-mock>*{animation:none}}
+@media (max-width:1180px){
+  .hero{grid-template-columns:1fr}
+  .stage{max-width:560px;width:100%;margin:0 auto}
+  .dcards{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .feats{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .how,.faq{grid-template-columns:1fr;gap:30px}
+}
+@media (max-width:960px){
+  .nav-toggle{display:flex}
+  .top nav{flex-wrap:wrap;height:auto;min-height:72px;padding-top:12px;padding-bottom:12px}
+  .links{display:none;width:100%;flex-direction:column;align-items:stretch;gap:0;padding:8px 0 6px;font-size:17px}
+  nav.open .links{display:flex}
+  .links>a,.links>span{padding:14px 2px;border-top:1px solid #17151C14}
+  .links>a.btn{margin-top:12px;border-top:0}
+  .tools{grid-template-columns:1fr}
+  .pgrid{grid-template-columns:1fr}
   .ad{grid-template-columns:1fr;min-height:0}
   .ad-stage{padding:28px 20px;min-height:270px}
   .ad-mock{zoom:1.05}
   .ad-side{padding:24px 22px 26px;gap:22px}
   .ad-copy h3{font-size:32px}
-  .ad-copy p{font-size:15px}
-  .ad-tabs{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;margin:0 -24px;padding:0 24px;scroll-padding:0 24px;scroll-snap-type:x proximity}
+  .ad-tabs{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;margin:0 -20px;padding:0 20px}
   .ad-tabs::-webkit-scrollbar{display:none}
-  .ad-tab{flex:none;scroll-snap-align:start}
+  .ad-tab{flex:none}
 }
-.inc{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2fr);gap:32px 64px;align-items:start}
-.inc-list{margin:0;padding:0;list-style:none;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0 28px}
-.inc-list li{display:flex;gap:10px;padding:14px 0;border-top:1px solid #DED7C8}
-.inc-list svg{flex:none;margin-top:3px}
-.inc-list b{display:block;font-weight:500;font-size:15px;color:#22201C}
-.inc-list span{display:block;margin-top:2px;font-size:13px;line-height:1.45;color:#6B6660}
-.pnl-phones{display:flex;justify-content:center;align-items:flex-start;gap:16px}
-.pnl-phones div{width:31%;max-width:220px;padding:6px;background:#22201C;border-radius:30px;box-shadow:0 30px 50px -30px rgba(34,32,28,.6)}
-.pnl-phones div:nth-child(2){transform:translateY(-28px)}
-.pnl-phones img{display:block;width:100%;height:auto;aspect-ratio:350/754;object-fit:cover;border-radius:25px}
-@media (max-width: 900px){
-  .inc{grid-template-columns:1fr}
-  .inc-list{grid-template-columns:repeat(2,minmax(0,1fr))}
-}
-@media (max-width: 560px){
-  .inc-list span{display:none}
-  .pnl-phones{gap:8px}
-  .pnl-phones div{padding:4px;border-radius:20px}
-  .pnl-phones img{border-radius:16px}
-  .pnl-phones div:nth-child(2){transform:translateY(-16px)}
+@media (max-width:720px){
+  .w{padding:0 20px}
+  .top .logo{font-size:28px}
+  .hero{padding-top:18px;padding-bottom:44px;gap:20px}
+  .hero h1{font-size:54px}
+  .hero .lead{font-size:17px}
+  .ctas .btn{width:100%}
+  .ctas .ex{width:100%;text-align:center}
+  .stage{height:350px}
+  .stage .a{left:4%;top:44px;width:34%;height:auto;aspect-ratio:554/1200}
+  .stage .b{left:31%;top:0;width:38%;height:auto;aspect-ratio:554/1200}
+  .stage .c{right:4%;top:44px;width:34%;height:auto;aspect-ratio:554/1200}
+  .stage .ph{border-radius:24px;padding:5px}
+  .stage .ph img{border-radius:20px}
+  .stage .tag{display:none}
+  .h2{font-size:38px}
+  .p{font-size:16px}
+  .journey,.how,.tools,.price,.dsg,.inc,.add{padding-top:56px;padding-bottom:56px}
+  .faq{padding-bottom:56px}
+  .steps,.dcards{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;margin:0 -20px;padding:0 20px 6px;gap:12px}
+  .steps::-webkit-scrollbar,.dcards::-webkit-scrollbar{display:none}
+  .steps li{flex:none;width:150px;scroll-snap-align:start}
+  .steps b{font-size:18px}
+  .steps p{font-size:13px}
+  .dcard{flex:none;width:220px;scroll-snap-align:start}
+  .chips{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;margin:0 -20px;padding:0 20px}
+  .chips::-webkit-scrollbar{display:none}
+  .chips .k{display:none}
+  .chip{flex:none}
+  .how ol{grid-template-columns:1fr}
+  .how li{display:grid;grid-template-columns:40px minmax(0,1fr);gap:4px 12px}
+  .how li>span{grid-row:span 3;font-size:34px}
+  .feats{gap:10px}
+  .feats li{padding:16px}
+  .feats span{font-size:14px}
+  .pcard{padding:24px}
+  .pcard ul{grid-template-columns:1fr}
+  .pcard .btns .btn{width:100%}
+  .faq summary{font-size:16px}
+  .end{padding:36px 22px;border-radius:24px}
+  .end h2{font-size:40px}
+  .end .r{align-items:stretch;width:100%}
+  .end .r .btn{width:100%}
+  .end .r a.wa{align-self:center}
+  .sticky{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:40;gap:8px;padding:10px 14px calc(12px + env(safe-area-inset-bottom));background:#F7F3EEf2;box-shadow:0 -1px 0 #17151C14;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);transform:translateY(110%);transition:transform .25s ease}
+  .sticky.on{transform:none}
+  .sticky .btn{min-height:48px;font-size:15px;padding:0 16px}
+  .sticky .btn:first-child{flex:1}
+  .sticky .btn:last-child{flex:1.4}
+  body.has-sticky .foot{padding-bottom:110px}
 }
 </style>
 </head>
 <body>
-<div style="font-family: 'Jost', system-ui, sans-serif; color: #22201C; background: #F5F2EA; width: 100%; min-height: 100vh">
-
-<header style="border-bottom: 1px solid #DED7C8">
-<nav style="max-width: 1200px; margin: 0 auto; padding: 18px 24px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px">
-<a href="#top" aria-label="Lazo, home" style="display: flex; align-items: center; gap: 10px; text-decoration: none; color: #2B3A33">
-<span style="width: 40px; height: 40px; border-radius: 50%; border: 1px solid #2B3A33; display: flex; align-items: center; justify-content: center; font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 24px; line-height: 1">&amp;</span>
-<span style="font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 500; font-size: 34px; line-height: 1">lazo</span>
-</a>
-<button type="button" class="nav-toggle" data-open="Open menu" data-close="Close menu" aria-expanded="false" aria-controls="nav-links" aria-label="Open menu"><svg class="bars" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg><svg class="x" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
-<div id="nav-links" class="nav-links" style="display: flex; flex-wrap: wrap; align-items: center; gap: 24px; font-size: 15px">
-<a href="#designs" style="text-decoration: none; color: #22201C">Designs</a>
-<a href="#editor" style="text-decoration: none; color: #22201C">The editor</a>
-<a href="#panel" style="text-decoration: none; color: #22201C">Dashboard</a>
-<a href="#add-ons" style="text-decoration: none; color: #22201C">Add-ons</a>
-<a href="#pricing" style="text-decoration: none; color: #22201C">Pricing</a>
-<a href="#faq" style="text-decoration: none; color: #22201C">FAQ</a>
-<span style="display: flex; align-items: center; gap: 6px; font-size: 13px; letter-spacing: 1px"><a href="/" style="color: #5A5650; text-decoration: none; padding: 12px 4px">ES</a><span style="color: #8C8577">/</span><strong style="font-weight: 600">EN</strong></span>
-<a href="/en/cuenta/" style="text-decoration: none; color: #22201C; padding: 12px 6px">Log in</a>
-<a href="#pricing" style="text-decoration: none; background: #2B3A33; color: #F5F2EA; padding: 13px 24px; border-radius: 999px; font-weight: 500">Create my invitation</a>
+<header class="top"><nav class="w" aria-label="Main">
+<a class="logo" href="/en/" aria-label="Invitesse, home"><span class="iv-wm" role="img" aria-label="Invitesse"><span aria-hidden="true">invite</span><b aria-hidden="true">ss</b><span aria-hidden="true">e</span><svg viewBox="0 0 70 54" aria-hidden="true"><path d="M2 48C10 34 22 26 31 30C39 34 35 45 27 43C19 41 21 26 36 17C46 11 58 10 66 15" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg></span></a>
+<button type="button" class="nav-toggle" data-open="Open menu" data-close="Close menu" aria-expanded="false" aria-controls="nav-links" aria-label="Open menu"><svg class="bars" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg><svg class="x" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+<div id="nav-links" class="links"><a href="/en/disenos/">Designs<span class="badge" data-n>22</span></a><a href="#add-ons">Add-ons</a><a href="#how">How it works</a><a href="#pricing">Pricing</a><span class="lang"><a href="/" hreflang="es">ES</a> · <b>EN</b></span><a href="/en/cuenta/">Log in</a><a class="btn btn-dark" style="min-height: 44px; font-size: 15px; padding: 0 20px" href="/en/comprar/">Create my invitation</a></div>
+</nav></header>
+<main>
+<section id="top" class="w hero">
+<div class="hero-t">
+<p class="k">Wedding website invitations</p>
+<h1>An invitation to <i>experience.</i></h1>
+<p class="lead">It opens like a gift, tells your story, guides your guests on the day and lets them RSVP with one tap. You run it all from one dashboard.</p>
+<div class="ctas"><a class="btn btn-dark" href="/en/comprar/">Create my invitation</a><a class="btn btn-line" href="/en/disenos/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="6.5" height="6.5" rx="1.5"/><rect x="13.5" y="4" width="6.5" height="6.5" rx="1.5"/><rect x="4" y="13.5" width="6.5" height="6.5" rx="1.5"/><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1.5"/></svg><span>See all <span data-n>22</span> designs</span></a><a class="ex" href="/en/demo/encaje/">or open a sample</a></div>
+<div class="trust"><span>One-time payment</span><span>Ready the same day</span><span>No design skills needed</span></div>
 </div>
-</nav>
-</header>
-
-<section id="top" style="max-width: 1200px; margin: 0 auto; padding: 88px 24px 96px; display: flex; flex-wrap: wrap; align-items: center; gap: 56px">
-<div style="flex: 1 1 460px; min-width: 0; display: flex; flex-direction: column; gap: 28px">
-<p style="margin: 0; font-size: 13px; font-weight: 500; letter-spacing: 3px; text-transform: uppercase; color: #6B5444">Wedding website invitations</p>
-<h1 style="margin: 0; font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: 80px; line-height: 0.98; letter-spacing: -1px; color: #2B3A33">An invitation that opens <span style="font-style: italic; color: #6B5444">like a gift.</span></h1>
-<p style="margin: 0; font-size: 19px; line-height: 1.6; color: #4A4640; max-width: 520px">Pick a design, write your story and upload your photos from your own dashboard. Your site is built instantly, with a unique link for every family and RSVP ready to go.</p>
-<div style="display: flex; flex-wrap: wrap; gap: 14px; align-items: center">
-<a href="#pricing" style="text-decoration: none; background: #2B3A33; color: #F5F2EA; padding: 17px 32px; border-radius: 999px; font-weight: 500; font-size: 16px">Create my invitation</a>
-<a href="#designs" style="text-decoration: none; color: #22201C; padding: 17px 26px; border-radius: 999px; font-weight: 500; font-size: 16px; border: 1px solid #BFB6A4">See designs</a>
-</div>
-<div style="display: flex; flex-wrap: wrap; gap: 10px 28px; font-size: 14px; color: #5A5650">
-<span>One-time payment</span>
-<span>No design or code skills</span>
-<span>Ready the same day</span>
-</div>
-</div>
-<div style="flex: 1 1 480px; min-width: 0; display: flex; justify-content: center; align-items: center; gap: 18px">
-<div style="width: 30%; max-width: 190px; padding: 7px; background: #1C1A17; border-radius: 34px; box-shadow: 0 30px 60px -30px rgba(34,32,28,0.55); transform: translateY(36px)"><img src="/assets/hero-clasico-sobre.jpg" alt="Classic design: envelope addressed to the guest family" style="display: block; width: 100%; height: auto; aspect-ratio: 350 / 754; object-fit: cover; border-radius: 28px"></div>
-<div style="width: 36%; max-width: 230px; padding: 8px; background: #1C1A17; border-radius: 38px; box-shadow: 0 30px 60px -30px rgba(34,32,28,0.55)"><img src="/assets/hero-romantico.jpg" alt="Romantic design: wax-sealed envelope with a gold seal" style="display: block; width: 100%; height: auto; aspect-ratio: 350 / 754; object-fit: cover; border-radius: 31px"></div>
-<div style="width: 30%; max-width: 190px; padding: 7px; background: #1C1A17; border-radius: 34px; box-shadow: 0 30px 60px -30px rgba(34,32,28,0.55); transform: translateY(36px)"><img src="/assets/panel-moderno.jpg" alt="Couple’s dashboard with confirmed guests" style="display: block; width: 100%; height: auto; aspect-ratio: 350 / 754; object-fit: cover; border-radius: 28px"></div>
+<div class="stage" aria-hidden="false">
+<div class="ph a"><img src="/assets/encaje-estor.jpg" alt="Encaje: the closed invitation with its lace blind"></div>
+<div class="ph b"><img src="/assets/encaje-portada.jpg" alt="Encaje: the cover with the couple’s photo"></div>
+<div class="ph c"><img src="/assets/encaje-rsvp.jpg" alt="Encaje: the RSVP per person"></div>
+<span class="tag">Open it and explore it all</span>
 </div>
 </section>
 
-<section id="designs" style="background: #EAE4D7; padding: 96px 24px">
-<div style="max-width: 1200px; margin: 0 auto; display: flex; flex-direction: column; gap: 48px">
-<div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 24px">
-<div style="display: flex; flex-direction: column; gap: 12px; max-width: 640px">
-<p style="margin: 0; font-size: 13px; font-weight: 500; letter-spacing: 3px; text-transform: uppercase; color: #6B5444">The designs</p>
-<h2 style="margin: 0; font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: 56px; line-height: 1.02; color: #2B3A33">Choose your style, in any colors you like</h2>
-</div>
-<p style="margin: 0; font-size: 16px; line-height: 1.6; color: #4A4640; max-width: 380px">Open the demo on your phone: that’s how your guests will see it.</p>
-</div>
-<div id="featured" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(340px, 100%), 1fr)); gap: 28px"></div>
-<div style="display: flex; justify-content: center"><a id="all-designs" href="/en/disenos/" style="display: inline-flex; align-items: center; gap: 10px; text-decoration: none; background: #2B3A33; color: #F5F2EA; padding: 17px 32px; border-radius: 999px; font-weight: 500; font-size: 16px">See all designs <span aria-hidden="true">→</span></a></div>
-<script src="/disenos/catalogo.js"></script>
-<script>(function(){var C=window.LazoCatalog,L=document.documentElement.lang==='en'?'en':'es';document.getElementById('featured').innerHTML=C.featured().map(function(d){return C.card(d,L);}).join('');var a=document.getElementById('all-designs');a.firstChild.nodeValue=a.firstChild.nodeValue.trim()+' ('+C.designs.length+') ';})();</script>
+<section class="w journey" aria-labelledby="j-h">
+<div class="head"><div><p class="k">A complete invitation</p><h2 class="h2" id="j-h">From the opening <i>to the RSVP.</i></h2></div><p class="p">The opening is the welcome. What follows is what your guests really use, and it all lives in the same link.</p></div>
+<ol class="steps"><li><div class="ph"><img src="/assets/encaje-estor.jpg" alt="Encaje closed" loading="lazy"></div><b><span>1</span>It opens</b><p>Every design has its own opening: the welcome.</p></li><li><div class="ph"><img src="/assets/encaje-portada.jpg" alt="Encaje: cover" loading="lazy"></div><b><span>2</span>It greets</b><p>The cover with your photo, the date and their name.</p></li><li><div class="ph"><img src="/assets/encaje-historia.jpg" alt="Encaje: our story" loading="lazy"></div><b><span>3</span>It tells</b><p>Your story and the photo gallery.</p></li><li><div class="ph"><img src="/assets/encaje-itinerario.jpg" alt="Encaje: schedule" loading="lazy"></div><b><span>4</span>It guides</b><p>The schedule with maps, hotel and FAQ.</p></li><li><div class="ph"><img src="/assets/encaje-rsvp.jpg" alt="Encaje: RSVP" loading="lazy"></div><b><span>5</span>They RSVP</b><p>Yes or no per person, in one tap.</p></li></ol>
+<div class="band"><span>All <span data-n>22</span> designs include these five parts, each in its own style.</span><a class="btn btn-dark" style="min-height: 46px" href="/en/disenos/">Compare them<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
+</section>
+
+<section id="designs" class="dsg" aria-labelledby="d-h">
+<div class="w">
+<div class="head"><div><p class="k">The designs</p><h2 class="h2" id="d-h">Every design, <i>a complete invitation.</i></h2></div><a class="btn btn-paper" href="/en/disenos/"><span>See all <span data-n>22</span> designs</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
+<div class="chips"><span class="k">By opening</span><a class="chip" href="/en/disenos/?apertura=sobre">Envelopes<small>5</small></a><a class="chip" href="/en/disenos/?apertura=puertas,cortina,estor">Doors and curtains<small>4</small></a><a class="chip" href="/en/disenos/?apertura=pase,tarjetas,carta,calendario,baraja">Cards<small>5</small></a><a class="chip" href="/en/disenos/?apertura=carpeta,lazo,estuche,funda">Boxes and bows<small>4</small></a><a class="chip" href="/en/disenos/?apertura=tele,ventana">TV and window<small>2</small></a><a class="chip" href="/en/disenos/?apertura=luna,medallon">Moon and medallion<small>2</small></a></div>
+<div class="dcards"><a class="dcard" href="/en/demo/senal/" aria-label="Open the demo of Señal"><div class="ph"><img src="/assets/senal-tele.jpg" alt="" loading="lazy"></div><b>Señal</b><span>TV that flips channels</span></a><a class="dcard" href="/en/demo/onix/" aria-label="Open the demo of Ónix"><div class="ph"><img src="/assets/onix-sobre.jpg" alt="" loading="lazy"></div><b>Ónix</b><span>Envelope lined with a photo</span></a><a class="dcard" href="/en/demo/corazones/" aria-label="Open the demo of Corazones"><div class="ph"><img src="/assets/corazones-baraja.jpg" alt="" loading="lazy"></div><b>Corazones</b><span>Deck that fans out</span></a><a class="dcard" href="/en/demo/arco/" aria-label="Open the demo of Arco"><div class="ph"><img src="/assets/arco-ventana.jpg" alt="" loading="lazy"></div><b>Arco</b><span>Misted window</span></a><a class="dcard more" href="/en/disenos/"><div class="ph"><div class="stack"><img src="/assets/glicina-cortina.jpg" alt="" loading="lazy"><img src="/assets/fiesta-carta.jpg" alt="" loading="lazy"><img src="/assets/celeste-luna.jpg" alt="" loading="lazy"></div><div class="txt"><strong>And <span data-more>18</span> more.</strong><em>Envelopes, doors, boxes, a moon and a vintage TV.</em><span class="btn btn-lacre"><span>See all <span data-n>22</span></span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></div></div><b>All designs</b><span>With filters by style and color</span></a></div>
+<p class="dnote">Each design brings its own opening, cover and every section in its own style. Tap one to open its demo.</p>
 </div>
 </section>
 
-<section id="included" style="max-width: 1200px; margin: 0 auto; padding: 80px 24px">
-<div class="inc">
-<div style="display: flex; flex-direction: column; gap: 12px"><p style="margin: 0; font-size: 13px; font-weight: 500; letter-spacing: 3px; text-transform: uppercase; color: #6B5444">Included in every design</p><h2 style="margin: 0; font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: 42px; line-height: 1.05; color: #2B3A33">Everything your wedding needs, in one link</h2></div>
-<ul class="inc-list"><li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6B5444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><div><b>Opening effect</b><span>Envelope and letter, wax seal or doors.</span></div></li><li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6B5444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><div><b>A unique link per invitation</b><span>Greets each family by name and shows their seats.</span></div></li><li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6B5444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><div><b>Countdown</b><span>Days, hours, minutes and seconds to the wedding.</span></div></li><li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6B5444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><div><b>Your story</b><span>How you met, with a photo gallery.</span></div></li><li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6B5444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><div><b>Schedule</b><span>Ceremony and reception, address and map.</span></div></li><li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6B5444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><div><b>FAQ</b><span>Dress code, kids, gifts… grouped by topic.</span></div></li><li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6B5444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><div><b>Background music</b><span>Your song plays when the invitation opens.</span></div></li><li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6B5444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><div><b>Travel and stay</b><span>Hotels and things to do for out-of-town guests.</span></div></li><li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6B5444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><div><b>RSVP</b><span>Yes or no per guest, plus a note to the couple.</span></div></li></ul>
+<section id="how" class="w how" aria-labelledby="h-h">
+<div style="display: flex; flex-direction: column; gap: 10px"><p class="k">How it works</p><h2 class="h2" id="h-h">Ready in <i>an afternoon.</i></h2></div>
+<ol><li><span>1</span><b>Choose your design</b><p>The style, the opening and the colors. You can change it later.</p><a class="lnk" href="/en/disenos/">See the designs<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></li><li><span>2</span><b>Fill it in the editor</b><p>Text, photos, places and guests. A five-step guide shows you the way.</p></li><li><span>3</span><b>Share it</b><p>Each family gets its link on WhatsApp and you see who RSVPs.</p></li></ol>
+</section>
+
+<section class="inc" aria-labelledby="i-h">
+<div class="w">
+<div class="head"><div><p class="k">Included in every design</p><h2 class="h2" id="i-h">Your whole wedding in <i>one link.</i></h2></div></div>
+<ul class="feats"><li><b>Opening effect</b><span>Every design opens its own way.</span></li><li><b>A link per family</b><span>Greets each family by name and shows their seats.</span></li><li><b>RSVP per person</b><span>Yes or no for each guest, with a message for you.</span></li><li><b>Countdown</b><span>To the day and time of the wedding.</span></li><li><b>Schedule and maps</b><span>Every moment with its place and directions.</span></li><li><b>Photos and story</b><span>A gallery of up to 12 photos and your story.</span></li><li><b>Music</b><span>Your song plays when the invitation opens.</span></li><li><b>Travel and FAQ</b><span>Hotels, dress code, gifts and common questions.</span></li></ul>
 </div>
 </section>
 
-<section id="editor" style="background: #1C1A17; color: #F5F2EA; padding: 96px 24px">
-<div style="max-width: 1200px; margin: 0 auto; display: flex; flex-direction: column; gap: 44px">
-<div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 20px 40px">
-<div style="display: flex; flex-direction: column; gap: 16px; max-width: 640px">
-<p style="margin: 0; font-size: 13px; font-weight: 500; letter-spacing: 3px; text-transform: uppercase; color: #C9B49A">The editor</p>
-<h2 style="margin: 0; font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: 52px; line-height: 1.02">Write it, and see your invitation instantly</h2>
-</div>
-<p style="margin: 0; max-width: 420px; font-size: 16px; line-height: 1.6; color: #CFCABE">Everything in one place: texts, photos, colors, your music and the guest list.</p>
-</div>
-<div style="position: relative; padding-bottom: 28px">
-<div style="border-radius: 14px; overflow: hidden; background: #2B2925; box-shadow: 0 40px 80px -40px rgba(0,0,0,0.9)">
-<div aria-hidden="true" style="display: flex; gap: 7px; padding: 12px 14px"><i style="width: 10px; height: 10px; border-radius: 50%; background: #4A4640"></i><i style="width: 10px; height: 10px; border-radius: 50%; background: #4A4640"></i><i style="width: 10px; height: 10px; border-radius: 50%; background: #4A4640"></i></div>
-<img src="/assets/editor-en.jpg" alt="Lazo editor: cover form and live invitation preview on a phone" loading="lazy" style="display: block; width: 100%; height: auto; aspect-ratio: 16 / 10">
-</div>
-</div>
-<ul style="margin: 0; padding: 0; list-style: none; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr)); gap: 24px 40px">
-<li style="border-top: 1px solid #3A3631; padding: 18px 0 0; display: flex; flex-direction: column; gap: 6px"><strong style="font-weight: 600; font-size: 17px">Live preview</strong><span style="font-size: 15px; line-height: 1.55; color: #CFCABE">Every change shows up in the real invitation, on phone or desktop.</span></li><li style="border-top: 1px solid #3A3631; padding: 18px 0 0; display: flex; flex-direction: column; gap: 6px"><strong style="font-weight: 600; font-size: 17px">Colors, photos and your song</strong><span style="font-size: 15px; line-height: 1.55; color: #CFCABE">Pick the palette, upload your photos and the music you love.</span></li><li style="border-top: 1px solid #3A3631; padding: 18px 0 0; display: flex; flex-direction: column; gap: 6px"><strong style="font-weight: 600; font-size: 17px">Guests and RSVPs</strong><span style="font-size: 15px; line-height: 1.55; color: #CFCABE">Upload the list from Excel and follow who confirms from your dashboard.</span></li>
-</ul>
-</div>
+<section id="editor" class="w tools">
+<div class="tool"><p class="k">The editor</p><h2 class="h2">Write and see your invitation <i>instantly.</i></h2><div class="shot"><img src="/assets/editor-en.jpg" alt="Invitesse editor: the cover form and the invitation preview" loading="lazy"></div><p><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Text, photos, colors and music, with a live preview on phone and computer.</p></div>
+<div class="tool" id="panel"><p class="k">The dashboard</p><h2 class="h2">Know who’s coming, <i>right away.</i></h2><div class="shot panel"><img src="/assets/panel-invitados-en.jpg" alt="Couple’s dashboard: the guest list with their replies" loading="lazy"></div><p><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Upload your list from Excel, send on WhatsApp and download the replies.</p></div>
 </section>
 
-<section id="panel" style="background: #EAE4D7; padding: 112px 24px 96px">
-<div style="max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; align-items: center; gap: 48px 64px">
-<div style="flex: 1 1 380px; min-width: 0; display: flex; flex-direction: column; gap: 18px"><p style="margin: 0; font-size: 13px; font-weight: 500; letter-spacing: 3px; text-transform: uppercase; color: #6B5444">Planning dashboard</p><h2 style="margin: 0; font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: 52px; line-height: 1.02; color: #2B3A33">Know who’s coming, as it happens</h2><p style="margin: 0; font-size: 17px; line-height: 1.6; color: #4A4640">Every reply lands in your dashboard on its own: no spreadsheets, no messages lost in group chats.</p><ul style="margin: 8px 0 0; padding: 0; list-style: none; display: flex; flex-direction: column"><li style="border-top: 1px solid #CFC6B4; padding: 14px 0; display: flex; flex-direction: column; gap: 3px"><strong style="font-weight: 600; font-size: 16px; color: #22201C">Overview</strong><span style="font-size: 14.5px; line-height: 1.5; color: #4A4640">How many said yes, how many said no and who hasn’t replied.</span></li><li style="border-top: 1px solid #CFC6B4; padding: 14px 0; display: flex; flex-direction: column; gap: 3px"><strong style="font-weight: 600; font-size: 16px; color: #22201C">Guests</strong><span style="font-size: 14.5px; line-height: 1.5; color: #4A4640">Search, filter by status and edit names and seats.</span></li><li style="border-top: 1px solid #CFC6B4; padding: 14px 0; display: flex; flex-direction: column; gap: 3px"><strong style="font-weight: 600; font-size: 16px; color: #22201C">Sending</strong><span style="font-size: 14.5px; line-height: 1.5; color: #4A4640">Create invitations and copy the message with its link for WhatsApp.</span></li><li style="border-top: 1px solid #CFC6B4; padding: 14px 0; display: flex; flex-direction: column; gap: 3px"><strong style="font-weight: 600; font-size: 16px; color: #22201C">Export</strong><span style="font-size: 14.5px; line-height: 1.5; color: #4A4640">Download the list with every reply as a spreadsheet (CSV).</span></li></ul></div>
-<div class="pnl-phones" style="flex: 1 1 480px; min-width: 0"><div><img src="/assets/panel-resumen-en.jpg" alt="Dashboard: overview of confirmed guests" loading="lazy"></div><div><img src="/assets/panel-invitados-en.jpg" alt="Dashboard: guest list with each reply" loading="lazy"></div><div><img src="/assets/panel-envio-en.jpg" alt="Dashboard: creating an invitation to send" loading="lazy"></div></div>
-</div>
-</section>
-
-<section style="max-width: 1200px; margin: 0 auto; padding: 96px 24px; display: flex; flex-direction: column; gap: 56px">
-<h2 style="margin: 0; font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: 56px; line-height: 1.02; max-width: 680px; color: #2B3A33">Ready in an afternoon, no waiting</h2>
-<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr)); gap: 40px">
-<div style="display: flex; flex-direction: column; gap: 14px"><span style="font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 72px; line-height: 1; color: #6B5444">1</span><h3 style="margin: 0; font-size: 20px; font-weight: 600">Pick your design</h3><p style="margin: 0; font-size: 15px; line-height: 1.6; color: #4A4640">Pay once and get access to your editor.</p></div><div style="display: flex; flex-direction: column; gap: 14px"><span style="font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 72px; line-height: 1; color: #6B5444">2</span><h3 style="margin: 0; font-size: 20px; font-weight: 600">Fill in your invitation</h3><p style="margin: 0; font-size: 15px; line-height: 1.6; color: #4A4640">Texts, photos, venues and guests. The preview builds itself as you type.</p></div><div style="display: flex; flex-direction: column; gap: 14px"><span style="font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 72px; line-height: 1; color: #6B5444">3</span><h3 style="margin: 0; font-size: 20px; font-weight: 600">Share</h3><p style="margin: 0; font-size: 15px; line-height: 1.6; color: #4A4640">Send each family its unique link on WhatsApp and follow RSVPs live.</p></div>
-</div>
-</section>
-
-<section id="add-ons" style="background: #EAE4D7; padding: 96px 24px">
-<div style="max-width: 1200px; margin: 0 auto; display: flex; flex-direction: column; gap: 44px">
-<div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 20px 40px">
-<div style="display: flex; flex-direction: column; gap: 16px; max-width: 640px">
-<p style="margin: 0; font-size: 13px; font-weight: 500; letter-spacing: 3px; text-transform: uppercase; color: #6B5444">Add-ons</p>
-<h2 style="margin: 0; font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: 56px; line-height: 1.02; color: #2B3A33">Add them whenever you like</h2>
-</div>
-<p style="margin: 0; max-width: 420px; font-size: 16px; line-height: 1.6; color: #4A4640">They switch on from the editor, before or after publishing. This is how they look in the invitation.</p>
-</div>
+<section id="add-ons" class="add" aria-labelledby="a-h">
+<div class="w">
+<div class="head"><div><p class="k">Add-ons</p><h2 class="h2" id="a-h">Add <i>more party.</i></h2></div><p class="p" style="max-width: 420px">Turn them on from the editor, before or after publishing. This is how they look in the invitation.</p></div>
 <div data-addons style="display: flex; flex-direction: column; gap: 20px">
 <div class="ad-tabs" role="tablist" aria-label="Add-ons"><button type="button" class="ad-tab" role="tab" id="ad-t0" aria-controls="ad-p" aria-selected="true">Collaborative playlist</button><button type="button" class="ad-tab" role="tab" id="ad-t1" aria-controls="ad-p" aria-selected="false">QR guestbook</button><button type="button" class="ad-tab" role="tab" id="ad-t2" aria-controls="ad-p" aria-selected="false">Message capsule</button><button type="button" class="ad-tab" role="tab" id="ad-t3" aria-controls="ad-p" aria-selected="false">Fun polls</button><button type="button" class="ad-tab" role="tab" id="ad-t4" aria-controls="ad-p" aria-selected="false">Shared gallery</button><button type="button" class="ad-tab" role="tab" id="ad-t5" aria-controls="ad-p" aria-selected="false">Bilingual site</button><button type="button" class="ad-tab" role="tab" id="ad-t6" aria-controls="ad-p" aria-selected="false">Custom domain</button></div>
 <div class="ad" id="ad-p" role="tabpanel" aria-live="polite">
-<div class="ad-stage"><div class="ad-mock"><div style="width: 100%; max-width: 240px; background: #FFFFFF; border-radius: 14px; padding: 12px; display: flex; flex-direction: column; gap: 10px; box-shadow: 0 10px 24px -16px rgba(34,32,28,0.4)"><div style="display: flex; align-items: center; gap: 10px"><span aria-hidden="true" style="width: 32px; height: 32px; flex: none; border-radius: 8px; background: #2B3A33; color: #F5F2EA; display: flex; align-items: center; justify-content: center; font-size: 15px">♪</span><span style="display: flex; flex-direction: column; min-width: 0"><span style="font-size: 13px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">Your first dance song</span><span style="font-size: 11px; color: #6B6660">Suggested by Aunt Martha</span></span></div><div style="display: flex; align-items: center; gap: 10px"><span aria-hidden="true" style="width: 32px; height: 32px; flex: none; border-radius: 8px; background: #2B3A33; color: #F5F2EA; display: flex; align-items: center; justify-content: center; font-size: 15px">♪</span><span style="display: flex; flex-direction: column; min-width: 0"><span style="font-size: 13px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">One everyone can sing</span><span style="font-size: 11px; color: #6B6660">Suggested by the García family</span></span></div><div style="display: flex; align-items: center; gap: 10px"><span aria-hidden="true" style="width: 32px; height: 32px; flex: none; border-radius: 8px; background: #2B3A33; color: #F5F2EA; display: flex; align-items: center; justify-content: center; font-size: 15px">♪</span><span style="display: flex; flex-direction: column; min-width: 0"><span style="font-size: 13px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">The one from when you met</span><span style="font-size: 11px; color: #6B6660">Suggested by Daniel</span></span></div></div></div><div class="ad-mock" hidden><div style="display: flex; flex-direction: column; align-items: center; gap: 10px"><svg viewBox="0 0 21 21" width="104" height="104" role="img" aria-label="QR" style="display:block;padding:8px;background:#fff;border-radius:10px;border:1px solid #E5DFD2"><path d="M0 0h1v1h-1zM1 0h1v1h-1zM2 0h1v1h-1zM3 0h1v1h-1zM4 0h1v1h-1zM5 0h1v1h-1zM6 0h1v1h-1zM8 0h1v1h-1zM14 0h1v1h-1zM15 0h1v1h-1zM16 0h1v1h-1zM17 0h1v1h-1zM18 0h1v1h-1zM19 0h1v1h-1zM20 0h1v1h-1zM0 1h1v1h-1zM6 1h1v1h-1zM7 1h1v1h-1zM8 1h1v1h-1zM11 1h1v1h-1zM12 1h1v1h-1zM14 1h1v1h-1zM20 1h1v1h-1zM0 2h1v1h-1zM2 2h1v1h-1zM3 2h1v1h-1zM4 2h1v1h-1zM6 2h1v1h-1zM9 2h1v1h-1zM11 2h1v1h-1zM14 2h1v1h-1zM16 2h1v1h-1zM17 2h1v1h-1zM18 2h1v1h-1zM20 2h1v1h-1zM0 3h1v1h-1zM2 3h1v1h-1zM3 3h1v1h-1zM4 3h1v1h-1zM6 3h1v1h-1zM8 3h1v1h-1zM9 3h1v1h-1zM12 3h1v1h-1zM14 3h1v1h-1zM16 3h1v1h-1zM17 3h1v1h-1zM18 3h1v1h-1zM20 3h1v1h-1zM0 4h1v1h-1zM2 4h1v1h-1zM3 4h1v1h-1zM4 4h1v1h-1zM6 4h1v1h-1zM8 4h1v1h-1zM9 4h1v1h-1zM12 4h1v1h-1zM14 4h1v1h-1zM16 4h1v1h-1zM17 4h1v1h-1zM18 4h1v1h-1zM20 4h1v1h-1zM0 5h1v1h-1zM6 5h1v1h-1zM11 5h1v1h-1zM14 5h1v1h-1zM20 5h1v1h-1zM0 6h1v1h-1zM1 6h1v1h-1zM2 6h1v1h-1zM3 6h1v1h-1zM4 6h1v1h-1zM5 6h1v1h-1zM6 6h1v1h-1zM8 6h1v1h-1zM10 6h1v1h-1zM13 6h1v1h-1zM14 6h1v1h-1zM15 6h1v1h-1zM16 6h1v1h-1zM17 6h1v1h-1zM18 6h1v1h-1zM19 6h1v1h-1zM20 6h1v1h-1zM1 7h1v1h-1zM2 7h1v1h-1zM9 7h1v1h-1zM10 7h1v1h-1zM11 7h1v1h-1zM16 7h1v1h-1zM0 8h1v1h-1zM3 8h1v1h-1zM4 8h1v1h-1zM5 8h1v1h-1zM6 8h1v1h-1zM7 8h1v1h-1zM8 8h1v1h-1zM9 8h1v1h-1zM10 8h1v1h-1zM16 8h1v1h-1zM17 8h1v1h-1zM19 8h1v1h-1zM1 9h1v1h-1zM4 9h1v1h-1zM6 9h1v1h-1zM7 9h1v1h-1zM10 9h1v1h-1zM11 9h1v1h-1zM15 9h1v1h-1zM16 9h1v1h-1zM17 9h1v1h-1zM18 9h1v1h-1zM20 9h1v1h-1zM5 10h1v1h-1zM6 10h1v1h-1zM16 10h1v1h-1zM20 10h1v1h-1zM6 11h1v1h-1zM8 11h1v1h-1zM10 11h1v1h-1zM11 11h1v1h-1zM12 11h1v1h-1zM16 11h1v1h-1zM1 12h1v1h-1zM5 12h1v1h-1zM9 12h1v1h-1zM10 12h1v1h-1zM12 12h1v1h-1zM13 12h1v1h-1zM15 12h1v1h-1zM16 12h1v1h-1zM19 12h1v1h-1zM20 12h1v1h-1zM0 13h1v1h-1zM2 13h1v1h-1zM3 13h1v1h-1zM4 13h1v1h-1zM7 13h1v1h-1zM8 13h1v1h-1zM9 13h1v1h-1zM11 13h1v1h-1zM12 13h1v1h-1zM15 13h1v1h-1zM16 13h1v1h-1zM20 13h1v1h-1zM0 14h1v1h-1zM1 14h1v1h-1zM2 14h1v1h-1zM3 14h1v1h-1zM4 14h1v1h-1zM5 14h1v1h-1zM6 14h1v1h-1zM7 14h1v1h-1zM9 14h1v1h-1zM15 14h1v1h-1zM20 14h1v1h-1zM0 15h1v1h-1zM6 15h1v1h-1zM8 15h1v1h-1zM10 15h1v1h-1zM11 15h1v1h-1zM13 15h1v1h-1zM17 15h1v1h-1zM18 15h1v1h-1zM0 16h1v1h-1zM2 16h1v1h-1zM3 16h1v1h-1zM4 16h1v1h-1zM6 16h1v1h-1zM14 16h1v1h-1zM16 16h1v1h-1zM17 16h1v1h-1zM0 17h1v1h-1zM2 17h1v1h-1zM3 17h1v1h-1zM4 17h1v1h-1zM6 17h1v1h-1zM10 17h1v1h-1zM11 17h1v1h-1zM17 17h1v1h-1zM20 17h1v1h-1zM0 18h1v1h-1zM2 18h1v1h-1zM3 18h1v1h-1zM4 18h1v1h-1zM6 18h1v1h-1zM7 18h1v1h-1zM8 18h1v1h-1zM10 18h1v1h-1zM11 18h1v1h-1zM16 18h1v1h-1zM17 18h1v1h-1zM18 18h1v1h-1zM0 19h1v1h-1zM6 19h1v1h-1zM9 19h1v1h-1zM10 19h1v1h-1zM11 19h1v1h-1zM12 19h1v1h-1zM14 19h1v1h-1zM16 19h1v1h-1zM17 19h1v1h-1zM18 19h1v1h-1zM0 20h1v1h-1zM1 20h1v1h-1zM2 20h1v1h-1zM3 20h1v1h-1zM4 20h1v1h-1zM5 20h1v1h-1zM6 20h1v1h-1zM7 20h1v1h-1zM8 20h1v1h-1zM11 20h1v1h-1zM12 20h1v1h-1zM15 20h1v1h-1zM20 20h1v1h-1z" fill="#2B3A33"/></svg><span style="font-size: 12px; color: #4A4640">Scan and leave us a message</span></div></div><div class="ad-mock" hidden><div style="display: flex; flex-direction: column; align-items: center; gap: 12px"><div style="position: relative; width: 170px; height: 108px; background: #FBF9F4; border-radius: 4px; box-shadow: 0 10px 24px -14px rgba(34,32,28,0.45); overflow: hidden"><svg width="170" height="64" viewBox="0 0 170 64" aria-hidden="true" style="position: absolute; top: 0; left: 0"><path d="M0 0h170L85 60Z" fill="#E6E1D4" stroke="#D6CFBF"/></svg><span aria-hidden="true" style="position: absolute; left: 63px; top: 38px; width: 44px; height: 44px; border-radius: 50%; background: #2B3A33; color: #F5F2EA; display: flex; align-items: center; justify-content: center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></span></div><span style="font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase; color: #6B5444">Opens on 03 · 14 · 2028</span></div></div><div class="ad-mock" hidden><div style="width: 100%; max-width: 240px; background: #FFFFFF; border-radius: 14px; padding: 14px; display: flex; flex-direction: column; gap: 10px; box-shadow: 0 10px 24px -16px rgba(34,32,28,0.4)"><span style="font-family: 'Cormorant Garamond', serif; font-size: 19px; line-height: 1.15">Who will cry the most at the ceremony?</span><div style="display: flex; flex-direction: column; gap: 4px"><span style="font-size: 12px">Anna</span><span style="height: 7px; border-radius: 7px; background: #E5DFD2"><span style="display: block; width: 64%; height: 7px; border-radius: 7px; background: #2B3A33"></span></span></div><div style="display: flex; flex-direction: column; gap: 4px"><span style="font-size: 12px">Leo</span><span style="height: 7px; border-radius: 7px; background: #E5DFD2"><span style="display: block; width: 36%; height: 7px; border-radius: 7px; background: #8A9886"></span></span></div></div></div><div class="ad-mock" hidden><div style="display: grid; grid-template-columns: repeat(3, 64px); gap: 6px"><img src="/assets/fotos/torre.jpg" alt="" loading="lazy" style="width: 64px; height: 64px; object-fit: cover; border-radius: 8px; display: block"><img src="/assets/fotos/beso.jpg" alt="" loading="lazy" style="width: 64px; height: 64px; object-fit: cover; border-radius: 8px; display: block"><img src="/assets/fotos/muro.jpg" alt="" loading="lazy" style="width: 64px; height: 64px; object-fit: cover; border-radius: 8px; display: block"><img src="/assets/fotos/paseo.jpg" alt="" loading="lazy" style="width: 64px; height: 64px; object-fit: cover; border-radius: 8px; display: block"><img src="/assets/fotos/escalera.jpg" alt="" loading="lazy" style="width: 64px; height: 64px; object-fit: cover; border-radius: 8px; display: block"><img src="/assets/fotos/beso.jpg" alt="" loading="lazy" style="width: 64px; height: 64px; object-fit: cover; border-radius: 8px; display: block"></div></div><div class="ad-mock" hidden><div style="display: flex; flex-direction: column; align-items: center; gap: 12px"><span style="display: inline-flex; padding: 3px; border-radius: 999px; background: #E5DFD2; font-size: 12px; font-weight: 500"><span style="padding: 5px 14px; border-radius: 999px; background: #2B3A33; color: #F5F2EA">EN</span><span style="padding: 5px 14px; color: #4A4640">ES</span></span><span style="font-family: 'Cormorant Garamond', serif; font-size: 26px; line-height: 1">We’re getting married</span><span style="font-size: 12px; color: #6B6660">and we want to celebrate with you</span><span style="font-size: 13px; color: #A39C90; font-style: italic">Nos casamos</span></div></div><div class="ad-mock" hidden><div style="width: 100%; max-width: 250px; border-radius: 12px; overflow: hidden; background: #FBF9F4; border: 1px solid #E5DFD2; box-shadow: 0 10px 24px -16px rgba(34,32,28,0.4)"><div style="display: flex; align-items: center; gap: 6px; padding: 8px 10px; background: #E5DFD2"><i style="width: 7px; height: 7px; border-radius: 50%; background: #C9C0AF"></i><i style="width: 7px; height: 7px; border-radius: 50%; background: #C9C0AF"></i><i style="width: 7px; height: 7px; border-radius: 50%; background: #C9C0AF"></i><span style="flex: 1; margin-left: 4px; padding: 3px 10px; border-radius: 999px; background: #FBF9F4; font-size: 11px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">https://annaandleo.com</span></div><div style="padding: 22px 12px; text-align: center; background: #2B3A33; color: #F5F2EA"><span style="font-family: 'Cormorant Garamond', serif; font-size: 28px; line-height: 1">Anna &amp; Leo</span></div></div></div></div>
-<div class="ad-side"><div class="ad-copy" aria-labelledby="ad-t0"><span class="ad-count">01 of 07</span><h3>Collaborative playlist</h3><p>Guests suggest songs when they RSVP and they land in a Spotify playlist you control.</p></div><div class="ad-copy" aria-labelledby="ad-t1" hidden><span class="ad-count">02 of 07</span><h3>QR guestbook</h3><p>A QR code on the tables so guests leave messages and photos during the party.</p></div><div class="ad-copy" aria-labelledby="ad-t2" hidden><span class="ad-count">03 of 07</span><h3>Message capsule</h3><p>Messages that stay sealed and open by themselves on your first anniversary.</p></div><div class="ad-copy" aria-labelledby="ad-t3" hidden><span class="ad-count">04 of 07</span><h3>Fun polls</h3><p>Who will cry the most? Who will be late? Guests vote from their invitation and see the results at the party.</p></div><div class="ad-copy" aria-labelledby="ad-t4" hidden><span class="ad-count">05 of 07</span><h3>Shared gallery</h3><p>All your guests’ photos in one album, no group chats needed.</p></div><div class="ad-copy" aria-labelledby="ad-t5" hidden><span class="ad-count">06 of 07</span><h3>Bilingual site</h3><p>Guests choose the language: English or Spanish.</p></div><div class="ad-copy" aria-labelledby="ad-t6" hidden><span class="ad-count">07 of 07</span><h3>Custom domain</h3><p>Your invitation at your own web address, like annaandleo.com.</p></div><div class="ad-ctrl"><button type="button" class="ad-arrow" data-prev aria-label="Previous">←</button><button type="button" class="ad-arrow" data-next aria-label="Next">→</button></div></div>
+<div class="ad-stage"><div class="ad-mock"><div style="width: 100%; max-width: 240px; background: #FFFFFF; border-radius: 14px; padding: 12px; display: flex; flex-direction: column; gap: 10px; box-shadow: 0 10px 24px -16px rgba(34,32,28,0.4)"><div style="display: flex; align-items: center; gap: 10px"><span aria-hidden="true" style="width: 32px; height: 32px; flex: none; border-radius: 8px; background: #17151C; color: #F5F2EA; display: flex; align-items: center; justify-content: center; font-size: 15px"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18V5l11-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="17" cy="16" r="3"/></svg></span><span style="display: flex; flex-direction: column; min-width: 0"><span style="font-size: 13px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">Your first dance song</span><span style="font-size: 11px; color: #6B6660">Suggested by Aunt Martha</span></span></div><div style="display: flex; align-items: center; gap: 10px"><span aria-hidden="true" style="width: 32px; height: 32px; flex: none; border-radius: 8px; background: #17151C; color: #F5F2EA; display: flex; align-items: center; justify-content: center; font-size: 15px"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18V5l11-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="17" cy="16" r="3"/></svg></span><span style="display: flex; flex-direction: column; min-width: 0"><span style="font-size: 13px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">One everyone can sing</span><span style="font-size: 11px; color: #6B6660">Suggested by the García family</span></span></div><div style="display: flex; align-items: center; gap: 10px"><span aria-hidden="true" style="width: 32px; height: 32px; flex: none; border-radius: 8px; background: #17151C; color: #F5F2EA; display: flex; align-items: center; justify-content: center; font-size: 15px"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18V5l11-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="17" cy="16" r="3"/></svg></span><span style="display: flex; flex-direction: column; min-width: 0"><span style="font-size: 13px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">The one from when you met</span><span style="font-size: 11px; color: #6B6660">Suggested by Daniel</span></span></div></div></div><div class="ad-mock" hidden><div style="display: flex; flex-direction: column; align-items: center; gap: 10px"><svg viewBox="0 0 21 21" width="104" height="104" role="img" aria-label="QR" style="display:block;padding:8px;background:#fff;border-radius:10px;border:1px solid #EFE9E1"><path d="M0 0h1v1h-1zM1 0h1v1h-1zM2 0h1v1h-1zM3 0h1v1h-1zM4 0h1v1h-1zM5 0h1v1h-1zM6 0h1v1h-1zM8 0h1v1h-1zM14 0h1v1h-1zM15 0h1v1h-1zM16 0h1v1h-1zM17 0h1v1h-1zM18 0h1v1h-1zM19 0h1v1h-1zM20 0h1v1h-1zM0 1h1v1h-1zM6 1h1v1h-1zM7 1h1v1h-1zM8 1h1v1h-1zM11 1h1v1h-1zM12 1h1v1h-1zM14 1h1v1h-1zM20 1h1v1h-1zM0 2h1v1h-1zM2 2h1v1h-1zM3 2h1v1h-1zM4 2h1v1h-1zM6 2h1v1h-1zM9 2h1v1h-1zM11 2h1v1h-1zM14 2h1v1h-1zM16 2h1v1h-1zM17 2h1v1h-1zM18 2h1v1h-1zM20 2h1v1h-1zM0 3h1v1h-1zM2 3h1v1h-1zM3 3h1v1h-1zM4 3h1v1h-1zM6 3h1v1h-1zM8 3h1v1h-1zM9 3h1v1h-1zM12 3h1v1h-1zM14 3h1v1h-1zM16 3h1v1h-1zM17 3h1v1h-1zM18 3h1v1h-1zM20 3h1v1h-1zM0 4h1v1h-1zM2 4h1v1h-1zM3 4h1v1h-1zM4 4h1v1h-1zM6 4h1v1h-1zM8 4h1v1h-1zM9 4h1v1h-1zM12 4h1v1h-1zM14 4h1v1h-1zM16 4h1v1h-1zM17 4h1v1h-1zM18 4h1v1h-1zM20 4h1v1h-1zM0 5h1v1h-1zM6 5h1v1h-1zM11 5h1v1h-1zM14 5h1v1h-1zM20 5h1v1h-1zM0 6h1v1h-1zM1 6h1v1h-1zM2 6h1v1h-1zM3 6h1v1h-1zM4 6h1v1h-1zM5 6h1v1h-1zM6 6h1v1h-1zM8 6h1v1h-1zM10 6h1v1h-1zM13 6h1v1h-1zM14 6h1v1h-1zM15 6h1v1h-1zM16 6h1v1h-1zM17 6h1v1h-1zM18 6h1v1h-1zM19 6h1v1h-1zM20 6h1v1h-1zM1 7h1v1h-1zM2 7h1v1h-1zM9 7h1v1h-1zM10 7h1v1h-1zM11 7h1v1h-1zM16 7h1v1h-1zM0 8h1v1h-1zM3 8h1v1h-1zM4 8h1v1h-1zM5 8h1v1h-1zM6 8h1v1h-1zM7 8h1v1h-1zM8 8h1v1h-1zM9 8h1v1h-1zM10 8h1v1h-1zM16 8h1v1h-1zM17 8h1v1h-1zM19 8h1v1h-1zM1 9h1v1h-1zM4 9h1v1h-1zM6 9h1v1h-1zM7 9h1v1h-1zM10 9h1v1h-1zM11 9h1v1h-1zM15 9h1v1h-1zM16 9h1v1h-1zM17 9h1v1h-1zM18 9h1v1h-1zM20 9h1v1h-1zM5 10h1v1h-1zM6 10h1v1h-1zM16 10h1v1h-1zM20 10h1v1h-1zM6 11h1v1h-1zM8 11h1v1h-1zM10 11h1v1h-1zM11 11h1v1h-1zM12 11h1v1h-1zM16 11h1v1h-1zM1 12h1v1h-1zM5 12h1v1h-1zM9 12h1v1h-1zM10 12h1v1h-1zM12 12h1v1h-1zM13 12h1v1h-1zM15 12h1v1h-1zM16 12h1v1h-1zM19 12h1v1h-1zM20 12h1v1h-1zM0 13h1v1h-1zM2 13h1v1h-1zM3 13h1v1h-1zM4 13h1v1h-1zM7 13h1v1h-1zM8 13h1v1h-1zM9 13h1v1h-1zM11 13h1v1h-1zM12 13h1v1h-1zM15 13h1v1h-1zM16 13h1v1h-1zM20 13h1v1h-1zM0 14h1v1h-1zM1 14h1v1h-1zM2 14h1v1h-1zM3 14h1v1h-1zM4 14h1v1h-1zM5 14h1v1h-1zM6 14h1v1h-1zM7 14h1v1h-1zM9 14h1v1h-1zM15 14h1v1h-1zM20 14h1v1h-1zM0 15h1v1h-1zM6 15h1v1h-1zM8 15h1v1h-1zM10 15h1v1h-1zM11 15h1v1h-1zM13 15h1v1h-1zM17 15h1v1h-1zM18 15h1v1h-1zM0 16h1v1h-1zM2 16h1v1h-1zM3 16h1v1h-1zM4 16h1v1h-1zM6 16h1v1h-1zM14 16h1v1h-1zM16 16h1v1h-1zM17 16h1v1h-1zM0 17h1v1h-1zM2 17h1v1h-1zM3 17h1v1h-1zM4 17h1v1h-1zM6 17h1v1h-1zM10 17h1v1h-1zM11 17h1v1h-1zM17 17h1v1h-1zM20 17h1v1h-1zM0 18h1v1h-1zM2 18h1v1h-1zM3 18h1v1h-1zM4 18h1v1h-1zM6 18h1v1h-1zM7 18h1v1h-1zM8 18h1v1h-1zM10 18h1v1h-1zM11 18h1v1h-1zM16 18h1v1h-1zM17 18h1v1h-1zM18 18h1v1h-1zM0 19h1v1h-1zM6 19h1v1h-1zM9 19h1v1h-1zM10 19h1v1h-1zM11 19h1v1h-1zM12 19h1v1h-1zM14 19h1v1h-1zM16 19h1v1h-1zM17 19h1v1h-1zM18 19h1v1h-1zM0 20h1v1h-1zM1 20h1v1h-1zM2 20h1v1h-1zM3 20h1v1h-1zM4 20h1v1h-1zM5 20h1v1h-1zM6 20h1v1h-1zM7 20h1v1h-1zM8 20h1v1h-1zM11 20h1v1h-1zM12 20h1v1h-1zM15 20h1v1h-1zM20 20h1v1h-1z" fill="#17151C"/></svg><span style="font-size: 12px; color: #4A4640">Scan and leave us a message</span></div></div><div class="ad-mock" hidden><div style="display: flex; flex-direction: column; align-items: center; gap: 12px"><div style="position: relative; width: 170px; height: 108px; background: #FFFFFF; border-radius: 4px; box-shadow: 0 10px 24px -14px rgba(34,32,28,0.45); overflow: hidden"><svg width="170" height="64" viewBox="0 0 170 64" aria-hidden="true" style="position: absolute; top: 0; left: 0"><path d="M0 0h170L85 60Z" fill="#E6E1D4" stroke="#D6CFBF"/></svg><span aria-hidden="true" style="position: absolute; left: 63px; top: 38px; width: 44px; height: 44px; border-radius: 50%; background: #17151C; color: #F5F2EA; display: flex; align-items: center; justify-content: center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></span></div><span style="font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase; color: #D24527">Opens on 03 · 14 · 2028</span></div></div><div class="ad-mock" hidden><div style="width: 100%; max-width: 240px; background: #FFFFFF; border-radius: 14px; padding: 14px; display: flex; flex-direction: column; gap: 10px; box-shadow: 0 10px 24px -16px rgba(34,32,28,0.4)"><span style="font-family: 'Fraunces', Georgia, serif; font-size: 19px; line-height: 1.15">Who will cry the most at the ceremony?</span><div style="display: flex; flex-direction: column; gap: 4px"><span style="font-size: 12px">Anna</span><span style="height: 7px; border-radius: 7px; background: #EFE9E1"><span style="display: block; width: 64%; height: 7px; border-radius: 7px; background: #17151C"></span></span></div><div style="display: flex; flex-direction: column; gap: 4px"><span style="font-size: 12px">Leo</span><span style="height: 7px; border-radius: 7px; background: #EFE9E1"><span style="display: block; width: 36%; height: 7px; border-radius: 7px; background: #F08A6C"></span></span></div></div></div><div class="ad-mock" hidden><div style="display: grid; grid-template-columns: repeat(3, 64px); gap: 6px"><img src="/assets/fotos/torre.jpg" alt="" loading="lazy" style="width: 64px; height: 64px; object-fit: cover; border-radius: 8px; display: block"><img src="/assets/fotos/beso.jpg" alt="" loading="lazy" style="width: 64px; height: 64px; object-fit: cover; border-radius: 8px; display: block"><img src="/assets/fotos/muro.jpg" alt="" loading="lazy" style="width: 64px; height: 64px; object-fit: cover; border-radius: 8px; display: block"><img src="/assets/fotos/paseo.jpg" alt="" loading="lazy" style="width: 64px; height: 64px; object-fit: cover; border-radius: 8px; display: block"><img src="/assets/fotos/escalera.jpg" alt="" loading="lazy" style="width: 64px; height: 64px; object-fit: cover; border-radius: 8px; display: block"><img src="/assets/fotos/beso.jpg" alt="" loading="lazy" style="width: 64px; height: 64px; object-fit: cover; border-radius: 8px; display: block"></div></div><div class="ad-mock" hidden><div style="display: flex; flex-direction: column; align-items: center; gap: 12px"><span style="display: inline-flex; padding: 3px; border-radius: 999px; background: #EFE9E1; font-size: 12px; font-weight: 500"><span style="padding: 5px 14px; border-radius: 999px; background: #17151C; color: #F5F2EA">EN</span><span style="padding: 5px 14px; color: #4A4640">ES</span></span><span style="font-family: 'Fraunces', Georgia, serif; font-size: 26px; line-height: 1">We’re getting married</span><span style="font-size: 12px; color: #6B6660">and we want to celebrate with you</span><span style="font-size: 13px; color: #A39C90; font-style: italic">Nos casamos</span></div></div><div class="ad-mock" hidden><div style="width: 100%; max-width: 250px; border-radius: 12px; overflow: hidden; background: #FFFFFF; border: 1px solid #EFE9E1; box-shadow: 0 10px 24px -16px rgba(34,32,28,0.4)"><div style="display: flex; align-items: center; gap: 6px; padding: 8px 10px; background: #EFE9E1"><i style="width: 7px; height: 7px; border-radius: 50%; background: #C9C0AF"></i><i style="width: 7px; height: 7px; border-radius: 50%; background: #C9C0AF"></i><i style="width: 7px; height: 7px; border-radius: 50%; background: #C9C0AF"></i><span style="flex: 1; margin-left: 4px; padding: 3px 10px; border-radius: 999px; background: #FFFFFF; font-size: 11px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">https://annaandleo.com</span></div><div style="padding: 22px 12px; text-align: center; background: #17151C; color: #F5F2EA"><span style="font-family: 'Fraunces', Georgia, serif; font-size: 28px; line-height: 1">Anna &amp; Leo</span></div></div></div></div>
+<div class="ad-side"><div class="ad-copy" aria-labelledby="ad-t0"><span class="ad-count">01 of 07</span><h3>Collaborative playlist</h3><p>Guests suggest songs when they RSVP and they land in a Spotify playlist you control.</p></div><div class="ad-copy" aria-labelledby="ad-t1" hidden><span class="ad-count">02 of 07</span><h3>QR guestbook</h3><p>A QR code on the tables so guests leave messages and photos during the party.</p></div><div class="ad-copy" aria-labelledby="ad-t2" hidden><span class="ad-count">03 of 07</span><h3>Message capsule</h3><p>Messages that stay sealed and open by themselves on your first anniversary.</p></div><div class="ad-copy" aria-labelledby="ad-t3" hidden><span class="ad-count">04 of 07</span><h3>Fun polls</h3><p>Who will cry the most? Who will be late? Guests vote from their invitation and see the results at the party.</p></div><div class="ad-copy" aria-labelledby="ad-t4" hidden><span class="ad-count">05 of 07</span><h3>Shared gallery</h3><p>All your guests’ photos in one album, no group chats needed.</p></div><div class="ad-copy" aria-labelledby="ad-t5" hidden><span class="ad-count">06 of 07</span><h3>Bilingual site</h3><p>Guests choose the language: English or Spanish.</p></div><div class="ad-copy" aria-labelledby="ad-t6" hidden><span class="ad-count">07 of 07</span><h3>Custom domain</h3><p>Your invitation at your own web address, like annaandleo.com.</p></div><div class="ad-ctrl"><button type="button" class="ad-arrow" data-prev aria-label="Previous"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></button><button type="button" class="ad-arrow" data-next aria-label="Next"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button></div></div>
 </div>
 </div>
 </div>
 </section>
 
-<section id="pricing" style="max-width: 1200px; margin: 0 auto; padding: 96px 24px; display: flex; flex-direction: column; gap: 40px">
-<div style="display: flex; flex-direction: column; gap: 12px; align-items: center; text-align: center">
-<p style="margin: 0; font-size: 13px; font-weight: 500; letter-spacing: 3px; text-transform: uppercase; color: #6B5444">Pricing</p>
-<h2 style="margin: 0; font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: 56px; line-height: 1.02; color: #2B3A33">One clear price for your invitation</h2>
+<section id="pricing" class="w price" aria-labelledby="p-h">
+<div class="head"><div style="align-items: center"><p class="k">Pricing</p><h2 class="h2" id="p-h">Each design, its own price. <i>No surprises.</i></h2><p class="p">The price depends on the design you choose, and you see it on its page before you start. You pay once and everything else is included.</p></div></div>
+<div class="pgrid">
+<div class="pcard main">
+<div class="top2"><h3>Your invitation</h3><span class="amt"><small>from</small>[Precio]</span></div>
+<span style="font-size: 15px; color: #CFC8D2">One-time payment, depending on the design. Every one includes:</span>
+<ul><li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>The design you choose, in your colors</li><li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>A link per family</li><li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>RSVP per person</li><li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Editor and dashboard</li><li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Story, schedule, music and travel</li><li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>English and Spanish</li></ul>
+<p class="note">Add-ons are optional and added separately from the editor.</p>
+<div class="btns" style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 6px"><a class="btn btn-paper" href="/en/disenos/">See the designs and their prices<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a><a class="btn" style="color: #F7F3EE; box-shadow: inset 0 0 0 1.5px #F7F3EE55" href="/en/comprar/">Create my invitation</a></div>
 </div>
-<div style="display: flex; flex-wrap: wrap; gap: 24px; align-items: stretch">
-<div style="flex: 3 1 420px; min-width: 0; background: #FBF9F4; border: 2px solid #2B3A33; border-radius: 20px; padding: 36px 32px; display: flex; flex-direction: column; gap: 18px">
-<div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 12px"><h3 style="margin: 0; font-family: 'Cormorant Garamond', serif; font-weight: 600; font-size: 34px; color: #2B3A33">Invitation</h3><p style="margin: 0; font-size: 44px; font-weight: 600; line-height: 1">[Precio]</p></div>
-<p style="margin: 0; font-size: 15px; color: #4A4640; line-height: 1.55">One-time payment. Pick your design and colors, and publish whenever you like.</p>
-<ul style="margin: 0; padding: 0 0 0 18px; display: flex; flex-direction: column; gap: 8px; font-size: 15px; line-height: 1.45">
-<li>The design you choose, in your colors</li><li>Opening effect and a unique link per family</li><li>Story, schedule, FAQ, music and travel</li><li>Guest list and RSVP per person</li><li>Editor and dashboard to organize it all</li>
-</ul>
-<p style="margin: 0; font-size: 13px; color: #6B6660">Add-ons are optional and added separately from the editor.</p>
-<a href="/en/comprar/" style="align-self: flex-start; margin-top: 6px; text-decoration: none; background: #2B3A33; color: #F5F2EA; padding: 15px 28px; border-radius: 999px; font-weight: 500">Create my invitation</a>
+<div class="pcard alt"><h3>Rather have us do it for you?</h3><p>A custom design with your palette and your story; we load all the content. From [Precio].</p><a class="btn btn-line" style="align-self: flex-start; margin-top: auto" href="#contact">Let’s talk</a></div>
 </div>
-<div style="flex: 2 1 320px; min-width: 0; border: 1px dashed #A99F8B; border-radius: 20px; padding: 36px 32px; display: flex; flex-direction: column; gap: 14px; justify-content: center">
-<h3 style="margin: 0; font-family: 'Cormorant Garamond', serif; font-weight: 600; font-size: 30px; line-height: 1.1; color: #2B3A33">Rather have us do it for you?</h3>
-<p style="margin: 0; font-size: 15px; line-height: 1.6; color: #4A4640">Custom service: an exclusive design with your palette and your story, and we load all the content. From [Precio].</p>
-<a href="#contacto" style="align-self: flex-start; text-decoration: none; padding: 15px 28px; border-radius: 999px; border: 1px solid #22201C; color: #22201C; font-weight: 500">Let’s talk</a>
-</div>
-</div>
-<div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 12px 28px; font-size: 14px; color: #5A5650">
-<span>Secure payments with</span><strong style="font-weight: 600; color: #22201C">Mercado Pago</strong><strong style="font-weight: 600; color: #22201C">Credit card</strong><strong style="font-weight: 600; color: #22201C">PayPal</strong><span>· Prices in [currency]</span>
-</div>
+<p class="pay">Secure payments with Mercado Pago, card and PayPal · Prices in [currency]</p>
 </section>
 
-<section id="faq" style="max-width: 860px; margin: 0 auto; padding: 96px 24px; display: flex; flex-direction: column; gap: 32px">
-<h2 style="margin: 0; font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: 56px; line-height: 1.02; text-align: center; color: #2B3A33">Frequently asked questions</h2>
-<div style="display: flex; flex-direction: column">
-<details style="border-bottom: 1px solid #CFC6B4; padding: 20px 0"><summary style="display: flex; justify-content: space-between; align-items: center; gap: 16px; font-size: 18px; font-weight: 500; min-height: 44px">Do we need design or coding skills?<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#22201C" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></summary><p style="margin: 12px 0 0; font-size: 16px; line-height: 1.65; color: #4A4640">No. You fill everything in from your dashboard, like a form, and the site builds itself.</p></details>
-<details style="border-bottom: 1px solid #CFC6B4; padding: 20px 0"><summary style="display: flex; justify-content: space-between; align-items: center; gap: 16px; font-size: 18px; font-weight: 500; min-height: 44px">How do guests receive their invitation?<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#22201C" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></summary><p style="margin: 12px 0 0; font-size: 16px; line-height: 1.65; color: #4A4640">From the dashboard you create each invitation with its seats, copy the message with its unique link and send it.</p></details>
-<details style="border-bottom: 1px solid #CFC6B4; padding: 20px 0"><summary style="display: flex; justify-content: space-between; align-items: center; gap: 16px; font-size: 18px; font-weight: 500; min-height: 44px">Can we edit text or photos after sending it?<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#22201C" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></summary><p style="margin: 12px 0 0; font-size: 16px; line-height: 1.65; color: #4A4640">Yes, anytime. Changes appear instantly on every link.</p></details>
-<details style="border-bottom: 1px solid #CFC6B4; padding: 20px 0"><summary style="display: flex; justify-content: space-between; align-items: center; gap: 16px; font-size: 18px; font-weight: 500; min-height: 44px">How long will it stay online?<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#22201C" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></summary><p style="margin: 12px 0 0; font-size: 16px; line-height: 1.65; color: #4A4640">[Until X months after the wedding.]</p></details>
-<details style="border-bottom: 1px solid #CFC6B4; padding: 20px 0"><summary style="display: flex; justify-content: space-between; align-items: center; gap: 16px; font-size: 18px; font-weight: 500; min-height: 44px">Can the site be in English and Spanish?<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#22201C" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></summary><p style="margin: 12px 0 0; font-size: 16px; line-height: 1.65; color: #4A4640">Yes, with the bilingual add-on your guests switch languages with one tap.</p></details>
-</div>
+<section id="faq" class="w faq" aria-labelledby="f-h">
+<div style="display: flex; flex-direction: column; gap: 10px"><p class="k">Questions</p><h2 class="h2" id="f-h">Before you <i>start.</i></h2></div>
+<div><details open><summary>Do we need design or coding skills?<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></summary><p>No. You fill everything in like a form, and the invitation builds itself.</p></details><details><summary>How do guests receive their invitation?<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></summary><p>From the dashboard you create each invitation with its seats, copy the message with its unique link and send it on WhatsApp.</p></details><details><summary>Can we edit text or photos after sending it?<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></summary><p>Yes, anytime. Changes appear instantly on every link.</p></details><details><summary>How long will it stay online?<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></summary><p>[Until X months after the wedding.]</p></details><details><summary>Can the site be in English and Spanish?<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></summary><p>Yes, with the bilingual add-on your guests switch languages with one tap.</p></details></div>
 </section>
 
-<footer id="contact" style="background: #2B3A33; color: #F5F2EA; padding: 80px 24px 40px">
-<div style="max-width: 1200px; margin: 0 auto; display: flex; flex-direction: column; gap: 56px">
-<div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 32px">
-<h2 style="margin: 0; font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: 60px; line-height: 1.02; max-width: 640px">Start your invitation <span style="font-style: italic; color: #C9B49A">today.</span></h2>
-<div style="display: flex; flex-wrap: wrap; gap: 12px">
-<a href="#pricing" style="text-decoration: none; background: #F5F2EA; color: #2B3A33; padding: 16px 30px; border-radius: 999px; font-weight: 500">Create my invitation</a>
-<a href="#" style="text-decoration: none; border: 1px solid #8E9B85; color: #F5F2EA; padding: 16px 30px; border-radius: 999px; font-weight: 500">Message us on WhatsApp</a>
-</div>
-</div>
-<div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 24px; border-top: 1px solid #44544B; padding-top: 28px; font-size: 14px; color: #CFCABE">
-<span style="font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 28px; color: #F5F2EA">lazo</span>
-<div style="display: flex; flex-wrap: wrap; gap: 24px">
-<a href="#" style="color: #CFCABE">Instagram</a>
-<a href="#" style="color: #CFCABE">[hello@yourdomain.com]</a>
-<a href="#" style="color: #CFCABE">Terms</a>
-<a href="/" style="color: #CFCABE">Español</a>
-</div>
-</div>
-</div>
+<div class="w"><section class="end" id="contact"><h2>Your wedding starts <i>here.</i></h2><div class="r"><div style="display: flex; flex-wrap: wrap; gap: 12px"><a class="btn btn-dark" href="/en/comprar/">Create my invitation</a><a class="btn" style="box-shadow: inset 0 0 0 1.5px #FFF7F2" href="/en/disenos/"><span>See all <span data-n>22</span> designs</span></a></div><a class="wa" href="#">Questions? Message us on WhatsApp</a></div></section></div>
+</main>
+
+<footer class="w foot">
+<div class="row"><a class="logo" href="/en/" aria-label="Invitesse, home"><span class="iv-wm" role="img" aria-label="Invitesse"><span aria-hidden="true">invite</span><b aria-hidden="true">ss</b><span aria-hidden="true">e</span><svg viewBox="0 0 70 54" aria-hidden="true"><path d="M2 48C10 34 22 26 31 30C39 34 35 45 27 43C19 41 21 26 36 17C46 11 58 10 66 15" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg></span></a><nav aria-label="Footer"><a href="/en/disenos/">Designs</a><a href="#add-ons">Add-ons</a><a href="#">Instagram</a><a href="#">[hello@yourdomain.com]</a><a href="#">Terms</a><a href="/">Español</a></nav></div>
+<div class="by"><b>Designs by opening</b><a href="/en/disenos/?apertura=sobre">Envelopes</a><a href="/en/disenos/?apertura=puertas,cortina,estor">Doors and curtains</a><a href="/en/disenos/?apertura=pase,tarjetas,carta,calendario,baraja">Cards</a><a href="/en/disenos/?apertura=carpeta,lazo,estuche,funda">Boxes and bows</a><a href="/en/disenos/?apertura=tele,ventana">TV and window</a><a href="/en/disenos/?apertura=luna,medallon">Moon and medallion</a><a class="all" href="/en/disenos/">See all <span data-n>22</span></a></div>
+<small>Wedding website invitations</small>
 </footer>
 
-</div>
+<div class="sticky" id="sticky"><a class="btn btn-line" href="/en/disenos/"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="6.5" height="6.5" rx="1.5"/><rect x="13.5" y="4" width="6.5" height="6.5" rx="1.5"/><rect x="4" y="13.5" width="6.5" height="6.5" rx="1.5"/><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1.5"/></svg>Designs</a><a class="btn btn-dark" href="/en/comprar/">Create my invitation</a></div>
+
+<script src="/disenos/catalogo.js?v=2"></script>
 <script>
+/* Cuántos diseños hay (sale del catálogo, así no queda desactualizado). */
+(function(){var C=window.LazoCatalog;if(!C)return;var n=C.designs.length;document.querySelectorAll('[data-n]').forEach(function(e){e.textContent=n;});document.querySelectorAll('[data-more]').forEach(function(e){e.textContent=n-4;});})();
 (function(){
-  var nav=document.querySelector('header nav'),btn=nav.querySelector('.nav-toggle');
+  var nav=document.querySelector('.top nav'),btn=nav.querySelector('.nav-toggle');
   function set(o){nav.classList.toggle('open',o);btn.setAttribute('aria-expanded',String(o));btn.setAttribute('aria-label',o?btn.dataset.close:btn.dataset.open);}
   btn.addEventListener('click',function(){set(!nav.classList.contains('open'));});
-  nav.querySelectorAll('.nav-links a').forEach(function(a){a.addEventListener('click',function(){set(false);});});
+  nav.querySelectorAll('.links a').forEach(function(a){a.addEventListener('click',function(){set(false);});});
   document.addEventListener('keydown',function(e){if(e.key==='Escape'&&nav.classList.contains('open')){set(false);btn.focus();}});
 })();
-</script>
-<script>
+/* Barra fija en el celular: aparece al pasar la portada y se esconde en el cierre. */
+(function(){
+  var bar=document.getElementById('sticky'),hero=document.getElementById('top'),end=document.getElementById('contact');if(!bar||!('IntersectionObserver' in window))return;
+  document.body.classList.add('has-sticky');var past=false,atEnd=false;
+  function up(){bar.classList.toggle('on',past&&!atEnd);}
+  new IntersectionObserver(function(e){past=!e[0].isIntersecting;up();}).observe(hero);
+  new IntersectionObserver(function(e){atEnd=e[0].isIntersecting;up();}).observe(end);
+})();
 (function(){
   var box=document.querySelector('[data-addons]'); if(!box) return;
   var tabs=[].slice.call(box.querySelectorAll('.ad-tab')), mocks=[].slice.call(box.querySelectorAll('.ad-mock')), copies=[].slice.call(box.querySelectorAll('.ad-copy')), i=0, n=tabs.length;

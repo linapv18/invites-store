@@ -1,11 +1,13 @@
-# Lazo — tienda de invitaciones web
+# Invitesse — tienda de invitaciones web
 
 Sitio estático (HTML + CSS + un poco de JS), sin paso de build.
 
 - `/` — español (`index.html`)
 - `/en/` — inglés (`en/index.html`)
-- `/disenos/` y `/en/disenos/` — galería con todos los diseños y filtros (búsqueda, estilo, lugar de la boda, apertura y colores; quedan en la URL). La landing muestra solo 3 destacados y un botón a la galería
+- `/disenos/` y `/en/disenos/` — galería con todos los diseños: pestañas «Cómo se abre» (grupos de aperturas en `openings` de `catalogo.js`), filtros de estilo, lugar y colores (en el celular, en una hoja desde abajo), búsqueda, y la tarjeta del diseño a la medida al final. Los filtros quedan en la URL (`?apertura=sobre&estilo=…`).
 - `disenos/catalogo.js` — catálogo de diseños: textos, capturas, etiquetas de los filtros y cuáles son destacados (`featured`). Al sumar un diseño se agrega aquí y sale en la galería; para cambiar los destacados de la landing basta con mover `featured`
+- `assets/brand/` — marca Invitesse: `brand.css` (colores, Fraunces + Geist, el logo `.iv-wm` y el sello `.iv-mark`) y `favicon.svg`. El inicio, el catálogo, el editor, la cuenta y el panel usan estos mismos colores; los nombres internos (`LazoAuth`, `lazo.*` en localStorage, `lz-*`) se conservan para no perder datos guardados.
+- Editor: la primera vez muestra una bienvenida con la guía de cinco pasos y un recorrido que ilumina cada parte (`?guia=0` la omite). El botón «Guía» muestra el avance y «Cambiar diseño»/«Diseños» abre los diseños sin salir; un diseño nuevo trae el contenido del último que editaron.
 - `assets/` — capturas de los diseños
 - `/en/demo/<diseño>/` — versión en inglés de cada demo (generada a partir de la española)
 - `/demo/clasico/` — demo del diseño clásico (sobre con carta)
