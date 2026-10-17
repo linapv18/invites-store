@@ -69,6 +69,57 @@
   // Apertura: un solo gesto. Se tira de la borla, el estor sube en pliegues y deja ver la portada.
   var op = $('open'), timers = [], clothRaf = 0, progress = 0;
   var folds = Array.from(op.querySelectorAll('.fold'));
+  // A continuous fabric surface: curved hanging folds retain their texture as
+  // the cord gathers the lower panels. Canvas is decorative; controls stay native.
+  var cloth = document.createElement('canvas'), ctx = cloth.getContext('2d'), textile = new Image();
+  var material = document.createElement('canvas'), surface, ready = false, lastPaint = -1;
+  cloth.className = 'curtain-surface'; cloth.setAttribute('aria-hidden', 'true');
+  op.querySelector('.blind').insertBefore(cloth, op.querySelector('.blind-edge'));
+  function prepareCloth() {
+    if (!textile.naturalWidth || !ctx) return;
+    var w = innerWidth, h = innerHeight, tile = document.createElement('canvas');
+    tile.width = tile.height = 420; tile.getContext('2d').drawImage(textile, 0, 0, 420, 420);
+    material.width = w; material.height = h;
+    surface = material.getContext('2d'); surface.fillStyle = '#f6f2ea'; surface.fillRect(0, 0, w, h);
+    surface.fillStyle = surface.createPattern(tile, 'repeat'); surface.fillRect(0, 0, w, h);
+    var dpr = Math.min(devicePixelRatio || 1, 1.5);
+    cloth.width = Math.round(w * dpr); cloth.height = Math.round((h + 80) * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ready = true;
+    op.classList.add('fabric-ready'); lastPaint = -1; paintCloth(progress, true);
+  }
+  function paintCloth(p, force) {
+    if (!ready) return;
+    var now = performance.now(); if (!force && p > 0 && p < 1 && now - lastPaint < 32) return;
+    lastPaint = now;
+    var w = innerWidth, h = innerHeight, rows = 192, cols = w < 600 ? 12 : 24;
+    var gathering = p * p * (3 - 2 * p), length = 1 - .86 * gathering;
+    var billow = h * .043 * Math.sin(gathering * Math.PI * .8);
+    var sag = h * (.014 + .025 * gathering), yBottom = h * length;
+    ctx.clearRect(0, 0, w, h + 80);
+    function y(t, x) {
+      // Rounded valleys, with both ends supported and a heavier centre.
+      return t * h * length + billow * Math.sin(t * Math.PI * 16) +
+        sag * Math.sin(t * Math.PI) * Math.sin(x * Math.PI) +
+        Math.sin(x * Math.PI * 6 + t * 1.4) * h * .004 * (1 - gathering);
+    }
+    for (var r = 0; r < rows; r++) {
+      var t = r / rows, t2 = (r + 1) / rows;
+      var phase = t * Math.PI * 16;
+      for (var c = 0; c < cols; c++) {
+        var x = c / cols, dx = w / cols, px = c * dx;
+        var y1 = y(t, x + .5 / cols), y2 = y(t2, x + .5 / cols);
+        var top = Math.min(y1, y2), dh = Math.max(1, Math.abs(y2 - y1));
+        ctx.drawImage(material, px, t * h, dx, h / rows, px, top, dx + .7, dh + 1);
+        var vertical = Math.cos(x * Math.PI * 12 + .6) * .055 * (1 - gathering);
+        var light = Math.sin(phase) * .25 * gathering + vertical;
+        ctx.fillStyle = light > 0 ? 'rgba(255,253,244,' + light + ')' : 'rgba(59,43,30,' + (-light) + ')';
+        ctx.fillRect(px, top, dx + .7, dh + 1);
+      }
+    }
+    op.style.setProperty('--cloth-bottom', Math.max(yBottom, 0) + 'px');
+  }
+  textile.onload = prepareCloth; textile.src = '/assets/encaje/visillo.webp';
+  window.addEventListener('resize', prepareCloth);
   function fabric(p) {
     progress = p; var h = innerHeight, band = h / folds.length, y = 0;
     folds.forEach(function (fold, i) {
@@ -78,8 +129,9 @@
       fold.style.transform = 'translateY(' + y + 'px) scaleY(' + scale + ')';
       fold.firstElementChild.style.opacity = q * .65; y += band * scale;
     });
-    op.style.setProperty('--cloth-bottom', y + 'px');
+    if (!ready) op.style.setProperty('--cloth-bottom', y + 'px');
     op.style.setProperty('--cord-end', (h * (h < 500 ? .48 : .62) + p * h * .1) + 'px');
+    paintCloth(p, p === 0 || p === 1);
     op.querySelector('.tag').style.transform = 'translateY(' + (-p * h * .18) + 'px)';
     op.querySelector('.tag').style.opacity = Math.max(0, 1 - p * 2.5);
   }
@@ -98,7 +150,7 @@
     at(180, function () {
       op.classList.add('up'); var start = performance.now();
       function step(now) {
-        var p = Math.min(1, (now - start) / 2250); fabric(p);
+        var p = Math.min(1, (now - start) / 2900); fabric(p);
         if (p < 1) clothRaf = requestAnimationFrame(step);
         else { at(280, function () { op.classList.add('lift'); }); at(1000, enter); }
       }

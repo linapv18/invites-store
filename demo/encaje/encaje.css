@@ -404,3 +404,12 @@ body.locked .hero-txt>*,body.locked .hero-ph{transform:translateY(12px)}
 
 .medal{position:relative;background:url('/assets/encaje/ovalo.webp') center/100% 100% no-repeat;filter:drop-shadow(0 2px 1px #34251a20)}
 .medal svg{position:absolute;left:38%;top:38%;width:24%;height:24%;fill:none;stroke:var(--sgd);stroke-width:.7}
+
+/* The continuous surface replaces the flat bands once its texture is decoded. */
+.curtain-surface{position:absolute;left:0;top:0;width:100vw;height:calc(100dvh + 80px);pointer-events:none;visibility:hidden;filter:drop-shadow(0 5px 4px #392c2033)}
+.fabric-ready .curtain-surface{visibility:visible}
+.fabric-ready .folds{visibility:hidden}
+.fabric-ready .cloth-veil{background:#f6f2eaee}
+.fabric-ready .blind-edge{transition:none}
+.opening.up .pull,.opening.up .cord-line{transition:opacity .4s ease}
+@media(prefers-reduced-motion:reduce){.curtain-surface{filter:none}}
