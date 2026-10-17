@@ -414,7 +414,7 @@ body.locked .hero-txt>*,body.locked .hero-ph{transform:translateY(12px);opacity:
 .tv .bez{position:absolute;left:7.2%;top:13.5%;width:66.5%;height:70%;padding:0;background:none;border-radius:0}
 .tv .scr{border-radius:0}
 .tv .scr::after{content:'';position:absolute;inset:0;pointer-events:none;background:linear-gradient(135deg,#fff2,transparent 34%,transparent 68%,#0004);z-index:1}
-.tv .side{position:absolute;inset:0;width:auto;display:block;pointer-events:none;z-index:3}
+.tv .side,.opening .tv.big .side,.fin-tv .side{position:absolute;inset:0;width:auto;display:block;pointer-events:none;z-index:3}
 .tv .side>.ctl,.tv .side>.sw,.tv .side>.grill,.tv .side>.dots{display:none}
 .tv .kb,.opening .tv.big .kb,.fin-tv .kb{position:absolute;left:81.5%;top:17.3%;width:13%;height:auto;aspect-ratio:1;padding:0;border:0;border-radius:50%;background:none;pointer-events:auto}
 .tv .knob,.opening .tv.big .knob,.fin-tv .knob{width:100%;height:100%;background:url('/assets/senal/perilla.webp') center/contain no-repeat;box-shadow:none;rotate:var(--dial-angle,0deg);transition:rotate .32s ease}
