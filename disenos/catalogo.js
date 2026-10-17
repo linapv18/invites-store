@@ -33,7 +33,8 @@
       { id: 'funda', es: 'Funda de terciopelo', en: 'Velvet sleeve' },
       { id: 'estuche', es: 'Estuche', en: 'Gift box' },
       { id: 'ventana', es: 'Ventana empañada', en: 'Misted window' },
-      { id: 'baraja', es: 'Baraja de cartas', en: 'Deck of cards' }
+      { id: 'baraja', es: 'Baraja de cartas', en: 'Deck of cards' },
+      { id: 'estor', es: 'Estor de encaje', en: 'Lace blind' }
     ] },
     { key: 'tono', es: 'Colores', en: 'Colors', opts: [
       { id: 'claros', es: 'Claros', en: 'Light' },
@@ -95,6 +96,10 @@
       tags: { estilo: ['botanico', 'romantico'], lugar: ['campo'], apertura: ['cortina'], tono: ['claros'] },
       es: { name: 'Glicina', title: 'Diseño glicina', desc: 'Un jardín de cuento: la invitación está detrás de una cortina de glicinas que se mecen; al tocarla se abre y aparece un óvalo de encaje con los nombres. Hortensias, paneles con encaje, programa con íconos y la cita en un corazón. Se puede usar con o sin fotos.', opening: 'Apertura: cortina de glicinas', colors: 'Lavanda y oliva', alt: ['Diseño glicina: cortina de glicinas', 'Diseño glicina: portada con foto en un óvalo de encaje y hortensias'] },
       en: { name: 'Glicina', title: 'Glicina', desc: 'A fairy-tale garden: the invitation hides behind a swaying wisteria curtain; tap it and it parts to reveal a lace oval with the names. Hydrangeas, lace-trimmed panels, a program with icons and the quote in a heart. Works with or without photos.', opening: 'Opening: wisteria curtain', colors: 'Lavender and olive', alt: ['Glicina design: wisteria curtain', 'Glicina design: cover with a photo in a lace oval and hydrangeas'] } },
+    { id: 'encaje', bg: '#EDE6DC', shadow: 'rgba(74,58,46,0.55)', img: ['/assets/encaje-estor.jpg', '/assets/encaje-portada.jpg'],
+      tags: { estilo: ['romantico', 'elegante'], lugar: ['campo', 'ciudad'], apertura: ['estor'], tono: ['claros', 'oscuros'] },
+      es: { name: 'Encaje', title: 'Diseño encaje', desc: 'Íntimo y romántico, como una ventana con visillo a la luz de la tarde: se tira de la borla, el estor de encaje sube en pliegues y aparece la pareja en un óvalo calado. Adentro, cacao y marfil con bordes de encaje, la semana de la boda con el día en un corazón, fotos con marco de papel y cuenta regresiva en óvalos.', opening: 'Apertura: estor de encaje', colors: 'Cacao, salvia o rosa', alt: ['Diseño encaje: estor de encaje con una borla verde y el nombre de la familia en un óvalo', 'Diseño encaje: portada cacao con la foto de la pareja en un óvalo de encaje'] },
+      en: { name: 'Encaje', title: 'Encaje', desc: 'Intimate and romantic, like a window with a lace blind in the afternoon light: pull the tassel, the lace blind rises in folds and the couple appears in a lace oval. Inside, cocoa and ivory with lace trims, the wedding week with the day in a heart, paper-framed photos and a countdown in ovals.', opening: 'Opening: lace blind', colors: 'Cocoa, sage or rose', alt: ['Encaje design: lace blind with a sage tassel and the family name on an oval tag', 'Encaje design: cocoa cover with the couple’s photo in a lace oval'] } },
     { id: 'corazones', bg: '#EFE3DC', shadow: 'rgba(90,14,30,0.6)', img: ['/assets/corazones-baraja.jpg', '/assets/corazones-portada.jpg'],
       tags: { estilo: ['elegante', 'romantico'], lugar: ['ciudad', 'campo'], apertura: ['baraja'], tono: ['oscuros'] },
       es: { name: 'Corazones', title: 'Diseño corazones', desc: 'La boda como la mejor mano, con glamour de Hollywood clásico: una baraja sobre fieltro borgoña se abre en abanico y el rey y la reina de corazones se dan la vuelta con la foto de la pareja. Adentro, cada dato va en un naipe, la cuenta regresiva en fichas de juego y la galería en cartas con foto.', opening: 'Apertura: baraja en abanico', colors: 'Burdeos, tapete o medianoche', alt: ['Diseño corazones: baraja con dorso borgoña y monograma dorado', 'Diseño corazones: portada con una carta de doble cabeza con la foto de la pareja'] },

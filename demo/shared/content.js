@@ -125,6 +125,12 @@
       { id: 'tapete', es: 'Tapete', en: 'Card table', sw: '#0F3D2E', vars: { bur: '#0F3D2E', bur2: '#1A5240', bur3: '#082419', gold: '#D2B06A' } },
       { id: 'medianoche', es: 'Medianoche', en: 'Midnight', sw: '#141B33', vars: { bur: '#141B33', bur2: '#222C4F', bur3: '#0A0F1F', gold: '#D9C08A' } }
     ],
+    // Encaje: cambian el cacao, el marfil y el verde; el encaje siempre es claro.
+    encaje: [
+      { id: 'cacao', es: 'Cacao', en: 'Cocoa', sw: '#4A3A2E' },
+      { id: 'salvia', es: 'Salvia', en: 'Sage', sw: '#55614A', vars: { co: '#55614A', co2: '#67755A', iv: '#F5F2EA', sg: '#B9A58B', sgd: '#6E5F48', mute: '#555A4C', ink: '#262A20' } },
+      { id: 'rosa', es: 'Rosa', en: 'Rose', sw: '#7A5050', vars: { co: '#7A5050', co2: '#8E6262', iv: '#F7F0EC', sg: '#9AA587', sgd: '#5E6A4D', mute: '#5E4A47', ink: '#2F2120' } }
+    ],
     // Glicina: una sola paleta (los racimos, la rama y las hortensias son imágenes).
     glicina: [
       { id: 'lavanda', es: 'Lavanda y oliva', en: 'Lavender and olive', sw: 'conic-gradient(#8E79BD 0 50%,#7C8454 0)' }
