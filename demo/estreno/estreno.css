@@ -44,14 +44,16 @@ a:focus-visible,button:focus-visible,summary:focus-visible,input:focus-visible{o
 .marquee,.board,.sign{--b:27px;--g:31px;position:relative;isolation:isolate;padding:var(--b);background:linear-gradient(135deg,#392a20,#1d1612 30%,#30231b 75%,#17120f);border-radius:5px;box-shadow:0 0 0 1px #8c765c80,inset 0 0 0 3px #100c0980,0 20px 35px -24px #000b}
 .marquee::before,.marquee::after,.board::before,.board::after,.sign::before,.sign::after{content:none}
 .marquee-lamps{position:absolute;inset:0;width:100%;height:100%;overflow:visible;z-index:2;pointer-events:none}
-.lamp-glow{opacity:0}.lamp-glass{opacity:.35}
-.lit .lamp-glow{opacity:.72}.lit .lamp-glass{opacity:1}
-.lit:not(.lamps-settled) .lamp-glow{animation:es-lamp-glow .45s ease-out var(--lamp-delay) both}
-.lit:not(.lamps-settled) .lamp-glass{animation:es-lamp-glass .45s ease-out var(--lamp-delay) both}
-@keyframes es-lamp-glow{from{opacity:0}65%{opacity:.92}to{opacity:.72}}
-@keyframes es-lamp-glass{from{opacity:.35}to{opacity:1}}
+.lamp-glow,.lamp-glass,.lamp-filament{opacity:0}
+.lit .lamp-glow{opacity:.9}.lit .lamp-glass,.lit .lamp-filament{opacity:1}
+.lit:not(.lamps-settled) .lamp-filament{animation:es-lamp-filament .35s ease-out var(--lamp-delay) both}
+.lit:not(.lamps-settled) .lamp-glass{animation:es-lamp-glass .65s ease-out calc(var(--lamp-delay) + .12s) both}
+.lit:not(.lamps-settled) .lamp-glow{animation:es-lamp-glow .85s ease-out calc(var(--lamp-delay) + .2s) both;transform-box:fill-box;transform-origin:center}
+@keyframes es-lamp-filament{from{opacity:0;stroke:#d27b29}45%{opacity:.8;stroke:#ffbd63}to{opacity:1;stroke:#ffffe8}}
+@keyframes es-lamp-glass{from{opacity:0}to{opacity:1}}
+@keyframes es-lamp-glow{from{opacity:0;transform:scale(.55)}to{opacity:.9;transform:scale(1)}}
 html.motion-paused .marquee-lamps *{animation-play-state:paused!important}
-@media(prefers-reduced-motion:reduce){.lamp-glow{opacity:.72}.lamp-glass{opacity:1}.marquee-lamps *{animation:none!important}}
+@media(prefers-reduced-motion:reduce){.lamp-glow{opacity:.9}.lamp-glass,.lamp-filament{opacity:1}.marquee-lamps *{animation:none!important}}
 .hero-ph .ph{position:relative;z-index:1;box-shadow:0 0 0 2px #00000080}
 
 
@@ -369,3 +371,7 @@ html.motion-paused .velvet,html.motion-paused .op-sleeve::before,.opening.gone .
 @media(min-width:900px){.velvet{background-size:220px 100%,100% 100%,256px 256px}.op-sleeve::before{background-size:110px 100%,100% 100%,256px 256px}}
 @media(max-width:600px){.velvet{background-size:125px 100%,100% 100%,256px 256px}.op-sleeve::before{background-size:95px 100%,100% 100%,256px 256px}}
 @media(prefers-reduced-motion:reduce){.velvet,.op-sleeve::before{animation:none!important}}
+
+/* A visible glass bulb and a warm pool of light on the metal surround. */
+.marquee,.board,.sign{--b:32px;--g:35px}
+@media(max-width:380px){.marquee,.board,.sign{--b:28px;--g:33px}}

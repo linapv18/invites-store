@@ -5,7 +5,7 @@
   var PEOPLE = ['Carlos Rodríguez', 'Lucía Pérez', 'Sofía Rodríguez', 'Mateo Rodríguez'];
   LazoPanel.init({ mono: 'A&L', couple: S.n1 + (LANG === 'en' ? ' and ' : ' y ') + S.n2, link: location.pathname, guest: S.guest, people: PEOPLE });
   LazoMusic.init({ src: '/assets/musica/demo.mp3' });
-  var still = matchMedia('(prefers-reduced-motion: reduce)').matches, lights = null;
+  var still = matchMedia('(prefers-reduced-motion: reduce)').matches, lights = null, lightReady = false;
 
   // Lo que aparece (y las fotos que se revelan) al llegar a la pantalla, después de abrir la invitación.
   var io = null, show = function (el) { el.classList.add('in'); };
@@ -85,15 +85,19 @@
     for(var i=0;i<ny;i++)points.push([inset,h-inset-(h-2*inset)*i/ny]);
     var id='esLamp'+(++lightCounter),svg=document.createElementNS(lightNS,'svg');
     svg.classList.add('marquee-lamps');svg.setAttribute('viewBox','0 0 '+w+' '+h);svg.setAttribute('aria-hidden','true');svg.setAttribute('focusable','false');svg.dataset.size=w+'x'+h;
-    svg.innerHTML='<defs><radialGradient id="'+id+'halo"><stop stop-color="var(--bulb)" stop-opacity=".6"/><stop offset=".38" stop-color="var(--bulb)" stop-opacity=".22"/><stop offset="1" stop-color="var(--bulb)" stop-opacity="0"/></radialGradient><radialGradient id="'+id+'glass" cx="32%" cy="25%" r="78%"><stop stop-color="#fffef5"/><stop offset=".24" stop-color="#fff7d9"/><stop offset=".62" stop-color="var(--bulb)"/><stop offset="1" stop-color="#b18345"/></radialGradient><linearGradient id="'+id+'socket" x2=".8" y2="1"><stop stop-color="#b09a71"/><stop offset=".4" stop-color="#554332"/><stop offset="1" stop-color="#19120d"/></linearGradient></defs>';
-    svg.innerHTML+=points.map(function(p,i){var x=p[0].toFixed(2),y=p[1].toFixed(2);return '<g class="marquee-lamp" style="--lamp-delay:'+(i/points.length*1.0).toFixed(3)+'s"><circle cx="'+x+'" cy="'+y+'" r="6.2" fill="url(#'+id+'socket)" stroke="#0b0806" stroke-width=".7"/><g class="lamp-glow"><circle cx="'+x+'" cy="'+y+'" r="16" fill="url(#'+id+'halo)"/></g><g class="lamp-glass"><circle cx="'+x+'" cy="'+y+'" r="4.45" fill="url(#'+id+'glass)"/><ellipse cx="'+(p[0]-.95).toFixed(2)+'" cy="'+(p[1]-1.3).toFixed(2)+'" rx="1.1" ry=".65" fill="#fff" opacity=".82"/><path d="M'+(p[0]-1.8).toFixed(2)+' '+(p[1]+.9).toFixed(2)+'q1.8-1.4 3.6 0" fill="none" stroke="#fffce1" stroke-width=".65" opacity=".9"/></g></g>';}).join('');
+    svg.innerHTML='<defs><radialGradient id="'+id+'halo"><stop stop-color="var(--bulb)" stop-opacity=".95"/><stop offset=".3" stop-color="var(--bulb)" stop-opacity=".52"/><stop offset=".65" stop-color="var(--bulb)" stop-opacity=".13"/><stop offset="1" stop-color="var(--bulb)" stop-opacity="0"/></radialGradient><radialGradient id="'+id+'cold" cx="32%" cy="25%" r="80%"><stop stop-color="#988568"/><stop offset=".28" stop-color="#62513a"/><stop offset=".75" stop-color="#2f261e"/><stop offset="1" stop-color="#61513d"/></radialGradient><radialGradient id="'+id+'glass" cx="43%" cy="44%" r="62%"><stop stop-color="#fffef4"/><stop offset=".26" stop-color="#fff7d3"/><stop offset=".66" stop-color="var(--bulb)"/><stop offset="1" stop-color="#c68a37"/></radialGradient><linearGradient id="'+id+'socket" x2=".8" y2="1"><stop stop-color="#b09a71"/><stop offset=".4" stop-color="#554332"/><stop offset="1" stop-color="#19120d"/></linearGradient></defs>';
+    var elapsed=el.classList.contains('lit')&&el._litStarted?(performance.now()-el._litStarted)/1000:0;
+    svg.innerHTML+=points.map(function(p,i){
+      var x=p[0].toFixed(2),y=p[1].toFixed(2),coil='M'+(p[0]-2.5).toFixed(2)+' '+(p[1]+1.2).toFixed(2)+'l1.2-2 1.3 2 1.3-2 1.2 2';
+      return '<g class="marquee-lamp" style="--lamp-delay:'+(i/points.length*2.1-elapsed).toFixed(3)+'s"><circle cx="'+x+'" cy="'+y+'" r="7.8" fill="url(#'+id+'socket)" stroke="#0b0806" stroke-width=".9"/><circle cx="'+x+'" cy="'+y+'" r="5.9" fill="url(#'+id+'cold)" stroke="#b99e6e66" stroke-width=".55"/><path d="'+coil+'" fill="none" stroke="#ad713e" stroke-width=".7"/><g class="lamp-glow"><circle cx="'+x+'" cy="'+y+'" r="25" fill="url(#'+id+'halo)"/></g><g class="lamp-glass"><circle cx="'+x+'" cy="'+y+'" r="5.9" fill="url(#'+id+'glass)"/></g><path class="lamp-filament" d="'+coil+'" fill="none" stroke="#ffffe8" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><ellipse cx="'+(p[0]-1.65).toFixed(2)+'" cy="'+(p[1]-2.1).toFixed(2)+'" rx="1.5" ry=".8" fill="#fff" opacity=".33"/></g>';
+    }).join('');
     if(old)old.replaceWith(svg);else el.appendChild(svg);
   }
   function ignite(el){
     if(el.classList.contains('lit'))return;
-    el.classList.add('lit');
+    el._litStarted=performance.now();el.classList.add('lit');
     if(still)el.classList.add('lamps-settled');
-    else el._lampTimer=setTimeout(function(){el.classList.add('lamps-settled');},1650);
+    else el._lampTimer=setTimeout(function(){el.classList.add('lamps-settled');},3600);
   }
   lightFrames.forEach(renderLamps);
   var lightRAF=0;
@@ -102,10 +106,10 @@
   else window.addEventListener('resize',resizeLights);
   if(document.fonts)document.fonts.ready.then(resizeLights);
   if('IntersectionObserver' in window&&!still){
-    lights=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting&&opened){ignite(e.target);lights.unobserve(e.target);}});},{threshold:.12});
+    lights=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting&&opened&&lightReady){ignite(e.target);lights.unobserve(e.target);}});},{threshold:.12});
     lightFrames.forEach(function(el){lights.observe(el);});
-  }else lightFrames.forEach(ignite);
-  function resetLights(){lightFrames.forEach(function(el){clearTimeout(el._lampTimer);el.classList.remove('lit','lamps-settled');if(lights){lights.unobserve(el);lights.observe(el);}else ignite(el);});}
+  }else if(still)lightFrames.forEach(ignite);
+  function resetLights(){lightFrames.forEach(function(el){clearTimeout(el._lampTimer);el.classList.remove('lit','lamps-settled');if(lights){lights.unobserve(el);lights.observe(el);}else if(still)ignite(el);});}
 
   // The folds breathe gently only while their piece of curtain is on screen.
   if('IntersectionObserver' in window&&!still){
@@ -129,13 +133,18 @@
     clear(); opened = true; op.classList.add('open', 'gone'); op.inert = true; op.setAttribute('aria-hidden', 'true');
     $('invite').inert = false; document.body.classList.remove('locked'); watch(); $('demoBar').hidden = false; window.scrollTo(0, 0);
     document.querySelector('.hero .names').focus({ preventScroll: true });
-    if (lights) document.querySelectorAll('.marquee,.board,.sign').forEach(function (el) { lights.unobserve(el); lights.observe(el); });
+    function startVisibleLights(){if(!opened)return;lightReady=true;if(lights)lightFrames.forEach(function(el){lights.unobserve(el);lights.observe(el);});else lightFrames.forEach(ignite);}
+    if(still)startVisibleLights();else{
+      var css=getComputedStyle(op),dur=css.transitionDuration.split(',').map(function(v){return parseFloat(v)*1000;}),del=css.transitionDelay.split(',').map(function(v){return parseFloat(v)*1000;}),exit=0;
+      for(var i=0;i<Math.max(dur.length,del.length);i++)exit=Math.max(exit,dur[i%dur.length]+del[i%del.length]);
+      timers.push(setTimeout(startVisibleLights,exit+120));
+    }
   }
   function part() { if (op.classList.contains('open')) return; clear(); LazoMusic.play(); op.classList.add('open'); timers.push(setTimeout(enter, still ? 0 : 2200)); }
   $('sleeve').addEventListener('click', part); $('enter').addEventListener('click', part);
   window.LzTemplate = {
     open: function () { op.classList.add('open'); enter(); },
-    envelope: function () { clear(); opened = false; resetLights();bar.classList.remove('show'); op.classList.remove('open', 'gone'); op.inert = false; op.removeAttribute('aria-hidden'); $('invite').inert = true; document.body.classList.add('locked'); window.scrollTo(0, 0); },
+    envelope: function () { clear(); opened = false;lightReady=false; resetLights();bar.classList.remove('show'); op.classList.remove('open', 'gone'); op.inert = false; op.removeAttribute('aria-hidden'); $('invite').inert = true; document.body.classList.add('locked'); window.scrollTo(0, 0); },
     scroll: function (el, now) { window.scrollTo({ top: el.getBoundingClientRect().top + scrollY - 70, behavior: now || still ? 'instant' : 'smooth' }); }
   };
 
