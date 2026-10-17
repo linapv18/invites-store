@@ -359,3 +359,13 @@ main{display:block}
 @media(max-height:740px){.opening{padding-top:22px;padding-bottom:92px;gap:14px}.op-stage{width:min(63vw,235px);margin-top:35px}.op-cut{width:110px;height:100px;transform:none}.op-day{font-size:38px}.op-mon{font-size:10px}.op-sleeve{gap:12px}.op-names{font-size:24px}.op-intro{font-size:10px;padding-inline:18px}.op-guest{font-size:23px}.op-seats{margin-bottom:8px}.op-hint{font-size:12px}.op-ticket .btn{font-size:13px}}
 @media(max-height:550px) and (min-width:600px){.opening{display:grid;grid-template-columns:minmax(160px,240px) minmax(230px,330px);justify-content:center;align-content:center;align-items:center;column-gap:38px;padding:20px 30px 85px}.op-stage{width:min(43vh,195px);margin-top:27px;justify-self:center}.op-cut{width:90px;height:82px}.op-day{font-size:31px}.op-mon{font-size:9px}.op-names{font-size:21px}.op-intro{font-size:9px}.op-sleeve{gap:10px}.op-card{top:-27px;padding:9px}.op-card-k{font-size:12px}.op-card-names{font-size:19px}}
 @media(prefers-reduced-motion:reduce){.beams i{animation:none!important}#rsDone{animation:none!important}}
+
+/* Restore the theatre curtains: deep folds under soft stage light. */
+:root{--es-folds:linear-gradient(90deg,#0009 0%,#0004 7%,#ffffff06 14%,#ffffff21 24%,#ffffff0b 31%,#0002 39%,#0007 48%,#0009 54%,#0004 63%,#ffffff0a 70%,#ffffff1c 78%,#0001 88%,#0007 96%,#0009 100%)}
+.velvet,.op-sleeve::before{background-image:var(--es-folds),linear-gradient(180deg,#0002,transparent 28%,#0001 62%,#0005),var(--es-fabric);background-size:170px 100%,100% 100%,256px 256px;background-position:0 0,center top,0 0;background-repeat:repeat-x,no-repeat,repeat;background-blend-mode:normal,normal,soft-light;animation:es-curtain-drift 12s ease-in-out infinite alternate;animation-play-state:paused}
+.velvet.curtain-active,.op-sleeve.curtain-active::before{animation-play-state:running}
+html.motion-paused .velvet,html.motion-paused .op-sleeve::before,.opening.gone .op-sleeve::before{animation-play-state:paused!important}
+@keyframes es-curtain-drift{from{background-position:0 0,center top,0 0}to{background-position:5px 0,center top,0 0}}
+@media(min-width:900px){.velvet{background-size:220px 100%,100% 100%,256px 256px}.op-sleeve::before{background-size:110px 100%,100% 100%,256px 256px}}
+@media(max-width:600px){.velvet{background-size:125px 100%,100% 100%,256px 256px}.op-sleeve::before{background-size:95px 100%,100% 100%,256px 256px}}
+@media(prefers-reduced-motion:reduce){.velvet,.op-sleeve::before{animation:none!important}}

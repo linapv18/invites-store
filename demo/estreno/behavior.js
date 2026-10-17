@@ -107,6 +107,12 @@
   }else lightFrames.forEach(ignite);
   function resetLights(){lightFrames.forEach(function(el){clearTimeout(el._lampTimer);el.classList.remove('lit','lamps-settled');if(lights){lights.unobserve(el);lights.observe(el);}else ignite(el);});}
 
+  // The folds breathe gently only while their piece of curtain is on screen.
+  if('IntersectionObserver' in window&&!still){
+    var curtains=new IntersectionObserver(function(entries){entries.forEach(function(e){e.target.classList.toggle('curtain-active',e.isIntersecting);});});
+    document.querySelectorAll('.velvet,.op-sleeve').forEach(function(el){curtains.observe(el);});
+  }
+
   // La tira de película avanza de fotograma en fotograma con las flechas.
   var strip = $('strip');
   document.querySelectorAll('[data-strip]').forEach(function (b) {
