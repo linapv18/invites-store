@@ -66,11 +66,11 @@
     document.body.appendChild(a); a.click(); a.remove(); setTimeout(function () { URL.revokeObjectURL(a.href); }, 1000);
   });
 
-  // Apertura: un solo gesto. Se tira de la borla, el estor sube en pliegues y deja ver la portada.
+  // Apertura: dos paños se recogen lateralmente desde el centro.
   var op = $('open'), timers = [], clothRaf = 0, progress = 0;
-  var folds = Array.from(op.querySelectorAll('.fold'));
-  // A continuous fabric surface: curved hanging folds retain their texture as
-  // the cord gathers the lower panels. Canvas is decorative; controls stay native.
+
+  // Two hanging panels retain their full height and gather into vertical folds.
+  // Canvas is decorative; controls remain native buttons.
   var cloth = document.createElement('canvas'), ctx = cloth.getContext('2d'), textile = new Image();
   var material = document.createElement('canvas'), surface, ready = false, lastPaint = -1;
   cloth.className = 'curtain-surface'; cloth.setAttribute('aria-hidden', 'true');
@@ -95,53 +95,47 @@
     if (!ready) return;
     var now = performance.now(); if (!force && p > 0 && p < 1 && now - lastPaint < 32) return;
     lastPaint = now;
-    var w = innerWidth, h = innerHeight, rows = 192, cols = w < 600 ? 12 : 24;
-    var gathering = p * p * (3 - 2 * p), length = 1 - .86 * gathering;
-    var billow = h * .055 * Math.sin(gathering * Math.PI * .8);
-    var sag = h * (.014 + .025 * gathering), yBottom = h * length;
+    var w = innerWidth, h = innerHeight, half = w / 2, columns = 144, rows = 12;
+    var gathering = p * p * (3 - 2 * p), length = 1 - .84 * gathering;
+    var exit = Math.max(0, (p - .8) / .2) * half * .2;
     ctx.clearRect(0, 0, w, h + 80);
-    function y(t, x) {
-      // Rounded valleys, with both ends supported and a heavier centre.
-      return t * h * length + billow * Math.sin(t * Math.PI * 16) +
-        sag * Math.sin(t * Math.PI) * Math.sin(x * Math.PI) +
-        Math.sin(x * Math.PI * 6 + t * 1.4) * h * .004 * (1 - gathering);
+    function x(t, v) {
+      return t * half * length - exit +
+        Math.sin(t * Math.PI * 14) * half * .022 * gathering * Math.sin(t * Math.PI) +
+        Math.sin(v * Math.PI) * half * .018 * gathering * t;
     }
-    for (var r = 0; r < rows; r++) {
-      var t = r / rows, t2 = (r + 1) / rows;
-      var phase = t * Math.PI * 16;
-      for (var c = 0; c < cols; c++) {
-        var x = c / cols, dx = w / cols, px = c * dx;
-        var y1 = y(t, x + .5 / cols), y2 = y(t2, x + .5 / cols);
-        var top = Math.min(y1, y2), dh = Math.max(1, Math.abs(y2 - y1));
-        ctx.drawImage(material, px, t * h, dx, h / rows, px, top, dx + .7, dh + 1);
-        var vertical = 0; // Vertical pleats and their lighting are photographed into the textile.
-        var light = Math.sin(phase) * .25 * gathering + vertical;
-        ctx.fillStyle = light > 0 ? 'rgba(255,253,244,' + light + ')' : 'rgba(59,43,30,' + (-light) + ')';
-        // Preserve the true openwork alpha while shading folded fabric.
-        ctx.globalCompositeOperation = 'source-atop';
-        ctx.fillRect(px, top, dx + .7, dh + 1);
-        ctx.globalCompositeOperation = 'source-over';
+    for (var side = 0; side < 2; side++) {
+      for (var c = 0; c < columns; c++) {
+        var t = c / columns, t2 = (c + 1) / columns;
+        for (var r = 0; r < rows; r++) {
+          var v = r / rows, sy = v * h, dh = h / rows;
+          var x1 = x(t, v), x2 = x(t2, v), dx = Math.max(.7, Math.abs(x2 - x1));
+          var px = Math.min(x1, x2), sx = t * half;
+          if (side) { px = w - Math.max(x1, x2); sx = w - t2 * half; }
+          ctx.drawImage(material, sx, sy, half / columns, dh, px, sy, dx + .7, dh + .7);
+          var light = Math.sin(t * Math.PI * 14) * .26 * gathering;
+          ctx.fillStyle = light > 0 ? 'rgba(255,253,244,' + light + ')' : 'rgba(59,43,30,' + (-light) + ')';
+          ctx.globalCompositeOperation = 'source-atop'; ctx.fillRect(px, sy, dx + .7, dh + .7);
+          ctx.globalCompositeOperation = 'source-over';
+        }
       }
     }
-    op.style.setProperty('--cloth-bottom', Math.max(yBottom, 0) + 'px');
   }
   textile.onload = prepareCloth; textile.src = '/assets/encaje/cortina.webp';
   window.addEventListener('resize', prepareCloth);
   function fabric(p) {
-    progress = p; var h = innerHeight, band = h / folds.length, y = 0;
-    folds.forEach(function (fold, i) {
-      var delay = (7 - i) * .035, q = Math.max(0, Math.min(1, (p - delay) / (1 - delay)));
-      q = q * q * (3 - 2 * q); var scale = Math.cos(q * 1.39);
-      fold.style.height = (band + 1) + 'px'; fold.style.backgroundPosition = 'center ' + (-i * band) + 'px';
-      fold.style.transform = 'translateY(' + y + 'px) scaleY(' + scale + ')';
-      fold.firstElementChild.style.opacity = q * .65; y += band * scale;
-    });
-    if (!ready) op.style.setProperty('--cloth-bottom', y + 'px');
-    op.style.setProperty('--cord-end', (h * (h < 500 ? .38 : .62) + p * h * .1) + 'px');
+    progress = p; var w = innerWidth, h = innerHeight, q = p * p * (3 - 2 * p);
+    var edge = Math.max(0, 50 * (1 - .84 * q) - Math.max(0, (p - .8) / .2) * 10);
+    op.style.setProperty('--cloth-bottom', h + 'px');
+    op.style.setProperty('--panel-edge', edge + '%');
+    op.style.setProperty('--panel-shift', (-w * .5 * q) + 'px');
+    op.querySelector('.cloth-veil').style.clipPath = 'polygon(0 0,'+edge+'% 0,'+edge+'% 100%,0 100%,0 0,100% 0,100% 100%,'+(100-edge)+'% 100%,'+(100-edge)+'% 0,100% 0)';
+    op.style.setProperty('--cord-end', (h * (h < 500 ? .38 : .62) + Math.sin(p * Math.PI) * 16) + 'px');
     paintCloth(p, p === 0 || p === 1);
-    op.querySelector('.tag').style.transform = 'translateY(' + (-p * h * .18) + 'px)';
-    op.querySelector('.tag').style.opacity = Math.max(0, 1 - p * 2.5);
+    op.querySelector('.tag').style.transform = 'translateX(' + (-q * w * .35) + 'px) rotate(' + (-q * 5) + 'deg)';
+    op.querySelector('.tag').style.opacity = Math.max(0, 1 - p * 3);
   }
+
   fabric(0); window.addEventListener('resize', function () { fabric(progress); });
   var clear = function () { timers.forEach(clearTimeout); timers = []; cancelAnimationFrame(clothRaf); };
   var at = function (ms, fn) { timers.push(setTimeout(fn, still ? 0 : ms)); };

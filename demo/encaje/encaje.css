@@ -429,3 +429,12 @@ body.locked .hero-txt>*,body.locked .hero-ph{transform:translateY(12px)}
 .fabric-ready .curtain-surface{filter:drop-shadow(0 5px 5px #3b2e2130)}
 .opening::before{content:"";position:absolute;inset:0 0 auto;height:9px;background:linear-gradient(#eee9df,#fffdf8 50%,#b8ac9629);box-shadow:0 3px 5px #352a2020;z-index:1;pointer-events:none;transition:opacity .5s}
 .opening.lift::before{opacity:0}
+
+/* Side-drawn drapes retain their full hanging height throughout the opening. */
+.opening.lift .blind{transform:none;opacity:0;transition:opacity .5s ease}
+.folds{display:block}
+.folds .fold{display:none}
+.folds::before,.folds::after{content:"";position:absolute;top:0;bottom:0;width:50%;background:url('/assets/encaje/cortina.webp') left top/100vw 100dvh no-repeat}
+.folds::before{left:0;transform:translateX(var(--panel-shift,0px))}
+.folds::after{right:0;background-position:right top;transform:translateX(calc(-1 * var(--panel-shift,0px)))}
+.opening .blind-edge{display:none}

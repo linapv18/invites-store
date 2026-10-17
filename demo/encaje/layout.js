@@ -7,7 +7,7 @@
   var LANG = (document.documentElement.lang || 'es').slice(0, 2) === 'en' ? 'en' : 'es';
   var S = {
     es: {
-      envIntro: 'Una invitación para un día inolvidable', envClosing: 'Con cariño, te esperamos en nuestra boda.', openAria: 'Invitación tras un estor de encaje', open: 'Abrir la invitación', hint: 'o tira de la borla', for: 'Para', tassel: 'Tirar de la borla',
+      envIntro: 'Una invitación para un día inolvidable', envClosing: 'Con cariño, te esperamos en nuestra boda.', openAria: 'Invitación tras cortinas de encaje', open: 'Abrir la invitación', hint: 'o tira de la borla', for: 'Para', tassel: 'Tirar de la borla',
       y: 'y', amp: '&amp;', weddingOf: 'Nuestra boda',
       guest: 'Familia Rodríguez', n1: 'Ana', n2: 'León', city: 'Oaxaca, México', msg: 'Nos haría muy felices que celebren con nosotros el día en que unimos nuestras vidas.', photoAlt: 'Ana y León',
       numPat: '{dd} · {mm} · {Y}', numTxt: '14 · 03 · 2027', dayPat: '{W} {d} de {M} de {Y}', dayTxt: 'Domingo 14 de marzo de 2027', monthPat: '{Mc} {Y}', monthTxt: 'Marzo 2027', shortPat: '{W} {d} de {M}', shortTxt: 'Domingo 14 de marzo',
@@ -34,7 +34,7 @@
       demo: 'Demo', panel: 'Panel de novios', store: 'Tienda', storeUrl: '/#disenos', wedding: 'Boda de'
     },
     en: {
-      envIntro: 'An invitation to an unforgettable day', envClosing: 'With love, we look forward to seeing you at our wedding.', openAria: 'Invitation behind a lace blind', open: 'Open the invitation', hint: 'or pull the tassel', for: 'For', tassel: 'Pull the tassel',
+      envIntro: 'An invitation to an unforgettable day', envClosing: 'With love, we look forward to seeing you at our wedding.', openAria: 'Invitation behind lace curtains', open: 'Open the invitation', hint: 'or pull the tassel', for: 'For', tassel: 'Pull the tassel',
       y: '&amp;', amp: '&amp;', weddingOf: 'Our wedding',
       guest: 'The Rodríguez family', n1: 'Anna', n2: 'Leo', city: 'Oaxaca, Mexico', msg: 'It would make us so happy to have you celebrate with us the day we join our lives.', photoAlt: 'Anna and Leo',
       numPat: '{mm} · {dd} · {Y}', numTxt: '03 · 14 · 2027', dayPat: '{W}, {Mc} {d}, {Y}', dayTxt: 'Sunday, March 14, 2027', monthPat: '{Mc} {Y}', monthTxt: 'March 2027', shortPat: '{W}, {Mc} {d}', shortTxt: 'Sunday, March 14',
