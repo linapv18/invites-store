@@ -324,7 +324,7 @@
     document.body.appendChild(box);
     var img=box.querySelector('img'),count=box.querySelector('.lz-v-count'),list=[],idx=0,last=null,activeGroup=null,touch=null;
     function groupFor(el){return el.closest('[data-gallery]') || el.closest('[data-lz-list="gallery"]');}
-    function images(group){return [].slice.call(group.querySelectorAll('img')).filter(function(el){return el.matches(photoSelector) || group.matches('[data-gallery]') && el.classList.contains('lz-zoomable');});}
+    function images(group){return [].slice.call(group.querySelectorAll('img')).filter(function(el){return !el.closest('[data-gallery-ignore]') && (el.matches(photoSelector) || group.matches('[data-gallery]') && el.classList.contains('lz-zoomable'));});}
     function sources(group){
       if(Array.isArray(window.LZ_GALLERY)) return window.LZ_GALLERY.slice(0,12).map(function(src){return {src:src,alt:''};});
       return images(group).slice(0,12).map(function(el){return {src:el.getAttribute('data-full-src') || el.currentSrc || el.src,alt:el.alt || ''};});

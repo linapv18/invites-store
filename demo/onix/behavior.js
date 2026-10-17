@@ -23,18 +23,25 @@
     raf = requestAnimationFrame(function () { raf = 0; bar.classList.toggle('show', opened && window.pageYOffset > 520); });
   }, { passive: true });
 
-  var TARGET = new Date(2027, 2, 14, 13, 0).getTime();
-  var when = function () { return new Date(window.LZ_T || TARGET); };
+  var TARGET = LazoTime.target('2027-03-14', '13:00', 'America/Mexico_City'), target = TARGET;
+  function syncTarget() {
+    var c = window.LazoContent && LazoContent.current ? LazoContent.current() : null;
+    if (!c) { target = TARGET; return; }
+    var events = c.events || [], ev = events.find(function (e) { return e.id === c.countdownId; }) || events[0];
+    target = c.date ? LazoTime.target(c.date, ev && ev.time || '00:00', c.timeZone || 'America/Mexico_City') : NaN;
+  }
 
   // El lugar repite el lugar, la dirección y el mapa del primer evento del programa.
   function syncPlace() {
-    var ev = document.querySelector('.evs > .ev'); if (!ev) return;
+    var ev = document.querySelector('.evs > .ev');
+    if (!ev) { $('whereName').textContent = ''; $('whereAddr').textContent = ''; $('whereMap').hidden = true; $('whereMap').removeAttribute('href'); $('where').hidden = true; return; }
+    $('where').hidden = false;
     var pl = ev.querySelector('[data-lz-f="place"]'), ad = ev.querySelector('[data-lz-f="address"]'), mp = ev.querySelector('[data-lz-f="map"]');
     $('whereName').textContent = pl ? pl.textContent : '';
     $('whereAddr').textContent = ad ? ad.textContent : '';
     $('whereMap').hidden = !mp || mp.classList.contains('lz-off');
     if (mp) $('whereMap').href = mp.href;
-    $('where').classList.toggle('lz-off', !(pl && pl.textContent.trim()));
+    var empty = !(pl && pl.textContent.trim()); $('where').hidden = empty; $('where').classList.toggle('lz-off', empty);
   }
   // Nombres largos: pasan a dos líneas con una letra más chica. Lo mismo con la familia de la borla.
   function fit() {
@@ -43,7 +50,15 @@
     var on = document.querySelector('.op-names'); on.classList.toggle('long', on.textContent.trim().length > 16);
     var g = document.querySelector('.op-guest'); g.classList.toggle('long', g.textContent.trim().length > 24);
   }
-  function sync() { syncPlace(); fit(); }
+  function fitEngravings() {
+    document.querySelectorAll('.seal-material').forEach(function (seal) {
+      var engraving = seal.querySelector('.seal-engraving'); if (!engraving) return;
+      var size = seal.getBoundingClientRect().width, len = engraving.textContent.replace(/\s/g, '').length || 2;
+      engraving.style.fontSize = Math.min(size * .25, size * .52 / (Math.max(2, len) * .58)) + 'px';
+    });
+  }
+  function sync() { syncPlace(); fit(); syncTarget(); fitEngravings(); }
+  document.addEventListener('lz-content-applied', sync);
   sync();
 
   // Apertura: un solo gesto. El lacre se hunde, la solapa se abre, la vista entra en el forro y la foto queda de portada.
@@ -63,10 +78,11 @@
   function part() {
     if (op.classList.contains('tug')) return; clear(); LazoMusic.play();
     op.classList.add('tug');
-    at(160, function () { op.classList.add('up'); });
-    at(650, function () { op.classList.add('zoom'); if (!still) zoom(); });
-    at(1000, function () { op.classList.add('lift'); document.body.classList.remove('locked'); });
-    at(1300, enter);
+    if (still) { op.classList.add('lift'); timers.push(setTimeout(enter, 220)); return; }
+    at(180, function () { op.classList.add('up'); });
+    at(1100, function () { op.classList.add('zoom'); zoom(); });
+    at(1850, function () { op.classList.add('lift'); });
+    at(2250, enter);
   }
   btn.addEventListener('click', part); $('enter').addEventListener('click', part);
   window.LzTemplate = {
@@ -78,7 +94,7 @@
   // Cuenta regresiva (la fecha del editor llega en window.LZ_T)
   var pad = function (n) { return String(n).padStart(2, '0'); }, cd = {};
   document.querySelectorAll('[data-cd]').forEach(function (e) { cd[e.dataset.cd] = e; });
-  function tick() { var s = Math.floor(Math.max(0, (window.LZ_T || TARGET) - Date.now()) / 1000); cd.d.textContent = String(Math.floor(s / 86400)); cd.h.textContent = pad(Math.floor(s / 3600) % 24); cd.m.textContent = pad(Math.floor(s / 60) % 60); cd.s.textContent = pad(s % 60); }
+  function tick() { if (!Number.isFinite(target)) { Object.keys(cd).forEach(function (k) { cd[k].textContent = '—'; }); return; } var s = Math.floor(Math.max(0, target - Date.now()) / 1000); cd.d.textContent = String(Math.floor(s / 86400)); cd.h.textContent = pad(Math.floor(s / 3600) % 24); cd.m.textContent = pad(Math.floor(s / 60) % 60); cd.s.textContent = pad(s % 60); }
   tick(); setInterval(tick, 1000);
 
   // Confirmación por persona (demo: no se envía a ningún lado)
@@ -110,5 +126,14 @@
     LazoPanel.setResponse(att, $('note').value.trim());
   });
   $('rsEdit').addEventListener('click', function () { $('rsDone').hidden = true; $('rsForm').hidden = false; wrapP.querySelector('input').focus(); });
+  if (window.ResizeObserver) { var sealObserver = new ResizeObserver(fitEngravings); document.querySelectorAll('.seal-material').forEach(function (seal) { sealObserver.observe(seal); }); }
+  window.addEventListener('resize', fitEngravings);
+  if (document.fonts) document.fonts.ready.then(fitEngravings);
+  document.addEventListener('keydown', function (e) {
+    if (e.key !== 'Tab' || op.classList.contains('gone') || !op.contains(document.activeElement)) return;
+    var controls = [btn, $('enter')], first = controls[0], last = controls[1];
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+  });
   document.addEventListener('visibilitychange', function () { document.documentElement.classList.toggle('motion-paused', document.hidden); });
 })();

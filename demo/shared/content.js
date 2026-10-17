@@ -431,7 +431,7 @@
     // Cuenta regresiva: las plantillas leen window.LZ_T en cada segundo.
     var d = dateObj(c0.date);
     if (d) {
-      var zone = c0.timeZone || (['corazones','clasico','moderno'].includes(TPL) ? 'America/Mexico_City' : '');
+      var zone = c0.timeZone || (['corazones','clasico','moderno','onix'].includes(TPL) ? 'America/Mexico_City' : '');
       if (zone) window.LZ_T = window.LazoTime.target(c0.date, cdEv && cdEv.time || '00:00', zone);
       else { var m = /^(\d{1,2}):(\d{2})$/.exec(cdEv && cdEv.time || ''); if (m) d.setHours(+m[1], +m[2]); window.LZ_T = d.getTime(); }
     }

@@ -412,3 +412,88 @@ body.locked .hero .names,body.locked .hero-foot{transform:translateY(12px);opaci
   body.locked .hero .names,body.locked .hero-foot{transform:none}
 }
 .motion-paused *{animation-play-state:paused!important}
+/* Photographed materials keep their editable contents in native HTML. */
+.seal-material{position:relative;width:70px;height:70px;background:url('/assets/onix/lacre.webp') center/100% 100% no-repeat;flex:none;isolation:isolate}
+.seal-engraving{position:absolute;left:25%;top:25%;width:50%;height:50%;display:flex;align-items:center;justify-content:center;color:#76624b;font:400 16px/1 var(--cap);text-align:center;text-shadow:0 1px 0 #fff8,0 -1px 0 #7b674d55;overflow:hidden}
+.seal-engraving .lz-seal{max-width:100%;max-height:100%;font-size:inherit!important;white-space:nowrap}
+.seal-engraving .lz-seal img{filter:none;max-width:100%;max-height:100%;object-fit:contain}
+.seal-engraving .lz-seal-ring{max-width:100%;max-height:100%}
+.env{box-shadow:inset 0 0 0 1px #ffffff12}
+.env::after{content:'';position:absolute;inset:0;background:url('/assets/aurelia/papel-algodon.webp') center/400px;mix-blend-mode:soft-light;opacity:.05;pointer-events:none;border-radius:inherit}
+.env .flap .seal{width:76px;height:76px;margin:-38px 0 0 -38px}
+.flap{transition-duration:.7s}
+.opening{gap:28px;padding:54px 24px 110px;justify-content:safe center;overflow-y:auto;overflow-x:clip}
+.opening .env-btn{flex:none}
+.opening .paper{flex:none}
+.opening.zoom{overflow:hidden}
+.opening.zoom .env-btn{transition:transform .75s cubic-bezier(.55,0,.35,1),filter .2s ease}
+.opening.lift{transition:opacity .4s ease}
+body.locked .hero .names,body.locked .hero-foot{opacity:1;transform:none}
+.story .locket{position:relative;left:auto;top:auto;width:min(440px,100%);height:auto;aspect-ratio:3/2;order:4;margin-top:12px;flex:none;pointer-events:none;filter:drop-shadow(0 5px 4px #211e1a20)}
+.locket-photo{position:absolute;object-fit:cover;object-position:50% 55%;z-index:0}
+.locket-metal{position:absolute;inset:0;background:url('/assets/onix/relicario.webp') center/100% 100% no-repeat;z-index:1}
+.place{min-height:0;padding:50px 30px;overflow:visible}
+.place-signature{display:flex;align-items:center;gap:18px;border-top:1px solid var(--line);padding-top:22px;margin-top:20px;font:400 14px/1.5 var(--cap);letter-spacing:.06em}
+.place-signature .mg{font-size:34px;flex:none}
+.tray{width:min(360px,100%);height:auto;aspect-ratio:4/3}
+.tray-metal{position:absolute;inset:0;background:url('/assets/onix/bandeja.webp') center/100% 100% no-repeat;filter:drop-shadow(0 7px 6px #211e1a22)}
+.tray-card{left:26%;top:30%;width:48%;height:40%;rotate:-2deg;border:1px solid #ffffff40;outline:1px solid #ffffff40;outline-offset:-6px;box-shadow:2px 5px 8px #15130e4d}
+.tray-card .scr{font-size:clamp(40px,5vw,58px)}
+.gal .duo .scr,.dress .duo .scr,.travel .duo .scr{font-family:var(--cap);font-size:clamp(28px,3vw,40px);font-style:italic;line-height:1.25;margin:4px 0 0;letter-spacing:0}
+.dg{min-width:clamp(46px,7vw,96px)}
+.digits{gap:clamp(3px,1vw,14px);max-width:100%}
+.opt{min-height:48px;padding:10px 12px}
+.person{min-width:0}
+.person legend{float:none}
+.opts{min-width:0;width:100%}
+.pill{white-space:normal;text-align:center;min-height:48px;letter-spacing:.13em;line-height:1.5;padding-block:10px}
+.lnk,.ev .lnk{min-height:44px}
+.mbar .pill{min-height:44px}
+.rs-form{min-width:0}
+.rs-send{flex-wrap:wrap}
+.fields{grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr))}
+.person-err{line-height:1.5}
+@media(max-height:700px){
+ .opening{display:block;padding:30px 20px 100px;text-align:center}
+ .opening .paper{display:flex;align-items:center}
+ .opening .env-btn{display:block;width:fit-content;margin:38px auto 28px;transform:none}
+ .op-names{margin-top:16px;font-size:34px}
+ .opening.tug .env-btn{transform:translateY(-6px)}
+ .op-intro{max-width:38ch;font-size:12px}
+}
+@media(min-width:900px){
+ .story .locket{width:min(440px,100%)}
+ .rs-form{padding:70px clamp(40px,5vw,80px)}
+ .rsvp{grid-template-columns:minmax(0,42%) minmax(0,58%)}
+ .person{grid-template-columns:minmax(0,1fr) minmax(240px,300px)}
+ .tray{width:min(400px,100%);height:auto}
+ .travel{grid-template-columns:minmax(0,1fr) minmax(280px,340px) minmax(0,1fr);gap:36px}
+ .pair{gap:70px}
+ .place{padding:38px 28px;border:1px solid var(--line);background:linear-gradient(#ffffff70,#ffffff70),url('/assets/aurelia/papel-algodon.webp') center/500px,var(--iv)}
+}
+@media(min-width:900px) and (max-width:1199px){
+ .welcome{grid-template-columns:1fr;gap:36px;text-align:center}
+ .wel-txt{align-items:center;margin-inline:auto}.wel-date{width:min(460px,100%);margin:auto}
+ .cd{display:flex;flex-direction:column;gap:26px;text-align:center}
+ .cd-head{align-items:center}.digits{justify-content:center}
+ .pair{grid-template-columns:1fr;gap:48px;padding-inline:60px}
+ .place,.sched{width:min(720px,100%);margin-inline:auto}.sched{align-items:stretch}
+ .story{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:40px}
+ .st-txt .p{font-size:17px}.st-img{width:100%;max-width:100%}
+ .travel{grid-template-columns:1fr;gap:36px;text-align:center}
+ .tr-a,.tr-c{max-width:720px;width:100%;margin:auto}.tr-b{width:min(480px,100%);margin:auto}
+ .tr-a .duo{align-items:center}.tr-b,.tr-c{padding-top:0}
+ .faq{display:flex;align-items:center;gap:30px}.faq-head{align-items:center}
+ .rsvp{display:block;min-height:0}.rs-side{padding:50px 30px;min-height:360px}
+ .rs-form{max-width:800px;margin:auto;padding:50px 60px}
+ .person{display:flex;flex-direction:column;gap:12px}.person .opts{grid-column:auto}
+ .rs-send{flex-direction:column}.rs-send .pill{width:100%}
+}
+@media(max-width:599px){.story .locket{width:100%;max-width:400px}.tray{max-width:310px}.op-names{font-size:40px}.op-names.long{font-size:30px}.dg b{font-size:36px}.colon{font-size:29px}.hero{padding-top:100px}.names .nm{font-size:68px}.names.long .nm{font-size:48px}.place-signature{font-size:13px}.fin-love .rule{width:50px}}
+@media(prefers-reduced-motion:reduce){.opening .env-btn,.opening.zoom .env-btn{transition:none!important}.opening.lift{transition:opacity .2s!important}}
+.pocket .e2:first-child{fill:url('#oxPocketL')}
+.pocket .e2:nth-child(2){fill:url('#oxPocketR')}
+.pocket .e3{fill:url('#oxPocketB')}
+.flap-out .e4{fill:url('#oxFlap')}
+.locket-metal{filter:grayscale(1)}
+.tray-metal{filter:grayscale(1) drop-shadow(0 7px 6px #211e1a22)}
