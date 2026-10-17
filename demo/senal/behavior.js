@@ -54,31 +54,44 @@
   sync();
 
   // Apertura: la tele se enciende sola, pasa cuatro canales (foto + palabra, y al final la fecha), se apaga en una línea
-  // de luz y queda la estática. «Abrir la invitación» funciona en todo momento: la vista entra por la pantalla.
-  var op = $('open'), wrap = $('tvWrap'), turb = $('snTurb'), timers = [], boilT = 0, cur = 0;
+  // de luz y vuelve a la fotografía con la fecha. «Abrir la invitación» funciona en todo momento: la vista entra por la pantalla.
+  var op = $('open'), wrap = $('tvWrap'), noise = op.querySelector('canvas.static'), timers = [], boilT = 0, cur = 0;
   var clear = function () { timers.forEach(clearTimeout); timers = []; };
   var at = function (ms, fn) { timers.push(setTimeout(fn, ms)); };
+  var noiseCtx = noise.getContext('2d'), noiseFrames = [], noiseIndex = 0;
+  for (var f = 0; f < 4; f++) {
+    var frame = noiseCtx.createImageData(noise.width, noise.height);
+    for (var px = 0; px < frame.data.length; px += 4) {
+      var value = 40 + Math.floor(Math.random() * 170);
+      frame.data[px] = frame.data[px + 1] = frame.data[px + 2] = value; frame.data[px + 3] = 255;
+    }
+    noiseFrames.push(frame);
+  }
   function boil(on) {
     clearInterval(boilT); boilT = 0;
-    if (on && !still) boilT = setInterval(function () { if (!document.hidden) turb.setAttribute('seed', Math.floor(Math.random() * 999)); }, 80);
+    if (on && !still) {
+      noiseCtx.putImageData(noiseFrames[noiseIndex++ % 4], 0, 0);
+      boilT = setInterval(function () { if (!document.hidden) noiseCtx.putImageData(noiseFrames[noiseIndex++ % 4], 0, 0); }, 90);
+    }
   }
-  function state(st) { op.dataset.st = st; boil(st === 'static'); }
+  function state(st) { op.dataset.st = st; boil(false); }
+  function selectChannel(n) {
+    cur = n; $('knob').setAttribute('aria-label', S.knob + ' · ' + S.channel + ' ' + n); $('knob').style.setProperty('--dial-angle', (n - 1) * 32 + 'deg');
+    op.querySelectorAll('.ch').forEach(function (c) { c.classList.toggle('cur', +c.dataset.ch === n); });
+  }
   function channel(n) {
+    if (still) { selectChannel(n); state('ch'); return; }
     op.classList.add('burst'); boil(true);
-    at(120, function () {
-      op.classList.remove('burst'); cur = n;
-      op.querySelectorAll('.ch').forEach(function (c) { c.classList.toggle('cur', +c.dataset.ch === n); });
-      state('ch');
-    });
+    at(160, function () { op.classList.remove('burst'); selectChannel(n); state('ch'); });
   }
   function sequence() {
-    clear(); cur = 0;
-    if (still) { state('still'); return; }
+    clear(); boil(false); cur = 0;
+    if (still) { selectChannel(4); state('ch'); return; }
     state('pre');
     at(300, function () { state('on'); });
-    [900, 1900, 2900, 3900].forEach(function (t, i) { at(t - 120, function () { channel(i + 1); }); });
-    at(4900, function () { state('off'); });
-    at(5700, function () { state('static'); });
+    [1000, 2450, 3900, 5350].forEach(function (t, i) { at(t - 160, function () { channel(i + 1); }); });
+    at(7550, function () { state('off'); });
+    at(8500, function () { channel(4); });
   }
   function zoom() {
     var t = wrap.getBoundingClientRect(), r = wrap.querySelector('.scr').getBoundingClientRect(), W = innerWidth, H = innerHeight;
@@ -86,7 +99,7 @@
     wrap.style.transform = 'translate(' + (W / 2 - t.left - s * cx) + 'px,' + (H / 2 - t.top - s * cy) + 'px) scale(' + s.toFixed(2) + ')';
   }
   function enter() {
-    clear(); boil(false); opened = true; op.classList.add('gone'); op.inert = true; op.setAttribute('aria-hidden', 'true');
+    clear(); op.classList.remove('burst'); boil(false); opened = true; op.classList.add('gone'); op.inert = true; op.setAttribute('aria-hidden', 'true');
     $('invite').inert = false; document.body.classList.remove('locked'); watch(); $('demoBar').hidden = false; window.scrollTo(0, 0);
     document.querySelector('.hero .names').focus({ preventScroll: true });
   }
@@ -94,11 +107,11 @@
     if (op.classList.contains('zoom')) return; clear(); LazoMusic.play();
     if (still) { op.classList.add('lift'); timers.push(setTimeout(enter, 200)); return; }
     op.classList.add('zoom'); boil(true); zoom();
-    at(700, function () { op.classList.add('lift'); document.body.classList.remove('locked'); });
-    at(1100, enter);
+    at(1050, function () { op.classList.add('lift'); });
+    at(1500, enter);
   }
   $('enter').addEventListener('click', part);
-  $('knob').addEventListener('click', function () { if (op.classList.contains('zoom')) return; clear(); if (still) return; channel(cur % 4 + 1); });
+  $('knob').addEventListener('click', function () { if (op.classList.contains('zoom')) return; clear(); op.classList.remove('burst'); channel(cur % 4 + 1); });
   sequence();
   window.LzTemplate = {
     open: function () { clear(); op.classList.add('zoom', 'lift'); enter(); },
