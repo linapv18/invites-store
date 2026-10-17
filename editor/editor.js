@@ -943,7 +943,7 @@
   var SECTION_HTML = {
     portada: function () {
       return head('portada') +
-        '<div class="ed-grid2">' + field(S.n1, 'n1') + field(S.n2, 'n2') + field(S.date, 'date', { type: 'date' }) + field(S.city, 'city', { ph: S.cityPh, hint: S.cityHint }) + '</div>' + (['corazones','clasico'].includes(state.design) ? coZone() : '') +
+        '<div class="ed-grid2">' + field(S.n1, 'n1') + field(S.n2, 'n2') + field(S.date, 'date', { type: 'date' }) + field(S.city, 'city', { ph: S.cityPh, hint: S.cityHint }) + '</div>' + (['corazones','clasico','moderno'].includes(state.design) ? coZone() : '') +
         '<div class="ed-stack"><span class="ed-label">' + esc(S.cover) + '</span><div class="ed-photo">' +
           (state.cover ? '<div class="ed-photo-img"><img src="' + esc(state.cover) + '" alt="' + esc(S.coverAlt) + '"></div>' : '<div class="ed-photo-img ph"></div>') +
           dropzone('cover', S.drop, S.dropHint) + '</div></div>' +

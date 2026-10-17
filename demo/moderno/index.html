@@ -7,9 +7,10 @@
 <meta name="description" content="Demo de invitación web de boda, diseño moderno en blanco y negro: puertas que se abren, capítulos, cuenta regresiva y confirmación por persona.">
 <meta name="theme-color" content="#141414">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%23141414'/%3E%3Ctext x='32' y='44' font-family='Georgia,serif' font-style='italic' font-size='34' fill='%23F5F4F0' text-anchor='middle'%3E%26%3C/text%3E%3C/svg%3E">
+<link rel="preload" href="/assets/fotos/beso.jpg" as="image" fetchpriority="high">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&amp;family=Jost:wght@300;400&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&amp;family=Jost:wght@300;400&amp;display=swap" rel="stylesheet" media="print" onload="this.media='all'">
 <style>
 html,body{margin:0;height:100%}
 [hidden]{display:none !important}
@@ -202,6 +203,7 @@ button.mo-row{width:100%;grid-template-columns:72px minmax(0,1fr) auto;align-ite
 @media (prefers-reduced-motion:reduce){.mo *,.mo *::before{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important}.mo-scroller{scroll-behavior:auto}}
 </style>
 <link rel="stylesheet" href="/demo/shared/panel.css">
+<link rel="stylesheet" href="/demo/moderno/moderno.css">
 </head>
 <body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="ext" viewBox="0 0 12 12"><path d="M3 9 9 3M4 3h5v5" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></symbol></svg>
@@ -209,7 +211,7 @@ button.mo-row{width:100%;grid-template-columns:72px minmax(0,1fr) auto;align-ite
 <div class="mo" id="mo" data-chapter="portada">
 
   <!-- Puertas -->
-  <div class="mo-env" id="env">
+  <div class="mo-env" id="env" role="dialog" aria-modal="true" aria-label="Apertura de la invitación">
     <div class="mo-door is-left"><div class="mo-door-face">
       <div class="mo-env-top mo-kicker"><span data-lz-mono>S — T</span><span data-lz-date="{dd}.{mm}.{Y}">12.06.2027</span></div>
       <div class="mo-env-head"><p class="mo-kicker" data-lz="envIntro" data-lz-keep>Una invitación para un día inolvidable</p><p class="mo-env-mono" data-lz-mono>S<em>&amp;</em>T</p></div>
@@ -228,58 +230,91 @@ button.mo-row{width:100%;grid-template-columns:72px minmax(0,1fr) auto;align-ite
   <div class="mo-guest" id="guest" hidden>
     <div class="mo-side" aria-hidden="true">
       <img src="/assets/fotos/beso.jpg" alt="" data-ch="0" data-lz-src="photo:0" class="is-on" style="object-position:center 60%">
-      <img src="/assets/fotos/muro.jpg" alt="" data-ch="1" data-lz-src="photo:1" loading="lazy" style="object-position:center 40%">
       <img src="/assets/fotos/paseo.jpg" alt="" data-ch="2" data-lz-src="photo:2" loading="lazy" style="object-position:center 70%">
-      <img src="/assets/fotos/torre.jpg" alt="" data-ch="3" data-lz-src="photo:3" loading="lazy" style="object-position:center 70%">
-      <img src="/assets/fotos/beso.jpg" alt="" data-ch="4" data-lz-src="photo:4" loading="lazy" style="object-position:center 60%">
-      <img src="/assets/fotos/escalera.jpg" alt="" data-ch="5" data-lz-src="photo:5" loading="lazy" style="object-position:center 65%">
-      <img src="/assets/fotos/paseo.jpg" alt="" data-ch="6" data-lz-src="photo:6" loading="lazy" style="object-position:center 70%">
+      <img src="/assets/fotos/torre.jpg" alt="" data-ch="5" data-lz-src="photo:3" loading="lazy" style="object-position:center 70%">
+      <img src="/assets/fotos/beso.jpg" alt="" data-ch="1" data-lz-src="photo:1" loading="lazy" style="object-position:center 60%">
+      <img src="/assets/fotos/escalera.jpg" alt="" data-ch="3" data-lz-src="photo:5" loading="lazy" style="object-position:center 65%">
+      <img src="/assets/fotos/paseo.jpg" alt="" data-ch="4" data-lz-src="photo:6" loading="lazy" style="object-position:center 70%">
       <div class="mo-side-cap" id="sideCap">Portada</div>
     </div>
     <div class="mo-main">
       <div class="mo-bar mo-chrome">
         <button type="button" class="mo-bar-brand" data-lz-mono data-go="0" aria-label="Ir a la portada">S<em>&amp;</em>T</button>
-        <nav aria-label="Capítulos" id="chapNav"></nav>
+        <nav aria-label="Secciones" id="chapNav"></nav><button type="button" id="indexOpen" class="mo-index-open" aria-expanded="false" aria-controls="chapterIndex">Contenido <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" aria-hidden="true"><path d="M2 4h12M2 8h12M2 12h12"/></svg></button>
       </div>
 
       <div class="mo-scroller mo-ns" id="scroller">
-        <section class="mo-ch mo-cover" data-lz-anchor="portada" aria-label="Portada">
+        <section data-chapter="portada" class="mo-ch mo-cover" data-lz-anchor="portada" aria-label="Portada">
           <img class="mo-photo" data-lz-src="photo:0" src="/assets/fotos/beso.jpg" alt="Sofía y Tomás" style="object-position:center 55%">
           <div class="mo-cover-copy">
-            <p class="mo-kicker"><span data-lz-date="{W} · {d} de {M} · {Y}">Sábado · 12 de junio · 2027</span><span data-lz-if="city" hidden> · <span data-lz="city"></span></span></p>
+            <p class="mo-kicker"><span data-lz-date="{W} · {d} de {M} · {Y}">Sábado · 12 de junio · 2027</span><span data-lz-if="city"> · <span data-lz="city">Oaxaca, México</span></span></p>
             <h1><span data-lz="n1">Sofía</span><br><em>&amp; <span data-lz="n2">Tomás</span></em></h1>
             <p class="mo-cover-intro" data-lz="msg">Nos vamos a casar y queremos celebrarlo con ustedes, Familia Rodríguez.</p>
             <button type="button" class="mo-discover" data-go="1"><svg width="1em" height="1em" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" style="vertical-align:-.15em;flex:none"><path d="M8 3v10M4 9l4 4 4-4"/></svg> Descubrir</button>
           </div>
         </section>
 
-        <section class="mo-ch is-dark" aria-label="Cuenta atrás">
-          <p class="mo-kicker">Faltan</p>
-          <div class="mo-count">
-            <p class="mo-count-days"><span data-cd="d">—</span><span>días</span></p>
-            <div class="mo-count-grid" role="timer" aria-live="off">
-              <div><strong data-cd="h">—</strong><span>Horas</span></div>
-              <div><strong data-cd="m">—</strong><span>Minutos</span></div>
-              <div><strong data-cd="s">—</strong><span>Segundos</span></div>
-            </div>
+<section data-chapter="historia" class="mo-ch mo-story" data-lz-anchor="historia" aria-label="Historia" data-gallery="mono">
+          <div class="mo-story-photo"><img class="mo-photo" data-lz-src="photo:1" src="/assets/fotos/torre.jpg" alt="Sofía y Tomás tomados de la mano" loading="lazy" style="object-position:center 72%"></div>
+          <div class="mo-story-copy">
+            <p class="mo-kicker">Nuestra historia</p>
+            <h2 data-lz="storyTitle">Una historia <em>escrita juntos.</em></h2>
+            <p class="mo-text" data-lz="story" style="margin-top:16px;max-width:460px">Nos conocimos sin imaginar todo lo que vendría después. Entre conversaciones largas, viajes y pequeños días felices, fuimos construyendo nuestra historia. Hoy queremos comenzar un nuevo capítulo junto a las personas que siempre han sido parte de ella.</p><blockquote data-lz-if="quote" hidden style="margin:22px 0 0;max-width:460px"><p data-lz="quote" style="font:italic 400 24px/1.3 var(--serif)"></p><p data-lz="quoteAuthor" class="mo-label" style="margin-top:8px;color:var(--muted)"></p></blockquote>
+            <div class="mo-thumbs mo-ns" data-lz-list="gallery" aria-label="Galería de fotos"><img data-lz-item data-lz-f="img" src="/assets/fotos/beso.jpg" alt="Foto 1" loading="lazy"><img data-lz-item data-lz-f="img" src="/assets/fotos/muro.jpg" alt="Foto 2" loading="lazy"><img data-lz-item data-lz-f="img" src="/assets/fotos/escalera.jpg" alt="Foto 3" loading="lazy"><img data-lz-item data-lz-f="img" src="/assets/fotos/paseo.jpg" alt="Foto 4" loading="lazy"><img data-lz-item data-lz-f="img" src="/assets/fotos/torre.jpg" alt="Foto 5" loading="lazy"></div><button type="button" class="mo-gallery-open mo-underline" data-gallery-open>Ver todas las fotos <span class="mo-gallery-total"></span></button>
           </div>
-          <p class="mo-count-note" data-lz="countdownNote">Cada vez falta menos para celebrar juntos.</p>
         </section>
 
-        <section class="mo-ch is-grow" aria-label="El día" data-lz-anchor="itinerario musica">
+<section data-chapter="el-dia" class="mo-ch is-grow" aria-label="El día" data-lz-anchor="itinerario musica">
           <p class="mo-kicker">El día</p>
           <h2 class="mo-display" style="margin-top:18px"><span data-lz-date="{W},">Sábado,</span><br><em data-lz-date="{d} de {M}">12 de junio</em></h2>
           <div style="margin-top:auto;padding-top:32px" data-lz-list="events">
-            <div class="mo-row" data-lz-item><span class="mo-row-time" data-lz-f="time">16:00</span><div><p class="mo-row-title" data-lz-f="name">Ceremonia</p><p class="mo-row-text"><span data-lz-f="place">Lugar de la ceremonia</span><br><span data-lz-f="address">Dirección de la ceremonia</span></p><a class="mo-underline" href="#" data-lz-f="map">Cómo llegar <svg class="mo-arrow" aria-hidden="true"><use href="#ext"/></svg></a></div></div>
-            <div class="mo-row" data-lz-item><span class="mo-row-key" data-lz-f="time">Después</span><div><p class="mo-row-title" data-lz-f="name">Recepción</p><p class="mo-row-text"><span data-lz-f="place">Lugar de la recepción</span><br><span data-lz-f="address">Dirección de la recepción</span></p><a class="mo-underline" href="#" data-lz-f="map">Cómo llegar <svg class="mo-arrow" aria-hidden="true"><use href="#ext"/></svg></a></div></div>
+            <div class="mo-row" data-lz-item><span class="mo-row-time" data-lz-f="time">16:00</span><div><p class="mo-row-title" data-lz-f="name">Ceremonia</p><p class="mo-row-text"><span data-lz-f="place">Jardín Etnobotánico</span><br><span data-lz-f="address">Reforma s/n, Centro</span></p><a class="mo-underline" href="https://www.google.com/maps/search/?api=1&amp;query=Jard%C3%ADn+Etnobot%C3%A1nico+Oaxaca" target="_blank" rel="noopener" data-lz-f="map">Cómo llegar <svg class="mo-arrow" aria-hidden="true"><use href="#ext"/></svg></a></div></div>
+            <div class="mo-row" data-lz-item><span class="mo-row-key" data-lz-f="time">18:00</span><div><p class="mo-row-title" data-lz-f="name">Recepción</p><p class="mo-row-text"><span data-lz-f="place">Casa Oaxaca</span><br><span data-lz-f="address">Calle de la Constitución 104, Centro</span></p><a class="mo-underline" href="https://www.google.com/maps/search/?api=1&amp;query=Casa+Oaxaca+Constituci%C3%B3n+104" target="_blank" rel="noopener" data-lz-f="map">Cómo llegar <svg class="mo-arrow" aria-hidden="true"><use href="#ext"/></svg></a></div></div>
             <div class="mo-dress" id="dress" data-lz-group="dressCode dressNotes dressColors">
               <button type="button" class="mo-row" aria-expanded="false" aria-controls="dressBody" id="dressBtn"><span class="mo-row-key">Nota</span><span class="mo-row-title">Código de vestimenta</span><span class="mo-faq-plus" aria-hidden="true">+</span></button>
-              <div id="dressBody" class="mo-dress-body" hidden><p data-lz="dressCode" data-lz-if="dressCode" hidden style="font:400 22px/1.2 var(--serif);color:var(--ink);margin-bottom:6px"></p><p data-lz="dressNotes">Agrega las recomendaciones de vestimenta para los invitados.</p><div data-lz-group="dressColors"><p class="mo-label" style="margin-top:16px;color:var(--muted)">Colores reservados</p><p data-lz="dressColors">Indica los colores reservados y otras recomendaciones de vestimenta.</p></div></div>
+              <div id="dressBody" class="mo-dress-body" hidden><p data-lz="dressCode" data-lz-if="dressCode" hidden style="font:400 22px/1.2 var(--serif);color:var(--ink);margin-bottom:6px"></p><p data-lz="dressNotes">Traje o vestido de fiesta. Recomendamos calzado cómodo y una prenda ligera para la noche.</p><div data-lz-group="dressColors"><p class="mo-label" style="margin-top:16px;color:var(--muted)">Colores reservados</p><p data-lz="dressColors">Blanco y marfil, reservados para la pareja.</p></div></div>
             </div>
           </div>
+        <div class="mo-count-compact" role="group" aria-label="Cuenta regresiva"><p class="mo-count-days"><span data-cd="d">—</span><span>días</span></p><div class="mo-count-grid" role="timer" aria-live="off">
+              <div><strong data-cd="h">—</strong><span>Horas</span></div>
+              <div><strong data-cd="m">—</strong><span>Minutos</span></div>
+              <div><strong data-cd="s">—</strong><span>Segundos</span></div>
+            </div><p class="mo-count-note" data-lz="countdownNote">Cada vez falta menos para celebrar juntos.</p></div></section>
+
+<section data-lz-hide-empty data-chapter="preguntas" class="mo-ch is-tall" aria-label="Preguntas" data-lz-anchor="faq">
+          <p class="mo-kicker">Preguntas</p>
+          <h2 class="mo-display" style="margin:18px 0 28px">Los detalles</h2>
+          <div data-acc="faq" data-lz-list="faqs"><div class="mo-faq is-open" data-lz-item><button type="button" aria-expanded="true"><span class="mo-faq-q" data-lz-f="q">¿Qué significa vestimenta formal?</span><span class="mo-faq-plus" aria-hidden="true">+</span></button><p class="mo-faq-a" data-lz-f="a">Traje o vestido de fiesta. Evita blanco y marfil y lleva una prenda ligera para la noche.</p></div><div class="mo-faq" data-lz-item><button type="button" aria-expanded="false"><span class="mo-faq-q" data-lz-f="q">¿A qué hora debemos llegar?</span><span class="mo-faq-plus" aria-hidden="true">+</span></button><p class="mo-faq-a" data-lz-f="a" hidden>La ceremonia comienza a las 4:00 p. m. Les recomendamos llegar 20 minutos antes.</p></div><div class="mo-faq" data-lz-item><button type="button" aria-expanded="false"><span class="mo-faq-q" data-lz-f="q">¿Podemos llevar acompañantes?</span><span class="mo-faq-plus" aria-hidden="true">+</span></button><p class="mo-faq-a" data-lz-f="a" hidden>Los lugares están reservados para las personas que aparecen en esta invitación. Si tienen alguna duda, pueden consultarnos antes de confirmar.</p></div><div class="mo-faq" data-lz-item><button type="button" aria-expanded="false"><span class="mo-faq-q" data-lz-f="q">¿Cómo avisamos de una restricción alimentaria?</span><span class="mo-faq-plus" aria-hidden="true">+</span></button><p class="mo-faq-a" data-lz-f="a" hidden>Al confirmar, indiquen el nombre de la persona y su restricción en el campo de alimentación.</p></div><div class="mo-faq" data-lz-item><button type="button" aria-expanded="false"><span class="mo-faq-q" data-lz-f="q">¿Hay lista de regalos?</span><span class="mo-faq-plus" aria-hidden="true">+</span></button><p class="mo-faq-a" data-lz-f="a" hidden>Su compañía es nuestro mejor regalo. No tenemos lista de regalos; nos hace felices compartir este día con ustedes.</p></div>
+          </div>
+          <div style="border-top:1px solid var(--line)"></div>
         </section>
 
-        <section class="mo-ch is-sand" data-lz-anchor="rsvp" aria-label="Confirmación">
+<section data-chapter="viaje" class="mo-ch is-tall" aria-label="Viaje" data-lz-show="viajeOn" data-lz-anchor="viaje">
+          <p class="mo-kicker">Viaje</p>
+          <h2 class="mo-display" style="margin-top:18px">Si vienen <em>de viaje</em></h2>
+          <p class="mo-text" data-lz="travelIntro" style="margin-top:18px;max-width:460px">Todo lo que necesitan para llegar, descansar y conocer la ciudad durante esos días.</p>
+          <div style="margin-top:40px">
+            <p class="mo-label" style="color:var(--muted);margin-bottom:6px">Alojamiento</p>
+            <div class="mo-row" data-lz-group="hotel hotelAddress hotelNotes"><span class="mo-row-key">Hotel</span><div><p class="mo-row-title" data-lz="hotel">Hotel Casa Antigua</p><p class="mo-row-text" data-lz="hotelNotes">Una opción en el centro histórico para disfrutar el fin de semana. Datos ilustrativos de esta demostración.</p><p class="mo-row-text" data-lz="hotelAddress">Calle Macedonio Alcalá 304, Centro, Oaxaca</p></div></div>
+            <div class="mo-row" data-lz-group="hotelCode hotelLink"><span class="mo-row-key">Código</span><div><p class="mo-row-title" data-lz="hotelCode">BODA-ST</p><p class="mo-booking-demo">Demostración · reserva por personalizar.</p><p class="mo-row-text"><a class="mo-underline" href="#" hidden data-lz-if="hotelLink" data-lz-href="hotelLink">Reservar <svg class="mo-arrow" aria-hidden="true"><use href="#ext"/></svg></a></p></div></div>
+            <div class="mo-row" style="border-bottom:1px solid var(--line)" data-lz-group="airport transport"><span class="mo-row-key">Cómo llegar</span>
+              <dl class="mo-details"><div data-lz-group="airport"><dt>Aeropuerto</dt><dd data-lz="airport">Aeropuerto Internacional de Oaxaca (OAX), a unos 30 minutos del centro.</dd></div><div data-lz-group="transport"><dt>Transporte</dt><dd data-lz="transport">Pueden reservar un traslado con su hotel o utilizar los taxis autorizados del aeropuerto.</dd></div></dl>
+            </div>
+          </div>
+          <div style="margin-top:48px" data-lz-group="guideFood guideCulture guidePlans">
+            <p class="mo-label" style="color:var(--muted)">Guía de la ciudad</p>
+            <h3 class="mo-serif" style="margin:10px 0 20px;font-size:34px;line-height:1.05">Turismo y actividades</h3>
+            <div data-acc="guide">
+              <div class="mo-faq is-open" data-lz-group="guideFood"><button type="button" aria-expanded="true"><span class="mo-faq-q" style="margin-top:0">Restaurantes</span><span class="mo-faq-plus" aria-hidden="true">+</span></button><div class="mo-guide"><p class="mo-guide-note" data-lz="guideFood">Levadura de Olla y los mercados del centro, para conocer los sabores de Oaxaca.</p></div></div>
+              <div class="mo-faq" data-lz-group="guideCulture"><button type="button" aria-expanded="false"><span class="mo-faq-q" style="margin-top:0">Museos y cultura</span><span class="mo-faq-plus" aria-hidden="true">+</span></button><div class="mo-guide" hidden><p class="mo-guide-note" data-lz="guideCulture">El Templo de Santo Domingo y el Museo Textil de Oaxaca.</p></div></div>
+              <div class="mo-faq" data-lz-group="guidePlans"><button type="button" aria-expanded="false"><span class="mo-faq-q" style="margin-top:0">Actividades para disfrutar</span><span class="mo-faq-plus" aria-hidden="true">+</span></button><div class="mo-guide" hidden><p class="mo-guide-note" data-lz="guidePlans">Un paseo por el centro histórico o una visita a Monte Albán durante el fin de semana.</p></div></div>
+            </div>
+            <div style="border-top:1px solid var(--line)"></div>
+          </div>
+
+        </section>
+
+<section data-chapter="confirmacion" class="mo-ch is-sand" data-lz-anchor="rsvp" aria-label="Confirmación">
           <p class="mo-kicker">Confirmación</p>
           <h2 class="mo-display" style="margin-top:18px" id="rsTitle">¿Nos acompañan?</h2>
           <p class="mo-text" style="margin-top:18px;max-width:380px" id="rsText">Tienen 4 cupos reservados. Confirmen por persona antes de la fecha límite de confirmación.</p><p class="mo-text" data-lz="rsvpMsg" data-lz-if="rsvpMsg" hidden style="margin-top:12px;max-width:380px;font-size:13px"></p><p class="mo-text" data-lz-if="rsvpDeadline" hidden style="margin-top:8px;font-size:13px">Confirmen antes del <span data-lz-date="{d} de {M}" data-lz-from="rsvpDeadline"></span></p>
@@ -287,55 +322,7 @@ button.mo-row{width:100%;grid-template-columns:72px minmax(0,1fr) auto;align-ite
             <div id="peopleList"></div>
             <button type="button" class="mo-pill" style="margin-top:22px" id="rsOpen">Confirmar asistencia</button>
           </div>
-        </section>
-
-        <section class="mo-ch mo-story" data-lz-anchor="historia" aria-label="Historia" data-gallery="mono">
-          <div class="mo-story-photo"><img class="mo-photo" data-lz-src="photo:1" src="/assets/fotos/torre.jpg" alt="Sofía y Tomás tomados de la mano" loading="lazy" style="object-position:center 72%"></div>
-          <div class="mo-story-copy">
-            <p class="mo-kicker">Nuestra historia</p>
-            <h2 data-lz="storyTitle">Una historia <em>escrita juntos.</em></h2>
-            <p class="mo-text" data-lz="story" style="margin-top:16px;max-width:460px">Cuenta cómo se conocieron los novios. Comparte sus recuerdos favoritos juntos. Describe la nueva etapa que están por comenzar.</p><blockquote data-lz-if="quote" hidden style="margin:22px 0 0;max-width:460px"><p data-lz="quote" style="font:italic 400 24px/1.3 var(--serif)"></p><p data-lz="quoteAuthor" class="mo-label" style="margin-top:8px;color:var(--muted)"></p></blockquote>
-            <div class="mo-thumbs mo-ns" data-lz-list="gallery" aria-label="Galería de fotos"><img data-lz-item data-lz-f="img" src="/assets/fotos/beso.jpg" alt="Foto 1" loading="lazy"><img data-lz-item data-lz-f="img" src="/assets/fotos/muro.jpg" alt="Foto 2" loading="lazy"><img data-lz-item data-lz-f="img" src="/assets/fotos/escalera.jpg" alt="Foto 3" loading="lazy"><img data-lz-item data-lz-f="img" src="/assets/fotos/paseo.jpg" alt="Foto 4" loading="lazy"><img data-lz-item data-lz-f="img" src="/assets/fotos/torre.jpg" alt="Foto 5" loading="lazy"></div>
-          </div>
-        </section>
-
-        <section class="mo-ch is-tall" aria-label="Preguntas" data-lz-anchor="faq">
-          <p class="mo-kicker">Preguntas</p>
-          <h2 class="mo-display" style="margin:18px 0 28px">Los detalles</h2>
-          <div data-acc="faq" data-lz-list="faqs">
-            <div class="mo-faq is-open" data-lz-item><button type="button" aria-expanded="true"><span><span class="mo-label" data-lz-f="hide" style="display:block;color:var(--muted)">Vestimenta</span><span class="mo-faq-q" data-lz-f="q">¿Hay código de vestimenta?</span></span><span class="mo-faq-plus" aria-hidden="true">+</span></button><p class="mo-faq-a" data-lz-f="a">Agrega las recomendaciones de vestimenta para los invitados.</p></div>
-            <div class="mo-faq" data-lz-item><button type="button" aria-expanded="false"><span><span class="mo-label" data-lz-f="hide" style="display:block;color:var(--muted)">Vestimenta</span><span class="mo-faq-q" data-lz-f="q">¿Hay colores reservados?</span></span><span class="mo-faq-plus" aria-hidden="true">+</span></button><p class="mo-faq-a" data-lz-f="a" hidden>Indica los colores reservados y otras recomendaciones de vestimenta.</p></div>
-            <div class="mo-faq" data-lz-item><button type="button" aria-expanded="false"><span><span class="mo-label" data-lz-f="hide" style="display:block;color:var(--muted)">Niños</span><span class="mo-faq-q" data-lz-f="q">Niños en la celebración</span></span><span class="mo-faq-plus" aria-hidden="true">+</span></button><p class="mo-faq-a" data-lz-f="a" hidden>Indica si la celebración incluirá niños.</p></div>
-            <div class="mo-faq" data-lz-item><button type="button" aria-expanded="false"><span><span class="mo-label" data-lz-f="hide" style="display:block;color:var(--muted)">Alimentación</span><span class="mo-faq-q" data-lz-f="q">Restricciones alimentarias</span></span><span class="mo-faq-plus" aria-hidden="true">+</span></button><p class="mo-faq-a" data-lz-f="a" hidden>Agrega información sobre el menú y las opciones para necesidades alimentarias especiales.</p></div>
-            <div class="mo-faq" data-lz-item><button type="button" aria-expanded="false"><span><span class="mo-label" data-lz-f="hide" style="display:block;color:var(--muted)">Regalos</span><span class="mo-faq-q" data-lz-f="q">¿Hay lista de regalos?</span></span><span class="mo-faq-plus" aria-hidden="true">+</span></button><p class="mo-faq-a" data-lz-f="a" hidden>Su compañía es nuestro mejor regalo. Agrega las preferencias de los novios o la información de su lista de regalos.</p></div>
-          </div>
-          <div style="border-top:1px solid var(--line)"></div>
-        </section>
-
-        <section class="mo-ch is-tall" aria-label="Viaje" data-lz-show="viajeOn" data-lz-anchor="viaje">
-          <p class="mo-kicker">Viaje</p>
-          <h2 class="mo-display" style="margin-top:18px">Si vienen <em>de viaje</em></h2>
-          <p class="mo-text" data-lz="travelIntro" style="margin-top:18px;max-width:460px">Todo lo que necesitan para llegar, descansar y conocer la ciudad durante esos días.</p>
-          <div style="margin-top:40px">
-            <p class="mo-label" style="color:var(--muted);margin-bottom:6px">Alojamiento</p>
-            <div class="mo-row" data-lz-group="hotel hotelAddress hotelNotes"><span class="mo-row-key">Hotel</span><div><p class="mo-row-title" data-lz="hotel">Nombre del hotel</p><p class="mo-row-text" data-lz="hotelNotes">Agrega los alojamientos recomendados y la información para reservar.</p><p class="mo-row-text" data-lz="hotelAddress">Dirección del hotel</p></div></div>
-            <div class="mo-row" data-lz-group="hotelCode hotelLink"><span class="mo-row-key">Código</span><div><p class="mo-row-title" data-lz="hotelCode">Código de reserva</p><p class="mo-row-text"><a class="mo-underline" href="#" data-lz-href="hotelLink">Reservar <svg class="mo-arrow" aria-hidden="true"><use href="#ext"/></svg></a></p></div></div>
-            <div class="mo-row" style="border-bottom:1px solid var(--line)" data-lz-group="airport transport"><span class="mo-row-key">Cómo llegar</span>
-              <dl class="mo-details"><div data-lz-group="airport"><dt>Aeropuerto</dt><dd data-lz="airport">Agrega el aeropuerto más cercano y el tiempo de viaje.</dd></div><div data-lz-group="transport"><dt>Transporte</dt><dd data-lz="transport">Indica si habrá transporte para los invitados.</dd></div></dl>
-            </div>
-          </div>
-          <div style="margin-top:48px" data-lz-group="guideFood guideCulture guidePlans">
-            <p class="mo-label" style="color:var(--muted)">Guía de la ciudad</p>
-            <h3 class="mo-serif" style="margin:10px 0 20px;font-size:34px;line-height:1.05">Turismo y actividades</h3>
-            <div data-acc="guide">
-              <div class="mo-faq is-open" data-lz-group="guideFood"><button type="button" aria-expanded="true"><span class="mo-faq-q" style="margin-top:0">Restaurantes</span><span class="mo-faq-plus" aria-hidden="true">+</span></button><div class="mo-guide"><p class="mo-guide-note" data-lz="guideFood">Agrega recomendaciones de la zona.</p></div></div>
-              <div class="mo-faq" data-lz-group="guideCulture"><button type="button" aria-expanded="false"><span class="mo-faq-q" style="margin-top:0">Museos y cultura</span><span class="mo-faq-plus" aria-hidden="true">+</span></button><div class="mo-guide" hidden><p class="mo-guide-note" data-lz="guideCulture">Agrega recomendaciones de la zona.</p></div></div>
-              <div class="mo-faq" data-lz-group="guidePlans"><button type="button" aria-expanded="false"><span class="mo-faq-q" style="margin-top:0">Actividades para disfrutar</span><span class="mo-faq-plus" aria-hidden="true">+</span></button><div class="mo-guide" hidden><p class="mo-guide-note" data-lz="guidePlans">Agrega recomendaciones de la zona.</p></div></div>
-            </div>
-            <div style="border-top:1px solid var(--line)"></div>
-          </div>
-          <div class="mo-foot"><button type="button" id="showEnv">Ver invitación</button></div>
-        </section>
+        <div class="mo-foot"><button type="button" id="showEnv">Ver invitación</button></div></section>
       </div>
 
       <div class="mo-ticks mo-chrome" id="ticks"></div>
@@ -378,101 +365,6 @@ button.mo-row{width:100%;grid-template-columns:72px minmax(0,1fr) auto;align-ite
 
 <script src="/demo/shared/content.js"></script>
 <script src="/demo/shared/panel.js"></script>
-<script>
-LazoPanel.init({mono:'S&T',couple:'Sofía y Tomás',link:'/demo/moderno/',guest:'Familia Rodríguez',people:['Carlos Rodríguez','Lucía Pérez','Sofía Rodríguez','Mateo Rodríguez']});
-LazoMusic.init({src:'/assets/musica/demo.mp3'});
-</script>
-<script>
-(function(){
-  var CH=[['portada','Portada'],['cuenta-atras','Cuenta atrás'],['el-dia','El día'],['confirmacion','Confirmación'],['historia','Historia'],['preguntas','Preguntas'],['viaje','Viaje']];
-  var PEOPLE=['Carlos Rodríguez','Lucía Pérez','Sofía Rodríguez','Mateo Rodríguez'];
-  var mo=document.getElementById('mo'),env=document.getElementById('env'),guest=document.getElementById('guest'),scroller=document.getElementById('scroller');
-  var chapter=0,saved=null,draft=PEOPLE.map(function(){return null;}),timers=[];
-
-  // Navegación de capítulos
-  var nav=document.getElementById('chapNav'),ticks=document.getElementById('ticks');
-  CH.forEach(function(c,i){
-    var b=null;if(i>0){b=document.createElement('button');b.type='button';b.textContent=c[1];b.dataset.go=i;nav.appendChild(b);}
-    var t=document.createElement('button');t.type='button';t.setAttribute('aria-label',c[1]);t.dataset.go=i;t.appendChild(document.createElement('span'));ticks.appendChild(t);
-    if(c[0]==='viaje'){t.setAttribute('data-lz-show','viajeOn');if(b)b.setAttribute('data-lz-show','viajeOn');}
-  });
-  function top(i){var el=scroller.children[i];return el?el.offsetTop:0;}
-  function go(i){scroller.scrollTo({top:top(i),behavior:'smooth'});}
-  mo.addEventListener('click',function(e){var b=e.target.closest('[data-go]');if(b)go(Number(b.dataset.go));});
-  function setChapter(i){chapter=i;mo.dataset.chapter=CH[i][0];document.getElementById('sideCap').textContent=CH[i][1];
-    document.querySelectorAll('.mo-side img').forEach(function(im){im.classList.toggle('is-on',Number(im.dataset.ch)===i);});
-    nav.querySelectorAll('button').forEach(function(b){b.setAttribute('aria-current',String(Number(b.dataset.go)===i));});
-    ticks.querySelectorAll('button').forEach(function(b){b.setAttribute('aria-current',String(Number(b.dataset.go)===i));});}
-  scroller.addEventListener('scroll',function(){var mid=scroller.scrollTop+scroller.clientHeight/2,i=0;
-    for(var j=0;j<scroller.children.length;j++)if(scroller.children[j].offsetTop<=mid)i=j;if(i!==chapter)setChapter(i);},{passive:true});
-  setChapter(0);
-
-  // Abrir y volver al sobre
-  document.getElementById('seal').addEventListener('click',function(){
-    if(env.classList.contains('is-busy'))return;
-    env.classList.add('is-busy');LazoMusic.play();
-    timers.push(setTimeout(function(){env.classList.add('is-open');guest.hidden=false;scroller.scrollTo({top:0,behavior:'instant'});setChapter(0);requestAnimationFrame(function(){scroller.scrollTo({top:0,behavior:'instant'});});},380));
-    timers.push(setTimeout(function(){env.hidden=true;env.classList.remove('is-busy','is-open');},1850));
-  });
-  document.getElementById('showEnv').addEventListener('click',function(){
-    timers.forEach(clearTimeout);timers=[];guest.hidden=true;env.hidden=false;env.classList.remove('is-busy','is-open');document.getElementById('seal').focus();
-  });
-  // Para el editor de Lazo (demo/shared/content.js): saltar o volver a mostrar las puertas.
-  window.LzTemplate={open:function(){timers.forEach(clearTimeout);timers=[];env.hidden=true;env.classList.remove('is-busy','is-open');guest.hidden=false;},envelope:function(){timers.forEach(clearTimeout);timers=[];guest.hidden=true;env.hidden=false;env.classList.remove('is-busy','is-open');},scroll:function(el,now){scroller.scrollTo({top:el.offsetTop,behavior:now?'instant':'smooth'});}};
-
-  // Acordeones (uno abierto a la vez). Delegado, para que también funcione con preguntas que agrega el editor.
-  document.querySelectorAll('[data-acc]').forEach(function(acc){
-    function items(){return acc.querySelectorAll(':scope > .mo-faq');}
-    function setOpen(item,o){item.classList.toggle('is-open',o);item.querySelector('button').setAttribute('aria-expanded',String(o));item.lastElementChild.hidden=!o;}
-    acc.addEventListener('click',function(e){var btn=e.target.closest('button');if(!btn||btn.parentNode.parentNode!==acc)return;
-      var item=btn.parentNode,open=!item.classList.contains('is-open');items().forEach(function(f){setOpen(f,false);});if(open)setOpen(item,true);});
-    acc.addEventListener('lz-render',function(){items().forEach(function(f,i){setOpen(f,i===0);});});
-  });
-  var dress=document.getElementById('dress'),dressBtn=document.getElementById('dressBtn');
-  dressBtn.addEventListener('click',function(){var o=!dress.classList.contains('is-open');dress.classList.toggle('is-open',o);dressBtn.setAttribute('aria-expanded',String(o));document.getElementById('dressBody').hidden=!o;});
-
-  // Cuenta regresiva
-  var T=Date.parse('2027-06-12T16:00:00-05:00'),cd={},p=function(n){return String(n).padStart(2,'0');};
-  document.querySelectorAll('[data-cd]').forEach(function(e){cd[e.dataset.cd]=e;});
-  function tick(){var s=Math.max(0,Math.floor(((window.LZ_T||T)-Date.now())/1000));cd.d.textContent=Math.floor(s/86400);cd.h.textContent=p(Math.floor(s/3600)%24);cd.m.textContent=p(Math.floor(s/60)%60);cd.s.textContent=p(s%60);}
-  tick();setInterval(tick,1000);
-
-  // Confirmación (demo: no se guarda)
-  function renderList(){var box=document.getElementById('peopleList');box.innerHTML='';
-    PEOPLE.forEach(function(n,i){var a=saved?saved[i]:null,row=document.createElement('div');row.className='mo-person';
-      var nm=document.createElement('span');nm.textContent=n;var st=document.createElement('span');st.className='mo-status';
-      var dot=document.createElement('span');dot.className='mo-dot'+(a?' is-yes':'');st.appendChild(dot);st.appendChild(document.createTextNode(a===null?'Pendiente':a?'Asiste':'No asiste'));
-      row.appendChild(nm);row.appendChild(st);box.appendChild(row);});
-    var yes=saved?saved.filter(Boolean).length:0;
-    document.getElementById('rsTitle').textContent=!saved?'¿Nos acompañan?':yes?'Nos vemos pronto.':'Los extrañaremos.';
-    document.getElementById('rsText').textContent=saved?'Recibimos su respuesta. Pueden cambiarla en cualquier momento antes de la fecha límite de confirmación.':'Tienen 4 cupos reservados. Confirmen por persona antes de la fecha límite de confirmación.';
-    document.getElementById('rsOpen').textContent=saved?'Editar confirmación':'Confirmar asistencia';}
-  function renderSwitches(){var box=document.getElementById('switches');box.innerHTML='';
-    PEOPLE.forEach(function(n,i){var row=document.createElement('div');row.className='mo-person';
-      var nm=document.createElement('span');nm.id='seat'+i;nm.textContent=n;
-      var sw=document.createElement('div');sw.className='mo-switch'+(draft[i]===true?' is-yes':draft[i]===false?' is-no':'');sw.setAttribute('role','group');sw.setAttribute('aria-labelledby','seat'+i);
-      [['Sí',true],['No',false]].forEach(function(o){var b=document.createElement('button');b.type='button';b.textContent=o[0];b.setAttribute('aria-pressed',String(draft[i]===o[1]));
-        b.addEventListener('click',function(){draft[i]=o[1];document.getElementById('sheetErr').hidden=true;renderSwitches();});sw.appendChild(b);});
-      row.appendChild(nm);row.appendChild(sw);box.appendChild(row);});
-    document.getElementById('dietField').hidden=!draft.some(function(x){return x===true;});}
-  var scrim=document.getElementById('scrim');
-  function openSheet(){draft=saved?saved.slice():PEOPLE.map(function(){return null;});document.getElementById('sheetForm').hidden=!!saved;document.getElementById('sheetThanks').hidden=!saved;if(saved)renderThanks();renderSwitches();scrim.hidden=false;document.body.classList.add('sheet-open');document.getElementById('sheetClose').focus();}
-  function closeSheet(){scrim.hidden=true;document.body.classList.remove('sheet-open');document.getElementById('rsOpen').focus({preventScroll:true});}
-  function renderThanks(){var y=saved.filter(Boolean).length;document.getElementById('thanksText').textContent=y?'Nos encantará celebrar con ustedes. Confirmamos '+y+' '+(y===1?'asistente':'asistentes')+'.':'Gracias por hacérnoslo saber. Los tendremos presentes en este día tan especial.';
-    var l=document.getElementById('thanksList');l.innerHTML='';PEOPLE.forEach(function(n,i){var r=document.createElement('div');r.className='mo-person';r.style.padding='12px 0';var a=document.createElement('span');a.style.fontSize='20px';a.textContent=n;var b=document.createElement('span');b.className='mo-status';b.textContent=saved[i]?'Asiste':'No asiste';r.appendChild(a);r.appendChild(b);l.appendChild(r);});}
-  document.getElementById('rsOpen').addEventListener('click',openSheet);
-  document.getElementById('sheetClose').addEventListener('click',closeSheet);
-  document.getElementById('scrimClose').addEventListener('click',closeSheet);
-  document.getElementById('thanksBack').addEventListener('click',closeSheet);
-  document.getElementById('thanksEdit').addEventListener('click',function(){draft=saved.slice();document.getElementById('sheetThanks').hidden=true;document.getElementById('sheetForm').hidden=false;renderSwitches();});
-  document.getElementById('allYes').addEventListener('click',function(){draft=PEOPLE.map(function(){return true;});document.getElementById('sheetErr').hidden=true;renderSwitches();});
-  document.getElementById('sheetSend').addEventListener('click',function(){var b=this;
-    if(draft.some(function(x){return x===null;})){document.getElementById('sheetErr').hidden=false;return;}
-    b.disabled=true;b.textContent='Enviando…';
-    setTimeout(function(){saved=draft.slice();LazoPanel.setResponse(saved,document.querySelector('#sheetForm textarea[maxlength="2000"]').value.trim());b.disabled=false;b.textContent='Enviar confirmación';renderList();renderThanks();document.getElementById('sheetForm').hidden=true;document.getElementById('sheetThanks').hidden=false;},600);});
-  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&!scrim.hidden)closeSheet();});
-  renderList();
-})();
-</script>
+<script src="/demo/moderno/behavior.js"></script>
 </body>
 </html>
