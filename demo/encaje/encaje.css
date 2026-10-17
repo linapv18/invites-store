@@ -413,3 +413,11 @@ body.locked .hero-txt>*,body.locked .hero-ph{transform:translateY(12px)}
 .fabric-ready .blind-edge{transition:none}
 .opening.up .pull,.opening.up .cord-line{transition:opacity .4s ease}
 @media(prefers-reduced-motion:reduce){.curtain-surface{filter:none}}
+
+/* A photographed tassel and a twisted, softly lit cord share the same axis. */
+.tassel{position:relative;left:-14px;width:84px;height:126px;margin:0;background:url('/assets/encaje/borla.png') center/contain no-repeat;filter:drop-shadow(1px 3px 2px #352b2425);transform-origin:50% 0}
+.cord-line{width:4px;margin-right:-1px;border-radius:3px;background:repeating-linear-gradient(125deg,#59684c 0 1px,#abb594 1px 2px,#d1d5b8 2px 3px,#81906c 3px 4px);box-shadow:inset 1px 0 1px #eef0d8aa,inset -1px 0 1px #35432f80,1px 1px 2px #352b2425}
+.cord{left:26px;width:4px;background:repeating-linear-gradient(125deg,#657454 0 1px,#c0c9a6 1px 3px,#7e8d69 3px 4px);border-radius:3px}
+.opening.tug .tassel{animation:tassel-weight .85s ease-out}
+@keyframes tassel-weight{0%,100%{rotate:0deg}25%{rotate:5deg}60%{rotate:-2deg}}
+@media(prefers-reduced-motion:reduce){.opening.tug .tassel{animation:none}}
