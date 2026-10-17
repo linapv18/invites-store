@@ -67,8 +67,24 @@
   });
 
   // Apertura: un solo gesto. Se tira de la borla, el estor sube en pliegues y deja ver la portada.
-  var op = $('open'), timers = [];
-  var clear = function () { timers.forEach(clearTimeout); timers = []; };
+  var op = $('open'), timers = [], clothRaf = 0, progress = 0;
+  var folds = Array.from(op.querySelectorAll('.fold'));
+  function fabric(p) {
+    progress = p; var h = innerHeight, band = h / folds.length, y = 0;
+    folds.forEach(function (fold, i) {
+      var delay = (7 - i) * .035, q = Math.max(0, Math.min(1, (p - delay) / (1 - delay)));
+      q = q * q * (3 - 2 * q); var scale = Math.cos(q * 1.39);
+      fold.style.height = (band + 1) + 'px'; fold.style.backgroundPosition = 'center ' + (-i * band) + 'px';
+      fold.style.transform = 'translateY(' + y + 'px) scaleY(' + scale + ')';
+      fold.firstElementChild.style.opacity = q * .65; y += band * scale;
+    });
+    op.style.setProperty('--cloth-bottom', y + 'px');
+    op.style.setProperty('--cord-end', (h * (h < 500 ? .48 : .62) + p * h * .1) + 'px');
+    op.querySelector('.tag').style.transform = 'translateY(' + (-p * h * .18) + 'px)';
+    op.querySelector('.tag').style.opacity = Math.max(0, 1 - p * 2.5);
+  }
+  fabric(0); window.addEventListener('resize', function () { fabric(progress); });
+  var clear = function () { timers.forEach(clearTimeout); timers = []; cancelAnimationFrame(clothRaf); };
   var at = function (ms, fn) { timers.push(setTimeout(fn, still ? 0 : ms)); };
   function enter() {
     clear(); opened = true; op.classList.add('gone'); op.inert = true; op.setAttribute('aria-hidden', 'true');
@@ -78,15 +94,21 @@
   function part() {
     if (op.classList.contains('tug')) return; clear(); LazoMusic.play();
     op.classList.add('tug');
-    at(160, function () { op.classList.add('up'); });
-    at(850, function () { op.classList.add('lift'); });
-    at(1000, function () { document.body.classList.remove('locked'); });
-    at(1300, enter);
+    if (still) { op.classList.add('lift'); timers.push(setTimeout(enter, 220)); return; }
+    at(180, function () {
+      op.classList.add('up'); var start = performance.now();
+      function step(now) {
+        var p = Math.min(1, (now - start) / 2250); fabric(p);
+        if (p < 1) clothRaf = requestAnimationFrame(step);
+        else { at(280, function () { op.classList.add('lift'); }); at(1000, enter); }
+      }
+      clothRaf = requestAnimationFrame(step);
+    });
   }
   $('pull').addEventListener('click', part); $('enter').addEventListener('click', part);
   window.LzTemplate = {
     open: function () { op.classList.add('tug', 'up', 'lift'); enter(); },
-    envelope: function () { clear(); opened = false; bar.classList.remove('show'); op.classList.remove('tug', 'up', 'lift', 'gone'); op.inert = false; op.removeAttribute('aria-hidden'); $('invite').inert = true; document.body.classList.add('locked'); window.scrollTo(0, 0); },
+    envelope: function () { clear(); fabric(0); opened = false; bar.classList.remove('show'); op.classList.remove('tug', 'up', 'lift', 'gone'); op.inert = false; op.removeAttribute('aria-hidden'); $('invite').inert = true; document.body.classList.add('locked'); window.scrollTo(0, 0); },
     scroll: function (el, now) { window.scrollTo({ top: el.getBoundingClientRect().top + scrollY - 70, behavior: now || still ? 'instant' : 'smooth' }); }
   };
 

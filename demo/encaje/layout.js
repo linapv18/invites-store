@@ -74,37 +74,20 @@
   // Borde de encaje: festones con un calado en cada uno y una fila de puntos finos. Se repite con un patrón, así sirve
   // para cualquier ancho. La clase dice de qué color es la tela (t-*) y de qué color son los calados (h-*).
   var uid = 0;
-  var edge = function (cls) {
-    var id = 'lzEdge' + (++uid);
-    return '<svg class="edge ' + cls + '" width="100%" height="30" aria-hidden="true" focusable="false"><defs><pattern id="' + id + '" width="24" height="30" patternUnits="userSpaceOnUse">' +
-      '<path class="et" d="M0 0H24V10A12 12 0 0 1 0 10Z"/><circle class="eh" cx="12" cy="15" r="3.2"/><circle class="eh" cx="4" cy="5" r="1.4"/><circle class="eh" cx="12" cy="5" r="1.4"/><circle class="eh" cx="20" cy="5" r="1.4"/>' +
-      '</pattern></defs><rect width="100%" height="30" fill="url(#' + id + ')"/></svg>';
-  };
+  var edge = function (cls) { return '<span class="edge ' + cls + '" aria-hidden="true"></span>'; };
   // Óvalo calado alrededor de una foto: un anillo de festones con calados y un filete fino pegado a la imagen.
   var oval = function (cls, src, n, alt, lazy) {
-    var w = 300, h = 400, rx = w / 2 + 14, ry = h / 2 + 14, W = w + 44, Hh = h + 44, cx = W / 2, cy = Hh / 2;
-    var per = Math.PI * (3 * (rx + ry) - Math.sqrt((3 * rx + ry) * (rx + 3 * ry))), k = Math.floor(per / 15), sc = '', holes = '', dots = '';
-    for (var i = 0; i < k; i++) {
-      var t = 2 * Math.PI * i / k;
-      sc += '<circle cx="' + (cx + rx * Math.cos(t)).toFixed(1) + '" cy="' + (cy + ry * Math.sin(t)).toFixed(1) + '" r="8.5"/>';
-      holes += '<circle cx="' + (cx + (rx + 1) * Math.cos(t)).toFixed(1) + '" cy="' + (cy + (ry + 1) * Math.sin(t)).toFixed(1) + '" r="2.6"/>';
-    }
-    for (var j = 0; j < k * 2; j++) { var u = 2 * Math.PI * j / (k * 2); dots += '<circle cx="' + (cx + (rx - 9) * Math.cos(u)).toFixed(1) + '" cy="' + (cy + (ry - 9) * Math.sin(u)).toFixed(1) + '" r="1.3"/>'; }
-    return '<div class="oval ' + cls + '"><img src="/assets/fotos/' + src + '.jpg" data-lz-src="photo:' + n + '" alt="' + (alt || '') + '" decoding="async"' + (lazy ? ' loading="lazy"' : '') + '>' +
-      '<svg viewBox="0 0 ' + W + ' ' + Hh + '" aria-hidden="true" focusable="false"><g class="or">' + sc + '</g><ellipse class="ors" cx="' + cx + '" cy="' + cy + '" rx="' + (rx - 4) + '" ry="' + (ry - 4) + '" stroke-width="10"/>' +
-      '<g class="oh">' + holes + '</g><g class="oh od">' + dots + '</g><ellipse class="ors" cx="' + cx + '" cy="' + cy + '" rx="' + (w / 2 + 1) + '" ry="' + (h / 2 + 1) + '" stroke-width="2.5"/></svg></div>';
+    return '<div class="oval ' + cls + '"><img src="/assets/fotos/' + src + '.jpg" data-lz-src="photo:' + n + '" alt="' + (alt || '') + '" decoding="async"' + (lazy ? ' loading="lazy"' : '') + '><span class="lace-ring" aria-hidden="true"></span></div>';
   };
   // Medallón de encaje: doce pétalos, un botón y una corona de puntos.
   var medal = function (cls) {
-    var o = '', c = 50;
-    for (var i = 0; i < 12; i++) o += '<ellipse cx="50" cy="20" rx="7" ry="15" transform="rotate(' + i * 30 + ' 50 50)"/>';
-    o += '<circle cx="50" cy="50" r="14"/><circle class="f" cx="50" cy="50" r="5"/>';
-    for (var j = 0; j < 24; j++) { var t = 2 * Math.PI * j / 24; o += '<circle class="f" cx="' + (c + 47 * Math.cos(t)).toFixed(1) + '" cy="' + (c + 47 * Math.sin(t)).toFixed(1) + '" r="1.3"/>'; }
-    return '<svg class="medal ' + (cls || '') + '" viewBox="0 0 100 100" aria-hidden="true" focusable="false">' + o + '</svg>';
+    return '<span class="medal ' + (cls || '') + '" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="' + HEART + '"/></svg></span>';
   };
   var divider = '<svg class="divider" viewBox="0 0 120 16" aria-hidden="true" focusable="false"><path d="M0 8H46M74 8H120" stroke="currentColor" stroke-width="1"/><path d="' + HEART + '" transform="translate(52 0)" fill="currentColor"/></svg>';
-  var tassel = '<svg class="tassel" viewBox="0 0 40 96" aria-hidden="true" focusable="false"><ellipse class="ta" cx="20" cy="26" rx="9" ry="7"/><path class="tb" d="M12 30h16l7 58H5z"/>' +
-    [13, 16, 19, 22, 25].map(function (x) { return '<path class="tf" d="M' + x + ' 34 ' + (x + (x - 20) * .25).toFixed(1) + ' 88"/>'; }).join('') + '<rect class="tc" x="11" y="31" width="18" height="4" rx="2"/></svg>';
+  var tassel = '<svg class="tassel" viewBox="0 0 40 96" aria-hidden="true" focusable="false"><defs><linearGradient id="cotton" x1="0" x2="1"><stop stop-color="#47533b"/><stop offset=".32" stop-color="#abb697"/><stop offset=".54" stop-color="#7f8b6c"/><stop offset="1" stop-color="#48553a"/></linearGradient></defs><path fill="url(#cotton)" d="M20 12c-11 0-11 18-5 21-5 15-10 41-10 55q15 7 30 0c0-14-5-40-10-55 6-3 6-21-5-21z"/>' +
+    Array.from({length:29},function(_,i){var x=6+i;return '<path d="M'+(16+i*8/28)+' 34 Q'+x+' 60 '+x+' '+(88+Math.sin(i/28*Math.PI)*4)+'" fill="none" stroke="'+(i%3===0?'#c6ceb7':i%3===1?'#4a573d':'#8f9d7b')+'" stroke-width=".45"/>';}).join('') +
+    '<path d="M12 29h16m-16 2h16m-15 2h14m-14 2h14" stroke="#c1c9ae" stroke-width="1.3" fill="none"/></svg>';
+
 
   var N = function (k) { return '<span data-lz="' + k + '">' + S[k] + '</span>'; };
   var MONO = '<span data-lz-mono>A<i>&amp;</i>L</span>';
@@ -115,7 +98,7 @@
   document.getElementById('app').innerHTML =
   // ======================= APERTURA: el estor de encaje =======================
   '<div class="opening" id="open" role="dialog" aria-modal="true" aria-label="' + S.openAria + '">' +
-    '<div class="blind" aria-hidden="true"><div class="cloth lace"></div><div class="folds">' + [0, 1, 2, 3].map(function () { return '<span class="fold"></span>'; }).join('') + '</div>' + edge('t-blind h-blind blind-edge') + '</div>' +
+    '<div class="blind" aria-hidden="true"><div class="cloth-veil"></div><div class="folds">' + [0, 1, 2, 3, 4, 5, 6, 7].map(function () { return '<span class="fold"><span class="fold-shade"></span></span>'; }).join('') + '</div>' + edge('t-blind h-blind blind-edge') + '</div>' +
     '<span class="cord-line" aria-hidden="true"></span>' +
     '<button type="button" class="pull" id="pull" aria-label="' + S.tassel + '"><span class="cord"></span>' + tassel + '</button>' +
     '<div class="tag"><p class="tag-k">' + S.for + '</p><p class="tag-g">' + S.guest + '</p></div>' +

@@ -1,5 +1,5 @@
 /* Encaje: una ventana con visillo y la luz de la tarde. Cacao y marfil alternados con bordes de encaje; la foto va en un
-   óvalo calado. Todo es CSS/SVG; las paletas (demo/shared/content.js) cambian el cacao, el marfil y el verde. El encaje
+   óvalo calado. Tejido, puntilla y marco fotográficos; las paletas (demo/shared/content.js) cambian el cacao, el marfil y el verde. El encaje
    siempre es claro. */
 :root{
   --co:#4A3A2E;--co2:#5C4838;--iv:#F6F2EA;--lace:#FFFDF8;--sg:#7F8B6C;--sgd:#5E6A4D;--ink:#2E241D;--mute:#5C4F45;--pale:#E3D9CB;--pale2:#D9CFC0;--paper:#E9E1D4;--line:#2E241D1f;
@@ -24,7 +24,7 @@ a:focus-visible,button:focus-visible,summary:focus-visible,input:focus-visible,i
 .dark2{background:var(--co2);color:var(--iv)}
 .ivory{background:var(--iv)}
 .lacebg-solid{background:var(--lace)}
-.lace,.lacebg{background:radial-gradient(circle at 6px 6px,rgba(120,100,80,.16) 0 1.6px,transparent 2.2px) 0 0/12px 12px,radial-gradient(circle at 0 0,rgba(120,100,80,.08) 0 3px,transparent 3.5px) 0 0/24px 24px,repeating-linear-gradient(90deg,rgba(255,255,255,0) 0 40px,rgba(120,100,80,.05) 40px 44px),rgba(251,248,242,.94)}
+.lace,.lacebg{background:linear-gradient(#fffdf8ed,#fffdf8ed),url('/assets/encaje/visillo.webp') center/420px repeat,var(--iv)}
 .ey{font:600 12px/1.5 var(--sans);letter-spacing:.26em;text-transform:uppercase;color:var(--sgd)}
 .dark .ey,.dark2 .ey{color:var(--pale2)}
 .head{display:flex;flex-direction:column;align-items:center;gap:2px;text-align:center}
@@ -42,14 +42,14 @@ a:focus-visible,button:focus-visible,summary:focus-visible,input:focus-visible,i
 [data-rv].in{opacity:1;transform:none}
 
 /* Bordes de encaje: t-* es el color de la tela, h-* el de los calados */
-.edge{display:block;width:100%;height:30px;flex:none}
+.edge{display:block;width:100%;height:30px;flex:none;background:url('/assets/encaje/puntilla.webp') left top/auto 100% repeat-x;pointer-events:none}
 .edge.flip{transform:scaleY(-1)}
 .t-lace .et{fill:var(--lace)}.t-iv .et{fill:var(--iv)}.t-co .et{fill:var(--co)}.t-co2 .et{fill:var(--co2)}.t-blind .et{fill:#FBF8F2}
 .h-co .eh{fill:var(--co)}.h-co2 .eh{fill:var(--co2)}.h-iv .eh{fill:var(--iv)}.h-paper .eh{fill:var(--paper)}.h-blind .eh{fill:#E2D9CB}
 
 /* Óvalo calado */
-.oval{position:relative;width:276px;aspect-ratio:344/444;flex:none}
-.oval img{position:absolute;left:6.4%;top:4.95%;width:87.2%;height:90.1%;object-fit:cover;object-position:50% 78%;border-radius:50%}
+.oval{position:relative;width:276px;aspect-ratio:1093/1438;flex:none}
+.oval img{position:absolute;left:20%;top:14%;width:60%;height:72%;object-fit:cover;object-position:50% 78%;border-radius:50%}
 .oval svg{position:absolute;inset:0;width:100%;height:100%;filter:drop-shadow(0 6px 8px rgba(0,0,0,.25));pointer-events:none}
 .oval .or{fill:var(--lace)}.oval .ors{fill:none;stroke:var(--lace)}.oval .oh{fill:var(--co)}.oval .od{fill-opacity:.7}
 .o-story{width:214px}
@@ -62,16 +62,17 @@ a:focus-visible,button:focus-visible,summary:focus-visible,input:focus-visible,i
 /* ======================= Apertura: el estor ======================= */
 .opening{position:fixed;inset:0;z-index:100;overflow:hidden;color:var(--ink)}
 .opening.gone{visibility:hidden;pointer-events:none}
-.blind{position:absolute;left:0;right:0;top:0;display:flex;flex-direction:column;filter:drop-shadow(0 10px 12px rgba(0,0,0,.25));transition:transform .3s ease-in,opacity .3s ease}
-.cloth{height:100vh;height:100dvh;transition:height .69s cubic-bezier(.45,0,.25,1)}
-.folds{display:flex;flex-direction:column}
-.fold{display:block;height:0;background:linear-gradient(180deg,#FBF8F2 0%,#F1EBE1 62%,#D8CFC1 100%);box-shadow:0 6px 8px -6px rgba(0,0,0,.28);transition:height .2s ease}
-.blind-edge{margin-top:-1px;height:26px}
-.cord-line{position:absolute;right:22px;top:0;width:2px;height:66%;background:#BFB6A6;transition:height .69s cubic-bezier(.45,0,.25,1),transform .16s ease-out}
-.pull{position:absolute;right:3px;top:calc(66% - 4px);width:40px;height:96px;padding:0;border:0;background:none;cursor:pointer;transform-origin:50% 0;transition:top .69s cubic-bezier(.45,0,.25,1),transform .16s ease-out,opacity .3s ease}
+.blind{position:absolute;inset:0 0 auto;height:var(--cloth-bottom,100dvh);filter:drop-shadow(0 8px 10px #36271935);transition:transform .7s cubic-bezier(.45,0,.25,1),opacity .7s ease}
+.cloth-veil{position:absolute;inset:0;background:#f6f2eae8;backdrop-filter:blur(7px);-webkit-backdrop-filter:blur(7px)}
+.folds{position:absolute;inset:0}
+.fold{position:absolute;top:0;left:0;width:100%;display:block;background:url('/assets/encaje/visillo.webp') center top/420px 420px repeat;transform-origin:50% 0;will-change:transform}
+.fold-shade{position:absolute;inset:0;opacity:0;background:linear-gradient(180deg,#fffdf800 10%,#fffdf877 32%,#705b4844 74%,#3d2c2377 100%);box-shadow:0 7px 10px -7px #291b18aa}
+.blind-edge{position:absolute;top:calc(100% - 6px);left:0;height:42px!important;margin:0;filter:drop-shadow(0 4px 3px #30251c25)}
+.cord-line{position:absolute;right:22px;top:0;width:2px;height:var(--cord-end,62%);background:repeating-linear-gradient(135deg,#9d917c 0 1px,#ede4d4 1px 3px);transition:height .69s cubic-bezier(.45,0,.25,1),transform .16s ease-out}
+.pull{position:absolute;right:3px;top:calc(var(--cord-end,62%) - 4px);width:48px;height:96px;padding:0;border:0;background:none;cursor:pointer;transform-origin:50% 0;transition:top .69s cubic-bezier(.45,0,.25,1),transform .16s ease-out,opacity .3s ease}
 .pull:focus-visible{outline:2px solid var(--ink);outline-offset:4px;border-radius:12px}
-.cord{position:absolute;left:19px;top:-20px;width:2px;height:24px;background:#BFB6A6}
-.tassel{display:block;width:40px;height:96px}
+.cord{position:absolute;left:23px;top:-20px;width:2px;height:24px;background:#BFB6A6}
+.tassel{display:block;margin-inline:auto;width:40px;height:96px}
 .tassel .ta{fill:var(--sg)}.tassel .tb{fill:var(--sgd)}.tassel .tf{stroke:#9AA587;stroke-width:1}.tassel .tc{fill:#C7CDB8}
 .pull:hover .tassel{transform:translateY(3px);transition:transform .2s ease}
 .tag{position:absolute;left:50%;top:max(80px,calc(66% - 200px));translate:-50% 0;width:min(240px,calc(100% - 100px));min-height:104px;padding:14px 22px;border-radius:50%;background:var(--co);color:var(--iv);box-shadow:inset 0 0 0 4px var(--co),inset 0 0 0 5px #D9CFC088,0 10px 18px -10px #0008;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;text-align:center;transform-origin:50% -60px;transition:opacity .3s ease}
@@ -87,12 +88,7 @@ a:focus-visible,button:focus-visible,summary:focus-visible,input:focus-visible,i
 .opening.tug .op-foot{opacity:.3}
 @keyframes sway{0%{rotate:0deg}35%{rotate:4deg}70%{rotate:-1.5deg}100%{rotate:0deg}}
 /* Sube en pliegues */
-.opening.up .op-foot,.opening.up .tag{opacity:0}
-.opening.up .cloth{height:60px}
-.opening.up .fold{height:34px}
-.opening.up .fold:nth-child(2){transition-delay:.15s}.opening.up .fold:nth-child(3){transition-delay:.3s}.opening.up .fold:nth-child(4){transition-delay:.45s}
-.opening.up .cord-line{height:83%}
-.opening.up .pull{top:calc(83% - 4px)}
+.opening.up .op-foot{opacity:0;pointer-events:none}
 .opening.lift .blind{transform:translateY(-110%);opacity:0}
 .opening.lift .pull,.opening.lift .cord-line{opacity:0;transition:opacity .25s ease}
 /* La portada aparece con un ascenso leve */
@@ -398,3 +394,13 @@ body.locked .hero-txt>*,body.locked .hero-ph{transform:translateY(12px)}
   body.locked .hero-txt>*,body.locked .hero-ph{transform:none}
 }
 .motion-paused *{animation-play-state:paused!important}
+
+/* Fibres and openwork stay ivory across every editable palette. */
+.lace-ring{position:absolute;inset:0;background:url('/assets/encaje/ovalo.webp') center/100% 100% no-repeat;filter:drop-shadow(0 3px 2px #21180f24);pointer-events:none}
+.hero-ph .oval{width:min(350px,88vw)}
+.o-story{width:270px;max-width:88vw}
+@media(min-width:900px){.hero-ph .oval{width:min(490px,36vw)}.o-story{width:310px}}
+@media(max-height:500px){.tag{top:40px;min-height:84px}.op-foot{bottom:76px}.op-hint{display:none}}
+
+.medal{position:relative;background:url('/assets/encaje/ovalo.webp') center/100% 100% no-repeat;filter:drop-shadow(0 2px 1px #34251a20)}
+.medal svg{position:absolute;left:38%;top:38%;width:24%;height:24%;fill:none;stroke:var(--sgd);stroke-width:.7}
