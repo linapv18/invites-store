@@ -1,13 +1,13 @@
 
-/* Plantilla Arco: una boda bajo la lluvia de ciudad. La invitación es una ventana en arco empañada; al tocarla el
-   cristal se limpia desde el dedo y aparece la pareja. Desde ahí la arquitectura acompaña distintas composiciones, en verde bosque
-   y papel. El vaho, las gotas, los arcos y las olas son CSS/SVG (cambian con la paleta). El HTML se arma aquí ANTES de
+/* Plantilla Arco: una boda bajo la lluvia de ciudad. La invitación es una ventana en arco empañada; al deslizar el dedo el
+   cristal se limpia por trazos y aparece la pareja. Desde ahí la arquitectura acompaña distintas composiciones, en verde bosque
+   y papel. El vaho y la lluvia se dibujan en canvas; los arcos y las olas son CSS/SVG (cambian con la paleta). El HTML se arma aquí ANTES de
    cargar demo/shared/content.js, para que el editor encuentre las marcas data-lz…. */
 (function () {
   var LANG = (document.documentElement.lang || 'es').slice(0, 2) === 'en' ? 'en' : 'es';
   var S = {
     es: {
-      envIntro: 'Una invitación para un día inolvidable', envClosing: 'Con cariño, te esperamos en nuestra boda', openAria: 'Invitación detrás de una ventana empañada', open: 'Abrir la invitación', hint: 'o toca el cristal', for: 'Para',
+      envIntro: 'Una invitación para un día inolvidable', envClosing: 'Con cariño, te esperamos en nuestra boda', openAria: 'Invitación detrás de una ventana empañada', open: 'Abrir la invitación', hint: 'Desliza el dedo por el cristal para descubrir la invitación', ready: 'Ya puedes abrirla. Puedes seguir limpiando el cristal.', for: 'Para',
       seats: '4 cupos', y: 'y', amp: '&amp;', saveDate: 'Guarda la fecha',
       guest: 'Familia Rodríguez', n1: 'Ana', n2: 'León', city: 'Oaxaca, México', msg: 'Nos casamos y queremos celebrarlo contigo.', photoAlt: 'Ana y León',
       numPat: '{dd} · {mm} · {Y}', numTxt: '14 · 03 · 2027', monPat: '{M}', monTxt: 'marzo', dayPat: '{d}', dayTxt: '14', yearPat: '{Y}', yearTxt: '2027',
@@ -33,7 +33,7 @@
       demo: 'Demo', panel: 'Panel de novios', store: 'Tienda', storeUrl: '/#disenos'
     },
     en: {
-      envIntro: 'An invitation to an unforgettable day', envClosing: 'With love, we’ll see you at our wedding', openAria: 'Invitation behind a misted window', open: 'Open the invitation', hint: 'or tap the glass', for: 'For',
+      envIntro: 'An invitation to an unforgettable day', envClosing: 'With love, we’ll see you at our wedding', openAria: 'Invitation behind a misted window', open: 'Open the invitation', hint: 'Slide your finger across the glass to reveal the invitation', ready: 'You can open it now, or keep clearing the glass.', for: 'For',
       seats: '4 seats', y: '&amp;', amp: '&amp;', saveDate: 'Save the date',
       guest: 'The Rodríguez family', n1: 'Anna', n2: 'Leo', city: 'Oaxaca, Mexico', msg: 'We’re getting married and want to celebrate with you.', photoAlt: 'Anna and Leo',
       numPat: '{mm} · {dd} · {Y}', numTxt: '03 · 14 · 2027', monPat: '{Mc}', monTxt: 'March', dayPat: '{d}', dayTxt: '14', yearPat: '{Y}', yearTxt: '2027',
@@ -77,14 +77,14 @@
   // ======================= APERTURA: la ventana empañada =======================
   '<div class="opening" id="open" role="dialog" aria-modal="true" aria-label="' + S.openAria + '">' +
     '<p class="op-intro" data-lz="envIntro" data-lz-keep>' + S.envIntro + '</p>' +
-    '<button type="button" class="win" id="win" aria-label="' + S.open + '">' +
+    '<button type="button" class="win" id="win" aria-describedby="wipeHint" aria-label="' + S.hint + (LANG === 'en' ? '. Press Enter to clear using the keyboard.' : '. Pulsa Enter para limpiar con el teclado.') + '">' +
       '<span class="win-ph blur"><img src="/assets/fotos/torre.jpg" data-lz-src="photo:0" alt="" decoding="async"></span>' +
-      '<span class="fog" aria-hidden="true"></span><span class="drops" aria-hidden="true"></span>' +
+      '<canvas class="rain" aria-hidden="true"></canvas><canvas class="mist" aria-hidden="true"></canvas>' +
       '<span class="win-ph clear" aria-hidden="true"><img src="/assets/fotos/torre.jpg" data-lz-src="photo:0" alt="" decoding="async"></span>' +
       '<span class="fog-txt" aria-hidden="true"><span class="sig">' + N('n1') + ' ' + S.y + ' ' + N('n2') + '</span><span class="fog-d" data-lz-date="' + S.numPat + '">' + S.numTxt + '</span></span>' +
     '</button>' +
     '<div class="op-ticket"><p class="k">' + S.for + '</p><p class="op-guest">' + S.guest + '</p><p class="op-seats">' + S.seats + '</p>' +
-      '<button type="button" class="btn btn-light" id="enter">' + S.open + '</button><p class="op-hint">' + S.hint + '</p>' +
+      '<button type="button" class="btn btn-light" id="enter" disabled>' + S.open + '</button><p class="op-hint" id="wipeHint" role="status" aria-live="polite">' + S.hint + '</p>' +
       '<p class="lz-closing" data-lz="envClosing" data-lz-keep hidden>' + S.envClosing + '</p></div>' +
   '</div>' +
 

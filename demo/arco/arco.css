@@ -334,3 +334,16 @@ main{display:block}
 @media(max-height:620px) and (max-width:599px){.opening{justify-content:flex-start;overflow:auto;padding:22px 20px 100px;gap:12px}.win{width:150px}.op-intro{font-size:10px}.op-guest{font-size:24px}}
 @media(prefers-reduced-motion:reduce){.opening.open .win{transform:none}.opening.open .win-ph.clear{-webkit-mask-image:none;mask-image:none}.arcade-strip{scroll-behavior:auto}}
 @media(max-height:700px) and (max-width:599px){.opening{gap:14px;padding:20px 20px 90px}.win{width:min(60vw,calc((100svh - 370px)*.7));min-width:120px}.op-guest{font-size:26px}.op-seats{margin-bottom:6px}}
+
+/* Vaho borrable en el interior; gotas de lluvia al otro lado del cristal. */
+.win{touch-action:none;user-select:none;-webkit-user-select:none;-webkit-tap-highlight-color:transparent;cursor:grab;transition:transform .85s cubic-bezier(.22,1,.36,1),box-shadow .7s}
+.win:active{cursor:grabbing}
+.win-ph.blur,.fog-txt{display:none}
+.win-ph.clear{z-index:0;-webkit-mask-image:none;mask-image:none}
+.mist,.rain{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.rain{z-index:1;opacity:.8}.mist{z-index:2}
+.op-hint{max-width:300px;min-height:3em;line-height:1.5}
+#enter:disabled{opacity:.45;cursor:default;filter:none}
+.opening.open .op-intro,.opening.open .op-ticket{transition:opacity .4s;opacity:0}
+.opening.open .mist,.opening.open .rain{opacity:0;transition:opacity .8s}
+@media(prefers-reduced-motion:reduce){.opening.open .win{transform:none}}
