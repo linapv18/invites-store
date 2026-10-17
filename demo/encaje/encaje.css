@@ -421,3 +421,4 @@ body.locked .hero-txt>*,body.locked .hero-ph{transform:translateY(12px)}
 .opening.tug .tassel{animation:tassel-weight .85s ease-out}
 @keyframes tassel-weight{0%,100%{rotate:0deg}25%{rotate:5deg}60%{rotate:-2deg}}
 @media(prefers-reduced-motion:reduce){.opening.tug .tassel{animation:none}}
+@media(max-width:899px){.pull{right:12px}.cord-line{right:39px}}
