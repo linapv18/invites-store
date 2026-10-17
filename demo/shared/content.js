@@ -131,6 +131,12 @@
       { id: 'salvia', es: 'Salvia', en: 'Sage', sw: '#55614A', vars: { co: '#55614A', co2: '#67755A', iv: '#F5F2EA', sg: '#B9A58B', sgd: '#6E5F48', mute: '#555A4C', ink: '#262A20' } },
       { id: 'rosa', es: 'Rosa', en: 'Rose', sw: '#7A5050', vars: { co: '#7A5050', co2: '#8E6262', iv: '#F7F0EC', sg: '#9AA587', sgd: '#5E6A4D', mute: '#5E4A47', ink: '#2F2120' } }
     ],
+    // Ónix: cambian el oscuro (sobre, bandas, botones) y el papel; el lacre, la plata y el blanco y negro de las fotos no.
+    onix: [
+      { id: 'onix', es: 'Ónix', en: 'Onyx', sw: '#141414' },
+      { id: 'pizarra', es: 'Pizarra', en: 'Slate', sw: '#2A3138', vars: { dk: '#2A3138', dk2: '#323A42', dk3: '#38414A', iv: '#F1F0EC', iv2: '#E1E3E2' } },
+      { id: 'bosque', es: 'Bosque', en: 'Forest', sw: '#1E2A23', vars: { dk: '#1E2A23', dk2: '#26342C', dk3: '#2B3A31', iv: '#F2F0E8', iv2: '#E2E3D9' } }
+    ],
     // Glicina: una sola paleta (los racimos, la rama y las hortensias son imágenes).
     glicina: [
       { id: 'lavanda', es: 'Lavanda y oliva', en: 'Lavender and olive', sw: 'conic-gradient(#8E79BD 0 50%,#7C8454 0)' }

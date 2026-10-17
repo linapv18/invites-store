@@ -348,7 +348,8 @@
     nacar: { es: ['Guardada como una joya', 'Con todo nuestro cariño'], en: ['Kept like a jewel', 'With all our love'] },
     arco: { es: ['Una invitación para un día inolvidable', 'Con cariño, te esperamos en nuestra boda'], en: ['An invitation to an unforgettable day', 'With love, we’ll see you at our wedding'] },
     corazones: { es: ['Una invitación para un día inolvidable', 'Con todo nuestro cariño'], en: ['An invitation to an unforgettable day', 'With all our love'] },
-    encaje: { es: ['Una invitación para un día inolvidable', 'Con cariño, te esperamos en nuestra boda.'], en: ['An invitation to an unforgettable day', 'With love, we look forward to seeing you at our wedding.'] }
+    encaje: { es: ['Una invitación para un día inolvidable', 'Con cariño, te esperamos en nuestra boda.'], en: ['An invitation to an unforgettable day', 'With love, we look forward to seeing you at our wedding.'] },
+    onix: { es: ['Una invitación para un día inolvidable', 'Con todo nuestro cariño'], en: ['An invitation to an unforgettable day', 'With all our love'] }
   };
   // Paletas de Romántico (los colores los aplica demo/shared/content.js; aquí solo el nombre y la muestra).
   var ROSA_PALETTES = [
@@ -454,7 +455,13 @@
     { id: 'salvia', hex: '#55614A', seal: '#55614A', es: 'Salvia', en: 'Sage' },
     { id: 'rosa', hex: '#7A5050', seal: '#7A5050', es: 'Rosa', en: 'Rose' }
   ];
-  var TPL_PALETTES = { rosa: ROSA_PALETTES, moderno: MOD_PALETTES, jardin: JARDIN_PALETTES, costa: COSTA_PALETTES, gala: GALA_PALETTES, aurelia: AURELIA_PALETTES, noir: NOIR_PALETTES, lino: LINO_PALETTES, marfil: MARFIL_PALETTES, fiesta: FIESTA_PALETTES, celeste: CELESTE_PALETTES, cisne: CISNE_PALETTES, tinta: TINTA_PALETTES, glicina: GLICINA_PALETTES, estreno: ESTRENO_PALETTES, nacar: NACAR_PALETTES, arco: ARCO_PALETTES, corazones: CORAZONES_PALETTES, encaje: ENCAJE_PALETTES };
+  // Ónix: cambian el oscuro y el papel. El sello es lacre marfil.
+  var ONIX_PALETTES = [
+    { id: 'onix', hex: '#141414', seal: '#141414', es: 'Ónix', en: 'Onyx' },
+    { id: 'pizarra', hex: '#2A3138', seal: '#2A3138', es: 'Pizarra', en: 'Slate' },
+    { id: 'bosque', hex: '#1E2A23', seal: '#1E2A23', es: 'Bosque', en: 'Forest' }
+  ];
+  var TPL_PALETTES = { rosa: ROSA_PALETTES, moderno: MOD_PALETTES, jardin: JARDIN_PALETTES, costa: COSTA_PALETTES, gala: GALA_PALETTES, aurelia: AURELIA_PALETTES, noir: NOIR_PALETTES, lino: LINO_PALETTES, marfil: MARFIL_PALETTES, fiesta: FIESTA_PALETTES, celeste: CELESTE_PALETTES, cisne: CISNE_PALETTES, tinta: TINTA_PALETTES, glicina: GLICINA_PALETTES, estreno: ESTRENO_PALETTES, nacar: NACAR_PALETTES, arco: ARCO_PALETTES, corazones: CORAZONES_PALETTES, encaje: ENCAJE_PALETTES, onix: ONIX_PALETTES };
   var tplPal = function () { var l = TPL_PALETTES[state.design] || []; return l.filter(function (x) { return x.id === state.pal; })[0] || l[0]; };
   var PALETTES = [
     { id: 'salvia', hex: '#5F7360', es: 'Salvia', en: 'Sage' },
@@ -482,7 +489,8 @@
     nacar: { kind: 'envelope', es: ['Nácar', 'Estuche con hilo de perlas'], en: ['Nácar', 'Box with a pearl strand'] },
     arco: { kind: 'doors', es: ['Arco', 'Ventana empañada'], en: ['Arco', 'Misted window'] },
     corazones: { kind: 'envelope', es: ['Corazones', 'Baraja en abanico'], en: ['Corazones', 'Deck that fans out'] },
-    encaje: { kind: 'doors', es: ['Encaje', 'Estor de encaje'], en: ['Encaje', 'Lace blind'] }
+    encaje: { kind: 'doors', es: ['Encaje', 'Estor de encaje'], en: ['Encaje', 'Lace blind'] },
+    onix: { kind: 'envelope', es: ['Ónix', 'Sobre negro con forro de foto'], en: ['Ónix', 'Black envelope lined with a photo'] }
   };
   // Sección de la vista previa a la que lleva cada complemento.
   var ADDON_SPOT = { playlist: 'musica', libro: 'itinerario', capsula: 'rsvp', encuestas: 'faq', galeria: 'historia', bilingue: 'portada', dominio: 'portada' };
@@ -706,6 +714,7 @@
     if (state.design === 'celeste') return serif + 'background:' + tplPal().seal + ';color:#F4E9C8;box-shadow:inset 0 0 0 1px #F4E9C866';
     if (state.design === 'cisne') return serif + 'background:radial-gradient(circle at 35% 30%,#ffffff40,' + tplPal().seal + ' 60%);color:#E8D5A8';
     if (state.design === 'tinta') return serif + 'background:#FBF8F3;color:' + tplPal().seal + ';box-shadow:inset 0 0 0 1.5px ' + tplPal().seal;
+    if (state.design === 'onix') return serif + 'background:radial-gradient(circle at 38% 32%,#F7EFE4,#C6B095 75%);color:#6B5A43;box-shadow:inset 0 0 0 3px #E5D6C3,inset 0 0 0 4px #BCA487';
     if (state.design === 'encaje') return "font-family:'EB Garamond',Georgia,serif;font-style:italic;" + 'background:' + tplPal().seal + ';color:#F6F2EA;box-shadow:inset 0 0 0 3px ' + tplPal().seal + ',inset 0 0 0 4px #D9CFC088';
     if (state.design === 'corazones') return serif + 'background:' + tplPal().seal + ';color:#D2B06A;box-shadow:inset 0 0 0 1px #D2B06A';
     if (state.design === 'arco') return serif + 'background:' + tplPal().seal + ';color:#F7F5EF;box-shadow:inset 0 0 0 1px #F7F5EF55';
