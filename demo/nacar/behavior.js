@@ -13,7 +13,7 @@
   function watch() {
     if (io) return;
     if (!('IntersectionObserver' in window)) { document.querySelectorAll('#invite [data-rv]').forEach(show); return; }
-    io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { show(e.target); io.unobserve(e.target); } }); }, { threshold: .15 });
+    io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { show(e.target); io.unobserve(e.target); } }); }, { threshold: .08 });
     observe(document);
   }
   document.addEventListener('lz-render', function (e) { observe(e.target); });
@@ -30,6 +30,12 @@
   new MutationObserver(fitSoon).observe(namesEl, { subtree: true, childList: true, characterData: true });
   if ('ResizeObserver' in window) new ResizeObserver(fitSoon).observe(namesEl); else window.addEventListener('resize', fitSoon);
   if (document.fonts) document.fonts.ready.then(fitSoon); fitSoon();
+
+  var monoRaf=0;
+  function fitMonograms(){monoRaf=0;document.querySelectorAll('[data-lz-seal]').forEach(function(box){var mark=box.querySelector('.lz-seal');if(!mark)return;mark.style.setProperty('--mono-fit','1');var r=mark.getBoundingClientRect(),b=box.getBoundingClientRect();if(r.width&&r.height)mark.style.setProperty('--mono-fit',Math.min(1,b.width/r.width,b.height/r.height).toFixed(4));});}
+  function scheduleMonos(){if(!monoRaf)monoRaf=requestAnimationFrame(fitMonograms);}
+  document.querySelectorAll('[data-lz-seal]').forEach(function(box){new MutationObserver(scheduleMonos).observe(box,{childList:true,subtree:true,characterData:true});if('ResizeObserver' in window)new ResizeObserver(scheduleMonos).observe(box);});
+  scheduleMonos();if(document.fonts)document.fonts.ready.then(scheduleMonos);
 
   var bar = $('mbar'), raf = 0, opened = false;
   window.addEventListener('scroll', function () {
@@ -51,6 +57,9 @@
     b.addEventListener('click', function () { var f = strip.querySelector('.charm'); strip.scrollBy({ left: (+b.dataset.strip) * ((f ? f.offsetWidth : 118) + 18), behavior: still ? 'instant' : 'smooth' }); });
   });
 
+  function updateStrip(){document.querySelector('[data-strip="-1"]').disabled=strip.scrollLeft<2;document.querySelector('[data-strip="1"]').disabled=strip.scrollLeft+strip.clientWidth>=strip.scrollWidth-2;}
+  strip.addEventListener('scroll',updateStrip,{passive:true});new ResizeObserver(updateStrip).observe(strip);document.addEventListener('lz-render',function(){requestAnimationFrame(updateStrip);});requestAnimationFrame(updateStrip);
+
   // Apertura: un solo gesto. Se suelta el broche, se levanta la tapa y la tarjeta sube hasta ser la portada.
   var op = $('open'), timers = [];
   var clear = function () { timers.forEach(clearTimeout); timers = []; };
@@ -59,7 +68,7 @@
     $('invite').inert = false; document.body.classList.remove('locked'); watch(); $('demoBar').hidden = false; window.scrollTo(0, 0);
     document.querySelector('.hero .names').focus({ preventScroll: true });
   }
-  function part() { if (op.classList.contains('open')) return; clear(); LazoMusic.play(); op.classList.add('open'); timers.push(setTimeout(enter, still ? 0 : 1250)); }
+  function part() { if (op.classList.contains('open')) return; clear(); var card=op.querySelector('.op-card'),from=card.getBoundingClientRect(),to=namesEl.getBoundingClientRect();op.style.setProperty('--card-x',((to.left+to.width/2)-(from.left+from.width/2))+'px');op.style.setProperty('--card-y',((to.top+to.height/2)-(from.top+from.height/2))+'px');op.style.setProperty('--card-grow',Math.min(1.8,Math.max(1.1,to.width/from.width)).toFixed(3));LazoMusic.play(); op.classList.add('open'); timers.push(setTimeout(enter, still ? 0 : 1400)); }
   $('lid').addEventListener('click', part); $('enter').addEventListener('click', part);
   window.LzTemplate = {
     open: function () { op.classList.add('open'); enter(); },

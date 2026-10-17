@@ -59,27 +59,25 @@
   }[LANG];
   window.NacarS = S;
 
-  // Hilo de perlas: el mismo trazo cuatro veces (sombra, cuerpo, nácar y brillo) con puntos redondos.
+  var A = '/assets/nacar/';
+  var pearlId = 0;
+  // Individual shaded pearls follow a measured SVG path, so every layout can resize.
   function strand(d, w, h, r, cls) {
-    var sp = (r * 2 + 1.2).toFixed(1), a = 'fill="none" stroke-linecap="round" stroke-dasharray="0 ' + sp + '"';
-    return '<svg class="strand ' + (cls || '') + '" viewBox="0 0 ' + w + ' ' + h + '" aria-hidden="true" focusable="false">' +
-      '<path d="' + d + '" ' + a + ' stroke="#2a20181f" stroke-width="' + (r * 2 + 1) + '" transform="translate(.6 1.4)"/>' +
-      '<path d="' + d + '" ' + a + ' stroke="var(--pearl-lo)" stroke-width="' + r * 2 + '"/>' +
-      '<path d="' + d + '" ' + a + ' stroke="var(--pearl)" stroke-width="' + (r * 2 - 1.6) + '" transform="translate(-.4 -.4)"/>' +
-      '<path d="' + d + '" ' + a + ' stroke="#fff" stroke-width="' + (r * .7).toFixed(1) + '" stroke-opacity=".9" transform="translate(-' + (r * .35).toFixed(1) + ' -' + (r * .35).toFixed(1) + ')"/></svg>';
+    var id='naPearl'+(++pearlId);
+    return '<svg class="strand '+(cls||'')+'" viewBox="0 0 '+w+' '+h+'" data-pearl-radius="'+r+'" aria-hidden="true" focusable="false"><defs><radialGradient id="'+id+'" cx="31%" cy="26%" r="74%"><stop offset="0" stop-color="#fffefa"/><stop offset=".23" stop-color="#faf6f1"/><stop offset=".48" stop-color="#eee5df"/><stop offset=".72" stop-color="#d8d1cd"/><stop offset=".9" stop-color="#bcb7b1"/><stop offset="1" stop-color="#e1d9cf"/></radialGradient></defs><path class="pearl-route" d="'+d+'" fill="none" stroke="var(--silver)" stroke-width=".65"/><g data-pearl-fill="'+id+'"></g></svg>';
   }
-  var PEARL = '<span class="pearl" aria-hidden="true"></span>';
-  var PIN = '<svg class="pin" viewBox="0 0 30 90" aria-hidden="true" focusable="false"><path d="M15 16 15 88" stroke="var(--silver)" stroke-width="1.6" stroke-linecap="round"/><circle cx="15" cy="12" r="10" fill="var(--pearl)" stroke="var(--pearl-lo)"/><circle cx="12" cy="9" r="3" fill="#fff" opacity=".9"/></svg>';
-  var BOW = '<svg class="bow" viewBox="0 0 160 120" aria-hidden="true" focusable="false"><g fill="none" stroke="var(--pearl)" stroke-width="5" stroke-linecap="round" stroke-dasharray="0 7"><path d="M80 52C58 22 22 18 18 38s34 26 62 14Z"/><path d="M80 52c22-30 58-34 62-14s-34 26-62 14Z"/><path d="M78 56C68 76 58 96 46 114"/><path d="M82 56c10 20 20 40 32 58"/></g><circle cx="80" cy="52" r="7" fill="var(--pearl)"/></svg>';
+  var PEARL = '<span class="pearl broche" aria-hidden="true"></span>';
+  var PIN = '<img class="pin" src="'+A+'alfiler.webp" alt="" loading="lazy" decoding="async">';
+  var BOW = '<img class="bow" src="'+A+'lazo-perlas.webp" alt="" loading="lazy" decoding="async">';
   var ICO = function (d, w) { return '<svg class="ic" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="' + (w || 1.5) + '" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="' + d + '"/></svg>'; };
   var EXT = ICO('M5 11 11 5M6 5h5v5'), PREV = ICO('M10 3.5 5.5 8l4.5 4.5'), NEXT = ICO('M6 3.5 10.5 8 6 12.5'), WARN = ICO('M8 2.5 14 13H2zM8 6.5v3M8 11.2v.1');
   var BIG = function (d) { return '<svg class="tic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="' + d + '"/></svg>'; };
   var I_PLANE = BIG('M2.5 13.5 21 6l-2.4 4.6-6 2.2 1.5 6-2.2.8-3-5.3-3.8 1.4z'), I_BUS = BIG('M5 4h14a2 2 0 0 1 2 2v10H3V6a2 2 0 0 1 2-2zM3 11h18M7 16v2.5M17 16v2.5M7 13.5h.01M17 13.5h.01'), I_PIN = BIG('M12 21s-6.5-5.7-6.5-11a6.5 6.5 0 0 1 13 0c0 5.3-6.5 11-6.5 11zM12 12.4a2.4 2.4 0 1 0 0-4.8 2.4 2.4 0 0 0 0 4.8z');
   var N = function (k) { return '<span data-lz="' + k + '">' + S[k] + '</span>'; };
-  var MONO = '<span data-lz-mono>A<i>·</i>L</span>';
+  var MONO = '<span data-lz-seal><span class="lz-seal">A<i>·</i>L</span></span>';
   var maps = function (q) { return 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(q + ', Oaxaca'); };
   var info = function (icon, k, label, text) { return '<div class="tinfo" data-lz-group="' + k + '">' + icon + '<div><h3>' + label + '</h3><p data-lz="' + k + '">' + text + '</p></div></div>'; };
-  var ring = function (k, u) { return '<div class="ringc"><svg viewBox="0 0 100 100" aria-hidden="true" focusable="false"><g fill="none" stroke-linecap="round" stroke-dasharray="0 9.2"><circle cx="50.4" cy="50.8" r="44" stroke="#2a20181c" stroke-width="7"/><circle cx="50" cy="50" r="44" stroke="var(--pearl-lo)" stroke-width="6.4"/><circle cx="49.7" cy="49.7" r="44" stroke="var(--pearl)" stroke-width="4.6"/><circle cx="49" cy="49" r="44" stroke="#fff" stroke-width="2"/></g></svg><b data-cd="' + k + '">--</b><span>' + u + '</span></div>'; };
+  var ring = function (k, u) { return '<div class="ringc">'+strand('M50 6A44 44 0 1 1 49.99 6',100,100,3.3)+'<b data-cd="'+k+'">--</b><span>'+u+'</span></div>'; };
   var SWAG = 'M4 10C120 64 280 64 396 10', HALF_L = 'M8 30H150', HALF_R = 'M10 30H152';
 
   document.getElementById('app').innerHTML =
@@ -87,9 +85,9 @@
   '<div class="opening" id="open" role="dialog" aria-modal="true" aria-label="' + S.openAria + '">' +
     '<div class="op-mist" aria-hidden="true"></div>' +
     '<div class="op-box">' +
-      '<div class="op-base" aria-hidden="true"><div class="op-satin"><div class="op-card"><p class="op-card-n">' + N('n1') + '<br>' + N('n2') + '</p><p class="acc">' + S.married + '</p><p class="op-card-d" data-lz-date="' + S.numPat + '">' + S.numTxt + '</p></div></div></div>' +
+      '<div class="op-base" aria-hidden="true"><div class="op-satin"></div></div><div class="op-card" aria-hidden="true"><p class="op-card-n">' + N('n1') + '<br>' + N('n2') + '</p><p class="acc">' + S.married + '</p><p class="op-card-d" data-lz-date="' + S.numPat + '">' + S.numTxt + '</p></div>' +
       '<button type="button" class="op-lid" id="lid" aria-label="' + S.open + '"><span class="op-mono">' + MONO + '</span><span class="op-names">' + N('n1') + ' ' + S.amp + ' ' + N('n2') + '</span><span class="op-intro" data-lz="envIntro" data-lz-keep>' + S.envIntro + '</span></button>' +
-      '<div class="op-strand" aria-hidden="true"><span class="half l">' + strand(HALF_L, 160, 60, 4.2) + '</span><span class="clasp"></span><span class="half r">' + strand(HALF_R, 160, 60, 4.2) + '</span></div>' +
+      '<div class="op-strand" aria-hidden="true"><span class="half l"></span><span class="clasp"></span><span class="half r"></span></div>' +
     '</div>' +
     '<div class="op-ticket"><p class="k">' + S.for + '</p><p class="op-guest">' + S.guest + '</p><p class="op-seats">' + S.seats + '</p>' +
       '<button type="button" class="btn" id="enter">' + S.open + '</button><p class="op-hint">' + S.hint + '</p>' +
@@ -104,19 +102,19 @@
         '<h1 class="names" tabindex="-1">' + N('n1') + '<span class="amp">' + S.y + '</span>' + N('n2') + '</h1><p class="acc hero-acc">' + S.married + '</p>' +
         '<p class="k hero-when"><span data-lz-date="' + S.coverPat + '">' + S.coverTxt + '</span> · <span data-lz="city">' + S.city + '</span></p>' +
         '<div class="hero-act"><a class="btn" href="#rsvp">' + S.confirm + '</a><a class="lnk" href="#itinerario">' + S.seeProg + '</a></div></div>' +
-      '<div class="hero-ph bw" data-rv>' + strand(SWAG, 400, 70, 4.2, 'swag') + '<img class="ph-img" id="heroImg" src="/assets/fotos/torre.jpg" data-lz-src="photo:0" alt="' + S.photoAlt + '" decoding="async"></div>' +
+      '<div class="hero-ph bw">' + strand(SWAG, 400, 70, 4.2, 'swag') + '<img class="ph-img" id="heroImg" fetchpriority="high" src="/assets/fotos/torre.jpg" data-lz-src="photo:0" alt="' + S.photoAlt + '" decoding="async"></div>' +
     '</section>' +
 
-    '<section class="sec story" id="historia" data-lz-anchor="historia">' +
+    '<section class="sec story" id="historia" data-lz-anchor="historia" data-gallery="mono">' +
       '<div class="head"><h2>' + S.storyK + '</h2><p class="acc" data-lz="storyTitle">' + S.storyTitle + '</p></div>' +
       '<div class="env" data-rv><div class="vellum" aria-hidden="true"></div><div class="polaroid bw"><img class="ph-img" src="/assets/fotos/muro.jpg" data-lz-src="photo:1" alt="" loading="lazy"></div>' +
         '<div class="letter">' + PIN + '<p class="to">' + S.for + ' ' + S.guest + ':</p><p data-lz="msg">' + S.msg + '</p><p data-lz="story">' + S.storyTxt + '</p><p class="acc sig">' + N('n1') + ' ' + S.y + ' ' + N('n2') + '</p></div></div>' +
     '</section>' +
 
-    '<section class="sec gal" id="galeria">' +
+    '<section class="sec gal" id="galeria" data-gallery="mono">' +
       '<div class="head"><h2>' + S.galK + '</h2><p class="acc">' + S.galA + '</p></div>' +
-      '<div class="necklace">' + strand('M0 20C300 90 700 90 1000 20', 1000, 120, 11, 'line') +
-        '<div class="hang" id="strip" data-lz-list="gallery">' + ['beso', 'escalera', 'muro', 'torre', 'paseo'].map(function (f, i) { return '<div class="charm bw" data-lz-item style="--r:' + [-3, 2, -1, 3, -2][i] + 'deg"><img class="ph-img" data-lz-f="img" src="/assets/fotos/' + f + '.jpg" alt="" loading="lazy"></div>'; }).join('') + '</div></div>' +
+      '<div class="necklace">' + strand('M0 18H1000', 1000, 40, 4.2, 'line') +
+        '<div class="hang" id="strip" data-lz-list="gallery">' + ['beso', 'escalera', 'muro', 'torre', 'paseo'].map(function (f, i) { return '<div class="charm bw" data-lz-item data-rv style="--r:' + [-3, 2, -1, 3, -2][i] + 'deg"><img class="ph-img" data-lz-f="img" src="/assets/fotos/' + f + '.jpg" alt="" loading="lazy"></div>'; }).join('') + '</div></div>' +
       '<div class="gal-foot"><div class="gal-nav"><button type="button" class="round" data-strip="-1" aria-label="' + S.prev + '">' + PREV + '</button><button type="button" class="round" data-strip="1" aria-label="' + S.next + '">' + NEXT + '</button></div><button type="button" class="btn" data-gallery-open>' + S.allPhotos + '</button></div>' +
     '</section>' +
 
@@ -167,6 +165,17 @@
       '<p class="fin-n">' + N('n1') + ' ' + S.amp + ' ' + N('n2') + '</p><p class="k"><span data-lz-date="' + S.numPat + '">' + S.numTxt + '</span> · <span data-lz="city">' + S.city + '</span></p>' +
       '<nav class="fin-links" aria-label="' + (LANG === 'en' ? 'Wedding information' : 'Información de la boda') + '"><a href="#itinerario">' + S.program + '</a><a href="#rsvp">' + S.confirmShort + '</a></nav></section>' +
   '</main>';
+
+  function drawPearls(svg){
+    var path=svg.querySelector('.pearl-route'),group=svg.querySelector('[data-pearl-fill]'),r=+svg.dataset.pearlRadius;group.replaceChildren();if(svg.classList.contains('line')){var w=svg.clientWidth||1000;svg.setAttribute('viewBox','0 0 '+w+' 40');path.setAttribute('d','M0 18H'+w);}var total=path.getTotalLength(),n=Math.max(2,Math.floor(total/(2*r+1.1))),id=group.dataset.pearlFill;
+    for(var i=0;i<=n;i++){
+      var p=path.getPointAtLength(total*i/n),size=r*(1+Math.sin(i*2.4)*.025);
+      var shadow=document.createElementNS('http://www.w3.org/2000/svg','circle');shadow.setAttribute('cx',p.x+.35);shadow.setAttribute('cy',p.y+.85);shadow.setAttribute('r',size+.25);shadow.setAttribute('fill','#251e171b');group.appendChild(shadow);
+      var bead=document.createElementNS(shadow.namespaceURI,'circle');bead.setAttribute('cx',p.x);bead.setAttribute('cy',p.y);bead.setAttribute('r',size);bead.setAttribute('fill','url(#'+id+')');group.appendChild(bead);
+    }
+  }
+  document.querySelectorAll('svg[data-pearl-radius]').forEach(drawPearls);
+  var galleryThread=document.querySelector('.necklace .line');if('ResizeObserver' in window)new ResizeObserver(function(){requestAnimationFrame(function(){drawPearls(galleryThread);});}).observe(galleryThread);
 
   document.getElementById('demoBar').innerHTML = '<span class="lbl">' + S.demo + '</span><button type="button" data-open-panel>' + S.panel + '</button><a href="' + S.storeUrl + '">' + S.store + '</a>';
 })();

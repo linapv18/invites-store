@@ -295,3 +295,89 @@ main{display:block}
 }
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition-duration:.01s!important}[data-rv]{opacity:1;transform:none}.opening{transition:opacity .2s!important}}
 .lz-editor [data-rv]{opacity:1;transform:none}
+
+/* Physical materials: neutral textures take the editable suede color. */
+.opening{gap:22px;padding:32px 20px 100px;overflow-y:auto;overflow-x:clip;justify-content:safe center;transition:opacity .38s ease,visibility 0s .38s}
+.op-box{width:min(76vw,360px);flex:none;isolation:isolate}
+.op-base{z-index:1;padding:0;border-radius:0;background:transparent url('/assets/nacar/estuche-base.webp') center/contain no-repeat;box-shadow:none;transition:translate .5s ease .75s,opacity .5s ease .75s}
+.op-satin{display:none}
+.op-card{position:absolute;inset:17%;z-index:2;width:auto;height:auto;padding:14px;gap:9px;border:1px solid #bcb2a255;background:var(--card);box-shadow:0 5px 10px #51443625;transition:transform .65s cubic-bezier(.22,1,.36,1) .65s;transform-origin:center}
+.op-card-n{font-size:clamp(22px,5vw,30px);line-height:1.15;max-width:100%}
+.op-lid{z-index:3;padding-top:22%;gap:10px;border-radius:0;background:transparent;box-shadow:none;isolation:isolate;filter:drop-shadow(0 16px 16px #45382c29);transition:transform .62s cubic-bezier(.45,0,.55,1) .28s,filter .45s .28s,opacity .4s .65s}
+.op-lid::before{inset:0;border:0;border-radius:0;background-color:var(--suede);background-image:url('/assets/nacar/estuche-tapa.webp');background-size:contain;background-repeat:no-repeat;background-position:center;background-blend-mode:luminosity;mask:url('/assets/nacar/estuche-tapa.webp') center/contain no-repeat;z-index:-1}
+.op-mono{font-size:42px;letter-spacing:.03em;color:#3d372f;text-shadow:0 1px #fff5}
+.op-names{font-size:11px;letter-spacing:.16em;color:#3d372f;max-width:80%;overflow-wrap:anywhere}
+.op-intro{color:#40392f;bottom:12%;font-size:24px;padding-inline:15%;line-height:1.2}
+.op-strand{z-index:4;left:3%;right:3%;top:59%;height:42px;translate:0 -50%}
+.op-strand .half{height:28px;background-image:url('/assets/nacar/hilo-perlas.webp');background-size:200% auto;background-repeat:no-repeat;background-position:left center;transition:transform .45s cubic-bezier(.22,1,.36,1) .16s,opacity .35s .16s}
+.op-strand .half.r{background-position:right center}
+.op-strand .clasp{width:42px;height:42px;background:transparent url('/assets/nacar/broche.webp') center/contain no-repeat;box-shadow:none;margin-inline:-4px;border-radius:0;transition:filter .16s,opacity .25s .22s}
+.opening.open .clasp{box-shadow:none;filter:drop-shadow(0 0 7px #fff9);opacity:0}
+.opening.open .half.l{transform:translate(-52%,18px);opacity:0}.opening.open .half.r{transform:translate(52%,18px);opacity:0}
+.opening.open .op-lid{transform:translateY(-115vh) rotate(-3deg) scale(1.035);box-shadow:none;filter:drop-shadow(0 0 0 transparent)}
+.opening.open .op-base{translate:0 24px;opacity:0}
+.opening.open .op-card{transform:translate(var(--card-x,0px),var(--card-y,-30px)) scale(var(--card-grow,1.35))}
+.op-ticket{max-width:min(90vw,430px)}.op-guest{font-size:26px}.op-seats{font-size:14px;margin-bottom:10px}
+.op-ticket .btn{min-height:48px;font-size:14px;background:var(--dark);border:1px solid #fff4;box-shadow:0 5px 13px -8px #493d32aa}
+.op-hint{font-size:13px;margin-top:8px}
+[data-lz-seal]{display:inline-flex;align-items:center;justify-content:center;width:2.7em;height:1.5em;vertical-align:middle}
+[data-lz-seal]>.lz-seal{display:inline-flex;align-items:center;justify-content:center;max-width:100%;max-height:100%;line-height:1;white-space:nowrap;transform:scale(var(--mono-fit,1))}
+[data-lz-seal] img{width:100%;height:100%;object-fit:contain;filter:none!important}
+.op-mono [data-lz-seal]{height:1.5em;width:3em}.mono .lz-seal i{margin-inline:.18em}
+.hero-top{position:relative;width:100%;min-width:0;gap:18px}.hero-top>span:last-child{text-align:right}
+.hero-act .btn{min-height:48px;padding-inline:23px;background:var(--dark);font-size:14px;font-weight:500}
+.hero-ph img{object-position:50% 76%}
+.hero-ph .swag{filter:drop-shadow(0 1px 1px #2b20132b)}
+.env{max-width:510px;padding:58px 0 78px;isolation:isolate}
+.vellum{left:0;right:0;bottom:0;height:75%;min-height:230px;max-height:370px;clip-path:none;border-radius:0;box-shadow:none;background:transparent url('/assets/nacar/sobre-vegetal.webp') center bottom/145% auto no-repeat}
+.vellum::before{display:none}
+.letter{width:84%;padding:32px 27px 25px;rotate:-1deg;border:1px solid #cfc5b555;box-shadow:0 11px 22px -14px #30271c65;background:linear-gradient(125deg,#ffffff60,transparent 35%),var(--card)}
+.letter p{font-size:16px;line-height:1.7}
+.letter .pin,.pinned .pin{width:72px;height:108px;object-fit:contain;left:-26px;top:-39px;rotate:-24deg;max-width:none;pointer-events:none}
+.polaroid{right:0;top:10px;width:36%;padding:7px 7px 20px;rotate:4deg;box-shadow:0 10px 20px -13px #30271c65}
+.charm{padding:7px 7px 17px;box-shadow:0 12px 22px -15px #30271c65;opacity:1;transform:none}
+.charm::before{height:23px;top:-23px;background:linear-gradient(90deg,#f1eeea,var(--silver));width:2px}
+.charm::after{content:'';position:absolute;left:calc(50% - 4px);top:-7px;width:8px;height:8px;border:1px solid #aaa69d;border-radius:50%;background:var(--card)}
+.charm.in{animation:naCharm .65s ease-out both}
+@keyframes naCharm{0%{transform:rotate(-1.5deg)}45%{transform:rotate(1deg)}100%{transform:rotate(0)}}
+.gal-foot{flex-wrap:wrap;gap:16px 20px}.gal-foot .btn{min-height:46px;padding-inline:20px;font-size:14px}
+.gal-nav{flex:none}
+.ringc span{font-size:12px;letter-spacing:.07em}.ringc b{font-size:32px}
+.thread>.broche{width:32px;height:32px;left:2px;background:transparent url('/assets/nacar/broche.webp') center/contain no-repeat;box-shadow:none;border-radius:0}
+.thread::before{background-image:radial-gradient(circle at 34% 28%,#fffdf9 0 1px,#eee5df 2.4px,#c9c1b7 4px,#e6ddd1 4.7px,transparent 5.3px)}
+.ev .lnk{min-height:44px}.ev p{font-size:16px}.ev-time{font-size:34px!important}
+.pinned{max-width:460px;padding:38px 30px 30px;border:1px solid #cfc5b555;box-shadow:0 12px 22px -15px #30271c65;rotate:.7deg}
+.pinned .pin{left:-9px;top:-42px;rotate:-28deg}
+.tag{background:var(--card);border:1px solid #b9b2a155;rotate:-2deg}.tag-hole{background:var(--sand)}
+.tinfo p,.hotel p,.qs p{font-size:16px;line-height:1.65}
+.hotel{padding:28px 27px 24px;border:1px solid #cfc5b555;box-shadow:0 12px 25px -18px #30271c65}.hotel h3{font-size:27px}
+.quote .bow{width:150px;height:165px;object-fit:contain;filter:drop-shadow(0 2px 2px #352a1d20)}
+.quote blockquote{font-family:var(--cap);font-size:clamp(24px,5.6vw,33px);line-height:1.45}
+.card{border:1px solid #cfc5b555;box-shadow:0 17px 32px -25px #30271c65}.opt{min-height:48px;font-weight:500}
+.mini-box{position:relative;background:transparent url('/assets/nacar/estuche-tapa.webp') center/contain no-repeat;border-radius:0;box-shadow:none;width:120px;color:#3d372f;isolation:isolate}
+.mini-box>span{position:relative;max-width:80%;text-align:center}.fin .mini-box{width:150px}.fin .mini-box .mono{font-size:30px}
+.fin-strand{margin-top:-44px!important;position:relative;z-index:1;max-width:205px}
+@media(min-width:900px){
+ .op-box{width:min(49vh,410px)}
+ .hero-txt{position:relative;padding:42px clamp(34px,4.5vw,72px);align-items:flex-start}
+ .hero-top{position:relative;left:auto;right:auto;top:auto;width:100%;margin-bottom:clamp(35px,7vh,75px);font-size:11px;letter-spacing:.12em}
+ .hero-act{flex-wrap:wrap;gap:12px 20px}
+ .hero-ph .swag{left:-5%;width:110%;top:30px}
+ .story{gap:clamp(40px,6vw,100px)}
+ .charm{width:190px}
+ .necklace{max-width:1200px;margin-inline:auto}
+ .hang{padding-inline:24px}
+ .ringc{width:126px}.ringc b{font-size:37px}
+ .thread>.broche{left:auto;right:-9px;top:-5px}
+ .quote .bow{width:190px;height:210px}
+ .fin .mini-box{width:165px}
+}
+@media(max-width:380px){.gal-foot{justify-content:center}.gal-foot .btn{width:100%}.rings{gap:8px}.ringc{width:85px}.ringc b{font-size:27px}.ringc span{font-size:11px;letter-spacing:.04em}.op-box{width:min(72vw,270px)}}
+@media(max-height:740px){.opening{padding-top:24px;padding-bottom:92px;gap:14px}.op-box{width:min(64vw,245px)}.op-mono{font-size:31px}.op-intro{font-size:20px}.op-guest{font-size:23px}.op-ticket{gap:0}.op-hint{margin-top:5px}}
+@media(max-height:550px) and (min-width:600px){.opening{display:grid;grid-template-columns:minmax(160px,230px) minmax(230px,340px);justify-content:center;align-content:center;align-items:center;column-gap:34px;padding:20px 35px 85px}.op-box{width:min(52vh,230px);justify-self:center}.op-mono{font-size:26px}.op-intro{font-size:18px}.op-names{font-size:9px}.op-strand{height:34px}.op-strand .clasp{width:34px;height:34px}.op-guest{font-size:23px}}
+@media(prefers-reduced-motion:reduce){.opening,.op-card,.op-base,.op-lid,.op-strand *{transition:none!important}.charm.in{animation:none}.opening.open .op-card{transform:none}}
+.op-base{background-color:var(--suede);background-blend-mode:luminosity;mask:url('/assets/nacar/estuche-base.webp') center/contain no-repeat}
+.mini-box{background-color:var(--suede);background-blend-mode:luminosity;mask:url('/assets/nacar/estuche-tapa.webp') center/contain no-repeat}
+.necklace .line{left:24px;width:calc(100% - 48px);height:40px;top:14px}
+.hang{padding-top:58px}.charm::before{top:-26px;height:26px}
+.round:disabled{opacity:.35;cursor:default}
