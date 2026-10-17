@@ -73,6 +73,7 @@
   // Canvas is decorative; controls remain native buttons.
   var cloth = document.createElement('canvas'), ctx = cloth.getContext('2d'), textile = new Image();
   var material = document.createElement('canvas'), surface, ready = false, lastPaint = -1;
+  var pleated = document.createElement('canvas'), pleats = pleated.getContext('2d');
   cloth.className = 'curtain-surface'; cloth.setAttribute('aria-hidden', 'true');
   op.querySelector('.blind').insertBefore(cloth, op.querySelector('.blind-edge'));
   function prepareCloth() {
@@ -95,32 +96,45 @@
     if (!ready) return;
     var now = performance.now(); if (!force && p > 0 && p < 1 && now - lastPaint < 32) return;
     lastPaint = now;
-    var w = innerWidth, h = innerHeight, half = w / 2, columns = 144, rows = 12;
+    var w = innerWidth, h = innerHeight, half = w / 2, columns = 144;
     var gathering = p * p * (3 - 2 * p), length = 1 - .84 * gathering;
-    var exit = Math.max(0, (p - .8) / .2) * half * .2;
+    var exit = Math.max(0, (p - .8) / .2) * half * .2, width = half * length;
+    if (pleated.width !== Math.ceil(half + 4) || pleated.height !== h) {
+      pleated.width = Math.ceil(half + 4); pleated.height = h;
+    }
     ctx.clearRect(0, 0, w, h + 80);
-    function x(t, v) {
-      return t * half * length - exit +
-        Math.sin(t * Math.PI * 14) * half * .022 * gathering * Math.sin(t * Math.PI) +
-        Math.sin(v * Math.PI) * half * .018 * gathering * t;
+    function x(t) {
+      return t * width + Math.sin(t * Math.PI * 14) * half * .022 * gathering * Math.sin(t * Math.PI);
     }
     for (var side = 0; side < 2; side++) {
+      pleats.clearRect(0, 0, pleated.width, h);
+      // Draw continuous full-height pleats first, without rectangular row joins.
       for (var c = 0; c < columns; c++) {
         var t = c / columns, t2 = (c + 1) / columns;
-        for (var r = 0; r < rows; r++) {
-          var v = r / rows, sy = v * h, dh = h / rows;
-          var x1 = x(t, v), x2 = x(t2, v), dx = Math.max(.7, Math.abs(x2 - x1));
-          var px = Math.min(x1, x2), sx = t * half;
-          if (side) { px = w - Math.max(x1, x2); sx = w - t2 * half; }
-          ctx.drawImage(material, sx, sy, half / columns, dh, px, sy, dx + .7, dh + .7);
-          var light = Math.sin(t * Math.PI * 14) * .26 * gathering;
-          ctx.fillStyle = light > 0 ? 'rgba(255,253,244,' + light + ')' : 'rgba(59,43,30,' + (-light) + ')';
-          ctx.globalCompositeOperation = 'source-atop'; ctx.fillRect(px, sy, dx + .7, dh + .7);
-          ctx.globalCompositeOperation = 'source-over';
-        }
+        var x1 = x(t), x2 = x(t2), dx = Math.max(.7, Math.abs(x2 - x1)), px = Math.min(x1, x2);
+        var sx = side ? w - t2 * half : t * half;
+        pleats.drawImage(material, sx, 0, half / columns, h, px, 0, dx + .7, h);
+        var light = Math.sin(t * Math.PI * 14) * .26 * gathering;
+        pleats.fillStyle = light > 0 ? 'rgba(255,253,244,' + light + ')' : 'rgba(59,43,30,' + (-light) + ')';
+        pleats.globalCompositeOperation = 'source-atop'; pleats.fillRect(px, 0, dx + .7, h);
+        pleats.globalCompositeOperation = 'source-over';
       }
+      // A narrow translucent selvedge softens the cut through the original image.
+      var fade = pleats.createLinearGradient(Math.max(0, width - 2.5), 0, width + 1, 0);
+      fade.addColorStop(0, '#fff'); fade.addColorStop(1, '#fff0');
+      pleats.globalCompositeOperation = 'destination-in'; pleats.fillStyle = fade;
+      pleats.fillRect(0, 0, pleated.width, h); pleats.globalCompositeOperation = 'source-over';
+      ctx.save(); if (side) { ctx.translate(w, 0); ctx.scale(-1, 1); }
+      // Two-pixel scanlines follow a smooth hanging edge instead of twelve steps.
+      for (var row = 0; row < h; row += 2) {
+        var rh = Math.min(2, h - row), v = (row + rh / 2) / h;
+        var curve = half * gathering * (.026 * Math.sin(v * Math.PI) + .004 * Math.sin(v * Math.PI * 3));
+        ctx.drawImage(pleated, 0, row, width + 1, rh, -exit, row, width + curve + 1, rh);
+      }
+      ctx.restore();
     }
   }
+
   textile.onload = prepareCloth; textile.src = '/assets/encaje/cortina.webp';
   window.addEventListener('resize', prepareCloth);
   function fabric(p) {
@@ -129,7 +143,15 @@
     op.style.setProperty('--cloth-bottom', h + 'px');
     op.style.setProperty('--panel-edge', edge + '%');
     op.style.setProperty('--panel-shift', (-w * .5 * q) + 'px');
-    op.querySelector('.cloth-veil').style.clipPath = 'polygon(0 0,'+edge+'% 0,'+edge+'% 100%,0 100%,0 0,100% 0,100% 100%,'+(100-edge)+'% 100%,'+(100-edge)+'% 0,100% 0)';
+    // The backing follows the same curved edge, inset beneath the lace fibres.
+    var left = [], right = [];
+    for (var i = 0; i <= 80; i++) {
+      var v = i / 80, curve = w * .5 * q * (.026 * Math.sin(v * Math.PI) + .004 * Math.sin(v * Math.PI * 3));
+      var ex = Math.max(0, edge * w / 100 + curve - Math.min(3, q * 12));
+      left.push(ex.toFixed(2) + 'px ' + (v * 100) + '%');
+      right.unshift((w - ex).toFixed(2) + 'px ' + (v * 100) + '%');
+    }
+    op.querySelector('.cloth-veil').style.clipPath = 'polygon(0 0,' + left.join(',') + ',0 100%,0 0,100% 0,100% 100%,' + right.join(',') + ',100% 0)';
     op.style.setProperty('--cord-end', (h * (h < 500 ? .38 : .62) + Math.sin(p * Math.PI) * 16) + 'px');
     paintCloth(p, p === 0 || p === 1);
     op.querySelector('.tag').style.transform = 'translateX(' + (-q * w * .35) + 'px) rotate(' + (-q * 5) + 'deg)';
