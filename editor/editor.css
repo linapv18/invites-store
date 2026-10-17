@@ -695,3 +695,5 @@ a.ed-btn[aria-disabled="true"]{opacity:.4;pointer-events:none}
 .ed-head h1,.ac-narrow h1,.ac-wide h1,.co-main h1{font-weight:400;line-height:1.15}
 .ed-card,.ac-card,.co-sum,.ed-modal-box{border-radius:6px}
 .ed-logo-mark,.ed-mark{border-radius:4px}
+.ed-btn,.co-pay,.ac-card .ed-btn{border-radius:999px}
+.ed-card,.ac-card,.co-sum,.ed-modal-box{border-radius:18px}
