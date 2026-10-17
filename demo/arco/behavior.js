@@ -5,6 +5,12 @@
   var PEOPLE = ['Carlos Rodríguez', 'Lucía Pérez', 'Sofía Rodríguez', 'Mateo Rodríguez'];
   LazoPanel.init({ mono: 'A&L', couple: S.n1 + (LANG === 'en' ? ' and ' : ' y ') + S.n2, link: location.pathname, guest: S.guest, people: PEOPLE });
   LazoMusic.init({ src: '/assets/musica/demo.mp3' });
+  var drops = document.querySelector('.drops');
+  for (var di = 0; di < 58; di++) {
+    var drop = document.createElement('i'), size = 2 + ((di * 17) % 9);
+    drop.style.cssText = 'left:' + (5 + ((di * 37) % 90)) + '%;top:' + (3 + ((di * 23) % 93)) + '%;width:' + size + 'px;height:' + (size * (1 + (di % 4) * .17)) + 'px;transform:rotate(' + ((di % 5) * 9 - 18) + 'deg)';
+    if (di % 13 === 0) drop.className = 'trail'; drops.appendChild(drop);
+  }
   var still = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   // Lo que aparece (y las fotos que se revelan) al llegar a la pantalla, después de abrir la invitación.
@@ -22,7 +28,7 @@
   var namesEl = document.querySelector('.hero .names'), fitRaf = 0;
   function fitNames() {
     fitRaf = 0; namesEl.style.fontSize = '';
-    var w = namesEl.clientWidth, widest = 0;
+    var style = getComputedStyle(namesEl), w = namesEl.clientWidth - parseFloat(style.paddingLeft) - parseFloat(style.paddingRight), widest = 0;
     namesEl.querySelectorAll('[data-lz]').forEach(function (n) { widest = Math.max(widest, n.scrollWidth); });
     if (widest > w && widest) namesEl.style.fontSize = Math.floor(parseFloat(getComputedStyle(namesEl).fontSize) * w / widest) + 'px';
   }
@@ -30,6 +36,16 @@
   new MutationObserver(fitSoon).observe(namesEl, { subtree: true, childList: true, characterData: true });
   if ('ResizeObserver' in window) new ResizeObserver(fitSoon).observe(namesEl); else window.addEventListener('resize', fitSoon);
   if (document.fonts) document.fonts.ready.then(fitSoon); fitSoon();
+
+  function fitMonograms() {
+    document.querySelectorAll('[data-lz-seal]').forEach(function (box) {
+      var mark = box.querySelector('.lz-seal'); if (!mark) return;
+      mark.style.transform = ''; var r = mark.getBoundingClientRect();
+      mark.style.transform = 'scale(' + Math.min(1, box.clientWidth / (Math.max(r.width, mark.scrollWidth) || 1), box.clientHeight / (Math.max(r.height, mark.scrollHeight) || 1)) + ')';
+    });
+  }
+  document.addEventListener('lz-render', function () { requestAnimationFrame(fitMonograms); });
+  window.addEventListener('resize', fitMonograms); if (document.fonts) document.fonts.ready.then(fitMonograms); fitMonograms();
 
   var bar = $('mbar'), raf = 0, opened = false;
   window.addEventListener('scroll', function () {
@@ -39,7 +55,7 @@
 
   // «Te esperamos en»: repite el lugar, la dirección y el mapa del primer evento del programa.
   function syncSala() {
-    var ev = document.querySelector('.evs > .ev'); if (!ev) return;
+    var ev = document.querySelector('.evs > .ev'); if (!ev) { $('venue').classList.add('lz-off'); return; }
     var pl = ev.querySelector('[data-lz-f="place"]'), ad = ev.querySelector('[data-lz-f="address"]'), mp = ev.querySelector('[data-lz-f="map"]');
     var sala = $('venue');
     $('venueName').textContent = pl ? pl.textContent : '';
@@ -54,13 +70,16 @@
 
   // La arcada avanza de arco en arco con las flechas.
   var strip = $('strip');
+  function stripState() { document.querySelectorAll('[data-strip]').forEach(function (b) { b.disabled = +b.dataset.strip < 0 ? strip.scrollLeft < 2 : strip.scrollLeft >= strip.scrollWidth - strip.clientWidth - 2; }); }
+  strip.addEventListener('scroll', stripState, { passive: true });
+  window.addEventListener('resize', stripState); document.addEventListener('lz-render', function () { requestAnimationFrame(stripState); }); stripState();
   document.querySelectorAll('[data-strip]').forEach(function (b) {
-    b.addEventListener('click', function () { var f = strip.querySelector('.arc-item'); strip.scrollBy({ left: (+b.dataset.strip) * ((f ? f.offsetWidth : 150) + 12), behavior: still ? 'instant' : 'smooth' }); });
+    b.addEventListener('click', function () { var f = strip.querySelector('.arc-item'); strip.scrollBy({ left: (+b.dataset.strip) * ((f ? f.offsetWidth : 150) + 20), behavior: still ? 'instant' : 'smooth' }); });
   });
 
   // Apertura: un solo gesto. El cristal se limpia desde el punto tocado y la ventana crece hasta ser la portada.
-  var op = $('open'), timers = [];
-  var clear = function () { timers.forEach(clearTimeout); timers = []; };
+  var op = $('open'), timers = [], wipeRaf = 0;
+  var clear = function () { timers.forEach(clearTimeout); timers = []; cancelAnimationFrame(wipeRaf); wipeRaf = 0; };
   function enter() {
     clear(); opened = true; op.classList.add('open', 'gone'); op.inert = true; op.setAttribute('aria-hidden', 'true');
     $('invite').inert = false; document.body.classList.remove('locked'); watch(); $('demoBar').hidden = false; window.scrollTo(0, 0);
@@ -70,12 +89,20 @@
     if (op.classList.contains('open')) return; clear(); LazoMusic.play();
     var w = $('win'), r = w.getBoundingClientRect();
     if (ev && ev.clientX && ev.currentTarget === w) { w.style.setProperty('--x', (ev.clientX - r.left) + 'px'); w.style.setProperty('--y', (ev.clientY - r.top) + 'px'); }
-    w.style.setProperty('--r', '70px'); op.classList.add('open'); timers.push(setTimeout(enter, still ? 0 : 1250));
+    op.classList.add('open');
+    if (still) { enter(); return; }
+    var start = performance.now(), radius = Math.hypot(r.width, r.height) * 1.1;
+    function wipe(now) {
+      var t = Math.min(1, Math.max(0, (now - start - 140) / 1250));
+      w.style.setProperty('--r', (radius * (1 - Math.pow(1 - t, 2))) + 'px');
+      if (t < 1) wipeRaf = requestAnimationFrame(wipe); else wipeRaf = 0;
+    }
+    wipeRaf = requestAnimationFrame(wipe); timers.push(setTimeout(enter, 2550));
   }
   $('win').addEventListener('click', part); $('enter').addEventListener('click', part);
   window.LzTemplate = {
     open: function () { op.classList.add('open'); enter(); },
-    envelope: function () { clear(); opened = false; bar.classList.remove('show'); op.classList.remove('open', 'gone'); op.inert = false; op.removeAttribute('aria-hidden'); $('invite').inert = true; document.body.classList.add('locked'); window.scrollTo(0, 0); },
+    envelope: function () { clear(); opened = false; bar.classList.remove('show'); op.classList.remove('open', 'gone'); $('win').style.setProperty('--r', '0px'); $('win').style.setProperty('--x', '50%'); $('win').style.setProperty('--y', '55%'); op.inert = false; op.removeAttribute('aria-hidden'); $('invite').inert = true; document.body.classList.add('locked'); window.scrollTo(0, 0); },
     scroll: function (el, now) { window.scrollTo({ top: el.getBoundingClientRect().top + scrollY - 70, behavior: now || still ? 'instant' : 'smooth' }); }
   };
 
