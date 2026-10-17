@@ -1,7 +1,7 @@
 
 /* Plantilla Señal: una tele de los años cincuenta que reserva la fecha. Al abrir el enlace la tele se enciende sola y pasa
    cuatro canales (cada uno una foto del editor con una palabra y, al final, la fecha); luego se apaga en una línea de luz
-   y queda la estática. Al tocar «Abrir la invitación» la vista entra por la pantalla y empieza la transmisión. El gabinete y la perilla son imágenes transparentes; la pantalla y
+   y queda apagada hasta tocar la perilla. Al tocar «Abrir la invitación» la vista entra por la pantalla y empieza la transmisión. El gabinete y la perilla son imágenes transparentes; la pantalla y
    los contenidos siguen siendo HTML editable; el fondo cambia con la paleta, la tele y el oro no. Fotos siempre en blanco y negro.
    El HTML se arma aquí ANTES de cargar demo/shared/content.js, para que el editor encuentre las marcas data-lz…. */
 (function () {

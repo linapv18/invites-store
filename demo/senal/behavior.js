@@ -54,7 +54,7 @@
   sync();
 
   // Apertura: la tele se enciende sola, pasa cuatro canales (foto + palabra, y al final la fecha), se apaga en una línea
-  // de luz y vuelve a la fotografía con la fecha. «Abrir la invitación» funciona en todo momento: la vista entra por la pantalla.
+  // de luz y permanece apagada hasta que se toca la perilla. «Abrir la invitación» funciona en todo momento: la vista entra por la pantalla.
   var op = $('open'), wrap = $('tvWrap'), noise = op.querySelector('canvas.static'), timers = [], boilT = 0, cur = 0;
   var clear = function () { timers.forEach(clearTimeout); timers = []; };
   var at = function (ms, fn) { timers.push(setTimeout(fn, ms)); };
@@ -91,7 +91,6 @@
     at(300, function () { state('on'); });
     [1000, 2450, 3900, 5350].forEach(function (t, i) { at(t - 160, function () { channel(i + 1); }); });
     at(7550, function () { state('off'); });
-    at(8500, function () { channel(4); });
   }
   function zoom() {
     var t = wrap.getBoundingClientRect(), r = wrap.querySelector('.scr').getBoundingClientRect(), W = innerWidth, H = innerHeight;
