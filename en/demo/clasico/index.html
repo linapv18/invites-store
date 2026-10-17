@@ -7,9 +7,10 @@
 <meta name="description" content="Wedding website invitation demo, classic design: an envelope that opens, a letter addressed to each family, countdown, venue, FAQ and RSVP.">
 <meta name="theme-color" content="#243a32">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%232b4437'/%3E%3Ctext x='32' y='42' font-family='Georgia,serif' font-size='26' fill='%23f5f2ea' text-anchor='middle'%3EV%26amp;M%3C/text%3E%3C/svg%3E">
+<link rel="preload" href="/assets/fotos/torre.jpg" as="image" fetchpriority="high">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&amp;display=swap" rel="stylesheet" media="print" onload="this.media='all'">
 <style>
 :root{--background:#f5f2ea;--dark:#293c35;--light:#f5f2ea;--accent:#344c42;--light-accent:#79634b}
 *,*::before,*::after{box-sizing:border-box}
@@ -175,6 +176,7 @@ a:hover{opacity:.75}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{transition:none !important;animation:none !important}}
 </style>
 <link rel="stylesheet" href="/demo/shared/panel.css">
+<link rel="stylesheet" href="/demo/clasico/clasico.css">
 </head>
 <body class="locked">
 
@@ -183,10 +185,10 @@ a:hover{opacity:.75}
 </svg>
 
 <!-- ======================= SOBRE ======================= -->
-<main class="envelope-preview" id="cover" role="dialog" aria-modal="true" aria-label="Invitation in an envelope">
+<div class="envelope-preview" id="cover" role="dialog" aria-modal="true" aria-label="Invitation in an envelope">
   <p class="envelope-intro" data-lz="envIntro" data-lz-keep style="text-transform:uppercase">AN INVITATION TO AN UNFORGETTABLE DAY</p>
   <div class="envelope-stage">
-    <div class="envelope-back"></div>
+    <div class="envelope-back"><span class="envelope-liner" aria-hidden="true"><span data-lz-mono>V &amp; M</span></span></div>
     <article class="envelope-letter" id="letter" aria-hidden="true" inert>
       <p class="eyebrow">We’re getting married!</p>
       <h1><span data-lz="n1">Valentina</span> <em>&amp;</em> <span data-lz="n2">Martín</span></h1>
@@ -200,15 +202,15 @@ a:hover{opacity:.75}
     </article>
     <div class="envelope-front"></div>
     <div class="envelope-flap"></div>
-    <button type="button" class="envelope-seal" id="seal" data-lz-seal aria-label="Open the invitation envelope"><span>V<span>&amp;</span>M</span></button>
+    <button type="button" class="envelope-seal" id="seal" data-lz-seal aria-label="Open the invitation envelope"><span class="seal-face"><span>V<span>&amp;</span>M</span></span></button>
     <div class="envelope-address"><p>For</p><h2>The Rodríguez Family</h2><span data-lz="envClosing" data-lz-keep style="text-transform:uppercase">WITH ALL OUR LOVE</span></div>
   </div>
   <p class="envelope-hint" id="hint" aria-live="polite">Tap the seal to open your invitation</p>
   <button type="button" class="envelope-replay" id="replay" hidden>See the envelope again</button>
-</main>
+</div>
 
 <!-- ======================= SITIO ======================= -->
-<div style="position:relative">
+<main id="invitation" inert style="position:relative">
   <header class="nav-shell">
     <a href="#top" class="display nav-brand" data-lz-mono aria-label="Valentina and Martín, home">V<span>&amp;</span>M</a>
     <nav aria-label="Main navigation" class="nav-links">
@@ -233,12 +235,12 @@ a:hover{opacity:.75}
     <div class="hero-copy">
       <p class="eyebrow">We’re getting married</p>
       <h1 class="hero-title"><span data-lz="n1">Valentina</span><br><em>&amp;</em> <span data-lz="n2">Martín</span></h1>
-      <div class="hero-date"><span class="display" data-lz-date="{d}">12</span><i></i><p class="eyebrow" style="line-height:24px"><span data-lz-date="{Mc} · {Y}">December · 2026</span><br><span data-lz="city">City, country</span></p></div>
+      <div class="hero-date"><span class="display" data-lz-date="{d}">12</span><i></i><p class="eyebrow" style="line-height:24px"><span data-lz-date="{Mc} · {Y}">December · 2026</span><br><span data-lz="city">Oaxaca, Mexico</span></p></div>
       <p data-lz="msg" data-lz-if="msg" hidden style="max-width:420px;font:italic 19px/1.5 Georgia,serif;opacity:.85"></p>
       <a href="#celebracion" class="text-link">Our big day <svg class="arrow" style="rotate:90deg" aria-hidden="true"><use href="#arr"/></svg></a>
     </div>
     <div class="hero-photo">
-      <img class="photo" data-lz-src="photo:0" src="/assets/fotos/torre.jpg" alt="Valentina and Martín holding hands" style="object-position:center 70%">
+      <img class="photo" data-lz-src="photo:0" src="/assets/fotos/torre.jpg" fetchpriority="high" alt="Valentina and Martín holding hands" style="object-position:center 70%">
       <div class="hero-caption"><span class="eyebrow">The beginning of forever</span><span class="display" style="font-size:36px" data-lz-mono>V &amp; M</span></div>
     </div>
   </section>
@@ -255,6 +257,7 @@ a:hover{opacity:.75}
         <div data-lz-item><img class="photo" data-lz-f="img" src="/assets/fotos/paseo.jpg" alt="Gallery photo 3" loading="lazy" style="object-position:center 72%"></div>
         <div data-lz-item><img class="photo" data-lz-f="img" src="/assets/fotos/torre.jpg" alt="Gallery photo 4" loading="lazy" style="object-position:center 70%"></div>
       </div>
+      <button type="button" class="text-link gallery-open" data-gallery-open>View all photos <span class="gallery-count"></span><svg class="arrow" aria-hidden="true"><use href="#arr"/></svg></button>
       <a href="#celebracion" class="text-link">Our big day <svg class="arrow" style="rotate:90deg" aria-hidden="true"><use href="#arr"/></svg></a>
     </div>
   </section>
@@ -262,11 +265,11 @@ a:hover{opacity:.75}
   <section id="celebracion" class="schedule" data-lz-anchor="itinerario musica">
     <div class="section-shell">
       <div class="schedule-heading">
-        <div><p class="eyebrow" style="margin-bottom:24px;color:var(--pale,#c3cbaa)">The big day</p><h2 class="section-title" data-lz="cdName">The ceremony</h2></div>
+        <div><p class="eyebrow" style="margin-bottom:24px;color:var(--pale,#c3cbaa)">The big day</p><h2 class="section-title" data-lz="cdName">The celebration</h2></div>
         <p class="eyebrow" data-lz-date="{W}, {Mc} {d}, {Y}">Saturday, December 12, 2026</p>
       </div>
       <div class="ceremony-details">
-        <div><p class="display ceremony-time" data-lz="time0">7:30 <span>p.m.</span></p><p class="eyebrow" style="margin-top:20px">Local time · <span data-lz="city">City, country</span></p></div>
+        <div><p class="display ceremony-time" data-lz="time0">7:30 <span>p.m.</span></p><p class="eyebrow" style="margin-top:20px">Local time · <span data-lz="city">Oaxaca, Mexico</span></p></div>
         <p class="ceremony-note" data-lz="countdownNote">The countdown<br>to celebrating together.</p>
       </div>
       <div class="ceremony-countdown" role="timer" aria-label="Time left until the ceremony" aria-live="off">
@@ -279,13 +282,13 @@ a:hover{opacity:.75}
   </section>
 
   <section class="section-shell venue-grid" id="ubicacion">
-    <div class="venue-photo"><img class="photo" data-lz-src="photo:2" src="/assets/fotos/paseo.jpg" alt="The celebration venue" loading="lazy" style="object-position:center 55%"></div>
+    <div class="venue-keepsake"><span class="eyebrow">A day to remember</span><span class="keepsake-mono display" data-lz-mono>V &amp; M</span><span class="keepsake-rule" aria-hidden="true"></span><p class="display" data-lz-date="{d} · {MU} · {Y}">12 · DECEMBER · 2026</p><p class="eyebrow" data-lz="city">Oaxaca, Mexico</p></div>
     <div data-lz-list="events">
       <p class="eyebrow" style="margin-bottom:24px">Where we’ll meet</p>
       <h2 class="section-title">Location</h2>
-      <div class="venue-card" data-lz-item><p class="eyebrow"><span data-lz-f="name">Ceremony</span><span data-lz-f="time"></span></p><h3 data-lz-f="place">Ceremony venue</h3><a href="#ubicacion" data-lz-f="map"><span data-lz-f="mapText">Ceremony address</span> <svg class="arrow" aria-hidden="true"><use href="#arr"/></svg></a></div>
-      <div class="venue-card" data-lz-item><p class="eyebrow"><span data-lz-f="name">Reception</span><span data-lz-f="time"></span></p><h3 data-lz-f="place">Reception venue</h3><a href="#ubicacion" data-lz-f="map"><span data-lz-f="mapText">Reception address</span> <svg class="arrow" aria-hidden="true"><use href="#arr"/></svg></a></div>
-      <div class="venue-card" data-lz-group="dressCode dressNotes dressColors"><p class="eyebrow">Dress code</p><h3 data-lz="dressCode">Formal</h3><p data-lz="dressNotes" style="font-size:13px;line-height:1.8">Add your dress code recommendations for guests.</p><p data-lz-group="dressColors" style="font-size:13px;line-height:1.8;margin-top:6px"><b style="font-weight:600">Reserved colors:</b> <span data-lz="dressColors">List any reserved colors.</span></p></div>
+      <div class="venue-card" data-lz-item><p class="eyebrow"><span data-lz-f="name">Ceremony</span><span data-lz-f="time">7:30 p.m.</span></p><h3 data-lz-f="place">Jardín Etnobotánico</h3><a href="https://www.google.com/maps/search/?api=1&amp;query=Jard%C3%ADn+Etnobot%C3%A1nico+Oaxaca" target="_blank" rel="noopener" data-lz-f="map"><span data-lz-f="mapText">Reforma s/n, Centro</span> <svg class="arrow" aria-hidden="true"><use href="#arr"/></svg></a></div>
+      <div class="venue-card" data-lz-item><p class="eyebrow"><span data-lz-f="name">Reception</span><span data-lz-f="time">8:30 p.m.</span></p><h3 data-lz-f="place">Casa Oaxaca</h3><a href="https://www.google.com/maps/search/?api=1&amp;query=Casa+Oaxaca+Constituci%C3%B3n+104" target="_blank" rel="noopener" data-lz-f="map"><span data-lz-f="mapText">Calle de la Constitución 104, Centro</span> <svg class="arrow" aria-hidden="true"><use href="#arr"/></svg></a></div>
+      <div class="venue-card" data-lz-group="dressCode dressNotes dressColors"><p class="eyebrow">Dress code</p><h3 data-lz="dressCode">Formal</h3><p data-lz="dressNotes" style="font-size:13px;line-height:1.8">A suit or evening dress. We will celebrate outdoors; comfortable shoes and a light layer for the evening are recommended.</p><p data-lz-group="dressColors" style="font-size:13px;line-height:1.8;margin-top:6px"><b style="font-weight:600">Reserved colors:</b> <span data-lz="dressColors">white and ivory</span></p></div>
       <a href="#viaje" class="button" data-lz-show="viajeOn" style="margin-top:32px">Travel & stay <svg class="arrow" aria-hidden="true"><use href="#arr"/></svg></a>
     </div>
   </section>
@@ -297,31 +300,31 @@ a:hover{opacity:.75}
     <div class="travel-grid">
       <div data-lz-group="hotel hotelAddress hotelCode hotelNotes">
         <p class="eyebrow">Where to stay</p>
-        <h3 data-lz="hotel">Hotel name</h3>
-        <p data-lz="hotelAddress">Hotel address</p>
-        <p data-lz-group="hotelCode">We have a special rate with the code <strong data-lz="hotelCode">WEDDING-VM</strong>.</p>
-        <p data-lz="hotelNotes" data-lz-if="hotelNotes" hidden></p>
-        <a href="#viaje" class="text-link" data-lz-href="hotelLink" style="margin-top:22px">Book <svg class="arrow" aria-hidden="true"><use href="#arr"/></svg></a>
+        <h3 data-lz="hotel">Hotel Casa Antigua</h3>
+        <p data-lz="hotelAddress">Calle Macedonio Alcalá 304, Centro, Oaxaca</p>
+        <p data-lz-group="hotelCode">We have a special rate with the code <strong data-lz="hotelCode">BODA-VM</strong>.</p>
+        <p data-lz="hotelNotes" data-lz-if="hotelNotes" hidden>Illustrative details for this demo; booking and rates will be personalised.</p>
+        <a href="#viaje" class="text-link" hidden data-lz-if="hotelLink" data-lz-href="hotelLink" style="margin-top:22px">Book</a><p class="booking-demo">Demo · booking link to be personalised.</p>
       </div>
       <div data-lz-group="airport transport">
         <p class="eyebrow">Getting there</p>
         <h3>Airport & transportation</h3>
-        <ul><li data-lz-group="airport"><b>Airport</b><span data-lz="airport">Add the nearest airport and travel time.</span></li><li data-lz-group="transport"><b>Transportation</b><span data-lz="transport">Let guests know if transportation will be provided.</span></li></ul>
+        <ul><li data-lz-group="airport"><b>Airport</b><span data-lz="airport">Oaxaca International Airport (OAX), around 30 minutes from the city centre.</span></li><li data-lz-group="transport"><b>Transportation</b><span data-lz="transport">We recommend booking a transfer through your hotel. Authorised taxis are available at the airport.</span></li></ul>
       </div>
       <div data-lz-group="guideFood guideCulture guidePlans">
         <p class="eyebrow">City guide</p>
         <h3>Sights & activities</h3>
         <ul>
-          <li data-lz-group="guideFood"><b>Restaurants</b><span data-lz="guideFood">Add local recommendations.</span></li>
-          <li data-lz-group="guideCulture"><b>Museums & culture</b><span data-lz="guideCulture">Places worth visiting.</span></li>
-          <li data-lz-group="guidePlans"><b>Activities</b><span data-lz="guidePlans">Things to enjoy while you’re in town.</span></li>
+          <li data-lz-group="guideFood"><b>Restaurants</b><span data-lz="guideFood">Levadura de Olla, the city markets and traditional Oaxacan cooking.</span></li>
+          <li data-lz-group="guideCulture"><b>Museums & culture</b><span data-lz="guideCulture">Santo Domingo Church and the Oaxaca Textile Museum.</span></li>
+          <li data-lz-group="guidePlans"><b>Activities</b><span data-lz="guidePlans">Explore the historic centre or visit Monte Albán over the weekend.</span></li>
         </ul>
       </div>
     </div>
   </section>
 
   <section class="quote-section" data-lz-if="quote">
-    <svg width="36" height="36" viewBox="0 0 40 40" fill="none" stroke="#79634b" stroke-width="3" style="display:block;margin:0 auto" aria-hidden="true"><path d="M20 4v32M4 20h32M8.7 8.7l22.6 22.6M8.7 31.3 31.3 8.7"/></svg>
+    <svg class="quote-emblem" width="96" height="32" viewBox="0 0 96 32" fill="none" stroke="currentColor" style="display:block;margin:0 auto" aria-hidden="true"><path d="M0 16H22M74 16H96"/><ellipse cx="42" cy="16" rx="12" ry="10" transform="rotate(-18 42 16)"/><ellipse cx="54" cy="16" rx="12" ry="10" transform="rotate(18 54 16)"/></svg>
     <blockquote class="display" data-lz="quote">“Love does not consist in gazing at each other, but in looking outward together in the same direction.”</blockquote>
     <p class="eyebrow" data-lz="quoteAuthor">Antoine de Saint-Exupéry</p>
   </section>
@@ -330,12 +333,7 @@ a:hover{opacity:.75}
   <section class="section-shell" id="preguntas" data-lz-anchor="faq" data-lz-hide-empty style="border-top:1px solid #293c3520">
     <p class="eyebrow">Everything you need to know</p>
     <h2 class="section-title" style="margin-top:20px">FAQ</h2>
-    <div class="faq-list" data-lz-list="faqs">
-      <details data-lz-item><summary><span><small data-lz-f="hide">Dress code</small><span class="display" data-lz-f="q">Is there a dress code?</span></span><b aria-hidden="true">+</b></summary><p data-lz-f="a">Add your dress code recommendations for guests.</p></details>
-      <details data-lz-item><summary><span><small data-lz-f="hide">Dress code</small><span class="display" data-lz-f="q">Are any colors reserved?</span></span><b aria-hidden="true">+</b></summary><p data-lz-f="a">List any reserved colors and other attire tips.</p></details>
-      <details data-lz-item><summary><span><small data-lz-f="hide">Children</small><span class="display" data-lz-f="q">Are children welcome?</span></span><b aria-hidden="true">+</b></summary><p data-lz-f="a">Let guests know whether children are invited.</p></details>
-      <details data-lz-item><summary><span><small data-lz-f="hide">Food</small><span class="display" data-lz-f="q">Dietary restrictions</span></span><b aria-hidden="true">+</b></summary><p data-lz-f="a">Add details about the menu and options for special dietary needs.</p></details>
-      <details data-lz-item><summary><span><small data-lz-f="hide">Gifts</small><span class="display" data-lz-f="q">Is there a gift registry?</span></span><b aria-hidden="true">+</b></summary><p data-lz-f="a">Your presence is our greatest gift. Add your registry details or how guests can send a gift.</p></details>
+    <div class="faq-list" data-lz-list="faqs"><details data-lz-item><summary><span><small data-lz-f="hide">Dress code</small><span class="display" data-lz-f="q">What does formal dress mean?</span></span><b aria-hidden="true">+</b></summary><p data-lz-f="a">A suit or evening dress. Please avoid white and ivory, reserved for the couple. Bring a light layer for the evening.</p></details><details data-lz-item><summary><span><small data-lz-f="hide">Arrival</small><span class="display" data-lz-f="q">When should we arrive?</span></span><b aria-hidden="true">+</b></summary><p data-lz-f="a">The ceremony starts at 7:30 p.m. We recommend arriving 20 minutes early to settle in.</p></details><details data-lz-item><summary><span><small data-lz-f="hide">Invitation</small><span class="display" data-lz-f="q">Can we bring additional guests?</span></span><b aria-hidden="true">+</b></summary><p data-lz-f="a">Seats are reserved for the people named on this invitation. Please contact us before replying if you have any questions.</p></details><details data-lz-item><summary><span><small data-lz-f="hide">Food</small><span class="display" data-lz-f="q">How can we share dietary requirements?</span></span><b aria-hidden="true">+</b></summary><p data-lz-f="a">When replying, add the person’s name and dietary requirement in the dietary field.</p></details><details data-lz-item><summary><span><small data-lz-f="hide">Gifts</small><span class="display" data-lz-f="q">Is there a gift registry?</span></span><b aria-hidden="true">+</b></summary><p data-lz-f="a">Your presence is our greatest gift. We do not have a registry; we simply look forward to sharing this day with you.</p></details>
     </div>
   </section>
 
@@ -343,11 +341,11 @@ a:hover{opacity:.75}
 
   <div style="border-top:1px solid #293c3520" aria-hidden="true"></div>
   <section class="rsvp-form-wrap" id="confirmar" data-lz-anchor="rsvp">
-    <p class="eyebrow" style="margin-bottom:20px"><span data-lz-date="{Mc} {d}, {Y}">December 12, 2026</span> · <span data-lz="city">City, country</span></p>
+    <p class="eyebrow" style="margin-bottom:20px"><span data-lz-date="{Mc} {d}, {Y}">December 12, 2026</span> · <span data-lz="city">Oaxaca, Mexico</span></p>
     <h2 class="section-title">We’d love<br><em>to celebrate with you.</em></h2>
     <div style="margin:32px 0;padding:24px 0;border-top:1px solid #293c3533;border-bottom:1px solid #293c3533"><p class="display" style="font-size:30px">The Rodríguez Family</p><p style="margin-top:12px;font-size:14px">4 seats reserved</p></div>
     <form id="rsvpForm" novalidate style="display:flex;flex-direction:column;gap:28px">
-      <p style="font-size:14px;line-height:1.9"><span data-lz="rsvpMsg">Our celebration is adults only.</span> Let us know who on this invitation can join us<span data-lz-group="rsvpDeadline">; you can change your reply until <span data-lz-date="{Mc} {d}, {Y}" data-lz-from="rsvpDeadline">November 12, 2026</span></span>.</p>
+      <p style="font-size:14px;line-height:1.9"><span data-lz="rsvpMsg">We look forward to sharing this celebration with you.</span> Let us know who on this invitation can join us<span data-lz-group="rsvpDeadline">; you can change your reply until <span data-lz-date="{Mc} {d}, {Y}" data-lz-from="rsvpDeadline">November 12, 2026</span></span>.</p>
       <div>
         <div style="display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:12px">
           <span style="font-size:14px;font-weight:500">Will you join us? *</span>
@@ -371,59 +369,13 @@ a:hover{opacity:.75}
     </div>
   </section>
 
-  <footer class="site-footer"><p class="display" style="font-size:30px"><span data-lz="n1">Valentina</span> &amp; <span data-lz="n2">Martín</span></p><p class="eyebrow"><span data-lz-date="{dd}.{mm}.{Y}">12.12.2026</span> · <span data-lz="city">City, country</span></p><a class="eyebrow" href="#top" style="display:inline-flex;align-items:center;gap:8px">Back to top <svg class="arrow" style="rotate:-45deg" aria-hidden="true"><use href="#arr"/></svg></a></footer>
-</div>
+  <footer class="site-footer"><p class="display" style="font-size:30px"><span data-lz="n1">Valentina</span> &amp; <span data-lz="n2">Martín</span></p><p class="eyebrow"><span data-lz-date="{dd}.{mm}.{Y}">12.12.2026</span> · <span data-lz="city">Oaxaca, Mexico</span></p><nav class="footer-links" aria-label="Invitation links"><a href="#ubicacion">Location</a><a href="#confirmar">RSVP</a></nav><a class="eyebrow" href="#top" style="display:inline-flex;align-items:center;gap:8px">Back to top <svg class="arrow" style="rotate:-45deg" aria-hidden="true"><use href="#arr"/></svg></a></footer>
+</main>
 
 <div class="demo-bar" id="demoBar" hidden><span class="lbl">Demo</span><button type="button" data-open-panel>Couple’s dashboard</button><a href="/en/#designs">Shop</a></div>
 
 <script src="/demo/shared/content.js"></script>
 <script src="/demo/shared/panel.js"></script>
-<script>
-LazoPanel.init({mono:'V&M',couple:'Valentina & Martín',link:'/en/demo/clasico/',guest:'The Rodríguez Family',people:['Carlos Rodríguez','Lucía Pérez','Sofía Rodríguez','Mateo Rodríguez']});
-LazoMusic.init({src:'/assets/musica/demo.mp3'});
-(function(){
-  var cover=document.getElementById('cover'),letter=document.getElementById('letter'),seal=document.getElementById('seal'),hint=document.getElementById('hint'),replay=document.getElementById('replay');
-  function setOpen(o){cover.classList.toggle('is-open',o);letter.toggleAttribute('inert',!o);letter.setAttribute('aria-hidden',String(!o));seal.disabled=o;replay.hidden=!o;hint.textContent=o?'The beginning of forever.':'Tap the seal to open your invitation';}
-  // Para el editor de Lazo (demo/shared/content.js): saltar o volver a mostrar el sobre.
-  window.LzTemplate={open:function(){cover.classList.add('gone');document.body.classList.remove('locked');},envelope:function(){setOpen(false);cover.classList.remove('gone');document.body.classList.add('locked');window.scrollTo(0,0);},scroll:function(el,now){window.scrollTo({top:el.getBoundingClientRect().top+window.pageYOffset-70,behavior:now?'instant':'smooth'});}};
-  seal.addEventListener('click',function(){setOpen(true);LazoMusic.play();});
-  replay.addEventListener('click',function(){setOpen(false);seal.focus();});
-  document.getElementById('enter').addEventListener('click',function(){cover.classList.add('gone');document.body.classList.remove('locked');document.getElementById('demoBar').hidden=false;window.scrollTo(0,0);});
-
-  // Menú en celular
-  var menu=document.getElementById('mobileMenu'),mo=document.getElementById('menuOpen');
-  function showMenu(o){menu.hidden=!o;mo.setAttribute('aria-expanded',String(o));document.body.style.overflow=o?'hidden':'';if(o)document.getElementById('menuClose').focus();else mo.focus({preventScroll:true});}
-  mo.addEventListener('click',function(){showMenu(true);});
-  document.getElementById('menuClose').addEventListener('click',function(){showMenu(false);});
-  menu.querySelectorAll('nav a').forEach(function(a){a.addEventListener('click',function(){showMenu(false);});});
-  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&!menu.hidden)showMenu(false);});
-
-  // Cuenta regresiva
-  var T=Date.parse('2026-12-12T19:30:00-05:00'),cd={},p=function(n){return String(n).padStart(2,'0');};
-  document.querySelectorAll('[data-cd]').forEach(function(e){cd[e.dataset.cd]=e;});
-  function tick(){var s=Math.max(0,Math.floor(((window.LZ_T||T)-Date.now())/1000));cd.d.textContent=p(Math.floor(s/86400));cd.h.textContent=p(Math.floor(s/3600)%24);cd.m.textContent=p(Math.floor(s/60)%60);cd.s.textContent=p(s%60);}
-  tick();setInterval(tick,1000);
-
-  // Confirmación por persona (demo: no se envía)
-  var PEOPLE=['Carlos Rodríguez','Lucía Pérez','Sofía Rodríguez','Mateo Rodríguez'],att=PEOPLE.map(function(){return null;});
-  var form=document.getElementById('rsvpForm'),yesF=document.getElementById('yesFields'),thanks=document.getElementById('thanks'),box=document.getElementById('people');
-  function renderPeople(){box.innerHTML='';PEOPLE.forEach(function(name,i){
-    var row=document.createElement('div');row.className='person';row.setAttribute('role','group');row.setAttribute('aria-label',name);
-    var n=document.createElement('span');n.textContent=name;var g=document.createElement('div');
-    [['Attending',true],['Not attending',false]].forEach(function(o){var b=document.createElement('button');b.type='button';b.textContent=o[0];b.setAttribute('aria-pressed',String(att[i]===o[1]));
-      b.addEventListener('click',function(){att[i]=o[1];document.getElementById('formErr').hidden=true;renderPeople();});g.appendChild(b);});
-    row.appendChild(n);row.appendChild(g);box.appendChild(row);});
-    yesF.hidden=!att.some(function(x){return x===true;});}
-  renderPeople();
-  form.querySelectorAll('[data-all]').forEach(function(b){b.addEventListener('click',function(){var v=b.dataset.all==='1';att=PEOPLE.map(function(){return v;});document.getElementById('formErr').hidden=true;renderPeople();});});
-  form.addEventListener('submit',function(e){e.preventDefault();
-    if(att.some(function(x){return x===null;})){document.getElementById('formErr').hidden=false;return;}
-    var n=att.filter(Boolean).length;
-    document.getElementById('thanksText').textContent=n?'We can’t wait to celebrate with you. We have '+n+' '+(n===1?'guest':'guests')+' confirmed.':'Thank you for letting us know. You will be in our thoughts on our special day.';
-    LazoPanel.setResponse(att,document.getElementById('msg').value.trim());
-    form.hidden=true;thanks.hidden=false;});
-  document.getElementById('editRsvp').addEventListener('click',function(){thanks.hidden=true;form.hidden=false;});
-})();
-</script>
+<script src="/demo/clasico/behavior.js"></script>
 </body>
 </html>
