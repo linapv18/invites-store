@@ -74,22 +74,31 @@
   var cloth = document.createElement('canvas'), ctx = cloth.getContext('2d'), textile = new Image();
   var material = document.createElement('canvas'), surface, ready = false, lastPaint = -1;
   var pleated = document.createElement('canvas'), pleats = pleated.getContext('2d');
+  var reflected = document.createElement('canvas'), density = 1;
   cloth.className = 'curtain-surface'; cloth.setAttribute('aria-hidden', 'true');
   op.querySelector('.blind').insertBefore(cloth, op.querySelector('.blind-edge'));
   function prepareCloth() {
     if (!textile.naturalWidth || !ctx) return;
     var w = innerWidth, h = innerHeight;
-    material.width = w; material.height = h;
-    surface = material.getContext('2d');
+    density = Math.min(devicePixelRatio || 1, 2);
+    material.width = Math.round(w * density); material.height = Math.round(h * density);
+    surface = material.getContext('2d'); surface.setTransform(density, 0, 0, density, 0, 0);
+    surface.imageSmoothingEnabled = true; surface.imageSmoothingQuality = 'high';
     var panels = Math.max(1, Math.round(w / (h * .9))), pw = w / panels;
     var fraction = Math.min(.92, (pw / h) / (textile.naturalWidth / textile.naturalHeight));
     var sw = textile.naturalWidth * fraction, sx = (textile.naturalWidth - sw) / 2;
     for (var panel = 0; panel < panels; panel++) {
       surface.drawImage(textile, sx, 0, sw, textile.naturalHeight, panel * pw, 0, pw + .5, h);
     }
-    var dpr = Math.min(devicePixelRatio || 1, 1.5);
+    // Reflect the entire right panel once. Reversing narrow source strips
+    // individually breaks the continuity of the embroidery and scallops.
+    reflected.width = material.width; reflected.height = material.height;
+    var mirror = reflected.getContext('2d');
+    mirror.translate(reflected.width, 0); mirror.scale(-1, 1); mirror.drawImage(material, 0, 0);
+    var dpr = density;
     cloth.width = Math.round(w * dpr); cloth.height = Math.round((h + 80) * dpr);
-    ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ready = true;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.imageSmoothingEnabled = true; ctx.imageSmoothingQuality = 'high'; ready = true;
     op.classList.add('fabric-ready'); lastPaint = -1; paintCloth(progress, true);
   }
   function paintCloth(p, force) {
@@ -99,10 +108,13 @@
     var w = innerWidth, h = innerHeight, half = w / 2, columns = 144;
     var gathering = p * p * (3 - 2 * p), length = 1 - .84 * gathering;
     var exit = Math.max(0, (p - .8) / .2) * half * .2, width = half * length;
-    if (pleated.width !== Math.ceil(half + 4) || pleated.height !== h) {
-      pleated.width = Math.ceil(half + 4); pleated.height = h;
+    if (pleated.width !== Math.ceil((half + 4) * density) || pleated.height !== Math.round(h * density)) {
+      pleated.width = Math.ceil((half + 4) * density); pleated.height = Math.round(h * density);
+      pleats.setTransform(density, 0, 0, density, 0, 0);
+      pleats.imageSmoothingEnabled = true; pleats.imageSmoothingQuality = 'high';
     }
     ctx.clearRect(0, 0, w, h + 80);
+    if (p === 0) { ctx.drawImage(material, 0, 0, w, h); return; }
     function x(t) {
       return t * width + Math.sin(t * Math.PI * 14) * half * .022 * gathering * Math.sin(t * Math.PI);
     }
@@ -112,8 +124,8 @@
       for (var c = 0; c < columns; c++) {
         var t = c / columns, t2 = (c + 1) / columns;
         var x1 = x(t), x2 = x(t2), dx = Math.max(.7, Math.abs(x2 - x1)), px = Math.min(x1, x2);
-        var sx = side ? w - t2 * half : t * half;
-        pleats.drawImage(material, sx, 0, half / columns, h, px, 0, dx + .7, h);
+        var sx = t * half;
+        pleats.drawImage(side ? reflected : material, sx * density, 0, half / columns * density, h * density, px, 0, dx + .7, h);
         var light = Math.sin(t * Math.PI * 14) * .26 * gathering;
         pleats.fillStyle = light > 0 ? 'rgba(255,253,244,' + light + ')' : 'rgba(59,43,30,' + (-light) + ')';
         pleats.globalCompositeOperation = 'source-atop'; pleats.fillRect(px, 0, dx + .7, h);
@@ -129,7 +141,7 @@
       for (var row = 0; row < h; row += 2) {
         var rh = Math.min(2, h - row), v = (row + rh / 2) / h;
         var curve = half * gathering * (.026 * Math.sin(v * Math.PI) + .004 * Math.sin(v * Math.PI * 3));
-        ctx.drawImage(pleated, 0, row, width + 1, rh, -exit, row, width + curve + 1, rh);
+        ctx.drawImage(pleated, 0, row * density, (width + 1) * density, rh * density, -exit, row, width + curve + 1, rh);
       }
       ctx.restore();
     }
