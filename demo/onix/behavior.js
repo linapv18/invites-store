@@ -53,7 +53,7 @@
   function fitEngravings() {
     document.querySelectorAll('.seal-material').forEach(function (seal) {
       var engraving = seal.querySelector('.seal-engraving'); if (!engraving) return;
-      var size = seal.getBoundingClientRect().width, len = engraving.textContent.replace(/\s/g, '').length || 2;
+      var size = seal.getBoundingClientRect().width, len = engraving.textContent.trim().length || 2;
       engraving.style.fontSize = Math.min(size * .25, size * .52 / (Math.max(2, len) * .58)) + 'px';
     });
   }
@@ -80,6 +80,7 @@
     op.classList.add('tug');
     if (still) { op.classList.add('lift'); timers.push(setTimeout(enter, 220)); return; }
     at(180, function () { op.classList.add('up'); });
+    at(900, function () { op.classList.add('lined'); });
     at(1100, function () { op.classList.add('zoom'); zoom(); });
     at(1850, function () { op.classList.add('lift'); });
     at(2250, enter);
@@ -87,7 +88,7 @@
   btn.addEventListener('click', part); $('enter').addEventListener('click', part);
   window.LzTemplate = {
     open: function () { op.classList.add('tug', 'up', 'lift'); enter(); },
-    envelope: function () { clear(); opened = false; bar.classList.remove('show'); op.classList.remove('tug', 'up', 'zoom', 'lift', 'gone'); btn.style.transform = ''; op.inert = false; op.removeAttribute('aria-hidden'); $('invite').inert = true; document.body.classList.add('locked'); window.scrollTo(0, 0); },
+    envelope: function () { clear(); opened = false; bar.classList.remove('show'); op.classList.remove('tug', 'up', 'lined', 'zoom', 'lift', 'gone'); btn.style.transform = ''; op.inert = false; op.removeAttribute('aria-hidden'); $('invite').inert = true; document.body.classList.add('locked'); window.scrollTo(0, 0); },
     scroll: function (el, now) { window.scrollTo({ top: el.getBoundingClientRect().top + scrollY - 70, behavior: now || still ? 'instant' : 'smooth' }); }
   };
 

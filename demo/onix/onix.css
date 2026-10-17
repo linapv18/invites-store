@@ -497,3 +497,12 @@ body.locked .hero .names,body.locked .hero-foot{opacity:1;transform:none}
 .flap-out .e4{fill:url('#oxFlap')}
 .locket-metal{filter:grayscale(1)}
 .tray-metal{filter:grayscale(1) drop-shadow(0 7px 6px #211e1a22)}
+
+/* Keep the default initials on one engraved line; editor stack/ring styles stay available. */
+.seal-engraving{white-space:nowrap}
+.seal-engraving>[data-lz-mono]{display:block;white-space:nowrap;flex-shrink:0}
+/* After the flap settles, one photograph replaces the two 3D surfaces.
+   This removes the magnified horizontal compositing seam during the zoom. */
+.opening.lined .env .liner{top:-59.2%;bottom:auto;height:118.4%;clip-path:polygon(50% 0,100% 50%,50% 100%,0 50%)}
+.opening.lined .env .liner img{top:0;height:100%}
+.opening.lined .flap-in{visibility:hidden}
