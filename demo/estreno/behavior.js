@@ -13,10 +13,29 @@
   function watch() {
     if (io) return;
     if (!('IntersectionObserver' in window)) { document.querySelectorAll('#invite [data-rv]').forEach(show); return; }
-    io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { show(e.target); io.unobserve(e.target); } }); }, { threshold: .15 });
+    io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { show(e.target); io.unobserve(e.target); } }); }, { threshold: .08 });
     observe(document);
   }
   document.addEventListener('lz-render', function (e) { observe(e.target); syncSala(); });
+
+  // The heart is a real cutout in the velvet layer; the editable photo remains behind it.
+  var sleeve=$('sleeve'),cut=sleeve.querySelector('.op-cut'),cutRAF=0;
+  var heartPath='M66 118C24 92 4 66 4 40 4 18 20 4 38 4c12 0 22 6 28 16C72 10 82 4 94 4c18 0 34 14 34 36 0 26-20 52-62 78Z';
+  function fitCutout(){
+    cutRAF=0;var w=sleeve.clientWidth,h=sleeve.clientHeight,x=cut.offsetLeft,y=cut.offsetTop,cw=cut.offsetWidth,ch=cut.offsetHeight;
+    if(!w||!h)return;
+    var svg='<svg xmlns="http://www.w3.org/2000/svg" width="'+w+'" height="'+h+'"><defs><mask id="cut"><rect width="100%" height="100%" fill="white"/><path d="'+heartPath+'" transform="translate('+x+' '+y+') scale('+(cw/132)+' '+(ch/120)+')" fill="black"/></mask></defs><rect width="100%" height="100%" fill="white" mask="url(#cut)"/></svg>';
+    sleeve.style.setProperty('--sleeve-mask','url("data:image/svg+xml,'+encodeURIComponent(svg)+'")');
+    if(!cut.querySelector('.op-cut-rim')){var rim=document.createElementNS('http://www.w3.org/2000/svg','svg');rim.classList.add('op-cut-rim');rim.setAttribute('viewBox','0 0 132 120');rim.setAttribute('preserveAspectRatio','none');rim.setAttribute('aria-hidden','true');rim.innerHTML='<path d="'+heartPath+'" fill="none" stroke="#fff0c688" stroke-width="1.2"/>';cut.appendChild(rim);}
+  }
+  function scheduleCutout(){if(!cutRAF)cutRAF=requestAnimationFrame(fitCutout);}
+  if('ResizeObserver' in window){var cutResize=new ResizeObserver(scheduleCutout);cutResize.observe(sleeve);cutResize.observe(cut);}else window.addEventListener('resize',scheduleCutout);
+  scheduleCutout();if(document.fonts)document.fonts.ready.then(scheduleCutout);
+  var monoRAF=0;
+  function fitMonograms(){monoRAF=0;document.querySelectorAll('[data-lz-seal]').forEach(function(box){var mark=box.querySelector('.lz-seal');if(!mark)return;mark.style.setProperty('--mono-fit','1');var r=mark.getBoundingClientRect(),b=box.getBoundingClientRect();if(r.width&&r.height)mark.style.setProperty('--mono-fit',Math.min(1,b.width/r.width,b.height/r.height).toFixed(4));});}
+  function scheduleMonograms(){if(!monoRAF)monoRAF=requestAnimationFrame(fitMonograms);}
+  document.querySelectorAll('[data-lz-seal]').forEach(function(box){new MutationObserver(scheduleMonograms).observe(box,{subtree:true,childList:true,characterData:true});if('ResizeObserver' in window)new ResizeObserver(scheduleMonograms).observe(box);});
+  scheduleMonograms();if(document.fonts)document.fonts.ready.then(scheduleMonograms);
 
   var bar = $('mbar'), raf = 0, opened = false;
   window.addEventListener('scroll', function () {
@@ -26,7 +45,7 @@
 
   // La sala: el letrero repite el lugar, la dirección y el mapa del primer evento del programa.
   function syncSala() {
-    var ev = document.querySelector('.evs > .ev'); if (!ev) return;
+    var ev = document.querySelector('.evs > .ev'); if (!ev) { document.querySelector('.sala').classList.add('lz-off'); return; }
     var pl = ev.querySelector('[data-lz-f="place"]'), ad = ev.querySelector('[data-lz-f="address"]'), mp = ev.querySelector('[data-lz-f="map"]');
     var sala = document.querySelector('.sala');
     $('salaName').textContent = pl ? pl.textContent : '';
@@ -94,6 +113,9 @@
     b.addEventListener('click', function () { var f = strip.querySelector('.frame'); strip.scrollBy({ left: (+b.dataset.strip) * ((f ? f.offsetWidth : 150) + 10), behavior: still ? 'instant' : 'smooth' }); });
   });
 
+  function updateStrip(){document.querySelector('[data-strip="-1"]').disabled=strip.scrollLeft<2;document.querySelector('[data-strip="1"]').disabled=strip.scrollLeft+strip.clientWidth>=strip.scrollWidth-2;}
+  strip.addEventListener('scroll',updateStrip,{passive:true});if('ResizeObserver' in window)new ResizeObserver(updateStrip).observe(strip);else window.addEventListener('resize',updateStrip);document.addEventListener('lz-render',function(){requestAnimationFrame(updateStrip);scheduleCutout();});requestAnimationFrame(updateStrip);
+
   // Apertura: un solo gesto. La tarjeta sale de la funda, la funda cae y la portada se enciende.
   var op = $('open'), timers = [];
   var clear = function () { timers.forEach(clearTimeout); timers = []; };
@@ -114,7 +136,7 @@
   // Cuenta regresiva (la fecha del editor llega en window.LZ_T)
   var pad = function (n) { return String(n).padStart(2, '0'); }, cd = {};
   document.querySelectorAll('[data-cd]').forEach(function (e) { cd[e.dataset.cd] = e; });
-  function tick() { var s = Math.floor(Math.max(0, (window.LZ_T || TARGET) - Date.now()) / 1000); cd.d.textContent = pad(Math.floor(s / 86400)); cd.h.textContent = pad(Math.floor(s / 3600) % 24); cd.m.textContent = pad(Math.floor(s / 60) % 60); cd.s.textContent = pad(s % 60); }
+  function tick() { var s = Math.floor(Math.max(0, (window.LZ_T || TARGET) - Date.now()) / 1000),values={d:pad(Math.floor(s / 86400)),h:pad(Math.floor(s / 3600) % 24),m:pad(Math.floor(s / 60) % 60),s:pad(s % 60)};Object.keys(values).forEach(function(k){if(cd[k].textContent===values[k])return;var first=cd[k].textContent==='--';cd[k].textContent=values[k];if(!first&&k!=='s'&&!still&&cd[k].animate)cd[k].animate([{transform:'translateY(-3px)',opacity:.65},{transform:'translateY(0)',opacity:1}],{duration:220,easing:'ease-out'});}); }
   tick(); setInterval(function () { tick(); weekFill(); }, 1000);
 
   // Confirmación por persona (demo: no se envía a ningún lado)

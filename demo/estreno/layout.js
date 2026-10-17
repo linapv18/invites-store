@@ -68,6 +68,7 @@
   var I_PLANE = BIG('M2.5 13.5 21 6l-2.4 4.6-6 2.2 1.5 6-2.2.8-3-5.3-3.8 1.4z'), I_BUS = BIG('M5 4h14a2 2 0 0 1 2 2v10H3V6a2 2 0 0 1 2-2zM3 11h18M7 16v2.5M17 16v2.5M7 13.5h.01M17 13.5h.01'), I_PIN = BIG('M12 21s-6.5-5.7-6.5-11a6.5 6.5 0 0 1 13 0c0 5.3-6.5 11-6.5 11zM12 12.4a2.4 2.4 0 1 0 0-4.8 2.4 2.4 0 0 0 0 4.8z');
   var HEART = '<svg class="heart" viewBox="0 0 46 42" aria-hidden="true" focusable="false"><path d="M23 39C8 29 2 20 5 12c3-7 12-8 18-1 6-7 15-6 18 1 3 8-3 17-18 27Z"/></svg>';
   var N = function (k) { return '<span data-lz="' + k + '">' + S[k] + '</span>'; };
+  var MONO = '<span data-lz-seal><span class="lz-seal">A<i>·</i>L</span></span>';
   var maps = function (q) { return 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(q + ', Oaxaca'); };
   var info = function (icon, k, label, text) { return '<div class="tinfo" data-lz-group="' + k + '">' + icon + '<div><h3>' + label + '</h3><p data-lz="' + k + '">' + text + '</p></div></div>'; };
 
@@ -88,23 +89,23 @@
   '</div>' +
 
   // ======================= INVITACIÓN =======================
-  '<header class="mbar" id="mbar"><a class="mono" href="#portada" aria-label="' + S.n1 + ' ' + S.y + ' ' + S.n2 + '"><span data-lz-mono>A<i>·</i>L</span></a><nav aria-label="' + S.sections + '"><a href="#itinerario">' + S.program + '</a><a class="mbar-cta" href="#rsvp">' + S.confirmShort + '</a></nav></header>' +
+  '<header class="mbar" id="mbar"><a class="mono" href="#portada" aria-label="' + S.n1 + ' ' + S.y + ' ' + S.n2 + '">' + MONO + '</a><nav aria-label="' + S.sections + '"><a href="#itinerario">' + S.program + '</a><a class="mbar-cta" href="#rsvp">' + S.confirmShort + '</a></nav></header>' +
   '<main id="invite" inert>' +
     '<section class="hero" id="portada" data-lz-anchor="portada">' +
-      '<div class="marquee hero-ph" data-rv><div class="ph bw"><img class="ph-img" id="heroImg" src="/assets/fotos/paseo.jpg" data-lz-src="photo:0" alt="' + S.photoAlt + '" decoding="async"></div></div>' +
+      '<div class="marquee hero-ph"><div class="ph bw"><img class="ph-img" id="heroImg" fetchpriority="high" src="/assets/fotos/paseo.jpg" data-lz-src="photo:0" alt="' + S.photoAlt + '" decoding="async"></div></div>' +
       '<div class="hero-txt"><p class="k">' + S.show + ' · ' + S.single + '</p>' +
         '<h1 class="names" tabindex="-1">' + N('n1') + ' <em>' + S.y + '</em> ' + N('n2') + '</h1>' +
         '<p class="hero-date"><b data-lz-date="' + S.coverPat + '">' + S.coverTxt + '</b><span data-lz="city">' + S.city + '</span></p>' +
         '<div class="hero-act"><a class="btn" href="#rsvp">' + S.confirm + '</a><a class="lnk" href="#itinerario">' + S.seeProg + DOWN + '</a></div></div>' +
     '</section>' +
 
-    '<section class="sec story" id="historia" data-lz-anchor="historia">' +
-      '<div class="story-art" aria-hidden="true"><span class="initials" data-lz-mono><span>A</span><span>L</span></span><div class="torn"></div><div class="story-ph bw" data-rv><img class="ph-img" src="/assets/fotos/escalera.jpg" data-lz-src="photo:1" alt="" loading="lazy"></div></div>' +
+    '<section class="sec story" id="historia" data-lz-anchor="historia" data-gallery="mono">' +
+      '<div class="story-art"><span class="initials" data-lz-seal aria-hidden="true"><span class="lz-seal"><span>A</span><span>L</span></span></span><div class="torn" aria-hidden="true"></div><div class="story-ph bw" data-rv><img class="ph-img" src="/assets/fotos/escalera.jpg" data-lz-src="photo:1" alt="" loading="lazy"></div></div>' +
       '<div class="story-txt"><p class="k">' + S.storyK + '</p><h2 data-lz="storyTitle">' + S.storyTitle + '</h2>' +
         '<p class="lead" data-lz="msg">' + S.msg + '</p><p data-lz="story">' + S.storyTxt + '</p></div>' +
     '</section>' +
 
-    '<section class="sec gal" id="galeria">' +
+    '<section class="sec gal" id="galeria" data-gallery="mono">' +
       '<div class="gal-head"><div><p class="k">' + S.galK + '</p><h2>' + S.galT + '</h2></div><div class="gal-nav"><button type="button" class="round" data-strip="-1" aria-label="' + S.prev + '">' + PREV + '</button><button type="button" class="round" data-strip="1" aria-label="' + S.next + '">' + NEXT + '</button></div></div>' +
       '<div class="film"><div class="strip" id="strip" data-lz-list="gallery">' + ['beso', 'escalera', 'muro', 'torre', 'paseo'].map(function (f) { return '<div class="frame bw" data-lz-item><img class="ph-img" data-lz-f="img" src="/assets/fotos/' + f + '.jpg" alt="" loading="lazy"></div>'; }).join('') + '</div></div>' +
       '<div class="gal-foot"><button type="button" class="btn btn-dark" data-gallery-open>' + S.allPhotos + '</button></div>' +
@@ -160,7 +161,7 @@
       '<div id="rsDone" hidden><p class="thanks">' + S.thanks + '</p><div id="rsSum"></div><button type="button" class="lnk" id="rsEdit">' + S.edit + '</button></div>' +
       '<p class="mute demo-note">' + S.demoNote + '</p></div></section>' +
 
-    '<section class="sec fin"><p class="fin-t">' + S.fin + '</p><p class="fin-s">' + S.finTxt + '</p>' +
+    '<section class="sec fin"><div class="fin-mono" aria-hidden="true">' + MONO + '</div><p class="fin-t">' + S.fin + '</p><p class="fin-s">' + S.finTxt + '</p>' +
       '<p class="k k-bulb">' + N('n1') + ' ' + S.y + ' ' + N('n2') + ' · <span data-lz-date="' + S.endPat + '">' + S.endTxt + '</span></p>' +
       '<nav class="fin-links" aria-label="' + (LANG === 'en' ? 'Wedding information' : 'Información de la boda') + '"><a href="#itinerario">' + S.program + '</a><a href="#rsvp">' + S.confirmShort + '</a></nav></section>' +
   '</main>';
