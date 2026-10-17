@@ -1,7 +1,7 @@
 
 /* Plantilla Arco: una boda bajo la lluvia de ciudad. La invitación es una ventana en arco empañada; al deslizar el dedo el
    cristal se limpia por trazos y aparece la pareja. Desde ahí la arquitectura acompaña distintas composiciones, en verde bosque
-   y papel. El vaho y la lluvia se dibujan en canvas; los arcos y las olas son CSS/SVG (cambian con la paleta). El HTML se arma aquí ANTES de
+   y papel. El vaho combina una textura PNG transparente de lluvia y una superficie borrable en canvas; los arcos y las olas son CSS/SVG (cambian con la paleta). El HTML se arma aquí ANTES de
    cargar demo/shared/content.js, para que el editor encuentre las marcas data-lz…. */
 (function () {
   var LANG = (document.documentElement.lang || 'es').slice(0, 2) === 'en' ? 'en' : 'es';
@@ -79,7 +79,7 @@
     '<p class="op-intro" data-lz="envIntro" data-lz-keep>' + S.envIntro + '</p>' +
     '<button type="button" class="win" id="win" aria-describedby="wipeHint" aria-label="' + S.hint + (LANG === 'en' ? '. Press Enter to clear using the keyboard.' : '. Pulsa Enter para limpiar con el teclado.') + '">' +
       '<span class="win-ph blur"><img src="/assets/fotos/torre.jpg" data-lz-src="photo:0" alt="" decoding="async"></span>' +
-      '<canvas class="rain" aria-hidden="true"></canvas><canvas class="mist" aria-hidden="true"></canvas>' +
+      '<canvas class="mist" aria-hidden="true"></canvas>' +
       '<span class="win-ph clear" aria-hidden="true"><img src="/assets/fotos/torre.jpg" data-lz-src="photo:0" alt="" decoding="async"></span>' +
       '<span class="fog-txt" aria-hidden="true"><span class="sig">' + N('n1') + ' ' + S.y + ' ' + N('n2') + '</span><span class="fog-d" data-lz-date="' + S.numPat + '">' + S.numTxt + '</span></span>' +
     '</button>' +

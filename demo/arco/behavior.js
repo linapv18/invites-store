@@ -72,12 +72,13 @@
   });
 
   // El vaho es una superficie borrable: cada pasada persiste hasta reiniciar la apertura.
-  var op = $('open'), win = $('win'), mist = win.querySelector('.mist'), rain = win.querySelector('.rain');
-  var W = 280, H = 400, density = Math.min(devicePixelRatio || 1, 2), timers = [], rainRaf = 0, guideRaf = 0;
+  var op = $('open'), win = $('win'), mist = win.querySelector('.mist'), rainTexture = new Image();
+  rainTexture.src = '/assets/arco/lluvia-cristal.png';
+  var W = 280, H = 400, density = Math.min(devicePixelRatio || 1, 2), timers = [], guideRaf = 0;
   var surface = document.createElement('canvas'), erased = document.createElement('canvas');
-  var ctx = mist.getContext('2d'), weather = rain.getContext('2d'), fog = surface.getContext('2d'), brush = erased.getContext('2d');
-  [mist, rain, surface, erased].forEach(function (c) { c.width = W * density; c.height = H * density; });
-  [ctx, weather, fog, brush].forEach(function (c) { c.scale(density, density); });
+  var ctx = mist.getContext('2d'), fog = surface.getContext('2d'), brush = erased.getContext('2d');
+  [mist, surface, erased].forEach(function (c) { c.width = W * density; c.height = H * density; });
+  [ctx, fog, brush].forEach(function (c) { c.scale(density, density); });
   var photo = win.querySelector('.clear img'), ready = false, pointer = null, last = null, lastMeasure = 0;
   var randomSeed = 271;
   function random() { randomSeed = (randomSeed * 16807) % 2147483647; return (randomSeed - 1) / 2147483646; }
@@ -98,9 +99,10 @@
       var x = random() * W, y = random() * H, r = 15 + random() * 65, cloud = fog.createRadialGradient(x, y, 0, x, y, r);
       cloud.addColorStop(0, i % 2 ? '#ffffff10' : '#506b5910'); cloud.addColorStop(1, '#ffffff00'); fog.fillStyle = cloud; fog.fillRect(x-r,y-r,r*2,r*2);
     }
-    for (var n = 0; n < 2600; n++) {
-      var dx = random() * W, dy = random() * H, dr = .25 + random() * .85;
-      fog.fillStyle = n % 3 ? '#ffffff21' : '#304b3420'; fog.beginPath(); fog.ellipse(dx,dy,dr,dr*1.25,0,0,Math.PI*2); fog.fill();
+    // A photographic alpha texture replaces all synthetic circles and streaks.
+    // It belongs to the wipeable surface, so water and condensation disappear together.
+    if (rainTexture.complete && rainTexture.naturalWidth) {
+      fog.save(); fog.globalAlpha = .72; fog.drawImage(rainTexture, 0, 0, W, H); fog.restore();
     }
     var text = win.querySelector('.fog-txt'), names = text.querySelector('.sig').textContent.trim(), date = text.querySelector('.fog-d').textContent;
     fog.save(); fog.textAlign = 'center'; fog.fillStyle = '#36513cb8'; fog.shadowColor = '#ffffffaa'; fog.shadowOffsetY = 1;
@@ -108,20 +110,6 @@
     fog.font = fs + 'px "Mrs Saint Delafield", cursive'; fog.fillText(names, W/2, H*.48);
     fog.font = '11px "Albert Sans", sans-serif'; fog.fillText(date, W/2, H*.55); fog.restore(); paintMist();
   }
-  var beads = [];
-  for (var ri = 0; ri < 43; ri++) beads.push({ x:random()*W, y:random()*H, r:.8+random()*2.5, speed:ri%5 ? 0 : 9+random()*12, tail:12+random()*30 });
-  function renderRain(dt) {
-    weather.clearRect(0,0,W,H);
-    beads.forEach(function (d) {
-      d.y += d.speed * dt; if(d.y>H+30) d.y=-30;
-      if (d.speed) { var trail=weather.createLinearGradient(d.x,d.y-d.tail,d.x,d.y);trail.addColorStop(0,'#ffffff00');trail.addColorStop(1,'#d4e4dc50');weather.strokeStyle=trail;weather.lineWidth=.8;weather.beginPath();weather.moveTo(d.x-.8,d.y-d.tail);weather.quadraticCurveTo(d.x+1,d.y-12,d.x,d.y);weather.stroke(); }
-      weather.save(); weather.translate(d.x,d.y); weather.scale(1,1.45);
-      var drop=weather.createRadialGradient(-d.r*.35,-d.r*.4,.1,0,0,d.r);drop.addColorStop(0,'#ffffffb0');drop.addColorStop(.3,'#eff7ee35');drop.addColorStop(.7,'#1b382d28');drop.addColorStop(1,'#13291e85');weather.fillStyle=drop;weather.beginPath();weather.arc(0,0,d.r,0,Math.PI*2);weather.fill();weather.restore();
-    });
-  }
-  var rainTime = 0;
-  function rainFrame(now) { rainRaf=0; if(document.hidden || op.classList.contains('gone') || still) return; renderRain(rainTime ? Math.min(.05,(now-rainTime)/1000) : 0);rainTime=now;rainRaf=requestAnimationFrame(rainFrame); }
-  function startRain() { rainTime=0;renderRain(0);if(!still&&!document.hidden&&!rainRaf&&!op.classList.contains('gone'))rainRaf=requestAnimationFrame(rainFrame); }
   function measure() {
     var pixels=brush.getImageData(0,0,erased.width,erased.height).data,total=0,clean=0;
     for(var y=8;y<H;y+=8)for(var x=8;x<W;x+=8){if(y<140 && Math.pow((x-140)/140,2)+Math.pow((y-140)/140,2)>1)continue;total++;if(pixels[(Math.floor(y*density)*erased.width+Math.floor(x*density))*4+3]>180)clean++;}
@@ -140,14 +128,14 @@
   function release(e){if(e.pointerId!==pointer)return;pointer=null;last=null;measure();}
   win.addEventListener('pointerup',release);win.addEventListener('pointercancel',release);win.addEventListener('lostpointercapture',release);
   var clear = function(){timers.forEach(clearTimeout);timers=[];cancelAnimationFrame(guideRaf);guideRaf=0;};
-  function enter(){clear();cancelAnimationFrame(rainRaf);rainRaf=0;opened=true;op.classList.add('open','gone');op.inert=true;op.setAttribute('aria-hidden','true');$('invite').inert=false;document.body.classList.remove('locked');watch();$('demoBar').hidden=false;window.scrollTo(0,0);namesEl.focus({preventScroll:true});}
+  function enter(){clear();opened=true;op.classList.add('open','gone');op.inert=true;op.setAttribute('aria-hidden','true');$('invite').inert=false;document.body.classList.remove('locked');watch();$('demoBar').hidden=false;window.scrollTo(0,0);namesEl.focus({preventScroll:true});}
   // Keyboard users receive the same reveal as several slow cloth passes, rather than a tap-to-clear circle.
   win.addEventListener('click',function(e){if(e.detail!==0||ready||guideRaf)return;LazoMusic.play();if(still){brush.fillStyle='#000';brush.fillRect(0,0,W,H);paintMist();measure();return;}var start=performance.now();last=null;function guide(now){var t=Math.min(1,(now-start)/2800),row=Math.min(4,Math.floor(t*5)),u=(t*5)%1;stroke({x:row%2?250-u*220:30+u*220,y:70+row*64});if(t<1)guideRaf=requestAnimationFrame(guide);else{guideRaf=0;last=null;measure();}}guideRaf=requestAnimationFrame(guide);});
   $('enter').addEventListener('click',function(){if(!ready)return;clear();LazoMusic.play();op.classList.add('open');timers.push(setTimeout(enter,still?0:900));});
-  function resetGlass(){clear();pointer=null;last=null;ready=false;brush.clearRect(0,0,W,H);$('enter').disabled=true;$('wipeHint').textContent=S.hint;op.classList.remove('open','gone','wiped');makeMist();startRain();}
+  function resetGlass(){clear();pointer=null;last=null;ready=false;brush.clearRect(0,0,W,H);$('enter').disabled=true;$('wipeHint').textContent=S.hint;op.classList.remove('open','gone','wiped');makeMist();}
   photo.addEventListener('load',makeMist);new MutationObserver(makeMist).observe(win.querySelector('.fog-txt'),{childList:true,subtree:true,characterData:true});
-  if(document.fonts)document.fonts.ready.then(makeMist);makeMist();startRain();
-  document.addEventListener('visibilitychange',function(){cancelAnimationFrame(rainRaf);rainRaf=0;if(!document.hidden)startRain();});
+  if(document.fonts)document.fonts.ready.then(makeMist);makeMist();
+  rainTexture.addEventListener('load', makeMist);
   window.LzTemplate={open:function(){enter();},envelope:function(){opened=false;bar.classList.remove('show');op.inert=false;op.removeAttribute('aria-hidden');$('invite').inert=true;document.body.classList.add('locked');window.scrollTo(0,0);resetGlass();},scroll:function(el,now){window.scrollTo({top:el.getBoundingClientRect().top+scrollY-70,behavior:now||still?'instant':'smooth'});}};
 
   // Cuenta regresiva (la fecha del editor llega en window.LZ_T)
