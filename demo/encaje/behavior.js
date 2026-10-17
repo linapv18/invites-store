@@ -77,11 +77,15 @@
   op.querySelector('.blind').insertBefore(cloth, op.querySelector('.blind-edge'));
   function prepareCloth() {
     if (!textile.naturalWidth || !ctx) return;
-    var w = innerWidth, h = innerHeight, tile = document.createElement('canvas');
-    tile.width = tile.height = 420; tile.getContext('2d').drawImage(textile, 0, 0, 420, 420);
+    var w = innerWidth, h = innerHeight;
     material.width = w; material.height = h;
-    surface = material.getContext('2d'); surface.fillStyle = '#f6f2ea'; surface.fillRect(0, 0, w, h);
-    surface.fillStyle = surface.createPattern(tile, 'repeat'); surface.fillRect(0, 0, w, h);
+    surface = material.getContext('2d');
+    var panels = Math.max(1, Math.round(w / (h * .9))), pw = w / panels;
+    var fraction = Math.min(.92, (pw / h) / (textile.naturalWidth / textile.naturalHeight));
+    var sw = textile.naturalWidth * fraction, sx = (textile.naturalWidth - sw) / 2;
+    for (var panel = 0; panel < panels; panel++) {
+      surface.drawImage(textile, sx, 0, sw, textile.naturalHeight, panel * pw, 0, pw + .5, h);
+    }
     var dpr = Math.min(devicePixelRatio || 1, 1.5);
     cloth.width = Math.round(w * dpr); cloth.height = Math.round((h + 80) * dpr);
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ready = true;
@@ -93,7 +97,7 @@
     lastPaint = now;
     var w = innerWidth, h = innerHeight, rows = 192, cols = w < 600 ? 12 : 24;
     var gathering = p * p * (3 - 2 * p), length = 1 - .86 * gathering;
-    var billow = h * .043 * Math.sin(gathering * Math.PI * .8);
+    var billow = h * .055 * Math.sin(gathering * Math.PI * .8);
     var sag = h * (.014 + .025 * gathering), yBottom = h * length;
     ctx.clearRect(0, 0, w, h + 80);
     function y(t, x) {
@@ -110,15 +114,18 @@
         var y1 = y(t, x + .5 / cols), y2 = y(t2, x + .5 / cols);
         var top = Math.min(y1, y2), dh = Math.max(1, Math.abs(y2 - y1));
         ctx.drawImage(material, px, t * h, dx, h / rows, px, top, dx + .7, dh + 1);
-        var vertical = Math.cos(x * Math.PI * 12 + .6) * .055 * (1 - gathering);
+        var vertical = 0; // Vertical pleats and their lighting are photographed into the textile.
         var light = Math.sin(phase) * .25 * gathering + vertical;
         ctx.fillStyle = light > 0 ? 'rgba(255,253,244,' + light + ')' : 'rgba(59,43,30,' + (-light) + ')';
+        // Preserve the true openwork alpha while shading folded fabric.
+        ctx.globalCompositeOperation = 'source-atop';
         ctx.fillRect(px, top, dx + .7, dh + 1);
+        ctx.globalCompositeOperation = 'source-over';
       }
     }
     op.style.setProperty('--cloth-bottom', Math.max(yBottom, 0) + 'px');
   }
-  textile.onload = prepareCloth; textile.src = '/assets/encaje/visillo.webp';
+  textile.onload = prepareCloth; textile.src = '/assets/encaje/cortina.webp';
   window.addEventListener('resize', prepareCloth);
   function fabric(p) {
     progress = p; var h = innerHeight, band = h / folds.length, y = 0;

@@ -422,3 +422,10 @@ body.locked .hero-txt>*,body.locked .hero-ph{transform:translateY(12px)}
 @keyframes tassel-weight{0%,100%{rotate:0deg}25%{rotate:5deg}60%{rotate:-2deg}}
 @media(prefers-reduced-motion:reduce){.opening.tug .tassel{animation:none}}
 @media(max-width:899px){.pull{right:12px}.cord-line{right:39px}}
+
+/* Full hanging curtain: the photographed frill, pleats and scallops move together. */
+.fabric-ready .blind-edge{display:none}
+.fabric-ready .cloth-veil{bottom:54px;background:#f6f2eac9;backdrop-filter:blur(9px);-webkit-backdrop-filter:blur(9px)}
+.fabric-ready .curtain-surface{filter:drop-shadow(0 5px 5px #3b2e2130)}
+.opening::before{content:"";position:absolute;inset:0 0 auto;height:9px;background:linear-gradient(#eee9df,#fffdf8 50%,#b8ac9629);box-shadow:0 3px 5px #352a2020;z-index:1;pointer-events:none;transition:opacity .5s}
+.opening.lift::before{opacity:0}
