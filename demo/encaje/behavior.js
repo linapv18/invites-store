@@ -130,7 +130,7 @@
       fold.firstElementChild.style.opacity = q * .65; y += band * scale;
     });
     if (!ready) op.style.setProperty('--cloth-bottom', y + 'px');
-    op.style.setProperty('--cord-end', (h * (h < 500 ? .48 : .62) + p * h * .1) + 'px');
+    op.style.setProperty('--cord-end', (h * (h < 500 ? .38 : .62) + p * h * .1) + 'px');
     paintCloth(p, p === 0 || p === 1);
     op.querySelector('.tag').style.transform = 'translateY(' + (-p * h * .18) + 'px)';
     op.querySelector('.tag').style.opacity = Math.max(0, 1 - p * 2.5);

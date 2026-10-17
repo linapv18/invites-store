@@ -84,10 +84,23 @@
     return '<span class="medal ' + (cls || '') + '" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="' + HEART + '"/></svg></span>';
   };
   var divider = '<svg class="divider" viewBox="0 0 120 16" aria-hidden="true" focusable="false"><path d="M0 8H46M74 8H120" stroke="currentColor" stroke-width="1"/><path d="' + HEART + '" transform="translate(52 0)" fill="currentColor"/></svg>';
-  var tassel = '<svg class="tassel" viewBox="0 0 40 96" aria-hidden="true" focusable="false"><defs><linearGradient id="cotton" x1="0" x2="1"><stop stop-color="#47533b"/><stop offset=".32" stop-color="#abb697"/><stop offset=".54" stop-color="#7f8b6c"/><stop offset="1" stop-color="#48553a"/></linearGradient></defs><path fill="url(#cotton)" d="M20 12c-11 0-11 18-5 21-5 15-10 41-10 55q15 7 30 0c0-14-5-40-10-55 6-3 6-21-5-21z"/>' +
-    Array.from({length:29},function(_,i){var x=6+i;return '<path d="M'+(16+i*8/28)+' 34 Q'+x+' 60 '+x+' '+(88+Math.sin(i/28*Math.PI)*4)+'" fill="none" stroke="'+(i%3===0?'#c6ceb7':i%3===1?'#4a573d':'#8f9d7b')+'" stroke-width=".45"/>';}).join('') +
-    '<path d="M12 29h16m-16 2h16m-15 2h14m-14 2h14" stroke="#c1c9ae" stroke-width="1.3" fill="none"/></svg>';
-
+  // Individual curved strands, a wrapped neck and an interlaced crown.
+  var tassel = '<svg class="tassel" viewBox="0 0 80 180" aria-hidden="true" focusable="false"><defs>' +
+    '<linearGradient id="tasselSilk"><stop stop-color="#394536"/><stop offset=".22" stop-color="#82916e"/><stop offset=".42" stop-color="#ccd0ac"/><stop offset=".58" stop-color="#9ba783"/><stop offset=".8" stop-color="#647451"/><stop offset="1" stop-color="#3c4b35"/></linearGradient>' +
+    '<radialGradient id="tasselCrown" cx=".35" cy=".25" r=".8"><stop stop-color="#d5d8b9"/><stop offset=".45" stop-color="#96a17e"/><stop offset="1" stop-color="#44543b"/></radialGradient>' +
+    '</defs><path d="M40 0v13" stroke="#b0b89a" stroke-width="3"/>' +
+    '<path d="M32 52C26 70 16 91 13 123L9 165Q39 178 70 165L66 124C63 94 53 69 48 52Z" fill="url(#tasselSilk)"/>' +
+    Array.from({length:76},function(_,i){
+      var t=i/75, x=11+58*t, root=32+16*t;
+      var end=165+Math.sin(t*Math.PI)*8+Math.sin(i*2.3)*2;
+      var shade=['#d6dab9','#72815e','#9dab88','#4b5e40','#b9c4a0'][i%5];
+      return '<path d="M'+root.toFixed(2)+' 53 C'+(root-5+10*t).toFixed(2)+' 82 '+(x+Math.sin(i)*1.8).toFixed(2)+' 117 '+x.toFixed(2)+' '+end.toFixed(2)+'" fill="none" stroke="'+shade+'" stroke-width="'+(i%4===0?'.65':'.38')+'" stroke-linecap="round"/>';
+    }).join('') +
+    '<path d="M40 11C23 11 22 32 29 42Q40 50 51 42C58 32 57 11 40 11Z" fill="url(#tasselCrown)"/>' +
+    Array.from({length:13},function(_,i){var x=28+i*2;return '<path d="M40 13Q'+x+' 24 '+x+' 39" fill="none" stroke="'+(i%2?'#526346':'#c1c9a5')+'" stroke-width=".6"/>';}).join('') +
+    '<path d="M28 39Q40 44 52 39L51 55Q40 60 29 55Z" fill="url(#tasselSilk)"/>' +
+    [41,44,47,50,53].map(function(y){return '<path d="M29 '+y+'Q40 '+(y+5)+' 51 '+y+'" fill="none" stroke="#d0d5b4" stroke-width=".85"/><path d="M29 '+(y+1)+'Q40 '+(y+6)+' 51 '+(y+1)+'" fill="none" stroke="#516242" stroke-width=".5"/>';}).join('') +
+    '<path d="M27 37Q40 43 53 37M29 56Q40 61 51 56" fill="none" stroke="#c0c9a3" stroke-width="1.5"/></svg>';
 
   var N = function (k) { return '<span data-lz="' + k + '">' + S[k] + '</span>'; };
   var MONO = '<span data-lz-mono>A<i>&amp;</i>L</span>';

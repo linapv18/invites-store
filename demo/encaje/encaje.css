@@ -69,10 +69,10 @@ a:focus-visible,button:focus-visible,summary:focus-visible,input:focus-visible,i
 .fold-shade{position:absolute;inset:0;opacity:0;background:linear-gradient(180deg,#fffdf800 10%,#fffdf877 32%,#705b4844 74%,#3d2c2377 100%);box-shadow:0 7px 10px -7px #291b18aa}
 .blind-edge{position:absolute;top:calc(100% - 6px);left:0;height:42px!important;margin:0;filter:drop-shadow(0 4px 3px #30251c25)}
 .cord-line{position:absolute;right:22px;top:0;width:2px;height:var(--cord-end,62%);background:repeating-linear-gradient(135deg,#9d917c 0 1px,#ede4d4 1px 3px);transition:height .69s cubic-bezier(.45,0,.25,1),transform .16s ease-out}
-.pull{position:absolute;right:3px;top:calc(var(--cord-end,62%) - 4px);width:48px;height:96px;padding:0;border:0;background:none;cursor:pointer;transform-origin:50% 0;transition:top .69s cubic-bezier(.45,0,.25,1),transform .16s ease-out,opacity .3s ease}
+.pull{position:absolute;right:-5px;top:calc(var(--cord-end,62%) - 4px);width:56px;height:126px;padding:0;border:0;background:none;cursor:pointer;transform-origin:50% 0;transition:top .69s cubic-bezier(.45,0,.25,1),transform .16s ease-out,opacity .3s ease}
 .pull:focus-visible{outline:2px solid var(--ink);outline-offset:4px;border-radius:12px}
-.cord{position:absolute;left:23px;top:-20px;width:2px;height:24px;background:#BFB6A6}
-.tassel{display:block;margin-inline:auto;width:40px;height:96px}
+.cord{position:absolute;left:27px;top:-20px;width:2px;height:24px;background:#BFB6A6}
+.tassel{display:block;margin-inline:auto;width:56px;height:126px;filter:drop-shadow(2px 4px 2px #352b2430)}
 .tassel .ta{fill:var(--sg)}.tassel .tb{fill:var(--sgd)}.tassel .tf{stroke:#9AA587;stroke-width:1}.tassel .tc{fill:#C7CDB8}
 .pull:hover .tassel{transform:translateY(3px);transition:transform .2s ease}
 .tag{position:absolute;left:50%;top:max(80px,calc(66% - 200px));translate:-50% 0;width:min(240px,calc(100% - 100px));min-height:104px;padding:14px 22px;border-radius:50%;background:var(--co);color:var(--iv);box-shadow:inset 0 0 0 4px var(--co),inset 0 0 0 5px #D9CFC088,0 10px 18px -10px #0008;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;text-align:center;transform-origin:50% -60px;transition:opacity .3s ease}
@@ -281,7 +281,7 @@ body.locked .hero-txt>*,body.locked .hero-ph{transform:translateY(12px)}
 /* ======================= Escritorio ======================= */
 @media(min-width:900px){
   .cord-line{right:54px}
-  .pull{right:35px}
+  .pull{right:27px}
   .tag{width:260px;min-height:120px}
   .tag-g{font-size:21px}
   .mbar{left:50%;right:auto;width:min(1080px,calc(100% - 40px));translate:-50% 0;top:12px;border-radius:999px;padding:0 14px 0 26px}
