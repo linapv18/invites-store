@@ -160,6 +160,21 @@
   }
   window.LazoTheme = { list: function () { return THEMES[TPL] || []; }, apply: applyTheme };
 
+  // Convert a venue's wall-clock date/time to one instant, independent of the guest's device zone.
+  // Invalid zones and nonexistent daylight-saving times remain invalid instead of silently shifting the event.
+  window.LazoTime = { target: function (date, time, zone) {
+    var d = /^(\d{4})-(\d{2})-(\d{2})$/.exec(date || ''), t = /^(\d{1,2}):(\d{2})$/.exec(time || '00:00');
+    if (!d || !t || +t[1] > 23 || +t[2] > 59) return NaN;
+    var expected = Date.UTC(+d[1], +d[2]-1, +d[3], +t[1], +t[2]), guess = expected;
+    var check = new Date(expected); if(check.getUTCFullYear() !== +d[1] || check.getUTCMonth() !== +d[2]-1 || check.getUTCDate() !== +d[3]) return NaN;
+    try {
+      var formatter = new Intl.DateTimeFormat('en-CA', { timeZone: zone, year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit', hourCycle: 'h23' });
+      function wall(instant) { var parts = {}; formatter.formatToParts(new Date(instant)).forEach(function (p) { parts[p.type] = p.value; }); return Date.UTC(+parts.year, +parts.month-1, +parts.day, +parts.hour, +parts.minute, +parts.second); }
+      for (var i = 0; i < 4; i++) { var delta = expected - wall(guess); if (!delta) return guess; guess += delta; }
+      return wall(guess) === expected ? guess : NaN;
+    } catch (e) { return NaN; }
+  } };
+
   if (MODE !== 'editor' && MODE !== 'vista') {
     // Demo de la tienda: elegir entre los colores del diseño desde la barra de la demo (o con ?color=champana).
     var themes = THEMES[TPL] || [];
@@ -306,7 +321,7 @@
     els.forEach(function (el) {
       var f = el.getAttribute('data-lz-f'), v = data[f];
       if (f === 'map') { if (has(data.mapUrl) || has(data.mapQuery)) { el.href = data.mapUrl || 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(data.mapQuery); el.target = '_blank'; el.rel = 'noopener'; el.classList.remove('lz-off'); } else el.classList.add('lz-off'); return; }
-      if (f === 'img') { if (has(v)) { el.src = v; el.removeAttribute('srcset'); } return; }
+      if (f === 'img') { if (has(v)) { el.src = v; el.removeAttribute('srcset'); if(el.hasAttribute('data-full-src'))el.setAttribute('data-full-src',v); } return; }
       if (f === 'hide') { el.classList.add('lz-off'); return; }
       if (el._lz === undefined) el._lz = el.innerHTML;
       if (has(v)) { el.textContent = v; el.classList.remove('lz-off'); }
@@ -342,6 +357,7 @@
       dressCode: c0.dressCode, dressNotes: c0.dressNotes, dressColors: c0.dressColors,
       travelIntro: c0.travelIntro, hotel: c0.hotel, hotelAddress: c0.hotelAddress, hotelCode: c0.hotelCode, hotelNotes: c0.hotelNotes || c0.travelNotes,
       airport: c0.airport, transport: c0.transport, guideFood: c0.guideFood, guideCulture: c0.guideCulture, guidePlans: c0.guidePlans,
+      mainTime: evs[0] ? fmtTime(evs[0].time) : '', mainName: evs[0] ? evs[0].name : '',
       rsvpMsg: c0.rsvpMsg, time0: cdEv ? fmtTime(cdEv.time) : '', cdName: cdEv ? cdEv.name : ''
     };
     var filled = function (keys) { return keys.split(/\s+/).some(function (k) { return has(k in v ? v[k] : c0[k]); }); };
@@ -365,6 +381,7 @@
       if (el._lz === undefined) el._lz = el.getAttribute('src');
       var n = +(el.getAttribute('data-lz-src').split(':')[1] || 0);
       el.removeAttribute('srcset');
+      if (el.hasAttribute('data-full-src')) { if(el._lzFull === undefined)el._lzFull=el.getAttribute('data-full-src');el.setAttribute('data-full-src',ph.length?ph[n % ph.length]:el._lzFull); }
       el.src = ph.length ? ph[n % ph.length] : el._lz;
     });
     document.querySelectorAll('[data-lz-href]').forEach(function (el) {
@@ -387,7 +404,7 @@
       else if (k === 'events') rows = evs.map(function (e) {
         // Lugar y dirección van en campos separados; las invitaciones antiguas los tenían juntos ("Lugar · dirección").
         var p = e.address === undefined ? splitPlace(e.place) : [e.place || '', e.address || ''];
-        return { name: e.name, time: fmtTime(e.time), place: p[0], address: p[1], mapUrl: isMapsUrl(e.mapUrl) ? e.mapUrl : '', mapQuery: p.filter(has).length ? p.concat(c0.city || '').filter(has).join(', ') : '',
+        return { icon: e.icon || 'auto', name: e.name, time: fmtTime(e.time), place: p[0], address: p[1], mapUrl: isMapsUrl(e.mapUrl) ? e.mapUrl : '', mapQuery: p.filter(has).length ? p.concat(c0.city || '').filter(has).join(', ') : '',
           mapText: p[1] || (has(p[0]) ? (LANG === 'en' ? 'Directions' : 'Cómo llegar') : '') };
       });
       else if (k === 'faqs') rows = (c0.faqs || []).map(function (f) { return { q: f.q, a: f.a }; });
@@ -396,14 +413,20 @@
       renderList(box, rows);
     });
     applyTheme(c0.pal, c0.palCustom);
-    html.classList.toggle('lz-photo-color', (TPL === 'moderno' || TPL === 'noir') && c0.photoBW === false);
+    html.classList.toggle('lz-photo-color', (TPL === 'moderno' || TPL === 'noir' || TPL === 'corazones') && c0.photoBW === false);
     html.classList.toggle('lz-no-photos', TPL === 'glicina' && c0.photosOn === false);
     document.dispatchEvent(new CustomEvent('lz-gallery-change'));
     // Cuenta regresiva: las plantillas leen window.LZ_T en cada segundo.
     var d = dateObj(c0.date);
-    if (d) { var m = /^(\d{1,2}):(\d{2})$/.exec(cdEv && cdEv.time || ''); if (m) d.setHours(+m[1], +m[2]); window.LZ_T = d.getTime(); }
+    if (d) {
+      var zone = c0.timeZone || (TPL === 'corazones' ? 'America/Mexico_City' : '');
+      if (zone) window.LZ_T = window.LazoTime.target(c0.date, cdEv && cdEv.time || '00:00', zone);
+      else { var m = /^(\d{1,2}):(\d{2})$/.exec(cdEv && cdEv.time || ''); if (m) d.setHours(+m[1], +m[2]); window.LZ_T = d.getTime(); }
+    }
+    if (!d && TPL === 'corazones') window.LZ_T = NaN;
     if (window.LazoMusic && c0.musicOn === false) { window.LazoMusic.play = function () {}; var mb = document.querySelector('.lz-music'); if (mb) mb.classList.add('lz-off'); }
     applyMusic(c0);
+    document.dispatchEvent(new CustomEvent('lz-content-applied', { detail: c0 }));
   }
 
   /* Navegación desde el editor: cada plantilla define window.LzTemplate = { open(), envelope(), scroll(el) }. */
@@ -419,7 +442,7 @@
     }
   }
 
-  window.LazoContent = { apply: apply, goto: goto };
+  window.LazoContent = { apply: apply, goto: goto, current: function () { return C; } };
   apply(C);
   // Lo que todavía no estaba en el DOM (p. ej. el botón de música) se ajusta al terminar de cargar.
   document.addEventListener('DOMContentLoaded', function () {

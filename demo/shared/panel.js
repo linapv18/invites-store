@@ -327,7 +327,7 @@
     function images(group){return [].slice.call(group.querySelectorAll('img')).filter(function(el){return el.matches(photoSelector) || group.matches('[data-gallery]') && el.classList.contains('lz-zoomable');});}
     function sources(group){
       if(Array.isArray(window.LZ_GALLERY)) return window.LZ_GALLERY.slice(0,12).map(function(src){return {src:src,alt:''};});
-      return images(group).slice(0,12).map(function(el){return {src:el.currentSrc || el.src,alt:el.alt || ''};});
+      return images(group).slice(0,12).map(function(el){return {src:el.getAttribute('data-full-src') || el.currentSrc || el.src,alt:el.alt || ''};});
     }
     function indexFor(group,el){
       if(Array.isArray(window.LZ_GALLERY)){

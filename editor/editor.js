@@ -497,7 +497,7 @@
       musicOn: true, musicSource: 'library', musicTrack: 'demo', musicTrackSrc: '/assets/musica/demo.mp3', musicFileName: '', musicFileSize: 0,
       palCustom: '#8A4F5C',
       // Todos los diseños reciben y muestran estos mismos campos (ver demo/shared/content.js).
-      invitations: [], photoBW: true, photosOn: true, envIntro: '', envClosing: '', countdownId: 1, countdownNote: '', quote: '', quoteAuthor: '', dressCode: '', dressNotes: '', dressColors: '',
+      invitations: [], timeZone: '', courtPair: 'KQ', photoBW: true, photosOn: true, envIntro: '', envClosing: '', countdownId: 1, countdownNote: '', quote: '', quoteAuthor: '', dressCode: '', dressNotes: '', dressColors: '',
       viajeOn: true, travelIntro: '', hotel: '', hotelAddress: '', hotelCode: '', hotelLink: '', hotelNotes: '',
       airport: '', transport: '', guideFood: '', guideCulture: '', guidePlans: '',
       rsvpDeadline: '', rsvpMsg: '', rsvpDiet: true, rsvpNote: true,
@@ -918,10 +918,23 @@
   var addonUpsell = function (id, o) { o.act = 'sec'; o.id = id; o.label = S.seeAddon; return upsell(o); };
   var delBtn = function (act, i, label, fk) { return '<button type="button" class="ed-del" data-act="' + act + '" data-i="' + i + '" aria-label="' + esc(label) + '" data-fk="' + fk + '">' + svg(P.trash, 18, 1.7) + '</button>'; };
 
+  function coSelect(label, key, options, value, hint) {
+    return '<label class="ed-field">' + esc(label) + '<select data-k="' + key + '">' + options.map(function(o){return '<option value="'+esc(o[0])+'"'+(o[0]===value?' selected':'')+'>'+esc(o[1])+'</option>';}).join('') + '</select>' + (hint?'<span class="ed-hint">'+esc(hint)+'</span>':'') + '</label>';
+  }
+  function coZone() {
+    var zones = typeof Intl.supportedValuesOf === 'function' ? Intl.supportedValuesOf('timeZone') : ['America/Mexico_City','America/Bogota','America/New_York','Europe/Madrid'];
+    return coSelect(LANG==='es'?'Zona horaria de la boda':'Wedding time zone','timeZone',[['UTC','UTC']].concat(zones.map(function(z){return[z,z.replace(/_/g,' ')];})),state.timeZone||'America/Mexico_City',LANG==='es'?'Elige la zona del lugar de la boda para que todos los invitados vean la misma cuenta regresiva.':'Choose the venue’s time zone so every guest sees the same countdown.');
+  }
+  function coPair() { return coSelect(LANG==='es'?'Pareja de naipes':'Court-card pair','courtPair',LANG==='es'?[['KQ','Rey y reina · K/Q'],['QQ','Dos reinas · Q/Q'],['KK','Dos reyes · K/K'],['AA','Dos ases · A/A']]:[['KQ','King and queen · K/Q'],['QQ','Two queens · Q/Q'],['KK','Two kings · K/K'],['AA','Two aces · A/A']],state.courtPair||'KQ'); }
+  function coEventIcon(e, i) {
+    var opts=LANG==='es'?[['auto','Automático según el nombre'],['ceremony','Alianzas · ceremonia'],['drinks','Copas · brindis'],['meal','Plato · comida'],['party','Música · fiesta'],['cake','Pastel'],['transport','Vehículo · traslado'],['arrival','Reloj · otro evento']]:[['auto','Automatic from event name'],['ceremony','Rings · ceremony'],['drinks','Glasses · toast'],['meal','Plate · meal'],['party','Music · party'],['cake','Cake'],['transport','Vehicle · transfer'],['arrival','Clock · other event']];
+    return '<label class="ed-field full">'+(LANG==='es'?'Icono del evento':'Event icon')+'<select data-list="events" data-i="'+i+'" data-f="icon">'+opts.map(function(o){return '<option value="'+o[0]+'"'+((e.icon||'auto')===o[0]?' selected':'')+'>'+esc(o[1])+'</option>';}).join('')+'</select></label>';
+  }
+
   var SECTION_HTML = {
     portada: function () {
       return head('portada') +
-        '<div class="ed-grid2">' + field(S.n1, 'n1') + field(S.n2, 'n2') + field(S.date, 'date', { type: 'date' }) + field(S.city, 'city', { ph: S.cityPh, hint: S.cityHint }) + '</div>' +
+        '<div class="ed-grid2">' + field(S.n1, 'n1') + field(S.n2, 'n2') + field(S.date, 'date', { type: 'date' }) + field(S.city, 'city', { ph: S.cityPh, hint: S.cityHint }) + '</div>' + (state.design === 'corazones' ? coZone() : '') +
         '<div class="ed-stack"><span class="ed-label">' + esc(S.cover) + '</span><div class="ed-photo">' +
           (state.cover ? '<div class="ed-photo-img"><img src="' + esc(state.cover) + '" alt="' + esc(S.coverAlt) + '"></div>' : '<div class="ed-photo-img ph"></div>') +
           dropzone('cover', S.drop, S.dropHint) + '</div></div>' +
@@ -933,7 +946,7 @@
           PALETTES.map(function (p) { return '<button type="button" class="ed-pal" role="radio" aria-checked="' + (p.id === state.pal) + '" data-act="pal" data-id="' + p.id + '" data-fk="pal-' + p.id + '"><i style="background:' + p.hex + '"></i>' + esc(p[LANG]) + '</button>'; }).join('') +
           '<label class="ed-pal ed-pal-custom' + (state.pal === 'custom' ? ' is-on' : '') + '"><input type="color" data-k="palCustom" value="' + esc(state.palCustom) + '" aria-label="' + esc(S.palCustomLbl) + '"><span>' + esc(S.palCustom) + '</span></label>' +
         '</div><span class="ed-hint" id="palNote"' + (state.pal === 'custom' && isLight(state.palCustom) ? '' : ' hidden') + '>' + esc(S.palLight) + '</span></div>') +
-        ((state.design === 'moderno' || state.design === 'noir') ? toggleRow('photoBW', S.photoBW, S.photoBWOn, S.photoBWOff) : '') +
+        ((state.design === 'moderno' || state.design === 'noir' || state.design === 'corazones') ? toggleRow('photoBW', S.photoBW, S.photoBWOn, S.photoBWOff) : '') +
         (state.design === 'glicina' ? toggleRow('photosOn', S.photosOn, S.photosOnOn, S.photosOnOff) : '') +
         cartUpsell('dominio', { light: true, k: S.domainK, t: esc(S.domainT(slug(state))) });
     },
@@ -943,7 +956,7 @@
         var st = clone(state); st.sealMode = 'mono'; st.mono = id;
         return '<button type="button" class="ed-mono" role="radio" aria-checked="' + (mono && state.mono === id) + '" data-act="mono" data-id="' + id + '" data-fk="mono-' + id + '"><span class="iv-seal" style="' + sealLook() + '">' + sealInner(st) + '</span>' + esc(label) + '</button>';
       };
-      return head('apertura') +
+      return head('apertura') + (state.design === 'corazones' ? coPair() : '') +
         '<div class="ed-info">' + svg(DESIGNS[state.design].kind === 'doors' ? P.doors : P.mail, 22, 1.6) + '<div><b>' + esc(d[1]) + '</b><span>' + esc(S.effectNote(d[0])) + '</span></div></div>' +
         '<div class="ed-stack"><span class="ed-label" id="lblSeal">' + esc(S.sealQ) + '</span><div class="ed-seg" role="radiogroup" aria-labelledby="lblSeal">' +
           '<button type="button" role="radio" aria-checked="' + !mono + '" data-act="sealMode" data-id="text" data-fk="sm-text">' + esc(S.text) + '</button>' +
@@ -984,7 +997,7 @@
             '<span aria-hidden="true">' + pad(i + 1) + '</span>' +
             '<button type="button" data-act="ev-move" data-i="' + i + '" data-d="1" data-fk="evd-' + e.id + '" aria-label="' + esc(S.moveDown) + '"' + (i === ev.length - 1 ? ' disabled' : '') + '>' + svg(P.down, 14, 2) + '</button></div>' +
             '<div class="ed-ev-body"><div class="ed-ev-grid">' + listField('events', i, 'name', S.event, { cls: 'wide', ph: S.eventPh }) + listField('events', i, 'time', S.time, { type: 'time' }) + listField('events', i, 'place', S.place, { cls: 'full', ph: S.placePh }) + listField('events', i, 'address', S.address, { cls: 'full', ph: S.addressPh }) +
-              listField('events', i, 'mapUrl', S.mapUrl, { cls: 'full', ph: S.mapUrlPh, type: 'url' }) + '</div>' +
+              listField('events', i, 'mapUrl', S.mapUrl, { cls: 'full', ph: S.mapUrlPh, type: 'url' }) + (state.design === 'corazones' ? coEventIcon(e, i) : '') + '</div>' +
               '<small class="ed-hint ed-maphint" data-maphint="' + e.id + '"' + (e.mapUrl && !isMapsUrl(e.mapUrl) ? '' : ' hidden') + '>' + esc(S.mapUrlBad) + '</small>' +
               '<div class="ed-ev-tools"><label class="ed-check"><input type="radio" name="cdEvent" value="' + e.id + '"' + (cdEvent() === e ? ' checked' : '') + '><span>' + esc(S.cdUse) + '</span></label>' +
                 ('<button type="button" class="ed-link" data-act="ev-map" data-id="' + e.id + '" data-fk="evmap-' + e.id + '" aria-expanded="' + !!ui.maps[e.id] + '">' + esc(ui.maps[e.id] ? S.hideMap : S.showMap) + '</button>' +
@@ -1408,6 +1421,8 @@
   root.addEventListener('change', function (e) {
     var t = e.target;
     if (t.type === 'file' && t.hasAttribute('data-file')) { handleFiles(t.getAttribute('data-file'), t.files); t.value = ''; }
+    else if (t.tagName === 'SELECT' && t.hasAttribute('data-k')) { state[t.getAttribute('data-k')] = t.value; changed(false); }
+    else if (t.tagName === 'SELECT' && t.hasAttribute('data-list')) { var item=state[t.getAttribute('data-list')][+t.getAttribute('data-i')]; if(item){item[t.getAttribute('data-f')]=t.value;changed(false);} }
     else if (t.name === 'cdEvent') { state.countdownId = +t.value; changed(false); }
     else if (t.getAttribute('data-list') === 'events' && /^(place|address)$/.test(t.getAttribute('data-f'))) {
       // Al salir del campo: el mapa y la búsqueda de ese evento apuntan a la nueva dirección.
