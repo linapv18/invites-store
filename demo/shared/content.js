@@ -113,6 +113,12 @@
       { id: 'bruma', es: 'Bruma', en: 'Mist', sw: '#7F8A96', vars: { dark: '#5F6B78', suede: '#7F8A96', paper: '#F3F1EC', ink: '#22262B', silver: '#B9BCC0', sand: '#E4E4E0' } },
       { id: 'oliva', es: 'Oliva', en: 'Olive', sw: '#7B826A', vars: { dark: '#5E6650', suede: '#7B826A', paper: '#F4F0E6', ink: '#25271F', silver: '#B5B3A8', sand: '#E6E3D5' } }
     ],
+    // Arco: verde bosque (base), noche o vino; las fotos no se tiñen.
+    arco: [
+      { id: 'bosque', es: 'Bosque', en: 'Forest', sw: '#1F3A2B' },
+      { id: 'noche', es: 'Noche', en: 'Night', sw: '#1F2A3D', vars: { g: '#1F2A3D', g2: '#2D3A52', sage: '#9AA6BC', paper: '#F2F2EE', p2: '#E4E5E2' } },
+      { id: 'vino', es: 'Vino', en: 'Wine', sw: '#4A1E27', vars: { g: '#4A1E27', g2: '#5E2A34', sage: '#C2A3A3', paper: '#F4F0EB', p2: '#E9E2DB' } }
+    ],
     // Glicina: una sola paleta (los racimos, la rama y las hortensias son imágenes).
     glicina: [
       { id: 'lavanda', es: 'Lavanda y oliva', en: 'Lavender and olive', sw: 'conic-gradient(#8E79BD 0 50%,#7C8454 0)' }

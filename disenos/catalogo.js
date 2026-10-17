@@ -31,7 +31,8 @@
       { id: 'calendario', es: 'Calendario', en: 'Calendar' },
       { id: 'cortina', es: 'Cortina de flores', en: 'Flower curtain' },
       { id: 'funda', es: 'Funda de terciopelo', en: 'Velvet sleeve' },
-      { id: 'estuche', es: 'Estuche', en: 'Gift box' }
+      { id: 'estuche', es: 'Estuche', en: 'Gift box' },
+      { id: 'ventana', es: 'Ventana empañada', en: 'Misted window' }
     ] },
     { key: 'tono', es: 'Colores', en: 'Colors', opts: [
       { id: 'claros', es: 'Claros', en: 'Light' },
@@ -93,6 +94,10 @@
       tags: { estilo: ['botanico', 'romantico'], lugar: ['campo'], apertura: ['cortina'], tono: ['claros'] },
       es: { name: 'Glicina', title: 'Diseño glicina', desc: 'Un jardín de cuento: la invitación está detrás de una cortina de glicinas que se mecen; al tocarla se abre y aparece un óvalo de encaje con los nombres. Hortensias, paneles con encaje, programa con íconos y la cita en un corazón. Se puede usar con o sin fotos.', opening: 'Apertura: cortina de glicinas', colors: 'Lavanda y oliva', alt: ['Diseño glicina: cortina de glicinas', 'Diseño glicina: portada con foto en un óvalo de encaje y hortensias'] },
       en: { name: 'Glicina', title: 'Glicina', desc: 'A fairy-tale garden: the invitation hides behind a swaying wisteria curtain; tap it and it parts to reveal a lace oval with the names. Hydrangeas, lace-trimmed panels, a program with icons and the quote in a heart. Works with or without photos.', opening: 'Opening: wisteria curtain', colors: 'Lavender and olive', alt: ['Glicina design: wisteria curtain', 'Glicina design: cover with a photo in a lace oval and hydrangeas'] } },
+    { id: 'arco', bg: '#DDE3DC', shadow: 'rgba(31,58,43,0.55)', img: ['/assets/arco-ventana.jpg', '/assets/arco-portada.jpg'],
+      tags: { estilo: ['moderno', 'elegante'], lugar: ['ciudad'], apertura: ['ventana'], tono: ['oscuros', 'claros'] },
+      es: { name: 'Arco', title: 'Diseño arco', desc: 'Editorial y de ciudad, en verde bosque y papel: la invitación es una ventana en arco empañada; al tocarla, el cristal se limpia desde el dedo y aparece la pareja. Adentro, fotos a color recortadas en arcos y olas, una arcada de fotos, cuenta regresiva en fichas de cristal y firma manuscrita.', opening: 'Apertura: ventana empañada', colors: 'Bosque, noche o vino', alt: ['Diseño arco: ventana en arco empañada con gotas y los nombres escritos en el vaho', 'Diseño arco: portada con la foto de la pareja y un panel verde en arco'] },
+      en: { name: 'Arco', title: 'Arco', desc: 'Editorial and urban, in forest green and paper: the invitation is a misted arched window; tap it and the glass clears from the touch to reveal the couple. Inside, colour photos cut into arches and waves, an arcade gallery, a countdown on glass tiles and a handwritten signature.', opening: 'Opening: misted window', colors: 'Forest, night or wine', alt: ['Arco design: misted arched window with drops and the names written in the fog', 'Arco design: cover with the couple’s photo and a green arched panel'] } },
     { id: 'nacar', bg: '#E7E3DC', shadow: 'rgba(42,37,32,0.5)', img: ['/assets/nacar-estuche.jpg', '/assets/nacar-portada.jpg'],
       tags: { estilo: ['elegante', 'romantico'], lugar: ['campo', 'playa'], apertura: ['estuche'], tono: ['claros'] },
       es: { name: 'Nácar', title: 'Diseño nácar', desc: 'Lujo silencioso: la invitación llega en un estuche de ante cerrado con un hilo de perlas. Al soltar el broche se levanta la tapa y la tarjeta sube. Adentro, fotos en blanco y negro, una carta en papel vegetal con alfiler de perla, un collar que recorre el programa y una etiqueta de equipaje para el viaje.', opening: 'Apertura: estuche con hilo de perlas', colors: 'Nácar, bruma u oliva', alt: ['Diseño nácar: estuche de ante cerrado con un hilo de perlas', 'Diseño nácar: portada con los nombres en mayúsculas y foto en blanco y negro'] },
