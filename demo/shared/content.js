@@ -119,6 +119,12 @@
       { id: 'noche', es: 'Noche', en: 'Night', sw: '#1F2A3D', vars: { g: '#1F2A3D', g2: '#2D3A52', sage: '#9AA6BC', paper: '#F2F2EE', p2: '#E4E5E2' } },
       { id: 'vino', es: 'Vino', en: 'Wine', sw: '#4A1E27', vars: { g: '#4A1E27', g2: '#5E2A34', sage: '#C2A3A3', paper: '#F4F0EB', p2: '#E9E2DB' } }
     ],
+    // Corazones: cambia el fieltro y el oro; el rojo de los palos no.
+    corazones: [
+      { id: 'burdeos', es: 'Burdeos', en: 'Burgundy', sw: '#5A0E1E' },
+      { id: 'tapete', es: 'Tapete', en: 'Card table', sw: '#0F3D2E', vars: { bur: '#0F3D2E', bur2: '#1A5240', bur3: '#082419', gold: '#D2B06A' } },
+      { id: 'medianoche', es: 'Medianoche', en: 'Midnight', sw: '#141B33', vars: { bur: '#141B33', bur2: '#222C4F', bur3: '#0A0F1F', gold: '#D9C08A' } }
+    ],
     // Glicina: una sola paleta (los racimos, la rama y las hortensias son imágenes).
     glicina: [
       { id: 'lavanda', es: 'Lavanda y oliva', en: 'Lavender and olive', sw: 'conic-gradient(#8E79BD 0 50%,#7C8454 0)' }

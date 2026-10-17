@@ -32,7 +32,8 @@
       { id: 'cortina', es: 'Cortina de flores', en: 'Flower curtain' },
       { id: 'funda', es: 'Funda de terciopelo', en: 'Velvet sleeve' },
       { id: 'estuche', es: 'Estuche', en: 'Gift box' },
-      { id: 'ventana', es: 'Ventana empañada', en: 'Misted window' }
+      { id: 'ventana', es: 'Ventana empañada', en: 'Misted window' },
+      { id: 'baraja', es: 'Baraja de cartas', en: 'Deck of cards' }
     ] },
     { key: 'tono', es: 'Colores', en: 'Colors', opts: [
       { id: 'claros', es: 'Claros', en: 'Light' },
@@ -94,6 +95,10 @@
       tags: { estilo: ['botanico', 'romantico'], lugar: ['campo'], apertura: ['cortina'], tono: ['claros'] },
       es: { name: 'Glicina', title: 'Diseño glicina', desc: 'Un jardín de cuento: la invitación está detrás de una cortina de glicinas que se mecen; al tocarla se abre y aparece un óvalo de encaje con los nombres. Hortensias, paneles con encaje, programa con íconos y la cita en un corazón. Se puede usar con o sin fotos.', opening: 'Apertura: cortina de glicinas', colors: 'Lavanda y oliva', alt: ['Diseño glicina: cortina de glicinas', 'Diseño glicina: portada con foto en un óvalo de encaje y hortensias'] },
       en: { name: 'Glicina', title: 'Glicina', desc: 'A fairy-tale garden: the invitation hides behind a swaying wisteria curtain; tap it and it parts to reveal a lace oval with the names. Hydrangeas, lace-trimmed panels, a program with icons and the quote in a heart. Works with or without photos.', opening: 'Opening: wisteria curtain', colors: 'Lavender and olive', alt: ['Glicina design: wisteria curtain', 'Glicina design: cover with a photo in a lace oval and hydrangeas'] } },
+    { id: 'corazones', bg: '#EFE3DC', shadow: 'rgba(90,14,30,0.6)', img: ['/assets/corazones-baraja.jpg', '/assets/corazones-portada.jpg'],
+      tags: { estilo: ['elegante', 'romantico'], lugar: ['ciudad', 'campo'], apertura: ['baraja'], tono: ['oscuros'] },
+      es: { name: 'Corazones', title: 'Diseño corazones', desc: 'La boda como la mejor mano, con glamour de Hollywood clásico: una baraja sobre fieltro borgoña se abre en abanico y el rey y la reina de corazones se dan la vuelta con la foto de la pareja. Adentro, cada dato va en un naipe, la cuenta regresiva en fichas de juego y la galería en cartas con foto.', opening: 'Apertura: baraja en abanico', colors: 'Burdeos, tapete o medianoche', alt: ['Diseño corazones: baraja con dorso borgoña y monograma dorado', 'Diseño corazones: portada con una carta de doble cabeza con la foto de la pareja'] },
+      en: { name: 'Corazones', title: 'Corazones', desc: 'The wedding as a winning hand, with classic Hollywood glamour: a deck on burgundy felt fans out and the king and queen of hearts turn over with the couple’s photo. Inside, every detail sits on a playing card, the countdown is in poker chips and the gallery is a hand of photo cards.', opening: 'Opening: deck that fans out', colors: 'Burgundy, card table or midnight', alt: ['Corazones design: deck with a burgundy back and a gold monogram', 'Corazones design: cover with a double-headed card showing the couple’s photo'] } },
     { id: 'arco', bg: '#DDE3DC', shadow: 'rgba(31,58,43,0.55)', img: ['/assets/arco-ventana.jpg', '/assets/arco-portada.jpg'],
       tags: { estilo: ['moderno', 'elegante'], lugar: ['ciudad'], apertura: ['ventana'], tono: ['oscuros', 'claros'] },
       es: { name: 'Arco', title: 'Diseño arco', desc: 'Editorial y de ciudad, en verde bosque y papel: la invitación es una ventana en arco empañada; al tocarla, el cristal se limpia desde el dedo y aparece la pareja. Adentro, fotos a color recortadas en arcos y olas, una arcada de fotos, cuenta regresiva en fichas de cristal y firma manuscrita.', opening: 'Apertura: ventana empañada', colors: 'Bosque, noche o vino', alt: ['Diseño arco: ventana en arco empañada con gotas y los nombres escritos en el vaho', 'Diseño arco: portada con la foto de la pareja y un panel verde en arco'] },
