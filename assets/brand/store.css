@@ -1,0 +1,304 @@
+/* Invitesse — ciruela y seda. Product previews remain genuine template and editor captures. */
+.iv-home,.iv-catalog{background:var(--iv-paper);color:var(--iv-ink)}
+.iv-home ::selection,.iv-catalog ::selection{background:#D0BBC7;color:var(--iv-ink)}
+.iv-home .btn,.iv-catalog .btn{border-radius:2px;font-size:14px;font-weight:500;letter-spacing:.025em;min-height:50px;white-space:normal;text-align:center;line-height:1.4;padding-block:12px}
+.iv-home .btn-dark,.iv-catalog .btn-dark{background:var(--iv-plum);color:var(--iv-silk)}
+.iv-home .btn-dark:hover,.iv-catalog .btn-dark:hover{background:#4A3445}
+.iv-home .btn-line,.iv-catalog .btn-line{box-shadow:inset 0 0 0 1px #35243266}
+.iv-home .btn-lacre{background:var(--iv-plum);color:var(--iv-silk)}
+.iv-home .k,.iv-catalog .k{font-weight:500;font-size:10px;letter-spacing:.21em;line-height:1.7;color:#71616B}
+.iv-home .h2{font-size:clamp(36px,4vw,55px);font-weight:400;line-height:1.15;letter-spacing:-.035em;text-wrap:balance}
+.iv-home h1 i,.iv-home .h2 i{color:inherit;font-weight:400}
+.iv-home .p{font-size:16px;line-height:1.8;color:#61535D}
+.iv-home .w{max-width:1392px;padding-inline:56px}
+.iv-home .top,.iv-catalog .top{background:#F3EEE9f5;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--iv-rule)}
+.iv-home .top nav,.iv-catalog .top nav{height:82px;gap:24px}
+.iv-home .top .logo,.iv-catalog .top .logo{font-size:36px;flex-shrink:0}
+.iv-home .links,.iv-catalog .links{font-size:13px;gap:22px;font-weight:400}
+.iv-home .links a:not(.btn),.iv-catalog .links a:not(.btn){min-height:40px;display:inline-flex;align-items:center}
+.iv-home .badge{background:none;color:var(--iv-grey);font-size:10px;margin-left:2px;min-width:16px;font-weight:400;padding:0}
+.iv-home .nav-toggle{background:none;border:1px solid var(--iv-rule);border-radius:2px}
+.iv-home section[id],.iv-catalog section[id]{scroll-margin-top:100px}
+/* Hero: one actual invitation cover and its actual opening, on a plum field. */
+.iv-home .hero{max-width:1440px;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:56px;padding-top:36px;padding-bottom:64px;align-items:center}
+.iv-home .hero-t{gap:25px;min-width:0;padding-block:20px}
+.iv-home .hero h1{font-size:clamp(60px,6.1vw,88px);font-weight:400;line-height:1.08;letter-spacing:-.045em;text-wrap:balance}
+.iv-home .hero .lead{font-size:18px;line-height:1.7;max-width:490px;color:#61535D}
+.iv-home .ctas{gap:18px 25px;margin-top:4px}
+.iv-home .ctas .btn{min-height:52px;padding-inline:28px}
+.iv-home .hero-example{display:inline-flex;align-items:center;gap:16px;min-height:48px;font-size:13px;font-weight:400;text-underline-offset:6px;text-decoration-thickness:1px}
+.iv-home .trust{gap:8px 22px;font-size:11px;font-weight:400;color:#71616B}
+.iv-home .trust span+span::before{content:'·';margin-right:22px}
+.iv-home .hero-visual{position:relative;display:block;height:650px;min-width:0;text-decoration:none;overflow:hidden;background:radial-gradient(ellipse at 35% 25%,#513A4B 0%,#352432 55%,#2B1D29 100%);isolation:isolate}
+.iv-home .hero-visual::before{content:'';position:absolute;inset:28px;border:1px solid #D0BBC71a;pointer-events:none}
+.iv-home .hero-phone{position:absolute;left:10%;top:7%;width:43%;aspect-ratio:554/1200;background:#241D24;border:5px solid #241D24;border-radius:24px;overflow:hidden;z-index:2;box-shadow:0 24px 42px #140D1855;transition:transform .45s ease}
+.iv-home .hero-phone img{width:100%;height:100%;object-fit:cover;border-radius:18px}
+.iv-home .hero-opening{position:absolute;right:8%;top:24%;width:32%;aspect-ratio:554/1200;border:3px solid #E5D8DD;overflow:hidden;box-shadow:0 18px 38px #140D1855;transform:rotate(3deg);transition:transform .45s ease}
+.iv-home .hero-opening img{width:100%;height:100%;object-fit:cover}
+.iv-home .hero-visual-caption{position:absolute;bottom:25px;left:30px;right:30px;display:flex;align-items:center;justify-content:space-between;gap:20px;color:var(--iv-silk);font-size:11px;font-weight:400;letter-spacing:.03em;z-index:3}
+.iv-home .hero-visual-caption svg{flex:none}
+@media(hover:hover){.iv-home .hero-visual:hover .hero-phone{transform:translateY(-5px)}.iv-home .hero-visual:hover .hero-opening{transform:rotate(1deg) translateY(-3px)}}
+/* The collection is light, spacious and photographic. */
+.iv-home .dsg{background:var(--iv-paper);color:var(--iv-ink);padding:64px 0 86px;border-top:1px solid var(--iv-rule);border-bottom:1px solid var(--iv-rule)}
+.iv-home .dsg .w{gap:32px}
+.iv-home .dsg .k{color:#71616B}
+.iv-home .dsg .h2 i{color:inherit}
+.iv-home .dsg .head{align-items:flex-end;gap:24px}
+.iv-home .dsg .head>div{max-width:820px}
+.iv-home .dsg .head>.btn{padding-inline:0;min-height:44px;border-bottom:1px solid #35243288;background:none;font-size:12px;flex-shrink:0}
+.iv-home .chips{gap:12px 24px;padding-bottom:10px;border-bottom:1px solid var(--iv-rule)}
+.iv-home .chips .k{margin:0}
+.iv-home .chip{min-height:40px;padding:0;box-shadow:none;border-radius:0;font-weight:400;font-size:12px;gap:5px;white-space:nowrap}
+.iv-home .chip:hover{box-shadow:none;color:var(--iv-lacre);text-decoration:underline;text-underline-offset:5px}
+.iv-home .chip small{color:#71616B;font-size:9px}
+.iv-home .dcards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px}
+.iv-home .dcard{gap:10px;min-width:0}
+.iv-home .dcard .ph{position:relative;aspect-ratio:4/5;width:100%;background:#E7DEE2;border-radius:0;padding:0;overflow:hidden;box-shadow:none}
+.iv-home .dcard:nth-child(2) .ph{background:#DDD5D9}
+.iv-home .dcard:nth-child(3) .ph{background:#E6E4D9}
+.iv-home .dcard .ph img{position:absolute;left:7%;top:7%;width:57%;height:auto;aspect-ratio:554/1200;object-fit:contain;object-position:top;border:1px solid #fff8;border-radius:2px;box-shadow:0 14px 24px #3524321f;transition:transform .45s ease}
+.iv-home .dcard .ph img.collection-inside{left:auto;right:5%;top:23%;width:52%;z-index:1}
+.iv-home .dcard>b{font-size:29px;font-weight:400;line-height:1.25;margin-top:6px}
+.iv-home .dcard>span{font:400 12px/1.6 var(--iv-sans);text-transform:none;letter-spacing:0;color:#71616B}
+.iv-home .dcard .collection-view{display:flex;align-items:center;gap:14px;min-height:44px;color:var(--iv-ink);font-size:12px;text-decoration:underline;text-underline-offset:5px}
+.iv-home .dcard:hover .ph{box-shadow:none}
+@media(hover:hover){.iv-home .dcard:hover .ph img{transform:translateY(-4px)}}
+.iv-home .collection-more{margin:4px 0 0;font-size:13px;color:#71616B;line-height:1.8}
+.iv-home .collection-more a{color:var(--iv-ink);text-underline-offset:4px}
+.iv-home .dnote{font-size:13px;line-height:1.7;color:#71616B;max-width:800px}
+/* The complete journey and useful features keep the original information. */
+.iv-home .journey{padding-block:88px;gap:34px}
+.iv-home .journey .head>div{max-width:650px}
+.iv-home .steps{gap:24px}
+.iv-home .steps .ph{border-radius:2px;padding:0;background:none;box-shadow:0 10px 24px #35243212;overflow:hidden;border:1px solid var(--iv-rule)}
+.iv-home .steps .ph img{border-radius:0}
+.iv-home .steps b{font-size:22px;font-weight:400;line-height:1.3}
+.iv-home .steps b span{font-size:12px;color:#71616B;font-family:var(--iv-sans)}
+.iv-home .steps p{font-size:13px;line-height:1.7;color:#71616B}
+.iv-home .band{border-radius:0;background:none;border-top:1px solid var(--iv-rule);border-bottom:1px solid var(--iv-rule);padding:22px 0;font-size:14px;font-weight:400}
+.iv-home .band .btn{font-size:12px;min-height:44px}
+.iv-home .how{padding-block:86px;grid-template-columns:minmax(0,.75fr) minmax(0,1.25fr);gap:60px}
+.iv-home .how ol{gap:26px}
+.iv-home .how li{border-top:1px solid #B7A38A}
+.iv-home .how li>span{font-size:34px;font-weight:400;color:#71616B}
+.iv-home .how li b{font-size:15px;font-weight:500}
+.iv-home .how li p{font-size:14px;line-height:1.7;color:#71616B}
+.iv-home .lnk{font-size:13px;font-weight:500;min-height:44px;color:var(--iv-lacre)}
+.iv-home .inc{background:#E9E0E3;padding-block:84px}
+.iv-home .feats{gap:0 32px}
+.iv-home .feats li{border-radius:0;background:none;box-shadow:none;border-top:1px solid var(--iv-rule);padding:22px 0}
+.iv-home .feats b{font-size:14px;font-weight:500}
+.iv-home .feats span{font-size:13px;line-height:1.7;color:#61535D}
+/* Real editor and dashboard captures in two complementary editorial layouts. */
+.iv-home .tools{display:block;max-width:none;padding:0;background:var(--iv-plum);color:var(--iv-silk)}
+.iv-home .tool{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.3fr);gap:22px 64px;align-content:center;max-width:1392px;margin-inline:auto;padding:84px 56px}
+.iv-home .tool>.k{grid-column:1;grid-row:1;color:#D0BBC7;align-self:end}
+.iv-home .tool>.h2{grid-column:1;grid-row:2;align-self:center}
+.iv-home .tool>.shot{grid-column:2;grid-row:1/4;align-self:center;aspect-ratio:16/10;overflow:hidden;background:var(--iv-paper);border-radius:3px;border:1px solid #D0BBC733;box-shadow:0 24px 50px #160E1A33}
+.iv-home .tool>.shot img{width:100%;height:100%;object-fit:contain;object-position:center}
+.iv-home .tool>p:not(.k){grid-column:1;grid-row:3;font-size:14px;line-height:1.8;color:#DDCFD7;align-self:start}
+.iv-home .tool p svg{color:#D0BBC7;margin-top:4px}
+.iv-home .tool#panel{background:var(--iv-silk);color:var(--iv-ink);max-width:none;padding-inline:max(56px,calc((100vw - 1280px)/2));grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr)}
+.iv-home .tool#panel>.k{color:#71616B}
+.iv-home .tool#panel>p:not(.k){color:#71616B}
+.iv-home .tool#panel .shot{background:#E9E0E3;aspect-ratio:4/5;max-height:520px;width:100%;border:0;box-shadow:none;padding:25px 0 0;display:flex;justify-content:center;overflow:hidden}
+.iv-home .tool#panel .shot img{width:70%;height:auto;object-fit:contain;object-position:top;border-radius:4px 4px 0 0;align-self:flex-start;border:1px solid var(--iv-rule)}
+.iv-home .add{background:#E9E0E3;padding-block:84px}
+.iv-home .ad{border-radius:3px;box-shadow:none;border:1px solid var(--iv-rule)}
+.iv-home .ad-stage{background:var(--iv-paper)}
+.iv-home .ad-copy h3{font-size:36px;font-weight:400;line-height:1.2}
+.iv-home .ad-copy p{font-size:15px;line-height:1.8;color:#61535D}
+.iv-home .ad-count{font-size:10px;font-weight:400;letter-spacing:.18em;color:#71616B}
+.iv-home .ad-arrow{border-radius:2px;box-shadow:inset 0 0 0 1px var(--iv-rule)}
+.iv-home .ad-arrow:hover{background:var(--iv-plum);color:var(--iv-silk)}
+.iv-home .ad-tab{border-radius:2px;box-shadow:none;background:transparent;border-bottom:1px solid #35243233;font-size:12px;min-height:44px;font-weight:400;padding-inline:12px}
+.iv-home .ad-tab[aria-selected=true]{background:var(--iv-plum);color:var(--iv-silk)}
+.iv-home .price{padding-block:88px}
+.iv-home .pgrid{grid-template-columns:minmax(0,1.4fr) minmax(0,1fr)}
+.iv-home .pcard{min-width:0;border-radius:3px;padding:32px;gap:20px}
+.iv-home .pcard h3{font-weight:400;line-height:1.25}
+.iv-home .pcard.alt{background:transparent;border:1px solid var(--iv-rule);box-shadow:none}
+.iv-home .pcard .btns{min-width:0}
+.iv-home .pcard .btns .btn{max-width:100%;padding-inline:16px;font-size:12px}
+.iv-home .pcard.main .note{line-height:1.7}
+.iv-home .faq{grid-template-columns:minmax(0,.75fr) minmax(0,1.25fr);padding-bottom:88px}
+.iv-home .faq summary{font-weight:400;font-size:16px;line-height:1.5;padding-block:16px}
+.iv-home .faq details p{font-size:14px;line-height:1.8;color:#71616B}
+.iv-home .end{border-radius:3px;background:var(--iv-plum);padding:56px;gap:30px}
+.iv-home .end h2{font-size:54px;font-weight:400;line-height:1.15}
+.iv-home .end .btn-dark{background:var(--iv-silk);color:var(--iv-plum)}
+.iv-home .end .r a.wa{font-size:12px}
+.iv-home .foot{padding-block:56px 36px}
+.iv-home .foot .logo{font-size:32px}
+.iv-home .foot nav{font-size:12px;font-weight:400;gap:12px 24px}
+.iv-home .foot .by{font-size:11px;gap:8px 18px;line-height:1.8;padding-top:20px;border-top:1px solid var(--iv-rule)}
+.iv-home .foot .by b{font-weight:500}
+.iv-home .foot small{font-size:11px}
+.iv-home .sticky{background:#F3EEE9f5;box-shadow:0 -1px 0 var(--iv-rule)}
+/* Catalog: preserve search, filtering, prices and both purchase/demo actions. */
+.iv-catalog .w{max-width:1440px;padding-inline:48px}
+.iv-catalog h1{font-weight:400;letter-spacing:-.035em;line-height:1.15}
+.iv-catalog .intro i{color:inherit}
+.iv-catalog .lz-ph,.iv-catalog .tailcard{border-radius:3px}
+.iv-catalog .lz-ph{box-shadow:none}
+.iv-catalog .lz-meta{gap:8px;flex-wrap:wrap}
+.iv-catalog .lz-meta>div{min-width:0}
+.iv-catalog .lz-meta h3{font-weight:400}
+.iv-catalog .lz-buy{border-radius:2px;min-height:44px;font-size:12px;box-shadow:inset 0 0 0 1px #35243255}
+.iv-catalog .lz-price{font-weight:500}
+.iv-catalog .tab,.iv-catalog .chk i,.iv-catalog .clear,.iv-catalog .search{border-radius:2px}
+.iv-catalog .tailcard{background:var(--iv-plum)}
+.iv-catalog .tailcard h3{font-weight:400;line-height:1.2}
+.iv-catalog .tailcard h3 i{color:var(--iv-silk)}
+.iv-catalog .tailcard .btn{max-width:100%}
+@media(max-width:1180px){
+ .iv-home .w{padding-inline:36px}
+ .iv-home .hero{gap:32px;grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+ .iv-home .hero h1{font-size:clamp(58px,6vw,74px)}
+ .iv-home .hero .lead{font-size:16px}
+ .iv-home .hero-visual{height:560px}
+ .iv-home .hero-phone{top:12%;width:45%;left:8%}
+ .iv-home .hero-opening{right:7%;top:26%;width:33%}
+ .iv-home .hero-visual-caption{left:22px;right:22px;font-size:10px}
+ .iv-home .hero-example{font-size:12px}
+ .iv-home .trust{gap:8px 14px}
+ .iv-home .trust span+span::before{margin-right:14px}
+ .iv-home .how,.iv-home .faq{grid-template-columns:1fr;gap:32px}
+ .iv-home .tool{gap:22px 36px;padding:64px 36px}
+ .iv-home .tool#panel{padding-inline:36px}
+ .iv-catalog .w{padding-inline:32px}
+}
+@media(max-width:1100px){
+ .iv-home .nav-toggle{display:flex}
+ .iv-home .top nav{height:auto;min-height:76px;padding-block:12px;flex-wrap:wrap}
+ .iv-home .links{display:none;width:100%;flex-direction:column;align-items:stretch;gap:0;padding:8px 0 6px;font-size:15px;max-height:calc(100svh - 100px);overflow-y:auto}
+ .iv-home nav.open .links{display:flex}
+ .iv-home .links>a,.iv-home .links>span{padding:14px 2px;border-top:1px solid var(--iv-rule);flex-shrink:0}
+ .iv-home .links>a.btn{margin-top:12px;border-top:0;padding-inline:20px}
+ .iv-home .pgrid{grid-template-columns:1fr}
+ .iv-home .tool{grid-template-columns:1fr;gap:22px}
+ .iv-home .tool>.k,.iv-home .tool>.h2,.iv-home .tool>p:not(.k),.iv-home .tool>.shot{grid-column:1;grid-row:auto}
+ .iv-home .tool>.shot{order:3;width:100%}
+ .iv-home .tool#panel{grid-template-columns:minmax(0,1fr) minmax(0,.8fr)}
+ .iv-home .tool#panel>.shot{grid-column:2;grid-row:1/4}
+}
+@media(max-width:900px){
+ .iv-home .hero{grid-template-columns:1fr;gap:32px;padding-top:30px;padding-bottom:48px}
+ .iv-home .hero-t{padding-block:0;gap:22px;max-width:680px}
+ .iv-home .hero h1{font-size:70px;max-width:680px}
+ .iv-home .hero .lead{max-width:620px;font-size:17px}
+ .iv-home .hero-visual{width:100%;height:590px}
+ .iv-home .hero-phone{width:220px;left:18%;top:8%}
+ .iv-home .hero-opening{width:165px;right:18%;top:24%}
+ .iv-home .dcards{gap:18px}
+ .iv-home .dcard>b{font-size:25px}
+ .iv-home .dcard>span{font-size:11px}
+ .iv-home .feats{grid-template-columns:repeat(2,minmax(0,1fr));gap:0 28px}
+ .iv-home .ad{grid-template-columns:1fr}
+ .iv-home .ad-side{padding:28px}
+ .iv-home .tool#panel{grid-template-columns:1fr}
+ .iv-home .tool#panel>.shot{grid-column:1;grid-row:auto;aspect-ratio:5/4;max-height:460px}
+ .iv-home .tool#panel .shot img{width:230px}
+ .iv-catalog .w{padding-inline:24px}
+}
+@media(max-width:720px){
+ .iv-home .w{padding-inline:22px}
+ .iv-home .top .logo,.iv-catalog .top .logo{font-size:29px}
+ .iv-home .top nav{min-height:72px}
+ .iv-home .hero{display:flex;flex-direction:column;align-items:stretch;gap:22px;padding-top:28px;padding-bottom:42px}
+ .iv-home .hero-t{display:contents}
+ .iv-home .hero-t>.k{order:0}
+ .iv-home .hero h1{order:1;font-size:clamp(44px,10.6vw,64px);line-height:1.1;margin:0}
+ .iv-home .hero-visual{order:2;height:435px}
+ .iv-home .hero .lead{order:3;font-size:15px;line-height:1.8;margin:0}
+ .iv-home .hero .ctas{order:4;flex-direction:row;align-items:center;gap:8px 20px;margin-top:0}
+ .iv-home .ctas .btn{width:auto;flex:1;min-width:180px;font-size:12px;padding-inline:18px}
+ .iv-home .hero-example{flex:1;justify-content:center;white-space:nowrap;font-size:12px}
+ .iv-home .hero .trust{order:5;font-size:10px;gap:6px 10px}
+ .iv-home .trust span+span::before{margin-right:10px}
+ .iv-home .hero-phone{left:9%;top:8%;width:46%;border-width:4px;border-radius:20px}
+ .iv-home .hero-phone img{border-radius:15px}
+ .iv-home .hero-opening{right:7%;top:25%;width:32%;border-width:2px}
+ .iv-home .hero-visual::before{inset:18px}
+ .iv-home .hero-visual-caption{left:20px;right:20px;bottom:20px;font-size:9px;gap:10px}
+ .iv-home .hero-visual-caption svg{width:20px}
+ .iv-home .h2{font-size:36px;line-height:1.18}
+ .iv-home .dsg{padding-block:48px 56px}
+ .iv-home .dsg .w{gap:24px}
+ .iv-home .dsg .head{gap:16px}
+ .iv-home .dsg .head>.btn{font-size:12px;min-height:44px}
+ .iv-home .chips{margin:0 -22px;padding:0 22px 8px;gap:22px}
+ .iv-home .dcards{display:grid;grid-template-columns:1fr;overflow:visible;scroll-snap-type:none;margin:0;padding:0;gap:34px}
+ .iv-home .dcard{width:100%;flex:initial;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px 12px}
+ .iv-home .dcard .ph{grid-column:1/-1;aspect-ratio:1/1}
+ .iv-home .dcard>b{font-size:29px;grid-column:1}
+ .iv-home .dcard>span:not(.collection-view){grid-column:1}
+ .iv-home .dcard .collection-view{grid-column:2;grid-row:2/4;font-size:10px;gap:8px}
+ .iv-home .dcard .collection-view svg{width:17px}
+ .iv-home .collection-more,.iv-home .dnote{font-size:12px}
+ .iv-home .journey,.iv-home .how,.iv-home .price{padding-block:56px}
+ .iv-home .steps{gap:16px;margin:0 -22px;padding-inline:22px}
+ .iv-home .steps li{width:160px}
+ .iv-home .steps b{font-size:20px}
+ .iv-home .steps p{font-size:12px}
+ .iv-home .band{gap:16px;font-size:13px;line-height:1.7}
+ .iv-home .band .btn{min-height:46px;width:100%}
+ .iv-home .how{gap:28px}
+ .iv-home .how ol{grid-template-columns:1fr;gap:26px}
+ .iv-home .how li{padding-top:16px;grid-template-columns:32px minmax(0,1fr)}
+ .iv-home .inc,.iv-home .add{padding-block:56px}
+ .iv-home .feats{gap:0 20px}
+ .iv-home .feats li{padding-block:18px}
+ .iv-home .feats b{font-size:13px;line-height:1.5}
+ .iv-home .feats span{font-size:12px}
+ .iv-home .tool,.iv-home .tool#panel{padding:56px 22px;gap:22px}
+ .iv-home .tool>.shot{aspect-ratio:16/10}
+ .iv-home .tool>p:not(.k){font-size:13px}
+ .iv-home .tool#panel .shot{aspect-ratio:1/1;max-height:440px}
+ .iv-home .tool#panel .shot img{width:66%}
+ .iv-home .ad-copy h3{font-size:31px}
+ .iv-home .ad-copy p{font-size:14px}
+ .iv-home .ad-tabs{margin:0 -22px;padding-inline:22px;gap:12px}
+ .iv-home .ad-tab{font-size:11px;padding-inline:12px}
+ .iv-home .ad-side{padding:26px 22px}
+ .iv-home .pcard{padding:24px;gap:18px}
+ .iv-home .pcard h3{font-size:28px}
+ .iv-home .pcard .amt{font-size:38px}
+ .iv-home .pcard .btns{width:100%}
+ .iv-home .pcard .btns .btn{width:100%;font-size:12px;overflow-wrap:anywhere}
+ .iv-home .pay{font-size:11px;line-height:1.8}
+ .iv-home .faq{padding-block:0 56px;gap:24px}
+ .iv-home .faq summary{font-size:14px}
+ .iv-home .faq details p{font-size:13px}
+ .iv-home .end{padding:36px 24px;gap:26px}
+ .iv-home .end h2{font-size:39px}
+ .iv-home .end .r{width:100%;align-items:stretch}
+ .iv-home .end .btn{width:100%;font-size:12px}
+ .iv-home .end .r a.wa{font-size:11px;align-self:center;text-align:center;line-height:1.7}
+ .iv-home .foot{padding-block:44px 110px;gap:24px}
+ .iv-home .foot nav{gap:10px 20px;font-size:11px}
+ .iv-home .foot .by{font-size:10px;gap:8px 14px}
+ .iv-home .sticky .btn{font-size:12px;padding-inline:12px;min-height:48px}
+ .iv-catalog .w{padding-inline:20px}
+ .iv-catalog .top .links{gap:12px;font-size:12px}
+ .iv-catalog .lz-meta{align-items:flex-start}
+ .iv-catalog .lz-buy{padding-inline:12px;font-size:11px}
+ .iv-catalog .tailcard{padding:26px}
+}
+@media(max-width:359px){
+ .iv-home .hero-visual{height:365px}
+ .iv-home .hero h1{font-size:43px}
+ .iv-home .hero-visual-caption{font-size:8px;left:16px;right:16px}
+ .iv-home .dcard>span:not(.collection-view){font-size:10px}
+ .iv-home .dcard .collection-view{font-size:9px;gap:5px}
+}
+@media(prefers-reduced-motion:reduce){
+ .iv-home .hero-phone,.iv-home .hero-opening,.iv-home .dcard img{transition:none!important;transform:none!important}
+}
+/* Keep the photographic objects clear of their caption on wide displays. */
+.iv-home .hero-phone{max-width:245px}
+.iv-home .hero-opening{max-width:190px}
+.iv-catalog .lz-art,.iv-catalog .custom,.iv-catalog .incl,.iv-catalog .search input{border-radius:3px}
+.iv-catalog .tab{min-height:44px}
+@media(max-width:960px){.iv-catalog .links a.hide-sm{display:none}}
+@media(max-width:480px){.iv-catalog .links a.on{display:none}.iv-catalog .top nav{gap:16px}.iv-catalog .links{gap:14px}}

@@ -78,7 +78,7 @@
   cloth.className = 'curtain-surface'; cloth.setAttribute('aria-hidden', 'true');
   op.querySelector('.blind').insertBefore(cloth, op.querySelector('.blind-edge'));
   function prepareCloth() {
-    if (!textile.naturalWidth || !ctx) return;
+    if (!textile.naturalWidth || !ctx || innerWidth < 1 || innerHeight < 1) return;
     var w = innerWidth, h = innerHeight;
     density = Math.min(devicePixelRatio || 1, 2);
     material.width = Math.round(w * density); material.height = Math.round(h * density);
@@ -102,7 +102,7 @@
     op.classList.add('fabric-ready'); lastPaint = -1; paintCloth(progress, true);
   }
   function paintCloth(p, force) {
-    if (!ready) return;
+    if (!ready || innerWidth < 1 || innerHeight < 1) return;
     var now = performance.now(); if (!force && p > 0 && p < 1 && now - lastPaint < 32) return;
     lastPaint = now;
     var w = innerWidth, h = innerHeight, half = w / 2, columns = 144;

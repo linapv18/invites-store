@@ -292,7 +292,7 @@
       // El panel lleva la marca Invitesse (el sello «ss» con el lazo) y el nombre de la pareja.
       if (!document.getElementById('lzBrandFonts')) {
         var fl = document.createElement('link'); fl.id = 'lzBrandFonts'; fl.rel = 'stylesheet';
-        fl.href = 'https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;1,9..144,500;1,9..144,600&family=Geist:wght@400;500;600&display=swap';
+        fl.href = 'https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@0,400;0,500;1,500;1,600&family=Geist:wght@400;500;600&display=swap';
         document.head.appendChild(fl);
       }
       var mark = '<span class="lz-mark" aria-hidden="true"><b>ss</b><svg viewBox="0 0 70 54"><path d="M2 48C10 34 22 26 31 30C39 34 35 45 27 43C19 41 21 26 36 17C46 11 58 10 66 15" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round"/></svg></span>';
