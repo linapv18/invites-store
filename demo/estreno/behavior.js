@@ -86,14 +86,14 @@
     var id='esLamp'+(++lightCounter),svg=document.createElementNS(lightNS,'svg');
     svg.classList.add('marquee-lamps');svg.setAttribute('viewBox','0 0 '+w+' '+h);svg.setAttribute('aria-hidden','true');svg.setAttribute('focusable','false');svg.dataset.size=w+'x'+h;
     svg.innerHTML='<defs><radialGradient id="'+id+'halo"><stop stop-color="var(--bulb)" stop-opacity=".6"/><stop offset=".38" stop-color="var(--bulb)" stop-opacity=".22"/><stop offset="1" stop-color="var(--bulb)" stop-opacity="0"/></radialGradient><radialGradient id="'+id+'glass" cx="32%" cy="25%" r="78%"><stop stop-color="#fffef5"/><stop offset=".24" stop-color="#fff7d9"/><stop offset=".62" stop-color="var(--bulb)"/><stop offset="1" stop-color="#b18345"/></radialGradient><linearGradient id="'+id+'socket" x2=".8" y2="1"><stop stop-color="#b09a71"/><stop offset=".4" stop-color="#554332"/><stop offset="1" stop-color="#19120d"/></linearGradient></defs>';
-    svg.innerHTML+=points.map(function(p,i){var x=p[0].toFixed(2),y=p[1].toFixed(2);return '<g class="marquee-lamp" style="--lamp-delay:'+(i/points.length*.52).toFixed(3)+'s"><circle cx="'+x+'" cy="'+y+'" r="6.2" fill="url(#'+id+'socket)" stroke="#0b0806" stroke-width=".7"/><g class="lamp-glow"><circle cx="'+x+'" cy="'+y+'" r="16" fill="url(#'+id+'halo)"/></g><g class="lamp-glass"><circle cx="'+x+'" cy="'+y+'" r="4.45" fill="url(#'+id+'glass)"/><ellipse cx="'+(p[0]-.95).toFixed(2)+'" cy="'+(p[1]-1.3).toFixed(2)+'" rx="1.1" ry=".65" fill="#fff" opacity=".82"/><path d="M'+(p[0]-1.8).toFixed(2)+' '+(p[1]+.9).toFixed(2)+'q1.8-1.4 3.6 0" fill="none" stroke="#fffce1" stroke-width=".65" opacity=".9"/></g></g>';}).join('');
+    svg.innerHTML+=points.map(function(p,i){var x=p[0].toFixed(2),y=p[1].toFixed(2);return '<g class="marquee-lamp" style="--lamp-delay:'+(i/points.length*1.0).toFixed(3)+'s"><circle cx="'+x+'" cy="'+y+'" r="6.2" fill="url(#'+id+'socket)" stroke="#0b0806" stroke-width=".7"/><g class="lamp-glow"><circle cx="'+x+'" cy="'+y+'" r="16" fill="url(#'+id+'halo)"/></g><g class="lamp-glass"><circle cx="'+x+'" cy="'+y+'" r="4.45" fill="url(#'+id+'glass)"/><ellipse cx="'+(p[0]-.95).toFixed(2)+'" cy="'+(p[1]-1.3).toFixed(2)+'" rx="1.1" ry=".65" fill="#fff" opacity=".82"/><path d="M'+(p[0]-1.8).toFixed(2)+' '+(p[1]+.9).toFixed(2)+'q1.8-1.4 3.6 0" fill="none" stroke="#fffce1" stroke-width=".65" opacity=".9"/></g></g>';}).join('');
     if(old)old.replaceWith(svg);else el.appendChild(svg);
   }
   function ignite(el){
     if(el.classList.contains('lit'))return;
     el.classList.add('lit');
     if(still)el.classList.add('lamps-settled');
-    else el._lampTimer=setTimeout(function(){el.classList.add('lamps-settled');},1000);
+    else el._lampTimer=setTimeout(function(){el.classList.add('lamps-settled');},1650);
   }
   lightFrames.forEach(renderLamps);
   var lightRAF=0;
@@ -125,7 +125,7 @@
     document.querySelector('.hero .names').focus({ preventScroll: true });
     if (lights) document.querySelectorAll('.marquee,.board,.sign').forEach(function (el) { lights.unobserve(el); lights.observe(el); });
   }
-  function part() { if (op.classList.contains('open')) return; clear(); LazoMusic.play(); op.classList.add('open'); timers.push(setTimeout(enter, still ? 0 : 1050)); }
+  function part() { if (op.classList.contains('open')) return; clear(); LazoMusic.play(); op.classList.add('open'); timers.push(setTimeout(enter, still ? 0 : 2200)); }
   $('sleeve').addEventListener('click', part); $('enter').addEventListener('click', part);
   window.LzTemplate = {
     open: function () { op.classList.add('open'); enter(); },
