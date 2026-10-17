@@ -50,11 +50,43 @@
   }
   weekFill();
 
-  // Las bombillas se encienden cuando la marquesina entra en pantalla (y corren en cadena mientras se ve).
-  if ('IntersectionObserver' in window && !still) {
-    lights = new IntersectionObserver(function (es) { es.forEach(function (e) { e.target.classList.toggle('lit', e.isIntersecting && opened); }); }, { threshold: .2 });
-    document.querySelectorAll('.marquee,.board,.sign').forEach(function (el) { lights.observe(el); });
-  } else document.querySelectorAll('.marquee,.board,.sign').forEach(function (el) { el.classList.add('lit'); });
+  // One clockwise ignition; every bulb stays lit afterwards, including on return scroll.
+  var lightFrames=[].slice.call(document.querySelectorAll('.marquee,.board,.sign'));
+  var lightNS='http://www.w3.org/2000/svg',lightCounter=0;
+  function renderLamps(el){
+    var w=el.clientWidth,h=el.clientHeight;if(!w||!h)return;
+    var old=el.querySelector(':scope > .marquee-lamps');
+    if(old&&old.dataset.size===w+'x'+h)return;
+    var inset=parseFloat(getComputedStyle(el).getPropertyValue('--b'))/2||13.5;
+    var gap=parseFloat(getComputedStyle(el).getPropertyValue('--g'))||31;
+    var nx=Math.max(1,Math.round((w-2*inset)/gap)),ny=Math.max(1,Math.round((h-2*inset)/gap)),points=[];
+    for(var i=0;i<nx;i++)points.push([inset+(w-2*inset)*i/nx,inset]);
+    for(var i=0;i<ny;i++)points.push([w-inset,inset+(h-2*inset)*i/ny]);
+    for(var i=0;i<nx;i++)points.push([w-inset-(w-2*inset)*i/nx,h-inset]);
+    for(var i=0;i<ny;i++)points.push([inset,h-inset-(h-2*inset)*i/ny]);
+    var id='esLamp'+(++lightCounter),svg=document.createElementNS(lightNS,'svg');
+    svg.classList.add('marquee-lamps');svg.setAttribute('viewBox','0 0 '+w+' '+h);svg.setAttribute('aria-hidden','true');svg.setAttribute('focusable','false');svg.dataset.size=w+'x'+h;
+    svg.innerHTML='<defs><radialGradient id="'+id+'halo"><stop stop-color="var(--bulb)" stop-opacity=".6"/><stop offset=".38" stop-color="var(--bulb)" stop-opacity=".22"/><stop offset="1" stop-color="var(--bulb)" stop-opacity="0"/></radialGradient><radialGradient id="'+id+'glass" cx="32%" cy="25%" r="78%"><stop stop-color="#fffef5"/><stop offset=".24" stop-color="#fff7d9"/><stop offset=".62" stop-color="var(--bulb)"/><stop offset="1" stop-color="#b18345"/></radialGradient><linearGradient id="'+id+'socket" x2=".8" y2="1"><stop stop-color="#b09a71"/><stop offset=".4" stop-color="#554332"/><stop offset="1" stop-color="#19120d"/></linearGradient></defs>';
+    svg.innerHTML+=points.map(function(p,i){var x=p[0].toFixed(2),y=p[1].toFixed(2);return '<g class="marquee-lamp" style="--lamp-delay:'+(i/points.length*.52).toFixed(3)+'s"><circle cx="'+x+'" cy="'+y+'" r="6.2" fill="url(#'+id+'socket)" stroke="#0b0806" stroke-width=".7"/><g class="lamp-glow"><circle cx="'+x+'" cy="'+y+'" r="16" fill="url(#'+id+'halo)"/></g><g class="lamp-glass"><circle cx="'+x+'" cy="'+y+'" r="4.45" fill="url(#'+id+'glass)"/><ellipse cx="'+(p[0]-.95).toFixed(2)+'" cy="'+(p[1]-1.3).toFixed(2)+'" rx="1.1" ry=".65" fill="#fff" opacity=".82"/><path d="M'+(p[0]-1.8).toFixed(2)+' '+(p[1]+.9).toFixed(2)+'q1.8-1.4 3.6 0" fill="none" stroke="#fffce1" stroke-width=".65" opacity=".9"/></g></g>';}).join('');
+    if(old)old.replaceWith(svg);else el.appendChild(svg);
+  }
+  function ignite(el){
+    if(el.classList.contains('lit'))return;
+    el.classList.add('lit');
+    if(still)el.classList.add('lamps-settled');
+    else el._lampTimer=setTimeout(function(){el.classList.add('lamps-settled');},1000);
+  }
+  lightFrames.forEach(renderLamps);
+  var lightRAF=0;
+  function resizeLights(){if(!lightRAF)lightRAF=requestAnimationFrame(function(){lightRAF=0;lightFrames.forEach(renderLamps);});}
+  if('ResizeObserver' in window){var lightResize=new ResizeObserver(resizeLights);lightFrames.forEach(function(el){lightResize.observe(el);});}
+  else window.addEventListener('resize',resizeLights);
+  if(document.fonts)document.fonts.ready.then(resizeLights);
+  if('IntersectionObserver' in window&&!still){
+    lights=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting&&opened){ignite(e.target);lights.unobserve(e.target);}});},{threshold:.12});
+    lightFrames.forEach(function(el){lights.observe(el);});
+  }else lightFrames.forEach(ignite);
+  function resetLights(){lightFrames.forEach(function(el){clearTimeout(el._lampTimer);el.classList.remove('lit','lamps-settled');if(lights){lights.unobserve(el);lights.observe(el);}else ignite(el);});}
 
   // La tira de película avanza de fotograma en fotograma con las flechas.
   var strip = $('strip');
@@ -75,7 +107,7 @@
   $('sleeve').addEventListener('click', part); $('enter').addEventListener('click', part);
   window.LzTemplate = {
     open: function () { op.classList.add('open'); enter(); },
-    envelope: function () { clear(); opened = false; bar.classList.remove('show'); op.classList.remove('open', 'gone'); op.inert = false; op.removeAttribute('aria-hidden'); $('invite').inert = true; document.body.classList.add('locked'); window.scrollTo(0, 0); },
+    envelope: function () { clear(); opened = false; resetLights();bar.classList.remove('show'); op.classList.remove('open', 'gone'); op.inert = false; op.removeAttribute('aria-hidden'); $('invite').inert = true; document.body.classList.add('locked'); window.scrollTo(0, 0); },
     scroll: function (el, now) { window.scrollTo({ top: el.getBoundingClientRect().top + scrollY - 70, behavior: now || still ? 'instant' : 'smooth' }); }
   };
 
