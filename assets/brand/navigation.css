@@ -15,3 +15,12 @@
 @media(max-width:1100px){:is(.iv-home,.iv-catalog) header.top .links{gap:18px;font-size:13px}:is(.iv-home,.iv-catalog) header.top .links .btn{display:none}}
 @media(max-width:800px){:is(.iv-home,.iv-catalog) header.top nav.w{min-height:68px;padding-inline:24px}:is(.iv-home,.iv-catalog) header.top .logo{font-size:28px}:is(.iv-home,.iv-catalog) header.top .nav-toggle{display:flex}:is(.iv-home,.iv-catalog) header.top .links{display:none;position:absolute;top:68px;left:0;right:0;background:#241320;padding:12px 24px 20px;max-height:calc(100dvh - 68px);overflow:auto;box-shadow:0 16px 24px #24132033}:is(.iv-home,.iv-catalog) header.top .links>a{display:flex;min-height:48px;border-bottom:1px solid #ffffff25;font-size:16px}:is(.iv-home,.iv-catalog) header.top .links .btn{display:flex;margin-top:16px;border:0}:is(.iv-home,.iv-catalog) header.top .links .lang{font-size:13px}:is(.iv-home,.iv-catalog) header.top nav.open .links{display:block}}
 @media(max-width:500px){:is(.iv-home,.iv-catalog) header.top nav.w{padding-inline:20px}}
+
+/* Account access stays visible without opening the mobile menu. */
+:is(.iv-home,.iv-catalog) header.top .logo{order:1}
+:is(.iv-home,.iv-catalog) header.top .links{order:2;margin-left:auto}
+:is(.iv-home,.iv-catalog) header.top .nav-account{order:3;display:inline-flex;min-width:44px;align-items:center;justify-content:center;flex:none;min-height:44px;font:500 14px/1.4 var(--iv-sans);color:inherit;text-decoration:none;white-space:nowrap}
+:is(.iv-home,.iv-catalog) header.top .nav-account:hover{text-decoration:underline;text-underline-offset:6px}
+:is(.iv-home,.iv-catalog) header.top .nav-toggle{order:4;flex:none}
+@media(max-width:800px){:is(.iv-home,.iv-catalog) header.top nav.w{gap:14px}:is(.iv-home,.iv-catalog) header.top .nav-account{margin-left:auto;font-size:13px}}
+@media(max-width:360px){:is(.iv-home,.iv-catalog) header.top nav.w{gap:10px}:is(.iv-home,.iv-catalog) header.top .nav-account{font-size:12px}:is(.iv-home,.iv-catalog) header.top .logo{font-size:26px}}
