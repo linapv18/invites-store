@@ -60,3 +60,7 @@ El editor conserva una caché local para sus iframes de vista previa; esta no de
 Consulta real de solo lectura a `/auth/v1/settings`: HTTP 200, Email habilitado y confirmación exigida. Lectura anónima de `invitation_drafts`: HTTP 401 / PostgreSQL `42501`, acceso rechazado.
 
 Los recorridos de registro, acceso, creación/guardado de borradores, recuperación en otro contexto de navegador, fallos de servidor, reintentos, conflictos y cierre de sesión se prueban con respuestas del proveedor interceptadas. No se registran usuarios ni se envían correos reales. Estas pruebas no sustituyen una comprobación de aislamiento con dos usuarios en el proyecto remoto ni la entrega real de correos.
+
+## Estructura completa preparada
+
+Ver [SUPABASE-PERMISOS.md](SUPABASE-PERMISOS.md). Después de la primera migración, ejecutar `supabase/ACTIVAR-PLATAFORMA.sql` una sola vez para crear el resto de tablas, RLS, funciones y bucket privado. Los controles nuevos del editor aún requieren conexión a esas APIs.
