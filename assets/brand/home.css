@@ -140,3 +140,21 @@ details[open]>summary>span{transform:rotate(45deg)}
 .hero-design.romantic .hero-object{padding:0;aspect-ratio:1}
 .hero-design.romantic .hero-object img{width:100%;height:100%;max-height:none;object-fit:cover;filter:none}
 .hero-design.romantic:hover .hero-object img{transform:none}
+/* Reply summary illustrated in the storefront's own visual language. */
+.response-shot.response-preview{height:auto;min-height:494px;padding:28px;display:flex;align-items:center;background:#DED1CB}
+.confirmation-card{width:100%;padding:26px 28px 22px;background:#F8F3EC;color:#352432;border:1px solid #BBA59B;box-shadow:0 12px 32px #3524320d}
+.confirmation-top{display:flex;justify-content:space-between;align-items:center;gap:16px;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#725D68}
+.confirmation-mark{display:grid;place-items:center;width:32px;height:32px;border:1px solid #B6A28D;border-radius:50%;color:#775932}
+.confirmation-mark svg{width:16px;height:16px}
+.confirmation-family{margin-top:22px;font-size:12px;color:#725D68}
+.confirmation-card h4{margin:9px 0 18px;font:400 clamp(32px,3.4vw,46px)/1.04 var(--iv-serif);letter-spacing:-.025em}
+.confirmation-summary{display:flex;align-items:baseline;gap:8px;padding-bottom:18px;font-size:13px;color:#725D68}
+.confirmation-summary b{font:400 28px/1 var(--iv-serif);color:#352432}
+.confirmation-guests{list-style:none;margin:0;padding:0;border-top:1px solid #35243226}
+.confirmation-guests li{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:11px 0;border-bottom:1px solid #35243226;font-size:13px}
+.confirmation-status{display:inline-flex;align-items:center;gap:5px;white-space:nowrap;color:#655560;font-size:11px}
+.confirmation-status svg{width:12px;height:12px}
+.confirmation-note{margin-top:20px;font:400 17px/1.4 var(--iv-serif)}
+.confirmation-example{display:block;margin-top:14px;color:#725D68;font-size:11px;letter-spacing:.04em}
+@media(max-width:800px){.response-shot.response-preview{padding:18px;min-height:0}.confirmation-card{padding:20px 18px}.confirmation-card h4{font-size:34px}.confirmation-top{font-size:9px;letter-spacing:.06em}.confirmation-guests li{font-size:12px;gap:8px}.confirmation-status{font-size:10px}.confirmation-family{margin-top:18px}}
+@media(max-width:360px){.response-shot.response-preview{padding:12px}.confirmation-card{padding:18px 14px}.confirmation-guests li{font-size:11px}.confirmation-note{font-size:16px}}
