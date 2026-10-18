@@ -145,12 +145,13 @@
     { id: 'tele', es: 'Tele y ventana', en: 'TV and window', opts: ['tele', 'ventana'] },
     { id: 'luna', es: 'Luna y medallón', en: 'Moon and medallion', opts: ['luna', 'medallon'] }
   ];
-  var UI = { es: { demo: 'Ver demo', demoOf: 'Ver demo del diseño', buy: 'Elegir', buyOf: 'Elegir el diseño', isNew: 'Nuevo', price: 'Contratación próximamente' }, en: { demo: 'View demo', demoOf: 'View demo:', buy: 'Choose', buyOf: 'Choose the design', isNew: 'New', price: 'Ordering available soon' } };
+  var UI = { es: { demo: 'Ver demo', demoOf: 'Ver demo del diseño', buy: 'Comprar', buyOf: 'Comprar el diseño', isNew: 'Nuevo', price: 'Desde US$ XX' }, en: { demo: 'View demo', demoOf: 'View demo:', buy: 'Buy', buyOf: 'Buy the design', isNew: 'New', price: 'From US$ XX' } };
 
   // Tarjeta de un diseño en el catálogo: la invitación cerrada y los dos caminos (demo y elegir).
   function card(d, lang) {
     var t = d[lang], u = UI[lang], base = lang === 'en' ? '/en' : '';
     var op = String(t.opening).replace(/^(Apertura|Opening):\s*/, '');
+    op = op.charAt(0).toUpperCase() + op.slice(1);
     var preview = d.thumb;
     var arrow = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-5-5 5 5-5 5"/></svg>';
     return '<article class="lz-card" data-id="' + d.id + '">' +

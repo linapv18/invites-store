@@ -27,7 +27,7 @@
       step1: '1. Su cuenta', step2: '2. Pago', changeAcc: 'Usar otra cuenta', needAcc: 'Primero creen su cuenta o ingresen.',
       method: 'Método de pago', card: 'Tarjeta', paypal: 'PayPal', cardName: 'Nombre en la tarjeta', cardNamePh: 'Como aparece en la tarjeta', cardNum: 'Número de tarjeta', exp: 'Vencimiento', expPh: 'MM / AA', cvc: 'CVC',
       paypalText: 'Al pagar los llevaremos a PayPal para terminar y volverán aquí con su diseño listo para editar.',
-      pay: 'Pagar [Precio]', payPaypal: 'Continuar con PayPal', notConnected: 'Los pagos todavía no están conectados, así que no se hizo ningún cargo. [Pendiente: enlace de pago]',
+      pay: 'Pagar US$ XX', payPaypal: 'Continuar con PayPal', notConnected: 'Los pagos todavía no están conectados, así que no se hizo ningún cargo. [Pendiente: enlace de pago]',
       testBuy: 'Simular compra (prueba)', testHint: 'Solo para probar: activa el diseño en su cuenta sin pagar.',
       order: 'Su pedido', inv: 'Invitación', total: 'Total', includes: ['Efecto de apertura del diseño', 'Enlace único por invitado y confirmación por persona', 'Historia, itinerario, preguntas, música y viaje', 'Panel para organizar invitados'],
       already: 'Ya tienen este diseño', alreadyText: 'Pueden editarlo cuando quieran desde su cuenta.', payNote: 'Pago único. Recibirán el recibo en su correo.',
@@ -47,7 +47,7 @@
       step1: '1. Your account', step2: '2. Payment', changeAcc: 'Use another account', needAcc: 'First create your account or log in.',
       method: 'Payment method', card: 'Card', paypal: 'PayPal', cardName: 'Name on card', cardNamePh: 'As it appears on the card', cardNum: 'Card number', exp: 'Expiry', expPh: 'MM / YY', cvc: 'CVC',
       paypalText: 'When you pay we’ll take you to PayPal to finish, and you’ll come back here with your design ready to edit.',
-      pay: 'Pay [Precio]', payPaypal: 'Continue with PayPal', notConnected: 'Payments aren’t connected yet, so nothing was charged. [Pending: payment link]',
+      pay: 'Pay US$ XX', payPaypal: 'Continue with PayPal', notConnected: 'Payments aren’t connected yet, so nothing was charged. [Pending: payment link]',
       testBuy: 'Simulate purchase (test)', testHint: 'For testing only: activates the design on your account without paying.',
       order: 'Your order', inv: 'Invitation', total: 'Total', includes: ['The design’s opening effect', 'A unique link per guest and RSVP per person', 'Story, schedule, FAQ, music and travel', 'Dashboard to organize guests'],
       already: 'You already have this design', alreadyText: 'You can edit it anytime from your account.', payNote: 'One-time payment. You’ll get the receipt by email.',
@@ -102,7 +102,7 @@
         }).join('') + '</div>'
           : '<div class="ed-empty ac-empty"><p>' + esc(S.none) + '</p><a class="ed-btn ed-btn-dark" href="' + BASE + '/comprar/">' + esc(S.choose) + '</a></div>') +
         (rest.length ? '<h2 class="ac-h2">' + esc(S.others) + '</h2><div class="ac-grid">' + rest.map(function (d) {
-          return designCard(d, '<a class="ed-btn ed-btn-dark" href="' + BASE + '/comprar/?diseno=' + d + '">' + esc(S.buy) + ' · [Precio]</a><a class="ed-btn" href="' + demoUrl(d) + '">' + esc(S.demo) + '</a>');
+          return designCard(d, '<a class="ed-btn ed-btn-dark" href="' + BASE + '/comprar/?diseno=' + d + '">' + esc(S.buy) + ' · US$ XX</a><a class="ed-btn" href="' + demoUrl(d) + '">' + esc(S.demo) + '</a>');
         }).join('') + '</div>' : '') + '</section>';
     }
     root.innerHTML = '<div class="ed">' + header() + '<div class="co-wrap ac-wrap">' + h + '</div></div>';
@@ -136,9 +136,9 @@
       '</section>' +
       '<aside class="co-sum" aria-label="' + esc(S.order) + '"><h2>' + esc(S.order) + '</h2>' +
         '<img class="ac-sum-img" src="' + IMG[d] + '" alt="">' +
-        '<div class="co-line"><div><b>' + esc(S.inv) + ' · ' + esc(n[0]) + '</b><span>' + esc(n[1]) + '</span></div><span class="pr">[Precio]</span></div>' +
+        '<div class="co-line"><div><b>' + esc(S.inv) + ' · ' + esc(n[0]) + '</b><span>' + esc(n[1]) + '</span></div><span class="pr">US$ XX</span></div>' +
         '<ul class="ac-includes">' + S.includes.map(function (x) { return '<li>' + esc(x) + '</li>'; }).join('') + '</ul>' +
-        '<div class="co-total"><span>' + esc(S.total) + '</span><b>[Precio]</b></div>' +
+        '<div class="co-total"><span>' + esc(S.total) + '</span><b>US$ XX</b></div>' +
         (owns ? '' :
           '<button type="button" class="ed-btn ed-btn-dark co-pay" data-act="pay"' + (u ? '' : ' disabled') + '>' + esc(method === 'card' ? S.pay : S.payPaypal) + '</button>' +
           '<div aria-live="polite">' + (notice ? '<p class="co-notice">' + esc(S.notConnected) + '</p>' : '') + '</div>' +
