@@ -440,19 +440,25 @@
     if (!bar || document.documentElement.classList.contains('lz-content') || bar.classList.contains('lz-explore')) return;
     var en = document.documentElement.lang.slice(0, 2) === 'en';
     var title = en ? 'Explore demo' : 'Explorar demo';
+    var match = location.pathname.match(/\/demo\/([a-z]+)\//), design = match && match[1];
+    var names = { jardin: ['Jardín','Garden'], costa: ['Costa','Coast'], rosa: ['Romántico','Romantic'], clasico: ['Clásico','Classic'], moderno: ['Moderno','Modern'], nacar: ['Nácar','Nácar'], onix: ['Ónix','Ónix'], senal: ['Señal','Señal'] };
+    var designName = names[design] ? names[design][en ? 1 : 0] : design ? design.charAt(0).toUpperCase() + design.slice(1) : '';
+    var base = en ? '/en' : '';
+    document.body.classList.add('lz-has-tools');
     var icon = function (path) { return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">' + path + '</svg>'; };
     var arrow = icon('<path d="M5 12h14m-5-5 5 5-5 5"/>');
     var compass = icon('<circle cx="12" cy="12" r="9"/><path d="m15.5 8.5-2 5-5 2 2-5z"/>');
     var colors = document.querySelector('.lz-colors');
-    var store = bar.querySelector('a');
-    var href = store ? store.getAttribute('href') : (en ? '/en/#designs' : '/#disenos');
-    var css = document.createElement('link'); css.rel = 'stylesheet'; css.href = '/demo/shared/explore.css'; document.head.appendChild(css);
+    var href = base + '/disenos/';
+    var css = document.createElement('link'); css.rel = 'stylesheet'; css.href = '/demo/shared/explore.css?v=4'; document.head.appendChild(css);
     bar.classList.add('lz-explore');
-    bar.innerHTML = '<button type="button" id="dbToggle" class="lx-toggle" aria-expanded="false" aria-controls="lzExploreSheet">' + compass + title + '</button>' +
+    bar.innerHTML = '<div class="lx-tools"><button type="button" id="dbToggle" class="lx-toggle" aria-label="' + title + '" aria-expanded="false" aria-controls="lzExploreSheet">' + compass + '<span class="lx-label">' + title + '</span></button>' +
+      (design ? '<a class="lx-choose" href="' + base + '/comprar/?diseno=' + design + '">' + (en ? 'Choose ' : 'Elegir ') + designName + arrow + '</a>' : '') + '</div>' +
       '<div id="lzExploreSheet" class="lx-sheet" role="group" aria-label="' + title + '" hidden><div class="lx-head"><b>' + title + '</b>' +
       '<button type="button" class="lx-min" aria-label="' + (en ? 'Minimize' : 'Minimizar') + '">' + icon('<path d="M6 12h12"/>') + '</button></div>' +
       '<div id="dbColors" class="lx-colors"></div><button type="button" class="lx-action" data-explore-panel>' + (en ? 'Couple’s dashboard' : 'Panel de novios') + arrow + '</button>' +
-      '<a class="lx-action" href="' + href + '">' + (en ? 'Back to the store' : 'Volver a la tienda') + arrow + '</a></div>';
+      '<a class="lx-action" href="' + href + '">' + (en ? 'Back to designs' : 'Volver a los diseños') + arrow + '</a>' +
+      '<p class="lx-note">' + (en ? 'Demo view. Ordering will be available at launch.' : 'Vista de demostración. La contratación estará disponible con el lanzamiento.') + '</p></div>';
     if (colors) bar.querySelector('.lx-colors').appendChild(colors);
     var toggle = bar.querySelector('.lx-toggle'), sheet = bar.querySelector('.lx-sheet');
     function setOpen(on, focus) {

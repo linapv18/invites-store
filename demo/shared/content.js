@@ -366,6 +366,8 @@
   function apply(c) {
     C = c || C || {};
     var c0 = C, ph = photos(c0), evs = c0.events || [];
+    // Calendar exports use the first event, independently of the countdown selection.
+    window.LZ_CALENDAR = { date: c0.date, time: evs[0] && evs[0].time, zone: c0.timeZone || 'America/Mexico_City' };
     window.LZ_GALLERY = Array.isArray(c0.gallery) ? c0.gallery.filter(has).slice(0,12) : null;
     // Evento elegido en el editor para la cuenta regresiva (si no hay, el primero).
     var cdEv = evs.filter(function (e) { return e.id === c0.countdownId; })[0] || evs[0];

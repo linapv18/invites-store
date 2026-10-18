@@ -29,3 +29,18 @@ body:has(.lz-explore) .lz-music[hidden]{display:none!important}
   body:has(.lz-explore) .lz-music{width:48px!important;min-width:48px!important;height:48px!important;min-height:48px!important;padding:0!important;border-radius:50%!important;justify-content:center;gap:0!important;box-sizing:border-box}
   body:has(.lz-explore) .lz-music .txt{display:none!important}
 }
+
+/* Commercial tools stay outside the invitation and never appear over a panel or gallery. */
+.lx-tools{display:flex;align-items:center;gap:8px}
+.lz-explore .lx-choose{display:inline-flex;align-items:center;justify-content:center;gap:12px;min-height:46px;padding:10px 18px;border-radius:999px;background:var(--p-surface,var(--p-bg));color:var(--p-ink);border:1px solid var(--p-line);box-shadow:0 6px 18px -10px #0005;font:500 13px/1.4 var(--p-sans,Jost,sans-serif);text-decoration:none;box-sizing:border-box}
+.lz-explore .lx-choose svg{width:16px;height:16px}
+.lz-explore .lx-note{margin:14px 2px 0;font:400 12px/1.6 var(--p-sans,Jost,sans-serif);color:var(--p-ink)}
+body:has(.lz-panel:not([hidden])) :is(.demo-bar.lz-explore,.lz-music),body:has(.lz-viewer:not([hidden])) :is(.demo-bar.lz-explore,.lz-music){display:none!important}
+@media(max-width:720px){
+  .lz-explore .lx-toggle{width:46px;padding:0!important;justify-content:center}
+  .lz-explore .lx-toggle .lx-label{display:none}
+  .lz-explore .lx-choose{max-width:calc(100vw - 152px);gap:8px;font-size:12px;padding-inline:14px}
+  .lz-has-tools #invite .hero{padding-bottom:max(110px,calc(88px + env(safe-area-inset-bottom)))!important}
+  .lz-has-tools{scroll-padding-bottom:92px}
+  .lz-has-tools :is(a,button,input,summary){scroll-margin-bottom:92px}
+}

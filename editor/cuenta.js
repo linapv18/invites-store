@@ -77,7 +77,7 @@
       '<button type="button" role="tab" aria-selected="' + reg + '" data-act="mode" data-id="register">' + esc(S.register) + '</button></div>' +
       '<form class="ac-form" novalidate data-form="auth">' +
       '<label class="ed-field">' + esc(S.email) + '<input type="email" name="email" autocomplete="email" required></label>' +
-      '<label class="ed-field">' + esc(S.pass) + '<span class="ac-pass"><input type="password" name="pass" autocomplete="' + (reg ? 'new-password' : 'current-password') + '" required minlength="8"><button type="button" class="ed-link" data-act="peek">' + esc(S.show) + '</button></span>' + (reg ? '<span class="ed-hint">' + esc(S.passHint) + '</span>' : '') + '</label>' +
+      '<label class="ed-field">' + esc(S.pass) + '<span class="ac-pass"><input type="password" name="pass" autocomplete="' + (reg ? 'new-password' : 'current-password') + '" required minlength="8"><button type="button" class="ed-link" data-act="peek" style="min-height:44px;min-width:44px">' + esc(S.show) + '</button></span>' + (reg ? '<span class="ed-hint">' + esc(S.passHint) + '</span>' : '') + '</label>' +
       (reg ? '<label class="ed-field">' + esc(S.pass2) + '<input type="password" name="pass2" autocomplete="new-password" required></label>' : '') +
       '<p class="ac-error" role="alert"' + (error ? '' : ' hidden') + '>' + esc(error) + '</p>' +
       '<button type="submit" class="ed-btn ed-btn-dark ed-btn-lg">' + esc(reg ? S.register : S.login) + '</button>' +
@@ -166,6 +166,8 @@
     e.preventDefault();
     var email = form.email.value, pass = form.pass.value, btn = form.querySelector('[type="submit"]');
     var fail = function (code) { error = S.err[code] || code; var p = form.querySelector('.ac-error'); p.textContent = error; p.hidden = false; btn.disabled = false; (code === 'email' || code === 'nouser' || code === 'exists' ? form.email : form.pass).focus(); };
+    if (!A.validEmail(email)) return fail('email');
+    if (pass.length < 8) return fail('short');
     if (mode === 'register' && pass !== form.pass2.value) return fail('match');
     btn.disabled = true;
     (mode === 'register' ? A.register(email, pass) : A.login(email, pass)).then(function (r) {

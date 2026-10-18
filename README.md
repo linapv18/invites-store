@@ -4,10 +4,10 @@ Sitio estático (HTML + CSS + un poco de JS), sin paso de build.
 
 - `/` — español (`index.html`)
 - `/en/` — inglés (`en/index.html`)
-- `/disenos/` y `/en/disenos/` — galería con todos los diseños: pestañas «Cómo se abre» (grupos de aperturas en `openings` de `catalogo.js`), filtros de estilo, lugar y colores (en el celular, en una hoja desde abajo), búsqueda, y la tarjeta del diseño a la medida al final. Los filtros quedan en la URL (`?apertura=sobre&estilo=…`).
-- `disenos/catalogo.js` — catálogo de diseños: textos, capturas, etiquetas de los filtros y cuáles son destacados (`featured`). Al sumar un diseño se agrega aquí y sale en la galería; para cambiar los destacados de la landing basta con mover `featured`
-- `assets/brand/` — marca Invitesse: `brand.css` (colores, Fraunces + Geist, el logo `.iv-wm` y el sello `.iv-mark`) y `favicon.svg`. El inicio, el catálogo, el editor, la cuenta y el panel usan estos mismos colores; los nombres internos (`LazoAuth`, `lazo.*` en localStorage, `lz-*`) se conservan para no perder datos guardados.
-- Inicio (`/` y `/en/`): estilos en `assets/brand/home.css` y comportamiento en `assets/brand/home.js` («el atelier que se abre»: ciruela, seda y marfil; ventana en arco, solapa de sobre, hilo champagne, lacre «ss» y numerales romanos). El estor de Encaje del hero sube solo al tocar «Ver cómo se abre»; el recorrido invitación → confirmación → panel se ilumina una vez al entrar en pantalla (escritorio); con movimiento reducido todo queda quieto. `experience.js` sigue abriendo la vista previa real de las plantillas (`data-preview`). El catálogo usa `store.css`.
+- `/disenos/` y `/en/disenos/` — colección con estilos como filtro principal, aperturas desplegables, filtros de lugar y colores, búsqueda y tarjeta a medida. Lógica compartida en `disenos/galeria.js`; los filtros quedan en la URL (`?apertura=sobre&estilo=…`). La hoja móvil tiene foco contenido, fondo inerte y cierre con Escape.
+- `disenos/catalogo.js` — datos y tarjetas de los diseños. La propiedad opcional `thumb` usa miniaturas WebP de 280 y 554 px; sin ella se usa `img[0]`. Las seis tarjetas seleccionadas de la landing se mantienen en sus HTML estáticos ES/EN.
+- `assets/brand/` — marca Invitesse: `brand.css` (colores, Bodoni Moda + Geist, el logo `.iv-wm` y el sello `.iv-mark`) y `favicon.svg`. El inicio, el catálogo, el editor, la cuenta y el panel usan estos mismos colores; los nombres internos (`LazoAuth`, `lazo.*` en localStorage, `lz-*`) se conservan para no perder datos guardados.
+- Inicio (`/` y `/en/`): estilos en `assets/brand/home.css`, tarjetas compartidas en `cards.css` y menú en `home.js`. Hero estático de Romántico con enlace nativo a la demo; no hay iframe, modal ni apertura simulada en la landing. Seis diseños, prueba de confirmación/panel de la misma pareja, tres pasos del editor, opciones, complementos compactos y FAQ. El catálogo usa `catalog.css`. Las aperturas ocurren únicamente dentro de las demos y el navegador conserva el regreso a la colección.
 - Editor: la primera vez muestra una bienvenida con la guía de cinco pasos y un recorrido que ilumina cada parte (`?guia=0` la omite). El botón «Guía» muestra el avance y «Cambiar diseño»/«Diseños» abre los diseños sin salir; un diseño nuevo trae el contenido del último que editaron.
 - `assets/` — capturas de los diseños
 - `/en/demo/<diseño>/` — versión en inglés de cada demo (generada a partir de la española)
@@ -60,7 +60,15 @@ Editor y cuentas (el idioma sale de `<html lang>`):
 Compartido por las demos:
 
 - `demo/shared/panel.js` + `panel.css` — panel de los novios (vista previa), música de fondo y barra de demo
-- `demo/shared/explore.css` + el componente de `panel.js` — «Explorar demo» unificado en todas las plantillas ES/EN. Explorar y música permanecen visibles; música circular en móvil. Las herramientas viven fuera del contenido de la invitación.
+- `demo/shared/explore.css` + el componente de `panel.js` — «Explorar demo» y «Elegir [diseño]» compartidos ES/EN, con retorno al catálogo. Las herramientas se ocultan mientras se abre el panel o la galería y el hero móvil reserva espacio para evitar superposiciones. No aparecen en las vistas del editor/invitado (`lz-content`).
 - `assets/fotos/` — fotos de stock (Pexels) usadas en las demos
 - `assets/musica/demo.mp3` — música libre de derechos (Pixabay, paulyudin)
 - Biblioteca de música del editor: lista `MUSIC_LIBRARY` en `editor/editor.js`. Para sumar canciones libres de derechos, subir el MP3 a `assets/musica/` y agregar una línea. Los MP3 que suben los novios se guardan por ahora en IndexedDB del navegador (`lazo-media`)
+
+## Revisión de la tienda (octubre 2026)
+
+La landing y el catálogo se presentan como vista previa hasta completar la contratación. Los precios, contactos y condiciones pendientes están detallados en [PENDIENTES-LANZAMIENTO.md](PENDIENTES-LANZAMIENTO.md). No se conectaron pagos ni cuentas reales.
+
+Las capturas `encaje-response-{es,en}.webp` y `encaje-panel-{es,en}.webp` proceden de una misma sesión real de la demo: Familia Rodríguez confirma 4 de 4 personas y el resumen pasa de 13 a 17 asistentes de 32. `romantico-hero.webp` es una captura estática del sobre cerrado real de Romántico; la tarjeta y el CTA abren directamente `/demo/rosa/` (o su ruta en inglés), sin preview intermedio. Las miniaturas están en `assets/brand/thumbs/`.
+
+El calendario descargable de Encaje usa UTC explícito y la zona del evento (por defecto, la de Oaxaca en las demos). En el editor de Encaje se puede elegir la zona horaria; el archivo usa la fecha y la hora del primer evento, independientemente del evento seleccionado para la cuenta regresiva. Las líneas del `.ics` se pliegan a 75 octetos UTF-8.

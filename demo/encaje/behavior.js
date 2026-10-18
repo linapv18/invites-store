@@ -23,8 +23,13 @@
     raf = requestAnimationFrame(function () { raf = 0; bar.classList.toggle('show', opened && window.pageYOffset > 520); });
   }, { passive: true });
 
-  var TARGET = new Date(2027, 2, 14, 13, 0).getTime();
-  var when = function () { return new Date(window.LZ_T || TARGET); };
+  var TARGET = window.LazoTime.target('2027-03-14', '13:00', 'America/Mexico_City');
+  // The calendar grid shows the venue's date, not the guest device's date at that instant.
+  var when = function () {
+    var event = window.LZ_CALENDAR || { date: '2027-03-14' };
+    var parts = /^(\d{4})-(\d{2})-(\d{2})$/.exec(event.date || '');
+    return parts ? new Date(+parts[1], +parts[2] - 1, +parts[3]) : new Date(NaN);
+  };
 
   // El lugar repite el lugar, la dirección y el mapa del primer evento del programa.
   function syncPlace() {
@@ -40,6 +45,8 @@
   var HEART = '<svg class="hrt" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M8 14.2s-5.6-3.5-5.6-7.6A3.1 3.1 0 0 1 8 4.7a3.1 3.1 0 0 1 5.6 1.9c0 4.1-5.6 7.6-5.6 7.6z"/></svg>';
   function syncCal() {
     var d = when(), off = LANG === 'en' ? d.getDay() : (d.getDay() + 6) % 7, html = S.week.map(function (w) { return '<span class="dn">' + w + '</span>'; }).join('');
+    $('cal').hidden = !Number.isFinite(d.getTime());
+    if ($('cal').hidden) return;
     for (var i = 0; i < 7; i++) {
       var x = new Date(d.getFullYear(), d.getMonth(), d.getDate() - off + i), on = i === off;
       html += on ? '<span class="dd on">' + HEART + '<b>' + x.getDate() + '</b></span>' : '<span class="dd">' + x.getDate() + '</span>';
@@ -51,17 +58,38 @@
     var nm = document.querySelector('.hero .names'); nm.classList.toggle('long', nm.textContent.replace(/\s+/g, ' ').trim().length > 14);
     var tg = document.querySelector('.tag'); tg.classList.toggle('long', tg.querySelector('.tag-g').textContent.trim().length > 22);
   }
-  function sync() { syncPlace(); syncCal(); fit(); }
+  function calendarInstant() {
+    var event = window.LZ_CALENDAR || { date: '2027-03-14', time: '13:00', zone: 'America/Mexico_City' };
+    if (!event.date || !/^\d{1,2}:\d{2}$/.test(event.time || '')) return NaN;
+    return window.LazoTime.target(event.date, event.time, event.zone);
+  }
+  function sync() {
+    syncPlace(); syncCal(); fit();
+    $('addCal').disabled = !Number.isFinite(calendarInstant());
+    $('addCal').title = $('addCal').disabled ? (LANG === 'en' ? 'Add a valid event date, time and time zone.' : 'Añadan una fecha, hora y zona horaria válidas para el evento.') : '';
+  }
   sync();
 
   // Añadir al calendario: un .ics con la fecha, la hora y el lugar de la invitación.
   $('addCal').addEventListener('click', function () {
-    var d = when(), end = new Date(d.getTime() + 6 * 3600e3), p = function (n) { return String(n).padStart(2, '0'); };
-    var f = function (x) { return x.getFullYear() + p(x.getMonth() + 1) + p(x.getDate()) + 'T' + p(x.getHours()) + p(x.getMinutes()) + '00'; };
+    var instant = calendarInstant();
+    if (!Number.isFinite(instant)) return;
+    var d = new Date(instant), end = new Date(instant + 6 * 3600e3);
+    var f = function (x) { return x.toISOString().replace(/[-:]/g, '').replace(/\.\d{3}Z$/, 'Z'); };
     var esc = function (s) { return String(s || '').replace(/([,;\\])/g, '\\$1').replace(/\n/g, ' '); };
     var names = document.querySelector('.hero .names').textContent.replace(/\s+/g, ' ').trim();
     var place = [$('whereName').textContent, $('whereAddr').textContent, document.querySelector('.hero-c').textContent].filter(function (s) { return s && s.trim(); }).join(', ');
-    var ics = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//Lazo//Invitacion//ES', 'BEGIN:VEVENT', 'UID:' + Date.now() + '@lazo', 'DTSTAMP:' + f(new Date()), 'DTSTART:' + f(d), 'DTEND:' + f(end), 'SUMMARY:' + esc(S.wedding + ' ' + names), 'LOCATION:' + esc(place), 'END:VEVENT', 'END:VCALENDAR'].join('\r\n');
+    // RFC 5545: fold at 75 UTF-8 octets without splitting accented characters.
+    var fold = function (line) {
+      var parts = [], current = '', bytes = 0;
+      Array.from(line).forEach(function (char) {
+        var size = new TextEncoder().encode(char).length;
+        if (bytes + size > 75) { parts.push(current); current = ' '; bytes = 1; }
+        current += char; bytes += size;
+      });
+      parts.push(current); return parts.join('\r\n');
+    };
+    var ics = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//Invitesse//Invitation//EN', 'BEGIN:VEVENT', 'UID:' + Date.now() + '@invitesse', 'DTSTAMP:' + f(new Date()), 'DTSTART:' + f(d), 'DTEND:' + f(end), 'SUMMARY:' + esc(S.wedding + ' ' + names), 'LOCATION:' + esc(place), 'END:VEVENT', 'END:VCALENDAR'].map(fold).join('\r\n') + '\r\n';
     var a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([ics], { type: 'text/calendar' })); a.download = 'boda.ics';
     document.body.appendChild(a); a.click(); a.remove(); setTimeout(function () { URL.revokeObjectURL(a.href); }, 1000);
   });
