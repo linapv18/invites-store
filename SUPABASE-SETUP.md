@@ -64,3 +64,7 @@ Los recorridos de registro, acceso, creación/guardado de borradores, recuperaci
 ## Estructura completa preparada
 
 Ver [SUPABASE-PERMISOS.md](SUPABASE-PERMISOS.md). Después de la primera migración, ejecutar `supabase/ACTIVAR-PLATAFORMA.sql` una sola vez para crear el resto de tablas, RLS, funciones y bucket privado. Los controles nuevos del editor aún requieren conexión a esas APIs.
+
+## Google
+
+El proveedor opcional está preparado en la interfaz. Ver [GOOGLE-LOGIN.md](GOOGLE-LOGIN.md) para configurar Google Cloud y Supabase; no requiere otra migración SQL.

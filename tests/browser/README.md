@@ -9,3 +9,5 @@ Requieren Python con `playwright` y Chromium en `/usr/bin/chromium`. El SDK y ax
 Los tests interceptan todas las solicitudes a `*.supabase.co`; no crean cuentas, no envían correos ni escriben en el proyecto real. El almacenamiento remoto se simula entre dos contextos independientes del navegador. No prueban las políticas RLS del servidor real.
 
 `INVITESSE_TEST_BASE` permite cambiar la URL del sitio servido; los artefactos se guardan en `/tmp/invitesse-browser-checks` o en `INVITESSE_TEST_ARTIFACTS`.
+
+`python tests/browser/google_oauth.py` prueba el acceso Google/PKCE y el regreso al diseño con el proveedor interceptado.

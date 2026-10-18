@@ -37,6 +37,19 @@
     cartKey: function () { return 'invitesse.cart.v1:' + (user ? user.id : 'none'); },
     setLast: function () {},
     recovery: function () { return recovery; },
+    googleAvailable: function () { return B.auth.googleAvailable(); },
+    async google(next) {
+      var destination = api.safeNext(next);
+      try {
+        sessionStorage.setItem('invitesse.oauth.return', JSON.stringify({ path: destination, at: Date.now() }));
+        var result = await B.auth.signInWithGoogle(document.documentElement.lang === 'en' ? '/en/account/' : '/cuenta/');
+        if (result.error) { sessionStorage.removeItem('invitesse.oauth.return'); return { error: errorCode(result.error) }; }
+        return { ok: true };
+      } catch (_) {
+        try { sessionStorage.removeItem('invitesse.oauth.return'); } catch (_) {}
+        return { error: 'network' };
+      }
+    },
     async register(email, pass) {
       try {
         var r = await B.auth.signUp(email, pass, document.documentElement.lang === 'en' ? '/en/account/' : '/cuenta/');

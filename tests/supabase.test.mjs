@@ -30,3 +30,12 @@ test('auth redirects accept only implemented account routes', async () => {
   assert.equal(options.email, 'test@example.invalid');
   assert.throws(() => service.auth.signUp('test@example.invalid', 'password', 'https://evil.example/'), /INVALID_REDIRECT/);
 });
+test('Google OAuth uses the same allowlisted account callback and fixed provider', async () => {
+  globalThis.window = { location: { origin: 'https://www.invitesse.com' } };
+  let sent;
+  const service = createServices({ auth: { signInWithOAuth: async (options) => { sent = options; return { data: {}, error: null }; } } });
+  await service.auth.signInWithGoogle('/en/account/');
+  assert.equal(sent.provider, 'google');
+  assert.equal(sent.options.redirectTo, 'https://www.invitesse.com/en/cuenta/');
+  assert.throws(() => service.auth.signInWithGoogle('https://evil.example/'), /INVALID_REDIRECT/);
+});

@@ -6,6 +6,7 @@
   var root = document.getElementById('lazo-account');
   if (!root || !window.LazoAuth) return;
   var A = window.LazoAuth;
+  var oauthError = new URLSearchParams(location.search).has('error') || new URLSearchParams(location.hash.slice(1)).has('error');
   root.innerHTML = '<p style="padding:40px" role="status">'+(document.documentElement.lang === 'en' ? 'Connecting securely…' : 'Conectando de forma segura…')+'</p>';
   try { await A.ready; } catch (_) {
     root.innerHTML = '<div style="padding:40px"><p role="alert">'+(document.documentElement.lang === 'en' ? 'Unable to connect. Your drafts have not been changed.' : 'No se pudo conectar. Sus borradores no se han modificado.')+'</p><button type="button" onclick="location.reload()">'+(document.documentElement.lang === 'en' ? 'Retry' : 'Reintentar')+'</button></div>'; return;
@@ -80,6 +81,17 @@
   var mode = q.get('modo') === 'crear' || q.get('mode') === 'signup' ? 'register' : 'login';
   var method = 'card', notice = false, error = '', message = '';
   if (A.recovery()) mode = 'update';
+  var googleEnabled = false;
+  try {
+    var oauthReturn = JSON.parse(sessionStorage.getItem('invitesse.oauth.return') || 'null');
+    sessionStorage.removeItem('invitesse.oauth.return');
+    if (oauthReturn && !oauthError && A.current() && Date.now()-oauthReturn.at>=0 && Date.now()-oauthReturn.at<600000) {
+      var returnPath = A.safeNext(oauthReturn.path);
+      if (returnPath && returnPath !== location.pathname + location.search) { location.replace(returnPath); return; }
+    }
+  } catch (_) {}
+  if (oauthError) error = LANG === 'en' ? 'Google sign-in was not completed. Please try again or use your email.' : 'No se completó el acceso con Google. Reintenten o ingresen con su correo.';
+
 
   function header() {
     var u = A.current();
@@ -94,6 +106,7 @@
     return '<div class="ed-seg" role="group" aria-label="'+esc(S.title)+'">'+
       '<button type="button" aria-pressed="'+(mode==='login')+'" data-act="mode" data-id="login">'+esc(S.login)+'</button>'+
       '<button type="button" aria-pressed="'+reg+'" data-act="mode" data-id="register">'+esc(S.register)+'</button></div>'+
+      (!reset&&!update ? '<div data-google-slot></div>' : '')+
       '<form class="ac-form" novalidate data-form="auth">'+
       (update ? '' : '<label class="ed-field">'+esc(S.email)+'<input type="email" name="email" autocomplete="email" required></label>')+
       (reset ? '' : '<label class="ed-field">'+esc(update ? (LANG==='en'?'New password':'Nueva contraseña') : S.pass)+'<span class="ac-pass"><input type="password" name="pass" autocomplete="'+(reg||update?'new-password':'current-password')+'" required minlength="8"><button type="button" class="ed-link" data-act="peek" style="min-height:44px;min-width:44px">'+esc(S.show)+'</button></span><span class="ed-hint">'+esc(S.passHint)+'</span></label>')+
@@ -137,11 +150,21 @@
     root.innerHTML='<div class="ed">'+header()+'<div class="co-wrap ac-wrap"><section class="ac-narrow"><div class="ed-head"><h1>'+esc(S.names[d][0])+'</h1><p>'+(LANG==='en'?'Prepare a private draft. This does not purchase or publish an invitation.':'Preparen un borrador privado. Esto no compra ni publica una invitación.')+'</p></div>'+
       (!u?authForm():'<p role="alert"'+(error?'':' hidden')+'>'+esc(error)+'</p><a class="ed-btn" href="'+demoUrl(d)+'">'+esc(S.demo)+'</a> '+(A.owns(d)?'<a class="ed-btn ed-btn-dark" href="'+editUrl(d)+'">'+esc(S.edit)+'</a>':'<button class="ed-btn ed-btn-dark" type="button" data-act="testbuy">'+esc(S.buy)+'</button>'))+'</section></div></div>';
   }
-  function render() { if (VIEW === 'buy') renderBuy(); else renderAccount(); }
+  function renderGoogle() {
+    root.querySelectorAll('[data-google-slot]').forEach(function(slot) {
+      slot.innerHTML = googleEnabled ? '<button type="button" class="ac-google" data-act="google"><svg width="20" height="20" viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5Z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6C44.4 38.03 46.98 31.87 46.98 24.55Z"/><path fill="#FBBC05" d="M10.53 28.59A14.4 14.4 0 0 1 9.75 24c0-1.59.27-3.13.76-4.59l-7.98-6.19A23.87 23.87 0 0 0 0 24c0 3.87.93 7.53 2.56 10.78l7.97-6.19Z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.91-5.8l-7.73-6c-2.15 1.45-4.92 2.3-8.18 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48Z"/></svg><span>'+(LANG==='en'?'Continue with Google':'Continuar con Google')+'</span></button><div class="ac-auth-divider">'+(LANG==='en'?'or use your email':'o con su correo')+'</div>' : '';
+    });
+  }
+  function render() { if (VIEW === 'buy') renderBuy(); else renderAccount(); renderGoogle(); }
   root.addEventListener('click', async function (e) {
     var b = e.target.closest('[data-act]'); if (!b) return;
     var act = b.getAttribute('data-act');
-    if (act === 'mode') { mode = b.getAttribute('data-id'); error = ''; message = ''; render(); var t = root.querySelector('[data-act="mode"][aria-pressed="true"]'); if (t) t.focus(); }
+    if (act === 'google') {
+      b.disabled = true;
+      var result = await A.google(VIEW === 'buy' ? location.pathname + location.search : A.safeNext(q.get('next')) || ACCOUNT);
+      if (result.error) { error = S.err[result.error] || S.err.network; render(); }
+    }
+    else if (act === 'mode') { mode = b.getAttribute('data-id'); error = ''; message = ''; render(); var t = root.querySelector('[data-act="mode"][aria-pressed="true"]'); if (t) t.focus(); }
     else if (act === 'peek') { var i = b.parentNode.querySelector('input'); var show = i.type === 'password'; i.type = show ? 'text' : 'password'; b.textContent = show ? S.hide : S.show; }
     else if (act === 'logout') { try { await A.logout(); error=''; render(); } catch (_) { error=S.err.network; render(); } }
     else if (act === 'method') { method = b.getAttribute('data-id'); notice = false; render(); }
@@ -171,4 +194,5 @@
   });
   window.addEventListener('invitesse:signed-out',function(){mode='login';message='';render();});
   render();
+  A.googleAvailable().then(function(enabled) { googleEnabled = enabled; renderGoogle(); });
 })();

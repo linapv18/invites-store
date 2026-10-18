@@ -13,7 +13,8 @@ class Backend:
  async def route(self,r):
   req=r.request;url=req.url;data=req.post_data_json if req.post_data else {};self.calls.append((req.method,url.split('.co')[-1]))
   status=200;body={}
-  if '/auth/v1/token' in url:body={'access_token':token(),'refresh_token':'fake-refresh','expires_in':3600,'expires_at':int(time.time())+3600,'token_type':'bearer','user':USER}
+  if '/auth/v1/settings' in url:body={'external':{'google':False}}
+  elif '/auth/v1/token' in url:body={'access_token':token(),'refresh_token':'fake-refresh','expires_in':3600,'expires_at':int(time.time())+3600,'token_type':'bearer','user':USER}
   elif '/auth/v1/user' in url:body=USER
   elif '/auth/v1/signup' in url:body={'user':USER,'session':None}
   elif '/auth/v1/recover' in url or '/auth/v1/logout' in url:body={}
