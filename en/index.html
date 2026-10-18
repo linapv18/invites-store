@@ -4,336 +4,127 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Invitesse — wedding website invitations</title>
-<meta name="description" content="Wedding website invitations to experience from start to finish: an opening that surprises, your story, the schedule with maps and an RSVP per person. You run it all from one dashboard.">
+<meta name="description" content="Wedding website invitations worth opening: an opening that surprises, your story, the schedule and each guest’s RSVP inside the invitation. You see every reply in your dashboard.">
 <meta property="og:title" content="Invitesse — wedding website invitations">
-<meta property="og:description" content="Wedding website invitations to experience from start to finish: an opening that surprises, your story, the schedule with maps and an RSVP per person. You run it all from one dashboard.">
-<meta name="theme-color" content="#F3EEE9">
+<meta property="og:description" content="Wedding website invitations worth opening: an opening that surprises, your story, the schedule and each guest’s RSVP inside the invitation. You see every reply in your dashboard.">
+<meta name="theme-color" content="#241320">
 <link rel="alternate" hreflang="es" href="/">
 <link rel="alternate" hreflang="en" href="/en/">
 <link rel="icon" href="/assets/brand/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&amp;family=Geist:wght@400;500;600&amp;display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..600;1,6..96,400..600&amp;family=Geist:wght@400;500;600&amp;display=swap">
 <link rel="stylesheet" href="/assets/brand/brand.css">
-<link rel="preload" as="image" href="/assets/brand/previews/encaje-portada.webp" fetchpriority="high">
-<style>
-*,*::before,*::after{box-sizing:border-box}
-html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
-body{margin:0;background:var(--iv-paper);color:var(--iv-ink);font:400 16px/1.5 var(--iv-sans)}
-img{max-width:100%;display:block}
-a{color:inherit}
-[hidden]{display:none !important}
-a:focus-visible,button:focus-visible,summary:focus-visible{outline:2px solid var(--iv-lacre);outline-offset:3px}
-.w{max-width:1312px;margin:0 auto;padding:0 32px}
-.k{margin:0;font:600 12px/1.5 var(--iv-sans);letter-spacing:.16em;text-transform:uppercase;color:var(--iv-grey)}
-.h2{margin:0;font:500 56px/1.05 var(--iv-serif);letter-spacing:-.02em}
-.h2 i,h1 i{color:var(--iv-lacre)}
-.p{margin:0;font-size:17px;line-height:1.6;color:#50454C}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:52px;padding:0 26px;border-radius:999px;border:0;font:600 16px var(--iv-sans);text-decoration:none;white-space:nowrap;cursor:pointer;transition:background .2s,box-shadow .2s,color .2s}
-.btn-dark{background:var(--iv-ink);color:var(--iv-paper)}
-.btn-dark:hover{background:#000}
-.btn-line{box-shadow:inset 0 0 0 1.5px currentColor;background:transparent}
-.btn-line:hover{background:#3524320d}
-.btn-paper{background:var(--iv-paper);color:var(--iv-ink)}
-.btn-lacre{background:var(--iv-lacre);color:#FFF7F2}
-.btn-lacre:hover{background:var(--iv-lacre-2)}
-.lnk{display:inline-flex;align-items:center;gap:6px;font-weight:600;color:var(--iv-lacre);text-decoration:none}
-.lnk:hover{text-decoration:underline;text-underline-offset:4px}
-.head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:20px 40px}
-.head>div{display:flex;flex-direction:column;gap:10px}
-.ph{position:relative;border-radius:34px;padding:7px;background:var(--iv-ink);box-shadow:0 30px 50px -24px #35243299;flex:none}
-.ph img{width:100%;height:100%;object-fit:cover;border-radius:28px}
-/* nav */
-.top{position:sticky;top:0;z-index:30;background:#F3EEE9ee;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
-.top nav{height:80px;display:flex;align-items:center;justify-content:space-between;gap:16px}
-.top .logo{font-size:34px;text-decoration:none}
-.links{display:flex;align-items:center;gap:28px;font-weight:500;font-size:15px}
-.links a{text-decoration:none}
-.links a:not(.btn):hover{color:var(--iv-lacre)}
-.badge{display:inline-flex;align-items:center;justify-content:center;min-width:22px;height:22px;padding:0 6px;margin-left:6px;border-radius:999px;background:var(--iv-lacre);color:#FFF7F2;font:600 11px var(--iv-sans)}
-.lang{color:var(--iv-grey)}
-.lang b{color:var(--iv-ink);font-weight:600}
-.nav-toggle{display:none;width:44px;height:44px;border:0;border-radius:50%;background:#3524320d;color:var(--iv-ink);align-items:center;justify-content:center;cursor:pointer}
-.nav-toggle .x{display:none}
-nav.open .nav-toggle .bars{display:none}
-nav.open .nav-toggle .x{display:block}
-/* hero */
-.hero{display:grid;grid-template-columns:minmax(0,1fr) 560px;gap:40px;align-items:center;padding-top:40px;padding-bottom:80px}
-.hero-t{display:flex;flex-direction:column;gap:26px}
-.hero h1{margin:0;font:500 96px/.98 var(--iv-serif);letter-spacing:-.03em}
-.hero .lead{margin:0;font-size:21px;line-height:1.55;color:#50454C;max-width:600px}
-.ctas{display:flex;flex-wrap:wrap;gap:14px;align-items:center}
-.ctas .ex{font-weight:500;text-underline-offset:4px}
-.trust{display:flex;flex-wrap:wrap;gap:8px 26px;font-size:14px;font-weight:500;color:#55505A}
-.stage{position:relative;height:640px}
-.stage .ph{position:absolute}
-.stage .a{left:0;top:110px;width:210px;height:455px;transform:rotate(-7deg)}
-.stage .b{left:162px;top:30px;width:240px;height:520px;z-index:1}
-.stage .c{right:0;top:110px;width:210px;height:455px;transform:rotate(7deg)}
-.stage .tag{position:absolute;left:50%;bottom:20px;translate:-50% 0;z-index:2;display:inline-flex;align-items:center;gap:8px;padding:10px 16px;border-radius:999px;background:#fff;box-shadow:0 10px 24px -12px #35243266;font-size:14px;font-weight:500;white-space:nowrap}
-.stage .tag::before{content:"";width:9px;height:9px;border-radius:50%;background:var(--iv-lacre)}
-/* journey */
-.journey{padding-top:80px;padding-bottom:80px;display:flex;flex-direction:column;gap:34px}
-.journey .head p{max-width:440px}
-.steps{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:20px;margin:0;padding:0;list-style:none}
-.steps li{display:flex;flex-direction:column;gap:12px}
-.steps .ph{aspect-ratio:554/1200;width:100%}
-.steps b{display:flex;align-items:baseline;gap:10px;font:500 24px/1.1 var(--iv-serif)}
-.steps b span{color:var(--iv-lacre)}
-.steps p{margin:-4px 0 0;font-size:15px;line-height:1.5;color:#50454C}
-.band{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:14px 24px;padding:18px 24px;border-radius:18px;background:var(--iv-lino);font-weight:500;font-size:17px}
-/* designs */
-.dsg{background:var(--iv-ink);color:var(--iv-paper);padding:90px 0}
-.dsg .w{display:flex;flex-direction:column;gap:34px}
-.dsg .k{color:#B3ABB8}
-.dsg .h2 i{color:var(--iv-lacre-3)}
-.chips{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
-.chips .k{margin-right:6px}
-.chip{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 18px;border-radius:999px;box-shadow:inset 0 0 0 1px #F3EEE933;font-weight:500;font-size:15px;text-decoration:none}
-.chip:hover{box-shadow:inset 0 0 0 1px #F3EEE999}
-.chip small{font-size:12px;color:#B3ABB8}
-.dcards{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:22px}
-.dcard{display:flex;flex-direction:column;gap:12px;text-decoration:none}
-.dcard .ph{aspect-ratio:554/1200;width:100%;background:#463340}
-.dcard>b{font:500 24px var(--iv-serif)}
-.dcard>span{font:600 11px/1.4 var(--iv-sans);letter-spacing:.14em;text-transform:uppercase;color:#B3ABB8}
-.dcard:hover .ph{box-shadow:0 0 0 2px var(--iv-lacre-3),0 30px 50px -24px #000}
-.more .ph{background:#463340;box-shadow:inset 0 0 0 1.5px #F3EEE926;overflow:hidden;padding:0}
-.more .stack{position:absolute;inset:0}
-.more .stack img{position:absolute;width:48%;aspect-ratio:554/1200;height:auto;border-radius:16px;border:4px solid #0E0D12;box-shadow:0 20px 30px -18px #000}
-.more .stack img:nth-child(1){left:8%;top:12%;transform:rotate(-8deg)}
-.more .stack img:nth-child(2){right:6%;top:10%;transform:rotate(8deg)}
-.more .stack img:nth-child(3){left:26%;top:6%}
-.more .txt{position:absolute;left:20px;right:20px;bottom:22px;display:flex;flex-direction:column;gap:10px;z-index:1}
-.more .txt strong{font:500 34px/1.05 var(--iv-serif)}
-.more .txt em{font-style:normal;font-size:15px;line-height:1.5;color:#CFC8D2}
-.more .btn{min-height:46px}
-.dnote{margin:0;font-size:15px;color:#B3ABB8}
-/* how */
-.how{padding-top:90px;padding-bottom:90px;display:grid;grid-template-columns:420px minmax(0,1fr);gap:60px}
-.how ol{margin:0;padding:0;list-style:none;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
-.how li{display:flex;flex-direction:column;gap:12px;padding-top:18px;border-top:2px solid var(--iv-ink)}
-.how li>span{font:500 44px/1 var(--iv-serif);color:var(--iv-lacre)}
-.how li b{font-size:19px;font-weight:600}
-.how li p{margin:0;font-size:16px;line-height:1.55;color:#50454C}
-/* included */
-.inc{background:var(--iv-lino);padding:90px 0}
-.inc .w{display:flex;flex-direction:column;gap:34px}
-.feats{margin:0;padding:0;list-style:none;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
-.feats li{display:flex;flex-direction:column;gap:8px;padding:22px;border-radius:20px;background:#fff;box-shadow:0 0 0 1px #35243212}
-.feats b{font-size:16px;font-weight:600}
-.feats span{font-size:15px;line-height:1.5;color:#55505A}
-/* editor y panel */
-.tools{padding-top:90px;padding-bottom:90px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:48px}
-.tool{display:flex;flex-direction:column;gap:20px}
-.tool .shot{border-radius:22px;overflow:hidden;box-shadow:0 0 0 1px #35243214,0 30px 50px -30px #35243288;background:#fff;aspect-ratio:16/10}
-.tool .shot img{width:100%;height:100%;object-fit:cover;object-position:0 0}
-.tool .shot.panel{background:var(--iv-lino);display:flex;justify-content:center;align-items:flex-start;padding:28px 0 0}
-.tool .shot.panel img{width:52%;height:auto;aspect-ratio:auto;border-radius:24px 24px 0 0;box-shadow:0 20px 40px -24px #35243288}
-.tool p{display:flex;gap:10px;margin:0;font-size:16px;line-height:1.5;color:#2B2730}
-.tool p svg{flex:none;margin-top:3px;color:var(--iv-lacre)}
-/* complementos (carrusel) */
-.add{background:var(--iv-lino);padding:90px 0}
-.add .w{display:flex;flex-direction:column;gap:34px}
-.ad{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);background:#fff;border-radius:24px;overflow:hidden;min-height:420px;box-shadow:0 0 0 1px #35243212}
-.ad-stage{position:relative;background:var(--iv-paper);display:flex;align-items:center;justify-content:center;padding:40px;touch-action:pan-y}
-.ad-mock{zoom:1.4;display:flex;align-items:center;justify-content:center;width:100%}
-.ad-mock>*{animation:ad-in .45s ease both}
-.ad-side{display:flex;flex-direction:column;justify-content:space-between;gap:28px;padding:40px 40px 32px}
-.ad-copy{display:flex;flex-direction:column;gap:12px}
-.ad-count{font-size:13px;font-weight:600;letter-spacing:.14em;color:var(--iv-lacre)}
-.ad-copy h3{margin:0;font:500 40px/1.05 var(--iv-serif);letter-spacing:-.01em}
-.ad-copy p{margin:0;font-size:16px;line-height:1.6;color:#50454C}
-.ad-ctrl{display:flex;gap:10px}
-.ad-arrow{width:48px;height:48px;border-radius:50%;border:0;box-shadow:inset 0 0 0 1.5px #35243233;background:transparent;color:var(--iv-ink);cursor:pointer;display:flex;align-items:center;justify-content:center}
-.ad-arrow:hover{background:var(--iv-ink);color:var(--iv-paper);box-shadow:none}
-.ad-tabs{display:flex;flex-wrap:wrap;gap:8px}
-.ad-tab{font:500 14px var(--iv-sans);min-height:40px;padding:0 16px;border-radius:999px;border:0;background:#fff;box-shadow:0 0 0 1px #35243214;color:var(--iv-ink);cursor:pointer}
-.ad-tab[aria-selected="true"]{background:var(--iv-ink);color:var(--iv-paper);box-shadow:none}
-.ad-mock[hidden],.ad-copy[hidden]{display:none}
-@keyframes ad-in{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
-/* precios */
-.price{padding-top:100px;padding-bottom:100px;display:flex;flex-direction:column;gap:34px}
-.price .head{flex-direction:column;align-items:center;text-align:center}
-.price .head .p{max-width:620px}
-.pgrid{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:20px;max-width:1100px;width:100%;margin:0 auto}
-.pcard{padding:34px;border-radius:26px;display:flex;flex-direction:column;gap:16px}
-.pcard.main{background:var(--iv-ink);color:var(--iv-paper)}
-.pcard.main .top2{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap}
-.pcard h3{margin:0;font:500 30px var(--iv-serif)}
-.pcard .amt{display:flex;align-items:baseline;gap:8px;font:500 44px var(--iv-serif)}
-.pcard .amt small{font:500 15px var(--iv-sans);color:#CFC8D2}
-.pcard ul{margin:0;padding:0;list-style:none;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px 20px;font-size:15px;line-height:1.5}
-.pcard ul li{display:flex;gap:8px}
-.pcard ul svg{flex:none;margin-top:3px;color:var(--iv-lacre-3)}
-.pcard .note{margin:0;font-size:14px;color:#CFC8D2}
-.pcard.alt{background:#fff;box-shadow:0 0 0 1px #35243214}
-.pcard.alt p{margin:0;font-size:16px;line-height:1.6;color:#50454C}
-.pay{margin:0;text-align:center;font-size:14px;color:var(--iv-grey)}
-/* faq */
-.faq{padding-top:40px;padding-bottom:100px;display:grid;grid-template-columns:420px minmax(0,1fr);gap:60px}
-.faq details{border-top:1px solid #3524321f}
-.faq details:last-child{border-bottom:1px solid #3524321f}
-.faq summary{display:flex;justify-content:space-between;align-items:center;gap:16px;min-height:64px;padding:10px 0;font-size:18px;font-weight:500;cursor:pointer;list-style:none}
-.faq summary::-webkit-details-marker{display:none}
-.faq summary svg{flex:none;transition:transform .2s}
-.faq details[open] summary svg{transform:rotate(45deg)}
-.faq details p{margin:0 0 18px;font-size:16px;line-height:1.6;color:#55505A}
-/* cierre y pie */
-.end{border-radius:30px;background:var(--iv-lacre);color:#FFF7F2;padding:56px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:24px 40px}
-.end h2{margin:0;font:500 60px/1.02 var(--iv-serif);letter-spacing:-.02em}
-.end h2 i{color:#FFF7F2}
-.end .r{display:flex;flex-direction:column;align-items:flex-end;gap:14px}
-.end .r a.wa{font-weight:500;font-size:15px;text-underline-offset:4px}
-.foot{padding-top:60px;padding-bottom:40px;display:flex;flex-direction:column;gap:22px}
-.foot .row{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:20px}
-.foot .logo{font-size:30px}
-.foot nav{display:flex;flex-wrap:wrap;gap:12px 28px;font-size:14px;font-weight:500;color:#55505A}
-.foot nav a{text-decoration:none}
-.foot nav a:hover{color:var(--iv-lacre)}
-.foot .by{display:flex;flex-wrap:wrap;gap:8px 18px;font-size:14px;color:var(--iv-grey)}
-.foot .by b{color:var(--iv-ink);font-weight:600}
-.foot .by a{text-decoration:none}
-.foot .by a.all{color:var(--iv-lacre);font-weight:600}
-.foot small{font-size:13px;color:var(--iv-grey)}
-/* barra fija en el celular */
-.sticky{display:none}
-@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.ad-mock>*{animation:none}}
-@media (max-width:1180px){
-  .hero{grid-template-columns:1fr}
-  .stage{max-width:560px;width:100%;margin:0 auto}
-  .dcards{grid-template-columns:repeat(3,minmax(0,1fr))}
-  .feats{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .how,.faq{grid-template-columns:1fr;gap:30px}
-}
-@media (max-width:960px){
-  .nav-toggle{display:flex}
-  .top nav{flex-wrap:wrap;height:auto;min-height:72px;padding-top:12px;padding-bottom:12px}
-  .links{display:none;width:100%;flex-direction:column;align-items:stretch;gap:0;padding:8px 0 6px;font-size:17px}
-  nav.open .links{display:flex}
-  .links>a,.links>span{padding:14px 2px;border-top:1px solid #35243214}
-  .links>a.btn{margin-top:12px;border-top:0}
-  .tools{grid-template-columns:1fr}
-  .pgrid{grid-template-columns:1fr}
-  .ad{grid-template-columns:1fr;min-height:0}
-  .ad-stage{padding:28px 20px;min-height:270px}
-  .ad-mock{zoom:1.05}
-  .ad-side{padding:24px 22px 26px;gap:22px}
-  .ad-copy h3{font-size:32px}
-  .ad-tabs{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;margin:0 -20px;padding:0 20px}
-  .ad-tabs::-webkit-scrollbar{display:none}
-  .ad-tab{flex:none}
-}
-@media (max-width:720px){
-  .w{padding:0 20px}
-  .top .logo{font-size:28px}
-  .hero{padding-top:18px;padding-bottom:44px;gap:20px}
-  .hero h1{font-size:54px}
-  .hero .lead{font-size:17px}
-  .ctas .btn{width:100%}
-  .ctas .ex{width:100%;text-align:center}
-  .stage{height:350px}
-  .stage .a{left:4%;top:44px;width:34%;height:auto;aspect-ratio:554/1200}
-  .stage .b{left:31%;top:0;width:38%;height:auto;aspect-ratio:554/1200}
-  .stage .c{right:4%;top:44px;width:34%;height:auto;aspect-ratio:554/1200}
-  .stage .ph{border-radius:24px;padding:5px}
-  .stage .ph img{border-radius:20px}
-  .stage .tag{display:none}
-  .h2{font-size:38px}
-  .p{font-size:16px}
-  .journey,.how,.tools,.price,.dsg,.inc,.add{padding-top:56px;padding-bottom:56px}
-  .faq{padding-bottom:56px}
-  .steps,.dcards{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;margin:0 -20px;padding:0 20px 6px;gap:12px}
-  .steps::-webkit-scrollbar,.dcards::-webkit-scrollbar{display:none}
-  .steps li{flex:none;width:150px;scroll-snap-align:start}
-  .steps b{font-size:18px}
-  .steps p{font-size:13px}
-  .dcard{flex:none;width:220px;scroll-snap-align:start}
-  .chips{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;margin:0 -20px;padding:0 20px}
-  .chips::-webkit-scrollbar{display:none}
-  .chips .k{display:none}
-  .chip{flex:none}
-  .how ol{grid-template-columns:1fr}
-  .how li{display:grid;grid-template-columns:40px minmax(0,1fr);gap:4px 12px}
-  .how li>span{grid-row:span 3;font-size:34px}
-  .feats{gap:10px}
-  .feats li{padding:16px}
-  .feats span{font-size:14px}
-  .pcard{padding:24px}
-  .pcard ul{grid-template-columns:1fr}
-  .pcard .btns .btn{width:100%}
-  .faq summary{font-size:16px}
-  .end{padding:36px 22px;border-radius:24px}
-  .end h2{font-size:40px}
-  .end .r{align-items:stretch;width:100%}
-  .end .r .btn{width:100%}
-  .end .r a.wa{align-self:center}
-  .sticky{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:40;gap:8px;padding:10px 14px calc(12px + env(safe-area-inset-bottom));background:#F3EEE9f2;box-shadow:0 -1px 0 #35243214;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);transform:translateY(110%);transition:transform .25s ease}
-  .sticky.on{transform:none}
-  .sticky .btn{min-height:48px;font-size:15px;padding:0 16px}
-  .sticky .btn:first-child{flex:1}
-  .sticky .btn:last-child{flex:1.4}
-  body.has-sticky .foot{padding-bottom:110px}
-}
-</style>
-<link rel="stylesheet" href="/assets/brand/store.css">
+<link rel="stylesheet" href="/assets/brand/home.css?v=1">
+<link rel="preload" as="image" href="/assets/brand/previews/encaje-estor.webp" fetchpriority="high">
+<link rel="preload" as="image" href="/assets/brand/previews/encaje-portada.webp">
 </head>
 <body class="iv-home">
+
 <header class="top"><nav class="w" aria-label="Main">
-<a class="logo" href="/en/" aria-label="Invitesse, home"><span class="iv-wm" role="img" aria-label="Invitesse"><span aria-hidden="true">invite</span><b aria-hidden="true">ss</b><span aria-hidden="true">e</span><svg viewBox="0 0 70 54" aria-hidden="true"><path d="M2 48C10 34 22 26 31 30C39 34 35 45 27 43C19 41 21 26 36 17C46 11 58 10 66 15" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg></span></a>
-<button type="button" class="nav-toggle" data-open="Open menu" data-close="Close menu" aria-expanded="false" aria-controls="nav-links" aria-label="Open menu"><svg class="bars" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg><svg class="x" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
-<div id="nav-links" class="links"><a href="/en/disenos/">Designs<span class="badge" data-n>22</span></a><a href="#add-ons">Add-ons</a><a href="#how">How it works</a><a href="#pricing">Pricing</a><span class="lang"><a href="/" hreflang="es">ES</a> · <b>EN</b></span><a href="/en/cuenta/">Log in</a><a class="btn btn-dark" style="min-height: 44px; font-size: 15px; padding: 0 20px" href="/en/comprar/">Create my invitation</a></div>
+<a class="logo" href="/" aria-label="Invitesse, home"><span class="iv-wm on-dark" role="img" aria-label="Invitesse"><span aria-hidden="true">invite</span><b aria-hidden="true">ss</b><span aria-hidden="true">e</span><svg viewBox="0 0 70 54" aria-hidden="true"><path d="M2 48C10 34 22 26 31 30C39 34 35 45 27 43C19 41 21 26 36 17C46 11 58 10 66 15" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg></span></a>
+<button type="button" class="nav-toggle" data-open="Open menu" data-close="Close menu" aria-expanded="false" aria-controls="nav-links" aria-label="Open menu"><svg class="bars" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M4 8h16M4 16h16"/></svg><svg class="x" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+<div id="nav-links" class="links"><a href="/en/disenos/">The collection<span class="badge" data-n>22</span></a><a href="#recorrido">How it works</a><a href="#panel">Your dashboard</a><a href="#precios">Pricing</a><a href="#faq">Questions</a><span class="lang"><a href="/" hreflang="es">ES</a>&nbsp;·&nbsp;<b>EN</b></span><a href="/en/cuenta/">Log in</a><a class="btn btn-champ" href="/en/comprar/">Create my invitation</a></div>
 </nav></header>
+
 <main>
-<section id="top" class="w hero">
+<section id="top" class="hero dark" aria-labelledby="hero-h">
+<div class="w hero-grid">
 <div class="hero-t">
 <p class="k">Wedding website invitations</p>
-<h1>An invitation to <i>experience.</i></h1>
-<p class="lead">It opens like a gift, tells your story, guides your guests on the day and lets them RSVP with one tap. You run it all from one dashboard.</p>
-<div class="ctas"><a class="btn btn-dark" href="/en/disenos/">Explore the designs</a><a class="hero-example" data-preview="encaje" href="/en/demo/encaje/">Open an invitation<svg width="22" height="16" viewBox="0 0 32 20" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 10h28M22 3l7 7-7 7"/></svg></a></div>
-<div class="trust"><span>One-time payment</span><span>Ready the same day</span><span>No design skills needed</span></div>
+<h1 id="hero-h">An invitation worth <i>opening.</i></h1>
+<p class="lead">Fine stationery, made for the screen: an opening that surprises, your story, the schedule for the day and every guest’s RSVP, in one link.</p>
+<div class="ctas"><a class="btn btn-champ" href="/en/disenos/">Choose a design<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a><a class="btn btn-ghost" data-preview="encaje" href="/en/demo/encaje/">Open a sample invitation</a></div>
+<div class="promise"><svg class="seal" width="46" height="46" viewBox="0 0 56 56" aria-hidden="true"><circle cx="28" cy="28" r="27" fill="#6B3F5E"/><circle cx="28" cy="28" r="21" fill="none" stroke="#E2C9A0" stroke-width="1" stroke-dasharray="2 2.4"/><text x="28" y="35" text-anchor="middle" font-family="Bodoni Moda, Georgia, serif" font-style="italic" font-size="21" fill="#FBF6EF">ss</text></svg><p><strong>Guests RSVP inside the invitation.</strong> You see every reply in your dashboard, no outside forms.</p></div>
+<div class="trust"><span>One-time payment</span><span>Ready the same day</span><span>English and Spanish</span></div>
 </div>
-<div class="hero-visual" role="group" aria-label="Encaje, in motion">
-<svg class="hero-thread" viewBox="0 0 600 660" fill="none" aria-hidden="true"><path d="M-15 480C120 520 194 588 294 548S590 344 540 220C510 148 424 160 446 224C467 286 596 282 626 352"/></svg>
-<a class="hero-phone" data-preview="encaje" href="/en/demo/encaje/" aria-label="Watch the real opening: Encaje"><img src="/assets/brand/previews/encaje-portada.webp" width="554" height="1200" alt="Actual Encaje invitation cover" fetchpriority="high"></a>
-<span class="hero-opening"><img src="/assets/brand/previews/encaje-estor.webp" width="554" height="1200" alt="Actual Encaje lace curtain opening"></span>
-<a class="hero-visual-caption" data-preview="encaje" href="/en/demo/encaje/"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" aria-hidden="true"><path d="m9 5 11 7-11 7Z"/></svg><span>Watch the real opening</span><svg width="22" height="16" viewBox="0 0 32 20" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 10h28M22 3l7 7-7 7"/></svg></a>
+<div class="stage hero-visual" role="group" aria-label="Encaje: the invitation, its RSVP and the dashboard">
+<span class="cushion" aria-hidden="true"></span>
+<svg class="thread" viewBox="0 0 660 800" fill="none" aria-hidden="true"><path d="M520 470C600 560 520 690 380 700S120 660 96 600" stroke="#B48A55" stroke-width="1.2"/><circle cx="520" cy="470" r="4" fill="#B48A55"/><circle cx="96" cy="600" r="4" fill="#B48A55"/></svg>
+<span class="caption" aria-hidden="true">The Encaje design · try it here</span>
+<div class="arch"><img src="/assets/brand/previews/encaje-portada.webp" width="554" height="1200" alt="Encaje, open: the cover with the couple’s photo in a lace frame"><img class="estor" src="/assets/brand/previews/encaje-estor.webp" width="554" height="1200" alt="Encaje, closed: a lace blind with the guest family’s name" fetchpriority="high"></div>
+<span class="tag tag-rsvp">They RSVP here</span>
+<div class="slip rsvp"><img src="/assets/encaje-rsvp.jpg" width="554" height="1200" alt="RSVP inside the invitation: each person chooses whether they will attend" loading="lazy"></div>
+<span class="tag tag-board">You see it in your dashboard</span>
+<div class="slip board"><img src="/assets/panel-resumen-en.jpg" width="700" height="1508" alt="Your dashboard: confirmed guests" loading="lazy"></div>
+<button type="button" class="btn btn-ghost toggle" aria-pressed="false" data-open-label="See how it opens" data-close-label="Close it again"><svg class="tassel" width="14" height="20" viewBox="0 0 14 20" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" aria-hidden="true"><path d="M7 1v8"/><path d="M4 9h6l1 9H3z"/></svg><span>See how it opens</span></button>
 </div>
+</div>
+<div class="w"><div class="discover"><span>Discover by opening</span><a class="chip" href="/en/disenos/?apertura=sobre">Envelopes</a><a class="chip" href="/en/disenos/?apertura=puertas,cortina,estor">Doors and curtains</a><a class="chip" href="/en/disenos/?apertura=pase,tarjetas,carta,calendario,baraja">Cards</a><a class="chip" href="/en/disenos/?apertura=carpeta,lazo,estuche,funda">Boxes and bows</a><a class="chip" href="/en/disenos/?apertura=tele,ventana">TV and window</a><a class="chip" href="/en/disenos/?apertura=luna,medallon">Moon and medallion</a></div></div>
+<svg class="flap" viewBox="0 0 1440 120" preserveAspectRatio="none" aria-hidden="true"><path d="M0 40C340 40 580 118 720 118S1100 40 1440 40V120H0Z" fill="#F8F3EC"/><path d="M0 40C340 40 580 118 720 118S1100 40 1440 40" fill="none" stroke="#C49A5A" stroke-width="1" vector-effect="non-scaling-stroke"/></svg>
 </section>
 
-<section id="designs" class="dsg" aria-labelledby="d-h">
+<section id="disenos" class="dsg" aria-labelledby="d-h">
 <div class="w">
-<div class="head"><div><p class="k">The designs</p><h2 class="h2" id="d-h">Every design, <i>a complete invitation.</i></h2></div><a class="btn btn-paper" href="/en/disenos/"><span>See all <span data-n>22</span> designs</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
-<div class="chips"><span class="k">By opening</span><a class="chip" href="/en/disenos/?apertura=sobre">Envelopes<small>5</small></a><a class="chip" href="/en/disenos/?apertura=puertas,cortina,estor">Doors and curtains<small>4</small></a><a class="chip" href="/en/disenos/?apertura=pase,tarjetas,carta,calendario,baraja">Cards<small>5</small></a><a class="chip" href="/en/disenos/?apertura=carpeta,lazo,estuche,funda">Boxes and bows<small>4</small></a><a class="chip" href="/en/disenos/?apertura=tele,ventana">TV and window<small>2</small></a><a class="chip" href="/en/disenos/?apertura=luna,medallon">Moon and medallion<small>2</small></a></div>
-<div class="dcards"><a class="dcard" data-preview="encaje" href="/en/demo/encaje/" aria-label="View invitation: Encaje"><div class="ph"><img src="/assets/brand/previews/encaje-estor.webp" alt="Encaje: opening" width="554" height="1200" loading="lazy"><img class="collection-inside" src="/assets/brand/previews/encaje-portada.webp" alt="Encaje: cover" width="554" height="1200" loading="lazy"></div><b>Encaje</b><span>A welcome wrapped in lace</span><span class="collection-view">See it open<svg width="22" height="16" viewBox="0 0 32 20" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 10h28M22 3l7 7-7 7"/></svg></span></a><a class="dcard" data-preview="onix" href="/en/demo/onix/" aria-label="View invitation: Ónix"><div class="ph"><img src="/assets/brand/previews/onix-sobre.webp" alt="Ónix: opening" width="554" height="1200" loading="lazy"><img class="collection-inside" src="/assets/brand/previews/onix-portada.webp" alt="Ónix: cover" width="554" height="1200" loading="lazy"></div><b>Ónix</b><span>Black-and-white stationery</span><span class="collection-view">See it open<svg width="22" height="16" viewBox="0 0 32 20" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 10h28M22 3l7 7-7 7"/></svg></span></a><a class="dcard" data-preview="jardin" href="/en/demo/jardin/" aria-label="View invitation: Jardín"><div class="ph"><img src="/assets/brand/previews/jardin-sobre.webp" alt="Jardín: opening" width="554" height="1200" loading="lazy"><img class="collection-inside" src="/assets/brand/previews/jardin-portada.webp" alt="Jardín: cover" width="554" height="1200" loading="lazy"></div><b>Jardín</b><span>A garden that begins as you open</span><span class="collection-view">See it open<svg width="22" height="16" viewBox="0 0 32 20" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 10h28M22 3l7 7-7 7"/></svg></span></a></div>
-<p class="collection-more">Discover more: <a href="/en/demo/senal/">Señal</a> · <a href="/en/demo/corazones/">Corazones</a> · <a href="/en/demo/arco/">Arco</a></p>
-<p class="dnote">Each design brings its own opening, cover and every section in its own style. Tap one to open its demo.</p>
+<div class="head"><div><p class="k">The collection</p><h2 class="h2" id="d-h">Twenty-two designs, <i>each with its own opening.</i></h2></div><div class="side" style="flex: 0 1 420px"><p class="p">Romantic, botanical, classic, modern and theatrical. Hover to see it open; tap to open its demo.</p><a class="ul" href="/en/disenos/">See the full collection (<span data-n>22</span>)</a></div></div>
+<nav class="chips" aria-label="The collection by opening"><a class="chip on" href="/en/disenos/" aria-current="page">All</a><a class="chip" href="/en/disenos/?apertura=sobre">Envelopes<small>5</small></a><a class="chip" href="/en/disenos/?apertura=puertas,cortina,estor">Doors and curtains<small>4</small></a><a class="chip" href="/en/disenos/?apertura=pase,tarjetas,carta,calendario,baraja">Cards<small>5</small></a><a class="chip" href="/en/disenos/?apertura=carpeta,lazo,estuche,funda">Boxes and bows<small>4</small></a><a class="chip" href="/en/disenos/?apertura=tele,ventana">TV and window<small>2</small></a><a class="chip" href="/en/disenos/?apertura=luna,medallon">Moon and medallion<small>2</small></a></nav>
+<ul class="dcards rail">
+<li><a class="dcard" href="/en/demo/senal/"><div class="slip"><img src="/assets/senal-tele.jpg" width="554" height="1200" alt="" loading="lazy"><img class="open" src="/assets/senal-portada.jpg" width="554" height="1200" alt="" loading="lazy"><span class="hint">Open the demo</span><span class="go" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></div><div class="meta"><div><span class="nm">Señal</span><span class="op">A TV that changes channel</span></div><span class="pr">from [Precio]</span></div></a></li>
+<li><a class="dcard" href="/en/demo/nacar/"><div class="slip"><img src="/assets/nacar-estuche.jpg" width="554" height="1200" alt="" loading="lazy"><img class="open" src="/assets/nacar-portada.jpg" width="554" height="1200" alt="" loading="lazy"><span class="hint">Open the demo</span><span class="go" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></div><div class="meta"><div><span class="nm">Nácar</span><span class="op">A case with a string of pearls</span></div><span class="pr">from [Precio]</span></div></a></li>
+<li><a class="dcard" data-preview="encaje" href="/en/demo/encaje/"><div class="slip"><img src="/assets/brand/previews/encaje-estor.webp" width="554" height="1200" alt="" loading="lazy"><img class="open" src="/assets/brand/previews/encaje-portada.webp" width="554" height="1200" alt="" loading="lazy"><span class="hint">See it open</span><span class="go" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></div><div class="meta"><div><span class="nm">Encaje</span><span class="op">A lace blind</span></div><span class="pr">from [Precio]</span></div></a></li>
+<li><a class="dcard" href="/en/demo/gala/"><div class="slip"><img src="/assets/gala-medallon.jpg" width="554" height="1200" alt="" loading="lazy"><img class="open" src="/assets/gala-portada.jpg" width="554" height="1200" alt="" loading="lazy"><span class="hint">Open the demo</span><span class="go" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></div><div class="meta"><div><span class="nm">Gala</span><span class="op">A golden medallion</span></div><span class="pr">from [Precio]</span></div></a></li>
+<li><a class="dcard" data-preview="onix" href="/en/demo/onix/"><div class="slip"><img src="/assets/brand/previews/onix-sobre.webp" width="554" height="1200" alt="" loading="lazy"><img class="open" src="/assets/brand/previews/onix-portada.webp" width="554" height="1200" alt="" loading="lazy"><span class="hint">See it open</span><span class="go" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></div><div class="meta"><div><span class="nm">Ónix</span><span class="op">A photo-lined envelope</span></div><span class="pr">from [Precio]</span></div></a></li>
+<li><a class="dcard" href="/en/demo/marfil/"><div class="slip"><img src="/assets/marfil-lazo.jpg" width="554" height="1200" alt="" loading="lazy"><img class="open" src="/assets/marfil-portada.jpg" width="554" height="1200" alt="" loading="lazy"><span class="hint">Open the demo</span><span class="go" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></div><div class="meta"><div><span class="nm">Marfil</span><span class="op">A silk bow</span></div><span class="pr">from [Precio]</span></div></a></li>
+<li><a class="dcard" href="/en/demo/corazones/"><div class="slip"><img src="/assets/corazones-baraja.jpg" width="554" height="1200" alt="" loading="lazy"><img class="open" src="/assets/corazones-portada.jpg" width="554" height="1200" alt="" loading="lazy"><span class="hint">Open the demo</span><span class="go" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></div><div class="meta"><div><span class="nm">Corazones</span><span class="op">A fanned deck of cards</span></div><span class="pr">from [Precio]</span></div></a></li>
+<li><a class="dcard" href="/en/demo/glicina/"><div class="slip"><img src="/assets/glicina-cortina.jpg" width="554" height="1200" alt="" loading="lazy"><img class="open" src="/assets/glicina-portada.jpg" width="554" height="1200" alt="" loading="lazy"><span class="hint">Open the demo</span><span class="go" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></div><div class="meta"><div><span class="nm">Glicina</span><span class="op">A wisteria curtain</span></div><span class="pr">from [Precio]</span></div></a></li>
+</ul>
+<div class="more"><a class="btn btn-plum" href="/en/disenos/"><span>See all <span data-n>22</span> designs</span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
 </div>
 </section>
 
-<section class="w journey" aria-labelledby="j-h">
+<section id="recorrido" class="ritual" aria-labelledby="j-h">
+<div class="w">
 <div class="head"><div><p class="k">A complete invitation</p><h2 class="h2" id="j-h">From the opening <i>to the RSVP.</i></h2></div><p class="p">The opening is the welcome. What follows is what your guests really use, and it all lives in the same link.</p></div>
-<ol class="steps"><li><div class="ph"><img src="/assets/brand/previews/encaje-estor.webp" alt="Encaje closed" loading="lazy"></div><b><span>1</span>It opens</b><p>Every design has its own opening: the welcome.</p></li><li><div class="ph"><img src="/assets/brand/previews/encaje-portada.webp" alt="Encaje: cover" loading="lazy"></div><b><span>2</span>It greets</b><p>The cover with your photo, the date and their name.</p></li><li><div class="ph"><img src="/assets/encaje-historia.jpg" alt="Encaje: our story" loading="lazy"></div><b><span>3</span>It tells</b><p>Your story and the photo gallery.</p></li><li><div class="ph"><img src="/assets/encaje-itinerario.jpg" alt="Encaje: schedule" loading="lazy"></div><b><span>4</span>It guides</b><p>The schedule with maps, hotel and FAQ.</p></li><li><div class="ph"><img src="/assets/encaje-rsvp.jpg" alt="Encaje: RSVP" loading="lazy"></div><b><span>5</span>They RSVP</b><p>Yes or no per person, in one tap.</p></li></ol>
-<div class="band"><span>All <span data-n>22</span> designs include these five parts, each in its own style.</span><a class="btn btn-dark" style="min-height: 46px" href="/en/disenos/">Compare them<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
+<ol class="rsteps rail">
+<li><div class="shot"><img src="/assets/brand/previews/encaje-estor.webp" width="554" height="1200" alt="Encaje, closed: the opening" loading="lazy"></div><span class="num">I</span><b>It opens</b><p>Every design has its own opening: the envelope, the curtain, the case. It is the welcome.</p></li>
+<li><div class="shot"><img src="/assets/brand/previews/encaje-portada.webp" width="554" height="1200" alt="Encaje: the cover with the couple’s photo" loading="lazy"></div><span class="num">II</span><b>It greets</b><p>The cover with your photo, the date and each family’s name.</p></li>
+<li><div class="shot"><img src="/assets/encaje-historia.jpg" width="554" height="1200" alt="Encaje: our story" loading="lazy"></div><span class="num">III</span><b>It tells</b><p>Your story and the photo gallery, in the style of the design.</p></li>
+<li><div class="shot"><img src="/assets/encaje-itinerario.jpg" width="554" height="1200" alt="Encaje: schedule for the day" loading="lazy"></div><span class="num">IV</span><b>It guides</b><p>The schedule with maps, the hotel and the usual questions.</p></li>
+<li><div class="shot"><img src="/assets/encaje-rsvp.jpg" width="554" height="1200" alt="Encaje: RSVP per person" loading="lazy"></div><span class="num">V</span><b>They RSVP</b><p>Yes or no per person, in one tap. You see it right away in your dashboard.</p></li>
+</ol>
+</div>
 </section>
 
+<section id="panel" class="panel dark" aria-labelledby="pn-h">
+<div class="w">
+<div class="head"><div><p class="k">RSVPs and dashboard · Included</p><h2 class="h2" id="pn-h">So special on the outside. <i>All organized on the inside.</i></h2></div><p class="p">Your guests RSVP from the invitation. You manage replies and details from your dashboard, with no outside forms.</p></div>
+<div class="journey">
+<svg class="thread" viewBox="0 0 1280 260" preserveAspectRatio="none" fill="none" aria-hidden="true"><path d="M30 200C120 70 230 70 330 150S520 260 620 190 800 60 980 120" stroke="#C49A5A" stroke-width="1.3" stroke-dasharray="1400" vector-effect="non-scaling-stroke"/></svg>
+<div class="station"><span class="num">I</span><b>Your invitation, with their name</b><p>Each family gets its own link and seats.</p><div class="scr"><img src="/assets/brand/previews/encaje-estor.webp" width="554" height="1200" alt="The Rodríguez family’s invitation, closed" loading="lazy"></div></div>
+<div class="station"><span class="num">II</span><b>They RSVP right there</b><p>Yes or no per person, in one tap, without leaving the design.</p><div class="scr"><img src="/assets/encaje-rsvp.jpg" width="554" height="1200" alt="The Rodríguez family’s RSVP, 4 seats, inside the invitation" loading="lazy"><span class="ring" style="top: 26.5%; height: 4.2%" aria-hidden="true"></span></div></div>
+<div class="station"><span class="num">III</span><b>You see it in your dashboard</b><p>Who is coming, who is not and who has yet to reply.</p>
+<div class="duo"><div class="scr"><img src="/assets/panel-resumen-en.jpg" width="700" height="1508" alt="Dashboard overview: attending, not attending and no reply" loading="lazy"></div><div class="scr"><img src="/assets/brand/previews/panel-invitados-en.webp" width="700" height="1508" alt="Dashboard guest list: the Rodríguez family, 4 seats, no reply" loading="lazy"><span class="ring" style="top: 56.6%; height: 8%" aria-hidden="true"></span></div></div>
+<div class="same"><p>The same family: in their invitation and in your dashboard.</p></div></div>
+</div>
+<ul class="caps">
+<li><b>No outside forms</b><span>The RSVP keeps the design of your invitation.</span></li>
+<li><b>Per family and per person</b><span>Names and seats for each invitation, editable.</span></li>
+<li><b>Search and filter</b><span>All, attending, not attending, no reply.</span></li>
+<li><b>Send on WhatsApp</b><span>Create each invitation and copy its unique link.</span></li>
+<li><b>From Excel and back</b><span>Upload your list and download the replies.</span></li>
+</ul>
+<div class="ctas"><a class="btn btn-champ" href="/en/demo/encaje/">Try the RSVP and the dashboard</a></div>
+</div>
+</section>
 
-
-<section id="how" class="w how" aria-labelledby="h-h">
-<div style="display: flex; flex-direction: column; gap: 10px"><p class="k">How it works</p><h2 class="h2" id="h-h">Ready in <i>an afternoon.</i></h2></div>
-<ol><li><span>1</span><b>Choose your design</b><p>The style, the opening and the colors. You can change it later.</p><a class="lnk" href="/en/disenos/">See the designs<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></li><li><span>2</span><b>Fill it in the editor</b><p>Text, photos, places and guests. A five-step guide shows you the way.</p></li><li><span>3</span><b>Share it</b><p>Each family gets its link on WhatsApp and you see who RSVPs.</p></li></ol>
+<section id="como" class="editor" aria-labelledby="e-h">
+<div class="w">
+<div><p class="k">The editor · Included</p><h2 class="h2" id="e-h" style="margin-top: 20px">Ready in an afternoon. <i>No design skills needed.</i></h2><p class="p">A five-step guide shows you the way in the editor.</p>
+<ol class="steps3"><li><span class="num">I</span><div><b>Choose your design</b><p>The opening, the style and your colors. You can change it later.</p></div></li><li><span class="num">II</span><div><b>Fill it in at your pace</b><p>Text, photos, places and guests, with the real invitation beside you.</p></div></li><li><span class="num">III</span><div><b>Share it</b><p>Each family gets its link on WhatsApp and you see who RSVPs.</p></div></li></ol>
+</div>
+<div class="shotwrap">
+<div class="edrail"><div class="edshot"><img src="/assets/brand/previews/editor-en.webp" width="1600" height="1000" alt="The Invitesse editor: sections on the left, fields in the middle and the invitation preview on the right" loading="lazy"><span class="pin" style="left: 55.5%; top: 1.4%" aria-hidden="true">1</span><span class="pin" style="left: 14.6%; top: 11.5%" aria-hidden="true">2</span><span class="pin" style="left: 94.5%; top: 46%" aria-hidden="true">3</span></div></div>
+<p class="swipe-note"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>Swipe to see the preview</p>
+<ol class="pins"><li><span>1</span><span><strong>A five-step guide</strong>, always at hand.</span></li><li><span>2</span><span><strong>Nine sections</strong>, one by one, with your progress.</span></li><li><span>3</span><span><strong>The real invitation beside you</strong>, as each family will see it.</span></li></ol>
+</div>
+</div>
 </section>
 
 <section class="inc" aria-labelledby="i-h">
 <div class="w">
-<div class="head"><div><p class="k">Included in every design</p><h2 class="h2" id="i-h">Your whole wedding in <i>one link.</i></h2></div></div>
-<ul class="feats"><li><b>Opening effect</b><span>Every design opens its own way.</span></li><li><b>A link per family</b><span>Greets each family by name and shows their seats.</span></li><li><b>RSVP per person</b><span>Yes or no for each guest, with a message for you.</span></li><li><b>Countdown</b><span>To the day and time of the wedding.</span></li><li><b>Schedule and maps</b><span>Every moment with its place and directions.</span></li><li><b>Photos and story</b><span>A gallery of up to 12 photos and your story.</span></li><li><b>Music</b><span>Your song plays when the invitation opens.</span></li><li><b>Travel and FAQ</b><span>Hotels, dress code, gifts and common questions.</span></li></ul>
+<div><p class="k">Included in every design</p><h2 class="h2" id="i-h" style="margin-top: 20px">Your whole wedding <i>in one link.</i></h2></div>
+<ol class="feats"><li><div>An animated opening<span>Every design opens its own way.</span></div></li><li><div>A link per family, with their name<span>Greets each family and shows their seats.</span></div></li><li><div>RSVP per person<span>Yes or no for each guest, with a message for you.</span></div></li><li><div>Countdown<span>To the day and time of the wedding.</span></div></li><li><div>Schedule with maps<span>Every moment with its place and directions.</span></div></li><li><div>Story and gallery<span>Up to 12 photos and your story.</span></div></li><li><div>Your song on opening<span>It plays when the invitation opens.</span></div></li><li><div>Travel, stays and FAQ<span>Hotels, dress code, gifts and common questions.</span></div></li><li><div>Editor with a five-step guide<span>No design skills needed.</span></div></li><li><div>Dashboard to see who’s coming<span>Every reply in one place.</span></div></li></ol>
 </div>
-</section>
-
-<section id="editor" class="w tools">
-<div class="tool"><p class="k">The editor</p><h2 class="h2">Write and see your invitation <i>instantly.</i></h2><div class="shot"><img src="/assets/brand/previews/editor-en.webp" alt="Invitesse editor: the cover form and the invitation preview" loading="lazy"></div><p><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Text, photos, colors and music, with a live preview on phone and computer.</p></div>
-<div class="tool" id="panel"><p class="k">The dashboard</p><h2 class="h2">Know who’s coming, <i>right away.</i></h2><div class="shot panel"><img src="/assets/brand/previews/panel-invitados-en.webp" alt="Couple’s dashboard: the guest list with their replies" loading="lazy"></div><p><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Upload your list from Excel, send on WhatsApp and download the replies.</p></div>
 </section>
 
 <section id="add-ons" class="add" aria-labelledby="a-h">
@@ -349,78 +140,74 @@ nav.open .nav-toggle .x{display:block}
 </div>
 </section>
 
-<section id="pricing" class="w price" aria-labelledby="p-h">
-<div class="head"><div style="align-items: center"><p class="k">Pricing</p><h2 class="h2" id="p-h">Each design, its own price. <i>No surprises.</i></h2><p class="p">The price depends on the design you choose, and you see it on its page before you start. You pay once and everything else is included.</p></div></div>
+<section id="precios" class="price" aria-labelledby="p-h">
+<div class="w">
+<div class="head"><div><p class="k">Pricing</p><h2 class="h2" id="p-h">Each design, <i>its own price.</i></h2></div><p class="p">You see it on each design’s page before you start. You pay once; everything else is included.</p></div>
 <div class="pgrid">
-<div class="pcard main">
-<div class="top2"><h3>Your invitation</h3><span class="amt"><small>from</small>[Precio]</span></div>
-<span style="font-size: 15px; color: #CFC8D2">One-time payment, depending on the design. Every one includes:</span>
-<ul><li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>The design you choose, in your colors</li><li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>A link per family</li><li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>RSVP per person</li><li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Editor and dashboard</li><li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Story, schedule, music and travel</li><li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>English and Spanish</li></ul>
-<p class="note">Add-ons are optional and added separately from the editor.</p>
-<div class="btns" style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 6px"><a class="btn btn-paper" href="/en/disenos/">See the designs and their prices<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a><a class="btn" style="color: #F3EEE9; box-shadow: inset 0 0 0 1.5px #F3EEE955" href="/en/comprar/">Create my invitation</a></div>
+<div class="pmain">
+<div><p class="k">From the collection</p><h3>Your invitation</h3><div class="amt"><small>from</small><b>[Precio]</b></div><p class="note">One-time payment, depending on the design. Add-ons separately, whenever you like.</p>
+<ul class="checks"><li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>The design you choose, in your colors</li><li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>A link per family, with their name</li><li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Story, schedule, music and travel</li><li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Editor with a five-step guide</li><li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>English and Spanish</li></ul>
+<a class="btn btn-plum" href="/en/disenos/">See the designs and their prices</a></div>
+<div class="precall"><p class="k">Also included</p><h4>RSVP inside the invitation <i>and your dashboard.</i></h4><div class="crop"><img src="/assets/brand/previews/panel-invitados-en.webp" width="700" height="1508" alt="Dashboard: All, Attending and Not attending filters, and the list of families" loading="lazy"></div><p>No outside forms: your guests RSVP from the design and you see every reply.</p></div>
 </div>
-<div class="pcard alt"><h3>Rather have us do it for you?</h3><p>A custom design with your palette and your story; we load all the content. From [Precio].</p><a class="btn btn-line" style="align-self: flex-start; margin-top: auto" href="#contact">Let’s talk</a></div>
+<div class="pbesp" id="medida"><p class="k">Custom</p><h3>Your invitation, made from scratch.</h3><p>With your palette, your story and an opening only your wedding has; we load all the content.</p><p class="from">from <b>[Precio]</b></p><a class="btn btn-champ" href="#contacto">Let’s talk</a></div>
 </div>
-<p class="pay">Secure payments with Mercado Pago, card and PayPal · Prices in [currency]</p>
+<div class="compare"><table>
+<caption class="k">Compare</caption>
+<thead><tr><td></td><th scope="col">From the collection</th><th scope="col">Custom</th></tr></thead>
+<tbody>
+<tr><th scope="row">Design</th><td data-l="Collection">One of the <span data-n>22</span> in the collection</td><td data-l="Custom">Made from scratch for your wedding</td></tr>
+<tr><th scope="row">Opening</th><td data-l="Collection">The one of the chosen design</td><td data-l="Custom">One only your wedding has</td></tr>
+<tr><th scope="row">Who fills it in</th><td data-l="Collection">You, with the editor and its guide</td><td data-l="Custom">We load all the content</td></tr>
+<tr><th scope="row">RSVP and dashboard</th><td data-l="Collection">Included</td><td data-l="Custom">[Confirm]</td></tr>
+<tr><th scope="row">Add-ons</th><td data-l="Collection">Separately, whenever you like</td><td data-l="Custom">[Confirm]</td></tr>
+<tr><th scope="row">Payment</th><td data-l="Collection">One-time, from [Precio]</td><td data-l="Custom">From [Precio]</td></tr>
+</tbody></table>
+<p class="pay">Secure payments with Mercado Pago, card and PayPal · Prices in [currency]</p></div>
+</div>
 </section>
 
-<section id="faq" class="w faq" aria-labelledby="f-h">
-<div style="display: flex; flex-direction: column; gap: 10px"><p class="k">Questions</p><h2 class="h2" id="f-h">Before you <i>start.</i></h2></div>
-<div><details open><summary>Do we need design or coding skills?<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></summary><p>No. You fill everything in like a form, and the invitation builds itself.</p></details><details><summary>How do guests receive their invitation?<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></summary><p>From the dashboard you create each invitation with its seats, copy the message with its unique link and send it on WhatsApp.</p></details><details><summary>Can we edit text or photos after sending it?<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></summary><p>Yes, anytime. Changes appear instantly on every link.</p></details><details><summary>How long will it stay online?<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></summary><p>[Until X months after the wedding.]</p></details><details><summary>Can the site be in English and Spanish?<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></summary><p>Yes, with the bilingual add-on your guests switch languages with one tap.</p></details></div>
+<section id="faq" class="faq" aria-labelledby="f-h">
+<div class="w">
+<div><p class="k">Questions</p><h2 class="h2" id="f-h" style="margin-top: 20px">Before you <i>start.</i></h2><div class="ask"><b>Another question?</b><p>We’ll answer you on WhatsApp, at your pace.</p><a class="btn btn-plum" href="#">Message us on WhatsApp</a></div></div>
+<div class="qs">
+<details name="faq" open><summary>Do we need design skills?<span class="pm" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 12h14"/><path class="v" d="M12 5v14"/></svg></span></summary><p>No. You fill everything in like a form, with the real invitation beside you, and a guide shows you every step.</p></details>
+<details name="faq"><summary>Do our guests RSVP somewhere else?<span class="pm" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 12h14"/><path class="v" d="M12 5v14"/></svg></span></summary><p>No. They RSVP inside the same invitation, person by person, and you see every reply in your dashboard. No outside forms.</p></details>
+<details name="faq"><summary>How do guests receive their invitation?<span class="pm" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 12h14"/><path class="v" d="M12 5v14"/></svg></span></summary><p>From your dashboard you create each invitation with its seats, copy the message with its unique link and send it on WhatsApp.</p></details>
+<details name="faq"><summary>Can we edit it after sending it?<span class="pm" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 12h14"/><path class="v" d="M12 5v14"/></svg></span></summary><p>Yes, anytime. Changes appear instantly on every link.</p></details>
+<details name="faq"><summary>How long will it stay online?<span class="pm" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 12h14"/><path class="v" d="M12 5v14"/></svg></span></summary><p>[Until X months after the wedding.]</p></details>
+<details name="faq"><summary>Can the site be in English and Spanish?<span class="pm" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 12h14"/><path class="v" d="M12 5v14"/></svg></span></summary><p>Yes, with the bilingual add-on your guests switch languages with one tap.</p></details>
+</div>
+<a class="btn btn-line wa-m" href="#">Another question? Message us on WhatsApp</a>
+</div>
 </section>
 
-<div class="w"><section class="end" id="contact"><h2>Your wedding starts <i>here.</i></h2><div class="r"><div style="display: flex; flex-wrap: wrap; gap: 12px"><a class="btn btn-dark" href="/en/comprar/">Create my invitation</a><a class="btn" style="box-shadow: inset 0 0 0 1.5px #FFF7F2" href="/en/disenos/"><span>See all <span data-n>22</span> designs</span></a></div><a class="wa" href="#">Questions? Message us on WhatsApp</a></div></section></div>
+<section id="contacto" class="end dark" aria-labelledby="c-h">
+<svg class="flap flap-down" viewBox="0 0 1440 120" preserveAspectRatio="none" aria-hidden="true"><path d="M0 0H1440C1100 0 860 100 720 100S340 0 0 0Z" fill="#F8F3EC"/><path d="M0 0C340 0 580 100 720 100S1100 0 1440 0" fill="none" stroke="#C49A5A" stroke-width="1" vector-effect="non-scaling-stroke"/></svg>
+<div class="w">
+<div><svg class="seal seal-l" width="74" height="74" viewBox="0 0 56 56" aria-hidden="true"><circle cx="28" cy="28" r="27" fill="#6B3F5E"/><circle cx="28" cy="28" r="21" fill="none" stroke="#E2C9A0" stroke-width=".8" stroke-dasharray="2 2.4"/><text x="28" y="35" text-anchor="middle" font-family="Bodoni Moda, Georgia, serif" font-style="italic" font-size="21" fill="#FBF6EF">ss</text></svg>
+<h2 id="c-h">Your wedding <i>starts here.</i></h2>
+<div class="ctas"><a class="btn btn-champ" href="/en/comprar/">Create my invitation</a><a class="btn btn-ghost" href="/en/disenos/"><span>See all <span data-n>22</span> designs</span></a></div>
+<a class="ul wa" href="#">Questions? Message us on WhatsApp</a></div>
+<div class="trio" aria-hidden="true"><span class="cushion"></span><div class="slip a"><img src="/assets/gala-medallon.jpg" width="554" height="1200" alt="" loading="lazy"></div><div class="slip b"><img src="/assets/brand/previews/onix-sobre.webp" width="554" height="1200" alt="" loading="lazy"></div><div class="slip c"><img src="/assets/marfil-lazo.jpg" width="554" height="1200" alt="" loading="lazy"></div></div>
+</div>
+</section>
 </main>
 
-<footer class="w foot">
-<div class="row"><a class="logo" href="/en/" aria-label="Invitesse, home"><span class="iv-wm" role="img" aria-label="Invitesse"><span aria-hidden="true">invite</span><b aria-hidden="true">ss</b><span aria-hidden="true">e</span><svg viewBox="0 0 70 54" aria-hidden="true"><path d="M2 48C10 34 22 26 31 30C39 34 35 45 27 43C19 41 21 26 36 17C46 11 58 10 66 15" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg></span></a><nav aria-label="Footer"><a href="/en/disenos/">Designs</a><a href="#add-ons">Add-ons</a><a href="#">Instagram</a><a href="#">[hello@yourdomain.com]</a><a href="#">Terms</a><a href="/">Español</a></nav></div>
-<div class="by"><b>Designs by opening</b><a href="/en/disenos/?apertura=sobre">Envelopes</a><a href="/en/disenos/?apertura=puertas,cortina,estor">Doors and curtains</a><a href="/en/disenos/?apertura=pase,tarjetas,carta,calendario,baraja">Cards</a><a href="/en/disenos/?apertura=carpeta,lazo,estuche,funda">Boxes and bows</a><a href="/en/disenos/?apertura=tele,ventana">TV and window</a><a href="/en/disenos/?apertura=luna,medallon">Moon and medallion</a><a class="all" href="/en/disenos/">See all <span data-n>22</span></a></div>
-<small>Wedding website invitations</small>
+<footer class="foot">
+<div class="w">
+<div class="about"><a class="logo" href="/" aria-label="Invitesse, home"><span class="iv-wm on-dark" role="img" aria-label="Invitesse"><span aria-hidden="true">invite</span><b aria-hidden="true">ss</b><span aria-hidden="true">e</span><svg viewBox="0 0 70 54" aria-hidden="true"><path d="M2 48C10 34 22 26 31 30C39 34 35 45 27 43C19 41 21 26 36 17C46 11 58 10 66 15" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg></span></a><p>Wedding website invitations worth opening.</p></div>
+<nav aria-label="The collection by opening"><p class="k">By opening</p><ul><li><a href="/en/disenos/?apertura=sobre">Envelopes</a></li><li><a href="/en/disenos/?apertura=puertas,cortina,estor">Doors and curtains</a></li><li><a href="/en/disenos/?apertura=pase,tarjetas,carta,calendario,baraja">Cards</a></li><li><a href="/en/disenos/?apertura=carpeta,lazo,estuche,funda">Boxes and bows</a></li><li><a href="/en/disenos/?apertura=tele,ventana">TV and window</a></li><li><a href="/en/disenos/?apertura=luna,medallon">Moon and medallion</a></li></ul></nav>
+<nav aria-label="Invitesse"><p class="k">Invitesse</p><ul><li><a href="/en/disenos/">The collection</a></li><li><a href="#panel">Your dashboard</a></li><li><a href="#add-ons">Add-ons</a></li><li><a href="/en/cuenta/">Log in</a></li></ul></nav>
+<nav aria-label="Contact"><p class="k">Contact</p><ul><li><a href="#">WhatsApp</a></li><li><a href="#">Instagram</a></li><li><a href="#">[hello@yourdomain.com]</a></li><li><a href="#">Terms</a></li><li><a href="/" hreflang="es">Español</a></li></ul></nav>
+</div>
+<div class="base"><span>Wedding website invitations</span><span>Mercado Pago · Card · PayPal</span></div>
 </footer>
 
-<div class="sticky" id="sticky"><a class="btn btn-line" href="/en/disenos/"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="6.5" height="6.5" rx="1.5"/><rect x="13.5" y="4" width="6.5" height="6.5" rx="1.5"/><rect x="4" y="13.5" width="6.5" height="6.5" rx="1.5"/><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1.5"/></svg>Designs</a><a class="btn btn-dark" href="/en/comprar/">Create my invitation</a></div>
+<div class="sticky" id="sticky"><a class="btn btn-line" href="/en/disenos/">Designs</a><a class="btn btn-plum" href="/en/comprar/">Create my invitation</a></div>
 
 <script src="/disenos/catalogo.js?v=2"></script>
-<script>
-/* Cuántos diseños hay (sale del catálogo, así no queda desactualizado). */
-(function(){var C=window.LazoCatalog;if(!C)return;var n=C.designs.length;document.querySelectorAll('[data-n]').forEach(function(e){e.textContent=n;});document.querySelectorAll('[data-more]').forEach(function(e){e.textContent=n-4;});})();
-(function(){
-  var nav=document.querySelector('.top nav'),btn=nav.querySelector('.nav-toggle');
-  function set(o){nav.classList.toggle('open',o);btn.setAttribute('aria-expanded',String(o));btn.setAttribute('aria-label',o?btn.dataset.close:btn.dataset.open);}
-  btn.addEventListener('click',function(){set(!nav.classList.contains('open'));});
-  nav.querySelectorAll('.links a').forEach(function(a){a.addEventListener('click',function(){set(false);});});
-  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&nav.classList.contains('open')){set(false);btn.focus();}});
-})();
-/* Barra fija en el celular: aparece al pasar la portada y se esconde en el cierre. */
-(function(){
-  var bar=document.getElementById('sticky'),hero=document.getElementById('top'),end=document.getElementById('contact');if(!bar||!('IntersectionObserver' in window))return;
-  document.body.classList.add('has-sticky');var past=false,atEnd=false;
-  function up(){bar.classList.toggle('on',past&&!atEnd);}
-  new IntersectionObserver(function(e){past=!e[0].isIntersecting;up();}).observe(hero);
-  new IntersectionObserver(function(e){atEnd=e[0].isIntersecting;up();}).observe(end);
-})();
-(function(){
-  var box=document.querySelector('[data-addons]'); if(!box) return;
-  var tabs=[].slice.call(box.querySelectorAll('.ad-tab')), mocks=[].slice.call(box.querySelectorAll('.ad-mock')), copies=[].slice.call(box.querySelectorAll('.ad-copy')), i=0, n=tabs.length;
-  function go(k,focus,scroll){
-    i=(k+n)%n;
-    tabs.forEach(function(t,j){var on=j===i;t.setAttribute('aria-selected',on);t.tabIndex=on?0:-1;});
-    mocks.forEach(function(m,j){m.hidden=j!==i;}); copies.forEach(function(c,j){c.hidden=j!==i;});
-    if(focus) tabs[i].focus();
-    if(scroll!==false){var t=tabs[i], s=t.parentNode; if(s.scrollWidth>s.clientWidth) s.scrollTo({left:t.offsetLeft-s.firstElementChild.offsetLeft,behavior:'smooth'});}
-  }
-  tabs.forEach(function(t,j){t.addEventListener('click',function(){go(j);});});
-  box.querySelector('.ad-tabs').addEventListener('keydown',function(e){
-    if(e.key==='ArrowRight'){e.preventDefault();go(i+1,true);} else if(e.key==='ArrowLeft'){e.preventDefault();go(i-1,true);}
-  });
-  box.querySelector('[data-prev]').addEventListener('click',function(){go(i-1);});
-  box.querySelector('[data-next]').addEventListener('click',function(){go(i+1);});
-  var x0=null, stage=box.querySelector('.ad-stage');
-  stage.addEventListener('touchstart',function(e){x0=e.touches[0].clientX;},{passive:true});
-  stage.addEventListener('touchend',function(e){ if(x0===null) return; var d=e.changedTouches[0].clientX-x0; x0=null; if(Math.abs(d)>40) go(i+(d<0?1:-1)); });
-  go(0,false,false);
-})();
-</script>
-<script src="/assets/brand/experience.js" defer></script>
+<script src="/assets/brand/home.js?v=1"></script>
+<script src="/assets/brand/experience.js?v=2" defer></script>
 </body>
 </html>

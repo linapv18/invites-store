@@ -5,13 +5,13 @@
   if (!body.classList.contains('iv-home')) return;
   if ('IntersectionObserver' in window) {
     var hero = document.querySelector('.hero-visual');
-    new IntersectionObserver(function (items) { items.forEach(function (item) { item.target.classList.toggle('is-in-view', item.isIntersecting); }); }).observe(hero);
+    if (hero) new IntersectionObserver(function (items) { items.forEach(function (item) { item.target.classList.toggle('is-in-view', item.isIntersecting); }); }).observe(hero);
     if (!reduced.matches) {
       body.classList.add('iv-motion-enabled');
       var reveal = new IntersectionObserver(function (items) {
         items.forEach(function (item) { if (item.isIntersecting) { item.target.classList.add('iv-visible'); reveal.unobserve(item.target); } });
       }, { rootMargin: '100px 0px', threshold: .05 });
-      document.querySelectorAll('.dcard .ph,.tool .shot').forEach(function (item) { item.classList.add('iv-reveal'); reveal.observe(item); });
+      document.querySelectorAll('.dcard .ph,.tool .shot,.dcard .slip,.rsteps .shot,.edshot,.trio .slip').forEach(function (item) { item.classList.add('iv-reveal'); reveal.observe(item); });
     }
   }
   document.addEventListener('visibilitychange', function () { document.documentElement.classList.toggle('iv-motion-paused', document.hidden); });
