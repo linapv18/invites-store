@@ -28,7 +28,7 @@
       faqK: 'Dudas', faqT: 'Preguntas',
       faqs: [['¿Cuál es el código de vestimenta?', 'Formal. Evita el blanco, por favor.'], ['¿Pueden ir niños?', 'Nuestra celebración es solo para adultos.'], ['¿Hay mesa de regalos?', 'Su compañía es nuestro mejor regalo. Si desean tener un detalle, los novios compartirán los detalles de su mesa de regalos.']],
       rsvpK: 'RSVP', rsvpT: 'Confirmación', before: 'Responde antes del', rsvpDatePat: '{d} de {M}', deadline: '14 de febrero', seatsRes: '4 lugares', rsvpMsg: 'Confirma quiénes de esta invitación podrán acompañarnos.',
-      yes: 'Asistiré', no: 'No podré ir', diet: 'Alergias o restricciones alimentarias', note: 'Mensaje para los novios', optional: 'Opcional', send: 'Confirmar asistencia', err: 'Elige una opción para cada persona.', missing: 'Elige una opción para',
+      yes: 'Asistiré', no: 'No podré ir', yesSum: 'Asistirá', noSum: 'No asistirá', replies: 'Sus respuestas', diet: 'Alergias o restricciones alimentarias', note: 'Mensaje para los novios', optional: 'Opcional', send: 'Confirmar asistencia', err: 'Elige una opción para cada persona.', missing: 'Elige una opción para',
       thanks: '¡Gracias!', edit: 'Editar respuesta', will: function (y, n) { return y ? 'Asistirán ' + y + ' de ' + n + ' personas. Nos vemos pronto.' : 'Gracias por avisarnos. Los extrañaremos.'; },
       demoNote: 'Demostración: las respuestas no se envían ni se guardan.',
       demo: 'Demo', panel: 'Panel de novios', store: 'Tienda', storeUrl: '/#disenos', wedding: 'Boda de'
@@ -55,7 +55,7 @@
       faqK: 'Questions', faqT: 'FAQ',
       faqs: [['What is the dress code?', 'Formal. Please avoid white.'], ['Are kids welcome?', 'Our celebration is adults only.'], ['Is there a gift registry?', 'Your presence is our best gift. If you’d like to give something, the couple will share their registry details.']],
       rsvpK: 'RSVP', rsvpT: 'Will you join us?', before: 'Reply by', rsvpDatePat: '{Mc} {d}', deadline: 'February 14', seatsRes: '4 seats', rsvpMsg: 'Let us know who from this invitation can join us.',
-      yes: 'Attending', no: 'Can’t make it', diet: 'Allergies or dietary restrictions', note: 'A message for the couple', optional: 'Optional', send: 'Send RSVP', err: 'Choose an option for each person.', missing: 'Choose an option for',
+      yes: 'Attending', no: 'Can’t make it', yesSum: 'Attending', noSum: 'Not attending', replies: 'Your replies', diet: 'Allergies or dietary restrictions', note: 'A message for the couple', optional: 'Optional', send: 'Send RSVP', err: 'Choose an option for each person.', missing: 'Choose an option for',
       thanks: 'Thank you!', edit: 'Edit answer', will: function (y, n) { return y ? y + ' of ' + n + ' people will attend. See you soon.' : 'Thanks for letting us know. We’ll miss you.'; },
       demoNote: 'Demo: responses are neither sent nor saved.',
       demo: 'Demo', panel: 'Couple’s dashboard', store: 'Store', storeUrl: '/en/#designs', wedding: 'Wedding of'

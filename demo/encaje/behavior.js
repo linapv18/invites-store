@@ -257,8 +257,19 @@
     var rows = wrapP.querySelectorAll('.person');
     rows.forEach(function (r, i) { var miss = att[i] === null; r.classList.toggle('is-err', miss); r.querySelector('.person-err').hidden = !miss; });
     if (att.some(function (x) { return x === null; })) { $('rsErr').hidden = false; rows[att.indexOf(null)].querySelector('input').focus(); return; }
-    $('rsSum').textContent = S.will(att.filter(Boolean).length, PEOPLE.length);
-    var list = document.createElement('ul'); list.className = 'reply-list'; PEOPLE.forEach(function (name, i) { var li = document.createElement('li'), b = document.createElement('b'); b.textContent = name; li.appendChild(b); li.appendChild(document.createTextNode(att[i] ? S.yes : S.no)); list.appendChild(li); }); $('rsSum').appendChild(list);
+    var sum = $('rsSum'); sum.textContent = '';
+    var lead = document.createElement('p'); lead.className = 'rs-will'; lead.textContent = S.will(att.filter(Boolean).length, PEOPLE.length); sum.appendChild(lead);
+    var box = document.createElement('div'); box.className = 'reply-box';
+    var cap = document.createElement('p'); cap.className = 'ey'; cap.textContent = S.replies; box.appendChild(cap);
+    var list = document.createElement('ul'); list.className = 'reply-list';
+    PEOPLE.forEach(function (name, i) {
+      var li = document.createElement('li'), b = document.createElement('b'), st = document.createElement('span');
+      b.textContent = name; st.className = 'reply-st ' + (att[i] ? 'is-yes' : 'is-no');
+      st.innerHTML = att[i] ? CHECK : '<svg class="ic" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true" focusable="false"><path d="M4.5 4.5l7 7M11.5 4.5l-7 7"/></svg>';
+      st.appendChild(document.createTextNode(att[i] ? S.yesSum : S.noSum));
+      li.appendChild(b); li.appendChild(st); list.appendChild(li);
+    });
+    box.appendChild(list); sum.appendChild(box);
     $('rsForm').hidden = true; $('rsDone').hidden = false; $('rsDone').tabIndex = -1; $('rsDone').focus();
     LazoPanel.setResponse(att, $('note').value.trim());
   });
