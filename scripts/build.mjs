@@ -12,7 +12,7 @@ if (!publishableKey.startsWith('sb_publishable_')) throw new Error('Use a publis
 await rm('dist', { recursive: true, force: true });
 await mkdir('dist', { recursive: true });
 // Explicit allowlist: never publish env files, dependencies, SQL or internal docs.
-for (const path of ['assets','comprar','cuenta','demo','disenos','editor','en','index.html']) {
+for (const path of ['assets','comprar','cuenta','demo','disenos','editor','en','privacidad','condiciones','index.html']) {
   await cp(path, 'dist/' + path, { recursive: true });
 }
 await mkdir('dist/assets/backend', { recursive: true });

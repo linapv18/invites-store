@@ -12,7 +12,7 @@
       count: function (n, t) { return n === t ? t + ' diseños<span class="xs-hide"> · prueben sus demos</span>' : n + ' de ' + t + ' diseños'; }, empty: 'Ningún diseño coincide con esos filtros todavía.',
       customH: '¿Ninguno es el suyo?', customP: 'Diseñamos uno a la medida de su boda.', customA: 'Ver la opción a medida',
       tailK: 'A la medida', tailH: 'Su invitación, <i>hecha desde cero.</i>', tailP: 'Una dirección visual y una apertura propias para su boda. Consultas disponibles con el lanzamiento.', tailA: 'Conocer la opción', tailB: 'Ver cómo funciona',
-      foot: [['/', 'Inicio'], ['/#complementos', 'Complementos'], ['/#precios', 'Opciones'], ['/en/disenos/', 'English']], tagline: 'Invitaciones web de boda' },
+      foot: [['/', 'Inicio'], ['/#complementos', 'Complementos'], ['/#precios', 'Opciones'], ['/privacidad/', 'Privacidad'], ['/condiciones/', 'Condiciones'], ['/en/disenos/', 'English']], tagline: 'Invitaciones web de boda' },
     en: { kicker: 'The designs', title: 'Find the design <i>for your wedding.</i>', store: 'Home', designs: 'Designs', addons: 'Add-ons', pricing: 'Options', login: 'Log in', cta: 'Explore designs',
       search: 'Search designs', searchPh: 'Search by style, color or opening', opening: 'How it opens', all: 'All', tabsLbl: 'How the invitation opens',
       incl: 'Every one includes:', inclList: ['Opening', 'Cover', 'Our story', 'Schedule and maps', 'FAQ', 'Music', 'Travel and hotels', 'RSVP per person'],
@@ -20,7 +20,7 @@
       count: function (n, t) { return n === t ? t + ' designs<span class="xs-hide"> · try the demos</span>' : n + ' of ' + t + ' designs'; }, empty: 'No design matches those filters yet.',
       customH: 'None feels like yours?', customP: 'We design one just for your wedding.', customA: 'Explore custom design',
       tailK: 'Custom', tailH: 'Your invitation, <i>made from scratch.</i>', tailP: 'A visual direction and opening created for your wedding. Enquiries available at launch.', tailA: 'Explore this option', tailB: 'See how it works',
-      foot: [['/en/', 'Home'], ['/en/#add-ons', 'Add-ons'], ['/en/#precios', 'Options'], ['/disenos/', 'Español']], tagline: 'Wedding website invitations' }
+      foot: [['/en/', 'Home'], ['/en/#add-ons', 'Add-ons'], ['/en/#precios', 'Options'], ['/en/privacy/', 'Privacy'], ['/en/terms/', 'Terms'], ['/disenos/', 'Español']], tagline: 'Wedding website invitations' }
   }[LANG];
   var C = window.LazoCatalog, $ = function (id) { return document.getElementById(id); };
   var esc = function (s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); };

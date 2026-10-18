@@ -115,7 +115,7 @@
       (message?'<p role="status">'+esc(message)+'</p>':'')+
       '<button type="submit" class="ed-btn ed-btn-dark ed-btn-lg">'+esc(label)+'</button>'+
       (mode==='login'?'<button type="button" class="ed-link" data-act="mode" data-id="reset">'+(LANG==='en'?'Forgot your password?':'¿Olvidaron su contraseña?')+'</button>':'')+
-      '<p class="ac-note">'+esc(S.demoNote)+'</p></form>';
+      '<p class="ac-note">'+esc(S.demoNote)+'</p><p class="ac-note"><a href="'+(LANG==='en'?'/en/privacy/':'/privacidad/')+'">'+(LANG==='en'?'Privacy policy':'Política de privacidad')+'</a> · <a href="'+(LANG==='en'?'/en/terms/':'/condiciones/')+'">'+(LANG==='en'?'Terms of service':'Condiciones del servicio')+'</a></p></form>';
   }
   function designCard(d, actions, sub) {
     var n = S.names[d];
