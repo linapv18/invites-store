@@ -43,14 +43,6 @@ svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.6;stroke
 .ctas{display:flex;flex-wrap:wrap;align-items:center;gap:16px 24px;margin-top:30px}
 .hero-demo{display:inline-flex;align-items:center;min-height:44px;text-decoration:underline;text-underline-offset:6px;font-size:14px}
 .launch-note{font-size:12px;line-height:1.7;color:#C5B3BF;margin-top:26px;max-width:420px}
-.hero-design{display:block;text-decoration:none;min-width:0;background:#E9E0D7;color:var(--h-ink);border-radius:180px 180px 12px 12px;overflow:hidden;transition:background .2s}
-.hero-design:hover{background:#F1E8DF}
-.hero-object{display:flex;align-items:center;justify-content:center;padding:58px 42px 24px;aspect-ratio:1/1}
-.hero-object img{width:100%;max-height:430px;object-fit:contain;filter:drop-shadow(0 20px 18px #24132022);transition:transform .3s}
-.hero-design:hover .hero-object img{transform:translateY(-4px)}
-.hero-caption{display:flex;align-items:center;justify-content:space-between;gap:20px;border-top:1px solid var(--h-rule);padding:24px 30px}
-.hero-caption .k{margin:0 0 6px;color:var(--h-ink);font-size:12px}
-.hero-caption p{font-size:13px;color:var(--h-muted)}
 .round-arrow{display:flex;align-items:center;justify-content:center;width:44px;height:44px;border:1px solid #35243255;border-radius:50%;flex:none}
 .section{padding-block:92px;position:relative}
 .section-head{display:flex;justify-content:space-between;align-items:flex-end;gap:28px 64px;margin-bottom:36px}
@@ -137,9 +129,6 @@ details[open]>summary>span{transform:rotate(45deg)}
 @media(max-width:500px){.response-shot{height:auto}.panel-shot{max-height:440px}}
 
 /* Romantic: a static capture of the real closed envelope, linked to its full demo. */
-.hero-design.romantic .hero-object{padding:0;aspect-ratio:1}
-.hero-design.romantic .hero-object img{width:100%;height:100%;max-height:none;object-fit:cover;filter:none}
-.hero-design.romantic:hover .hero-object img{transform:none}
 /* Reply summary illustrated in the storefront's own visual language. */
 .response-shot.response-preview{height:auto;min-height:494px;padding:28px;display:flex;align-items:center;background:#DED1CB}
 .confirmation-card{width:100%;padding:26px 28px 22px;background:#F8F3EC;color:#352432;border:1px solid #BBA59B;box-shadow:0 12px 32px #3524320d}
@@ -158,3 +147,15 @@ details[open]>summary>span{transform:rotate(45deg)}
 .confirmation-example{display:block;margin-top:14px;color:#725D68;font-size:11px;letter-spacing:.04em}
 @media(max-width:800px){.response-shot.response-preview{padding:18px;min-height:0}.confirmation-card{padding:20px 18px}.confirmation-card h4{font-size:34px}.confirmation-top{font-size:9px;letter-spacing:.06em}.confirmation-guests li{font-size:12px;gap:8px}.confirmation-status{font-size:10px}.confirmation-family{margin-top:18px}}
 @media(max-width:360px){.response-shot.response-preview{padding:12px}.confirmation-card{padding:18px 14px}.confirmation-guests li{font-size:11px}.confirmation-note{font-size:16px}}
+
+/* Hero: Romántico cerrada y abierta, una captura sobre la otra (mismas proporciones en escritorio y móvil). */
+.hero-pair{position:relative;display:block;width:100%;max-width:480px;justify-self:center;aspect-ratio:537/720;text-decoration:none;isolation:isolate}
+.hero-pair::before{content:'';position:absolute;inset:-6% -14%;border-radius:50%;background:radial-gradient(closest-side,rgba(107,63,94,.5),rgba(36,19,32,0));z-index:-1;pointer-events:none}
+.hero-pair .shot{position:absolute;width:54%;aspect-ratio:554/1200;border-radius:16px;overflow:hidden;box-shadow:0 2px 3px rgba(0,0,0,.2),0 34px 60px -24px rgba(0,0,0,.65);transition:transform .45s cubic-bezier(.2,.7,.2,1)}
+.hero-pair .shot img{width:100%;height:100%;object-fit:cover;display:block}
+.hero-pair .open{left:46%;top:0}
+.hero-pair .closed{left:0;top:12.78%}
+@media(hover:hover){.hero-pair:hover .open{transform:translateY(-6px)}.hero-pair:hover .closed{transform:translateY(-3px)}}
+.hero-pair:focus-visible{outline:2px solid #C49A5A;outline-offset:8px;border-radius:18px}
+@media(max-width:800px){.hero-pair{max-width:350px;margin-top:8px}.hero-pair .shot{border-radius:12px}}
+@media(prefers-reduced-motion:reduce){.hero-pair .shot{transition:none}.hero-pair:hover .shot{transform:none}}
