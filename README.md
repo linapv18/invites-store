@@ -48,11 +48,11 @@ Para verlo en local:
 python3 -m http.server 4173
 ```
 
-Pendiente: precios (`[Precio]`, `[$]`, `[Total]`), enlaces de pago (compra del diseño en `/comprar/` y "Pagar y activar" de `/editor/pago/`), cuentas reales, publicar desde el editor y WhatsApp. No hay backend: cuentas, invitaciones y carrito se guardan en `localStorage` del navegador.
+Pendiente: precios (`[Precio]`, `[$]`, `[Total]`), enlaces de pago (compra del diseño en `/comprar/` y "Pagar y activar" de `/editor/pago/`), publicar desde el editor y WhatsApp. Cuentas y borradores usan Supabase; el carrito sigue siendo local y los archivos grandes requieren una integración de almacenamiento adicional.
 
 Editor y cuentas (el idioma sale de `<html lang>`):
 
-- `editor/auth.js` — cuentas **simuladas**: se guardan en `localStorage` de cada navegador (sirven para probar el flujo, no son seguras ni se comparten entre dispositivos). Pendiente: cuentas reales (p. ej. Supabase o Firebase) y activar la compra desde el servidor al confirmarse el pago
+- `editor/auth.js` — cuentas y borradores en Supabase. Registro/confirmación de correo, acceso, recuperación y cierre de sesión. `buy()` prepara un borrador privado, sin acreditar compras. Pendiente: activar la compra desde el servidor al confirmarse el pago.
 - `editor/cuenta.js` — páginas de cuenta y compra; `editor/editor.js` + `editor.css` — editor y pago de complementos
 - Vista previa al compartir (sección 02 del editor): los novios eligen si el enlace en WhatsApp/Instagram muestra la invitación cerrada o una foto suya (`shareMode`, `sharePhoto`: 0 = portada, n = foto n de la galería). Pendiente: al publicar, el servidor debe generar la imagen `og:image` de 1200 × 630 (captura de `/demo/<diseño>/?lz=vista` con su contenido, o la foto elegida) y poner `og:title`/`og:description` con los nombres, la fecha y el mensaje
 - `demo/shared/content.js` — lleva el contenido del editor a la plantilla real. Todos los diseños reciben y muestran los mismos campos (pareja, fecha, ciudad, mensaje, frase de la cuenta regresiva, historia, cita, galería, eventos con lugar y dirección, código de vestimenta, preguntas, viaje con hotel, cómo llegar y guía de la ciudad, RSVP); lo que queda vacío no aparece al ver como invitado. Solo actúa con `?lz=editor` (vista previa) o `?lz=vista` (ver como invitado); sin esos parámetros las demos se ven igual. Las plantillas marcan con `data-lz…` dónde va cada dato
@@ -72,3 +72,7 @@ La landing y el catálogo se presentan como vista previa hasta completar la cont
 Las capturas `encaje-response-{es,en}.webp` y `encaje-panel-{es,en}.webp` proceden de una misma sesión real de la demo: Familia Rodríguez confirma 4 de 4 personas y el resumen pasa de 13 a 17 asistentes de 32. `romantico-hero.webp` es una captura estática del sobre cerrado real de Romántico; la tarjeta y el CTA abren directamente `/demo/rosa/` (o su ruta en inglés), sin preview intermedio. Las miniaturas están en `assets/brand/thumbs/`.
 
 El calendario descargable de Encaje usa UTC explícito y la zona del evento (por defecto, la de Oaxaca en las demos). En el editor de Encaje se puede elegir la zona horaria; el archivo usa la fecha y la hora del primer evento, independientemente del evento seleccionado para la cuenta regresiva. Las líneas del `.ics` se pliegan a 75 octetos UTF-8.
+
+## Preparación de Supabase
+
+Ver [SUPABASE-SETUP.md](SUPABASE-SETUP.md) para las variables de entorno, el build y la migración de borradores privados. Las cuentas y los borradores del editor usan Supabase. La publicación y los pagos siguen pendientes; ver también los límites de archivos en esa guía.

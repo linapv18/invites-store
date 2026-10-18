@@ -1,0 +1,28 @@
+{
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "framework": null,
+  "headers": [
+    {
+      "source": "/assets/backend/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-cache"
+        }
+      ]
+    }
+  ],
+  "redirects": [
+    {
+      "source": "/en/cuenta",
+      "destination": "/en/account/",
+      "permanent": true
+    },
+    {
+      "source": "/en/cuenta/",
+      "destination": "/en/account/",
+      "permanent": true
+    }
+  ]
+}

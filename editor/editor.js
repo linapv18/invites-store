@@ -1,19 +1,25 @@
 /* Editor de invitaciones y pago de complementos (Lazo).
    El idioma sale de <html lang="…"> ('es' o 'en') y la vista de <div id="lazo-editor" data-view="editor|checkout">.
-   No hay backend: el contenido y el carrito se guardan en localStorage (si el navegador lo permite).
+   Los borradores se guardan en Supabase; localStorage es una caché para las vistas previas. El carrito sigue siendo un prototipo.
    Precios: se dejan los marcadores [Precio], [$] y [Total] igual que en el resto de la tienda.
    Rutas: /editor/ y /en/editor/ (editor), /editor/pago/ y /en/editor/pago/ (pago).
    Atajos: /editor/#musica abre una sección o un complemento, /editor/#complementos abre el panel,
    /editor/?diseno=moderno (o ?design=) elige el diseño. */
-(function () {
+(async function () {
   'use strict';
   var root = document.getElementById('lazo-editor');
   if (!root) return;
   var LANG = (document.documentElement.lang || 'es').slice(0, 2) === 'en' ? 'en' : 'es';
   var BASE = LANG === 'en' ? '/en' : '';
+  var ACCOUNT = LANG === 'en' ? '/en/account/' : '/cuenta/';
   var VIEW = root.getAttribute('data-view') || 'editor';
   // Las claves dependen de la cuenta y del diseño: las fija gate() (ver editor/auth.js).
   var KEY = '', CART_KEY = '', PREV_KEY = '', AUTH = window.LazoAuth;
+  root.innerHTML = '<p style="padding:40px" role="status">'+(document.documentElement.lang === 'en' ? 'Connecting securely…' : 'Conectando de forma segura…')+'</p>';
+  try { await AUTH.ready; } catch (_) {
+    root.innerHTML = '<div style="padding:40px"><p role="alert">'+(document.documentElement.lang === 'en' ? 'Unable to connect. Your drafts have not been changed.' : 'No se pudo conectar. Sus borradores no se han modificado.')+'</p><button type="button" onclick="location.reload()">'+(document.documentElement.lang === 'en' ? 'Retry' : 'Reintentar')+'</button></div>'; return;
+  }
+
 
   var esc = function (s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); };
   var pad = function (n) { return (n < 10 ? '0' : '') + n; };
@@ -25,10 +31,10 @@
   var STR = {
     es: {
       weddingOf: 'Boda de', designLbl: 'Diseño', myInv: 'Mis invitaciones',
-      gateT: function (d) { return 'Aún no tienen el diseño ' + d; }, gateP: 'Para editarlo, primero cómprenlo. Las invitaciones que ya compraron están en su cuenta.', gateBuy: 'Comprar este diseño',
+      gateT: function (d) { return 'Aún no tienen el diseño ' + d; }, gateP: 'Primero creen un borrador privado de este diseño. No se realizará una compra ni se publicará la invitación.', gateBuy: 'Preparar borrador',
       palFixed: function (d) { return 'Los colores vienen con el diseño ' + d + '.'; },
       saved: 'Cambios guardados', saving: 'Guardando…', saveFail: 'No se pudo guardar',
-      saveFailLong: 'No pudimos guardar en este navegador. Si subiste muchas fotos, prueba con menos o más ligeras.',
+      saveFailLong: 'No pudimos guardar en su cuenta. Mantengan esta pestaña abierta y reintenten. Si editaron en otro dispositivo, recarguen después de copiar sus cambios. Los archivos grandes requieren almacenamiento adicional.',
       savedShort: 'guardado', savingShort: 'guardando…',
       addons: 'Complementos', guest: 'Ver como invitado', publish: 'Publicar', menu: 'Secciones', closeMenu: 'Cerrar secciones',
       yourInv: 'Su invitación', ready: function (n, t) { return n + ' de ' + t + ' secciones listas'; },
@@ -121,7 +127,7 @@
       rsvpK: 'Te esperamos', rsvpH: 'Confirma tu asistencia', rsvpBtn: 'Confirmar asistencia', rsvpBy: function (d) { return 'Antes del ' + d; },
       rsvpDemo: 'En la invitación publicada, aquí cada invitado confirma su asistencia.',
       guestTitle: 'Así la verá la familia Rodríguez', closeGuest: 'Volver al editor', replay: 'Ver la apertura otra vez',
-      pubTitle: 'Publicar su invitación', pubText: 'Todavía no se puede publicar desde aquí: falta conectar la cuenta y el pago de la plantilla. Sus cambios quedan guardados en este navegador.',
+      pubTitle: 'Publicar su invitación', pubText: 'Su borrador se guarda en su cuenta. La publicación todavía no está disponible: falta conectar los permisos de compra y el servicio de publicación.',
       pubPending: 'Secciones por completar:', pubAll: 'Todas las secciones están listas.', ok: 'Entendido',
       badFile: 'Ese archivo no es una imagen compatible.', badMono: 'El monograma debe ser SVG o PNG.',
       demoPlaylist: 'Así la ven sus invitados', songAsk: '¿Qué canción no puede faltar?', songAskPh: 'Su canción', suggest: 'Sugerir',
@@ -156,10 +162,10 @@
     },
     en: {
       weddingOf: 'Wedding of', designLbl: 'Design', myInv: 'My invitations',
-      gateT: function (d) { return 'You don’t have the ' + d + ' design yet'; }, gateP: 'Buy it first to edit it. The invitations you already bought are in your account.', gateBuy: 'Buy this design',
+      gateT: function (d) { return 'You don’t have the ' + d + ' design yet'; }, gateP: 'Create a private draft of this design first. This does not purchase or publish an invitation.', gateBuy: 'Prepare a draft',
       palFixed: function (d) { return 'The colors come with the ' + d + ' design.'; },
       saved: 'Changes saved', saving: 'Saving…', saveFail: 'Could not save',
-      saveFailLong: 'We could not save in this browser. If you uploaded many photos, try fewer or lighter ones.',
+      saveFailLong: 'We could not save to your account. Keep this tab open and retry. If another device edited this draft, copy your changes before reloading. Large files require additional storage.',
       savedShort: 'saved', savingShort: 'saving…',
       addons: 'Add-ons', guest: 'View as guest', publish: 'Publish', menu: 'Sections', closeMenu: 'Close sections',
       yourInv: 'Your invitation', ready: function (n, t) { return n + ' of ' + t + ' sections ready'; },
@@ -252,7 +258,7 @@
       rsvpK: 'We hope to see you', rsvpH: 'Confirm your attendance', rsvpBtn: 'RSVP', rsvpBy: function (d) { return 'By ' + d; },
       rsvpDemo: 'In the published invitation, each guest RSVPs here.',
       guestTitle: 'How the Rodríguez family will see it', closeGuest: 'Back to the editor', replay: 'Watch the opening again',
-      pubTitle: 'Publish your invitation', pubText: 'Publishing from here isn’t available yet: the account and template payment still need to be connected. Your changes are saved in this browser.',
+      pubTitle: 'Publish your invitation', pubText: 'Your draft is saved to your account. Publishing is not available yet: purchase permissions and the publishing service still need to be connected.',
       pubPending: 'Sections to finish:', pubAll: 'All sections are ready.', ok: 'Got it',
       badFile: 'That file isn’t a supported image.', badMono: 'The monogram must be SVG or PNG.',
       demoPlaylist: 'What your guests see', songAsk: 'Which song can’t be missing?', songAskPh: 'Your song', suggest: 'Suggest',
@@ -794,7 +800,7 @@
   /* ---------- Acceso: hay que ingresar y haber comprado el diseño ---------- */
   function gate() {
     var u = AUTH && AUTH.current();
-    if (!u) { location.replace(BASE + '/cuenta/?next=' + encodeURIComponent(location.pathname + location.search + location.hash)); return null; }
+    if (!u) { location.replace(ACCOUNT + '?next=' + encodeURIComponent(location.pathname + location.search + location.hash)); return null; }
     var own = AUTH.owned(), p = new URLSearchParams(location.search), d = p.get('diseno') || p.get('design');
     if (!own.length) { location.replace(BASE + '/comprar/' + (DESIGNS[d] ? '?diseno=' + d : '')); return null; }
     if (!d) d = own.indexOf(u.last) > -1 ? u.last : own[0];
@@ -803,7 +809,7 @@
       document.title = S.gateT(name) + ' — Invitesse';
       root.innerHTML = '<div class="ed-gate"><a class="ed-logo ed-logo-full" href="' + BASE + '/" aria-label="Invitesse">' + logoFull + '</a><h1>' + esc(S.gateT(name)) + '</h1><p>' + esc(S.gateP) + '</p><div>' +
         (DESIGNS[d] ? '<a class="ed-btn ed-btn-dark" href="' + BASE + '/comprar/?diseno=' + d + '">' + esc(S.gateBuy) + '</a>' : '') +
-        '<a class="ed-btn" href="' + BASE + '/cuenta/">' + esc(S.myInv) + '</a></div></div>';
+        '<a class="ed-btn" href="' + ACCOUNT + '">' + esc(S.myInv) + '</a></div></div>';
       return null;
     }
     // Si es la primera vez que abren este diseño, el editor trae el contenido del último que editaron.
@@ -855,7 +861,7 @@
       '<header class="ed-top">' +
         '<button type="button" class="ed-icon-btn ed-menu" data-act="menu" aria-label="' + esc(S.menu) + '" aria-expanded="false" aria-controls="edNav">' + svg(P.menu, 18) + '</button>' +
         '<a class="ed-logo" href="' + BASE + '/" aria-label="Invitesse">' + logo + '</a><div class="ed-sep"></div>' +
-        '<div class="ed-title"><strong data-couple></strong><small>' + esc(S.designLbl) + ' <span data-design></span> · <button type="button" class="ed-chg" data-act="designs">' + svg(P.swap, 14, 2) + esc(G.change) + '</button> · <a href="' + BASE + '/cuenta/">' + esc(S.myInv) + '</a></small></div>' +
+        '<div class="ed-title"><strong data-couple></strong><small>' + esc(S.designLbl) + ' <span data-design></span> · <button type="button" class="ed-chg" data-act="designs">' + svg(P.swap, 14, 2) + esc(G.change) + '</button> · <a href="' + ACCOUNT + '">' + esc(S.myInv) + '</a></small></div>' +
         '<div class="ed-save" data-save aria-live="polite"></div>' +
         '<div class="ed-mtitle"><strong data-couple-short></strong><small data-msub></small></div>' +
         '<div class="ed-spacer"></div>' +
@@ -897,6 +903,7 @@
   }
 
   function renderChrome() {
+    if (!AUTH.current()) return;
     var n = cartCount(cart), idx = SECS.indexOf(state.sec);
     $$('[data-couple]').forEach(function (el) { el.textContent = S.weddingOf + ' ' + couple(state); });
     $$('[data-couple-short]').forEach(function (el) { el.textContent = couple(state); });
@@ -907,6 +914,12 @@
     var sv = $('[data-save]');
     sv.className = 'ed-save' + (ui.saving === 'fail' ? ' err' : '');
     sv.innerHTML = ui.saving === 'saving' ? esc(S.saving) : ui.saving === 'fail' ? esc(S.saveFail) : svg(P.check, 14, 2.4, '#4E7A5C') + esc(S.saved);
+    var cloudError = root.querySelector('.ed-cloud-error');
+    if (ui.saving === 'fail' && !cloudError) {
+      cloudError = document.createElement('div'); cloudError.className = 'ed-cloud-error'; cloudError.setAttribute('role', 'alert');
+      cloudError.innerHTML = '<span>' + esc(S.saveFail) + '</span><button type="button" class="ed-btn" data-act="save-retry">' + (LANG === 'en' ? 'Retry' : 'Reintentar') + '</button>';
+      root.appendChild(cloudError);
+    } else if (ui.saving !== 'fail' && cloudError) cloudError.remove();
     $$('[data-act="step"]').forEach(function (b) { var d = +b.getAttribute('data-d'); b.disabled = d < 0 ? idx <= 0 : idx === SECS.length - 1; });
     $$('[data-act="mode"]').forEach(function (b) { b.setAttribute('aria-selected', String(b.getAttribute('data-id') === ui.mode)); });
     $$('[data-act="device"]').forEach(function (b) { b.setAttribute('aria-pressed', String(b.getAttribute('data-id') === ui.device)); });
@@ -933,7 +946,7 @@
       }).join('') + '</div>' +
       '<div class="ed-promo"><span class="ed-kicker">' + esc(S.packsFrom) + '</span><span class="ed-promo-title">' + esc(S.packsTitle) + '</span><div class="ed-chips">' +
       PACKS.map(function (p) { return '<span class="ed-chip">' + esc(PACK_TXT[p.id][0]) + '</span>'; }).join('') + '</div><button type="button" class="ed-btn" data-act="drawer">' + esc(S.seePacks) + '</button></div>' +
-      '<div class="ed-only-m" style="flex-direction:column;gap:10px;padding:0 4px"><button type="button" class="ed-btn" data-act="designs">' + svg(P.grid, 16) + esc(G.designs) + '</button><button type="button" class="ed-btn" data-act="guest">' + esc(S.guest) + '</button><a class="ed-btn" href="' + BASE + '/cuenta/">' + esc(S.myInv) + '</a></div>';
+      '<div class="ed-only-m" style="flex-direction:column;gap:10px;padding:0 4px"><button type="button" class="ed-btn" data-act="designs">' + svg(P.grid, 16) + esc(G.designs) + '</button><button type="button" class="ed-btn" data-act="guest">' + esc(S.guest) + '</button><a class="ed-btn" href="' + ACCOUNT + '">' + esc(S.myInv) + '</a></div>';
   }
 
   /* ---------- Piezas del formulario ---------- */
@@ -1332,7 +1345,7 @@
   /* ---------- Ver como invitado: la plantilla completa, empezando por la apertura ---------- */
   function openGuest(opener) {
     closeNav(); ui.drawer = false; ui.opener = opener || document.activeElement; ui.guest = true;
-    stopSample(); clearTimeout(saveTimer); var ok = store(KEY, state); ui.saving = ok ? 'saved' : 'fail'; renderChrome();
+    stopSample(); saveNow();
     layer.innerHTML = '<div class="ed-guest" role="dialog" aria-modal="true" aria-labelledby="gTitle"><div class="ed-guest-bar"><span id="gTitle">' + esc(S.guestTitle) + '</span>' +
       '<button type="button" class="ed-btn" data-act="guest-close">' + esc(S.closeGuest) + '</button></div>' +
       '<iframe class="ed-guest-frame" title="' + esc(S.guestTitle) + '" src="' + frameUrl('vista') + '"></iframe></div>';
@@ -1362,15 +1375,39 @@
   }
 
   /* ---------- Guardado ---------- */
-  var saveTimer, warned = false;
+  var saveTimer, warned = false, saveGeneration = 0, saveQueue = Promise.resolve();
+  function saveNow() {
+    clearTimeout(saveTimer);
+    var snapshot = clone(state), generation = ++saveGeneration;
+    store(KEY, snapshot); // Preview cache only; success is acknowledged after the server writes.
+    ui.saving = 'saving'; renderChrome();
+    saveQueue = saveQueue.then(async function () {
+      try {
+        await AUTH.saveDraft(DESIGN, snapshot);
+        if (generation === saveGeneration) { ui.saving = 'saved'; warned = false; renderChrome(); }
+      } catch (_) {
+        if (generation === saveGeneration) {
+          ui.saving = 'fail'; renderChrome();
+          if (!warned) { warned = true; toast(S.saveFailLong); }
+        }
+      }
+    });
+    return saveQueue;
+  }
   function saveSoon() {
     ui.saving = 'saving'; clearTimeout(saveTimer);
-    saveTimer = setTimeout(function () {
-      var ok = store(KEY, state); ui.saving = ok ? 'saved' : 'fail'; renderChrome();
-      if (!ok && !warned) { warned = true; toast(S.saveFailLong); }
-      if (ok) warned = false;
-    }, 450);
+    // Advance immediately so an earlier in-flight write cannot claim newer edits are saved.
+    saveGeneration++;
+    store(KEY, state);
+    saveTimer = setTimeout(saveNow, 450);
   }
+  window.addEventListener('beforeunload', function (event) {
+    if (ui.saving !== 'saved') { event.preventDefault(); event.returnValue = ''; }
+  });
+  window.addEventListener('invitesse:signed-out', function () {
+    clearTimeout(saveTimer); ui.saving = 'saved'; root.innerHTML = '';
+    location.replace(ACCOUNT + '');
+  });
   function changed(form) {
     saveSoon();
     keepFocus(function () { renderChrome(); renderNav(); if (form) renderMain(); });
@@ -1547,6 +1584,7 @@
       case 'tour-prev': tour(tourAt - 1); break;
       case 'tour-skip': endTour(); break;
       case 'guide-go': closeGuide(); guideGo(+id); break;
+      case 'save-retry': saveNow(); break;
       case 'publish':
         var pending = SECS.filter(function (x) { return !doneOf(x); });
         // TODO: publicar de verdad cuando haya cuentas y backend (y el pago de la plantilla esté conectado).

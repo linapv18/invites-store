@@ -48,7 +48,7 @@ Se retiraron los enlaces vacíos del storefront. Cuando estén disponibles, cone
 
 Estas tareas requieren desarrollo e integración; no basta con completar los textos:
 
-- Cuentas reales, sesión, recuperación de contraseña y acceso desde varios dispositivos. `editor/auth.js` sigue siendo una simulación local.
+- Cuentas y borradores ya conectados a Supabase. Completar SMTP propio y validación de entrega de correos y aislamiento con dos cuentas reales de prueba.
 - Checkout del proveedor, validación del importe en servidor y confirmación del pago mediante webhook. Retirar la activación de compra de prueba del recorrido real.
 - Publicación de invitaciones, persistencia de archivos y contenido, enlaces personalizados y confirmaciones reales sincronizadas con el panel.
 - Control de acceso y permisos para que cada pareja y cada familia vean y editen solo lo que les corresponde.
@@ -68,4 +68,4 @@ Estas tareas requieren desarrollo e integración; no basta con completar los tex
 | Pago de complementos | `editor/editor.js` y las rutas `editor/pago/`, `en/editor/pago/` |
 | Herramientas de demo y aviso de contratación | `demo/shared/panel.js` |
 
-El flujo de cuenta, compra y editor conserva sus placeholders y mecanismos de prueba existentes. Deben revisarse junto con la integración de pagos; la limpieza comercial de esta revisión se aplicó a la landing y al catálogo.
+El flujo de cuenta y borradores usa Supabase; el checkout de complementos conserva sus placeholders. Deben revisarse junto con la integración de pagos; la limpieza comercial de esta revisión se aplicó a la landing y al catálogo.
