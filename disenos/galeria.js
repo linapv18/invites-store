@@ -32,10 +32,8 @@
   var FILTER = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M7 12h10M10 17h4"/></svg>';
   var otherUrl = function (s) { return (LANG === 'es' ? '/en/disenos/' : '/disenos/') + (s ? '?' + s : ''); };
 
-  $('nav').innerHTML = '<a class="logo" href="' + base + '/" aria-label="Invitesse">' + WM + '</a>' +
-    '<div class="links"><a class="on" href="' + base + '/disenos/" aria-current="page">' + S.designs + '</a><a class="hide-sm" href="' + base + (LANG === 'en' ? '/#add-ons' : '/#complementos') + '">' + S.addons + '</a><a class="hide-sm" href="' + base + ('/#precios') + '">' + S.pricing + '</a>' +
-    '<span class="lang">' + (LANG === 'es' ? '<b>ES</b> · <a href="' + otherUrl(location.search.slice(1)) + '" hreflang="en">EN</a>' : '<a href="' + otherUrl(location.search.slice(1)) + '" hreflang="es">ES</a> · <b>EN</b>') + '</span>' +
-    '<a href="' + base + '/cuenta/">' + S.login + '</a></div>';
+  var languageLink = document.querySelector('.top .lang');
+  if (languageLink) languageLink.href = otherUrl(location.search.slice(1));
   $('kicker').textContent = S.kicker; $('title').innerHTML = S.title;
   $('q').setAttribute('aria-label', S.search); $('q').placeholder = S.searchPh;
   $('incl').innerHTML = '<b>' + S.incl + '</b>' + S.inclList.map(function (x) { return '<span>' + CHECK(14, 2) + esc(x) + '</span>'; }).join('');
@@ -109,7 +107,7 @@
     var p = new URLSearchParams(); if (text.trim()) p.set('q', text.trim());
     C.filters.forEach(function (g) { if (sel[g.key].length) p.set(g.key, sel[g.key].join(',')); });
     var s = p.toString(); history.replaceState(null, '', location.pathname + (s ? '?' + s : ''));
-    var other = document.querySelector('.lang a'); if (other) other.href = otherUrl(s);
+    var other = document.querySelector('.top .lang'); if (other) other.href = otherUrl(s);
   }
   $('filters').addEventListener('click', function (e) {
     if (e.target.closest('[data-close]')) return sheet(false);

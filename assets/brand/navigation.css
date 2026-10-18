@@ -1,0 +1,17 @@
+/* Shared storefront navigation: home and catalogue, both languages. */
+:is(.iv-home,.iv-catalog) header.top{position:sticky;top:0;z-index:30;background:#241320f5;color:#F8F3EC;border:0;backdrop-filter:blur(12px)}
+:is(.iv-home,.iv-catalog) header.top nav.w{width:100%;max-width:1320px;padding-inline:40px;margin-inline:auto;min-height:80px;height:auto;display:flex;align-items:center;justify-content:space-between;gap:24px}
+:is(.iv-home,.iv-catalog) header.top .logo{display:inline-flex;align-items:center;min-height:44px;font-size:34px;text-decoration:none}
+:is(.iv-home,.iv-catalog) header.top .iv-wm{color:#F8F3EC}
+:is(.iv-home,.iv-catalog) header.top .links{display:flex;align-items:center;gap:24px;font:400 14px var(--iv-sans)}
+:is(.iv-home,.iv-catalog) header.top .links>a{display:inline-flex;align-items:center;min-height:44px;color:inherit;text-decoration:none}
+:is(.iv-home,.iv-catalog) header.top .links>a:hover,:is(.iv-home,.iv-catalog) header.top .links>a[aria-current="page"]{text-decoration:underline;text-underline-offset:6px}
+:is(.iv-home,.iv-catalog) header.top .links .lang{font-size:12px;letter-spacing:.1em}
+:is(.iv-home,.iv-catalog) header.top .links .btn{display:inline-flex;justify-content:center;min-height:44px;padding:10px 22px;border:1px solid transparent;border-radius:999px;background:#E9D7B8;color:#241320;font:500 14px/1.4 var(--iv-sans);text-decoration:none}
+:is(.iv-home,.iv-catalog) header.top .links .btn:hover{background:#F5E7D1}
+:is(.iv-home,.iv-catalog) header.top :focus-visible{outline:2px solid #E9D7B8;outline-offset:5px}
+:is(.iv-home,.iv-catalog) header.top .nav-toggle{display:none;align-items:center;justify-content:center;background:none;color:inherit;border:1px solid #ffffff40;width:44px;height:44px;border-radius:50%;cursor:pointer}
+:is(.iv-home,.iv-catalog) header.top .nav-toggle svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round}
+@media(max-width:1100px){:is(.iv-home,.iv-catalog) header.top .links{gap:18px;font-size:13px}:is(.iv-home,.iv-catalog) header.top .links .btn{display:none}}
+@media(max-width:800px){:is(.iv-home,.iv-catalog) header.top nav.w{min-height:68px;padding-inline:24px}:is(.iv-home,.iv-catalog) header.top .logo{font-size:28px}:is(.iv-home,.iv-catalog) header.top .nav-toggle{display:flex}:is(.iv-home,.iv-catalog) header.top .links{display:none;position:absolute;top:68px;left:0;right:0;background:#241320;padding:12px 24px 20px;max-height:calc(100dvh - 68px);overflow:auto;box-shadow:0 16px 24px #24132033}:is(.iv-home,.iv-catalog) header.top .links>a{display:flex;min-height:48px;border-bottom:1px solid #ffffff25;font-size:16px}:is(.iv-home,.iv-catalog) header.top .links .btn{display:flex;margin-top:16px;border:0}:is(.iv-home,.iv-catalog) header.top .links .lang{font-size:13px}:is(.iv-home,.iv-catalog) header.top nav.open .links{display:block}}
+@media(max-width:500px){:is(.iv-home,.iv-catalog) header.top nav.w{padding-inline:20px}}
