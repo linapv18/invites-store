@@ -45,3 +45,7 @@ Completar la información de marca y los documentos reales que Google solicite, 
 `python tests/browser/google_oauth.py` comprueba ambos idiomas a 1440, 390 y 320 px: disponibilidad del proveedor, escritura preservada durante la carga, inicio OAuth con PKCE, callback y regreso al diseño; también comprueba la cancelación. Todas las peticiones de Supabase/Google están interceptadas en ese recorrido: no inicia sesiones reales ni crea usuarios.
 
 No se afirma haber validado el consentimiento real o la configuración de Google Cloud. Esa comprobación requiere habilitar el proveedor con las credenciales del proyecto y una cuenta autorizada de prueba.
+
+## Nombre, logo y dominio visibles
+
+Ver [AUTH-DOMINIO.md](AUTH-DOMINIO.md): primero verificar/publicar la marca en Google; el dominio `auth.invitesse.com` es una opción adicional de pago en Supabase. El código admite ese endpoint, pero no lo activa por sí solo.
