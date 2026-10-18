@@ -157,5 +157,7 @@ details[open]>summary>span{transform:rotate(45deg)}
 .hero-pair .closed{left:0;top:12.78%}
 @media(hover:hover){.hero-pair:hover .open{transform:translateY(-6px)}.hero-pair:hover .closed{transform:translateY(-3px)}}
 .hero-pair:focus-visible{outline:2px solid #C49A5A;outline-offset:8px;border-radius:18px}
-@media(max-width:800px){.hero-pair{max-width:350px;margin-top:8px}.hero-pair .shot{border-radius:12px}}
+@media(max-width:800px){.hero-pair{max-width:350px;margin-top:8px}.hero-pair::before{inset:-6% -4%}.hero-pair .shot{border-radius:12px}}
+/* El resplandor del hero nunca debe ensanchar la página. */
+.hero{overflow-x:clip}
 @media(prefers-reduced-motion:reduce){.hero-pair .shot{transition:none}.hero-pair:hover .shot{transform:none}}
