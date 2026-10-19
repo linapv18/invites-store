@@ -198,3 +198,8 @@ body.sheet-open .demo-bar,body.sheet-open .lz-music{display:none !important}
 html.lz-photo-color img[data-lz-src^="photo:"],
 html.lz-photo-color img[data-lz-f="img"],
 html.lz-photo-color .lz-viewer .lz-v-frame img{filter:none!important}
+
+.lz-colors{max-width:calc(100vw - 32px);flex-wrap:wrap;border-radius:18px!important;justify-content:center}
+.lz-custom-color{display:inline-flex;align-items:center;gap:6px;min-height:44px;cursor:pointer;letter-spacing:.04em}
+.lz-custom-color input{width:32px;height:32px;padding:2px;border:1px solid currentColor;border-radius:6px;background:transparent;cursor:pointer}
+.lz-custom-color input:focus-visible{outline:2px solid currentColor;outline-offset:3px}

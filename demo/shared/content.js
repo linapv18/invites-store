@@ -24,6 +24,7 @@
   var q = new URLSearchParams(location.search), MODE = q.get('lz'), KEY = q.get('k');
   var LANG = (document.documentElement.lang || 'es').slice(0, 2) === 'en' ? 'en' : 'es';
   var html = document.documentElement, TPL = html.getAttribute('data-lz-tpl');
+  var CUSTOM_COLORS = ['clasico','moderno','noir','tinta','arco','lino','gala','onix'].indexOf(TPL) !== -1;
   var COLOR_PHOTOS = ['moderno', 'noir', 'corazones', 'tinta', 'estreno', 'nacar', 'onix'].indexOf(TPL) !== -1;
 
   /* ---------- Colores de cada plantilla ----------
@@ -171,6 +172,17 @@
         '--seal-hi': toHex(mix(c, W, 0.28)), '--seal-lo': toHex(mix(c, K, 0.05)), '--seal-ring': toHex(mix(c, W, 0.5)),
         '--pale': toHex(mix(c, W, 0.68)), '--m-bg': pal[0], '--p-ink': pal[0], '--p-accent': pal[0]
       };
+    } else if (id === 'custom' && CUSTOM_COLORS && hexRgb(custom)) {
+      var base = hexRgb(custom), limit = ['noir','gala'].indexOf(TPL) >= 0 ? 0.025 : 0.08;
+      while (lum(base) > limit) base = mix(base, [0,0,0], 0.12);
+      var dark = toHex(base), light = function(a){return toHex(mix(base,[255,255,255],a));};
+      if (TPL === 'moderno') vars = {'--t-ink':dark,'--t-ivory':light(.96),'--t-sand':light(.87),'--t-stone':light(.65),'--t-muted':light(.25),'--t-body':light(.12),'--t-soft':light(.4),'--sand2':light(.8),'--tone1':toHex(mix(base,[0,0,0],.2)),'--tone2':dark,'--tone3':light(.08),'--p-bg':light(.96),'--p-ink':dark,'--p-muted':light(.25),'--p-accent':dark,'--p-on-accent':light(.96),'--m-bg':dark,'--m-fg':light(.96)};
+      if (TPL === 'noir') vars = {'--bg':dark};
+      if (TPL === 'tinta') vars = {'--red':dark};
+      if (TPL === 'arco') vars = {'--g':dark,'--g2':light(.06),'--sage':light(.6)};
+      if (TPL === 'lino') vars = {'--sage':dark};
+      if (TPL === 'gala') vars = {'--bg':dark,'--bg2':light(.03)};
+      if (TPL === 'onix') vars = {'--dk':dark,'--dk2':light(.04),'--dk3':light(.08)};
     } else if (t && t.vars) Object.keys(t.vars).forEach(function (k) { vars['--' + k] = t.vars[k]; });
     Object.keys(themeVars).concat(Object.keys(vars)).forEach(function (k) { html.style.setProperty(k, vars[k] || ''); });
     themeVars = vars;
@@ -203,7 +215,9 @@
     // Con una sola paleta no hay selector de color (Glicina igual muestra su botón «Sin fotos»).
     if (themes.length < 2 && TPL !== 'glicina' && !COLOR_PHOTOS) return;
     var start = q.get('color');
-    if (start) applyTheme(start);
+    var customStart = q.get('custom');
+    if (CUSTOM_COLORS && hexRgb(customStart)) { start = 'custom'; applyTheme(start, customStart); }
+    else if (start) applyTheme(start);
     var photoColor = COLOR_PHOTOS && /^(color|colour)$/.test(q.get('fotos') || q.get('photos') || '');
     html.classList.toggle('lz-photo-color', photoColor);
     // Glicina: verla sin fotos (?fotos=no o el botón de la barra).
@@ -226,10 +240,19 @@
       var cur = themes.some(function (x) { return x.id === start; }) ? start : (themes[0] && themes[0].id);
       if (themes.length > 1) themes.forEach(function (t) {
         var b = document.createElement('button'); b.type = 'button'; b.style.background = t.sw; b.title = t[LANG];
-        b.setAttribute('aria-label', t[LANG]); b.setAttribute('aria-pressed', String(t.id === cur));
+        b.setAttribute('aria-label', t[LANG]); b.setAttribute('aria-pressed', String(start !== 'custom' && t.id === cur));
         b.addEventListener('click', function () { applyTheme(t.id); g.querySelectorAll('button:not(.lz-photo)').forEach(function (x) { x.setAttribute('aria-pressed', String(x === b)); }); });
         g.appendChild(b);
       });
+      if (CUSTOM_COLORS) {
+        var label = document.createElement('label'); label.className = 'lz-custom-color';
+        var input = document.createElement('input'); input.type = 'color'; input.value = hexRgb(customStart) ? customStart : '#8a4f5c';
+        input.setAttribute('aria-label', LANG === 'en' ? 'Choose a custom color' : 'Elegir un color personalizado');
+        var caption = document.createElement('span'); caption.textContent = LANG === 'en' ? 'Custom color' : 'Personalizado';
+        label.title = LANG === 'en' ? 'We adapt the shade to keep the design readable.' : 'Adaptamos el tono para mantener la legibilidad.';
+        input.addEventListener('input', function(){applyTheme('custom', input.value);g.querySelectorAll('button:not(.lz-photo)').forEach(function(b){b.setAttribute('aria-pressed','false');});});
+        label.appendChild(input); label.appendChild(caption); g.appendChild(label);
+      }
       if (COLOR_PHOTOS) {
         // Fotografías a color, sin alterar los materiales ni los adornos del diseño.
         var pb = document.createElement('button'); pb.type = 'button'; pb.className = 'lz-photo';

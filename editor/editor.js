@@ -495,7 +495,9 @@
     { id: 'medianoche', hex: '#111A2B', seal: '#111A2B', es: 'Medianoche', en: 'Midnight' }
   ];
   var TPL_PALETTES = { rosa: ROSA_PALETTES, moderno: MOD_PALETTES, jardin: JARDIN_PALETTES, costa: COSTA_PALETTES, gala: GALA_PALETTES, aurelia: AURELIA_PALETTES, noir: NOIR_PALETTES, lino: LINO_PALETTES, marfil: MARFIL_PALETTES, fiesta: FIESTA_PALETTES, celeste: CELESTE_PALETTES, cisne: CISNE_PALETTES, tinta: TINTA_PALETTES, glicina: GLICINA_PALETTES, estreno: ESTRENO_PALETTES, nacar: NACAR_PALETTES, arco: ARCO_PALETTES, corazones: CORAZONES_PALETTES, encaje: ENCAJE_PALETTES, onix: ONIX_PALETTES, senal: SENAL_PALETTES };
-  var tplPal = function () { var l = TPL_PALETTES[state.design] || []; return l.filter(function (x) { return x.id === state.pal; })[0] || l[0]; };
+  var CUSTOM_DESIGNS = ['clasico','moderno','noir','tinta','arco','lino','gala','onix'];
+  function customControl(){return '<label class="ed-pal ed-pal-custom' + (state.pal === 'custom' ? ' is-on' : '') + '"><input type="color" data-k="palCustom" value="' + esc(state.palCustom) + '" aria-label="' + esc(S.palCustomLbl) + '"><span>' + esc(S.palCustom) + '</span></label>'; }
+  var tplPal = function () { var l = TPL_PALETTES[state.design] || []; if(state.pal === 'custom' && CUSTOM_DESIGNS.indexOf(state.design)>=0 && l.length){var h=state.palCustom, n=parseInt(h.slice(1),16), rgb=[n>>16&255,n>>8&255,n&255];while(isLight(h)){rgb=rgb.map(function(x){return Math.floor(x*.85);});h='#'+rgb.map(function(x){return ('0'+x.toString(16)).slice(-2);}).join('');}return Object.assign({},l[0],{id:'custom',hex:h,ink:h,seal:['gala','onix'].indexOf(state.design)>=0?l[0].seal:h});} return l.filter(function (x) { return x.id === state.pal; })[0] || l[0]; };
   var PALETTES = [
     { id: 'salvia', hex: '#5F7360', es: 'Salvia', en: 'Sage' },
     { id: 'rosa', hex: '#9A5F5C', es: 'Rosa antiguo', en: 'Dusty rose' },
@@ -1022,7 +1024,8 @@
           dropzone('cover', S.drop, S.dropHint) + '</div></div>' +
         field(S.msg, 'msg', { rows: 3, ph: S.msgPh }) + field(S.countdownNote, 'countdownNote', { ph: S.countdownNotePh }) +
         (TPL_PALETTES[state.design] ? '<div class="ed-stack"><span class="ed-label" id="lblPal">' + esc(S.palette) + '</span><div class="ed-palettes" role="radiogroup" aria-labelledby="lblPal">' +
-          TPL_PALETTES[state.design].map(function (p) { var on = p === tplPal(); return '<button type="button" class="ed-pal" role="radio" aria-checked="' + on + '" data-act="pal" data-id="' + p.id + '" data-fk="pal-' + p.id + '"><i style="background:' + p.hex + ';box-shadow:inset 0 0 0 1px rgba(0,0,0,.12)"></i>' + esc(p[LANG]) + '</button>'; }).join('') +
+          TPL_PALETTES[state.design].map(function (p) { var on = state.pal !== 'custom' && p === tplPal(); return '<button type="button" class="ed-pal" role="radio" aria-checked="' + on + '" data-act="pal" data-id="' + p.id + '" data-fk="pal-' + p.id + '"><i style="background:' + p.hex + ';box-shadow:inset 0 0 0 1px rgba(0,0,0,.12)"></i>' + esc(p[LANG]) + '</button>'; }).join('') +
+        (CUSTOM_DESIGNS.indexOf(state.design) >= 0 ? customControl() + '<span class="ed-hint">' + (LANG === 'en' ? 'We adapt the shade to keep the design readable.' : 'Adaptamos el tono para mantener la legibilidad.') + '</span>' : '') +
         '</div></div>' :
         '<div class="ed-stack"><span class="ed-label" id="lblPal">' + esc(S.palette) + '</span><div class="ed-palettes" role="radiogroup" aria-labelledby="lblPal">' +
           PALETTES.map(function (p) { return '<button type="button" class="ed-pal" role="radio" aria-checked="' + (p.id === state.pal) + '" data-act="pal" data-id="' + p.id + '" data-fk="pal-' + p.id + '"><i style="background:' + p.hex + '"></i>' + esc(p[LANG]) + '</button>'; }).join('') +

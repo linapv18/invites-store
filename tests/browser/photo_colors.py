@@ -49,4 +49,4 @@ async def main():
    print('Editor',d,'preview/save/reload OK',flush=True)
   assert not errors,errors
   await b.close()
-asyncio.run(main())
+if __name__=='__main__':asyncio.run(main())
