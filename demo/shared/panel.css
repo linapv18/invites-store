@@ -193,3 +193,8 @@ body.sheet-open .demo-bar,body.sheet-open .lz-music{display:none !important}
 .lz-gallery-all{display:block;margin:24px auto;padding:12px 18px;min-height:44px;max-width:100%;border:1px solid currentColor;border-radius:3px;background:transparent;color:inherit;font:inherit;text-align:center;cursor:pointer}
 .lz-gallery-all:focus-visible{outline:2px solid currentColor;outline-offset:4px}
 [data-gallery-open][hidden]{display:none!important}
+
+/* Original photo colors only; decorative metal, seals and ribbons keep their finish. */
+html.lz-photo-color img[data-lz-src^="photo:"],
+html.lz-photo-color img[data-lz-f="img"],
+html.lz-photo-color .lz-viewer .lz-v-frame img{filter:none!important}

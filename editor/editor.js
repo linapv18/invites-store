@@ -1028,7 +1028,7 @@
           PALETTES.map(function (p) { return '<button type="button" class="ed-pal" role="radio" aria-checked="' + (p.id === state.pal) + '" data-act="pal" data-id="' + p.id + '" data-fk="pal-' + p.id + '"><i style="background:' + p.hex + '"></i>' + esc(p[LANG]) + '</button>'; }).join('') +
           '<label class="ed-pal ed-pal-custom' + (state.pal === 'custom' ? ' is-on' : '') + '"><input type="color" data-k="palCustom" value="' + esc(state.palCustom) + '" aria-label="' + esc(S.palCustomLbl) + '"><span>' + esc(S.palCustom) + '</span></label>' +
         '</div><span class="ed-hint" id="palNote"' + (state.pal === 'custom' && isLight(state.palCustom) ? '' : ' hidden') + '>' + esc(S.palLight) + '</span></div>') +
-        ((state.design === 'moderno' || state.design === 'noir' || state.design === 'corazones') ? toggleRow('photoBW', S.photoBW, S.photoBWOn, S.photoBWOff) : '') +
+        ((['moderno', 'noir', 'corazones', 'tinta', 'estreno', 'nacar', 'onix'].indexOf(state.design) !== -1) ? toggleRow('photoBW', S.photoBW, S.photoBWOn, S.photoBWOff) : '') +
         (state.design === 'glicina' ? toggleRow('photosOn', S.photosOn, S.photosOnOn, S.photosOnOff) : '') +
         cartUpsell('dominio', { light: true, k: S.domainK, t: esc(S.domainT(slug(state))) });
     },

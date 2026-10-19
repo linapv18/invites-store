@@ -24,6 +24,7 @@
   var q = new URLSearchParams(location.search), MODE = q.get('lz'), KEY = q.get('k');
   var LANG = (document.documentElement.lang || 'es').slice(0, 2) === 'en' ? 'en' : 'es';
   var html = document.documentElement, TPL = html.getAttribute('data-lz-tpl');
+  var COLOR_PHOTOS = ['moderno', 'noir', 'corazones', 'tinta', 'estreno', 'nacar', 'onix'].indexOf(TPL) !== -1;
 
   /* ---------- Colores de cada plantilla ----------
      Clásico: paletas a partir de un color oscuro (o uno propio); Romántico: champaña (base) o rosado;
@@ -200,10 +201,10 @@
     // Demo de la tienda: elegir entre los colores del diseño desde la barra de la demo (o con ?color=champana).
     var themes = THEMES[TPL] || [];
     // Con una sola paleta no hay selector de color (Glicina igual muestra su botón «Sin fotos»).
-    if (themes.length < 2 && TPL !== 'glicina') return;
+    if (themes.length < 2 && TPL !== 'glicina' && !COLOR_PHOTOS) return;
     var start = q.get('color');
     if (start) applyTheme(start);
-    var photoColor = (TPL === 'moderno' || TPL === 'noir') && /^(color|colour)$/.test(q.get('fotos') || q.get('photos') || '');
+    var photoColor = COLOR_PHOTOS && /^(color|colour)$/.test(q.get('fotos') || q.get('photos') || '');
     html.classList.toggle('lz-photo-color', photoColor);
     // Glicina: verla sin fotos (?fotos=no o el botón de la barra).
     var noPhotos = TPL === 'glicina' && /^(no|sin|none)$/.test(q.get('fotos') || q.get('photos') || '');
@@ -222,18 +223,18 @@
       var bar = document.querySelector('.demo-bar'); if (!bar) return;
       var g = document.createElement('div'); g.className = 'lz-colors'; g.setAttribute('role', 'group'); g.setAttribute('aria-label', LANG === 'en' ? 'Design colors' : 'Colores del diseño');
       if (themes.length > 1) g.innerHTML = '<span aria-hidden="true">' + (LANG === 'en' ? 'Color' : 'Color') + '</span>';
-      var cur = themes.some(function (x) { return x.id === start; }) ? start : themes[0].id;
+      var cur = themes.some(function (x) { return x.id === start; }) ? start : (themes[0] && themes[0].id);
       if (themes.length > 1) themes.forEach(function (t) {
         var b = document.createElement('button'); b.type = 'button'; b.style.background = t.sw; b.title = t[LANG];
         b.setAttribute('aria-label', t[LANG]); b.setAttribute('aria-pressed', String(t.id === cur));
-        b.addEventListener('click', function () { applyTheme(t.id); g.querySelectorAll('button').forEach(function (x) { x.setAttribute('aria-pressed', String(x === b)); }); });
+        b.addEventListener('click', function () { applyTheme(t.id); g.querySelectorAll('button:not(.lz-photo)').forEach(function (x) { x.setAttribute('aria-pressed', String(x === b)); }); });
         g.appendChild(b);
       });
-      if (TPL === 'moderno' || TPL === 'noir') {
-        // Moderno y Noir: fotos en blanco y negro o con sus colores originales.
+      if (COLOR_PHOTOS) {
+        // Fotografías a color, sin alterar los materiales ni los adornos del diseño.
         var pb = document.createElement('button'); pb.type = 'button'; pb.className = 'lz-photo';
         pb.textContent = LANG === 'en' ? 'Color photos' : 'Fotos a color'; pb.setAttribute('aria-pressed', String(photoColor));
-        pb.addEventListener('click', function () { photoColor = !photoColor; html.classList.toggle('lz-photo-color', photoColor); pb.setAttribute('aria-pressed', String(photoColor)); });
+        pb.addEventListener('click', function () { photoColor = !photoColor; html.classList.toggle('lz-photo-color', photoColor); pb.setAttribute('aria-pressed', String(photoColor)); document.dispatchEvent(new CustomEvent('lz-gallery-change')); });
         g.appendChild(pb);
       }
       if (TPL === 'glicina') {
@@ -439,7 +440,7 @@
       renderList(box, rows);
     });
     applyTheme(c0.pal, c0.palCustom);
-    html.classList.toggle('lz-photo-color', (TPL === 'moderno' || TPL === 'noir' || TPL === 'corazones') && c0.photoBW === false);
+    html.classList.toggle('lz-photo-color', COLOR_PHOTOS && c0.photoBW === false);
     html.classList.toggle('lz-no-photos', TPL === 'glicina' && c0.photosOn === false);
     document.dispatchEvent(new CustomEvent('lz-gallery-change'));
     // Cuenta regresiva: las plantillas leen window.LZ_T en cada segundo.

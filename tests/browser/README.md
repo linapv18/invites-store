@@ -23,3 +23,5 @@ Los tests interceptan todas las solicitudes a `*.supabase.co`; no crean cuentas,
 `python tests/browser/not_found.py` inicia un servidor temporal que emula el fallback nativo de Vercel a `404.html` y comprueba HTTP404, recuperación ES/EN, rutas profundas, teclado, contraste y tamaños de 320 a 1440 px. Con `INVITESSE_TEST_BASE` comprueba el servidor publicado en lugar de la emulación local.
 
 `python tests/browser/gallery_limits.py` verifica los 22 diseños en escritorio y móvil: cupo original, actualizaciones con 0/2/más fotos, acceso al álbum completo, flechas y cierre con Escape. No escribe en Supabase.
+
+`python tests/browser/photo_colors.py` verifica la opción de color en los siete demos compatibles, su independencia de la paleta y el guardado/restauración del editor con Supabase simulado. Comprueba que Señal no tenga el selector.
