@@ -13,3 +13,5 @@ Los tests interceptan todas las solicitudes a `*.supabase.co`; no crean cuentas,
 `python tests/browser/google_oauth.py` prueba el acceso Google/PKCE y el regreso al diseño con el proveedor interceptado.
 
 `python tests/browser/empty_editor.py` comprueba borradores vacíos y vista previa neutra, guardado y recuperación, cancelación/confirmación del vaciado y conservación del demo público en escritorio ES y móvil EN.
+
+`python tests/browser/privacy_consent.py` verifica la carga de Analytics solo tras aceptar, rechazo/revocación, vencimiento, Global Privacy Control, exclusiones y accesibilidad ES/EN. Intercepta Google para no enviar visitas de prueba a la propiedad real.
