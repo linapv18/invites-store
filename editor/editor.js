@@ -79,6 +79,7 @@
       countdownNote: 'Frase de la cuenta regresiva', countdownNotePh: 'Cada vez falta menos para celebrar juntos.',
       quote: 'Una frase o cita (opcional)', quotePh: 'Una frase que los represente', quoteAuthor: 'Autor de la frase', quoteAuthorPh: 'Quién la dijo',
       dressK: 'Código de vestimenta', dressCode: 'Estilo', dressCodePh: 'Formal, cóctel, playa…', dressNotes: 'Recomendaciones', dressNotesPh: 'Lo que conviene saber para vestirse', dressColors: 'Colores reservados', dressColorsPh: 'p. ej. blanco y marfil',
+      dressSuggest: 'Colores sugeridos', dressAvoid: 'Colores a evitar', dressSwHint: 'Opcional, hasta 5 por lista. En la invitación toman el estilo del diseño; los que hay que evitar llevan una línea.', dressAdd: '+ Agregar', dressAddLbl: function (l) { return 'Agregar un color a ' + l.toLowerCase(); }, dressPick: function (l, n) { return l + ': color ' + n; }, dressDel: function (n) { return 'Quitar el color ' + n; },
       travelIntro: 'Introducción', travelIntroPh: 'Todo lo que necesitan para llegar y disfrutar esos días.', hotelK: 'Hotel', hotelAddress: 'Dirección del hotel', hotelCode: 'Código de reserva', hotelCodePh: 'p. ej. BODA-AL',
       gettingK: 'Cómo llegar', airport: 'Aeropuerto', airportPh: 'Aeropuerto más cercano y tiempo de viaje', transport: 'Transporte', transportPh: '¿Habrá transporte para los invitados?',
       guideK: 'Guía de la ciudad', guideFood: 'Restaurantes', guideCulture: 'Museos y cultura', guidePlans: 'Actividades', guidePh: 'Sus recomendaciones',
@@ -210,6 +211,7 @@
       countdownNote: 'Countdown line', countdownNotePh: 'The countdown to celebrating together is on.',
       quote: 'A quote (optional)', quotePh: 'A line that represents you', quoteAuthor: 'Quote author', quoteAuthorPh: 'Who said it',
       dressK: 'Dress code', dressCode: 'Style', dressCodePh: 'Formal, cocktail, beach…', dressNotes: 'Recommendations', dressNotesPh: 'What guests should know about what to wear', dressColors: 'Reserved colors', dressColorsPh: 'e.g. white and ivory',
+      dressSuggest: 'Suggested colors', dressAvoid: 'Colors to avoid', dressSwHint: 'Optional, up to 5 per list. On the invitation they take the design’s style; colors to avoid get a line through them.', dressAdd: '+ Add', dressAddLbl: function (l) { return 'Add a color to ' + l.toLowerCase(); }, dressPick: function (l, n) { return l + ': color ' + n; }, dressDel: function (n) { return 'Remove color ' + n; },
       travelIntro: 'Introduction', travelIntroPh: 'Everything you need to get here and enjoy those days.', hotelK: 'Hotel', hotelAddress: 'Hotel address', hotelCode: 'Booking code', hotelCodePh: 'e.g. WEDDING-AL',
       gettingK: 'Getting there', airport: 'Airport', airportPh: 'Nearest airport and travel time', transport: 'Transportation', transportPh: 'Will there be transportation for guests?',
       guideK: 'City guide', guideFood: 'Restaurants', guideCulture: 'Museums & culture', guidePlans: 'Activities', guidePh: 'Your recommendations',
@@ -313,6 +315,7 @@
       dNote: '<b>Your text, photos and guests stay.</b> Each design has its own price; when you open a new one, we bring your content so you don’t start from scratch.', price: '[Precio]' }
   }[LANG];
 
+  var DRESS_MAX = 5;
   var SECS = ['portada', 'apertura', 'historia', 'itinerario', 'faq', 'musica', 'viaje', 'rsvp', 'invitados'];
   var ADDON_IDS = ['playlist', 'libro', 'capsula', 'encuestas', 'galeria', 'bilingue', 'dominio'];
   var ADDON_TXT = {
@@ -541,7 +544,7 @@
       musicOn: false, musicSource: 'library', musicTrack: '', musicTrackSrc: '', musicFileName: '', musicFileSize: 0,
       palCustom: '#8A4F5C',
       // Todos los diseños reciben y muestran estos mismos campos (ver demo/shared/content.js).
-      invitations: [], timeZone: '', courtPair: 'KQ', photoBW: true, photosOn: true, envIntro: '', envClosing: '', countdownId: 1, countdownNote: '', quote: '', quoteAuthor: '', dressCode: '', dressNotes: '', dressColors: '',
+      invitations: [], timeZone: '', courtPair: 'KQ', photoBW: true, photosOn: true, envIntro: '', envClosing: '', countdownId: 1, countdownNote: '', quote: '', quoteAuthor: '', dressCode: '', dressNotes: '', dressColors: '', dressSuggest: [], dressAvoid: [],
       viajeOn: true, travelIntro: '', hotel: '', hotelAddress: '', hotelCode: '', hotelLink: '', hotelNotes: '',
       airport: '', transport: '', guideFood: '', guideCulture: '', guidePlans: '',
       rsvpDeadline: '', rsvpMsg: '', rsvpDiet: true, rsvpNote: true,
@@ -561,6 +564,7 @@
     s.events.forEach(function (e) { if (e.mapUrl === undefined) e.mapUrl = ''; });
     if (s.travelNotes && !s.hotelNotes) s.hotelNotes = s.travelNotes;
     delete s.travelNotes; delete s.greeting; delete s.song;
+    ['dressSuggest', 'dressAvoid'].forEach(function (k) { s[k] = s[k].filter(function (c) { return /^#[0-9a-f]{6}$/i.test(c); }).slice(0, DRESS_MAX); });
     // Ya no se guardan teléfonos ni correos de los invitados: se quitan de las listas anteriores al volver a guardar.
     s.invitations.forEach(function (x) { if (x && typeof x === 'object') { delete x.phone; delete x.email; } });
     return s;
@@ -949,6 +953,18 @@
     var n = SECS.indexOf(id) + 1;
     return '<div class="ed-head"><span class="ed-kicker">' + esc(S.section) + ' ' + pad(n) + (id === 'viaje' ? ' · ' + esc(S.optional) : '') + '</span><h1 id="edH1" tabindex="-1">' + esc(S.sec[id][0]) + '</h1><p>' + esc(S.sec[id][1]) + '</p></div>';
   }
+  /* Colores del código de vestimenta: dos listas (sugeridos y a evitar) de hasta DRESS_MAX colores cada una.
+     Cada muestra es un selector de color nativo; la invitación los dibuja con el estilo de su diseño (demo/shared/content.js). */
+  function dressSwatches(k, label) {
+    var list = state[k];
+    return '<div class="ed-dress" role="group" aria-labelledby="dl-' + k + '"><span class="ed-label" id="dl-' + k + '">' + esc(label) + '</span><div class="ed-dress-row">' +
+      list.map(function (c, i) {
+        return '<span class="ed-dress-sw' + (k === 'dressAvoid' ? ' is-avoid' : '') + '"><input type="color" value="' + esc(c) + '" data-dress="' + k + '" data-i="' + i + '" data-fk="dc-' + k + '-' + i + '" aria-label="' + esc(S.dressPick(label, i + 1)) + '">' +
+          '<button type="button" class="ed-dress-x" data-act="dress-del" data-id="' + k + '" data-i="' + i + '" aria-label="' + esc(S.dressDel(i + 1)) + '">' + svg(P.x, 12, 2.2) + '</button></span>';
+      }).join('') +
+      (list.length < DRESS_MAX ? '<button type="button" class="ed-dress-add" data-act="dress-add" data-id="' + k + '" data-fk="da-' + k + '" aria-label="' + esc(S.dressAddLbl(label)) + '">' + esc(S.dressAdd) + '</button>' : '') +
+      '</div></div>';
+  }
   function field(label, k, o) {
     o = o || {};
     var v = state[k] == null ? '' : state[k];
@@ -1095,7 +1111,8 @@
         '<div class="ed-stack"><span class="ed-label">' + esc(S.addEvent) + '</span><div class="ed-presets">' + PRESETS.map(function (p, i) {
           return '<button type="button" class="ed-btn ed-btn-dash ed-btn-sm" data-act="ev-add" data-i="' + i + '" data-fk="evadd-' + i + '">+ ' + esc(p) + '</button>';
         }).join('') + '</div></div>' +
-        '<div class="ed-stack ed-group"><h2 class="ed-sub">' + esc(S.dressK) + '</h2>' + field(S.dressCode, 'dressCode', { ph: S.dressCodePh }) + field(S.dressNotes, 'dressNotes', { rows: 2, ph: S.dressNotesPh }) + field(S.dressColors, 'dressColors', { ph: S.dressColorsPh }) + '</div>' +
+        '<div class="ed-stack ed-group"><h2 class="ed-sub">' + esc(S.dressK) + '</h2>' + field(S.dressCode, 'dressCode', { ph: S.dressCodePh }) + field(S.dressNotes, 'dressNotes', { rows: 2, ph: S.dressNotesPh }) + field(S.dressColors, 'dressColors', { ph: S.dressColorsPh }) +
+          dressSwatches('dressSuggest', S.dressSuggest) + dressSwatches('dressAvoid', S.dressAvoid) + '<span class="ed-hint">' + esc(S.dressSwHint) + '</span></div>' +
         addonUpsell('libro', { light: true, k: S.libroK, t: esc(S.libroT) });
     },
     faq: function () {
@@ -1513,6 +1530,7 @@
     var t = e.target;
     if (t.type === 'file') return;
     if (t.hasAttribute('data-gsearch')) { ui.gq = t.value; var pos = t.selectionStart; renderMain(); var sb = $('[data-gsearch]'); if (sb) { sb.focus(); try { sb.setSelectionRange(pos, pos); } catch (x) {} } return; }
+    if (t.hasAttribute('data-dress')) { state[t.getAttribute('data-dress')][+t.getAttribute('data-i')] = t.value; changed(false); return; }
     if (t.hasAttribute('data-inv')) {
       var gi = state.invitations[+t.getAttribute('data-inv')]; if (!gi) return;
       if (t.hasAttribute('data-p')) gi.people[+t.getAttribute('data-p')] = t.value; else gi[t.getAttribute('data-f')] = t.value;
@@ -1653,6 +1671,12 @@
         ui.maps[id] = !ui.maps[id]; keepFocus(renderMain); break;
       case 'gMode': ui.gMode = id; keepFocus(renderMain); break;
       case 'g-open': openInv(b.closest('.ed-inv')); break;
+      case 'dress-add':
+        if (state[id].length >= DRESS_MAX) break;
+        state[id].push(id === 'dressAvoid' ? '#ffffff' : '#c9b79c'); changed(true);
+        var dc = $$('[data-dress="' + id + '"]'); if (dc.length) { dc[dc.length - 1].focus(); try { dc[dc.length - 1].click(); } catch (x) {} }
+        break;
+      case 'dress-del': state[id].splice(i, 1); changed(true); ($('[data-fk="da-' + id + '"]') || $$('[data-dress="' + id + '"]').pop() || main).focus(); break;
       case 'g-new':
         state.invitations.push({ id: ++state.uid, name: '', people: [''] }); ui.gq = ''; ui.gOpen = String(state.uid); changed(true);
         var gn = $$('[data-inv][data-f="name"]'); if (gn.length) gn[gn.length - 1].focus();

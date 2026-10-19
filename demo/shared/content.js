@@ -415,6 +415,7 @@
     document.querySelectorAll('[data-lz-if]').forEach(function (el) { el.hidden = !filled(el.getAttribute('data-lz-if')); });
     document.querySelectorAll('[data-lz-group]').forEach(function (el) { el.classList.toggle('lz-off', MODE === 'vista' && !filled(el.getAttribute('data-lz-group'))); });
     document.querySelectorAll('[data-lz]').forEach(function (el) { setText(el, v[el.getAttribute('data-lz')]); });
+    renderDress(c0);
     document.querySelectorAll('[data-lz-mono]').forEach(function (el) {
       if (el._lzMono === undefined) el._lzMono = el.innerHTML;
       el.innerHTML = el._lzMono;
@@ -480,6 +481,51 @@
     if (window.LazoMusic && c0.musicOn === false) { window.LazoMusic.play = function () {}; var mb = document.querySelector('.lz-music'); if (mb) mb.classList.add('lz-off'); }
     applyMusic(c0);
     document.dispatchEvent(new CustomEvent('lz-content-applied', { detail: c0 }));
+  }
+
+  /* Colores del código de vestimenta (editor: dressSuggest y dressAvoid, hasta 5 cada uno). Se dibujan después del texto
+     «Colores reservados». Los diseños que traían muestras en su maqueta (DRESS_STYLE) las usan con los colores de la pareja;
+     los demás usan una muestra común con los tokens --p-* del diseño y una forma acorde (DRESS_SHAPE). A evitar: con una línea. */
+  var DRESS_STYLE = { aurelia: 'sws', noir: 'sws', lino: 'sws', fiesta: 'dots', gala: 'colors', tinta: 'swatch', celeste: 'planetchips', cisne: 'fabric', marfil: 'fabric' };
+  var DRESS_SHAPE = { clasico: 'arch', rosa: 'arch', arco: 'arch', corazones: 'chip', estreno: 'frame', senal: 'frame', moderno: 'frame', onix: 'frame' };
+  function renderDress(c) {
+    var hex = /^#[0-9a-f]{6}$/i, pick = function (l) { return (Array.isArray(l) ? l : []).filter(function (x) { return hex.test(x); }).slice(0, 5); };
+    var sug = pick(c.dressSuggest), av = pick(c.dressAvoid), en = LANG === 'en';
+    if (!document.getElementById('lz-dress-css')) {
+      var st = document.createElement('style'); st.id = 'lz-dress-css';
+      st.textContent = '.lz-dress{display:flex;flex-direction:column;gap:14px;margin-top:16px}.lz-dress[hidden]{display:none}' +
+        '.lz-dress-row{display:flex;flex-direction:column;align-items:inherit;gap:8px}' +
+        '.lz-dress-k{font-size:11px;line-height:1.3;letter-spacing:.16em;text-transform:uppercase;opacity:.78}' +
+        '.lz-dress .lz-dress-sw{display:flex!important;flex-wrap:wrap;justify-content:inherit;gap:12px;margin:0!important;padding:0}' +
+        '.lz-dress-sw i{display:block;flex:none}' +
+        '.lz-shape-dot i,.lz-shape-chip i{width:28px;height:28px;border-radius:50%;box-shadow:0 0 0 1px color-mix(in srgb,currentColor 30%,transparent),0 0 0 4px var(--p-surface,transparent),0 0 0 5px color-mix(in srgb,currentColor 18%,transparent)}' +
+        '.lz-shape-chip i{outline:2px dashed rgba(255,255,255,.75);outline-offset:-7px}' +
+        '.lz-shape-arch i{width:24px;height:32px;border-radius:12px 12px 3px 3px;box-shadow:0 0 0 1px color-mix(in srgb,currentColor 30%,transparent),0 0 0 4px var(--p-surface,transparent),0 0 0 5px color-mix(in srgb,currentColor 18%,transparent)}' +
+        '.lz-shape-frame i{width:28px;height:28px;border-radius:2px;box-shadow:0 0 0 1px color-mix(in srgb,currentColor 35%,transparent),0 0 0 4px var(--p-surface,transparent),0 0 0 5px color-mix(in srgb,currentColor 25%,transparent)}' +
+        '.lz-dress-row.is-avoid i{position:relative}' +
+        '.lz-dress-row.is-avoid i::after{content:"";position:absolute;left:50%;top:-3px;bottom:-3px;width:2px;margin-left:-1px;border-radius:2px;background:var(--p-ink,currentColor);box-shadow:0 0 0 1.5px var(--p-surface,#fff);rotate:45deg}' +
+        '.lz-dress .colors i::after{rotate:0deg!important}';
+      document.head.appendChild(st);
+    }
+    var cls = DRESS_STYLE[TPL] ? DRESS_STYLE[TPL] + ' lz-dress-sw' : 'lz-dress-sw lz-shape-' + (DRESS_SHAPE[TPL] || 'dot');
+    var row = function (list, avoid) {
+      if (!list.length) return '';
+      var label = avoid ? (en ? 'Colors to avoid' : 'Colores a evitar') : (en ? 'Suggested colors' : 'Colores sugeridos');
+      return '<div class="lz-dress-row' + (avoid ? ' is-avoid' : '') + '"><span class="lz-dress-k">' + label + '</span>' +
+        '<div class="' + cls + '" role="img" aria-label="' + label + ': ' + list.length + '">' + list.map(function (x) { return '<i style="background-color:' + x + '"></i>'; }).join('') + '</div></div>';
+    };
+    document.querySelectorAll('[data-lz="dressColors"]').forEach(function (sp) {
+      var anchor = sp.closest('[data-lz-group="dressColors"]') || sp.parentElement, box = anchor.nextElementSibling;
+      if (!box || !box.classList.contains('lz-dress')) { box = document.createElement('div'); box.className = 'lz-dress'; anchor.insertAdjacentElement('afterend', box); }
+      box.hidden = !sug.length && !av.length;
+      box.innerHTML = row(sug, false) + row(av, true);
+      // Alineado como el texto del diseño (centrado o a la izquierda).
+      var ta = getComputedStyle(anchor).textAlign, start = ta === 'left' || ta === 'start' || ta === 'justify';
+      box.style.alignItems = start ? 'flex-start' : 'center'; box.style.justifyContent = start ? 'flex-start' : 'center';
+      // La sección de vestimenta se muestra aunque no tenga texto si hay colores.
+      var group = sp.closest('[data-lz-group~="dressCode"]');
+      if (group && !box.hidden) group.classList.remove('lz-off');
+    });
   }
 
   /* Navegación desde el editor: cada plantilla define window.LzTemplate = { open(), envelope(), scroll(el) }. */
