@@ -108,7 +108,7 @@
       gList: 'Su lista', gSummary: function (n, p) { return n + (n === 1 ? ' invitación' : ' invitaciones') + ' · ' + p + (p === 1 ? ' persona' : ' personas'); },
       gEmpty: 'Todavía no hay invitaciones.', gNew: '+ Nueva invitación', gName: 'Nombre de la invitación', gNamePh: 'p. ej. Familia Rodríguez',
       gPerson: 'Persona', gPersonPh: 'Nombre y apellido', gAddPerson: '+ Agregar persona', gDelPerson: 'Quitar a', gDelInv: 'Eliminar invitación', gClear: 'Borrar toda la lista', gClearAsk: '¿Borrar las {n} invitaciones de la lista?', gCleared: 'Lista borrada',
-      gSearch: 'Buscar en la lista', gSearchPh: 'Nombre o familia…', gNoMatch: 'Nada coincide con la búsqueda.', gSeats: function (n) { return n + (n === 1 ? ' cupo' : ' cupos'); },
+      gSearch: 'Buscar en la lista', gSearchPh: 'Nombre o familia…', gNoMatch: 'Nada coincide con la búsqueda.', gSeats: function (n) { return n + (n === 1 ? ' cupo' : ' cupos'); }, gUnnamed: 'Invitación sin nombre', gNoPeople: 'Sin personas todavía', gEditInv: 'Editar',
       palCustom: 'Personalizado', palCustomLbl: 'Elegir un color', palLight: 'Es un color claro: en la invitación lo oscurecemos un poco para que el texto se lea bien.',
       sample: 'Música de ejemplo', sampleHint: 'Así suena la música de fondo en las demos.', play: 'Escuchar', pause: 'Pausar',
       playlistK: 'Complemento · Playlist colaborativa', playlistT: 'Dejen que sus invitados armen la playlist de la fiesta.',
@@ -239,7 +239,7 @@
       gList: 'Your list', gSummary: function (n, p) { return n + (n === 1 ? ' invitation' : ' invitations') + ' · ' + p + (p === 1 ? ' guest' : ' guests'); },
       gEmpty: 'No invitations yet.', gNew: '+ New invitation', gName: 'Invitation name', gNamePh: 'e.g. The Rodríguez Family',
       gPerson: 'Guest', gPersonPh: 'Full name', gAddPerson: '+ Add guest', gDelPerson: 'Remove', gDelInv: 'Delete invitation', gClear: 'Clear the whole list', gClearAsk: 'Delete all {n} invitations from the list?', gCleared: 'List cleared',
-      gSearch: 'Search the list', gSearchPh: 'Name or family…', gNoMatch: 'Nothing matches the search.', gSeats: function (n) { return n + (n === 1 ? ' seat' : ' seats'); },
+      gSearch: 'Search the list', gSearchPh: 'Name or family…', gNoMatch: 'Nothing matches the search.', gSeats: function (n) { return n + (n === 1 ? ' seat' : ' seats'); }, gUnnamed: 'Untitled invitation', gNoPeople: 'No guests yet', gEditInv: 'Edit',
       palCustom: 'Custom', palCustomLbl: 'Pick a color', palLight: 'It’s a light color: in the invitation we darken it a bit so text stays readable.',
       sample: 'Sample music', sampleHint: 'This is how background music sounds in the demos.', play: 'Listen', pause: 'Pause',
       playlistK: 'Add-on · Collaborative playlist', playlistT: 'Let your guests build the party playlist.',
@@ -820,7 +820,7 @@
      ========================================================= */
   var state = loadState(), cart = loadCart();
   state.design = DESIGN;
-  var ui = { maps: {}, drawer: false, nav: false, mode: 'edit', device: 'm', dragIdx: null, saving: 'saved', audio: null };
+  var ui = { maps: {}, drawer: false, nav: false, mode: 'edit', device: 'm', dragIdx: null, saving: 'saved', audio: null, gOpen: null };
   (function initialRoute() {
     var h = decodeURIComponent(location.hash.slice(1));
     if (SECS.indexOf(h) > -1 || ADDON_IDS.indexOf(h) > -1) state.sec = h;
@@ -976,6 +976,28 @@
   }
   var cartUpsell = function (id, o) { o.act = 'cart'; o.id = id; o.label = cart[id] ? S.inCartRemove : (o.label || S.addPrice); return upsell(o); };
   var addonUpsell = function (id, o) { o.act = 'sec'; o.id = id; o.label = S.seeAddon; return upsell(o); };
+  /* Invitados: cada invitación se ve como una fila resumida (nombre, personas y cupos) y se abre para editarla.
+     Al salir de ella (el foco pasa a otro elemento o se toca fuera) se vuelve a cerrar. Solo una abierta a la vez. */
+  function invSummary(x) {
+    var names = x.people.filter(function (n) { return n && n.trim(); });
+    return '<span class="ed-inv-sum-t"><b>' + esc(x.name.trim() || S.gUnnamed) + '</b><span>' + esc(names.length ? names.join(', ') : S.gNoPeople) + '</span></span>' +
+      '<span class="ed-pill">' + esc(S.gSeats(x.people.length)) + '</span><span class="ed-inv-edit">' + esc(S.gEditInv) + svg(P.down, 16, 2) + '</span>';
+  }
+  function invByGid(gid) { return state.invitations.filter(function (x, i) { return String(x.id || 'i' + i) === gid; })[0]; }
+  function closeInv(card) {
+    if (!card || !card.classList.contains('is-open')) return;
+    var gid = card.getAttribute('data-gid'), x = invByGid(gid), sum = card.querySelector('.ed-inv-sum');
+    card.classList.remove('is-open');
+    if (sum) { sum.setAttribute('aria-expanded', 'false'); if (x) sum.innerHTML = invSummary(x); }
+    if (ui.gOpen === gid) ui.gOpen = null;
+  }
+  function openInv(card) {
+    if (!card) return;
+    $$('.ed-inv.is-open').forEach(function (c) { if (c !== card) closeInv(c); });
+    card.classList.add('is-open'); ui.gOpen = card.getAttribute('data-gid');
+    var sum = card.querySelector('.ed-inv-sum'); if (sum) sum.setAttribute('aria-expanded', 'true');
+    var f = card.querySelector('[data-f="name"]'); if (f) f.focus();
+  }
   var delBtn = function (act, i, label, fk) { return '<button type="button" class="ed-del" data-act="' + act + '" data-i="' + i + '" aria-label="' + esc(label) + '" data-fk="' + fk + '">' + svg(P.trash, 18, 1.7) + '</button>'; };
 
   function coSelect(label, key, options, value, hint) {
@@ -1142,7 +1164,10 @@
         (inv.length > 6 ? '<label class="ed-field"><span class="vh">' + esc(S.gSearch) + '</span><input type="search" data-gsearch value="' + esc(ui.gq || '') + '" placeholder="' + esc(S.gSearchPh) + '" aria-label="' + esc(S.gSearch) + '"></label>' : '') +
         (inv.length ? (shown.length ? '<div class="ed-stack ed-invs">' + shown.map(function (p) {
           var x = p[0], i = p[1];
-          return '<div class="ed-card ed-inv"><div class="ed-card-body">' +
+          var gid = String(x.id || 'i' + i), open = gid === ui.gOpen;
+          return '<div class="ed-card ed-inv' + (open ? ' is-open' : '') + '" data-gid="' + esc(gid) + '">' +
+            '<button type="button" class="ed-inv-sum" data-act="g-open" data-i="' + i + '" data-fk="go-' + esc(gid) + '" aria-expanded="' + open + '">' + invSummary(x) + '</button>' +
+            '<div class="ed-card-body">' +
             '<div class="ed-inv-head"><label class="ed-field">' + esc(S.gName) + '<input data-inv="' + i + '" data-f="name" value="' + esc(x.name) + '" placeholder="' + esc(S.gNamePh) + '" autocomplete="off"></label><span class="ed-pill">' + esc(S.gSeats(x.people.length)) + '</span></div>' +
             '<div class="ed-inv-people">' + x.people.map(function (n, j) {
               return '<div class="ed-inv-person"><input data-inv="' + i + '" data-p="' + j + '" value="' + esc(n) + '" placeholder="' + esc(S.gPersonPh) + '" aria-label="' + esc(S.gPerson + ' ' + (j + 1)) + '" autocomplete="off">' +
@@ -1623,8 +1648,9 @@
         if (mev && !mapQuery(mev)) { toast(S.needPlace); break; }
         ui.maps[id] = !ui.maps[id]; keepFocus(renderMain); break;
       case 'gMode': ui.gMode = id; keepFocus(renderMain); break;
+      case 'g-open': openInv(b.closest('.ed-inv')); break;
       case 'g-new':
-        state.invitations.push({ id: ++state.uid, name: '', people: [''] }); ui.gq = ''; changed(true);
+        state.invitations.push({ id: ++state.uid, name: '', people: [''] }); ui.gq = ''; ui.gOpen = String(state.uid); changed(true);
         var gn = $$('[data-inv][data-f="name"]'); if (gn.length) gn[gn.length - 1].focus();
         break;
       case 'g-del': state.invitations.splice(i, 1); changed(true); focusAfterDelete('[data-inv][data-f="name"]', i, '[data-fk="g-new"]'); break;
@@ -1671,6 +1697,26 @@
   });
   function focusAfterDelete(sel, i, fallback) { var l = $$(sel); var el = l[Math.min(i, l.length - 1)] || $(fallback); if (el) el.focus(); }
 
+  // Cierra la invitación abierta cuando el foco sale de ella. Un toque en el relleno de la tarjeta (sin foco) no la cierra,
+  // y tras un re-render (agregar o quitar persona) el foco vuelve a la misma tarjeta, que se reconoce por data-gid.
+  var invDown = null;
+  document.addEventListener('pointerdown', function (e) { var c = e.target.closest && e.target.closest('.ed-inv'); invDown = c ? c.getAttribute('data-gid') : null; }, true);
+  main.addEventListener('focusout', function (e) {
+    if (!e.target.closest('.ed-inv.is-open')) return;
+    setTimeout(function () {
+      if (!ui.gOpen) return;
+      var a = document.activeElement, c = a && a.closest ? a.closest('.ed-inv') : null;
+      if (c && c.getAttribute('data-gid') === ui.gOpen) return;
+      if ((!a || a === document.body) && invDown === ui.gOpen) return;
+      closeInv($('.ed-inv.is-open'));
+    }, 0);
+  });
+  main.addEventListener('keydown', function (e) {
+    var card = e.key === 'Escape' && e.target.closest && e.target.closest('.ed-inv.is-open');
+    if (!card) return;
+    e.preventDefault(); e.stopPropagation(); closeInv(card);
+    var sum = card.querySelector('.ed-inv-sum'); if (sum) sum.focus();
+  });
   document.addEventListener('keydown', function (e) {
     if (e.key === 'Escape') { if (endTour() || closeGuide(true) || closeModal() || closeDesigns() || closeGuest() || closeDrawer() || closeNav(true)) e.preventDefault(); return; }
     if (tourAt > -1 && (e.key === 'ArrowRight' || e.key === 'ArrowLeft') && !/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName)) { e.preventDefault(); tour(tourAt + (e.key === 'ArrowRight' ? 1 : -1)); return; }

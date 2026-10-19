@@ -589,6 +589,17 @@ a.ed-btn[aria-disabled="true"]{opacity:.4;pointer-events:none}
 .ed-csv span+span{border-left:1px solid var(--line)}
 .ed-list-top{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap}
 .ed-invs{gap:12px}
+.ed-inv{flex-wrap:wrap}
+.ed-inv:not(.is-open){padding:0}
+.ed-inv:not(.is-open)>.ed-card-body,.ed-inv:not(.is-open)>.ed-del,.ed-inv.is-open>.ed-inv-sum{display:none}
+.ed-inv-sum{flex:1 1 100%;min-width:0;display:flex;align-items:center;gap:12px;min-height:64px;padding:12px 16px;border:0;border-radius:inherit;background:transparent;color:inherit;font:inherit;text-align:left;cursor:pointer}
+.ed-inv-sum:hover{background:var(--sand)}
+.ed-inv-sum-t{flex:1 1 auto;min-width:0;display:flex;flex-direction:column;gap:2px}
+.ed-inv-sum-t b{font-weight:500;font-size:15px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ed-inv-sum-t span{color:var(--mute);font-size:13px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ed-inv-sum .ed-pill,.ed-inv-edit{flex:none}
+.ed-inv-edit{display:inline-flex;align-items:center;gap:4px;color:var(--ink-2);font-size:13px}
+@media (max-width:520px){.ed-inv-edit{font-size:0;gap:0}}
 .ed-inv .ed-card-body{gap:12px}
 .ed-inv-head{display:flex;align-items:flex-end;gap:12px}
 .ed-inv-head .ed-field{flex:1 1 auto;min-width:0}
