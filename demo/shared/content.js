@@ -354,13 +354,15 @@
     if (!box._lzTpl) {
       var items = [].slice.call(box.querySelectorAll(':scope > [data-lz-item]'));
       if (!items.length) return;
+      box._lzItems = items.map(function (item) { return item.cloneNode(true); });
       box._lzTpl = items[0].cloneNode(true);
       box._lzMark = document.createComment('lz');
       box.insertBefore(box._lzMark, items[0]);
       items.forEach(function (n) { n.remove(); });
     }
     box.querySelectorAll(':scope > [data-lz-item]').forEach(function (n) { n.remove(); });
-    rows.forEach(function (r) { var n = box._lzTpl.cloneNode(true); fill(n, r); box.insertBefore(n, box._lzMark); });
+    if (box.getAttribute('data-lz-list') === 'gallery') rows = rows.slice(0, box._lzItems.length);
+    rows.forEach(function (r, i) { var n = (box.getAttribute('data-lz-list') === 'gallery' ? box._lzItems[i] : box._lzTpl).cloneNode(true); fill(n, r); box.insertBefore(n, box._lzMark); });
     var sec = box.closest('[data-lz-hide-empty]');
     if (sec) sec.classList.toggle('lz-off', !rows.length);
     box.dispatchEvent(new CustomEvent('lz-render', { bubbles: true }));
@@ -371,7 +373,7 @@
     var c0 = C, ph = photos(c0), evs = c0.events || [];
     // Calendar exports use the first event, independently of the countdown selection.
     window.LZ_CALENDAR = { date: c0.date, time: evs[0] && evs[0].time, zone: c0.timeZone || 'America/Mexico_City' };
-    window.LZ_GALLERY = Array.isArray(c0.gallery) ? c0.gallery.filter(has).slice(0,12) : null;
+    window.LZ_GALLERY = Array.isArray(c0.gallery) ? c0.gallery.filter(has) : null;
     // Evento elegido en el editor para la cuenta regresiva (si no hay, el primero).
     var cdEv = evs.filter(function (e) { return e.id === c0.countdownId; })[0] || evs[0];
     var v = {

@@ -21,3 +21,5 @@ Los tests interceptan todas las solicitudes a `*.supabase.co`; no crean cuentas,
 `python tests/browser/editor_preview_guide.py` comprueba el marco opaco y recortado del preview, navegación dentro del iframe, bienvenida vista/omitida, repetición manual, cambio de diseño/idioma/dispositivo y migración de preferencias antiguas. Las preferencias de cuenta se simulan mediante la API de Auth; no se modifican usuarios reales.
 
 `python tests/browser/not_found.py` inicia un servidor temporal que emula el fallback nativo de Vercel a `404.html` y comprueba HTTP404, recuperación ES/EN, rutas profundas, teclado, contraste y tamaños de 320 a 1440 px. Con `INVITESSE_TEST_BASE` comprueba el servidor publicado en lugar de la emulación local.
+
+`python tests/browser/gallery_limits.py` verifica los 22 diseños en escritorio y móvil: cupo original, actualizaciones con 0/2/más fotos, acceso al álbum completo, flechas y cierre con Escape. No escribe en Supabase.

@@ -188,3 +188,8 @@ body.sheet-open .demo-bar,body.sheet-open .lz-music{display:none !important}
 .lz-btn.is-danger{background:var(--p-no);border-color:var(--p-no)}
 .lz-btn.is-danger-text{color:var(--p-no) !important}
 .lz-toast{font:500 14px var(--p-sans);letter-spacing:0;text-transform:none}
+
+/* Overflow album access inherits each invitation's palette and typography. */
+.lz-gallery-all{display:block;margin:24px auto;padding:12px 18px;min-height:44px;max-width:100%;border:1px solid currentColor;border-radius:3px;background:transparent;color:inherit;font:inherit;text-align:center;cursor:pointer}
+.lz-gallery-all:focus-visible{outline:2px solid currentColor;outline-offset:4px}
+[data-gallery-open][hidden]{display:none!important}

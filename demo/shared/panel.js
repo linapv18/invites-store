@@ -333,8 +333,8 @@
     function groupFor(el){return el.closest('[data-gallery]') || el.closest('[data-lz-list="gallery"]');}
     function images(group){return [].slice.call(group.querySelectorAll('img')).filter(function(el){return !el.closest('[data-gallery-ignore]') && (el.matches(photoSelector) || group.matches('[data-gallery]') && el.classList.contains('lz-zoomable'));});}
     function sources(group){
-      if(Array.isArray(window.LZ_GALLERY)) return window.LZ_GALLERY.slice(0,12).map(function(src){return {src:src,alt:''};});
-      return images(group).slice(0,12).map(function(el){return {src:el.getAttribute('data-full-src') || el.currentSrc || el.src,alt:el.alt || ''};});
+      if(Array.isArray(window.LZ_GALLERY)) return window.LZ_GALLERY.map(function(src){return {src:src,alt:''};});
+      return images(group).map(function(el){return {src:el.getAttribute('data-full-src') || el.currentSrc || el.src,alt:el.alt || ''};});
     }
     function indexFor(group,el){
       if(Array.isArray(window.LZ_GALLERY)){
@@ -366,6 +366,22 @@
     }
     function step(d){if(list.length){idx=(idx+d+list.length)%list.length;show();}}
     function refresh(){
+      // Keep each design's composition; extra photographs live only in the viewer.
+      document.querySelectorAll('[data-lz-list="gallery"]').forEach(function(group){
+        var section=group.closest('section') || group.parentElement;
+        var button=section.querySelector('[data-gallery-open]');
+        var total=sources(group).length, visible=group.querySelectorAll(':scope > [data-lz-item]').length;
+        if(!button && total>visible){
+          button=document.createElement('button');button.type='button';
+          button.className='lz-gallery-all';button.setAttribute('data-gallery-open','');
+          group.insertAdjacentElement('afterend',button);
+        }
+        section.querySelectorAll('[data-gallery-open]').forEach(function(access){
+          access.hidden=total<=visible;
+          access.setAttribute('aria-haspopup','dialog');
+          if(access.classList.contains('lz-gallery-all')) access.textContent=(LANG==='en'?'View all photos':'Ver todas las fotos')+' ('+total+')';
+        });
+      });
       var seen=new Set();
       document.querySelectorAll('[data-gallery],[data-lz-list="gallery"]').forEach(function(group){
         var all=images(group),total=sources(group).length;
@@ -401,7 +417,7 @@
     box.addEventListener('touchstart',function(e){touch=e.touches.length===1?[e.touches[0].clientX,e.touches[0].clientY]:null;},{passive:true});
     box.addEventListener('touchend',function(e){if(!touch)return;var dx=e.changedTouches[0].clientX-touch[0],dy=e.changedTouches[0].clientY-touch[1];touch=null;if(Math.abs(dx)>50 && Math.abs(dx)>Math.abs(dy))step(dx<0?1:-1);},{passive:true});
     box.addEventListener('touchcancel',function(){touch=null;});
-    document.addEventListener('lz-render',refresh);document.addEventListener('lz-gallery-change',refresh);refresh();
+    document.addEventListener('lz-render',refresh);document.addEventListener('lz-gallery-change',refresh);document.addEventListener('lz-content-applied',refresh);refresh();
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initGallery); else initGallery();
 
