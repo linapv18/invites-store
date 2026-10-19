@@ -193,6 +193,9 @@
     } catch (e) { return NaN; }
   } };
 
+  // La marca de agua va en todas las vistas: demo de la tienda, vista previa del editor y la invitación (ver watermark()).
+  document.addEventListener('DOMContentLoaded', watermark);
+
   if (MODE !== 'editor' && MODE !== 'vista') {
     // Demo de la tienda: elegir entre los colores del diseño desde la barra de la demo (o con ?color=champana).
     var themes = THEMES[TPL] || [];
@@ -462,6 +465,45 @@
       // Las fotos cargan después y mueven la página: se corrige la posición cuando ya están.
       setTimeout(function () { T.scroll(el, true); }, 900);
     }
+  }
+
+  /* Marca de agua «Invitación creada con Invitesse» al final de la invitación (último hijo del contenedor
+     que reúne todas las secciones data-lz-anchor). Toma el fondo y la tinta del footer (la última sección)
+     para no chocar con la paleta de cada diseño; el logo es una máscara pintada con ese mismo color.
+     Lleva a la tienda con utm para medir de qué diseño vienen. */
+  function watermark() {
+    if (document.querySelector('.lz-made')) return;
+    var as = [].slice.call(document.querySelectorAll('[data-lz-anchor]')), root = as[0];
+    while (root && !as.every(function (a) { return root.contains(a); })) root = root.parentElement;
+    if (!root || root === document.body || root === html) return;
+    if (!document.getElementById('lz-made-css')) {
+      var logo = 'url(/assets/brand/logo/invitesse-logo-black.svg) center/contain no-repeat';
+      var st = document.createElement('style'); st.id = 'lz-made-css';
+      st.textContent = '.lz-made{display:block;flex:none;width:100%;box-sizing:border-box;margin:0;padding:22px 20px 30px;text-align:center;scroll-snap-align:end}' +
+        '.lz-made a{display:inline-flex;flex-direction:column;align-items:center;gap:8px;padding-top:20px;border-top:1px solid;border-color:color-mix(in srgb,currentColor 22%,transparent);color:inherit;opacity:.72;text-decoration:none;font:400 12px/1.4 system-ui,-apple-system,"Segoe UI",sans-serif;letter-spacing:.02em;transition:opacity .2s}' +
+        '.lz-made a:hover{opacity:1}' +
+        '.lz-made-k{font-size:10px;letter-spacing:.18em;text-transform:uppercase}' +
+        '.lz-made-logo{display:block;width:90px;height:24px;background:currentColor;-webkit-mask:' + logo + ';mask:' + logo + '}' +
+        '.lz-made a:hover .lz-made-cta{text-decoration:underline;text-underline-offset:4px}';
+      document.head.appendChild(st);
+    }
+    var en = LANG === 'en', box = document.createElement('div');
+    box.className = 'lz-made';
+    box.innerHTML = '<a href="https://www.invitesse.com' + (en ? '/en/' : '/') + '?utm_source=invitacion&amp;utm_medium=marca_agua&amp;utm_campaign=' + encodeURIComponent(TPL || 'diseno') + '" target="_blank" rel="noopener">' +
+      '<span class="lz-made-k">' + (en ? 'Invitation made with' : 'Invitación creada con') + '</span>' +
+      '<span class="lz-made-logo" role="img" aria-label="Invitesse"></span>' +
+      '<span class="lz-made-cta">' + (en ? 'Create yours at invitesse.com' : 'Crea la tuya en invitesse.com') + '</span></a>';
+    // Colores del footer: el primer fondo opaco desde la última sección hacia arriba, y su color de texto.
+    var last = root.lastElementChild, bg = 'transparent', el = last;
+    while (el && el !== html) { var c = getComputedStyle(el).backgroundColor; if (c && c !== 'transparent' && !/rgba\(.*,\s*0\)$/.test(c)) { bg = c; break; } el = el.parentElement; }
+    // Si la tinta del footer casi no se lee sobre ese fondo (el texto lo pintan sus hijos), se usa marfil o tinta oscura.
+    var rgb = function (c) { return (c.match(/[\d.]+/g) || [0, 0, 0]).slice(0, 3).map(Number); };
+    var lum = function (c) { return rgb(c).map(function (v) { v /= 255; return v <= .03928 ? v / 12.92 : Math.pow((v + .055) / 1.055, 2.4); }).reduce(function (a, v, i) { return a + v * [.2126, .7152, .0722][i]; }, 0); };
+    var ink = last ? getComputedStyle(last).color : '', lb = bg === 'transparent' ? 1 : lum(bg), li = ink ? lum(ink) : lb;
+    if ((Math.max(lb, li) + .05) / (Math.min(lb, li) + .05) < 4.5) ink = lb > .18 ? '#24201C' : '#F6F1E8';
+    box.style.backgroundColor = bg;
+    box.style.color = ink;
+    root.appendChild(box);
   }
 
   window.LazoContent = { apply: apply, goto: goto, current: function () { return C; } };
