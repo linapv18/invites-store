@@ -29,7 +29,7 @@
     current: function () {
       if (!user) return null;
       var owned = {}; Object.keys(drafts).forEach(function (d) { owned[d] = { draft: true }; });
-      return { id: user.id, email: user.email, purchases: owned, last: '' };
+      return { id: user.id, email: user.email, purchases: owned, last: '', editorGuideSeen: !!(user.user_metadata && user.user_metadata.invitesse_editor_guide_seen === true) };
     },
     owned: function () { return DESIGNS.filter(function (d) { return !!drafts[d]; }); },
     owns: function (d) { return !!(user && drafts[d]); },
@@ -67,6 +67,13 @@
       var r = await B.auth.signOut(); if (r.error) throw r.error;
       keys.forEach(function(k){ try { localStorage.removeItem(k); } catch (_) {} });
       user = null; drafts = {};
+    },
+    async rememberEditorGuideSeen() {
+      if (!user) throw new Error('AUTH_REQUIRED');
+      if (user.user_metadata && user.user_metadata.invitesse_editor_guide_seen === true) return;
+      var result = await B.auth.markEditorGuideSeen();
+      if (result.error) throw result.error;
+      user = result.data.user;
     },
     async buy(d) {
       // Creates an editable draft only: no payment, purchase or publication rights.

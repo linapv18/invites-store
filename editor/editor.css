@@ -511,11 +511,16 @@ a.ed-btn[aria-disabled="true"]{opacity:.4;pointer-events:none}
 .ed-gate h1{margin:0;font-family:var(--iv-serif);font-weight:500;font-size:44px;line-height:1.05}
 .ed-gate p{margin:0;color:var(--ink-2);line-height:1.5}
 .ed-gate div{display:flex;flex-wrap:wrap;gap:10px}
-.ed-frame{display:block;width:100%;height:100%;border:0;border-radius:31px;background:var(--bg)}
+.ed-frame{display:block;width:100%;height:100%;border:0;border-radius:0;background:var(--bg);position:absolute;top:0;left:0;transform-origin:0 0}
 /* En "Escritorio" el iframe mide 1280 px y se escala; va en position:absolute para no ensanchar la columna. */
 .ed-pv{min-width:0}
 .ed-phone{position:relative;overflow:hidden}
-.ed-phone.desk .ed-frame{position:absolute;top:8px;left:8px;border-radius:0;transform-origin:0 0}
+/* Clip the unscaled screen, not the transformed iframe. This also contains
+   fixed/backdrop-filter headers inside the rounded preview. */
+.ed-phone{--screen-inset:10px;--screen-radius:30px}
+.ed-phone.desk{--screen-inset:8px;--screen-radius:6px}
+.ed-phone>.ed-screen,.ed-phone.desk>.ed-screen{position:absolute;inset:var(--screen-inset);width:auto;height:auto;overflow:hidden;border-radius:var(--screen-radius);clip-path:inset(0 round var(--screen-radius));isolation:isolate}
+@media(max-width:960px){.ed-phone.desk{--screen-inset:10px;--screen-radius:30px}}
 .ed-guest-frame{flex:1 1 auto;width:100%;border:0;background:#fff}
 @media (max-width:720px){.ac-narrow h1,.ac-wide h1{font-size:40px}.ac-user a{display:none}}
 
@@ -721,3 +726,6 @@ a.ed-btn[aria-disabled="true"]{opacity:.4;pointer-events:none}
 .ac-auth-divider{display:flex;align-items:center;gap:14px;margin:18px 0;color:#655560;font:400 12px var(--iv-sans)}
 .ac-auth-divider:before,.ac-auth-divider:after{content:"";height:1px;background:#35243226;flex:1}
 .ac-wrap .ed-seg button[aria-pressed="true"]{background:#fff;color:#352432;box-shadow:0 1px 4px #35243218}
+
+/* Opaque bezel above composited iframe headers: prevents backdrop-filter bleed. */
+.ed-phone::after{content:"";position:absolute;inset:0;z-index:1;border:var(--screen-inset) solid #1E2622;border-radius:inherit;box-sizing:border-box;pointer-events:none}

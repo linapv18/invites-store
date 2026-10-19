@@ -873,7 +873,7 @@
         '<aside class="ed-pv" id="edPv" aria-label="' + esc(S.preview) + '"><div class="ed-pv-sticky">' +
           '<div class="ed-pv-head"><span class="ed-kicker">' + esc(S.preview) + '</span><div class="ed-device" role="group" aria-label="' + esc(S.device) + '">' +
             '<button type="button" data-act="device" data-id="m">' + esc(S.mobile) + '</button><button type="button" data-act="device" data-id="d">' + esc(S.desktop) + '</button></div></div>' +
-          '<div class="ed-phone" id="edPhone"><iframe class="ed-frame" id="edFrame" title="' + esc(S.preview) + '"></iframe></div>' +
+          '<div class="ed-phone" id="edPhone"><div class="ed-screen"><iframe class="ed-frame" id="edFrame" title="' + esc(S.preview) + '"></iframe></div></div>' +
           '<span class="ed-pv-cap">' + esc(S.viewingAs) + '</span>' +
         '</div></aside>' +
       '</div>' +
@@ -1298,7 +1298,7 @@
     }
     var iw = Math.min(maxW - 2 * pad, (maxH - 2 * pad) * PHONE_W / PHONE_H), k = iw / PHONE_W;
     ph.style.cssText = 'flex:none;width:' + Math.round(iw + 2 * pad) + 'px;height:' + Math.round(PHONE_H * k + 2 * pad) + 'px;min-height:0;max-height:none';
-    frame.style.cssText = 'position:absolute;top:' + pad + 'px;left:' + pad + 'px;width:' + PHONE_W + 'px;height:' + PHONE_H + 'px;transform:scale(' + k + ');transform-origin:0 0;border-radius:' + Math.round(31 / k) + 'px';
+    frame.style.cssText = 'width:' + PHONE_W + 'px;height:' + PHONE_H + 'px;transform:scale(' + k + ');transform-origin:0 0';
   }
 
   /* ---------- Panel de complementos ---------- */
@@ -1567,7 +1567,7 @@
       case 'designs': openDesigns(b); break;
       case 'designs-close': closeDesigns(); break;
       case 'designs-tab': ui.dTab = id; renderDesigns(); var dt = $('[data-act="designs-tab"][data-id="' + id + '"]'); if (dt) dt.focus(); break;
-      case 'guide': guideOpen ? closeGuide() : openGuidePanel(b); break;
+      case 'guide': guideSave({ seen: true }); guideOpen ? closeGuide() : openGuidePanel(b); break;
       case 'guide-close': closeGuide(true); break;
       case 'guide-start': closeModal(); guideSave({ seen: true }); tour(0); break;
       case 'guide-later': guideSave({ seen: true }); closeModal(); break;
@@ -1693,9 +1693,23 @@
   /* ---------- Guía de cinco pasos ----------
      La primera vez se abre una bienvenida con los pasos; «Empezar el recorrido» ilumina cada parte del editor.
      El botón «Guía» muestra el avance (se marca solo con lo que hacen) y lleva a lo que falta. */
-  var GKEY = KEY + ':guia', GUIDE_N = 5, tourAt = -1, guideOpen = false;
-  var guideState = function () { var g = load(GKEY); return g && typeof g === 'object' ? g : {}; };
-  function guideSave(patch) { var g = guideState(); Object.keys(patch).forEach(function (k) { g[k] = patch[k]; }); store(GKEY, g); }
+  var GKEY = KEY + ':guia', GUIDE_N = 5, tourAt = -1, guideOpen = false, welcomeTimer;
+  // Progress belongs to the draft; the one-time welcome belongs to the account.
+  var guideUser = AUTH.current(), GUIDE_ACCOUNT_KEY = 'invitesse.editor.guide.v1:' + guideUser.id;
+  var accountGuideSeen = !!(guideUser.editorGuideSeen || (load(GUIDE_ACCOUNT_KEY) || {}).seen || AUTH.DESIGNS.some(function (d) { return !!(load(AUTH.invKey(d) + ':guia') || {}).seen; }));
+  var guideSyncing = false, guideSynced = !!guideUser.editorGuideSeen;
+  function rememberGuideSeen() {
+    accountGuideSeen = true; store(GUIDE_ACCOUNT_KEY, { seen: true });
+    clearTimeout(welcomeTimer);
+    if (guideSynced || guideSyncing || !AUTH.rememberEditorGuideSeen) return;
+    guideSyncing = true;
+    AUTH.rememberEditorGuideSeen().then(function () { guideSynced = true; }).catch(function () {
+      // Keep the local preference and retry account synchronization on the next visit.
+    }).finally(function () { guideSyncing = false; });
+  }
+  var guideState = function () { var g = load(GKEY); g = g && typeof g === 'object' ? g : {}; g.seen = !!(g.seen || accountGuideSeen); return g; };
+  function guideSave(patch) { var g = guideState(); Object.keys(patch).forEach(function (k) { g[k] = patch[k]; }); store(GKEY, g); if (patch.seen) rememberGuideSeen(); }
+  if (accountGuideSeen) rememberGuideSeen();
   function guideMark(k) { if (!guideState()[k]) { guideSave((function () { var o = {}; o[k] = true; return o; })()); renderChrome(); } }
   function guideDone() {
     var g = guideState(), secs = SECS.filter(function (x) { return x !== 'invitados'; });
@@ -1703,6 +1717,8 @@
   }
   var guideHost = function () { return document.getElementById('edGuide'); };
   function welcome() {
+    if (guideState().seen || guideOpen || tourAt > -1 || document.querySelector('.ed-modal,.ed-overlay,.ed-guest')) return;
+    guideSave({ seen: true });
     var steps = G.steps.map(function (t, i) { return '<li><span class="ed-wn">' + (i + 1) + '</span><div><b>' + esc(t[0]) + '</b><span>' + esc(t[1]) + '</span></div></li>'; }).join('');
     modal('<div class="ed-welcome"><div class="ed-welcome-top"><span class="ed-logo-full on-dark">' + logoFull.replace('class="iv-wm"', 'class="iv-wm on-dark"') + '</span><h2 id="mdTitle">' + G.wH + '</h2><p>' + esc(G.wP) + '</p></div>' +
       '<ol class="ed-welcome-steps">' + steps + '</ol>' +
@@ -1817,8 +1833,9 @@
   }
   window.addEventListener('resize', function () { if (tourAt > -1) paintTour(); });
   renderChrome(); renderNav(); renderMain();
+  if (new URLSearchParams(location.search).get('guia') === '0') guideSave({ seen: true });
   if (ui.drawer) openDrawer($('.ed-cartbtn'));
-  else if (!guideState().seen && !/[?&]guia=0/.test(location.search)) setTimeout(welcome, 400);
+  else if (!guideState().seen) welcomeTimer = setTimeout(welcome, 400);
 
   /* =========================================================
      Pago de complementos
