@@ -15,16 +15,13 @@
   form.addEventListener('submit', async function (e) {
     e.preventDefault();
     var f = form.elements, data = {
-      names: f.names.value, email: f.email.value, phone: f.phone.value, date: f.date.value, place: f.place.value,
-      vision: f.vision.value, why: f.why.value, refs: f.refs.value, consent: f.consent.checked, website: f.website.value,
-      interests: [].slice.call(form.querySelectorAll('[name="interests"]:checked')).map(function (i) { return i.value; }),
+      names: f.names.value, email: f.email.value, vision: f.vision.value, consent: f.consent.checked, website: f.website.value,
       lang: document.documentElement.lang === 'en' ? 'en' : 'es', startedAt: startedAt
     };
     // Las mismas reglas que el servidor, para avisar sin esperar la respuesta.
     if (!data.names.trim()) return fail(msg('names'), 'names');
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(data.email.trim())) return fail(msg('email'), 'email');
     if (data.vision.trim().length < 20) return fail(msg('vision'), 'vision');
-    if (data.why.trim().length < 10) return fail(msg('why'), 'why');
     if (!data.consent) return fail(msg('consent'), 'consent');
     errorBox.hidden = true; button.disabled = true; button.setAttribute('aria-busy', 'true');
     try {

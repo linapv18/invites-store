@@ -29,12 +29,22 @@ test('a valid request is emailed with the couple as reply-to and escaped HTML', 
 test('missing required answers or consent are rejected without sending', async () => {
   let calls = 0;
   const handler = endpoint.createHandler({ send: async () => { calls++; }, now: () => NOW });
-  for (const [patch, field] of [[{ names: '' }, 'names'], [{ email: 'no' }, 'email'], [{ vision: 'corto' }, 'vision'], [{ why: '' }, 'why'], [{ consent: false }, 'consent']]) {
+  for (const [patch, field] of [[{ names: '' }, 'names'], [{ email: 'no' }, 'email'], [{ vision: 'corto' }, 'vision'], [{ consent: false }, 'consent']]) {
     const res = response();
     await handler(request({ ...valid, ...patch }), res);
     assert.equal(res.code, 400); assert.equal(res.body.field, field);
   }
   assert.equal(calls, 0);
+});
+
+test('the short form (names, email and what they imagine) is enough', async () => {
+  let sent;
+  const handler = endpoint.createHandler({ send: async (m) => { sent = m; }, now: () => NOW });
+  const res = response();
+  await handler(request({ names: 'Ana y León', email: 'ana@example.test', vision: 'Una apertura de abanico con acuarelas del mar.', consent: true, website: '', lang: 'es', startedAt: NOW - 60_000 }), res);
+  assert.equal(res.code, 200);
+  assert.match(sent.text, /Qué imaginan para su invitación:\nUna apertura de abanico/);
+  assert.doesNotMatch(sent.text, /Por qué|Referencias|WhatsApp/);
 });
 
 test('bots (honeypot or instant submit) get a silent success and nothing is sent', async () => {

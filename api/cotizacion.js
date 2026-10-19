@@ -1,5 +1,5 @@
 // Solicitud de cotización de un diseño a medida (/cotizar/ y /en/quote/).
-// Valida el formulario y lo envía por correo a hola@invitesse.com con Resend; la respuesta va al correo de la pareja.
+// Pide nombres, correo y qué imaginan (lo demás es opcional y se acepta si llega). Valida el formulario y lo envía por correo a hola@invitesse.com con Resend; la respuesta va al correo de la pareja.
 // No guarda nada: el correo es el registro. Variables en Vercel: RESEND_API_KEY (obligatoria),
 // QUOTE_TO (por defecto hola@invitesse.com) y QUOTE_FROM (remitente de un dominio verificado en Resend).
 const LIMITS = { names: 120, email: 254, phone: 40, date: 60, place: 120, vision: 3000, why: 1500, refs: 600 };
@@ -35,7 +35,6 @@ function invalid(q) {
   if (!q.names) return 'names';
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(q.email)) return 'email';
   if (q.vision.length < 20) return 'vision';
-  if (q.why.length < 10) return 'why';
   if (!q.consent) return 'consent';
   return '';
 }
@@ -45,7 +44,7 @@ function message(q) {
     ['Pareja', q.names], ['Correo', q.email], ['WhatsApp', q.phone], ['Fecha', q.date], ['Lugar', q.place],
     ['Les interesa', q.interests.map((i) => INTERESTS[i][0]).join(', ')], ['Idioma de la página', q.lang === 'en' ? 'Inglés' : 'Español'],
   ].filter((r) => r[1]);
-  const blocks = [['Qué buscan para su invitación', q.vision], ['Por qué la quieren a la medida', q.why], ['Referencias', q.refs]].filter((b) => b[1]);
+  const blocks = [['Qué imaginan para su invitación', q.vision], ['Por qué la quieren a la medida', q.why], ['Referencias', q.refs]].filter((b) => b[1]);
   const text = rows.map((r) => r[0] + ': ' + r[1]).join('\n') + '\n\n' + blocks.map((b) => b[0] + ':\n' + b[1]).join('\n\n') + '\n';
   const html = '<table cellpadding="4" style="font:14px/1.5 sans-serif;color:#352432">' +
     rows.map((r) => '<tr><td style="color:#71616B;vertical-align:top">' + escapeHtml(r[0]) + '</td><td>' + escapeHtml(r[1]) + '</td></tr>').join('') + '</table>' +
