@@ -10,16 +10,16 @@
       incl: 'Todos incluyen:', inclList: ['Apertura', 'Portada', 'Nuestra historia', 'Itinerario y mapas', 'Preguntas', 'Música', 'Viaje y hospedaje', 'Confirmación por persona'],
       filters: 'Filtros', clear: 'Borrar filtros', clearAll: 'Borrar todo', show: function (n) { return 'Ver ' + n + (n === 1 ? ' diseño' : ' diseños'); },
       count: function (n, t) { return n === t ? t + ' diseños<span class="xs-hide"> · prueben sus demos</span>' : n + ' de ' + t + ' diseños'; }, empty: 'Ningún diseño coincide con esos filtros todavía.',
-      customH: '¿Ninguno es el suyo?', customP: 'Diseñamos uno a la medida de su boda.', customA: 'Ver la opción a medida',
-      tailK: 'A la medida', tailH: 'Su invitación, <i>hecha desde cero.</i>', tailP: 'Una dirección visual y una apertura propias para su boda. Consultas disponibles con el lanzamiento.', tailA: 'Conocer la opción', tailB: 'Ver cómo funciona',
+      customH: '¿Ninguno es el suyo?', customP: 'Diseñamos uno a la medida de su boda.', customA: 'Solicitar cotización',
+      tailK: 'A la medida', tailH: 'Su invitación, <i>hecha desde cero.</i>', tailP: 'Una dirección visual y una apertura propias para su boda. Cuéntennos qué buscan y les enviamos una cotización.', tailA: 'Solicitar cotización', tailB: 'Ver cómo funciona',
       foot: [['/', 'Inicio'], ['/#complementos', 'Complementos'], ['/#precios', 'Opciones'], ['/privacidad/', 'Privacidad'], ['/condiciones/', 'Condiciones'], ['/en/disenos/', 'English']], tagline: 'Invitaciones web de boda' },
     en: { kicker: 'The designs', title: 'Find the design <i>for your wedding.</i>', store: 'Home', designs: 'Designs', addons: 'Add-ons', pricing: 'Options', login: 'Log in', cta: 'Explore designs',
       search: 'Search designs', searchPh: 'Search by style, color or opening', opening: 'How it opens', all: 'All', tabsLbl: 'How the invitation opens',
       incl: 'Every one includes:', inclList: ['Opening', 'Cover', 'Our story', 'Schedule and maps', 'FAQ', 'Music', 'Travel and hotels', 'RSVP per person'],
       filters: 'Filters', clear: 'Clear filters', clearAll: 'Clear all', show: function (n) { return 'Show ' + n + (n === 1 ? ' design' : ' designs'); },
       count: function (n, t) { return n === t ? t + ' designs<span class="xs-hide"> · try the demos</span>' : n + ' of ' + t + ' designs'; }, empty: 'No design matches those filters yet.',
-      customH: 'None feels like yours?', customP: 'We design one just for your wedding.', customA: 'Explore custom design',
-      tailK: 'Custom', tailH: 'Your invitation, <i>made from scratch.</i>', tailP: 'A visual direction and opening created for your wedding. Enquiries available at launch.', tailA: 'Explore this option', tailB: 'See how it works',
+      customH: 'None feels like yours?', customP: 'We design one just for your wedding.', customA: 'Request a quote',
+      tailK: 'Custom', tailH: 'Your invitation, <i>made from scratch.</i>', tailP: 'A visual direction and opening created for your wedding. Tell us what you have in mind and we will send you a quote.', tailA: 'Request a quote', tailB: 'See how it works',
       foot: [['/en/', 'Home'], ['/en/#add-ons', 'Add-ons'], ['/en/#precios', 'Options'], ['/en/privacy/', 'Privacy'], ['/en/terms/', 'Terms'], ['/disenos/', 'Español']], tagline: 'Wedding website invitations' }
   }[LANG];
   var C = window.LazoCatalog, $ = function (id) { return document.getElementById(id); };
@@ -50,7 +50,7 @@
   var selection = ['nacar','onix','arco','encaje','marfil','jardin'];
   var ordered = C.designs.slice().sort(function (a, b) { var x = selection.indexOf(a.id), y = selection.indexOf(b.id); return (x < 0 ? selection.length : x) - (y < 0 ? selection.length : y); });
   $('grid').innerHTML = ordered.map(function (d) { return C.card(d, LANG); }).join('') +
-    '<div class="tailcard" id="tail"><div><p class="k">' + S.tailK + '</p><h3>' + S.tailH + '</h3><p>' + esc(S.tailP) + '</p></div><div style="display: flex; flex-wrap: wrap; gap: 10px"><a class="btn" style="background: var(--iv-paper); color: var(--iv-ink)" href="' + base + ('/#medida') + '">' + S.tailA + '</a><a class="btn" style="color: var(--iv-paper); box-shadow: inset 0 0 0 1.5px #F3EEE955" href="' + base + ('/#como') + '">' + S.tailB + '</a></div></div>';
+    '<div class="tailcard" id="tail"><div><p class="k">' + S.tailK + '</p><h3>' + S.tailH + '</h3><p>' + esc(S.tailP) + '</p></div><div style="display: flex; flex-wrap: wrap; gap: 10px"><a class="btn" style="background: var(--iv-paper); color: var(--iv-ink)" href="' + (LANG === 'en' ? '/en/quote/' : '/cotizar/') + '">' + S.tailA + '</a><a class="btn" style="color: var(--iv-paper); box-shadow: inset 0 0 0 1.5px #F3EEE955" href="' + base + ('/#como') + '">' + S.tailB + '</a></div></div>';
   var cards = {}; $('grid').querySelectorAll('.lz-card').forEach(function (el) { cards[el.dataset.id] = el; });
   var words = {}; C.designs.forEach(function (d) {
     var t = d[LANG], w = [t.name, t.title, t.desc, t.opening, t.colors];
@@ -79,7 +79,7 @@
   // Filtros de la barra lateral (todos menos la apertura, que va en las pestañas)
   $('filters').innerHTML = '<div class="sheet-head"><div><b id="filterTitle">' + S.filters + '</b><button type="button" class="clear" data-clear>' + S.clearAll + '</button></div></div>' +
     C.filters.filter(function (g) { return g.key !== 'apertura' && g.key !== 'estilo'; }).map(function (g) { return '<fieldset><legend>' + g[LANG] + '</legend>' + g.opts.map(function (o) { return '<button type="button" class="chk" data-g="' + g.key + '" data-v="' + o.id + '" aria-pressed="false"><i>' + CHECK(12, 2.4) + '</i>' + esc(o[LANG]) + '<small></small></button>'; }).join('') + '</fieldset>'; }).join('') +
-    '<div class="custom"><b>' + S.customH + '</b><span>' + S.customP + '</span><a href="' + base + ('/#medida') + '">' + S.customA + ARROW + '</a></div>' +
+    '<div class="custom"><b>' + S.customH + '</b><span>' + S.customP + '</span><a href="' + (LANG === 'en' ? '/en/quote/' : '/cotizar/') + '">' + S.customA + ARROW + '</a></div>' +
     '<div class="sheet-foot"><button type="button" class="btn btn-dark" data-close></button></div>';
 
   function render() {

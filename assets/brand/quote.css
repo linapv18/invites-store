@@ -1,0 +1,38 @@
+/* Solicitud de cotización a medida (/cotizar/ y /en/quote/). Usa la base de legal.css (cabecera, pie y tipografía). */
+.qt{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);gap:56px;align-items:start}
+.qt-intro{position:sticky;top:32px}
+.qt-intro p{margin:0 0 18px;color:#50454C}
+.qt-steps{list-style:none;margin:28px 0 0;padding:0;display:flex;flex-direction:column;gap:14px;font-size:14px;line-height:1.55;color:#50454C}
+.qt-steps li{display:flex;gap:12px}
+.qt-steps b{flex:none;width:26px;height:26px;border-radius:50%;border:1px solid #35243233;display:inline-flex;align-items:center;justify-content:center;font:500 12px/1 var(--iv-sans);color:#352432}
+.qt-form{display:flex;flex-direction:column;gap:22px;padding:32px;border:1px solid #35243220;border-radius:20px;background:#FCFAF7}
+.qt-row{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.qt-field{display:flex;flex-direction:column;gap:6px;font-size:13px;font-weight:500;line-height:1.4}
+.qt-field small{font-weight:400;color:#725D68}
+.qt-field input,.qt-field textarea{width:100%;min-height:46px;padding:10px 14px;border:1px solid #C5B7BF;border-radius:10px;background:#fff;color:#352432;font:400 16px/1.5 var(--iv-sans)}
+.qt-field textarea{min-height:120px;resize:vertical}
+.qt-field input:focus,.qt-field textarea:focus{outline:none;border-color:#352432;box-shadow:0 0 0 3px #674A6026}
+.qt-field [aria-invalid="true"]{border-color:#A3443A}
+.qt-hint{font-weight:400;color:#725D68;font-size:12.5px}
+.qt-chips{border:0;margin:0;padding:0;display:flex;flex-direction:column;gap:10px}
+.qt-chips legend{padding:0;font-size:13px;font-weight:500;margin-bottom:10px}
+.qt-chips div{display:flex;flex-wrap:wrap;gap:8px}
+.qt-chips label{position:relative;display:inline-flex;align-items:center;min-height:38px;padding:0 14px;border:1px solid #C5B7BF;border-radius:999px;background:#fff;font-size:13px;cursor:pointer;transition:background .15s,border-color .15s,color .15s}
+.qt-chips input{position:absolute;opacity:0;width:1px;height:1px}
+.qt-chips label:has(input:checked){background:#352432;border-color:#352432;color:#F3EEE9}
+.qt-chips label:has(input:focus-visible){outline:2px solid #674A60;outline-offset:3px}
+.qt-consent{display:flex;gap:10px;align-items:flex-start;font-size:13px;line-height:1.55;color:#50454C}
+.qt-consent input{flex:none;width:18px;height:18px;margin:2px 0 0;accent-color:#352432}
+.qt-form[hidden],.qt-done[hidden],.qt-error[hidden]{display:none}
+.qt-trap{position:absolute;left:-10000px;width:1px;height:1px;overflow:hidden}
+.qt-error{margin:0;padding:12px 14px;border-radius:10px;background:#F6E6E3;color:#7A2E25;font-size:14px;line-height:1.5}
+.qt-submit{align-self:flex-start;display:inline-flex;align-items:center;gap:10px;min-height:50px;padding:0 26px;border:0;border-radius:999px;background:#352432;color:#F3EEE9;font:500 15px/1 var(--iv-sans);cursor:pointer}
+.qt-submit:hover{background:#463340}
+.qt-submit[disabled]{opacity:.6;cursor:progress}
+.qt-submit svg{width:18px;height:18px}
+.qt-done{padding:40px 32px;border:1px solid #35243220;border-radius:20px;background:#FCFAF7;text-align:center}
+.qt-done svg{width:44px;height:44px;color:#3F7A55}
+.qt-done h2{margin:14px 0 10px}
+.qt-done p{margin:0 auto;max-width:420px;color:#50454C}
+@media(max-width:860px){.qt{grid-template-columns:1fr;gap:32px}.qt-intro{position:static}}
+@media(max-width:600px){.qt-form{padding:22px 18px}.qt-row{grid-template-columns:1fr}.qt-submit{width:100%;justify-content:center}}
