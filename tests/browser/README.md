@@ -15,3 +15,5 @@ Los tests interceptan todas las solicitudes a `*.supabase.co`; no crean cuentas,
 `python tests/browser/empty_editor.py` comprueba borradores vacíos y vista previa neutra, guardado y recuperación, cancelación/confirmación del vaciado y conservación del demo público en escritorio ES y móvil EN.
 
 `python tests/browser/privacy_consent.py` verifica la carga de Analytics y Clarity solo tras aceptar, rechazo/revocación, vencimiento, Global Privacy Control, exclusiones y accesibilidad ES/EN. Intercepta Google y Clarity para no enviar visitas de prueba a los proyectos reales.
+
+`python tests/browser/account_navigation.py` comprueba la navegación con y sin sesión en inicio/catálogo ES/EN, nombres y alternativa genérica, tamaños móvil/escritorio y cierre de sesión entre pestañas. Supabase se simula; los visitantes anónimos no cargan el SDK ni se consultan borradores desde la tienda.

@@ -24,3 +24,8 @@
 :is(.iv-home,.iv-catalog) header.top .nav-toggle{order:4;flex:none}
 @media(max-width:800px){:is(.iv-home,.iv-catalog) header.top nav.w{gap:14px}:is(.iv-home,.iv-catalog) header.top .nav-account{margin-left:auto;font-size:13px}}
 @media(max-width:360px){:is(.iv-home,.iv-catalog) header.top nav.w{gap:10px}:is(.iv-home,.iv-catalog) header.top .nav-account{font-size:12px}:is(.iv-home,.iv-catalog) header.top .logo{font-size:26px}}
+
+/* Keep long profile names inside the navigation on small screens. */
+:is(.iv-home,.iv-catalog) header.top .nav-account{max-width:170px}
+.nav-account-label{display:block;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+@media(max-width:800px){:is(.iv-home,.iv-catalog) header.top .nav-account{max-width:30vw}}
