@@ -548,7 +548,7 @@
       musicOn: false, musicSource: 'library', musicTrack: '', musicTrackSrc: '', musicFileName: '', musicFileSize: 0,
       palCustom: '#8A4F5C',
       // Todos los diseños reciben y muestran estos mismos campos (ver demo/shared/content.js).
-      invitations: [], timeZone: '', courtPair: 'KQ', photoBW: true, photosOn: true, envIntro: '', envClosing: '', countdownId: 1, countdownNote: '', quote: '', quoteAuthor: '', dressCode: '', dressNotes: '', dressColors: '', dressSuggest: [], dressAvoid: [],
+      invitationLanguage: '', invitations: [], timeZone: '', courtPair: 'KQ', photoBW: true, photosOn: true, envIntro: '', envClosing: '', countdownId: 1, countdownNote: '', quote: '', quoteAuthor: '', dressCode: '', dressNotes: '', dressColors: '', dressSuggest: [], dressAvoid: [],
       giftsOn: false, giftsMessage: '', giftsEnvelopes: false, giftsRegistryUrl: '',
       viajeOn: true, travelIntro: '', hotel: '', hotelAddress: '', hotelCode: '', hotelLink: '', hotelNotes: '',
       airport: '', transport: '', guideFood: '', guideCulture: '', guidePlans: '',
@@ -668,7 +668,7 @@
   function shareHTML() {
     var foto = state.shareMode === 'foto', all = [state.cover].concat(state.gallery);
     var img = foto ? '<img src="' + esc(sharePhotoSrc()) + '" alt="">'
-      : '<iframe id="edShareFrame" src="' + BASE + '/demo/' + state.design + '/?lz=vista&k=' + encodeURIComponent(KEY) + '" title="" tabindex="-1" aria-hidden="true" loading="lazy"></iframe>';
+      : '<iframe id="edShareFrame" src="' + invitationBase() + '/demo/' + state.design + '/?lz=vista&k=' + encodeURIComponent(KEY) + '" title="" tabindex="-1" aria-hidden="true" loading="lazy"></iframe>';
     return '<div class="ed-stack ed-group"><h2 class="ed-sub">' + esc(S.shareK) + '</h2><span class="ed-hint" style="margin-top:-6px">' + esc(S.shareHint) + '</span>' +
       '<div class="ed-seg" role="radiogroup" aria-label="' + esc(S.shareK) + '">' +
         '<button type="button" role="radio" aria-checked="' + !foto + '" data-act="shareMode" data-id="sobre" data-fk="sh-sobre">' + esc(S.shareSobre) + '</button>' +
@@ -848,7 +848,7 @@
   function doneOf(id) {
     var s = state, t = function (v) { return !!String(v || '').trim(); };
     switch (id) {
-      case 'portada': return t(s.n1) && t(s.n2) && t(s.date) && t(s.city);
+      case 'portada': return ['es','en'].indexOf(s.invitationLanguage)>=0 && t(s.n1) && t(s.n2) && t(s.date) && t(s.city);
       case 'apertura': return s.sealMode === 'text' ? t(s.sealText) : (s.mono === 'custom' ? t(s.monoImg) : t(s.n1) && t(s.n2));
       case 'historia': return s.storyMode === 'timeline' ? s.timeline.some(function (x) { return t(x.when) && t(x.title); }) : t(s.story);
       case 'itinerario': return s.events.length > 0 && s.events.every(function (e) { return t(e.name) && t(e.time) && (t(e.place) || t(e.address)); });
@@ -1058,6 +1058,7 @@
   var SECTION_HTML = {
     portada: function () {
       return head('portada') + '<div><button type="button" class="ed-link" data-act="reset-content">' + (LANG === 'es' ? 'Vaciar contenido y empezar de nuevo' : 'Clear content and start again') + '</button></div>' +
+        '<label class="ed-field">' + (LANG==='en'?'Invitation language':'Idioma de la invitación') + '<select data-k="invitationLanguage" required aria-describedby="invitationLanguageHint"><option value="" disabled' + (!state.invitationLanguage?' selected':'') + '>' + (LANG==='en'?'Choose one language':'Elijan un idioma') + '</option><option value="es"' + (state.invitationLanguage==='es'?' selected':'') + '>Español</option><option value="en"' + (state.invitationLanguage==='en'?' selected':'') + '>English</option></select></label><p class="ed-hint" id="invitationLanguageHint">' + (LANG==='en'?'One language is included. The invitation keeps this language even if the website URL changes. Your own text is not translated automatically.':'Incluye un solo idioma. La invitación lo mantiene aunque cambien la URL de la web. Sus textos no se traducen automáticamente.') + '</p><button type="button" class="ed-link" data-act="sec" data-id="bilingue">' + (LANG==='en'?'Two languages? Explore the bilingual add-on':'¿Dos idiomas? Ver complemento bilingüe') + '</button>' +
         '<div class="ed-grid2">' + field(S.n1, 'n1') + field(S.n2, 'n2') + field(S.date, 'date', { type: 'date' }) + field(S.city, 'city', { ph: S.cityPh, hint: S.cityHint }) + '</div>' + (['corazones','clasico','moderno','onix','encaje'].includes(state.design) ? coZone() : '') +
         '<div class="ed-stack"><span class="ed-label">' + esc(S.cover) + '</span><div class="ed-photo">' +
           (state.cover ? '<div class="ed-photo-img"><img src="' + esc(state.cover) + '" alt="' + esc(S.coverAlt) + '"></div>' : '<div class="ed-photo-img ph"></div>') +
@@ -1352,7 +1353,8 @@
      La plantilla lee el contenido de localStorage (KEY) al cargar y luego recibe los cambios por postMessage
      (ver demo/shared/content.js). */
   var pvQueued = false, frameReady = false;
-  var frameUrl = function (mode) { return BASE + '/demo/' + state.design + '/?lz=' + mode + '&k=' + encodeURIComponent(KEY) + (mode === 'editor' ? '&sec=' + encodeURIComponent(pvTarget()) : ''); };
+  var invitationBase = function () { return state.invitationLanguage === 'en' ? '/en' : ''; };
+  var frameUrl = function (mode) { return invitationBase() + '/demo/' + state.design + '/?lz=' + mode + '&k=' + encodeURIComponent(KEY) + (mode === 'editor' ? '&sec=' + encodeURIComponent(pvTarget()) : ''); };
   function pvTarget() { return state.sec === 'invitados' ? 'rsvp' : SECS.indexOf(state.sec) > -1 ? state.sec : ADDON_SPOT[state.sec]; }
   function post(msg) {
     if (frameReady && frame.contentWindow) frame.contentWindow.postMessage(msg, location.origin);
@@ -1680,7 +1682,7 @@
         break;
       case 'reset-content-yes':
         stopSample();
-        var empty = defaults(); empty.design = state.design; empty.pal = state.pal; empty.palCustom = state.palCustom;
+        var empty = defaults(); empty.design = state.design; empty.pal = state.pal; empty.palCustom = state.palCustom; empty.invitationLanguage = state.invitationLanguage;
         state = empty; closeModal(); changed(true); break;
       case 'modal-close': closeModal(); break;
       case 'modal-scrim': if (e.target === b) closeModal(); break;

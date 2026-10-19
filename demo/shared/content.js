@@ -395,6 +395,7 @@
   }
 
   function apply(c) {
+    if (window.LazoInvitationLanguage && window.LazoInvitationLanguage.ensure(c || C || {})) return;
     C = c || C || {};
     var c0 = C, ph = photos(c0), evs = c0.events || [];
     // Calendar exports use the first event, independently of the countdown selection.

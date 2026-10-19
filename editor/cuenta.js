@@ -99,7 +99,7 @@
           '<a class="ed-btn ed-btn-dark" href="' + editUrl(d) + '#invitados">' + icon + esc(S.guestsOpen) + '</a></li>';
       }).join('') + '</ul></section>';
   }
-  var guestUrl = function (d) { return BASE + '/demo/' + d + '/?lz=vista&k=' + encodeURIComponent(A.invKey(d)); };
+  var guestUrl = function (d) { return ((invOf(d) || {}).invitationLanguage === 'en' ? '/en' : '') + '/demo/' + d + '/?lz=vista&k=' + encodeURIComponent(A.invKey(d)); };
   function invOf(d) { try { var v = localStorage.getItem(A.invKey(d)); return v ? JSON.parse(v) : null; } catch (e) { return null; } }
 
   var mode = q.get('modo') === 'crear' || q.get('mode') === 'signup' ? 'register' : 'login';
