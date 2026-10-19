@@ -38,7 +38,8 @@
   $('q').setAttribute('aria-label', S.search); $('q').placeholder = S.searchPh;
   $('incl').innerHTML = '<b>' + S.incl + '</b>' + S.inclList.map(function (x) { return '<span>' + CHECK(14, 2) + esc(x) + '</span>'; }).join('');
   $('clear').textContent = S.clear; $('emptyTxt').textContent = S.empty; $('emptyClear').textContent = S.clear;
-  $('foot').innerHTML = '<span style="display: flex; flex-direction: column; gap: 8px"><a class="logo" href="' + base + '/" aria-label="Invitesse">' + WM + '</a><span>' + S.tagline + '</span></span><nav>' + S.foot.map(function (f) { return '<a href="' + f[0] + '">' + f[1] + '</a>'; }).join('') + '</nav>';
+  var CONTACT = '<div class="foot-contact" aria-label="' + (LANG === 'en' ? 'Contact' : 'Contacto') + '"><a href="mailto:hola@invitesse.com"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M4 7l8 6 8-6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>hola@invitesse.com</a><a href="https://www.instagram.com/invitesse/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="5" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="17.2" cy="6.8" r="1.1" fill="currentColor"/></svg>@invitesse</a></div>';
+  $('foot').innerHTML = '<span style="display: flex; flex-direction: column; gap: 8px"><a class="logo" href="' + base + '/" aria-label="Invitesse">' + WM + '</a><span>' + S.tagline + '</span>' + CONTACT + '</span><nav>' + S.foot.map(function (f) { return '<a href="' + f[0] + '">' + f[1] + '</a>'; }).join('') + '</nav>';
 
   // Estado de los filtros (desde la URL)
   var q = new URLSearchParams(location.search), sel = {}, text = q.get('q') || '';

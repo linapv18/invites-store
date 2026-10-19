@@ -26,7 +26,7 @@ Los complementos se muestran como opciones en preparación. No se afirma que ya 
 ### 3. Contactos y soporte
 
 - Número de WhatsApp con código de país y destino definitivo de las consultas a medida.
-- Correo oficial e Instagram, si se van a mostrar.
+- Correo oficial e Instagram: hola@invitesse.com e @invitesse, ya visibles en el pie de la landing, el catálogo y las páginas legales (ES/EN).
 - Canal, idioma, horario y alcance del soporte; tiempo de respuesta que realmente puedas ofrecer.
 
 Se retiraron los enlaces vacíos del storefront. Cuando estén disponibles, conectar el CTA a medida directamente al canal correcto, sin pasar por un cierre genérico.

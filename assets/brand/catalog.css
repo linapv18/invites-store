@@ -73,6 +73,9 @@ legend{padding:0;margin-bottom:8px;font:600 12px/1.5 var(--iv-sans);letter-spaci
 .foot .logo{font-size:30px;text-decoration:none}
 .foot nav{display:flex;flex-wrap:wrap;gap:12px 24px;font-weight:500;color:#55505A}
 .foot nav a{text-decoration:none}
+.foot .foot-contact{display:flex;flex-wrap:wrap;gap:4px 20px;font-weight:500;color:#55505A}
+.foot .foot-contact a{display:inline-flex;align-items:center;gap:8px;min-height:32px;text-decoration:none}
+.foot .foot-contact svg{width:16px;height:16px;flex:none;opacity:.8}
 .sheet-bg{display:none}
 .sheet-head,.sheet-foot{display:none}
 @media (max-width:1240px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}.tailcard{grid-column:span 3}}
