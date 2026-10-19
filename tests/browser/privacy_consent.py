@@ -24,13 +24,15 @@ async def main():
    home=BASE+('/en/' if lang=='en' else '/')
    await pg.goto(home+'?email=private@example.invalid#secret',wait_until='networkidle')
    await pg.locator('.iv-privacy-banner').wait_for();assert not calls
+   assert await pg.locator('.iv-privacy-launch').count()==0
+   assert await pg.locator('footer [data-privacy=settings]').count()==1
    assert await pg.evaluate('document.documentElement.scrollWidth <= innerWidth')
    await pg.add_script_tag(path=str(ROOT/'node_modules/axe-core/axe.min.js'))
    violations=await pg.evaluate("async()=> (await axe.run(document.querySelector('.iv-privacy'),{runOnly:{type:'tag',values:['wcag2a','wcag2aa','wcag21aa']}})).violations")
    assert not violations,violations
    await pg.locator('section [data-privacy=reject]').click();await pg.reload(wait_until='networkidle');assert not calls
    assert await pg.locator('.iv-privacy-banner').is_hidden()
-   await pg.locator('.iv-privacy-launch').click();await pg.locator('dialog input').check();await pg.locator('[data-privacy=save]').click();await pg.wait_for_function('window.__googleLoaded===true')
+   await pg.locator('footer [data-privacy=settings]').click();await pg.locator('dialog input').check();await pg.locator('[data-privacy=save]').click();await pg.wait_for_function('window.__googleLoaded===true')
    assert len(calls)==1
    data=await pg.evaluate('dataLayer.map(x=>Array.from(x))')
    for command in data:
@@ -42,7 +44,7 @@ async def main():
    assert click[2]['action']=='open_demo' and 'private@example' not in json.dumps(click)
    # Mimic first-party cookies created by GA, then withdraw. Necessary storage must survive.
    await pg.evaluate("document.cookie='_ga=test;path=/';document.cookie='_ga_2YPN2SZT3R=test;path=/';document.cookie='_clck=test;path=/';document.cookie='_clsk=test;path=/';localStorage.setItem('necessary-test','keep')")
-   await pg.locator('.iv-privacy-launch').click();await pg.locator('[data-privacy=reject]').last.click();await pg.wait_for_timeout(500);await pg.wait_for_load_state('networkidle')
+   await pg.locator('footer [data-privacy=settings]').click();await pg.locator('[data-privacy=reject]').last.click();await pg.wait_for_timeout(500);await pg.wait_for_load_state('networkidle')
    assert len(calls)==1
    cookies=await pg.evaluate('document.cookie');assert all(name not in cookies for name in ['_ga=','_clck=','_clsk='])
    assert await pg.evaluate("localStorage.getItem('necessary-test')")=='keep'
@@ -52,7 +54,7 @@ async def main():
    assert not errors,errors
    print(lang,width,'no pre-consent requests; rejection, opt-in, sanitized pageview, withdrawal, expiry and accessibility OK',flush=True)
    await c.close()
-  c,calls=await context(b);await c.add_init_script("Object.defineProperty(navigator,'globalPrivacyControl',{get:()=>true})");pg=await c.new_page();await pg.goto(BASE+'/',wait_until='networkidle');assert not calls;await pg.locator('.iv-privacy-launch').click();assert await pg.locator('dialog input').is_disabled();await c.close();print('Global Privacy Control respected',flush=True)
+  c,calls=await context(b);await c.add_init_script("Object.defineProperty(navigator,'globalPrivacyControl',{get:()=>true})");pg=await c.new_page();await pg.goto(BASE+'/',wait_until='networkidle');assert not calls;await pg.locator('footer [data-privacy=settings]').click();assert await pg.locator('dialog input').is_disabled();await c.close();print('Global Privacy Control respected',flush=True)
   c,calls=await context(b);pg=await c.new_page()
   await pg.goto(BASE+'/',wait_until='networkidle');await pg.locator('section [data-privacy=accept]').click();await pg.wait_for_function('window.__googleLoaded===true')
   await pg.wait_for_function('window.__clarityLoaded===true');assert len(calls)==2
@@ -65,7 +67,7 @@ async def main():
   c,calls=await context(b);await c.add_init_script("Storage.prototype.setItem=function(){throw new Error('Unavailable')}");pg=await c.new_page();await pg.goto(BASE+'/',wait_until='networkidle');await pg.locator('section [data-privacy=accept]').click();assert not calls;assert await pg.locator('.iv-privacy-error').is_visible();await c.close()
   # Withdrawing in another tab disables and unloads an already loaded tag.
   c,calls=await context(b);pg=await c.new_page();await pg.goto(BASE+'/',wait_until='networkidle');await pg.locator('section [data-privacy=accept]').click();await pg.wait_for_function('window.__googleLoaded===true')
-  legal=await c.new_page();await legal.goto(BASE+'/privacidad/',wait_until='networkidle');await legal.locator('.iv-privacy-launch').click();await legal.locator('dialog [data-privacy=reject]').click();await pg.wait_for_timeout(1000);await pg.wait_for_load_state('networkidle');assert len(calls)==2;assert await pg.evaluate("window['ga-disable-G-2YPN2SZT3R']") is True
+  legal=await c.new_page();await legal.goto(BASE+'/privacidad/',wait_until='networkidle');await legal.locator('footer [data-privacy=settings]').click();await legal.locator('dialog [data-privacy=reject]').click();await pg.wait_for_timeout(1000);await pg.wait_for_load_state('networkidle');assert len(calls)==2;assert await pg.evaluate("window['ga-disable-G-2YPN2SZT3R']") is True
   await c.close();print('Storage failure stays blocked; cross-tab withdrawal stops analytics',flush=True)
   await b.close()
 if __name__=='__main__':asyncio.run(main())

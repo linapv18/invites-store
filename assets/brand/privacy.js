@@ -58,10 +58,17 @@
     }
   }
   var host = document.createElement('div'); host.className = 'iv-privacy';
-  host.innerHTML = '<button type="button" class="iv-privacy-launch" data-privacy="settings">' + text.settings + '</button>' +
+  host.innerHTML =
     '<section class="iv-privacy-banner" aria-labelledby="iv-privacy-title" hidden><h2 id="iv-privacy-title">' + text.title + '</h2><p>' + text.summary + '</p><a href="' + policy + '">' + text.policy + '</a><div class="iv-privacy-actions"><button type="button" data-privacy="reject">' + text.rejectShort + '</button><button type="button" data-privacy="settings">' + text.configure + '</button><button type="button" data-privacy="accept">' + text.acceptShort + '</button></div></section>' +
     '<dialog aria-labelledby="iv-privacy-dialog-title"><h2 id="iv-privacy-dialog-title">' + text.settings + '</h2><p>' + text.body + '</p><h3>' + text.necessary + '</h3><p>' + text.necessaryNote + '</p><label class="iv-privacy-choice"><input type="checkbox" id="iv-privacy-analytics">' + text.analytics + '</label><p>' + text.analyticsNote + '</p><p data-privacy-gpc hidden>' + text.gpc + '</p><a href="' + policy + '">' + text.policy + '</a><div class="iv-privacy-actions"><button type="button" data-privacy="reject">' + text.reject + '</button><button type="button" data-privacy="save">' + text.save + '</button><button type="button" data-privacy="close">' + text.close + '</button></div></dialog><p class="iv-privacy-error" role="status" hidden></p>';
   document.body.appendChild(host);
+  var footerNav = document.querySelector('footer nav');
+  if (footerNav) {
+    var preferences = document.createElement('a');
+    preferences.className = 'iv-privacy-footer'; preferences.href = policy + '#preferences';
+    preferences.dataset.privacy = 'settings'; preferences.textContent = text.settings;
+    preferences.setAttribute('aria-haspopup', 'dialog'); footerNav.appendChild(preferences);
+  }
   var banner = host.querySelector('section'), dialog = host.querySelector('dialog'), check = host.querySelector('input');
   function close() { dialog.close(); if (opener && opener.isConnected && !opener.closest('[hidden]')) opener.focus(); }
   function stop() {
@@ -72,7 +79,7 @@
   // Selected commercial actions only: no element text, field values or full URLs.
   document.addEventListener('click', function (e) {
     if (!commercial || !allowed() || !loaded) return;
-    var el = e.target.closest('a,button'); if (!el || el.closest('.iv-privacy')) return;
+    var el = e.target.closest('a,button'); if (!el || el.closest('.iv-privacy') || el.hasAttribute('data-privacy')) return;
     var action = '', design = '';
     if (el.matches('a[href]')) {
       var url; try { url = new URL(el.href, location.href); } catch (_) { return; }
@@ -102,8 +109,9 @@
     if (withdrawing) { location.reload(); return; } // Unload Google code after disabling collection.
     start();
   }
-  host.addEventListener('click', function (e) {
-    var b = e.target.closest('[data-privacy]'); if (!b) return;
+  document.addEventListener('click', function (e) {
+    var b = e.target.closest('[data-privacy]'); if (!b || (!host.contains(b) && !(footerNav && footerNav.contains(b)))) return;
+    e.preventDefault();
     switch (b.dataset.privacy) {
       case 'settings': opener = b; check.checked = allowed(); check.disabled = gpc; host.querySelector('[data-privacy-gpc]').hidden = !gpc; dialog.showModal(); break;
       case 'close': close(); break;
