@@ -112,12 +112,20 @@
   // Share only the public demo route: never preview keys, guest names or query strings.
   var linkFor = function () { var route = location.pathname.match(/^(\/en)?\/demo\/[a-z]+\//); return 'https://www.invitesse.com' + (route ? route[0] : (LANG === 'en' ? '/en/' : '/')); };
   var messageFor = function (i) { return template.split(S.tk.name).join(i.name).split(S.tk.link).join(linkFor()).split(S.tk.couple).join(cfg.couple); };
+  function shareIcon(kind) {
+    var paths = {
+      whatsapp: '<path d="M20.5 11.6a8.4 8.4 0 0 1-12.4 7.5L3 20.5l1.4-5a8.4 8.4 0 1 1 16.1-3.9Z"/><path d="M8.1 7.4c-.8.4-1 1.4-.6 2.5 1 2.7 3.3 4.9 6 5.6 1.1.3 2.2-.1 2.5-1l-2.5-1.4-1 1c-1.5-.6-2.7-1.8-3.3-3.2l.9-1-1.4-2.5Z"/>',
+      sms: '<path d="M21 11.5a8.3 8.3 0 0 1-8.5 8.1c-1.4 0-2.7-.3-3.8-.8L3 21l1.8-5.2A7.8 7.8 0 0 1 4 12a8.4 8.4 0 0 1 8.5-8.5A8.3 8.3 0 0 1 21 11.5Z"/><path d="M8 11.5h.01M12.5 11.5h.01M17 11.5h.01" stroke-width="2.8"/>',
+      copy: '<rect x="8" y="8" width="12" height="13" rx="2"/><path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h3"/>'
+    };
+    return '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">'+paths[kind]+'</svg>';
+  }
   function shareControls(n) {
     var en=LANG==='en', msg=messageFor(data[n]), ios=/iPhone|iPad|iPod/.test(navigator.userAgent) || navigator.platform==='MacIntel' && navigator.maxTouchPoints>1;
-    return '<details class="lz-share" data-share="'+n+'"><summary>'+(en?'Share demo':'Compartir demo')+'</summary><div class="lz-share-actions">'+
-      '<a href="https://wa.me/?text='+encodeURIComponent(msg)+'" target="_blank" rel="noopener noreferrer">WhatsApp</a>'+
-      '<a href="sms:'+(ios?'&':'?')+'body='+encodeURIComponent(msg)+'">SMS</a>'+
-      '<button type="button" data-copy-link="'+n+'">'+(en?'Copy link':'Copiar enlace')+'</button></div></details>';
+    return '<div class="lz-share" data-share="'+n+'" role="group" aria-label="'+(en?'Share demo':'Compartir demo')+'"><div class="lz-share-actions">'+
+      '<a href="https://wa.me/?text='+encodeURIComponent(msg)+'" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp" title="WhatsApp">'+shareIcon('whatsapp')+'</a>'+
+      '<a href="sms:'+(ios?'&':'?')+'body='+encodeURIComponent(msg)+'" aria-label="SMS" title="SMS">'+shareIcon('sms')+'</a>'+
+      '<button type="button" data-copy-link="'+n+'" aria-label="'+(en?'Copy link':'Copiar enlace')+'" title="'+(en?'Copy link':'Copiar enlace')+'">'+shareIcon('copy')+'</button></div></div>';
   }
   function copyLink(text) {
     if (navigator.clipboard && navigator.clipboard.writeText) return navigator.clipboard.writeText(text);
@@ -280,7 +288,7 @@
     ta.value = ta.value.slice(0, s) + token + ta.value.slice(e); template = ta.value;
     ta.focus(); ta.setSelectionRange(s + token.length, s + token.length); updatePreview();
   }
-  function updatePreview() { var p = root.querySelector('#lzPreview'); if (p) p.textContent = messageFor(data[0] || { name: cfg.guest }); root.querySelectorAll('.lz-share').forEach(function(el){var wasOpen=el.open,n=+el.dataset.share,wrap=document.createElement('div');wrap.innerHTML=shareControls(n);var fresh=wrap.firstElementChild;fresh.open=wasOpen;el.replaceWith(fresh);}); }
+  function updatePreview() { var p = root.querySelector('#lzPreview'); if (p) p.textContent = messageFor(data[0] || { name: cfg.guest }); root.querySelectorAll('.lz-share').forEach(function(el){var n=+el.dataset.share,wrap=document.createElement('div');wrap.innerHTML=shareControls(n);var fresh=wrap.firstElementChild;el.replaceWith(fresh);}); }
 
   function onInput(e) {
     var t = e.target;

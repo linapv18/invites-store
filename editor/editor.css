@@ -766,3 +766,5 @@ a.ed-btn[aria-disabled="true"]{opacity:.4;pointer-events:none}
 .ed-phone::after{content:"";position:absolute;inset:0;z-index:1;border:var(--screen-inset) solid #1E2622;border-radius:inherit;box-sizing:border-box;pointer-events:none}
 
 .ed-pending-share{padding:0 20px 16px}.ed-pending-share summary{min-height:44px;padding:12px 0;cursor:pointer;font-size:14px}.ed-pending-share .ed-actions{display:flex;flex-wrap:wrap;gap:8px}.ed-pending-share .ed-btn:disabled{opacity:.5;cursor:not-allowed}.ed-pending-share summary:focus-visible{outline:2px solid currentColor;outline-offset:3px}
+
+.ed-share-icons{display:flex;gap:8px;flex-wrap:wrap}.ed-share-icons button{box-sizing:border-box;display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;padding:0;border:1px solid var(--ed-line,#d8cfd5);border-radius:50%;background:transparent;color:inherit}.ed-share-icons button:disabled{opacity:.5;cursor:not-allowed}.ed-share-icons svg{width:20px;height:20px;flex:none}
