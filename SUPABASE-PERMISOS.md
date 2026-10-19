@@ -6,6 +6,7 @@ La primera migración de borradores ya se ejecutó. Para añadir esta fase:
 
 1. Abrir **Supabase → SQL Editor → New query**.
 2. Copiar y ejecutar **todo** `supabase/ACTIVAR-PLATAFORMA.sql` una sola vez. No contiene precios ni activa compras. Incluye las migraciones 002, 003 y 004 en una sola transacción: si hay un error, se revierte esta fase completa.
+   - Desde el 19 de octubre de 2026 también incluye `202610190001_publish_dress_timeline.sql` (la publicación conserva los colores del código de vestimenta y la historia como línea de tiempo). **Si ya habían ejecutado `ACTIVAR-PLATAFORMA.sql` antes de esa fecha, ejecuten solo `supabase/migrations/202610190001_publish_dress_timeline.sql`.**
 3. No ejecutar también las migraciones individuales: son la misma estructura, separada para mantenimiento.
 4. Mantener las claves secretas fuera del navegador y del repositorio.
 

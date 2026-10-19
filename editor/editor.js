@@ -67,6 +67,7 @@
       upMono: 'O suban su propio monograma', upMonoHint: 'SVG o PNG con fondo transparente', yourMono: 'Su monograma', useIt: 'Usar este', inUse: 'En uso', delMono: 'Quitar monograma',
       greeting: 'Saludo en la carta', greetingHint: '{apellido} se reemplaza con el nombre de cada familia.', token: '{apellido}',
       storyTitle: 'Título', story: 'Su historia', storyPh: 'Escriban aquí cómo se conocieron, su primera cita o la propuesta.',
+      storyMode: 'Cómo contarla', storyText: 'Párrafo', storyTl: 'Línea de tiempo', tlWhen: 'Fecha', tlWhenPh: 'p. ej. 2019 o Junio de 2021', tlTitle: 'Momento', tlTitlePh: 'p. ej. Nos conocimos', tlText: 'Detalle (opcional)', tlTextPh: 'Una o dos frases', tlAdd: '+ Agregar momento', tlDel: 'Quitar el momento', tlEmpty: 'Agreguen los momentos de su historia, del más antiguo al más reciente.', tlCount: function (n) { return n + ' de 6 momentos'; },
       gallery: 'Galería', galCount: function (n, touch) { return n + ' de 12 fotos · ' + (touch ? 'ordénalas con las flechas' : 'arrastren para ordenar'); }, upPhotos: 'Subir fotos',
       photoN: function (i) { return 'Foto ' + i; }, movePrev: 'Mover antes', moveNext: 'Mover después', delPhoto: 'Quitar foto', galFull: 'Llegaste a 12 fotos.',
       galK: 'Complemento · Galería compartida', galT: '¿Y las fotos que tomen sus invitados?', galS: 'Que las suban a este mismo álbum, sin grupos de WhatsApp. [$]',
@@ -199,6 +200,7 @@
       upMono: 'Or upload your own monogram', upMonoHint: 'SVG or PNG with a transparent background', yourMono: 'Your monogram', useIt: 'Use this one', inUse: 'In use', delMono: 'Remove monogram',
       greeting: 'Greeting on the letter', greetingHint: '{surname} is replaced with each family’s name.', token: '{surname}',
       storyTitle: 'Title', story: 'Your story', storyPh: 'Write how you met, your first date or the proposal.',
+      storyMode: 'How to tell it', storyText: 'Paragraph', storyTl: 'Timeline', tlWhen: 'Date', tlWhenPh: 'e.g. 2019 or June 2021', tlTitle: 'Moment', tlTitlePh: 'e.g. We met', tlText: 'Detail (optional)', tlTextPh: 'One or two sentences', tlAdd: '+ Add a moment', tlDel: 'Remove moment', tlEmpty: 'Add the moments of your story, from oldest to newest.', tlCount: function (n) { return n + ' of 6 moments'; },
       gallery: 'Gallery', galCount: function (n, touch) { return n + ' of 12 photos · ' + (touch ? 'use the arrows to reorder' : 'drag to reorder'); }, upPhotos: 'Upload photos',
       photoN: function (i) { return 'Photo ' + i; }, movePrev: 'Move earlier', moveNext: 'Move later', delPhoto: 'Remove photo', galFull: 'You reached 12 photos.',
       galK: 'Add-on · Shared gallery', galT: 'What about the photos your guests take?', galS: 'Let them upload to this same album, no group chats. [$]',
@@ -315,7 +317,7 @@
       dNote: '<b>Your text, photos and guests stay.</b> Each design has its own price; when you open a new one, we bring your content so you don’t start from scratch.', price: '[Precio]' }
   }[LANG];
 
-  var DRESS_MAX = 5;
+  var DRESS_MAX = 5, TL_MAX = 6;
   var SECS = ['portada', 'apertura', 'historia', 'itinerario', 'faq', 'musica', 'viaje', 'rsvp', 'invitados'];
   var ADDON_IDS = ['playlist', 'libro', 'capsula', 'encuestas', 'galeria', 'bilingue', 'dominio'];
   var ADDON_TXT = {
@@ -540,7 +542,7 @@
       n1: '', n2: '', date: '', city: '',
       cover: '', msg: '', pal: 'salvia',
       sealMode: 'mono', sealText: '', mono: 'amp', monoImg: '',
-      storyTitle: '', story: '', gallery: [], events: [], faqs: [],
+      storyTitle: '', story: '', storyMode: 'text', timeline: [], gallery: [], events: [], faqs: [],
       musicOn: false, musicSource: 'library', musicTrack: '', musicTrackSrc: '', musicFileName: '', musicFileSize: 0,
       palCustom: '#8A4F5C',
       // Todos los diseños reciben y muestran estos mismos campos (ver demo/shared/content.js).
@@ -564,6 +566,8 @@
     s.events.forEach(function (e) { if (e.mapUrl === undefined) e.mapUrl = ''; });
     if (s.travelNotes && !s.hotelNotes) s.hotelNotes = s.travelNotes;
     delete s.travelNotes; delete s.greeting; delete s.song;
+    if (s.storyMode !== 'timeline') s.storyMode = 'text';
+    s.timeline = s.timeline.filter(function (x) { return x && typeof x === 'object'; }).slice(0, TL_MAX).map(function (x) { return { id: x.id || ++s.uid, when: String(x.when || ''), title: String(x.title || ''), text: String(x.text || '') }; });
     ['dressSuggest', 'dressAvoid'].forEach(function (k) { s[k] = s[k].filter(function (c) { return /^#[0-9a-f]{6}$/i.test(c); }).slice(0, DRESS_MAX); });
     // Ya no se guardan teléfonos ni correos de los invitados: se quitan de las listas anteriores al volver a guardar.
     s.invitations.forEach(function (x) { if (x && typeof x === 'object') { delete x.phone; delete x.email; } });
@@ -843,7 +847,7 @@
     switch (id) {
       case 'portada': return t(s.n1) && t(s.n2) && t(s.date) && t(s.city);
       case 'apertura': return s.sealMode === 'text' ? t(s.sealText) : (s.mono === 'custom' ? t(s.monoImg) : t(s.n1) && t(s.n2));
-      case 'historia': return t(s.story);
+      case 'historia': return s.storyMode === 'timeline' ? s.timeline.some(function (x) { return t(x.when) && t(x.title); }) : t(s.story);
       case 'itinerario': return s.events.length > 0 && s.events.every(function (e) { return t(e.name) && t(e.time) && (t(e.place) || t(e.address)); });
       case 'faq': return s.faqs.length > 0 && s.faqs.every(function (f) { return t(f.q) && t(f.a); });
       case 'musica': return !s.musicOn || (s.musicSource === 'upload' ? t(s.musicFileName) : t(s.musicTrackSrc));
@@ -1078,7 +1082,18 @@
     },
     historia: function () {
       var g = state.gallery;
-      return head('historia') + field(S.storyTitle, 'storyTitle') + field(S.story, 'story', { rows: 5, ph: S.storyPh }) +
+      var tl = state.storyMode === 'timeline', full = state.timeline.length >= TL_MAX;
+      return head('historia') + field(S.storyTitle, 'storyTitle') +
+        '<div class="ed-stack"><span class="ed-label" id="lblStory">' + esc(S.storyMode) + '</span><div class="ed-seg" role="radiogroup" aria-labelledby="lblStory">' +
+          '<button type="button" role="radio" aria-checked="' + !tl + '" data-act="storyMode" data-id="text" data-fk="stm-text">' + esc(S.storyText) + '</button>' +
+          '<button type="button" role="radio" aria-checked="' + tl + '" data-act="storyMode" data-id="timeline" data-fk="stm-tl">' + esc(S.storyTl) + '</button></div></div>' +
+        (!tl ? field(S.story, 'story', { rows: 5, ph: S.storyPh }) :
+          (state.timeline.length ? '<div class="ed-stack" style="gap:12px">' + state.timeline.map(function (x, i) {
+            return '<div class="ed-card"><span class="ed-card-n">' + (i + 1) + '</span><div class="ed-card-body"><div class="ed-grid2">' +
+              listField('timeline', i, 'when', S.tlWhen, { ph: S.tlWhenPh }) + listField('timeline', i, 'title', S.tlTitle, { ph: S.tlTitlePh }) + '</div>' +
+              listField('timeline', i, 'text', S.tlText, { rows: 2, ph: S.tlTextPh }) + '</div>' + delBtn('tl-del', i, S.tlDel + ' ' + (i + 1), 'tlx-' + x.id) + '</div>';
+          }).join('') + '</div>' : '<p class="ed-empty">' + esc(S.tlEmpty) + '</p>') +
+          '<div class="ed-limit"><button type="button" class="ed-btn ed-btn-dash" data-act="tl-add" data-fk="tl-add"' + (full ? ' disabled' : '') + '>' + esc(S.tlAdd) + '</button><small aria-live="polite">' + esc(S.tlCount(state.timeline.length)) + '</small></div>') +
         '<div class="ed-grid2">' + field(S.quote, 'quote', { rows: 2, ph: S.quotePh, cls: 'span2' }) + field(S.quoteAuthor, 'quoteAuthor', { ph: S.quoteAuthorPh }) + '</div>' +
         '<div class="ed-stack"><div style="display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap"><span class="ed-label">' + esc(S.gallery) + '</span><span class="ed-hint">' + esc(S.galCount(g.length, window.matchMedia('(pointer: coarse)').matches)) + '</span></div>' +
         '<div class="ed-gallery">' + g.map(function (src, i) {
@@ -1648,6 +1663,16 @@
         break;
       case 'pal': state.pal = id; changed(true); break;
       case 'sealMode': state.sealMode = id; changed(true); break;
+      case 'storyMode':
+        state.storyMode = id === 'timeline' ? 'timeline' : 'text';
+        if (state.storyMode === 'timeline' && !state.timeline.length) state.timeline.push({ id: ++state.uid, when: '', title: '', text: '' });
+        changed(true); break;
+      case 'tl-add':
+        if (state.timeline.length >= TL_MAX) break;
+        state.timeline.push({ id: ++state.uid, when: '', title: '', text: '' }); changed(true);
+        var tw = $$('[data-list="timeline"][data-f="when"]'); if (tw.length) tw[tw.length - 1].focus();
+        break;
+      case 'tl-del': state.timeline.splice(i, 1); changed(true); focusAfterDelete('[data-list="timeline"][data-f="when"]', i, '[data-fk="tl-add"]'); break;
       case 'shareMode': state.shareMode = id; changed(true); break;
       case 'sharePhoto': state.sharePhoto = i; changed(true); break;
       case 'mono': state.mono = id; changed(true); break;

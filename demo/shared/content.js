@@ -416,6 +416,7 @@
     document.querySelectorAll('[data-lz-group]').forEach(function (el) { el.classList.toggle('lz-off', MODE === 'vista' && !filled(el.getAttribute('data-lz-group'))); });
     document.querySelectorAll('[data-lz]').forEach(function (el) { setText(el, v[el.getAttribute('data-lz')]); });
     renderDress(c0);
+    renderStory(c0);
     document.querySelectorAll('[data-lz-mono]').forEach(function (el) {
       if (el._lzMono === undefined) el._lzMono = el.innerHTML;
       el.innerHTML = el._lzMono;
@@ -481,6 +482,47 @@
     if (window.LazoMusic && c0.musicOn === false) { window.LazoMusic.play = function () {}; var mb = document.querySelector('.lz-music'); if (mb) mb.classList.add('lz-off'); }
     applyMusic(c0);
     document.dispatchEvent(new CustomEvent('lz-content-applied', { detail: c0 }));
+  }
+
+  /* Historia como línea de tiempo (editor: storyMode = 'timeline', timeline = [{ when, title, text }], hasta 6).
+     Sustituye al párrafo [data-lz="story"] en su mismo lugar. Toma la tipografía y el color del título de la historia
+     y la alineación del párrafo: centrada (hitos apilados con un conector) o a la izquierda (riel vertical con puntos). */
+  function renderStory(c) {
+    var on = c.storyMode === 'timeline', en = LANG === 'en';
+    var items = (Array.isArray(c.timeline) ? c.timeline : []).filter(function (x) { return x && (has(x.when) || has(x.title) || has(x.text)); }).slice(0, 6);
+    if (on && !items.length && MODE === 'editor') items = [{ when: en ? 'Date' : 'Fecha', title: en ? 'Moment' : 'Momento', text: '', ph: true }];
+    if (!document.getElementById('lz-tl-css')) {
+      var st = document.createElement('style'); st.id = 'lz-tl-css';
+      st.textContent = '.lz-tl{list-style:none;margin:18px 0 0;padding:0;display:flex;flex-direction:column}.lz-tl[hidden]{display:none}' +
+        '.lz-tl-i{position:relative;display:flex;flex-direction:column;gap:3px}.lz-tl-i.lz-ph{opacity:.45}' +
+        '.lz-tl-when{font-size:.72em;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--lz-tl-c,currentColor)}' +
+        '.lz-tl-t{font-family:var(--lz-tl-f,inherit);font-size:1.22em;line-height:1.2;color:var(--lz-tl-c,currentColor);overflow-wrap:anywhere}' +
+        '.lz-tl-x{font-size:.94em;opacity:.9;overflow-wrap:anywhere}' +
+        '.lz-tl-script .lz-tl-t{font-size:1.85em;line-height:1.05}' +
+        '.lz-tl-c{align-items:center;text-align:center}.lz-tl-c .lz-tl-i{align-items:center;max-width:34em}' +
+        '.lz-tl-c .lz-tl-i+.lz-tl-i::before{content:"";display:block;width:1px;height:26px;margin:12px auto 12px;background:var(--lz-tl-c,currentColor);opacity:.45}' +
+        '.lz-tl-l{position:relative;padding-left:26px;gap:20px;text-align:left}' +
+        '.lz-tl-l::before{content:"";position:absolute;left:4px;top:.55em;bottom:.55em;width:1px;background:var(--lz-tl-c,currentColor);opacity:.35}' +
+        '.lz-tl-l .lz-tl-i::before{content:"";position:absolute;left:-26px;top:.32em;width:9px;height:9px;border-radius:50%;background:var(--lz-tl-c,currentColor)}';
+      document.head.appendChild(st);
+    }
+    var head = document.querySelector('[data-lz="storyTitle"]'), hs = head ? getComputedStyle(head) : null;
+    document.querySelectorAll('[data-lz="story"]').forEach(function (pEl) {
+      var list = pEl.nextElementSibling;
+      if (!list || !list.classList.contains('lz-tl')) { list = document.createElement('ol'); list.className = 'lz-tl'; pEl.insertAdjacentElement('afterend', list); }
+      if (!on) { list.hidden = true; list.innerHTML = ''; return; }
+      pEl.classList.add('lz-off');
+      var ta = getComputedStyle(pEl).textAlign, left = ta === 'left' || ta === 'start' || ta === 'justify';
+      // Si el título de la historia usa una letra manuscrita, los hitos van más grandes para que se lean.
+      var script = hs && /cursive|script|allura|corinthia|italianno|caveat/i.test(hs.fontFamily);
+      list.className = 'lz-tl ' + (left ? 'lz-tl-l' : 'lz-tl-c') + (script ? ' lz-tl-script' : '');
+      if (hs) { list.style.setProperty('--lz-tl-f', hs.fontFamily); list.style.setProperty('--lz-tl-c', hs.color); }
+      list.hidden = !items.length;
+      list.innerHTML = items.map(function (x) {
+        return '<li class="lz-tl-i' + (x.ph ? ' lz-ph' : '') + '">' + (has(x.when) ? '<span class="lz-tl-when">' + esc(x.when) + '</span>' : '') +
+          (has(x.title) ? '<span class="lz-tl-t">' + esc(x.title) + '</span>' : '') + (has(x.text) ? '<span class="lz-tl-x">' + esc(x.text) + '</span>' : '') + '</li>';
+      }).join('');
+    });
   }
 
   /* Colores del código de vestimenta (editor: dressSuggest y dressAvoid, hasta 5 cada uno). Se dibujan después de la nota
