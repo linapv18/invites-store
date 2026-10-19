@@ -1039,6 +1039,10 @@
     return '<label class="ed-field full">'+(LANG==='es'?'Icono del evento':'Event icon')+'<select data-list="events" data-i="'+i+'" data-f="icon">'+opts.map(function(o){return '<option value="'+o[0]+'"'+((e.icon||'auto')===o[0]?' selected':'')+'>'+esc(o[1])+'</option>';}).join('')+'</select></label>';
   }
 
+  function pendingShare() {
+    var en=LANG==='en';
+    return '<details class="ed-pending-share"><summary>'+(en?'Share invitation':'Compartir invitación')+'</summary><p class="ed-hint">'+(en?'Publish your invitation to share each family’s final link. Publishing is not available yet.':'Publiquen su invitación para compartir el enlace definitivo de cada familia. La publicación todavía no está disponible.')+'</p><div class="ed-actions"><button type="button" class="ed-btn" disabled>WhatsApp</button><button type="button" class="ed-btn" disabled>SMS</button><button type="button" class="ed-btn" disabled>'+(en?'Copy link':'Copiar enlace')+'</button></div></details>';
+  }
   function giftUrl(value) { try { var u = new URL(String(value).trim()); return /^(https?:)$/.test(u.protocol) && !u.username && !u.password; } catch (_) { return false; } }
   var SECTION_HTML = {
     portada: function () {
@@ -1222,7 +1226,7 @@
               return '<div class="ed-inv-person"><input data-inv="' + i + '" data-p="' + j + '" value="' + esc(n) + '" placeholder="' + esc(S.gPersonPh) + '" aria-label="' + esc(S.gPerson + ' ' + (j + 1)) + '" autocomplete="off">' +
                 '<button type="button" class="ed-del" data-act="g-delp" data-i="' + i + '" data-d="' + j + '" aria-label="' + esc(S.gDelPerson + ' ' + (n || S.gPerson)) + '">' + svg(P.x, 16, 2) + '</button></div>';
             }).join('') + '<button type="button" class="ed-link" data-act="g-addp" data-i="' + i + '" data-fk="gap-' + i + '">' + esc(S.gAddPerson) + '</button></div>' +
-            '</div>' + delBtn('g-del', i, S.gDelInv + ' ' + (x.name || ''), 'gx-' + i) + '</div>';
+            '</div>' + pendingShare() + delBtn('g-del', i, S.gDelInv + ' ' + (x.name || ''), 'gx-' + i) + '</div>';
         }).join('') + '</div>' : '<p class="ed-empty">' + esc(S.gNoMatch) + '</p>') : '<p class="ed-empty">' + esc(S.gEmpty) + '</p>') +
         '<div class="ed-limit"><button type="button" class="ed-btn ed-btn-dash" data-act="g-new" data-fk="g-new">' + esc(S.gNew) + '</button>' +
         (inv.length ? '<button type="button" class="ed-link" data-act="g-clear">' + esc(S.gClear) + '</button>' : '') + '</div></div>';

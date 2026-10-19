@@ -29,3 +29,5 @@ Los tests interceptan todas las solicitudes a `*.supabase.co`; no crean cuentas,
 `python tests/browser/custom_colors.py` comprueba los ocho selectores de color personalizado en demos móviles y guardado/restauración en el editor, con Supabase simulado.
 
 `python tests/browser/gifts.py` verifica regalos opcionales en los 22 diseños, enlaces seguros, mensaje escapado, capítulo de Moderno y controles/validación/guardado/restauración del editor con Supabase simulado.
+
+`python tests/browser/invitation_sharing.py` inspecciona WhatsApp/SMS y copia del enlace público en los 22 demos; comprueba mensaje promocional, ausencia de claves de previews, variantes EN/iOS y bloqueo de borradores. No abre apps ni envía mensajes.

@@ -62,6 +62,10 @@
     }
   };
   var S = STR[LANG];
+  S.template = LANG === 'en' ? 'Discover Invitesse: digital wedding invitations. Explore this design and try the full experience:\n{link}\n\nThis is a demo, not a personal invitation.' : 'Descubre Invitesse: invitaciones digitales para bodas. Explora este diseño y prueba la experiencia completa:\n{enlace}\n\nEs una demostración, no una invitación personal.';
+  S.sendTitle = LANG === 'en' ? 'Share the Invitesse demo' : 'Compartir el demo de Invitesse';
+  S.msgTitle = LANG === 'en' ? 'Message to share the demo' : 'Mensaje para compartir el demo';
+  S.note += LANG === 'en' ? ' Sharing opens WhatsApp or Messages; you choose the recipient and confirm sending.' : ' Al compartir se abre WhatsApp o Mensajes; ustedes eligen el destinatario y confirman el envío.';
   var esc = function (s) { return String(s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); };
   var cfg, data, root, tab = 'resumen', filter = 'todos', query = '', editing = -1, confirmDelete = false;
   var draftNames = ['', ''], draftTitle = '', template = S.template;
@@ -105,8 +109,23 @@
     var el = document.createElement('div'); el.className = 'lz-toast'; el.setAttribute('role', 'status'); el.textContent = text;
     document.body.appendChild(el); setTimeout(function () { el.remove(); }, 1800);
   }
-  var linkFor = function (i) { return location.origin + cfg.link + '?' + S.linkParam + '=' + encodeURIComponent(i.name.toLowerCase().replace(/\s+/g, '-')); };
-  var messageFor = function (i) { return template.split(S.tk.name).join(i.name).split(S.tk.link).join(linkFor(i)).split(S.tk.couple).join(cfg.couple); };
+  // Share only the public demo route: never preview keys, guest names or query strings.
+  var linkFor = function () { var route = location.pathname.match(/^(\/en)?\/demo\/[a-z]+\//); return 'https://www.invitesse.com' + (route ? route[0] : (LANG === 'en' ? '/en/' : '/')); };
+  var messageFor = function (i) { return template.split(S.tk.name).join(i.name).split(S.tk.link).join(linkFor()).split(S.tk.couple).join(cfg.couple); };
+  function shareControls(n) {
+    var en=LANG==='en', msg=messageFor(data[n]), ios=/iPhone|iPad|iPod/.test(navigator.userAgent) || navigator.platform==='MacIntel' && navigator.maxTouchPoints>1;
+    return '<details class="lz-share" data-share="'+n+'"><summary>'+(en?'Share demo':'Compartir demo')+'</summary><div class="lz-share-actions">'+
+      '<a href="https://wa.me/?text='+encodeURIComponent(msg)+'" target="_blank" rel="noopener noreferrer">WhatsApp</a>'+
+      '<a href="sms:'+(ios?'&':'?')+'body='+encodeURIComponent(msg)+'">SMS</a>'+
+      '<button type="button" data-copy-link="'+n+'">'+(en?'Copy link':'Copiar enlace')+'</button></div></details>';
+  }
+  function copyLink(text) {
+    if (navigator.clipboard && navigator.clipboard.writeText) return navigator.clipboard.writeText(text);
+    return new Promise(function(resolve,reject){
+      var previous=document.activeElement, input=document.createElement('textarea');input.value=text;input.setAttribute('aria-label',LANG==='en'?'Demo link':'Enlace del demo');input.style.cssText='position:fixed;left:0;top:0;opacity:0';document.body.appendChild(input);input.select();
+      try{document.execCommand('copy')?resolve():reject();}catch(e){reject(e);}finally{input.remove();if(previous)previous.focus();}
+    });
+  }
   var seatsLabel = function (n) { return n + (n === 1 ? S.seat : S.seats); };
 
   /* ---------- Resumen ---------- */
@@ -167,7 +186,7 @@
         return '<div class="lz-item' + (n === editing ? ' is-open' : '') + '"><button type="button" class="lz-row" data-open="' + n + '" aria-expanded="' + (n === editing) + '">' +
           '<span class="lz-dot' + (s === 'asiste' ? ' is-yes' : s === 'no' ? ' is-no' : '') + '" aria-hidden="true"></span>' +
           '<span><strong>' + esc(i.name) + '</strong><small>' + sub + '</small></span><span>' + (s === 'pendiente' && !y ? '—' : y + '/' + i.guests.length) + '</span></button>' +
-          (n === editing ? editor(i, n) : '') + '</div>';
+          shareControls(n) + (n === editing ? editor(i, n) : '') + '</div>';
       }).join('') : '<p class="lz-sub">' + S.noMatch + '</p>') + '</div>' +
       '<div class="lz-actions"><button type="button" class="lz-btn" data-tab="envio">' + S.newInv + '</button><button type="button" class="lz-btn is-ghost" data-act="csv">' + S.csv + '</button></div>';
   }
@@ -194,7 +213,7 @@
 
       '<p class="lz-kicker" style="margin-top:36px">' + S.sendTitle + '</p><div style="margin-top:12px">' + data.map(function (i, n) {
         return '<div class="lz-send"><div><strong>' + esc(i.name) + '</strong><small>' + seatsLabel(i.guests.length) + ' · ' + (i.sent ? S.sent : S.toSend) + '</small></div>' +
-          '<div><button type="button" data-copy="' + n + '">' + S.copy + '</button><button type="button" data-sent="' + n + '" class="' + (i.sent ? 'is-on' : '') + '" aria-pressed="' + i.sent + '">' + (i.sent ? S.sent : S.markSent) + '</button></div></div>';
+          '<div>' + shareControls(n) + '<button type="button" data-sent="' + n + '" class="' + (i.sent ? 'is-on' : '') + '" aria-pressed="' + i.sent + '">' + (i.sent ? S.sent : S.markSent) + '</button></div></div>';
       }).join('') + '</div>';
   }
 
@@ -228,6 +247,9 @@
     if (b.dataset.rm !== undefined && inv) { inv.guests.splice(Number(b.dataset.rm), 1); return render(); }
     if (b.dataset.newrm !== undefined) { draftNames.splice(Number(b.dataset.newrm), 1); return render(); }
     if (b.dataset.ins) { insert(b.dataset.ins); return; }
+    if (b.dataset.copyLink !== undefined) {
+      copyLink(linkFor()).then(function(){toast(LANG==='en'?'Link copied':'Enlace copiado');},function(){toast(S.copyFail);});return;
+    }
     if (b.dataset.copy) {
       var msg = messageFor(data[Number(b.dataset.copy)]);
       (navigator.clipboard ? navigator.clipboard.writeText(msg) : Promise.reject()).then(function () { toast(S.copied); }, function () { toast(S.copyFail); });
@@ -258,7 +280,7 @@
     ta.value = ta.value.slice(0, s) + token + ta.value.slice(e); template = ta.value;
     ta.focus(); ta.setSelectionRange(s + token.length, s + token.length); updatePreview();
   }
-  function updatePreview() { var p = root.querySelector('#lzPreview'); if (p) p.textContent = messageFor(data[0] || { name: cfg.guest }); }
+  function updatePreview() { var p = root.querySelector('#lzPreview'); if (p) p.textContent = messageFor(data[0] || { name: cfg.guest }); root.querySelectorAll('.lz-share').forEach(function(el){var wasOpen=el.open,n=+el.dataset.share,wrap=document.createElement('div');wrap.innerHTML=shareControls(n);var fresh=wrap.firstElementChild;fresh.open=wasOpen;el.replaceWith(fresh);}); }
 
   function onInput(e) {
     var t = e.target;
