@@ -18,7 +18,10 @@ async def main():
    for k in ['cover','storyTitle','story','sealText','musicTrackSrc']:assert content[k]=='',(k,content[k])
    for k in ['gallery','events','faqs','invitations','polls']:assert content[k]==[],k
    frame=pg.frame_locator('#edFrame');await frame.locator('[data-lz=n1]').first.wait_for(state='attached')
-   assert not await frame.locator('[data-lz=n1]').first.inner_text() in ['Ana','Anna']
+   assert await frame.locator('[data-lz=n1]').first.inner_text()==''
+   assert await frame.locator('[data-lz-date]').first.inner_text()==''
+   assert not await frame.get_by_text('Por completar',exact=True).count()
+   assert not await frame.get_by_text('To complete',exact=True).count()
    assert '2027' not in await frame.locator('[data-lz-date]').first.inner_text()
    assert (await frame.locator('[data-lz-src]').first.get_attribute('src')).startswith('data:image/svg+xml,')
    await pg.locator('[data-k=n1]').fill('Camila');await pg.locator('[data-k=n2]').fill('Daniel');await pg.locator('[data-k=n2]').press('Tab');await pg.wait_for_timeout(2000)

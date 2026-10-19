@@ -17,7 +17,7 @@
      data-lz-seal              contenido del sello
      data-lz-mono              monograma ya maquetado ("V<span>&</span>M", "S — T"): solo cambia las dos letras
      data-lz-anchor="portada|historia|itinerario|faq|viaje|rsvp"  destino al cambiar de sección en el editor
-   Si un texto está vacío: en el editor se ve el texto de ejemplo de la plantilla, atenuado; al ver como
+   Si un texto está vacío: la vista previa lo deja vacío; al ver como
    invitado (?lz=vista) se oculta, para que nunca salga texto de ejemplo en la invitación. */
 (function () {
   'use strict';
@@ -360,7 +360,7 @@
     if (el._lz === undefined) el._lz = el.innerHTML;
     if (has(v)) { el.textContent = v; el.style.whiteSpace = /\n/.test(v) ? 'pre-line' : ''; el.classList.remove('lz-ph', 'lz-off'); }
     else if (el.hasAttribute('data-lz-keep')) { el.innerHTML = el._lz; el.style.whiteSpace = ''; el.classList.remove('lz-ph', 'lz-off'); } // vacío: el texto del diseño
-    else { el.textContent = MODE === 'editor' ? (LANG === 'en' ? 'To complete' : 'Por completar') : ''; el.style.whiteSpace = ''; el.classList.toggle('lz-off', MODE === 'vista'); el.classList.toggle('lz-ph', MODE !== 'vista'); }
+    else { el.textContent = ''; el.style.whiteSpace = ''; el.classList.toggle('lz-off', MODE === 'vista'); el.classList.toggle('lz-ph', MODE !== 'vista'); }
   }
   function fill(item, data) {
     var els = [].slice.call(item.querySelectorAll('[data-lz-f]'));
@@ -423,14 +423,14 @@
       var w = document.createTreeWalker(el, NodeFilter.SHOW_TEXT), n, t = [];
       while ((n = w.nextNode())) if (n.nodeValue.trim() && !/^[\s&—–·-]+$/.test(n.nodeValue)) t.push(n);
       t.forEach(function (x) { if (x._lz === undefined) x._lz = x.nodeValue; x.nodeValue = x._lz; });
-      if (!v.i1 && !v.i2) { el.textContent = '—'; return; }
+      if (!v.i1 && !v.i2) { el.textContent = ''; return; }
       if (t.length >= 2) { t[0].nodeValue = t[0]._lz.replace(/\S+/, v.i1); t[t.length - 1].nodeValue = t[t.length - 1]._lz.replace(/\S+(?=\s*$)/, v.i2); }
       else if (t.length === 1) t[0].nodeValue = t[0]._lz.replace(/^(\s*)\S+(.*?)\S+(\s*)$/, '$1' + v.i1 + '$2' + v.i2 + '$3');
     });
     document.querySelectorAll('[data-lz-date]').forEach(function (el) {
       if (el._lz === undefined) el._lz = el.innerHTML;
       var t = fmtDate(c0[el.getAttribute('data-lz-from') || 'date'], el.getAttribute('data-lz-date'));
-      el.textContent = t || (MODE === 'editor' ? (LANG === 'en' ? 'Choose your date' : 'Elijan la fecha') : '');
+      el.textContent = t || '';
     });
     document.querySelectorAll('[data-lz-src]').forEach(function (el) {
       if (el._lz === undefined) el._lz = el.getAttribute('src');
@@ -450,7 +450,7 @@
     document.querySelectorAll('[data-lz-seal]').forEach(function (el) {
       if (el._lz === undefined) el._lz = el.innerHTML;
       var s = sealHTML(c0);
-      el.innerHTML = s || '<span class="lz-seal">—</span>';
+      el.innerHTML = s || '<span class="lz-seal"></span>';
       if (el.classList.contains('lz-seal-over')) { el.classList.toggle('lz-off', !s); el.classList.toggle('is-img', c0.sealMode !== 'text' && c0.mono === 'custom' && !!c0.monoImg); }
     });
     document.querySelectorAll('[data-lz-list]').forEach(function (box) {
