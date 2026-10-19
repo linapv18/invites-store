@@ -41,7 +41,7 @@ async def main():
   for path in ['/demo/costa/missing','/editor/missing','/en/demo/costa/missing']:
    r=await pg.goto(base+path,wait_until='networkidle');assert r.status==404;assert await pg.locator('h1').count()==1
   for path in ['/','/en/','/disenos/','/en/disenos/']:
-   r=await context.request.get(base+path);assert r.status==200,(path,r.status)
+   r=await pg.goto(base+path,wait_until='domcontentloaded');assert r.status==200,(path,r.status)
   nojs=await browser.new_context(java_script_enabled=False);p2=await nojs.new_page();r=await p2.goto(base+'/missing',wait_until='networkidle');assert r.status==404;assert await p2.locator('.error-primary').is_visible();await p2.locator('.error-primary').click();assert p2.url==base+'/'
   print('Nested missing routes, valid pages and recovery without JavaScript OK',flush=True)
   await browser.close()
