@@ -11,3 +11,5 @@ Los tests interceptan todas las solicitudes a `*.supabase.co`; no crean cuentas,
 `INVITESSE_TEST_BASE` permite cambiar la URL del sitio servido; los artefactos se guardan en `/tmp/invitesse-browser-checks` o en `INVITESSE_TEST_ARTIFACTS`.
 
 `python tests/browser/google_oauth.py` prueba el acceso Google/PKCE y el regreso al diseño con el proveedor interceptado.
+
+`python tests/browser/empty_editor.py` comprueba borradores vacíos y vista previa neutra, guardado y recuperación, cancelación/confirmación del vaciado y conservación del demo público en escritorio ES y móvil EN.

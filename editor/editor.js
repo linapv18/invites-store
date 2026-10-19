@@ -14,7 +14,7 @@
   var ACCOUNT = LANG === 'en' ? '/en/account/' : '/cuenta/';
   var VIEW = root.getAttribute('data-view') || 'editor';
   // Las claves dependen de la cuenta y del diseño: las fija gate() (ver editor/auth.js).
-  var KEY = '', CART_KEY = '', PREV_KEY = '', AUTH = window.LazoAuth;
+  var KEY = '', CART_KEY = '', AUTH = window.LazoAuth;
   root.innerHTML = '<p style="padding:40px" role="status">'+(document.documentElement.lang === 'en' ? 'Connecting securely…' : 'Conectando de forma segura…')+'</p>';
   try { await AUTH.ready; } catch (_) {
     root.innerHTML = '<div style="padding:40px"><p role="alert">'+(document.documentElement.lang === 'en' ? 'Unable to connect. Your drafts have not been changed.' : 'No se pudo conectar. Sus borradores no se han modificado.')+'</p><button type="button" onclick="location.reload()">'+(document.documentElement.lang === 'en' ? 'Retry' : 'Reintentar')+'</button></div>'; return;
@@ -42,7 +42,7 @@
       section: 'Sección', optional: 'Opcional', inCart: 'En carrito', inCartRemove: 'En el carrito · Quitar', add: 'Añadir', remove: 'Quitar',
       addPrice: 'Añadir · [$]', addToInv: 'Añadir a mi invitación', seeAddon: 'Ver complemento', seePack: 'Ver paquete',
       edit: 'Editar', preview: 'Vista previa', mobile: 'Móvil', desktop: 'Escritorio', device: 'Dispositivo', modeLbl: 'Modo',
-      viewingAs: 'Viendo como: Familia Rodríguez · 4 lugares', prev: 'Sección anterior', next: 'Siguiente', stepsLbl: 'Navegación entre secciones',
+      viewingAs: 'Vista previa de la invitación', prev: 'Sección anterior', next: 'Siguiente', stepsLbl: 'Navegación entre secciones',
       sec: {
         portada: ['Portada', 'Lo primero que ven sus invitados cuando termina la apertura. Lo que escriban aparece al instante en la vista previa.'],
         apertura: ['Apertura y sello', 'Lo que sus invitados tocan para abrir la invitación.'],
@@ -173,7 +173,7 @@
       section: 'Section', optional: 'Optional', inCart: 'In cart', inCartRemove: 'In cart · Remove', add: 'Add', remove: 'Remove',
       addPrice: 'Add · [$]', addToInv: 'Add to my invitation', seeAddon: 'See add-on', seePack: 'See bundle',
       edit: 'Edit', preview: 'Preview', mobile: 'Mobile', desktop: 'Desktop', device: 'Device', modeLbl: 'Mode',
-      viewingAs: 'Viewing as: The Rodríguez Family · 4 seats', prev: 'Previous section', next: 'Next', stepsLbl: 'Section navigation',
+      viewingAs: 'Invitation preview', prev: 'Previous section', next: 'Next', stepsLbl: 'Section navigation',
       sec: {
         portada: ['Cover', 'The first thing your guests see when they open the envelope. Changes show up instantly in the preview.'],
         apertura: ['Opening and seal', 'What your guests tap to open the invitation.'],
@@ -527,28 +527,20 @@
   var ADDON_SPOT = { playlist: 'musica', libro: 'itinerario', capsula: 'rsvp', encuestas: 'faq', galeria: 'historia', bilingue: 'portada', dominio: 'portada' };
 
   function defaults() {
-    var es = LANG === 'es';
     return {
       v: 1, design: 'clasico', sec: 'portada',
-      n1: es ? 'Ana' : 'Anna', n2: es ? 'León' : 'Leo', date: '2027-03-14', city: 'Oaxaca',
-      cover: '/assets/fotos/paseo.jpg', msg: es ? 'Nos casamos y queremos celebrarlo contigo.' : 'We’re getting married and want to celebrate with you.', pal: 'salvia',
-      sealMode: 'mono', sealText: es ? 'A & L' : 'A & L', mono: 'amp', monoImg: '',
-      storyTitle: es ? 'Cómo empezó todo' : 'How it all began', story: '',
-      gallery: ['/assets/fotos/beso.jpg', '/assets/fotos/escalera.jpg', '/assets/fotos/muro.jpg'],
-      events: es
-        ? [{ id: 1, name: 'Ceremonia civil', time: '13:00', place: '', address: '', mapUrl: '' }, { id: 2, name: 'Comida familiar', time: '14:30', place: '', address: '' }, { id: 3, name: 'Fiesta', time: '20:00', place: '', address: '' }]
-        : [{ id: 1, name: 'Civil ceremony', time: '13:00', place: '', address: '', mapUrl: '' }, { id: 2, name: 'Family lunch', time: '14:30', place: '', address: '' }, { id: 3, name: 'Party', time: '20:00', place: '', address: '' }],
-      faqs: es
-        ? [{ id: 1, q: '¿Cuál es el código de vestimenta?', a: 'Formal. Evita el blanco, por favor.' }, { id: 2, q: '¿Pueden ir niños?', a: '' }, { id: 3, q: '¿Hay mesa de regalos?', a: '' }]
-        : [{ id: 1, q: 'What is the dress code?', a: 'Formal. Please avoid white.' }, { id: 2, q: 'Are kids welcome?', a: '' }, { id: 3, q: 'Is there a gift registry?', a: '' }],
-      musicOn: true, musicSource: 'library', musicTrack: 'demo', musicTrackSrc: '/assets/musica/demo.mp3', musicFileName: '', musicFileSize: 0,
+      n1: '', n2: '', date: '', city: '',
+      cover: '', msg: '', pal: 'salvia',
+      sealMode: 'mono', sealText: '', mono: 'amp', monoImg: '',
+      storyTitle: '', story: '', gallery: [], events: [], faqs: [],
+      musicOn: false, musicSource: 'library', musicTrack: '', musicTrackSrc: '', musicFileName: '', musicFileSize: 0,
       palCustom: '#8A4F5C',
       // Todos los diseños reciben y muestran estos mismos campos (ver demo/shared/content.js).
       invitations: [], timeZone: '', courtPair: 'KQ', photoBW: true, photosOn: true, envIntro: '', envClosing: '', countdownId: 1, countdownNote: '', quote: '', quoteAuthor: '', dressCode: '', dressNotes: '', dressColors: '',
       viajeOn: true, travelIntro: '', hotel: '', hotelAddress: '', hotelCode: '', hotelLink: '', hotelNotes: '',
       airport: '', transport: '', guideFood: '', guideCulture: '', guidePlans: '',
       rsvpDeadline: '', rsvpMsg: '', rsvpDiet: true, rsvpNote: true,
-      polls: [{ id: 4, q: S.pollMain, opts: '' }, { id: 5, q: S.pollIdeas[0], opts: '' }], pollReveal: 'fiesta',
+      polls: [], pollReveal: 'fiesta',
       capsuleDate: '', capsulePrompt: '', capsuleInRsvp: true,
       shareMode: 'sobre', sharePhoto: 0,
       uid: 10
@@ -556,7 +548,6 @@
   }
   function loadState() {
     var d = defaults(), s = load(KEY);
-    if ((!s || typeof s !== 'object') && PREV_KEY) { s = load(PREV_KEY); if (s && typeof s === 'object') { s = clone(s); s.pal = d.pal; } }
     if (!s || typeof s !== 'object') return d;
     Object.keys(d).forEach(function (k) { if (s[k] === undefined || typeof s[k] !== typeof d[k] || Array.isArray(d[k]) !== Array.isArray(s[k])) s[k] = d[k]; });
     if (!DESIGNS[s.design]) s.design = 'clasico';
@@ -812,8 +803,6 @@
         '<a class="ed-btn" href="' + ACCOUNT + '">' + esc(S.myInv) + '</a></div></div>';
       return null;
     }
-    // Si es la primera vez que abren este diseño, el editor trae el contenido del último que editaron.
-    if (u.last && u.last !== d && AUTH.owns(u.last)) PREV_KEY = AUTH.invKey(u.last);
     AUTH.setLast(d);
     KEY = AUTH.invKey(d); CART_KEY = AUTH.cartKey();
     return d;
@@ -843,7 +832,7 @@
     var s = state, t = function (v) { return !!String(v || '').trim(); };
     switch (id) {
       case 'portada': return t(s.n1) && t(s.n2) && t(s.date) && t(s.city);
-      case 'apertura': return s.sealMode === 'text' ? t(s.sealText) : (s.mono !== 'custom' || t(s.monoImg));
+      case 'apertura': return s.sealMode === 'text' ? t(s.sealText) : (s.mono === 'custom' ? t(s.monoImg) : t(s.n1) && t(s.n2));
       case 'historia': return t(s.story);
       case 'itinerario': return s.events.length > 0 && s.events.every(function (e) { return t(e.name) && t(e.time) && (t(e.place) || t(e.address)); });
       case 'faq': return s.faqs.length > 0 && s.faqs.every(function (f) { return t(f.q) && t(f.a); });
@@ -990,7 +979,7 @@
   }
   function coZone() {
     var zones = typeof Intl.supportedValuesOf === 'function' ? Intl.supportedValuesOf('timeZone') : ['America/Mexico_City','America/Bogota','America/New_York','Europe/Madrid'];
-    return coSelect(LANG==='es'?'Zona horaria de la boda':'Wedding time zone','timeZone',[['UTC','UTC']].concat(zones.map(function(z){return[z,z.replace(/_/g,' ')];})),state.timeZone||'America/Mexico_City',LANG==='es'?'Elige la zona del lugar de la boda para que todos los invitados vean la misma cuenta regresiva.':'Choose the venue’s time zone so every guest sees the same countdown.');
+    return coSelect(LANG==='es'?'Zona horaria de la boda':'Wedding time zone','timeZone',[['',LANG==='es'?'Elijan la zona horaria':'Choose a time zone'],['UTC','UTC']].concat(zones.map(function(z){return[z,z.replace(/_/g,' ')];})),state.timeZone||'',LANG==='es'?'Elige la zona del lugar de la boda para que todos los invitados vean la misma cuenta regresiva.':'Choose the venue’s time zone so every guest sees the same countdown.');
   }
   function coPair() { return coSelect(LANG==='es'?'Pareja de naipes':'Court-card pair','courtPair',LANG==='es'?[['KQ','Rey y reina · K/Q'],['QQ','Dos reinas · Q/Q'],['KK','Dos reyes · K/K'],['AA','Dos ases · A/A']]:[['KQ','King and queen · K/Q'],['QQ','Two queens · Q/Q'],['KK','Two kings · K/K'],['AA','Two aces · A/A']],state.courtPair||'KQ'); }
   function coEventIcon(e, i) {
@@ -1000,7 +989,7 @@
 
   var SECTION_HTML = {
     portada: function () {
-      return head('portada') +
+      return head('portada') + '<div><button type="button" class="ed-link" data-act="reset-content">' + (LANG === 'es' ? 'Vaciar contenido y empezar de nuevo' : 'Clear content and start again') + '</button></div>' +
         '<div class="ed-grid2">' + field(S.n1, 'n1') + field(S.n2, 'n2') + field(S.date, 'date', { type: 'date' }) + field(S.city, 'city', { ph: S.cityPh, hint: S.cityHint }) + '</div>' + (['corazones','clasico','moderno','onix','encaje'].includes(state.design) ? coZone() : '') +
         '<div class="ed-stack"><span class="ed-label">' + esc(S.cover) + '</span><div class="ed-photo">' +
           (state.cover ? '<div class="ed-photo-img"><img src="' + esc(state.cover) + '" alt="' + esc(S.coverAlt) + '"></div>' : '<div class="ed-photo-img ph"></div>') +
@@ -1592,6 +1581,13 @@
           (pending.length ? '<p style="margin-top:4px"><b style="font-weight:500;color:var(--ink)">' + esc(S.pubPending) + '</b></p><ul>' + pending.map(function (x) { return '<li>' + esc(secName(x)) + '</li>'; }).join('') + '</ul>' : '<p>' + esc(S.pubAll) + '</p>') +
           '<div class="ed-modal-actions"><button type="button" class="ed-btn ed-btn-dark" data-act="modal-close">' + esc(S.ok) + '</button></div>', b);
         break;
+      case 'reset-content':
+        modal('<h2 id="mdTitle">' + (LANG === 'es' ? '¿Empezar de nuevo?' : 'Start again?') + '</h2><p>' + (LANG === 'es' ? 'Se borrarán los textos, fotos, eventos e invitados de este borrador. Se conservarán el diseño y la paleta. Esta acción no se puede deshacer.' : 'This draft’s text, photos, events and guests will be cleared. Your design and palette will be kept. This cannot be undone.') + '</p><div class="ed-modal-actions"><button type="button" class="ed-btn" data-act="modal-close">' + esc(S.cancel) + '</button><button type="button" class="ed-btn ed-btn-dark" data-act="reset-content-yes">' + (LANG === 'es' ? 'Vaciar borrador' : 'Clear draft') + '</button></div>', b);
+        break;
+      case 'reset-content-yes':
+        stopSample();
+        var empty = defaults(); empty.design = state.design; empty.pal = state.pal; empty.palCustom = state.palCustom;
+        state = empty; closeModal(); changed(true); break;
       case 'modal-close': closeModal(); break;
       case 'modal-scrim': if (e.target === b) closeModal(); break;
       case 'mode': ui.mode = id; stopSample(); if (id === 'preview') guideMark('viewed'); renderChrome(); if (id === 'preview') renderPreview(true); break;
@@ -1780,8 +1776,7 @@
   }
 
   /* ---------- Cambiar diseño: los diseños sin salir del editor ----------
-     El que están editando va marcado; los que ya compraron se abren con «Abrir»; los demás llevan a comprarlos.
-     Al abrir un diseño nuevo, el editor trae el contenido del último que editaron (ver loadState). */
+     El que están editando va marcado; cada borrador conserva su propio contenido. */
   var CAT = window.LazoCatalog;
   function designsHTML() {
     var list = CAT ? CAT.designs : Object.keys(DESIGNS).map(function (id) { return { id: id, img: [], bg: '#EFE9E1', tags: { apertura: [] } }; });
