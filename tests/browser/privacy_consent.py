@@ -1,4 +1,4 @@
-"""Intercepts Google endpoints: never sends test visits to the production GA property."""
+"""Intercepts Google and Clarity endpoints: never sends test visits to production analytics."""
 import asyncio,json,os,time
 from pathlib import Path
 from playwright.async_api import async_playwright
@@ -10,9 +10,11 @@ async def context(b,**kwargs):
  c=await b.new_context(**kwargs);calls=[]
  async def google(r):
   calls.append(r.request.url)
-  await r.fulfill(status=200,content_type='application/javascript',body='window.__googleLoaded=true;')
+  await r.fulfill(status=200,content_type='application/javascript',body='window.__clarityLoaded=true;' if 'clarity.ms' in r.request.url else 'window.__googleLoaded=true;')
  await c.route('https://www.googletagmanager.com/**',google)
  await c.route('https://*.google-analytics.com/**',google)
+ await c.route('https://*.clarity.ms/**',google)
+ await c.route('https://clarity.ms/**',google)
  return c,calls
 async def main():
  async with async_playwright() as p:
@@ -34,11 +36,15 @@ async def main():
    for command in data:
     raw=json.dumps(command,default=str);assert 'private@example' not in raw and '#secret' not in raw
    config=next(x[2] for x in data if x[0]=='config');assert config['send_page_view']==False and config['allow_google_signals']==False and config['page_referrer']==''
+   link=pg.locator('a[href*="/demo/"]').first
+   await link.evaluate("el=>el.addEventListener('click',e=>e.preventDefault())");await link.click()
+   click=await pg.evaluate("dataLayer.map(x=>Array.from(x)).filter(x=>x[0]==='event'&&x[1]==='commercial_click').at(-1)")
+   assert click[2]['action']=='open_demo' and 'private@example' not in json.dumps(click)
    # Mimic first-party cookies created by GA, then withdraw. Necessary storage must survive.
-   await pg.evaluate("document.cookie='_ga=test;path=/';document.cookie='_ga_2YPN2SZT3R=test;path=/';localStorage.setItem('necessary-test','keep')")
+   await pg.evaluate("document.cookie='_ga=test;path=/';document.cookie='_ga_2YPN2SZT3R=test;path=/';document.cookie='_clck=test;path=/';document.cookie='_clsk=test;path=/';localStorage.setItem('necessary-test','keep')")
    await pg.locator('.iv-privacy-launch').click();await pg.locator('[data-privacy=reject]').last.click();await pg.wait_for_timeout(500);await pg.wait_for_load_state('networkidle')
    assert len(calls)==1
-   assert '_ga=' not in await pg.evaluate('document.cookie')
+   cookies=await pg.evaluate('document.cookie');assert all(name not in cookies for name in ['_ga=','_clck=','_clsk='])
    assert await pg.evaluate("localStorage.getItem('necessary-test')")=='keep'
    # An old consent is expired, not an automatic opt-in.
    await pg.evaluate('(args)=>localStorage.setItem(args[0],JSON.stringify(args[1]))',[KEY,{'version':1,'analytics':True,'at':int(time.time()*1000)-181*86400000}]);await pg.reload(wait_until='networkidle');await pg.locator('.iv-privacy-banner').wait_for();assert len(calls)==1
@@ -49,15 +55,17 @@ async def main():
   c,calls=await context(b);await c.add_init_script("Object.defineProperty(navigator,'globalPrivacyControl',{get:()=>true})");pg=await c.new_page();await pg.goto(BASE+'/',wait_until='networkidle');assert not calls;await pg.locator('.iv-privacy-launch').click();assert await pg.locator('dialog input').is_disabled();await c.close();print('Global Privacy Control respected',flush=True)
   c,calls=await context(b);pg=await c.new_page()
   await pg.goto(BASE+'/',wait_until='networkidle');await pg.locator('section [data-privacy=accept]').click();await pg.wait_for_function('window.__googleLoaded===true')
-  await pg.goto(BASE+'/disenos/',wait_until='networkidle');assert len(calls)==2
+  await pg.wait_for_function('window.__clarityLoaded===true');assert len(calls)==2
+  consent=await pg.evaluate('clarity.q.map(x=>Array.from(x))');assert consent[0]==['consentv2',{'ad_Storage':'denied','analytics_Storage':'granted'}]
+  await pg.goto(BASE+'/disenos/',wait_until='networkidle');assert len(calls)==4
   for route in ['/cuenta/','/en/account/','/editor/','/demo/costa/','/en/demo/costa/','/privacidad/','/en/privacy/']:
-   await pg.goto(BASE+route,wait_until='networkidle');assert len(calls)==2,(route,calls)
+   await pg.goto(BASE+route,wait_until='networkidle');assert len(calls)==4,(route,calls)
   print('Opt-in persists to catalogue; account, editor, demos and legal pages excluded',flush=True)
   # Storage failure must never silently enable tracking.
   c,calls=await context(b);await c.add_init_script("Storage.prototype.setItem=function(){throw new Error('Unavailable')}");pg=await c.new_page();await pg.goto(BASE+'/',wait_until='networkidle');await pg.locator('section [data-privacy=accept]').click();assert not calls;assert await pg.locator('.iv-privacy-error').is_visible();await c.close()
   # Withdrawing in another tab disables and unloads an already loaded tag.
   c,calls=await context(b);pg=await c.new_page();await pg.goto(BASE+'/',wait_until='networkidle');await pg.locator('section [data-privacy=accept]').click();await pg.wait_for_function('window.__googleLoaded===true')
-  legal=await c.new_page();await legal.goto(BASE+'/privacidad/',wait_until='networkidle');await legal.locator('.iv-privacy-launch').click();await legal.locator('dialog [data-privacy=reject]').click();await pg.wait_for_timeout(1000);await pg.wait_for_load_state('networkidle');assert len(calls)==1;assert await pg.evaluate("window['ga-disable-G-2YPN2SZT3R']") is True
+  legal=await c.new_page();await legal.goto(BASE+'/privacidad/',wait_until='networkidle');await legal.locator('.iv-privacy-launch').click();await legal.locator('dialog [data-privacy=reject]').click();await pg.wait_for_timeout(1000);await pg.wait_for_load_state('networkidle');assert len(calls)==2;assert await pg.evaluate("window['ga-disable-G-2YPN2SZT3R']") is True
   await c.close();print('Storage failure stays blocked; cross-tab withdrawal stops analytics',flush=True)
   await b.close()
 if __name__=='__main__':asyncio.run(main())
