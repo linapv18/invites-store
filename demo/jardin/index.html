@@ -379,6 +379,14 @@ footer a:focus-visible{outline-color:var(--paper)}
 .hero .in-w>*:not(.bfly){position:relative;z-index:1}
 @media (min-width:700px){.sec{padding-left:40px;padding-right:40px}.meadow{margin-left:-40px;margin-right:-40px}}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation:none !important;transition:none !important}[data-rv]{opacity:1;transform:none}.grow .st{stroke-dashoffset:0}.grow .lf,.grow .bl{transform:none}.bfly{display:none}}
+/* Opción «sin fotos» (editor: photosOn; demo: botón Sin fotos o ?fotos=no): html.lz-no-photos.
+   Los nombres van dentro del óvalo de flores y se ocultan las fotos de la historia. */
+html:not(.lz-no-photos) .np-only,.lz-no-photos .ph-only{display:none!important}
+.wreath .oval-np{display:flex;flex-direction:column;align-items:center;justify-content:center;background:var(--paper);color:var(--ink);text-align:center;padding:0 8%;font-size:clamp(40px,11vw,56px);line-height:.95}
+.wreath .oval-np .y{font:italic 20px 'Cormorant Garamond',serif;color:var(--accent-ink);margin:4px 0}
+.lz-no-photos .hero h1{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);margin:0}
+.lz-no-photos .polas{display:none}
+@media (min-width:900px){.wreath .oval-np{font-size:68px}.wreath .oval-np .y{font-size:24px}}
 </style>
 <link rel="stylesheet" href="/demo/shared/panel.css?v=custom-1">
 </head>
@@ -607,7 +615,8 @@ footer a:focus-visible{outline-color:var(--paper)}
       '<div class="deco" style="right:-30px;top:40px">' + cornerSprig(120, 190, -1) + '</div>' +
       '<div class="in-w">' + BFLY +
         '<p class="eb">' + S.getting + '</p>' +
-        '<div class="wreath"><div class="oval"><img class="ph-img" src="/assets/fotos/paseo.jpg" data-lz-src="photo:0" alt="' + S.photoAlt + '"></div>' + wreath() + '</div>' +
+        '<div class="wreath"><div class="oval ph-only"><img class="ph-img" src="/assets/fotos/paseo.jpg" data-lz-src="photo:0" alt="' + S.photoAlt + '"></div>' +
+          '<div class="oval oval-np np-only script" aria-hidden="true"><span data-lz="n1">' + S.n1 + '</span><span class="y">' + S.y + '</span><span data-lz="n2">' + S.n2 + '</span></div>' + wreath() + '</div>' +
         '<h1 class="script" id="names" tabindex="-1"><span class="fitl" data-lz="n1">' + S.n1 + '</span><span class="y">' + S.y + '</span><span class="fitl" data-lz="n2">' + S.n2 + '</span></h1>' +
         '<p class="date" data-lz-date="{d} · {Mc} · {Y}">' + S.date + '</p><p class="eb city" data-lz="city">' + S.city + '</p>' +
         '<p class="msg" data-lz="msg">' + S.msg + '</p>' +
@@ -687,7 +696,7 @@ footer a:focus-visible{outline-color:var(--paper)}
 
 })();
 </script>
-<script src="/demo/shared/content.js?v=custom-1"></script>
+<script src="/demo/shared/content.js?v=nophoto-1"></script>
 <script src="/demo/shared/panel.js?v=gallery-1"></script>
 <script>
 (function () {

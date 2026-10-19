@@ -348,3 +348,8 @@ footer>p{position:relative}
 .told{top:calc(344px + var(--reveal-offset,0px))}
 .lit::after{height:var(--reveal-bottom,600px)}
 @media(max-height:650px){.constellation{top:calc(112px + var(--reveal-offset,0px))}.told{top:calc(280px + var(--reveal-offset,0px))}}
+
+/* Opción «sin fotos» (editor: photosOn; demo: botón Sin fotos o ?fotos=no): html.lz-no-photos.
+   La luna llena ocupa el centro de la portada (sin la luna pequeña en órbita) y se ocultan los planetas con fotos de la historia. */
+html:not(.lz-no-photos) .np-only,.lz-no-photos .ph-only{display:none!important}
+.lz-no-photos .orbital-moon,.lz-no-photos .planets,.lz-no-photos .gallery-link{display:none}

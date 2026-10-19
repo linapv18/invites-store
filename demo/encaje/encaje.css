@@ -472,3 +472,14 @@ body.locked .hero-txt>*,body.locked .hero-ph{transform:translateY(12px)}
   .dress{padding-top:90px}
   .fin{padding-top:76px}
 }
+
+/* Opción «sin fotos» (editor: photosOn; demo: botón Sin fotos o ?fotos=no): html.lz-no-photos.
+   Los nombres van dentro del óvalo de la portada, la historia lleva sus iniciales y la galería se oculta. */
+html:not(.lz-no-photos) .np-only,.lz-no-photos .ph-only{display:none!important}
+.oval-np{position:absolute;left:20%;top:14%;width:60%;height:72%;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;padding:0 6%;text-align:center;font:400 clamp(44px,13vw,58px)/1 var(--scr);color:var(--lace);overflow-wrap:anywhere}
+.oval-np .amp{font-size:.62em;line-height:1;color:var(--pale)}
+.o-story .oval-np{flex-direction:row;gap:.12em;font-size:64px;color:var(--sgd)}
+.o-story .oval-np .amp{color:var(--sg)}
+.lz-no-photos .hero .names{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);margin:0}
+.lz-no-photos #galeria{display:none}
+@media(min-width:900px){.oval-np{font-size:clamp(60px,5.6vw,84px)}.o-story .oval-np{font-size:76px}}

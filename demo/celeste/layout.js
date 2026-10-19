@@ -108,7 +108,7 @@
   '<main id="invite" inert>' +
     '<section class="hero" id="portada" data-lz-anchor="portada"><div class="aurora" aria-hidden="true"></div>' + twk(12, 13) + shoot(160, -60, 10, 3) +
       '<div class="in-w">' + phases + '<p class="tn" style="margin-top:18px">' + S.getting + '</p>' +
-      '<div class="orbit">' + dial + '<span class="orbital-moon moonball" aria-hidden="true"></span><div class="ring" style="--du:28s;--c:#F4E9C8"></div><div class="ring r2" style="--du:18s;--c:var(--accent)"></div><div class="pic"><img class="ph-img" id="heroImg" src="/assets/fotos/paseo.jpg" data-lz-src="photo:0" alt="' + S.photoAlt + '" style="object-position:center 60%"></div></div>' +
+      '<div class="orbit">' + dial + '<span class="orbital-moon moonball" aria-hidden="true"></span><div class="ring" style="--du:28s;--c:#F4E9C8"></div><div class="ring r2" style="--du:18s;--c:var(--accent)"></div><div class="pic ph-only"><img class="ph-img" id="heroImg" src="/assets/fotos/paseo.jpg" data-lz-src="photo:0" alt="' + S.photoAlt + '" style="object-position:center 60%"></div><span class="pic pic-moon moonball np-only" aria-hidden="true"></span></div>' +
       '<h1 class="letters" tabindex="-1"><span data-split="srcN1">' + spl(S.n1) + '</span><span class="amp">' + S.y + '</span><span data-split="srcN2" data-off="4">' + spl(S.n2, 4) + '</span></h1>' +
       '<div class="date">' + dateL + '</div>' +
       '<p class="tn" style="margin-top:12px;color:var(--silver)" data-lz="city">' + S.city + '</p>' +

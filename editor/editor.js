@@ -97,7 +97,7 @@
       envK: 'Textos del sobre', envIntro: 'Frase del sobre', envClosing: 'Despedida', envClosingPh: 'p. ej. Con todo nuestro cariño',
       envKeepHint: 'Si lo dejan vacío, se usa el texto del diseño.', envOptHint: 'Opcional: aparece bajo el nombre de cada familia.',
       photoBW: 'Fotos en blanco y negro', photoBWOn: 'Como en el diseño original.', photoBWOff: 'Las fotos se ven con sus colores originales.',
-      photosOn: 'Usar fotos', photosOnOn: 'La portada y la historia llevan sus fotos.', photosOnOff: 'Sin fotos: sus nombres van en el óvalo de encaje y la historia lleva una ventana del jardín.',
+      photosOn: 'Usar fotos', photosOnOn: 'La portada y la historia llevan sus fotos.', photosOnOff: { glicina: 'Sin fotos: sus nombres van en el óvalo de encaje y la historia lleva una ventana del jardín.', encaje: 'Sin fotos: sus nombres van dentro del óvalo de encaje y se ocultan la foto de la historia y la galería.', jardin: 'Sin fotos: sus nombres van dentro del óvalo de flores y se ocultan las fotos de la historia.', celeste: 'Sin fotos: la luna llena ocupa el centro de la portada y se ocultan las fotos de la historia.', corazones: 'Sin fotos: las cartas llevan las iniciales de sus nombres y se ocultan las fotos de la historia y la galería.' },
       cancel: 'Cancelar', gUpload: 'Subir archivo (CSV)', gManual: 'Crear a mano', gHow: '¿Cómo se arma el archivo?',
       gSteps: ['Descarguen el archivo de ejemplo y ábranlo en Excel o Google Sheets.', 'Escriban una fila por persona. Las personas con el mismo nombre de invitación quedan juntas (por ejemplo, toda la Familia Rodríguez).', 'Guárdalo como CSV y súbelo aquí.'],
       gCols: ['Invitación', 'Persona'], gExample: 'Descargar el ejemplo (CSV)', gExampleFile: '/editor/invitados-ejemplo.csv',
@@ -228,7 +228,7 @@
       envK: 'Envelope text', envIntro: 'Envelope line', envClosing: 'Sign-off', envClosingPh: 'e.g. With all our love',
       envKeepHint: 'Leave it empty to use the design’s text.', envOptHint: 'Optional: shown under each family’s name.',
       photoBW: 'Black-and-white photos', photoBWOn: 'As in the original design.', photoBWOff: 'Photos show their original colors.',
-      photosOn: 'Use photos', photosOnOn: 'The cover and the story show your photos.', photosOnOff: 'No photos: your names go in the lace oval and the story shows a window onto the garden.',
+      photosOn: 'Use photos', photosOnOn: 'The cover and the story show your photos.', photosOnOff: { glicina: 'No photos: your names go in the lace oval and the story shows a window onto the garden.', encaje: 'No photos: your names go inside the lace oval, and the story photo and the gallery are hidden.', jardin: 'No photos: your names go inside the floral oval, and the story photos are hidden.', celeste: 'No photos: the full moon takes the center of the cover, and the story photos are hidden.', corazones: 'No photos: the cards show your initials, and the story photos and the gallery are hidden.' },
       cancel: 'Cancel', gUpload: 'Upload file (CSV)', gManual: 'Create by hand', gHow: 'How do I build the file?',
       gSteps: ['Download the example file and open it in Excel or Google Sheets.', 'Write one row per guest. Guests with the same invitation name are grouped together (e.g. the whole Rodríguez family).', 'Save it as CSV and upload it here.'],
       gCols: ['Invitation', 'Guest'], gExample: 'Download the example (CSV)', gExampleFile: '/editor/guests-example.csv',
@@ -1031,8 +1031,9 @@
           PALETTES.map(function (p) { return '<button type="button" class="ed-pal" role="radio" aria-checked="' + (p.id === state.pal) + '" data-act="pal" data-id="' + p.id + '" data-fk="pal-' + p.id + '"><i style="background:' + p.hex + '"></i>' + esc(p[LANG]) + '</button>'; }).join('') +
           '<label class="ed-pal ed-pal-custom' + (state.pal === 'custom' ? ' is-on' : '') + '"><input type="color" data-k="palCustom" value="' + esc(state.palCustom) + '" aria-label="' + esc(S.palCustomLbl) + '"><span>' + esc(S.palCustom) + '</span></label>' +
         '</div><span class="ed-hint" id="palNote"' + (state.pal === 'custom' && isLight(state.palCustom) ? '' : ' hidden') + '>' + esc(S.palLight) + '</span></div>') +
-        ((['moderno', 'noir', 'corazones', 'tinta', 'estreno', 'nacar', 'onix'].indexOf(state.design) !== -1) ? toggleRow('photoBW', S.photoBW, S.photoBWOn, S.photoBWOff) : '') +
-        (state.design === 'glicina' ? toggleRow('photosOn', S.photosOn, S.photosOnOn, S.photosOnOff) : '') +
+        (S.photosOnOff[state.design] ? toggleRow('photosOn', S.photosOn, S.photosOnOn, S.photosOnOff[state.design]) : '') +
+        // Blanco y negro o a color solo tiene sentido si la invitación lleva fotos.
+        ((['moderno', 'noir', 'corazones', 'tinta', 'estreno', 'nacar', 'onix'].indexOf(state.design) !== -1 && !(S.photosOnOff[state.design] && !state.photosOn)) ? toggleRow('photoBW', S.photoBW, S.photoBWOn, S.photoBWOff) : '') +
         cartUpsell('dominio', { light: true, k: S.domainK, t: esc(S.domainT(slug(state))) });
     },
     apertura: function () {

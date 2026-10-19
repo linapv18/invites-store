@@ -86,8 +86,8 @@
   var photo = function(name, bind, extra, sizes) { return '<img class="ph-img" src="/assets/corazones/fotos/' + name + '-480.webp" srcset="/assets/corazones/fotos/' + name + '-480.webp 480w, /assets/corazones/fotos/' + name + '-1066.webp 1066w" sizes="' + (sizes || '(min-width:900px) 450px, 80vw') + '" data-full-src="/assets/corazones/fotos/' + name + '-1066.webp" ' + bind + ' alt="" decoding="async" ' + (extra || '') + '>'; };
   var court = function (big) {
     return '<div class="court' + (big ? ' big' : '') + '">' + corners('K') + '<span class="cn tr" aria-hidden="true"><b data-co-rank="second">Q</b>' + H + '</span><span class="cn bl" aria-hidden="true"><b data-co-rank="second">Q</b>' + H + '</span>' +
-      '<span class="half top bw">' + photo('muro', 'data-lz-src="photo:0"') + '</span>' +
-      '<span class="half bot bw">' + photo('torre', 'data-lz-src="photo:1"') + '</span><span class="mid" aria-hidden="true">' + H + '</span></div>';
+      '<span class="half top bw">' + photo('muro', 'data-lz-src="photo:0"') + '<span class="court-np np-only" aria-hidden="true"><span data-lz="i1">' + S.n1.charAt(0) + '</span></span>' + '</span>' +
+      '<span class="half bot bw">' + photo('torre', 'data-lz-src="photo:1"') + '<span class="court-np np-only" aria-hidden="true"><span data-lz="i2">' + S.n2.charAt(0) + '</span></span>' + '</span><span class="mid" aria-hidden="true">' + H + '</span></div>';
   };
 
   document.getElementById('app').innerHTML =
@@ -96,8 +96,8 @@
     '<p class="op-intro" data-lz="envIntro" data-lz-keep>' + S.envIntro + '</p>' +
     '<button type="button" class="deck" id="deck" aria-label="' + S.open + '">' +
       [0, 1, 2, 3, 4].map(function (i) { return '<span class="dk c' + i + '">' + back() + '</span>'; }).join('') +
-      '<span class="dk face fk"><span class="flip"><span class="fb">' + back() + '</span><span class="ff">' + corners('K') + '<span class="fph bw"><img src="/assets/corazones/fotos/muro-480.webp" data-lz-src="photo:0" alt="" decoding="async"></span></span></span></span>' +
-      '<span class="dk face fq"><span class="flip"><span class="fb">' + back() + '</span><span class="ff">' + corners('Q') + '<span class="fph bw"><img src="/assets/corazones/fotos/torre-480.webp" data-lz-src="photo:1" alt="" decoding="async"></span></span></span></span>' +
+      '<span class="dk face fk"><span class="flip"><span class="fb">' + back() + '</span><span class="ff">' + corners('K') + '<span class="fph bw"><img src="/assets/corazones/fotos/muro-480.webp" data-lz-src="photo:0" alt="" decoding="async">' + '<span class="court-np np-only" aria-hidden="true"><span data-lz="i1">' + S.n1.charAt(0) + '</span></span>' + '</span></span></span></span>' +
+      '<span class="dk face fq"><span class="flip"><span class="fb">' + back() + '</span><span class="ff">' + corners('Q') + '<span class="fph bw"><img src="/assets/corazones/fotos/torre-480.webp" data-lz-src="photo:1" alt="" decoding="async">' + '<span class="court-np np-only" aria-hidden="true"><span data-lz="i2">' + S.n2.charAt(0) + '</span></span>' + '</span></span></span></span>' +
     '</button>' +
     '<div class="op-ticket"><p class="k k-gold">' + S.for + '</p><p class="op-guest">' + S.guest + '</p><p class="op-seats">' + S.seats + '</p>' +
       '<button type="button" class="btn btn-light" id="enter">' + S.open + '</button><p class="op-hint">' + S.hint + '</p>' +

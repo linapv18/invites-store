@@ -76,8 +76,10 @@
   var uid = 0;
   var edge = function (cls) { return '<span class="edge ' + cls + '" aria-hidden="true"></span>'; };
   // Óvalo calado alrededor de una foto: un anillo de festones con calados y un filete fino pegado a la imagen.
-  var oval = function (cls, src, n, alt, lazy) {
-    return '<div class="oval ' + cls + '"><img src="/assets/fotos/' + src + '.jpg" data-lz-src="photo:' + n + '" alt="' + (alt || '') + '" decoding="async"' + (lazy ? ' loading="lazy"' : '') + '><span class="lace-ring" aria-hidden="true"></span></div>';
+  // np: lo que va dentro del óvalo cuando la invitación es sin fotos (html.lz-no-photos).
+  var oval = function (cls, src, n, alt, lazy, np) {
+    return '<div class="oval ' + cls + '"><img class="ph-only" src="/assets/fotos/' + src + '.jpg" data-lz-src="photo:' + n + '" alt="' + (alt || '') + '" decoding="async"' + (lazy ? ' loading="lazy"' : '') + '>' +
+      (np ? '<div class="oval-np np-only" aria-hidden="true">' + np + '</div>' : '') + '<span class="lace-ring" aria-hidden="true"></span></div>';
   };
   // Medallón de encaje: doce pétalos, un botón y una corona de puntos.
   var medal = function (cls) {
@@ -107,7 +109,7 @@
   '<header class="mbar" id="mbar"><a class="mono" href="#portada" aria-label="' + S.n1 + ' ' + S.y + ' ' + S.n2 + '">' + MONO + '</a><nav aria-label="' + S.sections + '"><a href="#itinerario">' + S.program + '</a><a href="#rsvp">' + S.confirmShort + '</a></nav></header>' +
   '<main id="invite" inert>' +
     '<section class="hero dark" id="portada" data-lz-anchor="portada"><div class="hero-in">' +
-      '<div class="hero-ph">' + oval('o-hero', 'muro', 0, S.photoAlt) + '</div>' +
+      '<div class="hero-ph">' + oval('o-hero', 'muro', 0, S.photoAlt, false, N('n1') + '<span class="amp">' + S.amp + '</span>' + N('n2')) + '</div>' +
       '<div class="hero-txt"><p class="ey">' + S.weddingOf + '</p><h1 class="names" tabindex="-1">' + N('n1') + ' <span class="amp">' + S.amp + '</span> ' + N('n2') + '</h1>' +
         '<div class="hero-when"><p class="hero-d m" data-lz-date="' + S.numPat + '">' + S.numTxt + '</p><p class="hero-d d" data-lz-date="' + S.dayPat + '">' + S.dayTxt + '</p><p class="hero-c" data-lz="city">' + S.city + '</p></div>' +
         '<div class="hero-ctas"><a class="cta light" href="#rsvp">' + S.confirm + '</a><a class="lnk hero-prog" href="#itinerario">' + S.seeProgram + DOWN + '</a></div></div>' +
@@ -122,7 +124,7 @@
     '<section class="sec ivory pair">' +
       '<div class="place" id="where" data-rv>' + head(S.placeK, S.placeT) + medal() + '<p class="pl-n" id="whereName">' + S.events[0][2] + '</p><p class="pl-a" id="whereAddr">' + S.events[0][3] + '</p>' +
         '<a class="cta" id="whereMap" href="' + maps(S.events[0][2]) + '" target="_blank" rel="noopener">' + S.map + EXT + '</a></div>' +
-      '<div class="story" id="historia" data-lz-anchor="historia" data-rv>' + head(S.storyK, '<span data-lz="storyTitle">' + S.storyTitle + '</span>') + oval('o-story', 'torre', 1, '', true) +
+      '<div class="story" id="historia" data-lz-anchor="historia" data-rv>' + head(S.storyK, '<span data-lz="storyTitle">' + S.storyTitle + '</span>') + oval('o-story', 'torre', 1, '', true, '<span data-lz="i1">' + S.n1.charAt(0) + '</span><span class="amp">' + S.amp + '</span><span data-lz="i2">' + S.n2.charAt(0) + '</span>') +
         '<p class="p" data-lz="story">' + S.storyTxt + '</p><p class="sig">' + N('n1') + ' ' + S.y + ' ' + N('n2') + '</p></div>' +
     '</section>' +
 

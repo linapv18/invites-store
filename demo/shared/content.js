@@ -26,6 +26,8 @@
   var html = document.documentElement, TPL = html.getAttribute('data-lz-tpl');
   var CUSTOM_COLORS = ['clasico','moderno','noir','tinta','arco','lino','gala','onix'].indexOf(TPL) !== -1;
   var COLOR_PHOTOS = ['moderno', 'noir', 'corazones', 'tinta', 'estreno', 'nacar', 'onix'].indexOf(TPL) !== -1;
+  // Diseños que también funcionan sin fotos (html.lz-no-photos): la portada usa sus nombres y se ocultan las fotos de la historia y la galería.
+  var NO_PHOTOS = ['glicina', 'encaje', 'jardin', 'celeste', 'corazones'], canNoPhotos = NO_PHOTOS.indexOf(TPL) > -1;
 
   /* ---------- Colores de cada plantilla ----------
      Clásico: paletas a partir de un color oscuro (o uno propio); Romántico: champaña (base) o rosado;
@@ -212,16 +214,16 @@
   if (MODE !== 'editor' && MODE !== 'vista') {
     // Demo de la tienda: elegir entre los colores del diseño desde la barra de la demo (o con ?color=champana).
     var themes = THEMES[TPL] || [];
-    // Con una sola paleta no hay selector de color (Glicina igual muestra su botón «Sin fotos»).
-    if (themes.length < 2 && TPL !== 'glicina' && !COLOR_PHOTOS) return;
+    // Con una sola paleta no hay selector de color (los diseños sin fotos o con fotos a color igual muestran su botón).
+    if (themes.length < 2 && !canNoPhotos && !COLOR_PHOTOS) return;
     var start = q.get('color');
     var customStart = q.get('custom');
     if (CUSTOM_COLORS && hexRgb(customStart)) { start = 'custom'; applyTheme(start, customStart); }
     else if (start) applyTheme(start);
     var photoColor = COLOR_PHOTOS && /^(color|colour)$/.test(q.get('fotos') || q.get('photos') || '');
     html.classList.toggle('lz-photo-color', photoColor);
-    // Glicina: verla sin fotos (?fotos=no o el botón de la barra).
-    var noPhotos = TPL === 'glicina' && /^(no|sin|none)$/.test(q.get('fotos') || q.get('photos') || '');
+    // Verla sin fotos (?fotos=no o el botón de la barra).
+    var noPhotos = canNoPhotos && /^(no|sin|none)$/.test(q.get('fotos') || q.get('photos') || '');
     html.classList.toggle('lz-no-photos', noPhotos);
     // Cápsula propia, encima de la barra de la demo (dentro de la barra la apretaba contra el botón de música).
     var css0 = document.createElement('style');
@@ -260,7 +262,7 @@
         pb.addEventListener('click', function () { photoColor = !photoColor; html.classList.toggle('lz-photo-color', photoColor); pb.setAttribute('aria-pressed', String(photoColor)); document.dispatchEvent(new CustomEvent('lz-gallery-change')); });
         g.appendChild(pb);
       }
-      if (TPL === 'glicina') {
+      if (canNoPhotos) {
         var nb = document.createElement('button'); nb.type = 'button'; nb.className = 'lz-photo'; if (themes.length < 2) nb.style.marginLeft = '0';
         nb.textContent = LANG === 'en' ? 'No photos' : 'Sin fotos'; nb.setAttribute('aria-pressed', String(noPhotos));
         nb.addEventListener('click', function () { noPhotos = !noPhotos; html.classList.toggle('lz-no-photos', noPhotos); nb.setAttribute('aria-pressed', String(noPhotos)); });
@@ -464,7 +466,7 @@
     });
     applyTheme(c0.pal, c0.palCustom);
     html.classList.toggle('lz-photo-color', COLOR_PHOTOS && c0.photoBW === false);
-    html.classList.toggle('lz-no-photos', TPL === 'glicina' && c0.photosOn === false);
+    html.classList.toggle('lz-no-photos', canNoPhotos && c0.photosOn === false);
     document.dispatchEvent(new CustomEvent('lz-gallery-change'));
     // Cuenta regresiva: las plantillas leen window.LZ_T en cada segundo.
     var d = dateObj(c0.date);
