@@ -494,7 +494,10 @@ body.locked .hero .names,body.locked .hero-foot{opacity:1;transform:none}
 .pocket .e2:first-child{fill:url('#oxPocketL')}
 .pocket .e2:nth-child(2){fill:url('#oxPocketR')}
 .pocket .e3{fill:url('#oxPocketB')}
-.flap-out .e4{fill:url('#oxFlap')}
+/* Paint the animated face in CSS: WebKit can cache an external SVG gradient
+   on a backface-hidden 3D layer after the first palette change. */
+.flap-out{background:linear-gradient(135deg,var(--dk3),var(--dk));clip-path:polygon(0 0,100% 0,50% 100%)}
+.flap-out .e4{fill:transparent}
 .locket-metal{filter:grayscale(1)}
 .tray-metal{filter:grayscale(1) drop-shadow(0 7px 6px #211e1a22)}
 
