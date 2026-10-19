@@ -10,7 +10,7 @@ La propietaria autorizó pagos únicos reales, COP 200.000 para Colombia y USD 7
 
 ## Destino de Stripe (cuenta propia, modo real)
 
-URL exacta: `https://www.invitesse.com/api/stripe-webhook` (sin barra final).
+URL exacta: `https://www.invitesse.com/api/stripe-webhook/` (con barra final, comprobada en producción; sin ella Vercel responde 308).
 
 Eventos: `checkout.session.completed` y `checkout.session.async_payment_succeeded`.
 
