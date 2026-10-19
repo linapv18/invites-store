@@ -33,6 +33,9 @@
       demoNote: 'Versión de prueba: las cuentas se guardan solo en este navegador. No usen una contraseña que usen en otros sitios.',
       err: { email: 'Escriban un correo válido.', short: 'La contraseña debe tener al menos 8 caracteres.', exists: 'Ya existe una cuenta con ese correo. Ingresen con su contraseña.',
         nouser: 'No encontramos una cuenta con ese correo.', wrong: 'La contraseña no es correcta.', match: 'Las contraseñas no coinciden.', storage: 'Este navegador no permite guardar la cuenta.' },
+      guestsK: 'Panel de invitados', guestsT: 'Sus invitados', guestsLead: 'Su lista, las personas de cada invitación y sus datos de contacto.',
+      guestsOpen: 'Abrir panel', guestsNone: 'Aún sin invitados',
+      guestsSum: function (n, p) { return n + (n === 1 ? ' invitación' : ' invitaciones') + ' · ' + p + (p === 1 ? ' persona' : ' personas'); },
       mine: 'Mis invitaciones', signedAs: 'Sesión iniciada como', edit: 'Editar', guest: 'Ver como invitado', notStarted: 'Aún sin editar',
       weddingOf: 'Boda de', none: 'Todavía no tienen ningún diseño.', choose: 'Elegir un diseño', others: 'Otros diseños', demo: 'Ver demo', buy: 'Comprar',
       design: 'Diseño', bought: 'Comprado', buyTitle: 'Comprar su invitación', pick: 'Elijan el diseño de su invitación', pickBtn: 'Elegir este diseño',
@@ -53,6 +56,9 @@
       demoNote: 'Test version: accounts are stored only in this browser. Don’t use a password you use on other sites.',
       err: { email: 'Enter a valid email.', short: 'The password must be at least 8 characters.', exists: 'There is already an account with that email. Log in with your password.',
         nouser: 'We couldn’t find an account with that email.', wrong: 'That password isn’t right.', match: 'The passwords don’t match.', storage: 'This browser doesn’t allow saving the account.' },
+      guestsK: 'Guest panel', guestsT: 'Your guests', guestsLead: 'Your list, the people in each invitation and their contact details.',
+      guestsOpen: 'Open panel', guestsNone: 'No guests yet',
+      guestsSum: function (n, p) { return n + (n === 1 ? ' invitation' : ' invitations') + ' · ' + p + (p === 1 ? ' guest' : ' guests'); },
       mine: 'My invitations', signedAs: 'Signed in as', edit: 'Edit', guest: 'View as guest', notStarted: 'Not edited yet',
       weddingOf: 'Wedding of', none: 'You don’t have a design yet.', choose: 'Choose a design', others: 'Other designs', demo: 'View demo', buy: 'Buy',
       design: 'Design', bought: 'Purchased', buyTitle: 'Buy your invitation', pick: 'Choose your invitation design', pickBtn: 'Choose this design',
@@ -80,6 +86,19 @@
   var IMG = { clasico: '/assets/clasico-demo-portada.jpg', moderno: '/assets/moderno-demo-portada.jpg', rosa: '/assets/romantico-portada.jpg', jardin: '/assets/jardin-portada.jpg', costa: '/assets/costa-portada.jpg', gala: '/assets/gala-portada.jpg', aurelia: '/assets/aurelia-portada.jpg', noir: '/assets/noir-portada.jpg', lino: '/assets/lino-portada.jpg', marfil: '/assets/marfil-portada.jpg', fiesta: '/assets/fiesta-portada.jpg', celeste: '/assets/celeste-portada.jpg', cisne: '/assets/cisne-portada.jpg', tinta: '/assets/tinta-portada.jpg', glicina: '/assets/glicina-portada.jpg', estreno: '/assets/estreno-portada.jpg', nacar: '/assets/nacar-portada.jpg', arco: '/assets/arco-portada.jpg', corazones: '/assets/corazones-portada.jpg', encaje: '/assets/encaje-portada.jpg', onix: '/assets/onix-portada.jpg', senal: '/assets/senal-portada.jpg' };
   var demoUrl = function (d) { return BASE + '/demo/' + d + '/'; };
   var editUrl = function (d) { return BASE + '/editor/?diseno=' + d; };
+  // Acceso al panel de invitados (sección «Invitados» del editor). Solo se pinta en la vista con sesión iniciada;
+  // el editor vuelve a exigir la sesión antes de mostrar la lista.
+  function guestPanel(own) {
+    var icon = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 19c.6-3.2 2.8-5 5.5-5s4.9 1.8 5.5 5"/><circle cx="17" cy="9" r="2.4"/><path d="M16 14.2c2.3.1 4 1.6 4.5 4.3"/></svg>';
+    return '<section class="ac-guests" aria-labelledby="acGuestsH"><div class="ac-guests-head"><span class="ed-kicker">' + esc(S.guestsK) + '</span>' +
+      '<h2 id="acGuestsH">' + esc(S.guestsT) + '</h2><p>' + esc(S.guestsLead) + '</p></div><ul class="ac-guests-list">' +
+      own.map(function (d) {
+        var list = ((invOf(d) || {}).invitations || []).filter(function (x) { return x && typeof x === 'object'; });
+        var people = list.reduce(function (n, x) { return n + (Array.isArray(x.people) ? x.people.length : 0); }, 0);
+        return '<li><span class="ac-guests-d"><b>' + esc(S.names[d][0]) + '</b><span>' + esc(list.length ? S.guestsSum(list.length, people) : S.guestsNone) + '</span></span>' +
+          '<a class="ed-btn ed-btn-dark" href="' + editUrl(d) + '#invitados">' + icon + esc(S.guestsOpen) + '</a></li>';
+      }).join('') + '</ul></section>';
+  }
   var guestUrl = function (d) { return BASE + '/demo/' + d + '/?lz=vista&k=' + encodeURIComponent(A.invKey(d)); };
   function invOf(d) { try { var v = localStorage.getItem(A.invKey(d)); return v ? JSON.parse(v) : null; } catch (e) { return null; } }
 
@@ -135,6 +154,7 @@
     } else {
       var own = A.owned(), rest = A.DESIGNS.filter(function (d) { return own.indexOf(d) < 0; });
       h = '<section class="ac-wide"><div class="ed-head"><span class="ed-kicker">' + esc(S.signedAs) + ' ' + esc(u.email) + '</span><h1>' + esc(S.mine) + '</h1></div>' +
+        (own.length ? guestPanel(own) : '') +
         (own.length ? '<div class="ac-grid">' + own.map(function (d) {
           var c = invOf(d), sub = c && (c.n1 || c.n2) ? S.weddingOf + ' ' + (c.n1 || '—') + ' & ' + (c.n2 || '—') : S.notStarted;
           return designCard(d, '<a class="ed-btn ed-btn-dark" href="' + editUrl(d) + '">' + esc(S.edit) + '</a>' + (c ? '<a class="ed-btn" href="' + guestUrl(d) + '" target="_blank" rel="noopener">' + esc(S.guest) + '</a>' : ''), sub);
