@@ -17,7 +17,7 @@
       cdA: 'falta poco', units: ['Días', 'Horas', 'Minutos'], cdName: 'Ceremonia civil', time0: '1:00 p. m.', cdNote: 'Cada vez falta menos para celebrar juntos.', monthPat: '{MU}', monthTxt: 'MARZO',
       progK: 'Programa', progA: 'del día', map: 'Ver en el mapa',
       events: [['13:00', 'Ceremonia civil', 'Jardín Etnobotánico', 'Reforma s/n, Centro'], ['14:30', 'Comida familiar', 'Casa Oaxaca', 'García Vigil 407, Centro'], ['20:00', 'Fiesta', 'Hacienda Los Laureles', 'Hidalgo 21, San Felipe del Agua']],
-      dressK: 'Vestimenta', dressA: 'código', dressCode: 'Formal', dressNotes: 'Telas frescas: en marzo Oaxaca es cálida de día y fresca de noche.', reserved: 'Colores reservados:', dressColors: 'Blanco y marfil',
+      dressK: 'Vestimenta', dressA: 'código', dressCode: 'Formal', dressNotes: 'Telas frescas: en marzo Oaxaca es cálida de día y fresca de noche.', reserved: 'Colores reservados:', dressColors: 'El blanco y el marfil quedan reservados para la novia.',
       travelK: 'Viaje', travelA: 'y alojamiento', travelIntro: 'Si vienen de fuera, aquí tienen todo para organizar su viaje.', dest: 'Destino', waiting: 'te esperamos',
       airportL: 'En avión', airport: 'Aeropuerto Internacional de Oaxaca (OAX), a 20 minutos del centro.', transportL: 'Transporte', transport: 'Habrá camionetas del hotel a la fiesta y de regreso.',
       guideK: 'Qué hacer en la ciudad', foodL: 'Restaurantes', food: 'Levadura de Olla, Casa Oaxaca y los mercados.', cultureL: 'Cultura', culture: 'Santo Domingo y el Museo Textil.', plansL: 'Actividades', plans: 'Hierve el Agua y Monte Albán.',
@@ -42,7 +42,7 @@
       cdA: 'almost there', units: ['Days', 'Hours', 'Minutes'], cdName: 'Civil ceremony', time0: '1:00 PM', cdNote: 'Every day brings us closer to celebrating together.', monthPat: '{MU}', monthTxt: 'MARCH',
       progK: 'Program', progA: 'of the day', map: 'See on the map',
       events: [['1:00 PM', 'Civil ceremony', 'Ethnobotanical Garden', 'Reforma s/n, Centro'], ['2:30 PM', 'Family lunch', 'Casa Oaxaca', 'García Vigil 407, Centro'], ['8:00 PM', 'Party', 'Hacienda Los Laureles', 'Hidalgo 21, San Felipe del Agua']],
-      dressK: 'Dress code', dressA: 'what to wear', dressCode: 'Formal', dressNotes: 'Light fabrics: in March Oaxaca is warm by day and cool at night.', reserved: 'Reserved colors:', dressColors: 'White and ivory',
+      dressK: 'Dress code', dressA: 'what to wear', dressCode: 'Formal', dressNotes: 'Light fabrics: in March Oaxaca is warm by day and cool at night.', reserved: 'Reserved colors:', dressColors: 'White and ivory are reserved for the bride.',
       travelK: 'Travel', travelA: 'and stay', travelIntro: 'If you’re coming from out of town, here’s everything to plan your trip.', dest: 'Destination', waiting: 'see you there',
       airportL: 'By plane', airport: 'Oaxaca International Airport (OAX), 20 minutes from downtown.', transportL: 'Transport', transport: 'Shuttles will run from the hotel to the party and back.',
       guideK: 'Around town', foodL: 'Restaurants', food: 'Levadura de Olla, Casa Oaxaca and the markets.', cultureL: 'Culture', culture: 'Santo Domingo and the Textile Museum.', plansL: 'Activities', plans: 'Hierve el Agua and Monte Albán.',
@@ -132,7 +132,7 @@
     '</section>' +
 
     '<section class="sec dress" data-lz-group="dressCode dressNotes dressColors"><div class="head"><h2>' + S.dressK + '</h2><p class="acc">' + S.dressA + '</p></div>' +
-      '<div class="pinned" data-rv>' + PIN + '<h3 data-lz="dressCode">' + S.dressCode + '</h3><p data-lz="dressNotes">' + S.dressNotes + '</p><p class="b" data-lz-group="dressColors">' + S.reserved + ' <span data-lz="dressColors">' + S.dressColors + '</span></p></div>' +
+      '<div class="pinned" data-rv>' + PIN + '<h3 data-lz="dressCode">' + S.dressCode + '</h3><p data-lz="dressNotes">' + S.dressNotes + '</p><p class="b" data-lz-group="dressColors"><span data-lz="dressColors">' + S.dressColors + '</span></p></div>' +
     '</section>' +
 
     '<section class="sec travel" id="viaje" data-lz-anchor="viaje" data-lz-show="viajeOn">' +

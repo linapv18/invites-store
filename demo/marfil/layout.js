@@ -14,7 +14,7 @@
       bigDay: 'El gran día', cdName: 'Ceremonia civil', time0: '1:00 p. m.', cdNote: 'Cada vez falta menos para celebrar juntos.', units: ['Días', 'Horas', 'Min', 'Seg'],
       dayPat: '{W}, {d} de {M} de {Y}', dayTxt: 'Domingo, 14 de marzo de 2027', program: 'El <em>programa</em>', map: 'Ver mapa',
       events: [['1:00 p. m.', 'Ceremonia civil', 'Jardín Etnobotánico', 'Reforma s/n, Centro'], ['2:30 p. m.', 'Comida familiar', 'Casa Oaxaca', 'García Vigil 407, Centro'], ['8:00 p. m.', 'Fiesta', 'Hacienda Los Laureles', 'Hidalgo 21, San Felipe del Agua']],
-      dress: 'Código de vestimenta', dressCode: 'Formal', dressNotes: 'Telas frescas: en marzo Oaxaca es cálida de día y fresca de noche.', reserved: 'Colores reservados:', dressColors: 'Blanco y marfil',
+      dress: 'Código de vestimenta', dressCode: 'Formal', dressNotes: 'Telas frescas: en marzo Oaxaca es cálida de día y fresca de noche.', reserved: 'Colores reservados:', dressColors: 'El blanco y el marfil quedan reservados para la novia.',
       fromAway: 'Si vienen de fuera', travel: 'Viaje y <em>alojamiento</em>', travelIntro: 'Si vienen de fuera, aquí tienen todo para organizar su viaje.',
       stay: 'Alojamiento', hotel: 'Hotel Casa Antigua', hotelAddress: 'Calle Macedonio Alcalá 304, Centro', rate: 'Código de tarifa', hotelCode: 'BODA-AL', hotelNotes: 'Tarifa válida hasta el 1 de febrero.', book: 'Reservar',
       getThere: 'Cómo llegar', getThereT: 'Aeropuerto y transporte', airportL: 'Aeropuerto.', airport: 'Aeropuerto Internacional de Oaxaca (OAX), a 20 minutos del centro.', transportL: 'Transporte.', transport: 'Habrá camionetas del hotel a la fiesta y de regreso.',
@@ -36,7 +36,7 @@
       bigDay: 'The big day', cdName: 'Civil ceremony', time0: '1:00 PM', cdNote: 'Every day brings us closer to celebrating together.', units: ['Days', 'Hours', 'Min', 'Sec'],
       dayPat: '{W}, {Mc} {d}, {Y}', dayTxt: 'Sunday, March 14, 2027', program: 'The <em>program</em>', map: 'See map',
       events: [['1:00 PM', 'Civil ceremony', 'Ethnobotanical Garden', 'Reforma s/n, Centro'], ['2:30 PM', 'Family lunch', 'Casa Oaxaca', 'García Vigil 407, Centro'], ['8:00 PM', 'Party', 'Hacienda Los Laureles', 'Hidalgo 21, San Felipe del Agua']],
-      dress: 'Dress code', dressCode: 'Formal', dressNotes: 'Light fabrics: in March Oaxaca is warm by day and cool at night.', reserved: 'Reserved colors:', dressColors: 'White and ivory',
+      dress: 'Dress code', dressCode: 'Formal', dressNotes: 'Light fabrics: in March Oaxaca is warm by day and cool at night.', reserved: 'Reserved colors:', dressColors: 'White and ivory are reserved for the bride.',
       fromAway: 'If you’re traveling', travel: 'Travel and <em>stay</em>', travelIntro: 'If you’re coming from out of town, here’s everything to plan your trip.',
       stay: 'Where to stay', hotel: 'Hotel Casa Antigua', hotelAddress: 'Calle Macedonio Alcalá 304, Centro', rate: 'Rate code', hotelCode: 'BODA-AL', hotelNotes: 'Rate valid until February 1.', book: 'Book',
       getThere: 'Getting there', getThereT: 'Airport and transport', airportL: 'Airport.', airport: 'Oaxaca International Airport (OAX), 20 minutes from downtown.', transportL: 'Transport.', transport: 'Shuttles will run from the hotel to the party and back.',
@@ -138,7 +138,7 @@
     '<section class="sec cotton" id="itinerario" data-lz-anchor="itinerario musica"><div class="in-w">' +
       '<p class="sc" data-lz-date="' + S.dayPat + '">' + S.dayTxt + '</p><h2>' + S.program + '</h2>' +
       '<div class="prog" data-lz-list="events">' + S.events.map(function (e) { return '<div data-lz-item data-rv>' + FL(90) + '<p class="sc" data-lz-f="time">' + e[0] + '</p><h3 data-lz-f="name">' + e[1] + '</h3><p data-lz-f="place">' + e[2] + '</p><p class="addr" data-lz-f="address">' + e[3] + '</p><a data-lz-f="map" href="' + maps(e[2]) + '" target="_blank" rel="noopener">' + S.map + '</a></div>'; }).join('') + '</div>' +
-      '<div class="ccard cotton deboss" data-rv data-lz-group="dressCode dressNotes dressColors"><p class="sc">' + S.dress + '</p><h2 style="margin:10px 0 8px" data-lz="dressCode">' + S.dressCode + '</h2><p data-lz="dressNotes">' + S.dressNotes + '</p><p style="margin-top:10px;font-size:15px" data-lz-group="dressColors"><i>' + S.reserved + '</i> <span data-lz="dressColors">' + S.dressColors + '</span></p><div class="fabric" aria-hidden="true"><i style="background-color:#F4F1EA"></i><i style="background-color:#E8D9C0"></i></div></div>' +
+      '<div class="ccard cotton deboss" data-rv data-lz-group="dressCode dressNotes dressColors"><p class="sc">' + S.dress + '</p><h2 style="margin:10px 0 8px" data-lz="dressCode">' + S.dressCode + '</h2><p data-lz="dressNotes">' + S.dressNotes + '</p><p style="margin-top:10px;font-size:15px" data-lz-group="dressColors"><span data-lz="dressColors">' + S.dressColors + '</span></p><div class="fabric" aria-hidden="true"><i style="background-color:#F4F1EA"></i><i style="background-color:#E8D9C0"></i></div></div>' +
     '</div></section>' +
 
     '<section class="sec" id="viaje" data-lz-anchor="viaje" data-lz-show="viajeOn" style="background:var(--bg)"><div class="in-w">' +

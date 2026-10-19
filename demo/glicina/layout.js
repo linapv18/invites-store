@@ -15,7 +15,7 @@
       cdName: 'Ceremonia civil', time0: '1:00 p. m.', yes2: 'Nos daremos el sí en…', cdNote: 'Cada vez falta menos para celebrar juntos.', units: ['Días', 'Horas', 'Min', 'Seg'],
       program: 'Programa del día', map: 'Cómo llegar',
       events: [['13:00', 'Ceremonia civil', 'Jardín Etnobotánico', 'Reforma s/n, Centro'], ['14:30', 'Comida familiar', 'Casa Oaxaca', 'García Vigil 407, Centro'], ['20:00', 'Fiesta', 'Hacienda Los Laureles', 'Hidalgo 21, San Felipe del Agua']],
-      dress: 'Código de vestimenta', dressCode: 'Formal', dressNotes: 'Telas frescas: en marzo Oaxaca es cálida de día y fresca de noche.', reserved: 'Colores reservados:', dressColors: 'Blanco y marfil',
+      dress: 'Código de vestimenta', dressCode: 'Formal', dressNotes: 'Telas frescas: en marzo Oaxaca es cálida de día y fresca de noche.', reserved: 'Colores reservados:', dressColors: 'El blanco y el marfil quedan reservados para la novia.',
       fromAway: 'Si vienen de fuera', travel: 'Viaje y hospedaje', travelIntro: 'Si vienen de fuera, aquí tienen todo para organizar su viaje.',
       hotel: 'Hotel Casa Antigua', hotelAddress: 'Calle Macedonio Alcalá 304, Centro', rate: 'Código de tarifa', hotelCode: 'BODA-AL', hotelNotes: 'Tarifa válida hasta el 1 de febrero.', book: 'Reservar',
       getThere: 'Cómo llegar', airportL: 'Aeropuerto.', airport: 'Aeropuerto Internacional de Oaxaca (OAX), a 20 minutos del centro.', transportL: 'Transporte.', transport: 'Habrá camionetas del hotel a la fiesta y de regreso.',
@@ -39,7 +39,7 @@
       cdName: 'Civil ceremony', time0: '1:00 PM', yes2: 'We’ll say “I do” in…', cdNote: 'Every day brings us closer to celebrating together.', units: ['Days', 'Hours', 'Min', 'Sec'],
       program: 'The day’s program', map: 'Directions',
       events: [['1:00 PM', 'Civil ceremony', 'Ethnobotanical Garden', 'Reforma s/n, Centro'], ['2:30 PM', 'Family lunch', 'Casa Oaxaca', 'García Vigil 407, Centro'], ['8:00 PM', 'Party', 'Hacienda Los Laureles', 'Hidalgo 21, San Felipe del Agua']],
-      dress: 'Dress code', dressCode: 'Formal', dressNotes: 'Light fabrics: in March Oaxaca is warm by day and cool at night.', reserved: 'Reserved colors:', dressColors: 'White and ivory',
+      dress: 'Dress code', dressCode: 'Formal', dressNotes: 'Light fabrics: in March Oaxaca is warm by day and cool at night.', reserved: 'Reserved colors:', dressColors: 'White and ivory are reserved for the bride.',
       fromAway: 'If you’re traveling', travel: 'Travel and stay', travelIntro: 'If you’re coming from out of town, here’s everything to plan your trip.',
       hotel: 'Hotel Casa Antigua', hotelAddress: 'Calle Macedonio Alcalá 304, Centro', rate: 'Rate code', hotelCode: 'BODA-AL', hotelNotes: 'Rate valid until February 1.', book: 'Book',
       getThere: 'Getting there', airportL: 'Airport.', airport: 'Oaxaca International Airport (OAX), 20 minutes from downtown.', transportL: 'Transport.', transport: 'Shuttles will run from the hotel to the party and back.',
@@ -141,7 +141,7 @@ const brush = c => `<svg viewBox="0 0 70 26" aria-hidden="true"><path d="M5 11C2
       '<div class="gx-prog" data-lz-list="events">' + S.events.map(function (e) { return '<div class="gx-ev" data-lz-item data-rv>' + ICONS + '<p class="gx-k gx-ink" data-lz-f="time">' + e[0] + '</p><h3 class="gx-h gx-h-s" data-lz-f="name">' + e[1] + '</h3><p class="gx-p" data-lz-f="place">' + e[2] + '</p><p class="gx-m" data-lz-f="address">' + e[3] + '</p><a class="gx-link" data-lz-f="map" href="' + maps(e[2]) + '" target="_blank" rel="noopener">' + PIN + S.map + '</a></div>'; }).join('') + '</div></section>' +
     DIV +
     '<section class="gx-sec" data-lz-group="dressCode dressNotes dressColors"><p class="gx-k">' + S.dressK + '</p><h2 class="gx-h">' + S.dress + '</h2><p class="gx-code" data-lz="dressCode">' + S.dressCode + '</p>' +
-      '<p class="gx-p gx-narrow" data-lz="dressNotes">' + S.dressNotes + '</p><p class="gx-m" data-lz-group="dressColors"><i>' + S.reserved + '</i> <span data-lz="dressColors">' + S.dressColors + '</span></p></section>' +
+      '<p class="gx-p gx-narrow" data-lz="dressNotes">' + S.dressNotes + '</p><p class="gx-m" data-lz-group="dressColors"><span data-lz="dressColors">' + S.dressColors + '</span></p></section>' +
     DIV +
     '<section class="gx-sec" id="viaje" data-lz-anchor="viaje" data-lz-show="viajeOn"><p class="gx-k">' + S.fromAway + '</p><h2 class="gx-h">' + S.travel + '</h2><p class="gx-p gx-narrow" data-lz="travelIntro">' + S.travelIntro + '</p>' +
       '<div class="gx-hotel" data-rv data-lz-group="hotel hotelAddress hotelCode hotelNotes"><p class="gx-k">' + S.hotelK + '</p><h3 class="gx-h gx-h-s" data-lz="hotel">' + S.hotel + '</h3><p class="gx-p" data-lz="hotelAddress">' + S.hotelAddress + '</p>' +

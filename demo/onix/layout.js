@@ -18,7 +18,7 @@
       events: [['13:00', 'Ceremonia civil', 'Jardín Etnobotánico', 'Reforma s/n, Centro'], ['14:30', 'Comida familiar', 'Casa Oaxaca', 'García Vigil 407, Centro'], ['20:00', 'Fiesta', 'Hacienda Los Laureles', 'Hidalgo 21, San Felipe del Agua']],
       storyA: 'Nuestra', storyB: 'historia', storyTxt: 'Nos conocimos en una boda —qué ironía— y desde ese baile no hemos dejado de caminar juntos. Ahora queremos que estén con nosotros en el capítulo más bonito.',
       galA: 'Galería', galB: 'momentos', allPhotos: 'Ver todas las fotos',
-      dressA: 'Código', dressB: 'de vestimenta', dressCode: 'Formal', dressNotes: 'Telas frescas: en marzo Oaxaca es cálida de día y fresca de noche.', reserved: 'Colores reservados:', dressColors: 'blanco y marfil',
+      dressA: 'Código', dressB: 'de vestimenta', dressCode: 'Formal', dressNotes: 'Telas frescas: en marzo Oaxaca es cálida de día y fresca de noche.', reserved: 'Colores reservados:', dressColors: 'El blanco y el marfil quedan reservados para la novia.',
       travelA: 'Viaje y', travelB: 'alojamiento', travelIntro: 'Si vienen de fuera, aquí tienen todo para organizar su viaje.',
       airportL: 'Aeropuerto', airport: 'Aeropuerto Internacional de Oaxaca (OAX), a 20 minutos del centro.', transportL: 'Traslados', transport: 'Habrá camionetas del hotel a la fiesta y de regreso.',
       guideK: 'Guía de la zona', foodL: 'Dónde comer', food: 'Levadura de Olla, Casa Oaxaca y los mercados.', cultureL: 'Qué ver', culture: 'Santo Domingo y el Museo Textil.', plansL: 'Planes', plans: 'Hierve el Agua y Monte Albán.',
@@ -43,7 +43,7 @@
       events: [['1:00 PM', 'Civil ceremony', 'Ethnobotanical Garden', 'Reforma s/n, Centro'], ['2:30 PM', 'Family lunch', 'Casa Oaxaca', 'García Vigil 407, Centro'], ['8:00 PM', 'Party', 'Hacienda Los Laureles', 'Hidalgo 21, San Felipe del Agua']],
       storyA: 'Our', storyB: 'story', storyTxt: 'We met at a wedding —how ironic— and since that dance we haven’t stopped walking together. Now we want you with us for the most beautiful chapter.',
       galA: 'Gallery', galB: 'moments', allPhotos: 'See all photos',
-      dressA: 'Dress', dressB: 'code', dressCode: 'Formal', dressNotes: 'Light fabrics: in March Oaxaca is warm by day and cool at night.', reserved: 'Reserved colors:', dressColors: 'white and ivory',
+      dressA: 'Dress', dressB: 'code', dressCode: 'Formal', dressNotes: 'Light fabrics: in March Oaxaca is warm by day and cool at night.', reserved: 'Reserved colors:', dressColors: 'White and ivory are reserved for the bride.',
       travelA: 'Travel and', travelB: 'stay', travelIntro: 'If you’re coming from out of town, here’s everything to plan your trip.',
       airportL: 'Airport', airport: 'Oaxaca International Airport (OAX), 20 minutes from downtown.', transportL: 'Transport', transport: 'Shuttles will run from the hotel to the party and back.',
       guideK: 'Around town', foodL: 'Where to eat', food: 'Levadura de Olla, Casa Oaxaca and the markets.', cultureL: 'What to see', culture: 'Santo Domingo and the Textile Museum.', plansL: 'Plans', plans: 'Hierve el Agua and Monte Albán.',
@@ -135,7 +135,7 @@
       '<button type="button" class="pill line gal-all m" data-gallery-open>' + S.allPhotos + '</button></section>' +
 
     '<section class="sec dress" data-lz-group="dressCode dressNotes dressColors"><div class="dress-in" data-rv>' + duo(S.dressA, S.dressB) + '<p class="dr-c" data-lz="dressCode">' + S.dressCode + '</p><p class="p" data-lz="dressNotes">' + S.dressNotes + '</p>' +
-      '<div data-lz-group="dressColors"><span class="rule" aria-hidden="true"></span><p class="p"><b>' + S.reserved + '</b> <span data-lz="dressColors">' + S.dressColors + '</span>.</p></div></div></section>' +
+      '<div data-lz-group="dressColors"><span class="rule" aria-hidden="true"></span><p class="p"><span data-lz="dressColors">' + S.dressColors + '</span></p></div></div></section>' +
 
     '<section class="sec tone travel" id="viaje" data-lz-anchor="viaje" data-lz-show="viajeOn">' +
       '<div class="tr-a">' + duo(S.travelA, S.travelB) + '<p class="p" data-lz="travelIntro">' + S.travelIntro + '</p><div class="tlist">' + info(I_PLANE, 'airport', S.airportL, S.airport) + info(I_BUS, 'transport', S.transportL, S.transport) + '</div></div>' +

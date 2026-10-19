@@ -17,7 +17,7 @@
       progK: 'Programa de la función', progT: 'El día', map: 'Ver en el mapa',
       events: [['13:00', 'Ceremonia civil', 'Jardín Etnobotánico', 'Reforma s/n, Centro'], ['14:30', 'Comida familiar', 'Casa Oaxaca', 'García Vigil 407, Centro'], ['20:00', 'Fiesta', 'Hacienda Los Laureles', 'Hidalgo 21, San Felipe del Agua']],
       salaK: 'La sala', salaT: 'Te esperamos',
-      dressK: 'Vestuario', dressT: 'Qué ponerse', dressCodeK: 'Código', dressCode: 'Formal', dressNotes: 'Telas frescas: en marzo Oaxaca es cálida de día y fresca de noche.', reserved: 'Reservado:', dressColors: 'Blanco y marfil',
+      dressK: 'Vestuario', dressT: 'Qué ponerse', dressCodeK: 'Código', dressCode: 'Formal', dressNotes: 'Telas frescas: en marzo Oaxaca es cálida de día y fresca de noche.', reserved: 'Reservado:', dressColors: 'El blanco y el marfil quedan reservados para la novia.',
       travelK: 'Para llegar a la función', travel: 'Viaje y alojamiento', travelIntro: 'Si vienen de fuera, aquí tienen todo para organizar su viaje.',
       airportL: 'En avión', airport: 'Aeropuerto Internacional de Oaxaca (OAX), a 20 minutos del centro.', transportL: 'Transporte', transport: 'Habrá camionetas del hotel a la fiesta y de regreso.',
       guideK: 'Qué hacer en la ciudad', foodL: 'Restaurantes', food: 'Levadura de Olla, Casa Oaxaca y los mercados.', cultureL: 'Cultura', culture: 'Santo Domingo y el Museo Textil.', plansL: 'Actividades', plans: 'Hierve el Agua y Monte Albán.',
@@ -44,7 +44,7 @@
       progK: 'Tonight’s program', progT: 'The day', map: 'See on the map',
       events: [['1:00 PM', 'Civil ceremony', 'Ethnobotanical Garden', 'Reforma s/n, Centro'], ['2:30 PM', 'Family lunch', 'Casa Oaxaca', 'García Vigil 407, Centro'], ['8:00 PM', 'Party', 'Hacienda Los Laureles', 'Hidalgo 21, San Felipe del Agua']],
       salaK: 'The venue', salaT: 'We’ll see you at',
-      dressK: 'Wardrobe', dressT: 'What to wear', dressCodeK: 'Dress code', dressCode: 'Formal', dressNotes: 'Light fabrics: in March Oaxaca is warm by day and cool at night.', reserved: 'Reserved:', dressColors: 'White and ivory',
+      dressK: 'Wardrobe', dressT: 'What to wear', dressCodeK: 'Dress code', dressCode: 'Formal', dressNotes: 'Light fabrics: in March Oaxaca is warm by day and cool at night.', reserved: 'Reserved:', dressColors: 'White and ivory are reserved for the bride.',
       travelK: 'Getting to the show', travel: 'Travel and stay', travelIntro: 'If you’re coming from out of town, here’s everything to plan your trip.',
       airportL: 'By plane', airport: 'Oaxaca International Airport (OAX), 20 minutes from downtown.', transportL: 'Transport', transport: 'Shuttles will run from the hotel to the party and back.',
       guideK: 'Around town', foodL: 'Restaurants', food: 'Levadura de Olla, Casa Oaxaca and the markets.', cultureL: 'Culture', culture: 'Santo Domingo and the Textile Museum.', plansL: 'Activities', plans: 'Hierve el Agua and Monte Albán.',
@@ -131,7 +131,7 @@
     '</section>' +
 
     '<section class="sec dress" data-lz-group="dressCode dressNotes dressColors"><p class="k">' + S.dressK + '</p><h2>' + S.dressT + '</h2>' +
-      '<div class="ticket" data-rv><p class="k">' + S.dressCodeK + '</p><h3 data-lz="dressCode">' + S.dressCode + '</h3><p data-lz="dressNotes">' + S.dressNotes + '</p><p class="acc" data-lz-group="dressColors">' + S.reserved + ' <span data-lz="dressColors">' + S.dressColors + '</span></p></div>' +
+      '<div class="ticket" data-rv><p class="k">' + S.dressCodeK + '</p><h3 data-lz="dressCode">' + S.dressCode + '</h3><p data-lz="dressNotes">' + S.dressNotes + '</p><p class="acc" data-lz-group="dressColors"><span data-lz="dressColors">' + S.dressColors + '</span></p></div>' +
     '</section>' +
 
     '<section class="sec velvet quote" data-lz-group="quote">' + HEART +

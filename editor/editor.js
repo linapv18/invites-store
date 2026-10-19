@@ -78,8 +78,8 @@
       cityHint: 'También la usamos para encontrar los lugares del itinerario en el mapa.',
       countdownNote: 'Frase de la cuenta regresiva', countdownNotePh: 'Cada vez falta menos para celebrar juntos.',
       quote: 'Una frase o cita (opcional)', quotePh: 'Una frase que los represente', quoteAuthor: 'Autor de la frase', quoteAuthorPh: 'Quién la dijo',
-      dressK: 'Código de vestimenta', dressCode: 'Estilo', dressCodePh: 'Formal, cóctel, playa…', dressNotes: 'Recomendaciones', dressNotesPh: 'Lo que conviene saber para vestirse', dressColors: 'Colores reservados', dressColorsPh: 'p. ej. blanco y marfil',
-      dressSuggest: 'Colores sugeridos', dressAvoid: 'Colores a evitar', dressSwHint: 'Opcional, hasta 5 por lista. En la invitación toman el estilo del diseño; los que hay que evitar llevan una línea.', dressAdd: '+ Agregar', dressAddLbl: function (l) { return 'Agregar un color a ' + l.toLowerCase(); }, dressPick: function (l, n) { return l + ': color ' + n; }, dressDel: function (n) { return 'Quitar el color ' + n; },
+      dressK: 'Código de vestimenta', dressCode: 'Estilo', dressCodePh: 'Formal, cóctel, playa…', dressNotes: 'Recomendaciones', dressNotesPh: 'Lo que conviene saber para vestirse', dressColors: 'Nota sobre los colores (opcional)', dressColorsPh: 'p. ej. El blanco queda reservado para la novia',
+      dressSuggest: 'Colores sugeridos', dressAvoid: 'Colores a evitar', dressOpt: '(opcional)', dressAdd: '+ Agregar', dressAddLbl: function (l) { return 'Agregar un color a ' + l.toLowerCase(); }, dressPick: function (l, n) { return l + ': color ' + n; }, dressDel: function (n) { return 'Quitar el color ' + n; },
       travelIntro: 'Introducción', travelIntroPh: 'Todo lo que necesitan para llegar y disfrutar esos días.', hotelK: 'Hotel', hotelAddress: 'Dirección del hotel', hotelCode: 'Código de reserva', hotelCodePh: 'p. ej. BODA-AL',
       gettingK: 'Cómo llegar', airport: 'Aeropuerto', airportPh: 'Aeropuerto más cercano y tiempo de viaje', transport: 'Transporte', transportPh: '¿Habrá transporte para los invitados?',
       guideK: 'Guía de la ciudad', guideFood: 'Restaurantes', guideCulture: 'Museos y cultura', guidePlans: 'Actividades', guidePh: 'Sus recomendaciones',
@@ -210,8 +210,8 @@
       cityHint: 'Also used to find the schedule venues on Google Maps.',
       countdownNote: 'Countdown line', countdownNotePh: 'The countdown to celebrating together is on.',
       quote: 'A quote (optional)', quotePh: 'A line that represents you', quoteAuthor: 'Quote author', quoteAuthorPh: 'Who said it',
-      dressK: 'Dress code', dressCode: 'Style', dressCodePh: 'Formal, cocktail, beach…', dressNotes: 'Recommendations', dressNotesPh: 'What guests should know about what to wear', dressColors: 'Reserved colors', dressColorsPh: 'e.g. white and ivory',
-      dressSuggest: 'Suggested colors', dressAvoid: 'Colors to avoid', dressSwHint: 'Optional, up to 5 per list. On the invitation they take the design’s style; colors to avoid get a line through them.', dressAdd: '+ Add', dressAddLbl: function (l) { return 'Add a color to ' + l.toLowerCase(); }, dressPick: function (l, n) { return l + ': color ' + n; }, dressDel: function (n) { return 'Remove color ' + n; },
+      dressK: 'Dress code', dressCode: 'Style', dressCodePh: 'Formal, cocktail, beach…', dressNotes: 'Recommendations', dressNotesPh: 'What guests should know about what to wear', dressColors: 'Color note (optional)', dressColorsPh: 'e.g. White is reserved for the bride',
+      dressSuggest: 'Suggested colors', dressAvoid: 'Colors to avoid', dressOpt: '(optional)', dressAdd: '+ Add', dressAddLbl: function (l) { return 'Add a color to ' + l.toLowerCase(); }, dressPick: function (l, n) { return l + ': color ' + n; }, dressDel: function (n) { return 'Remove color ' + n; },
       travelIntro: 'Introduction', travelIntroPh: 'Everything you need to get here and enjoy those days.', hotelK: 'Hotel', hotelAddress: 'Hotel address', hotelCode: 'Booking code', hotelCodePh: 'e.g. WEDDING-AL',
       gettingK: 'Getting there', airport: 'Airport', airportPh: 'Nearest airport and travel time', transport: 'Transportation', transportPh: 'Will there be transportation for guests?',
       guideK: 'City guide', guideFood: 'Restaurants', guideCulture: 'Museums & culture', guidePlans: 'Activities', guidePh: 'Your recommendations',
@@ -957,7 +957,7 @@
      Cada muestra es un selector de color nativo; la invitación los dibuja con el estilo de su diseño (demo/shared/content.js). */
   function dressSwatches(k, label) {
     var list = state[k];
-    return '<div class="ed-dress" role="group" aria-labelledby="dl-' + k + '"><span class="ed-label" id="dl-' + k + '">' + esc(label) + '</span><div class="ed-dress-row">' +
+    return '<div class="ed-dress" role="group" aria-labelledby="dl-' + k + '"><span class="ed-label" id="dl-' + k + '">' + esc(label) + ' <span class="ed-opt">' + esc(S.dressOpt) + '</span></span><div class="ed-dress-row">' +
       list.map(function (c, i) {
         return '<span class="ed-dress-sw' + (k === 'dressAvoid' ? ' is-avoid' : '') + '"><input type="color" value="' + esc(c) + '" data-dress="' + k + '" data-i="' + i + '" data-fk="dc-' + k + '-' + i + '" aria-label="' + esc(S.dressPick(label, i + 1)) + '">' +
           '<button type="button" class="ed-dress-x" data-act="dress-del" data-id="' + k + '" data-i="' + i + '" aria-label="' + esc(S.dressDel(i + 1)) + '">' + svg(P.x, 12, 2.2) + '</button></span>';
@@ -1112,7 +1112,7 @@
           return '<button type="button" class="ed-btn ed-btn-dash ed-btn-sm" data-act="ev-add" data-i="' + i + '" data-fk="evadd-' + i + '">+ ' + esc(p) + '</button>';
         }).join('') + '</div></div>' +
         '<div class="ed-stack ed-group"><h2 class="ed-sub">' + esc(S.dressK) + '</h2>' + field(S.dressCode, 'dressCode', { ph: S.dressCodePh }) + field(S.dressNotes, 'dressNotes', { rows: 2, ph: S.dressNotesPh }) + field(S.dressColors, 'dressColors', { ph: S.dressColorsPh }) +
-          dressSwatches('dressSuggest', S.dressSuggest) + dressSwatches('dressAvoid', S.dressAvoid) + '<span class="ed-hint">' + esc(S.dressSwHint) + '</span></div>' +
+          dressSwatches('dressSuggest', S.dressSuggest) + dressSwatches('dressAvoid', S.dressAvoid) + '</div>' +
         addonUpsell('libro', { light: true, k: S.libroK, t: esc(S.libroT) });
     },
     faq: function () {

@@ -483,10 +483,10 @@
     document.dispatchEvent(new CustomEvent('lz-content-applied', { detail: c0 }));
   }
 
-  /* Colores del código de vestimenta (editor: dressSuggest y dressAvoid, hasta 5 cada uno). Se dibujan después del texto
-     «Colores reservados». Los diseños que traían muestras en su maqueta (DRESS_STYLE) las usan con los colores de la pareja;
+  /* Colores del código de vestimenta (editor: dressSuggest y dressAvoid, hasta 5 cada uno). Se dibujan después de la nota
+     sobre los colores (dressColors). Costa y Jardín traen su propia línea para los colores a evitar (own-strike). Los diseños que traían muestras en su maqueta (DRESS_STYLE) las usan con los colores de la pareja;
      los demás usan una muestra común con los tokens --p-* del diseño y una forma acorde (DRESS_SHAPE). A evitar: con una línea. */
-  var DRESS_STYLE = { aurelia: 'sws', noir: 'sws', lino: 'sws', fiesta: 'dots', gala: 'colors', tinta: 'swatch', celeste: 'planetchips', cisne: 'fabric', marfil: 'fabric' };
+  var DRESS_STYLE = { aurelia: 'sws', noir: 'sws', lino: 'sws', fiesta: 'dots', gala: 'colors', tinta: 'swatch', celeste: 'planetchips', cisne: 'fabric', marfil: 'fabric', costa: 'chips own-strike', jardin: 'blobs own-strike' };
   var DRESS_SHAPE = { clasico: 'arch', rosa: 'arch', arco: 'arch', corazones: 'chip', estreno: 'frame', senal: 'frame', moderno: 'frame', onix: 'frame' };
   function renderDress(c) {
     var hex = /^#[0-9a-f]{6}$/i, pick = function (l) { return (Array.isArray(l) ? l : []).filter(function (x) { return hex.test(x); }).slice(0, 5); };
@@ -502,8 +502,8 @@
         '.lz-shape-chip i{outline:2px dashed rgba(255,255,255,.75);outline-offset:-7px}' +
         '.lz-shape-arch i{width:24px;height:32px;border-radius:12px 12px 3px 3px;box-shadow:0 0 0 1px color-mix(in srgb,currentColor 30%,transparent),0 0 0 4px var(--p-surface,transparent),0 0 0 5px color-mix(in srgb,currentColor 18%,transparent)}' +
         '.lz-shape-frame i{width:28px;height:28px;border-radius:2px;box-shadow:0 0 0 1px color-mix(in srgb,currentColor 35%,transparent),0 0 0 4px var(--p-surface,transparent),0 0 0 5px color-mix(in srgb,currentColor 25%,transparent)}' +
-        '.lz-dress-row.is-avoid i{position:relative}' +
-        '.lz-dress-row.is-avoid i::after{content:"";position:absolute;left:50%;top:-3px;bottom:-3px;width:2px;margin-left:-1px;border-radius:2px;background:var(--p-ink,currentColor);box-shadow:0 0 0 1.5px var(--p-surface,#fff);rotate:45deg}' +
+        '.lz-dress-row.is-avoid i{position:relative}.lz-dress-row:not(.is-avoid) .own-strike i::after{display:none}' +
+        '.lz-dress-row.is-avoid .lz-dress-sw:not(.own-strike) i::after{content:"";position:absolute;left:50%;top:-3px;bottom:-3px;width:2px;margin-left:-1px;border-radius:2px;background:var(--p-ink,currentColor);box-shadow:0 0 0 1.5px var(--p-surface,#fff);rotate:45deg}' +
         '.lz-dress .colors i::after{rotate:0deg!important}';
       document.head.appendChild(st);
     }
@@ -515,6 +515,8 @@
         '<div class="' + cls + '" role="img" aria-label="' + label + ': ' + list.length + '">' + list.map(function (x) { return '<i style="background-color:' + x + '"></i>'; }).join('') + '</div></div>';
     };
     document.querySelectorAll('[data-lz="dressColors"]').forEach(function (sp) {
+      // La nota es opcional: vacía no se muestra (ni «Por completar» en el editor).
+      var note = sp.closest('[data-lz-group="dressColors"]') || sp; note.classList.toggle('lz-off', !has(c.dressColors));
       var anchor = sp.closest('[data-lz-group="dressColors"]') || sp.parentElement, box = anchor.nextElementSibling;
       if (!box || !box.classList.contains('lz-dress')) { box = document.createElement('div'); box.className = 'lz-dress'; anchor.insertAdjacentElement('afterend', box); }
       box.hidden = !sug.length && !av.length;

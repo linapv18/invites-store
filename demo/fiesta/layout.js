@@ -15,7 +15,7 @@
       cheer: '¡Que vivan los novios!',
       dayPat: '{W}, {d} de {M} de {Y}', dayTxt: 'Domingo, 14 de marzo de 2027', program: 'El programa', how: 'Cómo llegar <svg width="1em" height="1em" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" style="vertical-align:-.15em;flex:none"><path d="M3 8h10M9 4l4 4-4 4"/></svg>',
       events: [['1:00 p. m.', 'Ceremonia civil', 'Jardín Etnobotánico', 'Reforma s/n, Centro'], ['2:30 p. m.', 'Comida familiar', 'Casa Oaxaca', 'García Vigil 407, Centro'], ['8:00 p. m.', 'Fiesta', 'Hacienda Los Laureles', 'Hidalgo 21, San Felipe del Agua']],
-      dress: 'Código de vestimenta', dressCode: 'Formal', dressNotes: 'Telas frescas: en marzo Oaxaca es cálida de día y fresca de noche.', reserved: 'Colores reservados:', dressColors: 'Blanco y marfil',
+      dress: 'Código de vestimenta', dressCode: 'Formal', dressNotes: 'Telas frescas: en marzo Oaxaca es cálida de día y fresca de noche.', reserved: 'Colores reservados:', dressColors: 'El blanco y el marfil quedan reservados para la novia.',
       fromAway: 'Si vienen de fuera', travel: 'Viaje y alojamiento', travelIntro: 'Si vienen de fuera, aquí tienen todo para organizar su viaje.',
       tHotel: 'EL HOTEL', tPlane: 'EL AVIÓN', tCity: 'LA CIUDAD',
       hotel: 'Hotel Casa Antigua', hotelAddress: 'Calle Macedonio Alcalá 304, Centro', rate: 'Código:', hotelCode: 'BODA-AL', hotelNotes: 'Tarifa válida hasta el 1 de febrero.', book: 'Reservar',
@@ -39,7 +39,7 @@
       cheer: 'Long live the newlyweds!',
       dayPat: '{W}, {Mc} {d}, {Y}', dayTxt: 'Sunday, March 14, 2027', program: 'The program', how: 'Directions <svg width="1em" height="1em" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" style="vertical-align:-.15em;flex:none"><path d="M3 8h10M9 4l4 4-4 4"/></svg>',
       events: [['1:00 PM', 'Civil ceremony', 'Ethnobotanical Garden', 'Reforma s/n, Centro'], ['2:30 PM', 'Family lunch', 'Casa Oaxaca', 'García Vigil 407, Centro'], ['8:00 PM', 'Party', 'Hacienda Los Laureles', 'Hidalgo 21, San Felipe del Agua']],
-      dress: 'Dress code', dressCode: 'Formal', dressNotes: 'Light fabrics: in March Oaxaca is warm by day and cool at night.', reserved: 'Reserved colors:', dressColors: 'White and ivory',
+      dress: 'Dress code', dressCode: 'Formal', dressNotes: 'Light fabrics: in March Oaxaca is warm by day and cool at night.', reserved: 'Reserved colors:', dressColors: 'White and ivory are reserved for the bride.',
       fromAway: 'If you’re traveling', travel: 'Travel and stay', travelIntro: 'If you’re coming from out of town, here’s everything to plan your trip.',
       tHotel: 'THE HOTEL', tPlane: 'THE PLANE', tCity: 'THE CITY',
       hotel: 'Hotel Casa Antigua', hotelAddress: 'Calle Macedonio Alcalá 304, Centro', rate: 'Code:', hotelCode: 'BODA-AL', hotelNotes: 'Rate valid until February 1.', book: 'Book',
@@ -142,7 +142,7 @@
 
     '<section class="sec papel" id="itinerario" data-lz-anchor="itinerario musica"><div class="in-w"><p class="eb" data-lz-date="' + S.dayPat + '">' + S.dayTxt + '</p><h2>' + S.program + '</h2>' +
       '<div class="tickets" data-lz-list="events">' + S.events.map(function (e, i) { return '<div class="ticket" data-lz-item data-rv="' + (i % 2 ? 'right' : 'left') + '">' + marigold(['var(--orange)', 'var(--pink)', 'var(--yellow)'][i]) + '<div><span class="tm" data-lz-f="time">' + e[0] + '</span><h3 data-lz-f="name">' + e[1] + '</h3><p><span data-lz-f="place">' + e[2] + '</span> · <span data-lz-f="address">' + e[3] + '</span></p><a data-lz-f="map" href="' + maps(e[2]) + '" target="_blank" rel="noopener">' + S.how + '</a></div></div>'; }).join('') + '</div>' +
-      '<div class="bigcard" data-rv="pop" data-lz-group="dressCode dressNotes dressColors"><p class="eb">' + S.dress + '</p><h2 style="margin:8px 0" data-lz="dressCode">' + S.dressCode + '</h2><p data-lz="dressNotes">' + S.dressNotes + '</p><p style="margin-top:8px;font-weight:800" data-lz-group="dressColors">' + S.reserved + ' <span data-lz="dressColors">' + S.dressColors + '</span></p><div class="dots" aria-hidden="true"><i style="background:#F4F1EA"></i><i style="background:#E8D9C0"></i></div></div>' +
+      '<div class="bigcard" data-rv="pop" data-lz-group="dressCode dressNotes dressColors"><p class="eb">' + S.dress + '</p><h2 style="margin:8px 0" data-lz="dressCode">' + S.dressCode + '</h2><p data-lz="dressNotes">' + S.dressNotes + '</p><p style="margin-top:8px;font-weight:800" data-lz-group="dressColors"><span data-lz="dressColors">' + S.dressColors + '</span></p><div class="dots" aria-hidden="true"><i style="background:#F4F1EA"></i><i style="background:#E8D9C0"></i></div></div>' +
     '</div></section>' +
     '<div class="sarape" aria-hidden="true"></div>' +
 
