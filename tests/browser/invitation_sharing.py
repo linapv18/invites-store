@@ -14,13 +14,13 @@ async def main():
    await page.goto(BASE+'/demo/'+d+'/?lz=vista&k=private-preview',wait_until='domcontentloaded');await page.wait_for_function('window.LazoPanel');await page.evaluate('LazoPanel.open()')
    await page.locator('.lz-panel [data-tab=invitados]').first.click();details=page.locator('.lz-share').first
    assert await details.locator('svg[aria-hidden=true]').count()==3
-   assert await details.locator('button').get_attribute('aria-label')=='Copiar enlace'
+   assert await details.locator('button').get_attribute('aria-label')=='Copiar mensaje'
    assert await details.locator('button').evaluate('e=>e.getBoundingClientRect().width===44 && getComputedStyle(e).borderRadius==="50%"')
    wa=await details.locator('a').first.get_attribute('href');message=parse_qs(urlparse(wa).query)['text'][0];assert 'Invitesse' in message and 'demostración' in message and 'private-preview' not in message and 'Familia' not in message
    expected='https://www.invitesse.com/demo/'+d+'/';assert expected in message
    sms=await details.locator('a').nth(1).get_attribute('href');assert sms.startswith('sms:?body=')
-   await details.locator('[data-copy-link="0"]').click();assert await page.evaluate('window.copied')==expected
-   await page.locator('.lz-panel [data-tab=envio]').first.click();await page.locator('#lzTpl').fill('Invitesse — prueba {enlace}');wa=await page.locator('.lz-share a').first.get_attribute('href');assert 'Invitesse — prueba' in parse_qs(urlparse(wa).query)['text'][0]
+   await details.locator('[data-copy-link="0"]').click();assert await page.evaluate('window.copied')==message
+   await page.locator('.lz-panel [data-tab=envio]').first.click();await page.locator('#lzTpl').fill('Invitesse — prueba {enlace}');wa=await page.locator('.lz-share a').first.get_attribute('href');assert 'Invitesse — prueba' in parse_qs(urlparse(wa).query)['text'][0];await page.locator('[data-copy-link="0"]').click();assert await page.evaluate('window.copied')==parse_qs(urlparse(wa).query)['text'][0]
    print(d,'WhatsApp/SMS/copy, clean public link and editable message OK',flush=True)
   await c.close()
   c=await b.new_context(viewport={'width':390,'height':844},user_agent='Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X)');await c.route('https://**/*',lambda r:r.abort());page=await c.new_page();await page.goto(BASE+'/en/demo/onix/',wait_until='domcontentloaded');await page.evaluate('LazoPanel.open()');await page.locator('.lz-panel [data-tab=envio]').first.click();details=page.locator('.lz-share').first;assert (await details.locator('a').nth(1).get_attribute('href')).startswith('sms:&body=');wa=await details.locator('a').first.get_attribute('href');assert 'not a personal invitation' in parse_qs(urlparse(wa).query)['text'][0];print('English/iOS SMS link OK',flush=True)

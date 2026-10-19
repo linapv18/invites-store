@@ -73,4 +73,4 @@ El flujo de cuenta y borradores usa Supabase; el checkout de complementos conser
 
 - Regalos: ejecutar `supabase/migrations/202610190002_publish_gifts.sql` en el SQL Editor de Supabase para incluir los cuatro campos opcionales de regalos en la publicación pública. No vuelve a crear tablas ni cambia RLS; conserva la exclusión de invitados privados. El editor ya guarda los campos en el borrador JSON.
 
-- Compartir invitaciones: al conectar la publicación y los enlaces definitivos por familia, sustituir el bloqueo `pendingShare()` del editor por las acciones con URL verificada del servidor. El demo ya comparte WhatsApp/SMS y copia su URL pública; nunca usa claves de previews ni nombres de invitados en el enlace.
+- Compartir invitaciones: al conectar la publicación y los enlaces definitivos por familia, sustituir el bloqueo `pendingShare()` del editor por las acciones con URL verificada del servidor. El demo ya comparte WhatsApp/SMS y copia el mensaje completo con su URL pública; nunca usa claves de previews ni nombres de invitados en el enlace.

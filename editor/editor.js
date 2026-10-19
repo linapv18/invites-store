@@ -1052,7 +1052,7 @@
     return '<div class="ed-pending-share"><div class="ed-share-icons" role="group" aria-label="'+(en?'Share invitation':'Compartir invitación')+'">'+
       '<button type="button" disabled aria-label="WhatsApp" title="WhatsApp">'+shareIcon('whatsapp')+'</button>'+
       '<button type="button" disabled aria-label="SMS" title="SMS">'+shareIcon('sms')+'</button>'+
-      '<button type="button" disabled aria-label="'+(en?'Copy link':'Copiar enlace')+'" title="'+(en?'Copy link':'Copiar enlace')+'">'+shareIcon('copy')+'</button></div><p class="ed-hint">'+(en?'Available when your invitation is published.':'Disponible cuando publiquen su invitación.')+'</p></div>';
+      '<button type="button" disabled aria-label="'+(en?'Copy message':'Copiar mensaje')+'" title="'+(en?'Copy message':'Copiar mensaje')+'">'+shareIcon('copy')+'</button></div><p class="ed-hint">'+(en?'Available when your invitation is published.':'Disponible cuando publiquen su invitación.')+'</p></div>';
   }
   function giftUrl(value) { try { var u = new URL(String(value).trim()); return /^(https?:)$/.test(u.protocol) && !u.username && !u.password; } catch (_) { return false; } }
   var SECTION_HTML = {

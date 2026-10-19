@@ -125,12 +125,12 @@
     return '<div class="lz-share" data-share="'+n+'" role="group" aria-label="'+(en?'Share demo':'Compartir demo')+'"><div class="lz-share-actions">'+
       '<a href="https://wa.me/?text='+encodeURIComponent(msg)+'" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp" title="WhatsApp">'+shareIcon('whatsapp')+'</a>'+
       '<a href="sms:'+(ios?'&':'?')+'body='+encodeURIComponent(msg)+'" aria-label="SMS" title="SMS">'+shareIcon('sms')+'</a>'+
-      '<button type="button" data-copy-link="'+n+'" aria-label="'+(en?'Copy link':'Copiar enlace')+'" title="'+(en?'Copy link':'Copiar enlace')+'">'+shareIcon('copy')+'</button></div></div>';
+      '<button type="button" data-copy-link="'+n+'" aria-label="'+(en?'Copy message':'Copiar mensaje')+'" title="'+(en?'Copy message':'Copiar mensaje')+'">'+shareIcon('copy')+'</button></div></div>';
   }
   function copyLink(text) {
     if (navigator.clipboard && navigator.clipboard.writeText) return navigator.clipboard.writeText(text);
     return new Promise(function(resolve,reject){
-      var previous=document.activeElement, input=document.createElement('textarea');input.value=text;input.setAttribute('aria-label',LANG==='en'?'Demo link':'Enlace del demo');input.style.cssText='position:fixed;left:0;top:0;opacity:0';document.body.appendChild(input);input.select();
+      var previous=document.activeElement, input=document.createElement('textarea');input.value=text;input.setAttribute('aria-label',LANG==='en'?'Demo message':'Mensaje del demo');input.style.cssText='position:fixed;left:0;top:0;opacity:0';document.body.appendChild(input);input.select();
       try{document.execCommand('copy')?resolve():reject();}catch(e){reject(e);}finally{input.remove();if(previous)previous.focus();}
     });
   }
@@ -221,7 +221,7 @@
 
       '<p class="lz-kicker" style="margin-top:36px">' + S.sendTitle + '</p><div style="margin-top:12px">' + data.map(function (i, n) {
         return '<div class="lz-send"><div><strong>' + esc(i.name) + '</strong><small>' + seatsLabel(i.guests.length) + ' · ' + (i.sent ? S.sent : S.toSend) + '</small></div>' +
-          '<div>' + shareControls(n) + '<button type="button" data-sent="' + n + '" class="' + (i.sent ? 'is-on' : '') + '" aria-pressed="' + i.sent + '">' + (i.sent ? S.sent : S.markSent) + '</button></div></div>';
+          '<div class="lz-send-actions">' + shareControls(n) + '<button type="button" data-sent="' + n + '" class="' + (i.sent ? 'is-on' : '') + '" aria-pressed="' + i.sent + '">' + (i.sent ? S.sent : S.markSent) + '</button></div></div>';
       }).join('') + '</div>';
   }
 
@@ -256,7 +256,7 @@
     if (b.dataset.newrm !== undefined) { draftNames.splice(Number(b.dataset.newrm), 1); return render(); }
     if (b.dataset.ins) { insert(b.dataset.ins); return; }
     if (b.dataset.copyLink !== undefined) {
-      copyLink(linkFor()).then(function(){toast(LANG==='en'?'Link copied':'Enlace copiado');},function(){toast(S.copyFail);});return;
+      copyLink(messageFor(data[Number(b.dataset.copyLink)])).then(function(){toast(LANG==='en'?'Message copied':'Mensaje copiado');},function(){toast(S.copyFail);});return;
     }
     if (b.dataset.copy) {
       var msg = messageFor(data[Number(b.dataset.copy)]);
