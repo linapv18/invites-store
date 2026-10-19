@@ -57,7 +57,7 @@
   // Fotografía de una ramita prensada; nombres y monograma siguen siendo editables.
   var PRESSED = function (w, style) { return '<img class="pressed" src="/assets/lino/ramita-prensada.webp" width="' + w + '" style="' + style + '" alt="" aria-hidden="true">'; };
   var maps = function (q) { return 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(q + ', Oaxaca'); };
-  var photos = ['/assets/fotos/beso.jpg', '/assets/fotos/escalera.jpg', '/assets/fotos/muro.jpg'];
+  var photos = ['/assets/fotos/beso.webp', '/assets/fotos/escalera.webp', '/assets/fotos/muro.webp'];
   var sh = function (eb, title, attr) { return '<div class="sh" data-rv><p class="eb"' + (attr || '') + '>' + eb + '</p><h2>' + title + '</h2></div>'; };
   var N = function (k) { return '<span data-lz="' + k + '">' + S[k] + '</span>'; };
   var dots = function (mid) { return '<div class="dots"><span data-lz-date="{d}">14</span><i></i><span data-lz-date="' + (mid ? '{MU}' : '{mm}') + '">' + (mid ? S.MU : '03') + '</span><i></i><span data-lz-date="{Y}">2027</span></div>'; };
@@ -87,7 +87,7 @@
   '<main id="invite" inert>' +
     '<section class="hero" id="portada" data-lz-anchor="portada"><div class="in-w">' +
       '<p class="eb">' + S.getting + '</p>' +
-      '<div class="tipped pap zoomin" data-rv>' + PRESSED(92, 'right:-34px;top:-40px;rotate:18deg') + '<i></i><i></i><i></i><i></i><div class="pic"><img class="ph-img" id="heroImg" src="/assets/fotos/paseo.jpg" data-lz-src="photo:0" alt="' + S.photoAlt + '" style="object-position:center 60%"></div><span data-lz="city">' + S.city + '</span></div>' +
+      '<div class="tipped pap zoomin" data-rv>' + PRESSED(92, 'right:-34px;top:-40px;rotate:18deg') + '<i></i><i></i><i></i><i></i><div class="pic"><img class="ph-img" id="heroImg" src="/assets/fotos/paseo.webp" data-lz-src="photo:0" alt="' + S.photoAlt + '" style="object-position:center 60%"></div><span data-lz="city">' + S.city + '</span></div>' +
       '<h1 class="writes" tabindex="-1"><span class="write" data-lz="n1">' + S.n1 + '</span><small>' + S.y + '</small><span class="write" data-lz="n2">' + S.n2 + '</span></h1>' +
       dots(true) +
       '<p class="eb" style="color:var(--muted)"><span data-lz-date="{W}">' + S.W + '</span> · <span data-lz="city">' + S.city + '</span></p>' +

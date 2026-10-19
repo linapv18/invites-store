@@ -76,7 +76,7 @@
   // ======================= APERTURA: la tarjeta sale de su funda de terciopelo =======================
   '<div class="opening" id="open" role="dialog" aria-modal="true" aria-label="' + S.openAria + '">' +
     '<div class="op-stage">' +
-      '<div class="op-card" aria-hidden="true"><p class="op-card-k">' + S.show + '</p><div class="op-card-ph"><img src="/assets/fotos/paseo.jpg" data-lz-src="photo:0" alt="" decoding="async"></div><p class="op-card-names">' + N('n1') + ' <em>' + S.y + '</em> ' + N('n2') + '</p></div>' +
+      '<div class="op-card" aria-hidden="true"><p class="op-card-k">' + S.show + '</p><div class="op-card-ph"><img src="/assets/fotos/paseo.webp" data-lz-src="photo:0" alt="" decoding="async"></div><p class="op-card-names">' + N('n1') + ' <em>' + S.y + '</em> ' + N('n2') + '</p></div>' +
       '<button type="button" class="op-sleeve" id="sleeve" aria-label="' + S.open + '">' +
         '<span class="op-intro" data-lz="envIntro" data-lz-keep>' + S.envIntro + '</span>' +
         '<span class="op-cut" aria-hidden="true"><span class="op-day" data-lz-date="' + S.dayPat + '">' + S.dayTxt + '</span><span class="op-mon" data-lz-date="' + S.monPat + '">' + S.monTxt + '</span></span>' +
@@ -92,7 +92,7 @@
   '<header class="mbar" id="mbar"><a class="mono" href="#portada" aria-label="' + S.n1 + ' ' + S.y + ' ' + S.n2 + '">' + MONO + '</a><nav aria-label="' + S.sections + '"><a href="#itinerario">' + S.program + '</a><a class="mbar-cta" href="#rsvp">' + S.confirmShort + '</a></nav></header>' +
   '<main id="invite" inert>' +
     '<section class="hero" id="portada" data-lz-anchor="portada">' +
-      '<div class="marquee hero-ph"><div class="ph bw"><img class="ph-img" id="heroImg" fetchpriority="high" src="/assets/fotos/paseo.jpg" data-lz-src="photo:0" alt="' + S.photoAlt + '" decoding="async"></div></div>' +
+      '<div class="marquee hero-ph"><div class="ph bw"><img class="ph-img" id="heroImg" fetchpriority="high" src="/assets/fotos/paseo.webp" data-lz-src="photo:0" alt="' + S.photoAlt + '" decoding="async"></div></div>' +
       '<div class="hero-txt"><p class="k">' + S.show + ' · ' + S.single + '</p>' +
         '<h1 class="names" tabindex="-1">' + N('n1') + ' <em>' + S.y + '</em> ' + N('n2') + '</h1>' +
         '<p class="hero-date"><b data-lz-date="' + S.coverPat + '">' + S.coverTxt + '</b><span data-lz="city">' + S.city + '</span></p>' +
@@ -100,14 +100,14 @@
     '</section>' +
 
     '<section class="sec story" id="historia" data-lz-anchor="historia" data-gallery="mono">' +
-      '<div class="story-art"><span class="initials" data-lz-seal aria-hidden="true"><span class="lz-seal"><span>A</span><span>L</span></span></span><div class="torn" aria-hidden="true"></div><div class="story-ph bw" data-rv><img class="ph-img" src="/assets/fotos/escalera.jpg" data-lz-src="photo:1" alt="" loading="lazy"></div></div>' +
+      '<div class="story-art"><span class="initials" data-lz-seal aria-hidden="true"><span class="lz-seal"><span>A</span><span>L</span></span></span><div class="torn" aria-hidden="true"></div><div class="story-ph bw" data-rv><img class="ph-img" src="/assets/fotos/escalera.webp" data-lz-src="photo:1" alt="" loading="lazy"></div></div>' +
       '<div class="story-txt"><p class="k">' + S.storyK + '</p><h2 data-lz="storyTitle">' + S.storyTitle + '</h2>' +
         '<p class="lead" data-lz="msg">' + S.msg + '</p><p data-lz="story">' + S.storyTxt + '</p></div>' +
     '</section>' +
 
     '<section class="sec gal" id="galeria" data-gallery="mono">' +
       '<div class="gal-head"><div><p class="k">' + S.galK + '</p><h2>' + S.galT + '</h2></div><div class="gal-nav"><button type="button" class="round" data-strip="-1" aria-label="' + S.prev + '">' + PREV + '</button><button type="button" class="round" data-strip="1" aria-label="' + S.next + '">' + NEXT + '</button></div></div>' +
-      '<div class="film"><div class="strip" id="strip" data-lz-list="gallery">' + ['beso', 'escalera', 'muro', 'torre', 'paseo'].map(function (f) { return '<div class="frame bw" data-lz-item><img class="ph-img" data-lz-f="img" src="/assets/fotos/' + f + '.jpg" alt="" loading="lazy"></div>'; }).join('') + '</div></div>' +
+      '<div class="film"><div class="strip" id="strip" data-lz-list="gallery">' + ['beso', 'escalera', 'muro', 'torre', 'paseo'].map(function (f) { return '<div class="frame bw" data-lz-item><img class="ph-img" data-lz-f="img" src="/assets/fotos/' + f + '.webp" alt="" loading="lazy"></div>'; }).join('') + '</div></div>' +
       '<div class="gal-foot"><button type="button" class="btn btn-dark" data-gallery-open>' + S.allPhotos + '</button></div>' +
     '</section>' +
 

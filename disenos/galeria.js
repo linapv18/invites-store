@@ -39,7 +39,10 @@
   $('incl').innerHTML = '<b>' + S.incl + '</b>' + S.inclList.map(function (x) { return '<span>' + CHECK(14, 2) + esc(x) + '</span>'; }).join('');
   $('clear').textContent = S.clear; $('emptyTxt').textContent = S.empty; $('emptyClear').textContent = S.clear;
   var CONTACT = '<div class="foot-contact" aria-label="' + (LANG === 'en' ? 'Contact' : 'Contacto') + '"><a href="mailto:hola@invitesse.com"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M4 7l8 6 8-6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>hola@invitesse.com</a><a href="https://www.instagram.com/invitesse/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="5" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="17.2" cy="6.8" r="1.1" fill="currentColor"/></svg>@invitesse</a></div>';
+  var privacyPreference = $('foot').querySelector('[data-privacy="settings"]');
   $('foot').innerHTML = '<span style="display: flex; flex-direction: column; gap: 8px"><a class="logo" href="' + base + '/" aria-label="Invitesse">' + WM + '</a><span>' + S.tagline + '</span>' + CONTACT + '</span><nav>' + S.foot.map(function (f) { return '<a href="' + f[0] + '">' + f[1] + '</a>'; }).join('') + '</nav>';
+
+  if (privacyPreference) $('foot').querySelector('nav').appendChild(privacyPreference);
 
   // Estado de los filtros (desde la URL)
   var q = new URLSearchParams(location.search), sel = {}, text = q.get('q') || '';
@@ -49,8 +52,10 @@
   // Tarjetas: se pintan una vez; filtrar solo las muestra u oculta. Al final, la tarjeta del diseño a la medida.
   var selection = ['nacar','onix','arco','encaje','marfil','jardin'];
   var ordered = C.designs.slice().sort(function (a, b) { var x = selection.indexOf(a.id), y = selection.indexOf(b.id); return (x < 0 ? selection.length : x) - (y < 0 ? selection.length : y); });
-  $('grid').innerHTML = ordered.map(function (d) { return C.card(d, LANG); }).join('') +
-    '<div class="tailcard" id="tail"><div><p class="k">' + S.tailK + '</p><h3>' + S.tailH + '</h3><p>' + esc(S.tailP) + '</p></div><div style="display: flex; flex-wrap: wrap; gap: 10px"><a class="btn" style="background: var(--iv-paper); color: var(--iv-ink)" href="' + (LANG === 'en' ? '/en/quote/' : '/cotizar/') + '">' + S.tailA + '</a><a class="btn" style="color: var(--iv-paper); box-shadow: inset 0 0 0 1.5px #F3EEE955" href="' + base + ('/#como') + '">' + S.tailB + '</a></div></div>';
+  // Build provides real cards and links even without JavaScript. Keep those nodes.
+  if (!$('grid').querySelector('.lz-card')) $('grid').innerHTML = ordered.map(function (d) { return C.card(d, LANG, 2); }).join('');
+  $('grid').insertAdjacentHTML('beforeend',
+    '<div class="tailcard" id="tail"><div><p class="k">' + S.tailK + '</p><h3>' + S.tailH + '</h3><p>' + esc(S.tailP) + '</p></div><div style="display: flex; flex-wrap: wrap; gap: 10px"><a class="btn" style="background: var(--iv-paper); color: var(--iv-ink)" href="' + (LANG === 'en' ? '/en/quote/' : '/cotizar/') + '">' + S.tailA + '</a><a class="btn" style="color: var(--iv-paper); box-shadow: inset 0 0 0 1.5px #F3EEE955" href="' + base + ('/#como') + '">' + S.tailB + '</a></div></div>');
   var cards = {}; $('grid').querySelectorAll('.lz-card').forEach(function (el) { cards[el.dataset.id] = el; });
   var words = {}; C.designs.forEach(function (d) {
     var t = d[LANG], w = [t.name, t.title, t.desc, t.opening, t.colors];
@@ -133,7 +138,7 @@
   $('clear').addEventListener('click', clearAll); $('emptyClear').addEventListener('click', clearAll);
   // En el celular, los filtros se abren en una hoja desde abajo.
   var mobileFilters = matchMedia('(max-width:960px)');
-  var sheetBackground = document.querySelectorAll('.top,.head,.layout>div,.foot');
+  var sheetBackground = document.querySelectorAll('.top,.head,.layout>div,.foot,.seo-discovery,.breadcrumbs');
   function sheet(o) {
     o = o && mobileFilters.matches;
     $('filters').classList.toggle('open', o); $('sheetBg').classList.toggle('open', o); document.body.classList.toggle('sheet-open', o);
@@ -150,7 +155,7 @@
   mobileFilters.addEventListener('change', function () { if ($('filters').classList.contains('open')) sheet(false); });
   document.addEventListener('keydown', function (event) {
     if (event.key !== 'Tab' || !$('filters').classList.contains('open')) return;
-    var buttons = [].slice.call($('filters').querySelectorAll('button:not(:disabled)')).filter(function (b) { return b.getClientRects().length; });
+    var buttons = [].slice.call($('filters').querySelectorAll('button:not(:disabled),a[href]')).filter(function (b) { return b.getClientRects().length; });
     var first = buttons[0], last = buttons[buttons.length - 1];
     if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
     else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }

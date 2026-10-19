@@ -2,19 +2,20 @@
 (function () {
   'use strict';
   var path = location.pathname.replace(/\/+$/, '') || '/';
-  var commercial = ['/', '/en', '/disenos', '/en/disenos'].indexOf(path) !== -1;
+  var commercial = (document.body.hasAttribute('data-marketing-page') && !['/privacidad', '/condiciones', '/en/privacy', '/en/terms'].includes(path)) || ['/', '/en', '/disenos', '/en/disenos', '/cotizar', '/en/quote'].indexOf(path) !== -1;
   var legal = ['/privacidad', '/condiciones', '/en/privacy', '/en/terms'].indexOf(path) !== -1;
+  var quotePage = path === '/cotizar' || path === '/en/quote';
   // A copied script must never enable analytics on an invitation, account or editor.
-  if ((!commercial && !legal) || window.top !== window.self) return;
+  if (/^\/(?:en\/)?(?:demo|editor|cuenta|account|comprar)(?:\/|$)/.test(path) || (!commercial && !legal) || window.top !== window.self) return;
   var id = 'G-2YPN2SZT3R', key = 'invitesse.privacy.v1', lifetime = 180 * 86400000;
   var en = document.documentElement.lang.indexOf('en') === 0, loaded = false, opener;
   var gpc = navigator.globalPrivacyControl === true;
   var text = en ? {
-    title: 'Your privacy', summary: 'We use necessary storage. If you agree, we also analyse visits, clicks and sessions to improve the website.', acceptShort: 'Accept', rejectShort: 'Reject', configure: 'Settings', body: 'We use necessary storage to provide the site. With your permission, Google Analytics measures visits and selected clicks; Microsoft Clarity creates heatmaps and session replays of the public website. Accounts, the editor and private invitations are excluded.',
+    title: 'Your privacy', summary: 'We use necessary storage. If you agree, we also analyse visits, clicks and sessions to improve the website.', acceptShort: 'Accept', rejectShort: 'Reject', configure: 'Settings', body: 'We use necessary storage to provide the site. With your permission, Google Analytics measures visits, selected clicks and page performance on the public commercial website. Microsoft Clarity creates heatmaps and session replays, excluding quote pages. Accounts, the editor and private invitations are excluded.',
     accept: 'Accept analytics', reject: 'Reject optional', settings: 'Privacy preferences', save: 'Save preferences', close: 'Close',
     necessary: 'Necessary storage', necessaryNote: 'Required for access and features you request. Always active.', analytics: 'Google Analytics and Microsoft Clarity', analyticsNote: 'Optional visits, selected clicks, heatmaps and session replays. Disabled until you agree.', policy: 'Privacy policy', gpc: 'Your browser requests not to be tracked. Analytics stays disabled.', failure: 'Your preference could not be saved on this device. Analytics stays disabled.'
   } : {
-    title: 'Su privacidad', summary: 'Usamos almacenamiento necesario. Si aceptas, también analizamos visitas, clics y sesiones para mejorar la web.', acceptShort: 'Aceptar', rejectShort: 'Rechazar', configure: 'Configurar', body: 'Usamos almacenamiento necesario para prestar el servicio. Con su permiso, Google Analytics mide visitas y clics seleccionados; Microsoft Clarity genera mapas de calor y reproducciones de sesiones de la web comercial. Se excluyen cuentas, editor e invitaciones privadas.',
+    title: 'Su privacidad', summary: 'Usamos almacenamiento necesario. Si aceptas, también analizamos visitas, clics y sesiones para mejorar la web.', acceptShort: 'Aceptar', rejectShort: 'Rechazar', configure: 'Configurar', body: 'Usamos almacenamiento necesario para prestar el servicio. Con su permiso, Google Analytics mide visitas, clics seleccionados y rendimiento de la web comercial. Microsoft Clarity genera mapas de calor y reproducciones de sesiones, excepto en las páginas de cotización. Se excluyen cuentas, editor e invitaciones privadas.',
     accept: 'Aceptar analítica', reject: 'Rechazar opcionales', settings: 'Preferencias de privacidad', save: 'Guardar preferencias', close: 'Cerrar',
     necessary: 'Almacenamiento necesario', necessaryNote: 'Necesario para el acceso y las funciones que soliciten. Siempre activo.', analytics: 'Google Analytics y Microsoft Clarity', analyticsNote: 'Visitas, clics seleccionados, mapas de calor y reproducciones de sesiones. Desactivados hasta que acepten.', policy: 'Política de privacidad', gpc: 'Su navegador solicita no ser rastreado. La analítica permanece desactivada.', failure: 'No pudimos guardar la preferencia en este dispositivo. La analítica permanece desactivada.'
   };
@@ -48,8 +49,10 @@
     window.gtag = tag;
     var script = document.createElement('script'); script.async = true;
     script.src = 'https://www.googletagmanager.com/gtag/js?id=' + id; document.head.appendChild(script);
+    var vitals = document.createElement('script'); vitals.async = true;
+    vitals.src = '/assets/brand/vitals.js'; document.head.appendChild(vitals);
     // Do not send arbitrary URL parameters/fragments to session replay providers.
-    if (!location.search && (!location.hash || /^#(disenos|designs|como|medida|preguntas|faq|opciones|planes|rsvp)$/.test(location.hash))) {
+    if (!quotePage && !location.search && (!location.hash || /^#(disenos|designs|como|medida|preguntas|faq|opciones|planes|rsvp)$/.test(location.hash))) {
       window.clarity = window.clarity || function () { (window.clarity.q = window.clarity.q || []).push(arguments); };
       document.querySelectorAll('input,textarea,select,form,.iv-privacy').forEach(function (el) { el.setAttribute('data-clarity-mask', 'true'); });
       window.clarity('consentv2', { ad_Storage: 'denied', analytics_Storage: 'granted' });
@@ -91,6 +94,8 @@
         if (/^[a-z]{1,20}$/.test(candidate)) design = candidate;
       } else if (/^\/(cuenta|en\/account)\/$/.test(url.pathname)) action = 'sign_in';
       else if (/^\/(?:en\/)?disenos\/$/.test(url.pathname)) action = 'view_catalogue';
+      else if (/^\/(?:en\/)?disenos\/[a-z]+\/$/.test(url.pathname)) action = 'view_design';
+      else if (/^\/(?:cotizar|en\/quote)\/$/.test(url.pathname)) action = 'request_quote';
       else if (url.hash) action = 'section_link';
     } else if (el.matches('[data-o],[data-style],[data-g],[data-clear]')) action = 'filter_designs';
     if (!action) return;

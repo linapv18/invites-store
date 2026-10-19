@@ -1,0 +1,108 @@
+{
+  "kind": "local laboratory snapshots, not field data",
+  "conditions": "Python static server on localhost; no Vercel cache headers or compression; simulated mobile / desktop presets; no analytics consent; single runs on shared execution environment. Scores and timings vary. TBT is not INP.",
+  "results": [
+    {
+      "page": "Home",
+      "device": "mobile",
+      "url": "http://127.0.0.1:4174/",
+      "measured_at_utc": "2026-10-19T21:10:49.169Z",
+      "lighthouse_version": "13.5.0",
+      "scores": {
+        "performance": 94,
+        "accessibility": 100,
+        "seo": 100
+      },
+      "fcp_ms": 1955.9,
+      "lcp_ms": 2782.9,
+      "cls": 0.007116815037269392,
+      "tbt_ms": 0,
+      "transfer_bytes": 403968
+    },
+    {
+      "page": "Home",
+      "device": "desktop",
+      "url": "http://127.0.0.1:4174/",
+      "measured_at_utc": "2026-10-19T21:13:01.537Z",
+      "lighthouse_version": "13.5.0",
+      "scores": {
+        "performance": 100,
+        "accessibility": 100,
+        "seo": 100
+      },
+      "fcp_ms": 497.5,
+      "lcp_ms": 637.5,
+      "cls": 0.003729187362691806,
+      "tbt_ms": 0,
+      "transfer_bytes": 551644
+    },
+    {
+      "page": "Catálogo",
+      "device": "mobile",
+      "url": "http://127.0.0.1:4174/disenos/",
+      "measured_at_utc": "2026-10-19T21:29:15.766Z",
+      "lighthouse_version": "13.5.0",
+      "scores": {
+        "performance": 91,
+        "accessibility": 100,
+        "seo": 100
+      },
+      "fcp_ms": 1813.6,
+      "lcp_ms": 3185.1,
+      "cls": 0.06708812557812929,
+      "tbt_ms": 55,
+      "transfer_bytes": 591232
+    },
+    {
+      "page": "Catálogo",
+      "device": "desktop",
+      "url": "http://127.0.0.1:4174/disenos/",
+      "measured_at_utc": "2026-10-19T21:29:30.464Z",
+      "lighthouse_version": "13.5.0",
+      "scores": {
+        "performance": 100,
+        "accessibility": 100,
+        "seo": 100
+      },
+      "fcp_ms": 410.9,
+      "lcp_ms": 720.1,
+      "cls": 0.02084432171953358,
+      "tbt_ms": 0.5,
+      "transfer_bytes": 1277378
+    },
+    {
+      "page": "Nácar",
+      "device": "mobile",
+      "url": "http://127.0.0.1:4174/demo/nacar/",
+      "measured_at_utc": "2026-10-19T21:34:21.786Z",
+      "lighthouse_version": "13.5.0",
+      "scores": {
+        "performance": 83,
+        "accessibility": 100,
+        "seo": 100
+      },
+      "fcp_ms": 2057.0,
+      "lcp_ms": 4278.3,
+      "cls": 0.01131362180626767,
+      "tbt_ms": 100,
+      "transfer_bytes": 689152
+    },
+    {
+      "page": "Nácar",
+      "device": "desktop",
+      "url": "http://127.0.0.1:4174/demo/nacar/",
+      "measured_at_utc": "2026-10-19T21:34:33.792Z",
+      "lighthouse_version": "13.5.0",
+      "scores": {
+        "performance": 99,
+        "accessibility": 100,
+        "seo": 100
+      },
+      "fcp_ms": 465.3,
+      "lcp_ms": 843.5,
+      "cls": 0,
+      "tbt_ms": 12,
+      "transfer_bytes": 689152
+    }
+  ]
+}

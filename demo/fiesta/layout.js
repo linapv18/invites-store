@@ -95,7 +95,7 @@
     city: '<svg width="44" viewBox="0 0 48 48" aria-hidden="true"><path d="M5 41h38M10 41V17l14-9 14 9v24M8 19h32M15 22v13m9-13v13m9-13v13M18 41v-4h12v4" fill="none" stroke="var(--ink)" stroke-width="2"/><path d="m8 17 16-10 16 10z" fill="var(--orange)" stroke="var(--ink)" stroke-width="2"/></svg>'
   };
   var maps = function (q) { return 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(q + ', Oaxaca'); };
-  var photos = ['/assets/fotos/beso.jpg', '/assets/fotos/escalera.jpg', '/assets/fotos/muro.jpg'];
+  var photos = ['/assets/fotos/beso.webp', '/assets/fotos/escalera.webp', '/assets/fotos/muro.webp'];
   var N = function (k) { return '<span data-lz="' + k + '">' + S[k] + '</span>'; };
   var cheer = ''; for (var i = 0; i < 16; i++) cheer += '<span>' + [S.cheer, '<svg width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" focusable="false" style="vertical-align:-.15em"><path d="M8 1.5c.5 3.6 1.3 4.4 4.9 4.9-3.6.5-4.4 1.3-4.9 4.9-.5-3.6-1.3-4.4-4.9-4.9 3.6-.5 4.4-1.3 4.9-4.9Z"/></svg>', N('n1') + ' &amp; ' + N('n2'), '<svg width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" focusable="false" style="vertical-align:-.15em"><path d="M8 1.5c.5 3.6 1.3 4.4 4.9 4.9-3.6.5-4.4 1.3-4.9 4.9-.5-3.6-1.3-4.4-4.9-4.9 3.6-.5 4.4-1.3 4.9-4.9Z"/></svg>'][i % 4] + '</span>';
 
@@ -124,7 +124,7 @@
   '<main id="invite" inert>' +
     '<section class="hero papel" id="portada" data-lz-anchor="portada">' + picado(20, '', 1) +
       '<div class="in-w"><p class="eb">' + S.getting + '</p>' +
-      '<div class="lfr"><span class="num" data-lz-date="{d}">14</span><div class="pic"><img class="ph-img" id="heroImg" src="/assets/fotos/paseo.jpg" data-lz-src="photo:0" alt="' + S.photoAlt + '" style="object-position:center 60%"></div><p class="t">' + S.couple + '</p></div>' +
+      '<div class="lfr"><span class="num" data-lz-date="{d}">14</span><div class="pic"><img class="ph-img" id="heroImg" src="/assets/fotos/paseo.webp" data-lz-src="photo:0" alt="' + S.photoAlt + '" style="object-position:center 60%"></div><p class="t">' + S.couple + '</p></div>' +
       '<h1>' + N('n1') + '<span class="pac">&amp;</span>' + N('n2') + '</h1>' +
       '<div class="chips"><span style="background:var(--pink)" data-lz-date="{d}">14</span><span style="background:var(--orange)" data-lz-date="{MU}">' + S.MU + '</span><span style="background:var(--teal)" data-lz-date="{Y}">2027</span></div>' +
       '<p class="eb" style="margin-top:14px;color:var(--ink)" data-lz="city">' + S.city + '</p>' +

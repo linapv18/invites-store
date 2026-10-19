@@ -27,11 +27,12 @@
     try {
       var r = await fetch('/api/cotizacion', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
       var body = await r.json().catch(function () { return {}; });
-      if (!r.ok) { button.disabled = false; button.removeAttribute('aria-busy'); return fail(body.field ? msg(body.field) : msg('send'), body.field); }
+      if (!r.ok || body.ok !== true) { button.disabled = false; button.removeAttribute('aria-busy'); return fail(body.field ? msg(body.field) : msg('send'), body.field); }
       var done = document.getElementById('quote-done');
       done.querySelector('[data-email]').textContent = data.email.trim();
       form.hidden = true; done.hidden = false; done.focus();
-      if (window.gtag) window.gtag('event', 'generate_lead', { form: 'cotizacion' });
+      // A successful response is required; no names, email or submitted text go to analytics.
+      if (window.gtag) window.gtag('event', 'generate_lead', { form: 'cotizacion', page_location: location.origin + location.pathname, page_referrer: '' });
     } catch (_) {
       button.disabled = false; button.removeAttribute('aria-busy'); fail(msg('send'));
     }

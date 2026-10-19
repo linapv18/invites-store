@@ -139,7 +139,7 @@ const notch = (cls, inner, style = '') => `<div class="notch ${cls}" style="${st
     '<section class="hero" id="portada" data-lz-anchor="portada">' + BQ(150, 'hbq') +
       '<div class="piece hcard" data-frame="cs-crest">' + notch('lacey', SWAN(70) + '<p class="cz" style="margin-top:10px">' + S.getting + '</p>' + names(.9) +
         '<p class="cz" data-lz-date="' + S.heroPat + '">' + S.heroTxt + '</p><p class="cz" style="opacity:.8" data-lz="city">' + S.city + '</p>') + '</div>' +
-      '<div class="pola"><div class="pic"><img class="ph-img" id="heroImg" src="/assets/fotos/paseo.jpg" data-lz-src="photo:0" alt="' + S.photoAlt + '" style="object-position:center 60%"></div><p class="cap">' + N('n1') + ' &amp; ' + N('n2') + '</p><div class="wax gold photographic-seal"><img class="wax-photo" src="/assets/rosa/lacre-dorado.webp" alt="" width="512" height="512"><span class="emb" data-lz-seal>AL</span></div></div>' +
+      '<div class="pola"><div class="pic"><img class="ph-img" id="heroImg" src="/assets/fotos/paseo.webp" data-lz-src="photo:0" alt="' + S.photoAlt + '" style="object-position:center 60%"></div><p class="cap">' + N('n1') + ' &amp; ' + N('n2') + '</p><div class="wax gold photographic-seal"><img class="wax-photo" src="/assets/rosa/lacre-dorado.webp" alt="" width="512" height="512"><span class="emb" data-lz-seal>AL</span></div></div>' +
       BQ(116, 'hbq2') +
       '<p class="lead" data-lz="msg">' + S.msg + '</p>' +
     '</section>' +
@@ -155,7 +155,7 @@ const notch = (cls, inner, style = '') => `<div class="notch ${cls}" style="${st
 
     '<section class="sec" id="historia" data-lz-anchor="historia">' +
       '<div class="story-heading"><div class="piece lace" data-rv="left">' + notch('lacey', '<p class="cz">' + S.since + '</p><h3 class="gtxt">' + S.ourStory + '</h3>') + '</div><div class="story-copy"><h2 data-lz="storyTitle">' + S.storyTitle + '</h2><p data-lz="story">' + S.storyTxt + '</p></div></div>' +
-      '<div class="album" data-lz-list="gallery">' + ['/assets/fotos/beso.jpg','/assets/fotos/escalera.jpg','/assets/fotos/muro.jpg'].map(function(src){return '<div class="spol" data-lz-item data-rv><div class="pic"><img class="ph-img" data-lz-f="img" src="'+src+'" alt="" loading="lazy"></div></div>';}).join('') + '</div><button type="button" class="gallery-link" data-gallery-open>' + (LANG==='en'?'Open our photo album':'Abrir nuestro álbum') + '</button>' +
+      '<div class="album" data-lz-list="gallery">' + ['/assets/fotos/beso.webp','/assets/fotos/escalera.webp','/assets/fotos/muro.webp'].map(function(src){return '<div class="spol" data-lz-item data-rv><div class="pic"><img class="ph-img" data-lz-f="img" src="'+src+'" alt="" loading="lazy"></div></div>';}).join('') + '</div><button type="button" class="gallery-link" data-gallery-open>' + (LANG==='en'?'Open our photo album':'Abrir nuestro álbum') + '</button>' +
     '</section>' +
 
     '<section class="sec" id="itinerario" data-lz-anchor="itinerario musica">' +

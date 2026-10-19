@@ -83,3 +83,9 @@ El calendario descargable de Encaje usa UTC explícito y la zona del evento (por
 Ver [SUPABASE-SETUP.md](SUPABASE-SETUP.md) para las variables de entorno, el build y la migración de borradores privados. Las cuentas y los borradores del editor usan Supabase. La publicación y los pagos siguen pendientes; ver también los límites de archivos en esa guía.
 
 La siguiente fase de base de datos está documentada en [SUPABASE-PERMISOS.md](SUPABASE-PERMISOS.md), con activación SQL y pruebas de aislamiento mediante `npm run test:database`.
+
+## SEO y medición
+
+El build genera catálogo estático, fichas y páginas comerciales ES/EN desde `scripts/seo.mjs` y `scripts/seo-policy.mjs`, junto con sitemap, robots, metadata y datos estructurados. La salida comercial usa CSS/scripts agrupados y assets con fingerprint; no necesita peticiones a Google Fonts durante build ni navegación.
+
+Consultar [SEO_IMPLEMENTATION.md](SEO_IMPLEMENTATION.md) para rutas, decisiones de indexación, validación y pendientes de lanzamiento. [SEO_AUDIT.md](SEO_AUDIT.md) conserva el diagnóstico previo. La instrumentación de Core Web Vitals solo funciona con el consentimiento de analítica y excluye editor, demos e invitaciones privadas.

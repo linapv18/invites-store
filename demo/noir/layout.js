@@ -56,7 +56,7 @@
     '<svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="m4 12 10-4 12 4 10-4v24l-10 4-12-4-10 4zM14 8v24m12-20v24"/><path d="M20 23s7-6.5 7-11a7 7 0 0 0-14 0c0 4.5 7 11 7 11z" fill="var(--bg)"/><circle cx="20" cy="12" r="2.5"/></svg>'
   ];
   var maps = function (q) { return 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(q + ', Oaxaca'); };
-  var photos = ['/assets/fotos/beso.jpg', '/assets/fotos/escalera.jpg', '/assets/fotos/muro.jpg'];
+  var photos = ['/assets/fotos/beso.webp', '/assets/fotos/escalera.webp', '/assets/fotos/muro.webp'];
   var sh = function (eb, title, attr) { return '<div class="sh" data-rv><p class="eb"' + (attr || '') + '>' + eb + '</p><h2>' + title + '</h2></div>'; };
   var names = function (id) { return '<h1 class="letters"' + (id ? ' id="' + id + '"' : '') + '><span data-split="srcN1">' + esc(S.n1) + '</span><em>' + S.y + '</em><span data-split="srcN2" data-off="4">' + esc(S.n2) + '</span></h1>'; };
 
@@ -86,7 +86,7 @@
   '<div class="mbar" id="mbar" aria-hidden="true"><span class="pr chrome" style="font-size:19px" data-lz-mono>A · L</span><span class="eb" data-lz-date="{dd} · {mm} · {Y}">14 · 03 · 2027</span></div>' +
   '<main id="invite" inert>' +
     '<section class="hero" id="portada" data-lz-anchor="portada">' +
-      '<div class="hp zoomin" data-rv><div class="pic"><img class="ph-img" id="heroImg" src="/assets/fotos/paseo.jpg" data-lz-src="photo:0" alt="' + S.photoAlt + '" style="object-position:center 60%"></div><div class="top"><i></i><span class="eb" style="color:var(--ink)" data-lz-mono>A · L</span><i></i></div></div>' +
+      '<div class="hp zoomin" data-rv><div class="pic"><img class="ph-img" id="heroImg" src="/assets/fotos/paseo.webp" data-lz-src="photo:0" alt="' + S.photoAlt + '" style="object-position:center 60%"></div><div class="top"><i></i><span class="eb" style="color:var(--ink)" data-lz-mono>A · L</span><i></i></div></div>' +
       '<div class="hc in-w">' +
         '<p class="eb">' + S.getting + '</p>' + names().replace('<h1 class="letters"', '<h1 class="letters" style="margin-top:14px"') +
         '<div class="dt"><i></i><span class="chrome" data-lz-date="{dd} · {mm} · {Y}">14 · 03 · 2027</span><i></i></div>' +

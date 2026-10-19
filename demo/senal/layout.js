@@ -72,7 +72,7 @@
   var PHOTOS = ['escalera', 'beso', 'muro', 'torre'];
   var channels = PHOTOS.map(function (f, i) {
     var word = i < 3 ? '<span class="word">' + S.words[i] + '</span>' : '<span class="word date" data-lz-date="' + S.chPat + '">' + S.chTxt + '</span>';
-    return '<span class="ch" data-ch="' + (i + 1) + '"><img src="/assets/fotos/' + f + '.jpg" data-lz-src="photo:' + i + '" alt="" decoding="async">' + word + '<span class="osd">' + S.channel + ' ' + (i + 1) + '</span></span>';
+    return '<span class="ch" data-ch="' + (i + 1) + '"><img src="/assets/fotos/' + f + '.webp" data-lz-src="photo:' + i + '" alt="" decoding="async">' + word + '<span class="osd">' + S.channel + ' ' + (i + 1) + '</span></span>';
   }).join('');
   // La pantalla editable queda bajo el gabinete fotografiado y la perilla interactiva.
   var tv = function (cls, screen, knobBtn) {
@@ -80,7 +80,7 @@
       '<div class="side" aria-hidden="' + (knobBtn ? 'false' : 'true') + '">' + (knobBtn ? '<button type="button" class="kb" id="knob" aria-label="' + S.knob + '"><span class="knob"></span></button>' : '<span class="kb"><span class="knob"></span></span>') +
       '<span class="ctl"><i></i><i></i><i></i></span><span class="sw"></span><span class="grill"></span><span class="dots"><i></i><i></i><i></i></span></div></div></div>';
   };
-  var crt = function (cls, src, n, alt, extra) { return '<div class="crt ' + cls + '"><div><img src="/assets/fotos/' + src + '.jpg" data-lz-src="photo:' + n + '" alt="' + (alt || '') + '" loading="lazy"><span class="lines" aria-hidden="true"></span>' + (extra || '') + '</div></div>'; };
+  var crt = function (cls, src, n, alt, extra) { return '<div class="crt ' + cls + '"><div><img src="/assets/fotos/' + src + '.webp" data-lz-src="photo:' + n + '" alt="' + (alt || '') + '" loading="lazy"><span class="lines" aria-hidden="true"></span>' + (extra || '') + '</div></div>'; };
   var N = function (k) { return '<span data-lz="' + k + '">' + S[k] + '</span>'; };
   var MONO = '<span data-lz-mono>A<i> &amp; </i>L</span>';
   var maps = function (q) { return 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(q + ', Oaxaca'); };
@@ -121,7 +121,7 @@
       '<div class="st-txt">' + hd(S.storyK, '<span data-lz="storyTitle">' + S.storyTitle + '</span>') + '<p class="p" data-lz="story">' + S.storyTxt + '</p><p class="sc sig">' + N('n1') + ' ' + S.y + ' ' + N('n2') + '</p></div></section>' +
 
     '<section class="sec alt gal" id="galeria"><div class="gal-head">' + hd(S.galK, S.galS) + '<button type="button" class="pill line gal-all d" data-gallery-open>' + S.allPhotos + '</button></div>' +
-      '<div class="grid" data-lz-list="gallery">' + ['paseo', 'torre', 'muro', 'beso', 'escalera'].map(function (f) { return '<div class="crt tile" data-lz-item data-rv><div><img data-lz-f="img" src="/assets/fotos/' + f + '.jpg" alt="" loading="lazy"><span class="lines" aria-hidden="true"></span></div></div>'; }).join('') + '</div>' +
+      '<div class="grid" data-lz-list="gallery">' + ['paseo', 'torre', 'muro', 'beso', 'escalera'].map(function (f) { return '<div class="crt tile" data-lz-item data-rv><div><img data-lz-f="img" src="/assets/fotos/' + f + '.webp" alt="" loading="lazy"><span class="lines" aria-hidden="true"></span></div></div>'; }).join('') + '</div>' +
       '<button type="button" class="pill line gal-all m" data-gallery-open>' + S.allPhotos + '</button></section>' +
 
     '<section class="sec dress" data-lz-group="dressCode dressNotes dressColors"><div class="dress-in" data-rv>' + hd(S.dressK, S.dressS) + '<p class="dr-c" data-lz="dressCode">' + S.dressCode + '</p><p class="p" data-lz="dressNotes">' + S.dressNotes + '</p>' +

@@ -33,3 +33,7 @@ Los tests interceptan todas las solicitudes a `*.supabase.co`; no crean cuentas,
 `python tests/browser/invitation_sharing.py` inspecciona WhatsApp/SMS y copia del mensaje completo con el enlace público en los 22 demos; comprueba mensaje promocional, ausencia de claves de previews, variantes EN/iOS y bloqueo de borradores. No abre apps ni envía mensajes.
 
 `python tests/browser/invitation_language.py` comprueba idioma guardado frente a rutas ES/EN en los 22 diseños, demos públicas, elección obligatoria, guardado/restauración y cambio independiente del idioma del editor.
+
+`python tests/browser/seo.py` verifica la salida SEO del build en 320, 390 y 1440 px: rutas comerciales, H1, filtros, navegación catálogo → ficha sin JavaScript, overflow y axe. Intercepta la API de cotización y los proveedores de analítica: comprueba errores/éxito y eventos sin enviar correos ni visitas reales. Requiere servir `dist/` en 4174 o configurar `INVITESSE_TEST_BASE`.
+
+Las fuentes están alojadas localmente. El build agrupa los scripts de demos conservando su orden y el script temprano de idioma. Al editar scripts compartidos o el pipeline de assets, ejecutar también `gallery_limits.py` e `invitation_language.py`; ambas pruebas usan datos simulados.

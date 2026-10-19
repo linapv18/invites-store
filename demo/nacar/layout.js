@@ -58,6 +58,10 @@
     }
   }[LANG];
   window.NacarS = S;
+  // Ordinary demos load inside photographs when the box starts opening. Never
+  // defer editor/guest previews, where content.js owns the customer's image URLs.
+  var deferPhotos = !new URLSearchParams(location.search).has('lz');
+  var photo = function (src) { return deferPhotos ? 'data-invite-src="' + src + '" data-full-src="' + src + '"' : 'src="' + src + '"'; };
 
   var A = '/assets/nacar/';
   var pearlId = 0;
@@ -86,7 +90,7 @@
     '<div class="op-mist" aria-hidden="true"></div>' +
     '<div class="op-box">' +
       '<div class="op-base" aria-hidden="true"><div class="op-satin"></div></div><div class="op-card" aria-hidden="true"><p class="op-card-n">' + N('n1') + '<br>' + N('n2') + '</p><p class="acc">' + S.married + '</p><p class="op-card-d" data-lz-date="' + S.numPat + '">' + S.numTxt + '</p></div>' +
-      '<button type="button" class="op-lid" id="lid" aria-label="' + S.open + '"><span class="op-mono">' + MONO + '</span><span class="op-names">' + N('n1') + ' ' + S.amp + ' ' + N('n2') + '</span><span class="op-intro" data-lz="envIntro" data-lz-keep>' + S.envIntro + '</span></button>' +
+      '<button type="button" class="op-lid" id="lid" aria-describedby="enter"><span class="op-mono">' + MONO + '</span><span class="op-names">' + N('n1') + ' ' + S.amp + ' ' + N('n2') + '</span><span class="op-intro" data-lz="envIntro" data-lz-keep>' + S.envIntro + '</span></button>' +
       '<div class="op-strand" aria-hidden="true"><span class="half l"></span><span class="clasp"></span><span class="half r"></span></div>' +
     '</div>' +
     '<div class="op-ticket"><p class="k">' + S.for + '</p><p class="op-guest">' + S.guest + '</p><p class="op-seats">' + S.seats + '</p>' +
@@ -102,19 +106,19 @@
         '<h1 class="names" tabindex="-1">' + N('n1') + '<span class="amp">' + S.y + '</span>' + N('n2') + '</h1><p class="acc hero-acc">' + S.married + '</p>' +
         '<p class="k hero-when"><span data-lz-date="' + S.coverPat + '">' + S.coverTxt + '</span> · <span data-lz="city">' + S.city + '</span></p>' +
         '<div class="hero-act"><a class="btn" href="#rsvp">' + S.confirm + '</a><a class="lnk" href="#itinerario">' + S.seeProg + '</a></div></div>' +
-      '<div class="hero-ph bw">' + strand(SWAG, 400, 70, 4.2, 'swag') + '<img class="ph-img" id="heroImg" fetchpriority="high" src="/assets/fotos/torre.jpg" data-lz-src="photo:0" alt="' + S.photoAlt + '" decoding="async"></div>' +
+      '<div class="hero-ph bw">' + strand(SWAG, 400, 70, 4.2, 'swag') + '<img class="ph-img" id="heroImg" ' + photo('/assets/fotos/torre.webp') + ' data-lz-src="photo:0" alt="' + S.photoAlt + '" decoding="async"></div>' +
     '</section>' +
 
     '<section class="sec story" id="historia" data-lz-anchor="historia" data-gallery="mono">' +
       '<div class="head"><h2>' + S.storyK + '</h2><p class="acc" data-lz="storyTitle">' + S.storyTitle + '</p></div>' +
-      '<div class="env" data-rv><div class="vellum" aria-hidden="true"></div><div class="polaroid bw"><img class="ph-img" src="/assets/fotos/muro.jpg" data-lz-src="photo:1" alt="" loading="lazy"></div>' +
+      '<div class="env" data-rv><div class="vellum" aria-hidden="true"></div><div class="polaroid bw"><img class="ph-img" ' + photo('/assets/fotos/muro.webp') + ' data-lz-src="photo:1" alt="" loading="lazy"></div>' +
         '<div class="letter">' + PIN + '<p class="to">' + S.for + ' ' + S.guest + ':</p><p data-lz="msg">' + S.msg + '</p><p data-lz="story">' + S.storyTxt + '</p><p class="acc sig">' + N('n1') + ' ' + S.y + ' ' + N('n2') + '</p></div></div>' +
     '</section>' +
 
     '<section class="sec gal" id="galeria" data-gallery="mono">' +
       '<div class="head"><h2>' + S.galK + '</h2><p class="acc">' + S.galA + '</p></div>' +
       '<div class="necklace">' + strand('M0 18H1000', 1000, 40, 4.2, 'line') +
-        '<div class="hang" id="strip" data-lz-list="gallery">' + ['beso', 'escalera', 'muro', 'torre', 'paseo'].map(function (f, i) { return '<div class="charm bw" data-lz-item data-rv style="--r:' + [-3, 2, -1, 3, -2][i] + 'deg"><img class="ph-img" data-lz-f="img" src="/assets/fotos/' + f + '.jpg" alt="" loading="lazy"></div>'; }).join('') + '</div></div>' +
+        '<div class="hang" id="strip" data-lz-list="gallery">' + ['beso', 'escalera', 'muro', 'torre', 'paseo'].map(function (f, i) { return '<div class="charm bw" data-lz-item data-rv style="--r:' + [-3, 2, -1, 3, -2][i] + 'deg"><img class="ph-img" data-lz-f="img" ' + photo('/assets/fotos/' + f + '.webp') + ' alt="" loading="lazy"></div>'; }).join('') + '</div></div>' +
       '<div class="gal-foot"><div class="gal-nav"><button type="button" class="round" data-strip="-1" aria-label="' + S.prev + '">' + PREV + '</button><button type="button" class="round" data-strip="1" aria-label="' + S.next + '">' + NEXT + '</button></div><button type="button" class="btn" data-gallery-open>' + S.allPhotos + '</button></div>' +
     '</section>' +
 
@@ -167,12 +171,13 @@
   '</main>';
 
   function drawPearls(svg){
-    var path=svg.querySelector('.pearl-route'),group=svg.querySelector('[data-pearl-fill]'),r=+svg.dataset.pearlRadius;group.replaceChildren();if(svg.classList.contains('line')){var w=svg.clientWidth||1000;svg.setAttribute('viewBox','0 0 '+w+' 40');path.setAttribute('d','M0 18H'+w);}var total=path.getTotalLength(),n=Math.max(2,Math.floor(total/(2*r+1.1))),id=group.dataset.pearlFill;
+    var path=svg.querySelector('.pearl-route'),group=svg.querySelector('[data-pearl-fill]'),r=+svg.dataset.pearlRadius;if(svg.classList.contains('line')){var w=svg.clientWidth||1000;svg.setAttribute('viewBox','0 0 '+w+' 40');path.setAttribute('d','M0 18H'+w);}var total=path.getTotalLength(),n=Math.max(2,Math.floor(total/(2*r+1.1))),id=group.dataset.pearlFill,fragment=document.createDocumentFragment();
     for(var i=0;i<=n;i++){
       var p=path.getPointAtLength(total*i/n),size=r*(1+Math.sin(i*2.4)*.025);
-      var shadow=document.createElementNS('http://www.w3.org/2000/svg','circle');shadow.setAttribute('cx',p.x+.35);shadow.setAttribute('cy',p.y+.85);shadow.setAttribute('r',size+.25);shadow.setAttribute('fill','#251e171b');group.appendChild(shadow);
-      var bead=document.createElementNS(shadow.namespaceURI,'circle');bead.setAttribute('cx',p.x);bead.setAttribute('cy',p.y);bead.setAttribute('r',size);bead.setAttribute('fill','url(#'+id+')');group.appendChild(bead);
+      var shadow=document.createElementNS('http://www.w3.org/2000/svg','circle');shadow.setAttribute('cx',p.x+.35);shadow.setAttribute('cy',p.y+.85);shadow.setAttribute('r',size+.25);shadow.setAttribute('fill','#251e171b');fragment.appendChild(shadow);
+      var bead=document.createElementNS(shadow.namespaceURI,'circle');bead.setAttribute('cx',p.x);bead.setAttribute('cy',p.y);bead.setAttribute('r',size);bead.setAttribute('fill','url(#'+id+')');fragment.appendChild(bead);
     }
+    group.replaceChildren(fragment);
   }
   document.querySelectorAll('svg[data-pearl-radius]').forEach(drawPearls);
   var galleryThread=document.querySelector('.necklace .line');if('ResizeObserver' in window)new ResizeObserver(function(){requestAnimationFrame(function(){drawPearls(galleryThread);});}).observe(galleryThread);

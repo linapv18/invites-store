@@ -8,9 +8,7 @@
 <meta name="description" content="Wedding website invitation demo: a seed packet that opens, flowers that grow as you scroll, countdown, schedule, travel, per-guest RSVP and FAQ.">
 <meta name="theme-color" content="#F3EEE2">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%23B86B4B'/%3E%3Ctext x='32' y='44' font-family='Georgia,serif' font-style='italic' font-size='34' fill='%23FBF1E6' text-anchor='middle'%3E%26%3C/text%3E%3C/svg%3E">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&amp;family=Pinyon+Script&amp;family=Jost:wght@300;400;500&amp;family=Caveat:wght@500&amp;display=swap" rel="stylesheet">
+<link href="/assets/brand/fonts/set-625526a21a25a7cc.css" rel="stylesheet">
 <style>
 /* Jardín: botánico y de papelería. Los colores salen de estas variables (paletas en demo/shared/content.js). */
 :root{
@@ -571,7 +569,7 @@ html:not(.lz-no-photos) .np-only,.lz-no-photos .ph-only{display:none!important}
   var seeds = ''; for (var i = 0; i < 14; i++) seeds += '<i style="left:' + (46 + (i % 7) * 1.5) + '%;top:' + (24 + (i % 3)) + '%;--x:' + ((i % 2 ? 1 : -1) * (30 + i * 9)) + 'px;--y:' + (-40 - (i * 13) % 90) + 'px;animation-delay:' + ((i % 5) * .05) + 's"></i>';
   var gw = Math.max(360, Math.min(1600, window.innerWidth || 375));
   var maps = function (q) { return 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(q + ', Oaxaca'); };
-  var photos = ['/assets/fotos/beso.jpg', '/assets/fotos/escalera.jpg', '/assets/fotos/muro.jpg'];
+  var photos = ['/assets/fotos/beso.webp', '/assets/fotos/escalera.webp', '/assets/fotos/muro.webp'];
   var names = '<span data-lz="n1">' + S.n1 + '</span>';
   var ARROW = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" aria-hidden="true"><path d="M5 11 11 5M6 5h5v5"/></svg>';
   document.getElementById('app').innerHTML =
@@ -616,7 +614,7 @@ html:not(.lz-no-photos) .np-only,.lz-no-photos .ph-only{display:none!important}
       '<div class="deco" style="right:-30px;top:40px">' + cornerSprig(120, 190, -1) + '</div>' +
       '<div class="in-w">' + BFLY +
         '<p class="eb">' + S.getting + '</p>' +
-        '<div class="wreath"><div class="oval ph-only"><img class="ph-img" src="/assets/fotos/paseo.jpg" data-lz-src="photo:0" alt="' + S.photoAlt + '"></div>' +
+        '<div class="wreath"><div class="oval ph-only"><img class="ph-img" src="/assets/fotos/paseo.webp" data-lz-src="photo:0" alt="' + S.photoAlt + '"></div>' +
           '<div class="oval oval-np np-only script" aria-hidden="true"><span data-lz="n1">' + S.n1 + '</span><span class="y">' + S.y + '</span><span data-lz="n2">' + S.n2 + '</span></div>' + wreath() + '</div>' +
         '<h1 class="script" id="names" tabindex="-1"><span class="fitl" data-lz="n1">' + S.n1 + '</span><span class="y">' + S.y + '</span><span class="fitl" data-lz="n2">' + S.n2 + '</span></h1>' +
         '<p class="date" data-lz-date="{d} · {Mc} · {Y}">' + S.date + '</p><p class="eb city" data-lz="city">' + S.city + '</p>' +

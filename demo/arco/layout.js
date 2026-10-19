@@ -85,9 +85,9 @@
   '<div class="opening" id="open" role="dialog" aria-modal="true" aria-label="' + S.openAria + '">' +
     '<p class="op-intro" data-lz="envIntro" data-lz-keep>' + S.envIntro + '</p>' +
     '<button type="button" class="win" id="win" aria-describedby="wipeHint" aria-label="' + S.hint + (LANG === 'en' ? '. Press Enter to clear using the keyboard.' : '. Pulsa Enter para limpiar con el teclado.') + '">' +
-      '<span class="win-ph blur"><img src="/assets/fotos/torre.jpg" data-lz-src="photo:0" alt="" decoding="async"></span>' +
+      '<span class="win-ph blur"><img src="/assets/fotos/torre.webp" data-lz-src="photo:0" alt="" decoding="async"></span>' +
       '<canvas class="mist" aria-hidden="true"></canvas>' +
-      '<span class="win-ph clear" aria-hidden="true"><img src="/assets/fotos/torre.jpg" data-lz-src="photo:0" alt="" decoding="async"></span>' +
+      '<span class="win-ph clear" aria-hidden="true"><img src="/assets/fotos/torre.webp" data-lz-src="photo:0" alt="" decoding="async"></span>' +
       '<span class="fog-txt" aria-hidden="true"><span class="sig">' + N('n1') + ' ' + S.y + ' ' + N('n2') + '</span><span class="fog-d" data-lz-date="' + S.numPat + '">' + S.numTxt + '</span></span>' +
     '</button>' +
     '<div class="op-ticket"><p class="k">' + S.for + '</p><p class="op-guest">' + S.guest + '</p><p class="op-seats">' + S.seats + '</p>' +
@@ -99,7 +99,7 @@
   '<header class="mbar" id="mbar"><a class="mono" href="#portada" aria-label="' + S.n1 + ' ' + S.y + ' ' + S.n2 + '"><span data-lz-seal><span class="lz-seal">A<i>&amp;</i>L</span></span></a><nav aria-label="' + S.sections + '"><a href="#itinerario">' + S.program + '</a><a class="mbar-cta" href="#rsvp">' + S.confirmShort + '</a></nav></header>' +
   '<main id="invite" inert>' +
     '<section class="hero" id="portada" data-lz-anchor="portada">' +
-      '<div class="hero-ph"><img class="ph-img" id="heroImg" src="/assets/fotos/torre.jpg" data-lz-src="photo:0" alt="' + S.photoAlt + '" decoding="async">' +
+      '<div class="hero-ph"><img class="ph-img" id="heroImg" src="/assets/fotos/torre.webp" data-lz-src="photo:0" alt="' + S.photoAlt + '" decoding="async">' +
         '<p class="glass pill"><span class="k">' + S.saveDate + '</span><b data-lz-date="' + S.numPat + '">' + S.numTxt + '</b></p>' +
         '<h1 class="names" tabindex="-1"><em aria-hidden="true">&amp;</em>' + N('n1') + '<span class="sr"> ' + S.y + ' </span>' + N('n2') + '</h1></div>' +
       '<div class="hero-panel arch">' + I_RINGS + '<p class="when"><span class="w-m" data-lz-date="' + S.monPat + '">' + S.monTxt + '</span><b data-lz-date="' + S.dayPat + '">' + S.dayTxt + '</b><span class="w-t" data-lz="time0">' + S.time0 + '</span></p>' +
@@ -111,16 +111,16 @@
     '</section>' +
 
     '<section class="sec story" id="historia" data-lz-anchor="historia">' +
-      '<div class="arch-ph" data-rv><img class="ph-img" src="/assets/fotos/escalera.jpg" data-lz-src="photo:1" alt="" loading="lazy"></div>' +
+      '<div class="arch-ph" data-rv><img class="ph-img" src="/assets/fotos/escalera.webp" data-lz-src="photo:1" alt="" loading="lazy"></div>' +
       '<div class="story-txt"><p class="k">' + S.storyK + '</p><h2 data-lz="storyTitle">' + S.storyTitle + '</h2><p data-lz="story">' + S.storyTxt + '</p><p class="sig">' + N('n1') + ' ' + S.y + ' ' + N('n2') + '</p></div>' +
     '</section>' +
 
     '<section class="sec gal" id="galeria"><div class="head"><p class="k">' + S.galK + '</p><h2>' + S.galT + '</h2></div>' +
-      '<div class="arcade-strip" id="strip" data-lz-list="gallery">' + ['beso', 'escalera', 'muro', 'torre', 'paseo'].map(function (f) { return '<div class="arc-item" data-lz-item><img class="ph-img" data-lz-f="img" src="/assets/fotos/' + f + '.jpg" alt="" loading="lazy"></div>'; }).join('') + '</div>' +
+      '<div class="arcade-strip" id="strip" data-lz-list="gallery">' + ['beso', 'escalera', 'muro', 'torre', 'paseo'].map(function (f) { return '<div class="arc-item" data-lz-item><img class="ph-img" data-lz-f="img" src="/assets/fotos/' + f + '.webp" alt="" loading="lazy"></div>'; }).join('') + '</div>' +
       '<div class="gal-foot"><div class="gal-nav"><button type="button" class="round" data-strip="-1" aria-label="' + S.prev + '">' + PREV + '</button><button type="button" class="round" data-strip="1" aria-label="' + S.next + '">' + NEXT + '</button></div><button type="button" class="btn" data-gallery-open>' + S.allPhotos + '</button></div>' +
     '</section>' +
 
-    '<section class="cd"><img class="ph-img cd-bg" src="/assets/fotos/paseo.jpg" data-lz-src="photo:2" alt="" loading="lazy"><div class="cd-in">' +
+    '<section class="cd"><img class="ph-img cd-bg" src="/assets/fotos/paseo.webp" data-lz-src="photo:2" alt="" loading="lazy"><div class="cd-in">' +
       '<p class="k k-light">' + S.cdK + '</p><div class="tiles" role="timer" aria-live="off">' + S.units.map(function (u, i) { return '<div class="glass tile"><b data-cd="' + 'dhm'[i] + '">--</b><span>' + u + '</span></div>'; }).join('') + '<b data-cd="s" hidden></b></div>' +
       '<p class="sig">' + S.cdA + '</p><p class="cd-when"><span data-lz="cdName">' + S.cdName + '</span> · <span data-lz="time0">' + S.time0 + '</span></p><p class="cd-note" data-lz="countdownNote">' + S.cdNote + '</p></div>' + WAVE +
     '</section>' +
@@ -140,7 +140,7 @@
       '<div class="guide" data-lz-group="guideFood guideCulture guidePlans"><p class="k">' + S.guideK + '</p>' + info(I_SEE, 'guideCulture', S.cultureL, S.culture) + info(I_FOOD, 'guideFood', S.foodL, S.food) + info(I_PLAN, 'guidePlans', S.plansL, S.plans) + '</div>' +
     '</section>' +
 
-    '<section class="sec quote" data-lz-group="quote"><div class="arch-ph small" data-rv><img class="ph-img" src="/assets/fotos/muro.jpg" data-lz-src="photo:3" alt="" loading="lazy"></div>' +
+    '<section class="sec quote" data-lz-group="quote"><div class="arch-ph small" data-rv><img class="ph-img" src="/assets/fotos/muro.webp" data-lz-src="photo:3" alt="" loading="lazy"></div>' +
       '<div><blockquote>«<span data-lz="quote">' + S.quote + '</span>»</blockquote><p class="sig" data-lz="quoteAuthor">' + S.quoteAuthor + '</p></div></section>' +
 
     '<section class="sec faq" id="faq" data-lz-anchor="faq" data-lz-hide-empty><div class="head"><p class="k">' + S.faqK + '</p><h2>' + S.faqT + '</h2></div>' +
@@ -156,7 +156,7 @@
       '<div id="rsDone" hidden><div class="thanks arch"><p class="sig">' + S.thanks + '</p></div><div id="rsSum"></div><button type="button" class="lnk" id="rsEdit">' + S.edit + '</button></div>' +
       '<p class="mute demo-note">' + S.demoNote + '</p></div></section>' +
 
-    '<section class="fin"><img class="ph-img fin-bg" src="/assets/fotos/beso.jpg" data-lz-src="photo:4" alt="" loading="lazy">' +
+    '<section class="fin"><img class="ph-img fin-bg" src="/assets/fotos/beso.webp" data-lz-src="photo:4" alt="" loading="lazy">' +
       '<div class="fin-panel arch"><span class="fin-mono" data-lz-seal><span class="lz-seal">A<i>&amp;</i>L</span></span><p class="sig" data-lz="envClosing" data-lz-keep>' + S.envClosing + '</p><p class="fin-n">' + N('n1') + ' ' + S.amp + ' ' + N('n2') + '</p><p class="k k-light" data-lz-date="' + S.numPat + '">' + S.numTxt + '</p>' +
       '<nav class="fin-links" aria-label="' + (LANG === 'en' ? 'Wedding information' : 'Información de la boda') + '"><a href="#itinerario">' + S.program + '</a><a href="#rsvp">' + S.confirmShort + '</a></nav></div></section>' +
   '</main>';

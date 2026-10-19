@@ -61,7 +61,7 @@
   var ARCH = '<svg viewBox="0 0 236 330" fill="none" stroke="currentColor" aria-hidden="true"><path d="M118 2 152 14h24l24 18h20l14 30V328H2V62l14-30h20l24-18h24Z" stroke-width="1.2"/><path d="M118 8 150 20h24l24 18h18l12 26V322H8V64l12-26h18l24-18h24Z" stroke-width=".6" opacity=".6"/></svg>';
   var RING = '<svg viewBox="0 0 230 230" aria-hidden="true"><defs><path id="gRing" d="M115 115m-98 0a98 98 0 1 1 196 0a98 98 0 1 1-196 0"/></defs><circle cx="115" cy="115" r="108" fill="none" stroke="currentColor" stroke-width=".8" opacity=".7" style="color:var(--gold)"/><circle cx="115" cy="115" r="88" fill="none" stroke="currentColor" stroke-width=".6" stroke-dasharray="1 5" opacity=".8" style="color:var(--gold)"/><text font-family="Josefin Sans" font-size="9" style="fill:var(--gold2)"><textPath href="#gRing" textLength="612" lengthAdjust="spacingAndGlyphs" id="ringTxt"></textPath></text></svg>';
   var maps = function (q) { return 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(q + ', Oaxaca'); };
-  var photos = ['/assets/fotos/beso.jpg', '/assets/fotos/escalera.jpg', '/assets/fotos/muro.jpg'];
+  var photos = ['/assets/fotos/beso.webp', '/assets/fotos/escalera.webp', '/assets/fotos/muro.webp'];
 
   document.getElementById('app').innerHTML =
   // Fuentes ocultas: el editor las llena y la plantilla copia su texto donde va letra por letra o en el anillo.
@@ -80,7 +80,7 @@
     '<section class="hero velvet" id="portada" data-lz-anchor="portada">' +
       '<div class="in-w"><div class="hero-fan" style="color:var(--gold)">' + fan(80) + '</div>' +
       '<p class="eb hero-kicker" style="margin-top:6px">' + S.getting + '</p>' +
-      '<div class="arch"><div class="ph"><img class="ph-img" src="/assets/fotos/paseo.jpg" data-lz-src="photo:0" alt="' + S.photoAlt + '" style="object-position:center 60%"></div>' + ARCH + '</div>' +
+      '<div class="arch"><div class="ph"><img class="ph-img" src="/assets/fotos/paseo.webp" data-lz-src="photo:0" alt="' + S.photoAlt + '" style="object-position:center 60%"></div>' + ARCH + '</div>' +
       '<h1 class="letters" tabindex="-1"><span data-split="srcN1">' + spl(S.n1) + '</span><span class="foil amp">&amp;</span><span data-split="srcN2" data-off="4">' + spl(S.n2, 4) + '</span></h1>' +
       '<div class="date"><span data-lz-date="{Mc}">' + S.M + '</span><b class="foil" data-lz-date="{d}">14</b><span data-lz-date="{Y}">2027</span></div><p class="eb hero-city" style="margin-top:14px;color:var(--muted)" data-lz="city">' + S.city + '</p>' +
       ORN + '<p class="msg" data-lz="msg">' + S.msg + '</p></div>' +

@@ -62,7 +62,7 @@
     '<svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.15" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 10 10-4 12 4 10-4v26l-10 4-12-4-10 4V10Z"/><path d="M14 6v26m12-4v8M8 17l3-1m-3 7 3-1m7 6 4 1"/><path d="M30 15c0 4-6 10-6 10s-6-6-6-10a6 6 0 0 1 12 0Z"/><circle cx="24" cy="15" r="2"/></svg>'
   ];
   var maps = function (q) { return 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(q + ', Oaxaca'); };
-  var photos = ['/assets/fotos/beso.jpg', '/assets/fotos/escalera.jpg', '/assets/fotos/muro.jpg'];
+  var photos = ['/assets/fotos/beso.webp', '/assets/fotos/escalera.webp', '/assets/fotos/muro.webp'];
   var sh = function (eb, title, anchorAttr) { return '<div class="sh" data-rv><p class="eb"' + (anchorAttr || '') + '>' + eb + '</p><h2>' + title + '</h2></div>'; };
   var mono = '<span data-lz-mono>A<i>—</i>L</span>';
 
@@ -97,7 +97,7 @@
       '<p class="eb" style="margin-top:44px">' + S.getting + '</p>' +
       '<h1 class="names letters" tabindex="-1"><span class="ln" data-split="srcN1">' + spl(S.n1) + '</span><em class="foil">&amp;</em><span class="ln" data-split="srcN2" data-off="4">' + spl(S.n2, 4) + '</span></h1>' +
       '<div class="hl hero-rule" data-rv="line"></div>' +
-      '<div class="photo zoomin" data-rv><div class="pic"><img class="ph-img" id="heroImg" src="/assets/fotos/paseo.jpg" data-lz-src="photo:0" alt="' + S.photoAlt + '" style="object-position:center 60%"></div><span class="vcap" id="vcap">OAXACA, MÉXICO — MMXXVII</span>' +
+      '<div class="photo zoomin" data-rv><div class="pic"><img class="ph-img" id="heroImg" src="/assets/fotos/paseo.webp" data-lz-src="photo:0" alt="' + S.photoAlt + '" style="object-position:center 60%"></div><span class="vcap" id="vcap">OAXACA, MÉXICO — MMXXVII</span>' +
         '<div class="stamp" aria-hidden="true"><svg viewBox="0 0 100 100"><defs><path id="auRing" d="M50 50m-38 0a38 38 0 1 1 76 0a38 38 0 1 1-76 0"/></defs><text font-family="Montserrat" font-size="7.4" letter-spacing="2.6" fill="currentColor"><textPath href="#auRing" textLength="235" id="ringTxt"></textPath></text></svg><b class="au-monogram" data-lz-seal>A<i>&amp;</i>L</b></div></div>' +
       '<div class="meta"><div><span class="eb">' + S.dateL + '</span><p data-lz-date="' + S.metaPat + '">' + S.metaTxt + '</p></div><div><span class="eb">' + S.placeL + '</span><p data-lz="city">' + S.city + '</p></div></div>' +
       '<p class="msg" data-lz="msg">' + S.msg + '</p>' +

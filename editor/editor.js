@@ -1124,7 +1124,7 @@
             '<button type="button" data-act="gal-move" data-i="' + i + '" data-d="1" aria-label="' + esc(S.moveNext + ' · ' + S.photoN(i + 1)) + '"' + (i === g.length - 1 ? ' disabled' : '') + '>' + svg(P.right, 14, 2) + '</button></div></div>';
         }).join('') + (g.length < 12 ? dropzone('gallery', S.upPhotos, '', true) : '') + '</div>' + (g.length >= 12 ? '<span class="ed-hint">' + esc(S.galFull) + '</span>' : '') + '</div>' +
         cartUpsell('galeria', { k: S.galK, t: esc(S.galT), s: S.galS, dark: !cart.galeria, label: S.add,
-          pics: '<div class="ed-upsell-pics"><img src="/assets/fotos/torre.jpg" alt=""><img src="/assets/fotos/paseo.jpg" alt=""></div>' });
+          pics: '<div class="ed-upsell-pics"><img src="/assets/fotos/torre.webp" alt=""><img src="/assets/fotos/paseo.webp" alt=""></div>' });
     },
     itinerario: function () {
       var ev = state.events;
@@ -1314,14 +1314,14 @@
         }).join('')) + card('<span class="ed-kicker">' + esc(S.demoPlaylist) + '</span><span class="t">' + esc(S.songAsk) + '</span><span class="ed-field"><input disabled placeholder="' + esc(S.songAskPh) + '" aria-label="' + esc(S.songAskPh) + '"></span><span class="ed-btn ed-btn-dark ed-btn-sm" style="align-self:flex-start">' + esc(S.suggest) + '</span>') + '</div>';
       case 'libro':
         return '<div class="ed-demo">' + card(qrSVG() + '<span class="s">' + esc(S.qrScan) + '</span>', 'align-items:center;text-align:center') +
-          card('<img src="/assets/fotos/escalera.jpg" alt="" style="width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:8px"><span class="t" style="font-size:19px;font-style:italic">«' + esc(S.qrMsg) + '»</span><small class="ed-hint">' + esc(S.qrBy) + '</small>') + '</div>';
+          card('<img src="/assets/fotos/escalera.webp" alt="" style="width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:8px"><span class="t" style="font-size:19px;font-style:italic">«' + esc(S.qrMsg) + '»</span><small class="ed-hint">' + esc(S.qrBy) + '</small>') + '</div>';
       case 'capsula':
         var openTxt = longDate(capsuleOpen(), true);
         return '<div class="ed-demo">' + card('<div class="iv-env" style="width:100%;max-width:240px;height:150px;align-self:center"><svg width="100%" height="90" viewBox="0 0 240 96" preserveAspectRatio="none" aria-hidden="true"><path d="M0 0h240L120 92Z" fill="#E6E1D4" stroke="#D6CFBF"/></svg><div class="iv-seal" style="left:calc(50% - 36px);top:52px">' + svg(P.lock, 22, 1.6) + '</div></div><span class="ed-kicker" style="text-align:center">' + esc(S.sealedUntil) + '</span><span class="t" style="text-align:center">' + esc(openTxt || '—') + '</span>', 'background:var(--cream)') +
           card('<span class="ed-kicker">' + esc(S.guestsSee) + '</span><span class="t" style="font-size:19px;font-style:italic">«' + esc(String(state.capsulePrompt || '').trim() || S.capPromptPh) + '»</span><span class="ed-btn ed-btn-dark ed-btn-sm" style="align-self:flex-start">' + esc(S.capWrite) + '</span>' +
             S.capsuleMsgs.slice(0, 2).map(function (m) { return '<div class="ed-song"><i>' + svg(P.lock, 15) + '</i><div><span>' + esc(m[0]) + '</span><small>' + esc(m[1]) + '</small></div></div>'; }).join('')) + '</div>';
       case 'galeria':
-        return '<div class="ed-demo">' + card('<span class="ed-kicker">' + esc(S.galUploaded) + '</span><div class="ed-photos3">' + ['torre', 'beso', 'muro', 'paseo', 'escalera', 'torre'].map(function (f, i) { return '<img src="/assets/fotos/' + f + '.jpg" alt="' + esc(S.galShot(i + 1)) + '" loading="lazy"' + (i === 5 ? ' style="transform:scaleX(-1)"' : '') + '>'; }).join('') + '</div>', 'grid-column:1/-1') + '</div>';
+        return '<div class="ed-demo">' + card('<span class="ed-kicker">' + esc(S.galUploaded) + '</span><div class="ed-photos3">' + ['torre', 'beso', 'muro', 'paseo', 'escalera', 'torre'].map(function (f, i) { return '<img src="/assets/fotos/' + f + '.webp" alt="' + esc(S.galShot(i + 1)) + '" loading="lazy"' + (i === 5 ? ' style="transform:scaleX(-1)"' : '') + '>'; }).join('') + '</div>', 'grid-column:1/-1') + '</div>';
       case 'bilingue':
         return '<div class="ed-demo">' + [[S.biEs, S.biEsT, S.biEsMsg], [S.biEn, S.biEnT, S.biEnMsg]].map(function (x) {
           return card('<span class="ed-kicker">' + esc(x[0]) + '</span><span class="t">' + esc(x[1]) + '</span><span class="s">' + esc(x[2]) + '</span><span class="s serif" style="font-size:22px">' + esc(couple(state)) + '</span>');

@@ -15,10 +15,12 @@
     "@supabase/auth-js": "^2.118.0",
     "@supabase/postgrest-js": "^2.118.0",
     "@supabase/storage-js": "^2.118.0",
-    "@supabase/supabase-js": "^2.118.0"
+    "@supabase/supabase-js": "^2.118.0",
+    "web-vitals": "^6.2.3"
   },
   "devDependencies": {
     "@electric-sql/pglite": "^0.5.10",
+    "@vercel/routing-utils": "^6.6.0",
     "axe-core": "^4.14.0",
     "esbuild": "^0.28.2"
   }

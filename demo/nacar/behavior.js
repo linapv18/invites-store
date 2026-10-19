@@ -63,12 +63,14 @@
   // Apertura: un solo gesto. Se suelta el broche, se levanta la tapa y la tarjeta sube hasta ser la portada.
   var op = $('open'), timers = [];
   var clear = function () { timers.forEach(clearTimeout); timers = []; };
+  function loadPhotos() { document.querySelectorAll('[data-invite-src]').forEach(function (img) { img.src = img.getAttribute('data-invite-src'); img.removeAttribute('data-invite-src'); }); }
   function enter() {
+    loadPhotos();
     clear(); opened = true; op.classList.add('open', 'gone'); op.inert = true; op.setAttribute('aria-hidden', 'true');
     $('invite').inert = false; document.body.classList.remove('locked'); watch(); $('demoBar').hidden = false; window.scrollTo(0, 0);
     document.querySelector('.hero .names').focus({ preventScroll: true });
   }
-  function part() { if (op.classList.contains('open')) return; clear(); var card=op.querySelector('.op-card'),from=card.getBoundingClientRect(),to=namesEl.getBoundingClientRect();op.style.setProperty('--card-x',((to.left+to.width/2)-(from.left+from.width/2))+'px');op.style.setProperty('--card-y',((to.top+to.height/2)-(from.top+from.height/2))+'px');op.style.setProperty('--card-grow',Math.min(1.8,Math.max(1.1,to.width/from.width)).toFixed(3));LazoMusic.play(); op.classList.add('open'); timers.push(setTimeout(enter, still ? 0 : 2600)); }
+  function part() { if (op.classList.contains('open')) return; loadPhotos(); clear(); var card=op.querySelector('.op-card'),from=card.getBoundingClientRect(),to=namesEl.getBoundingClientRect();op.style.setProperty('--card-x',((to.left+to.width/2)-(from.left+from.width/2))+'px');op.style.setProperty('--card-y',((to.top+to.height/2)-(from.top+from.height/2))+'px');op.style.setProperty('--card-grow',Math.min(1.8,Math.max(1.1,to.width/from.width)).toFixed(3));LazoMusic.play(); op.classList.add('open'); timers.push(setTimeout(enter, still ? 0 : 2600)); }
   $('lid').addEventListener('click', part); $('enter').addEventListener('click', part);
   window.LzTemplate = {
     open: function () { op.classList.add('open'); enter(); },

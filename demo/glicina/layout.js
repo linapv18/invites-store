@@ -92,7 +92,7 @@ const brush = c => `<svg viewBox="0 0 70 26" aria-hidden="true"><path d="M5 11C2
   var LACE = '<img class="lace" src="' + G + 'encaje-ovalo.webp" alt="">';
   var N = function (k) { return '<span data-lz="' + k + '">' + S[k] + '</span>'; };
   var maps = function (q) { return 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(q + ', Oaxaca'); };
-  var names = function (d) { return '<h1 class="writes"><span class="write" data-lz="n1">' + S.n1 + '</span><span class="y">' + S.y + '</span><span class="write" style="transition-delay:' + d + 's" data-lz="n2">' + S.n2 + '</span></h1>'; };
+  var names = function (d) { return '<p class="writes opening-names"><span class="write" data-lz="n1">' + S.n1 + '</span><span class="y">' + S.y + '</span><span class="write" style="transition-delay:' + d + 's" data-lz="n2">' + S.n2 + '</span></p>'; };
   var ovalNames = function (d) { return '<p class="mc">' + S.invite + '</p>' + names(d) + '<p class="dt" data-lz-date="' + S.datePat + '">' + S.dateTxt + '</p>'; };
   var ICONS = ['rings', 'dinner', 'glasses', 'candles'].map(function (k, i) { return GLI(k).replace('class="ic"', 'class="ic i' + i + '"'); }).join('');
 
@@ -119,7 +119,7 @@ const brush = c => `<svg viewBox="0 0 70 26" aria-hidden="true"><path d="M5 11C2
     '<a class="gx-bar-cta" href="#rsvp">' + S.confirm + '</a></nav></header>' +
   '<main id="invite" inert>' +
     '<section class="gx-cover" id="portada" data-lz-anchor="portada"><div class="gx-cover-art" aria-hidden="true"></div><div class="gx-cover-in">' +
-      '<div class="gx-oval ph-only">' + LACE + '<div class="gx-oval-in"><img class="ph-img" id="heroImg" src="/assets/fotos/paseo.jpg" data-lz-src="photo:0" alt="' + S.photoAlt + '" decoding="async"></div></div>' +
+      '<div class="gx-oval ph-only">' + LACE + '<div class="gx-oval-in"><img class="ph-img" id="heroImg" src="/assets/fotos/paseo.webp" data-lz-src="photo:0" alt="' + S.photoAlt + '" decoding="async"></div></div>' +
       '<div class="gx-oval np-only" aria-hidden="true">' + LACE + '<div class="gx-oval-in gx-oval-text"><p class="gx-k">' + S.invite + '</p><p class="gx-oval-names">' + N('n1') + '<span>' + S.y + '</span>' + N('n2') + '</p></div></div>' +
       '<h1 class="gx-names" tabindex="-1">' + N('n1') + ' <span class="y">' + S.y + '</span> ' + N('n2') + '</h1>' +
       '<p class="gx-k gx-ink" data-lz-date="' + S.coverPat + '">' + S.coverTxt + '</p><p class="gx-city" data-lz="city">' + S.city + '</p>' +
@@ -130,7 +130,7 @@ const brush = c => `<svg viewBox="0 0 70 26" aria-hidden="true"><path d="M5 11C2
       '<h2 class="gx-h">' + S.dear + '</h2><p class="gx-p" data-lz="msg">' + S.msg + '</p></section>' +
     DIV +
     '<section class="gx-sec" id="historia" data-lz-anchor="historia"><p class="gx-k">' + S.story + '</p><h2 class="gx-h" data-lz="storyTitle">' + S.storyTitle + '</h2><p class="gx-p gx-narrow" data-lz="story">' + S.storyTxt + '</p>' +
-      '<div class="gx-collage ph-only" data-lz-list="gallery" data-rv>' + ['beso', 'escalera', 'muro'].map(function (f) { return '<div class="gx-arch" data-lz-item><img class="ph-img" data-lz-f="img" src="/assets/fotos/' + f + '.jpg" alt="" loading="lazy" decoding="async"></div>'; }).join('') + '</div>' +
+      '<div class="gx-collage ph-only" data-lz-list="gallery" data-rv>' + ['beso', 'escalera', 'muro'].map(function (f) { return '<div class="gx-arch" data-lz-item><img class="ph-img" data-lz-f="img" src="/assets/fotos/' + f + '.webp" alt="" loading="lazy" decoding="async"></div>'; }).join('') + '</div>' +
       '<button type="button" class="gx-link ph-only" data-gallery-open>' + GRID + S.allPhotos + '</button></section>' +
     '<div class="gx-band"><section class="gx-sec" id="cuando"><p class="gx-k">' + S.dateK + '</p><h2 class="gx-h" data-lz-date="' + S.monthPat + '">' + S.monthTxt + '</h2>' +
       '<div class="week" id="week">' + S.wd.map(function (d) { return '<span>' + d + '</span>'; }).join('') + [0, 1, 2, 3, 4, 5, 6].map(function () { return '<b></b>'; }).join('') + '</div>' +

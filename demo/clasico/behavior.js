@@ -78,7 +78,8 @@
     var list=Array.isArray(window.LZ_GALLERY)?window.LZ_GALLERY:document.querySelectorAll('#historia img');
     document.querySelector('.story-thumbs').classList.toggle('has-story-photo',Array.isArray(window.LZ_GALLERY)&&window.LZ_GALLERY.length>1);
     var total=list.length;document.querySelector('.gallery-count').textContent=total?'('+total+')':'';
-    document.querySelector('.gallery-open').hidden=!total;
+    var visible=document.querySelector('.story-thumbs').querySelectorAll(':scope > [data-lz-item]').length;
+    document.querySelector('.gallery-open').hidden=total<=visible;
     var brand=document.querySelector('.nav-brand');if(c&&c.n1&&c.n2)brand.setAttribute('aria-label',c.n1+(EN?' and ':' y ')+c.n2+(EN?', home':', inicio'));
     var nm=document.querySelector('.hero-title');nm.classList.toggle('long-names',Array.from(nm.querySelectorAll('[data-lz]')).some(function(n){return n.textContent.trim().length>11;}));
     document.querySelectorAll('.photo[data-lz-src]').forEach(function(img){img.alt=EN?'A moment from our story':'Un momento de nuestra historia';});

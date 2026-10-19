@@ -2,6 +2,8 @@ import { cp, mkdir, rm, writeFile } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
 import { build } from 'esbuild';
 import { supabaseOrigin } from '../lib/supabase/config.mjs';
+import { generateSeo } from './seo.mjs';
+import { bundleMarketingStyles, bundlePageScripts, fingerprintAssets } from './asset-cache.mjs';
 
 if (existsSync('.env.local')) process.loadEnvFile('.env.local');
 const url = process.env.SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL;
@@ -20,4 +22,9 @@ await mkdir('dist/assets/backend', { recursive: true });
 const preconnect = '(function(){var l=document.createElement("link");l.rel="preconnect";l.href=' + JSON.stringify(endpoint).replaceAll('<', '\\u003c') + ';l.crossOrigin="anonymous";document.head.appendChild(l);})();\n';
 await writeFile('dist/assets/backend/config.js', 'window.INVITESSE_SUPABASE_CONFIG=' + JSON.stringify({ url: endpoint, publishableKey }).replaceAll('<', '\\u003c') + ';\n' + preconnect);
 await build({ entryPoints: ['lib/supabase/client.mjs'], outfile: 'dist/assets/backend/client.js', bundle: true, minify: true, format: 'iife', target: ['es2020'], legalComments: 'eof' });
+await build({ entryPoints: ['lib/vitals.mjs'], outfile: 'dist/assets/brand/vitals.js', bundle: true, minify: true, format: 'iife', target: ['es2020'], legalComments: 'eof' });
+await generateSeo('dist');
+await bundleMarketingStyles('dist');
+await bundlePageScripts('dist');
+await fingerprintAssets('dist');
 console.log('Static storefront and Supabase client built in dist/. Accounts and drafts use Supabase; payments and publishing remain unavailable.');

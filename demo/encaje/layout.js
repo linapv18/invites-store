@@ -78,7 +78,7 @@
   // Óvalo calado alrededor de una foto: un anillo de festones con calados y un filete fino pegado a la imagen.
   // np: lo que va dentro del óvalo cuando la invitación es sin fotos (html.lz-no-photos).
   var oval = function (cls, src, n, alt, lazy, np) {
-    return '<div class="oval ' + cls + '"><img class="ph-only" src="/assets/fotos/' + src + '.jpg" data-lz-src="photo:' + n + '" alt="' + (alt || '') + '" decoding="async"' + (lazy ? ' loading="lazy"' : '') + '>' +
+    return '<div class="oval ' + cls + '"><img class="ph-only" src="/assets/fotos/' + src + '.webp" data-lz-src="photo:' + n + '" alt="' + (alt || '') + '" decoding="async"' + (lazy ? ' loading="lazy"' : '') + '>' +
       (np ? '<div class="oval-np np-only" aria-hidden="true">' + np + '</div>' : '') + '<span class="lace-ring" aria-hidden="true"></span></div>';
   };
   // Medallón de encaje: doce pétalos, un botón y una corona de puntos.
@@ -130,7 +130,7 @@
 
     '<section class="sec dark gal" id="galeria">' +
       '<div class="gal-head">' + head(S.galK, S.galT) + '<button type="button" class="cta light gal-all d" data-gallery-open>' + S.allPhotos + '</button></div>' +
-      '<div class="frames" data-lz-list="gallery">' + ['beso', 'escalera', 'paseo', 'torre', 'muro'].map(function (f) { return '<div class="frame" data-lz-item><img data-lz-f="img" src="/assets/fotos/' + f + '.jpg" alt="" loading="lazy">' + edge('t-lace h-paper frame-edge') + '</div>'; }).join('') + '</div>' +
+      '<div class="frames" data-lz-list="gallery">' + ['beso', 'escalera', 'paseo', 'torre', 'muro'].map(function (f) { return '<div class="frame" data-lz-item><img data-lz-f="img" src="/assets/fotos/' + f + '.webp" alt="" loading="lazy">' + edge('t-lace h-paper frame-edge') + '</div>'; }).join('') + '</div>' +
       '<button type="button" class="cta light gal-all m" data-gallery-open>' + S.allPhotos + '</button>' +
     '</section>' +
 

@@ -8,10 +8,8 @@
 <meta name="description" content="Wedding website invitation demo, classic design: an envelope that opens, a letter addressed to each family, countdown, venue, FAQ and RSVP.">
 <meta name="theme-color" content="#243a32">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%232b4437'/%3E%3Ctext x='32' y='42' font-family='Georgia,serif' font-size='26' fill='%23f5f2ea' text-anchor='middle'%3EV%26amp;M%3C/text%3E%3C/svg%3E">
-<link rel="preload" href="/assets/fotos/torre.jpg" as="image" fetchpriority="high">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&amp;display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<link rel="preload" href="/assets/fotos/torre.webp" as="image" fetchpriority="high">
+<link href="/assets/brand/fonts/set-3f5e81c5d77cc12d.css" rel="stylesheet" media="print" onload="this.media='all'">
 <style>
 :root{--background:#f5f2ea;--dark:#293c35;--light:#f5f2ea;--accent:#344c42;--light-accent:#79634b}
 *,*::before,*::after{box-sizing:border-box}
@@ -57,8 +55,8 @@ a:hover{opacity:.75}
 .envelope-address h2{font:clamp(18px,4vw,27px) Georgia,serif;margin:5px 0 12px;overflow-wrap:anywhere}
 .envelope-address span{font-size:8px;letter-spacing:.22em}
 .envelope-letter{position:absolute;z-index:2;left:5%;width:90%;top:12px;min-height:305px;padding:30px 20px;background:#f5f2ea;color:#293c35;text-align:center;border:1px solid #b7aa8755;border-radius:100px 100px 3px 3px;opacity:0;transform:translateY(50px) scale(.88);transition:transform 1.2s .55s cubic-bezier(.22,1,.36,1),opacity .6s .55s;pointer-events:none}
-.envelope-letter h1{font:clamp(29px,6vw,43px) Georgia,serif;letter-spacing:-.05em;margin:17px 0}
-.envelope-letter h1 em{color:#8c967f}
+.envelope-letter .envelope-names{font:clamp(29px,6vw,43px) Georgia,serif;letter-spacing:-.05em;margin:17px 0}
+.envelope-letter .envelope-names em{color:#8c967f}
 .envelope-letter h2{font:clamp(23px,5vw,30px) Georgia,serif;margin:13px 0 18px;overflow-wrap:anywhere}
 .envelope-letter p{font-size:12px;line-height:1.8}
 .envelope-letter .eyebrow{font-size:8px}
@@ -192,7 +190,7 @@ a:hover{opacity:.75}
     <div class="envelope-back"><span class="envelope-liner" aria-hidden="true"><span data-lz-mono>V &amp; M</span></span></div>
     <article class="envelope-letter" id="letter" aria-hidden="true" inert>
       <p class="eyebrow">We’re getting married!</p>
-      <h1><span data-lz="n1">Valentina</span> <em>&amp;</em> <span data-lz="n2">Martín</span></h1>
+      <p class="envelope-names"><span data-lz="n1">Valentina</span> <em>&amp;</em> <span data-lz="n2">Martín</span></p>
       <p class="envelope-date" data-lz-date="{d} · {MU} · {Y}">12 · DECEMBER · 2026</p>
       <div class="envelope-rule"></div>
       <p class="eyebrow">With love, for</p>
@@ -241,22 +239,22 @@ a:hover{opacity:.75}
       <a href="#celebracion" class="text-link">Our big day <svg class="arrow" style="rotate:90deg" aria-hidden="true"><use href="#arr"/></svg></a>
     </div>
     <div class="hero-photo">
-      <img class="photo" data-lz-src="photo:0" src="/assets/fotos/torre.jpg" fetchpriority="high" alt="Valentina and Martín holding hands" style="object-position:center 70%">
+      <img class="photo" data-lz-src="photo:0" src="/assets/fotos/torre.webp" fetchpriority="high" alt="Valentina and Martín holding hands" style="object-position:center 70%">
       <div class="hero-caption"><span class="eyebrow">The beginning of forever</span><span class="display" style="font-size:36px" data-lz-mono>V &amp; M</span></div>
     </div>
   </section>
 
   <section class="section-shell story-intro" id="historia" data-gallery data-lz-anchor="historia">
-    <div class="story-image"><img class="photo" data-lz-src="photo:1" src="/assets/fotos/beso.jpg" alt="A memory of Valentina and Martín" loading="lazy" style="object-position:center 62%"></div>
+    <div class="story-image"><img class="photo" data-lz-src="photo:1" src="/assets/fotos/beso.webp" alt="A memory of Valentina and Martín" loading="lazy" style="object-position:center 62%"></div>
     <div class="story-copy">
       <span class="eyebrow">Our story</span>
       <h2 class="section-title" style="margin-top:24px" data-lz="storyTitle">A story written over <em>time.</em></h2>
       <p data-lz="story">It all starts with small moments that, without us noticing, become important. This is a story made of memories, shared paths and chapters still being written.</p>
       <div class="story-thumbs" data-lz-list="gallery" aria-label="Photo gallery">
-        <div data-lz-item><img class="photo" data-lz-f="img" src="/assets/fotos/muro.jpg" alt="Gallery photo 1" loading="lazy" style="object-position:center 45%"></div>
-        <div data-lz-item><img class="photo" data-lz-f="img" src="/assets/fotos/escalera.jpg" alt="Gallery photo 2" loading="lazy" style="object-position:center 65%"></div>
-        <div data-lz-item><img class="photo" data-lz-f="img" src="/assets/fotos/paseo.jpg" alt="Gallery photo 3" loading="lazy" style="object-position:center 72%"></div>
-        <div data-lz-item><img class="photo" data-lz-f="img" src="/assets/fotos/torre.jpg" alt="Gallery photo 4" loading="lazy" style="object-position:center 70%"></div>
+        <div data-lz-item><img class="photo" data-lz-f="img" src="/assets/fotos/muro.webp" alt="Gallery photo 1" loading="lazy" style="object-position:center 45%"></div>
+        <div data-lz-item><img class="photo" data-lz-f="img" src="/assets/fotos/escalera.webp" alt="Gallery photo 2" loading="lazy" style="object-position:center 65%"></div>
+        <div data-lz-item><img class="photo" data-lz-f="img" src="/assets/fotos/paseo.webp" alt="Gallery photo 3" loading="lazy" style="object-position:center 72%"></div>
+        <div data-lz-item><img class="photo" data-lz-f="img" src="/assets/fotos/torre.webp" alt="Gallery photo 4" loading="lazy" style="object-position:center 70%"></div>
       </div>
       <button type="button" class="text-link gallery-open" data-gallery-open>View all photos <span class="gallery-count"></span><svg class="arrow" aria-hidden="true"><use href="#arr"/></svg></button>
       <a href="#celebracion" class="text-link">Our big day <svg class="arrow" style="rotate:90deg" aria-hidden="true"><use href="#arr"/></svg></a>

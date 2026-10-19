@@ -94,7 +94,7 @@ const CLIP = '<svg class="pc" viewBox="0 0 18 46" fill="none" stroke="currentCol
       '<p class="cap">' + S.loveIs + '</p>' +
       '<div class="loops">' +
         '<div class="loop ink-line-a" aria-hidden="true">' + loopTxt(S.love) + '</div><div class="loop ink-line-b" aria-hidden="true">' + loopTxt(S.love) + '</div><div class="loop front ink-line-c" aria-hidden="true">' + loopTxt(S.love) + '</div>' +
-        '<div class="ph bw"><img class="ph-img" id="heroImg" src="/assets/fotos/paseo.jpg" data-lz-src="photo:0" alt="' + S.photoAlt + '" style="object-position:center 40%"></div>' +
+        '<div class="ph bw"><img class="ph-img" id="heroImg" src="/assets/fotos/paseo.webp" data-lz-src="photo:0" alt="' + S.photoAlt + '" style="object-position:center 40%"></div>' +
       '</div>' +
       '<div class="htxt"><p class="cap">' + S.dreams + '</p><h1>' + names + '</h1>' +
       '<p class="cap" style="font-size:11px;margin-top:6px"><span data-lz-date="' + S.heroPat + '">' + S.heroTxt + '</span> · <span data-lz="city">' + S.city + '</span></p></div>' +
@@ -104,7 +104,7 @@ const CLIP = '<svg class="pc" viewBox="0 0 18 46" fill="none" stroke="currentCol
     '<section class="sec letter-section" style="padding-top:20px">' +
       '<div class="renv" data-rv><div class="rflap"></div><div class="rback"></div>' +
         '<div class="letter"><p class="lt">' + S.for + ' <b>' + S.guest + '</b> · ' + S.seats + '</p><p style="font-size:12.5px"><span class="typer" data-lz="msg">' + S.msg + '</span></p><span class="sig">' + N('n1') + ' ' + S.y + ' ' + N('n2') + '</span></div>' +
-        '<div class="rpocket"><p class="ms">' + N('n1') + ' ' + S.y + ' ' + N('n2') + '</p><div class="stamp"><div class="pic bw">' + img('/assets/fotos/beso.jpg', 1) + '<b data-lz-date="{d}">14</b></div></div>' +
+        '<div class="rpocket"><p class="ms">' + N('n1') + ' ' + S.y + ' ' + N('n2') + '</p><div class="stamp"><div class="pic bw">' + img('/assets/fotos/beso.webp', 1) + '<b data-lz-date="{d}">14</b></div></div>' +
           '<svg class="pmark" viewBox="0 0 130 60" fill="none" stroke="currentColor" aria-hidden="true"><defs><path id="ttPm" d="M84 30a16 16 0 1 1 32 0a16 16 0 1 1-32 0"/></defs><circle cx="100" cy="30" r="23" stroke-width="1.4"/><circle cx="100" cy="30" r="13" stroke-width=".8"/><text font-size="6.4" letter-spacing="1.2" fill="currentColor" stroke="none" font-family="Courier Prime,monospace"><textPath href="#ttPm" id="pmText">OAXACA · 14.03.2027 ·</textPath></text><path d="M40 21c6-4 10 4 16 0s10 4 16 0M40 30c6-4 10 4 16 0s10 4 16 0M40 39c6-4 10 4 16 0s10 4 16 0" stroke-width="1.3"/></svg></div>' +
       '</div>' +
     '</section>' +
@@ -118,7 +118,7 @@ const CLIP = '<svg class="pc" viewBox="0 0 18 46" fill="none" stroke="currentCol
 
     '<section class="sec" id="historia" data-lz-anchor="historia">' +
       '<p class="hand">' + S.ourStory + '</p><h2 data-lz="storyTitle">' + S.storyTitle + '</h2><p data-lz="story">' + S.storyTxt + '</p>' +
-      '<div class="prints" data-lz-list="gallery">' + ['/assets/fotos/beso.jpg','/assets/fotos/escalera.jpg','/assets/fotos/muro.jpg'].map(function(src){return '<div class="print" data-lz-item data-rv><i class="tape" aria-hidden="true"></i><div class="pic bw"><img class="ph-img" data-lz-f="img" src="'+src+'" alt="" loading="lazy"></div></div>';}).join('') + '</div><button class="gallery-link" type="button" data-gallery-open>' + (LANG==='en'?'Open our photo album':'Abrir nuestro álbum') + '</button>' +
+      '<div class="prints" data-lz-list="gallery">' + ['/assets/fotos/beso.webp','/assets/fotos/escalera.webp','/assets/fotos/muro.webp'].map(function(src){return '<div class="print" data-lz-item data-rv><i class="tape" aria-hidden="true"></i><div class="pic bw"><img class="ph-img" data-lz-f="img" src="'+src+'" alt="" loading="lazy"></div></div>';}).join('') + '</div><button class="gallery-link" type="button" data-gallery-open>' + (LANG==='en'?'Open our photo album':'Abrir nuestro álbum') + '</button>' +
     '</section>' +
 
     '<section class="sec" id="itinerario" data-lz-anchor="itinerario musica">' +
@@ -136,7 +136,7 @@ const CLIP = '<svg class="pc" viewBox="0 0 18 46" fill="none" stroke="currentCol
     '</section>' +
 
     '<section class="sec" style="padding-top:30px">' +
-      '<div class="cheers"><div class="loop" aria-hidden="true" style="top:20px;--du:60s">' + loopTxt(S.cheers, 7) + '</div><div class="loop rev" aria-hidden="true" style="top:240px;--du:64s;z-index:2">' + loopTxt(S.cheers, 7) + '</div><div class="ph bw">' + img('/assets/fotos/torre.jpg', 4) + '</div></div>' +
+      '<div class="cheers"><div class="loop" aria-hidden="true" style="top:20px;--du:60s">' + loopTxt(S.cheers, 7) + '</div><div class="loop rev" aria-hidden="true" style="top:240px;--du:64s;z-index:2">' + loopTxt(S.cheers, 7) + '</div><div class="ph bw">' + img('/assets/fotos/torre.webp', 4) + '</div></div>' +
       '<div data-lz-group="quote"><blockquote>“<span data-lz="quote">' + S.quote + '</span>”</blockquote><p class="cap" style="font-size:10px" data-lz="quoteAuthor">' + S.quoteAuthor + '</p></div>' +
     '</section>' +
 
@@ -159,7 +159,7 @@ const CLIP = '<svg class="pc" viewBox="0 0 18 46" fill="none" stroke="currentCol
 
     '</div>' +
 
-    '<footer><div class="fph bw">' + img('/assets/fotos/escalera.jpg', 2) + '</div><div class="with"><b>' + S.withW + '</b><span class="ms">' + S.loveW + '</span></div>' +
+    '<footer><div class="fph bw">' + img('/assets/fotos/escalera.webp', 2) + '</div><div class="with"><b>' + S.withW + '</b><span class="ms">' + S.loveW + '</span></div>' +
       '<p class="cap">' + N('n1') + ' ' + S.y + ' ' + N('n2') + '</p><p style="font-size:11px;margin-top:4px"><span data-lz-date="' + S.numPat + '">14.03.2027</span> · <span data-lz="city">' + S.city + '</span></p><nav class="footer-links" aria-label="' + (LANG==='en'?'Wedding information':'Información de la boda') + '"><a href="#itinerario">' + (LANG==='en'?'Schedule':'Itinerario') + '</a><a href="#rsvp">' + (LANG==='en'?'RSVP':'Confirmar asistencia') + '</a></nav></footer>' +
   '</main>';
 

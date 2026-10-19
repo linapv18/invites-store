@@ -86,7 +86,7 @@
     '<svg width="36" height="36" aria-hidden="true" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="m4 12 10-4 12 4 10-4v24l-10 4-12-4-10 4zM14 8v24m12-20v24"/><path d="M20 23s7-6.5 7-11a7 7 0 0 0-14 0c0 4.5 7 11 7 11z" fill="var(--bg)"/><circle cx="20" cy="12" r="2.5"/></svg>'
   ];
   var maps = function (q) { return 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(q + ', Oaxaca'); };
-  var photos = ['/assets/fotos/beso.jpg', '/assets/fotos/escalera.jpg', '/assets/fotos/muro.jpg'];
+  var photos = ['/assets/fotos/beso.webp', '/assets/fotos/escalera.webp', '/assets/fotos/muro.webp'];
   var N = function (k) { return '<span data-lz="' + k + '">' + S[k] + '</span>'; };
   var names = function (d) { return '<h1 class="writes"><span class="write" data-lz="n1">' + S.n1 + '</span><span class="y">' + S.y + '</span><span class="write" style="transition-delay:' + d + 's" data-lz="n2">' + S.n2 + '</span></h1>'; };
   var wm = function (style) { return '<span class="wm" aria-hidden="true"' + (style ? ' style="' + style + '"' : '') + ' data-lz-mono>A<i>&amp;</i>L</span>'; };
@@ -118,7 +118,7 @@
         '<p class="sc" style="margin-top:14px">' + S.getting + '</p>' + names(1) +
         '<svg class="swash draw" viewBox="0 0 220 30" width="190" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" aria-hidden="true"><path pathLength="1" d="M8 20C46 4 88 28 128 15S188 2 210 12c-6 7-19 9-31 4"/></svg>' + FL(150) +
         '<p class="date" data-lz-date="' + S.heroPat + '">' + S.heroTxt + '</p><p style="margin-top:6px;font-style:italic;color:var(--muted);font-size:17px" data-lz="city">' + S.city + '</p>' +
-        '<div class="gold-frame goldbg" data-rv><div><div class="pic"><img class="ph-img" id="heroImg" src="/assets/fotos/paseo.jpg" data-lz-src="photo:0" alt="' + S.photoAlt + '" style="object-position:center 60%"></div></div></div>' +
+        '<div class="gold-frame goldbg" data-rv><div><div class="pic"><img class="ph-img" id="heroImg" src="/assets/fotos/paseo.webp" data-lz-src="photo:0" alt="' + S.photoAlt + '" style="object-position:center 60%"></div></div></div>' +
         '<p class="msg" data-lz="msg">' + S.msg + '</p>' +
       '</div>' +
     '</section>' +

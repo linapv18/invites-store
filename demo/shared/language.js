@@ -3,7 +3,11 @@
 (function(){
   'use strict';
   var params=new URLSearchParams(location.search),mode=params.get('lz'),key=params.get('k');
-  if((mode!=='editor' && mode!=='vista') || !key)return;
+  if(mode!=='editor' && mode!=='vista')return;
+  // Defense in depth; response headers also exclude preview documents before JS.
+  var robots=document.querySelector('meta[name=robots]')||document.createElement('meta');
+  robots.name='robots';robots.content='noindex,nofollow';document.head.appendChild(robots);
+  if(!key)return;
   var current=document.documentElement.lang.slice(0,2)==='en'?'en':'es',redirecting=false;
   function ensure(content){
     var lang=content && content.invitationLanguage==='en'?'en':'es';

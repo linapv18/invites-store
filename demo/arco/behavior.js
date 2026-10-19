@@ -73,7 +73,7 @@
 
   // El vaho es una superficie borrable: cada pasada persiste hasta reiniciar la apertura.
   var op = $('open'), win = $('win'), mist = win.querySelector('.mist'), rainTexture = new Image();
-  rainTexture.src = '/assets/arco/lluvia-cristal.png';
+  rainTexture.src = '/assets/arco/lluvia-cristal.webp';
   var W = 280, H = 400, density = Math.min(devicePixelRatio || 1, 2), timers = [], guideRaf = 0;
   var surface = document.createElement('canvas'), erased = document.createElement('canvas');
   var ctx = mist.getContext('2d'), fog = surface.getContext('2d'), brush = erased.getContext('2d');

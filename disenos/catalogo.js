@@ -145,10 +145,11 @@
     { id: 'tele', es: 'Tele y ventana', en: 'TV and window', opts: ['tele', 'ventana'] },
     { id: 'luna', es: 'Luna y medallón', en: 'Moon and medallion', opts: ['luna', 'medallon'] }
   ];
-  var UI = { es: { demo: 'Ver demo', demoOf: 'Ver demo del diseño', buy: 'Comprar', buyOf: 'Comprar el diseño', isNew: 'Nuevo', price: 'Desde US$ XX' }, en: { demo: 'View demo', demoOf: 'View demo:', buy: 'Buy', buyOf: 'Buy the design', isNew: 'New', price: 'From US$ XX' } };
+  var UI = { es: { demo: 'Ver demo', demoOf: 'Ver demo del diseño', buy: 'Preparar', buyOf: 'Preparar un borrador del diseño', isNew: 'Nuevo', price: 'Precios disponibles con el lanzamiento' }, en: { demo: 'View demo', demoOf: 'View demo:', buy: 'Prepare', buyOf: 'Prepare a draft with the design', isNew: 'New', price: 'Pricing available at launch' } };
 
   // Tarjeta de un diseño en el catálogo: la invitación cerrada y los dos caminos (demo y elegir).
-  function card(d, lang) {
+  function card(d, lang, level) {
+    var heading = level === 2 ? 'h2' : 'h3';
     var t = d[lang], u = UI[lang], base = lang === 'en' ? '/en' : '';
     var op = String(t.opening).replace(/^(Apertura|Opening):\s*/, '');
     op = op.charAt(0).toUpperCase() + op.slice(1);
@@ -158,7 +159,7 @@
       '<a class="lz-art" href="' + base + '/demo/' + d.id + '/" aria-label="' + esc(u.demoOf + ' ' + t.name) + '" style="--card-bg:' + d.bg + '">' +
         '<img src="' + (preview ? preview + '-554.webp' : d.img[0]) + '"' + (preview ? ' srcset="' + preview + '-280.webp 280w, ' + preview + '-554.webp 554w"' : '') + ' sizes="(max-width:600px) 90vw, (max-width:960px) 45vw, 25vw" width="554" height="1200" alt="' + esc(t.alt[0]) + '" loading="lazy">' +
         '<span class="card-demo">' + u.demo + arrow + '</span></a>' +
-      '<div class="lz-meta"><div><h3><a href="' + base + '/demo/' + d.id + '/">' + esc(t.name) + '</a></h3><p>' + esc(op) + '</p><span class="lz-price">' + u.price + '</span></div>' +
+      '<div class="lz-meta"><div><' + heading + '><a href="' + base + '/disenos/' + d.id + '/">' + esc(t.name) + '</a></' + heading + '><p>' + esc(op) + '</p><span class="lz-price">' + u.price + '</span></div>' +
         '<a class="lz-buy" href="' + base + '/comprar/?diseno=' + d.id + '" aria-label="' + esc(u.buyOf + ' ' + t.name) + '">' + u.buy + '</a></div></article>';
   }
 

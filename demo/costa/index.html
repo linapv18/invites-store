@@ -8,9 +8,7 @@
 <meta name="description" content="Demo de invitación web para boda destino: un pase de abordar que pierde el talón, el mar en movimiento, tablero de salidas con la cuenta regresiva, postales de viaje y confirmación por persona.">
 <meta name="theme-color" content="#1F4E8C">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%231F4E8C'/%3E%3Ctext x='32' y='44' font-family='Georgia,serif' font-style='italic' font-size='34' fill='%23E9B949' text-anchor='middle'%3E%26%3C/text%3E%3C/svg%3E">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&amp;family=DM+Sans:wght@400;500;700&amp;family=DM+Mono:wght@400;500&amp;family=Caveat:wght@500&amp;display=swap" rel="stylesheet">
+<link href="/assets/brand/fonts/set-bbd4fea39abadbb2.css" rel="stylesheet">
 <style>
 /* Costa: boda destino. Los colores salen de estas variables (paletas en demo/shared/content.js). */
 :root{
@@ -484,7 +482,7 @@ footer .pf{font-size:clamp(28px,7vw,36px);font-style:italic;overflow-wrap:anywhe
   var EQ = '<span class="eq" aria-hidden="true"><i></i><i></i><i></i></span>';
   var COMPASS = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m15.5 8.5-2 5-5 2 2-5z"/></svg>';
   var maps = function (q) { return 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(q + ', Oaxaca'); };
-  var photos = ['/assets/fotos/beso.jpg', '/assets/fotos/escalera.jpg', '/assets/fotos/muro.jpg', '/assets/fotos/torre.jpg'];
+  var photos = ['/assets/fotos/beso.webp', '/assets/fotos/escalera.webp', '/assets/fotos/muro.webp', '/assets/fotos/torre.webp'];
   var N = function (k) { return '<span data-lz="' + k + '">' + S[k] + '</span>'; };
 
   document.getElementById('app').innerHTML =
@@ -515,7 +513,7 @@ footer .pf{font-size:clamp(28px,7vw,36px);font-style:italic;overflow-wrap:anywhe
   '<main id="invite">' +
     '<nav class="cbar" id="cbar" aria-label="' + S.qnav + '"><a class="mono" href="#portada" data-lz-mono>A &amp; L</a><a href="#itinerario">' + S.fSched + '</a><a class="go" href="#rsvp">' + S.confirm + '</a>' +
       '</nav>' +
-    '<section class="hero" id="portada" data-lz-anchor="portada"><img src="/assets/fotos/paseo.jpg" data-lz-src="photo:0" alt="' + S.photoAlt + '">' +
+    '<section class="hero" id="portada" data-lz-anchor="portada"><img src="/assets/fotos/paseo.webp" data-lz-src="photo:0" alt="' + S.photoAlt + '">' +
       '<div class="pstamp stampd" aria-hidden="true"><div>' + lemonBranch() + '<small data-city-up>OAXACA · MX</small><b class="pf" style="font-size:15px;font-style:italic" data-lz-mono>A &amp; L</b></div></div>' +
       '<div class="in-w"><p class="eb" style="color:var(--sun);margin-bottom:12px">' + S.getting + '</p><h1 id="names" tabindex="-1"><span class="fitl" data-lz="n1">' + S.n1 + '</span> <em>&amp;</em><br><span class="fitl" data-lz="n2">' + S.n2 + '</span></h1>' +
       '<div class="meta"><span data-lz-date="{d} {Mc} {Y}">' + S.date + '</span><span data-lz="city">' + S.city + '</span></div>' +
