@@ -70,3 +70,5 @@ Estas tareas requieren desarrollo e integración; no basta con completar los tex
 | Herramientas de demo y aviso de contratación | `demo/shared/panel.js` |
 
 El flujo de cuenta y borradores usa Supabase; el checkout de complementos conserva sus placeholders. Deben revisarse junto con la integración de pagos; la limpieza comercial de esta revisión se aplicó a la landing y al catálogo.
+
+- Regalos: ejecutar `supabase/migrations/202610190002_publish_gifts.sql` en el SQL Editor de Supabase para incluir los cuatro campos opcionales de regalos en la publicación pública. No vuelve a crear tablas ni cambia RLS; conserva la exclusión de invitados privados. El editor ya guarda los campos en el borrador JSON.

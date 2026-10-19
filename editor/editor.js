@@ -51,9 +51,10 @@
         apertura: ['Apertura y sello', 'Lo que sus invitados tocan para abrir la invitación.'],
         historia: ['Nuestra historia', 'Cuenten cómo se conocieron y suban las fotos que quieran mostrar.'],
         itinerario: ['Itinerario', 'Agreguen los momentos de su boda en el orden en que suceden. Cada uno lleva su hora, lugar y mapa.'],
-        faq: ['Preguntas frecuentes', 'Código de vestimenta, niños, regalos… Lo que más les van a preguntar.'],
+        faq: ['Preguntas frecuentes', 'Código de vestimenta, niños y otras dudas… Lo que más les van a preguntar.'],
         musica: ['Música de fondo', 'Su canción suena cuando se abre la invitación.'],
         viaje: ['Viaje y hospedaje', 'Hoteles y planes para quienes vienen de fuera. Si todos sus invitados son locales, pueden ocultarla.'],
+        regalos: ['Regalos', 'Compartan un mensaje, indiquen si recibirán lluvia de sobres o enlacen su lista de regalos. Esta sección es opcional.'],
         rsvp: ['RSVP', 'Sí o no por invitado, más una nota para los novios.'],
         invitados: ['Invitados', 'Su lista de invitaciones: cada una tendrá su enlace único y sus personas. Súbanla desde un archivo o créenla aquí.']
       },
@@ -186,6 +187,7 @@
         itinerario: ['Schedule', 'Add your wedding events in the order they happen. Each one has its time, place and map.'],
         faq: ['FAQ', 'Dress code, kids, gifts… What everyone will ask you.'],
         musica: ['Background music', 'Your song plays when the invitation opens.'],
+        regalos: ['Gifts', 'Share a message, welcome monetary gifts or link to your gift registry. This section is optional.'],
         viaje: ['Travel and stay', 'Hotels and plans for out-of-town guests. If all your guests are local, you can hide it.'],
         rsvp: ['RSVP', 'Yes or no per guest, plus a note for the couple.'],
         invitados: ['Guests', 'Your invitation list: each one gets its own unique link and its guests. Upload it from a file or create it here.']
@@ -318,7 +320,7 @@
   }[LANG];
 
   var DRESS_MAX = 5, TL_MAX = 6;
-  var SECS = ['portada', 'apertura', 'historia', 'itinerario', 'faq', 'musica', 'viaje', 'rsvp', 'invitados'];
+  var SECS = ['portada', 'apertura', 'historia', 'itinerario', 'faq', 'musica', 'viaje', 'regalos', 'rsvp', 'invitados'];
   var ADDON_IDS = ['playlist', 'libro', 'capsula', 'encuestas', 'galeria', 'bilingue', 'dominio'];
   var ADDON_TXT = {
     es: {
@@ -547,6 +549,7 @@
       palCustom: '#8A4F5C',
       // Todos los diseños reciben y muestran estos mismos campos (ver demo/shared/content.js).
       invitations: [], timeZone: '', courtPair: 'KQ', photoBW: true, photosOn: true, envIntro: '', envClosing: '', countdownId: 1, countdownNote: '', quote: '', quoteAuthor: '', dressCode: '', dressNotes: '', dressColors: '', dressSuggest: [], dressAvoid: [],
+      giftsOn: false, giftsMessage: '', giftsEnvelopes: false, giftsRegistryUrl: '',
       viajeOn: true, travelIntro: '', hotel: '', hotelAddress: '', hotelCode: '', hotelLink: '', hotelNotes: '',
       airport: '', transport: '', guideFood: '', guideCulture: '', guidePlans: '',
       rsvpDeadline: '', rsvpMsg: '', rsvpDiet: true, rsvpNote: true,
@@ -852,6 +855,7 @@
       case 'faq': return s.faqs.length > 0 && s.faqs.every(function (f) { return t(f.q) && t(f.a); });
       case 'musica': return !s.musicOn || (s.musicSource === 'upload' ? t(s.musicFileName) : t(s.musicTrackSrc));
       case 'viaje': return !s.viajeOn || t(s.hotel);
+      case 'regalos': return !s.giftsOn || ((t(s.giftsMessage) || s.giftsEnvelopes || t(s.giftsRegistryUrl)) && (!t(s.giftsRegistryUrl) || giftUrl(s.giftsRegistryUrl)));
       case 'rsvp': return t(s.rsvpDeadline);
       case 'invitados': return s.invitations.length > 0;
     }
@@ -939,7 +943,7 @@
       '<div class="ed-nav-top ed-only-m"><span class="ed-logo ed-logo-full" role="img" aria-label="Invitesse">' + logoFull + '</span><button type="button" class="ed-icon-btn" data-act="menu-close" aria-label="' + esc(S.closeMenu) + '">' + svg(P.x, 16, 2) + '</button></div>' +
       '<div class="ed-progress"><span class="ed-kicker">' + esc(S.yourInv) + '</span><div class="ed-bar"><span style="width:' + Math.round(done / SECS.length * 100) + '%"></span></div><small>' + esc(S.ready(done, SECS.length)) + '</small></div>' +
       '<div class="ed-list">' + SECS.map(function (id, i) {
-        var hidden = id === 'viaje' && !state.viajeOn;
+        var hidden = (id === 'viaje' && !state.viajeOn) || (id === 'regalos' && !state.giftsOn);
         return row(id, '<span class="ed-row-n">' + pad(i + 1) + '</span><span class="ed-row-name">' + esc(secName(id)) + '</span>' +
           (hidden ? '<span class="ed-pill">' + esc(S.hidden) + '</span>' : doneOf(id) ? svg('<circle cx="12" cy="12" r="9"/><path d="m8 12 3 3 5-6"/>', 16, 2.2, '#4E7A5C').replace('aria-hidden="true"', 'role="img" aria-label="' + esc(S.done) + '"') : ''));
       }).join('') + '</div>' +
@@ -955,7 +959,7 @@
   /* ---------- Piezas del formulario ---------- */
   function head(id) {
     var n = SECS.indexOf(id) + 1;
-    return '<div class="ed-head"><span class="ed-kicker">' + esc(S.section) + ' ' + pad(n) + (id === 'viaje' ? ' · ' + esc(S.optional) : '') + '</span><h1 id="edH1" tabindex="-1">' + esc(S.sec[id][0]) + '</h1><p>' + esc(S.sec[id][1]) + '</p></div>';
+    return '<div class="ed-head"><span class="ed-kicker">' + esc(S.section) + ' ' + pad(n) + (['viaje','regalos'].indexOf(id)>=0 ? ' · ' + esc(S.optional) : '') + '</span><h1 id="edH1" tabindex="-1">' + esc(S.sec[id][0]) + '</h1><p>' + esc(S.sec[id][1]) + '</p></div>';
   }
   /* Colores del código de vestimenta: dos listas (sugeridos y a evitar) de hasta DRESS_MAX colores cada una.
      Cada muestra es un selector de color nativo; la invitación los dibuja con el estilo de su diseño (demo/shared/content.js). */
@@ -1035,6 +1039,7 @@
     return '<label class="ed-field full">'+(LANG==='es'?'Icono del evento':'Event icon')+'<select data-list="events" data-i="'+i+'" data-f="icon">'+opts.map(function(o){return '<option value="'+o[0]+'"'+((e.icon||'auto')===o[0]?' selected':'')+'>'+esc(o[1])+'</option>';}).join('')+'</select></label>';
   }
 
+  function giftUrl(value) { try { var u = new URL(String(value).trim()); return /^(https?:)$/.test(u.protocol) && !u.username && !u.password; } catch (_) { return false; } }
   var SECTION_HTML = {
     portada: function () {
       return head('portada') + '<div><button type="button" class="ed-link" data-act="reset-content">' + (LANG === 'es' ? 'Vaciar contenido y empezar de nuevo' : 'Clear content and start again') + '</button></div>' +
@@ -1173,6 +1178,14 @@
           '<div class="ed-stack ed-group"><h2 class="ed-sub">' + esc(S.gettingK) + '</h2>' + field(S.airport, 'airport', { rows: 2, ph: S.airportPh }) + field(S.transport, 'transport', { rows: 2, ph: S.transportPh }) + '</div>' +
           '<div class="ed-stack ed-group"><h2 class="ed-sub">' + esc(S.guideK) + '</h2>' + field(S.guideFood, 'guideFood', { rows: 2, ph: S.guidePh }) + field(S.guideCulture, 'guideCulture', { rows: 2, ph: S.guidePh }) + field(S.guidePlans, 'guidePlans', { rows: 2, ph: S.guidePh }) + '</div>' +
           upsell({ k: S.destK, t: esc(S.destT), act: 'drawer', label: S.seePack }) + '</div>' : '');
+    },
+    regalos: function () {
+      var en = LANG === 'en', bad = state.giftsRegistryUrl.trim() && !giftUrl(state.giftsRegistryUrl);
+      return head('regalos') + toggleRow('giftsOn', S.viajeShow, S.viajeOnHint, S.viajeOffHint) +
+        (state.giftsOn ? field(en ? 'Message (optional)' : 'Mensaje (opcional)', 'giftsMessage', {rows:3, max:1500, ph:en ? 'Your presence is the best gift.' : 'Su compañía es nuestro mejor regalo.'}) +
+        toggleRow('giftsEnvelopes', en ? 'Monetary gifts' : 'Lluvia de sobres', en ? 'Show that you welcome monetary gifts.' : 'Indica que recibirán regalos en efectivo mediante lluvia de sobres.', en ? 'This option will not appear.' : 'Esta opción no aparecerá.') +
+        field(en ? 'Gift registry link (optional)' : 'Enlace a la lista de regalos (opcional)', 'giftsRegistryUrl', {type:'url', max:2048, ph:'https://', hint:en ? 'Use a full http:// or https:// link.' : 'Usen un enlace completo que empiece por http:// o https://.'}) +
+        '<p class="ed-hint" id="giftUrlError" role="status"' + (bad ? '' : ' hidden') + '>' + (en ? 'Enter a valid link. It will remain hidden from guests until corrected.' : 'Escriban un enlace válido. No se mostrará a los invitados hasta corregirlo.') + '</p>' : '');
     },
     rsvp: function () {
       return head('rsvp') + field(S.deadline, 'rsvpDeadline', { type: 'date' }) + field(S.rsvpMsg, 'rsvpMsg', { rows: 3, ph: S.rsvpMsgPh }) +
@@ -1561,6 +1574,7 @@
     else if (t.hasAttribute('data-list')) { var it = state[t.getAttribute('data-list')][+t.getAttribute('data-i')]; if (it) { it[t.getAttribute('data-f')] = t.value; changed(false); } }
     else return;
     if (t.getAttribute('data-f') === 'mapUrl') { var mh = $('[data-maphint="' + state.events[+t.getAttribute('data-i')].id + '"]'); if (mh) mh.hidden = !t.value.trim() || isMapsUrl(t.value.trim()); }
+    if (t.getAttribute('data-k') === 'giftsRegistryUrl') { var badGift = !!t.value.trim() && !giftUrl(t.value); t.setAttribute('aria-invalid',String(badGift)); var ge = $('#giftUrlError'); if(ge) ge.hidden = !badGift; }
     var demo = $('#edDemo'); if (demo) demo.innerHTML = addonDemo(state.sec);
   });
   root.addEventListener('change', function (e) {

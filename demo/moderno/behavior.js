@@ -11,7 +11,7 @@
  var index=document.createElement('div');index.id='chapterIndex';index.className='mo-index';index.hidden=true;
  index.innerHTML='<div class="mo-index-panel" role="dialog" aria-modal="true" aria-labelledby="indexTitle"><div class="mo-index-head"><h2 class="mo-serif" id="indexTitle" style="font-size:32px">'+S.contents+'</h2><button type="button" class="mo-index-close" aria-label="'+S.close+'"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" aria-hidden="true"><path d="m4 4 8 8m0-8-8 8"/></svg></button></div><nav aria-label="'+S.contents+'"></nav></div>';
  mo.appendChild(index);
- sections.forEach(function(sec,i){var name=S.labels[sec.dataset.chapter];
+ sections.forEach(function(sec,i){var name=S.labels[sec.dataset.chapter] || sec.getAttribute('aria-label');
   [nav,index.querySelector('nav')].forEach(function(root){var b=document.createElement('button');b.type='button';b.dataset.go=i;b.textContent=name;root.appendChild(b);});
   var t=document.createElement('button');t.type='button';t.dataset.go=i;t.setAttribute('aria-label',name);t.innerHTML='<span></span>';ticks.appendChild(t);
  });

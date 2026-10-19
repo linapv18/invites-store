@@ -27,3 +27,5 @@ Los tests interceptan todas las solicitudes a `*.supabase.co`; no crean cuentas,
 `python tests/browser/photo_colors.py` verifica la opción de color en los siete demos compatibles, su independencia de la paleta y el guardado/restauración del editor con Supabase simulado. Comprueba que Señal no tenga el selector.
 
 `python tests/browser/custom_colors.py` comprueba los ocho selectores de color personalizado en demos móviles y guardado/restauración en el editor, con Supabase simulado.
+
+`python tests/browser/gifts.py` verifica regalos opcionales en los 22 diseños, enlaces seguros, mensaje escapado, capítulo de Moderno y controles/validación/guardado/restauración del editor con Supabase simulado.

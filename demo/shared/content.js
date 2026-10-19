@@ -417,6 +417,7 @@
     document.querySelectorAll('[data-lz]').forEach(function (el) { setText(el, v[el.getAttribute('data-lz')]); });
     renderDress(c0);
     renderStory(c0);
+    renderGifts(c0);
     document.querySelectorAll('[data-lz-mono]').forEach(function (el) {
       if (el._lzMono === undefined) el._lzMono = el.innerHTML;
       el.innerHTML = el._lzMono;
@@ -482,6 +483,31 @@
     if (window.LazoMusic && c0.musicOn === false) { window.LazoMusic.play = function () {}; var mb = document.querySelector('.lz-music'); if (mb) mb.classList.add('lz-off'); }
     applyMusic(c0);
     document.dispatchEvent(new CustomEvent('lz-content-applied', { detail: c0 }));
+  }
+
+  /* Optional gifts: shared renderer, styled with each template's own panel tokens. */
+  function renderGifts(c) {
+    var target = document.querySelector('[data-lz-anchor~="rsvp"]'); if (!target) return;
+    var box = document.getElementById('lz-gifts');
+    if (!box) {
+      box = document.createElement('section'); box.id = 'lz-gifts'; box.className = 'lz-gifts';
+      box.setAttribute('data-lz-anchor','regalos'); box.setAttribute('aria-labelledby','lz-gifts-title');
+      if (TPL === 'moderno') {box.classList.add('mo-ch');box.dataset.chapter='regalos';box.setAttribute('aria-label',LANG==='en'?'Gifts':'Regalos');}
+      target.insertAdjacentElement('beforebegin',box);
+    }
+    var url = ''; try { var parsed = new URL(String(c.giftsRegistryUrl || '').trim()); if (/^(https?:)$/.test(parsed.protocol) && !parsed.username && !parsed.password) url = parsed.href; } catch (_) {}
+    var message = typeof c.giftsMessage === 'string' ? c.giftsMessage.trim() : '';
+    box.hidden = c.giftsOn !== true || (!message && c.giftsEnvelopes !== true && !url);
+    var en = LANG === 'en';
+    box.innerHTML = '<div class="lz-gifts-inner"><h2 id="lz-gifts-title">' + (en?'Gifts':'Regalos') + '</h2>' +
+      (message ? '<p class="lz-gifts-message">'+esc(message)+'</p>' : '') +
+      (c.giftsEnvelopes === true ? '<p class="lz-gifts-envelopes">'+(en?'If you wish to give us a gift, monetary gifts are welcome.':'Si desean hacernos un regalo, recibiremos lluvia de sobres.')+'</p>' : '') +
+      (url ? '<a class="lz-gifts-link" href="'+esc(url)+'" target="_blank" rel="noopener noreferrer">'+(en?'View gift registry':'Ver lista de regalos')+' <span aria-hidden="true">↗</span></a>' : '')+'</div>';
+    if (!document.getElementById('lz-gifts-css')) {
+      var css = document.createElement('style'); css.id='lz-gifts-css';
+      css.textContent='.lz-gifts{box-sizing:border-box;width:100%;padding:72px clamp(20px,5vw,72px);background:var(--p-bg,#faf7f2);color:var(--p-ink,#29232a);text-align:center;font-family:var(--p-sans,system-ui)}.lz-gifts[hidden]{display:none!important}.lz-gifts-inner{width:100%;max-width:640px;margin:auto}.lz-gifts h2{margin:0 0 24px;font:400 clamp(32px,6vw,52px)/1.15 var(--p-serif,Georgia);color:inherit;letter-spacing:normal}.lz-gifts p{margin:16px 0;font:400 16px/1.7 var(--p-sans,system-ui);color:inherit;overflow-wrap:anywhere}.lz-gifts-message{white-space:pre-line}.lz-gifts .lz-gifts-link{display:inline-flex;gap:10px;align-items:center;justify-content:center;min-height:44px;margin-top:16px;padding:12px 18px;border:1px solid currentColor;color:inherit;background:transparent;text-decoration:none;font:500 15px/1.4 var(--p-sans,system-ui);overflow-wrap:anywhere}.lz-gifts-link:focus-visible{outline:2px solid currentColor;outline-offset:4px}#mo .lz-gifts.mo-ch{justify-content:center;overflow-y:auto;padding-top:96px;padding-bottom:88px}';
+      document.head.appendChild(css);
+    }
   }
 
   /* Historia como línea de tiempo (editor: storyMode = 'timeline', timeline = [{ when, title, text }], hasta 6).
