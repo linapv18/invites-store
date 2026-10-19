@@ -39,7 +39,7 @@ Sitio estático (HTML + CSS + un poco de JS), sin paso de build.
 - `/cuenta/` y `/en/cuenta/` — ingresar o crear cuenta y "Mis invitaciones" (los diseños comprados)
 - `/comprar/?diseno=<diseño>` y `/en/comprar/…` — compra de un diseño (cuenta + pago; hay un botón de compra de prueba)
 - `/editor/?diseno=<diseño>` y `/en/editor/…` — editor del diseño comprado, con la plantilla real en la vista previa y complementos con carrito. Pide sesión y que el diseño esté comprado. Atajos: `#<sección o complemento>` (p. ej. `#musica`) y `#complementos`
-- Sección 09 del editor, Invitados: subir la lista en CSV o crearla a mano. Ejemplos para descargar: `/editor/invitados-ejemplo.csv` y `/editor/guests-example.csv` (una fila por persona: Invitación, Persona, Teléfono, Correo; acepta `,` o `;`)
+- Sección 09 del editor, Invitados: subir la lista en CSV o crearla a mano. Ejemplos para descargar: `/editor/invitados-ejemplo.csv` y `/editor/guests-example.csv` (una fila por persona: Invitación, Persona; acepta `,` o `;`). No se piden teléfonos ni correos de los invitados; si el archivo los trae, se ignoran
 - `/editor/pago/` y `/en/editor/pago/` — pago de los complementos (tarjeta o PayPal; el cobro aún no está conectado)
 
 Para verlo en local:

@@ -99,14 +99,14 @@
       photoBW: 'Fotos en blanco y negro', photoBWOn: 'Como en el diseño original.', photoBWOff: 'Las fotos se ven con sus colores originales.',
       photosOn: 'Usar fotos', photosOnOn: 'La portada y la historia llevan sus fotos.', photosOnOff: 'Sin fotos: sus nombres van en el óvalo de encaje y la historia lleva una ventana del jardín.',
       cancel: 'Cancelar', gUpload: 'Subir archivo (CSV)', gManual: 'Crear a mano', gHow: '¿Cómo se arma el archivo?',
-      gSteps: ['Descarguen el archivo de ejemplo y ábranlo en Excel o Google Sheets.', 'Escriban una fila por persona. Las personas con el mismo nombre de invitación quedan juntas (por ejemplo, toda la Familia Rodríguez).', 'Guárdalo como CSV y súbelo aquí. Teléfono y correo son opcionales.'],
-      gCols: ['Invitación', 'Persona', 'Teléfono', 'Correo'], gExample: 'Descargar el ejemplo (CSV)', gExampleFile: '/editor/invitados-ejemplo.csv',
+      gSteps: ['Descarguen el archivo de ejemplo y ábranlo en Excel o Google Sheets.', 'Escriban una fila por persona. Las personas con el mismo nombre de invitación quedan juntas (por ejemplo, toda la Familia Rodríguez).', 'Guárdalo como CSV y súbelo aquí.'],
+      gCols: ['Invitación', 'Persona'], gExample: 'Descargar el ejemplo (CSV)', gExampleFile: '/editor/invitados-ejemplo.csv',
       gDrop: 'Suban su lista de invitados', gDropHint: 'Archivo CSV (Excel o Google Sheets)', gBadFile: 'El archivo debe ser un CSV. En Excel: Archivo → Guardar como → CSV.',
       gImported: function (n, p, sk) { return 'Importamos ' + n + (n === 1 ? ' invitación' : ' invitaciones') + ' con ' + p + (p === 1 ? ' persona' : ' personas') + (sk ? '. ' + sk + (sk === 1 ? ' fila sin nombre se omitió' : ' filas sin nombre se omitieron') : '') + '.'; },
       gNone: 'El archivo no tiene filas con invitación y persona.', gMerge: 'Si vuelves a subir un archivo, las invitaciones con el mismo nombre se combinan.',
       gManualHint: 'Creen cada invitación con el nombre que verán (por ejemplo, Familia Rodríguez) y las personas que incluye.',
       gList: 'Su lista', gSummary: function (n, p) { return n + (n === 1 ? ' invitación' : ' invitaciones') + ' · ' + p + (p === 1 ? ' persona' : ' personas'); },
-      gEmpty: 'Todavía no hay invitaciones.', gNew: '+ Nueva invitación', gName: 'Nombre de la invitación', gNamePh: 'p. ej. Familia Rodríguez', gPhone: 'Teléfono (WhatsApp)', gEmail: 'Correo',
+      gEmpty: 'Todavía no hay invitaciones.', gNew: '+ Nueva invitación', gName: 'Nombre de la invitación', gNamePh: 'p. ej. Familia Rodríguez',
       gPerson: 'Persona', gPersonPh: 'Nombre y apellido', gAddPerson: '+ Agregar persona', gDelPerson: 'Quitar a', gDelInv: 'Eliminar invitación', gClear: 'Borrar toda la lista', gClearAsk: '¿Borrar las {n} invitaciones de la lista?', gCleared: 'Lista borrada',
       gSearch: 'Buscar en la lista', gSearchPh: 'Nombre o familia…', gNoMatch: 'Nada coincide con la búsqueda.', gSeats: function (n) { return n + (n === 1 ? ' cupo' : ' cupos'); },
       palCustom: 'Personalizado', palCustomLbl: 'Elegir un color', palLight: 'Es un color claro: en la invitación lo oscurecemos un poco para que el texto se lea bien.',
@@ -230,14 +230,14 @@
       photoBW: 'Black-and-white photos', photoBWOn: 'As in the original design.', photoBWOff: 'Photos show their original colors.',
       photosOn: 'Use photos', photosOnOn: 'The cover and the story show your photos.', photosOnOff: 'No photos: your names go in the lace oval and the story shows a window onto the garden.',
       cancel: 'Cancel', gUpload: 'Upload file (CSV)', gManual: 'Create by hand', gHow: 'How do I build the file?',
-      gSteps: ['Download the example file and open it in Excel or Google Sheets.', 'Write one row per guest. Guests with the same invitation name are grouped together (e.g. the whole Rodríguez family).', 'Save it as CSV and upload it here. Phone and email are optional.'],
-      gCols: ['Invitation', 'Guest', 'Phone', 'Email'], gExample: 'Download the example (CSV)', gExampleFile: '/editor/guests-example.csv',
+      gSteps: ['Download the example file and open it in Excel or Google Sheets.', 'Write one row per guest. Guests with the same invitation name are grouped together (e.g. the whole Rodríguez family).', 'Save it as CSV and upload it here.'],
+      gCols: ['Invitation', 'Guest'], gExample: 'Download the example (CSV)', gExampleFile: '/editor/guests-example.csv',
       gDrop: 'Upload your guest list', gDropHint: 'CSV file (Excel or Google Sheets)', gBadFile: 'The file must be a CSV. In Excel: File → Save As → CSV.',
       gImported: function (n, p, sk) { return 'Imported ' + n + (n === 1 ? ' invitation' : ' invitations') + ' with ' + p + (p === 1 ? ' guest' : ' guests') + (sk ? '. ' + sk + (sk === 1 ? ' row without a name was skipped' : ' rows without a name were skipped') : '') + '.'; },
       gNone: 'The file has no rows with an invitation and a guest.', gMerge: 'If you upload a file again, invitations with the same name are merged.',
       gManualHint: 'Create each invitation with the name guests will see (e.g. The Rodríguez Family) and the people it includes.',
       gList: 'Your list', gSummary: function (n, p) { return n + (n === 1 ? ' invitation' : ' invitations') + ' · ' + p + (p === 1 ? ' guest' : ' guests'); },
-      gEmpty: 'No invitations yet.', gNew: '+ New invitation', gName: 'Invitation name', gNamePh: 'e.g. The Rodríguez Family', gPhone: 'Phone (WhatsApp)', gEmail: 'Email',
+      gEmpty: 'No invitations yet.', gNew: '+ New invitation', gName: 'Invitation name', gNamePh: 'e.g. The Rodríguez Family',
       gPerson: 'Guest', gPersonPh: 'Full name', gAddPerson: '+ Add guest', gDelPerson: 'Remove', gDelInv: 'Delete invitation', gClear: 'Clear the whole list', gClearAsk: 'Delete all {n} invitations from the list?', gCleared: 'List cleared',
       gSearch: 'Search the list', gSearchPh: 'Name or family…', gNoMatch: 'Nothing matches the search.', gSeats: function (n) { return n + (n === 1 ? ' seat' : ' seats'); },
       palCustom: 'Custom', palCustomLbl: 'Pick a color', palLight: 'It’s a light color: in the invitation we darken it a bit so text stays readable.',
@@ -299,14 +299,14 @@
   var G = {
     es: { change: 'Cambiar diseño', designs: 'Diseños', guide: 'Guía', guideLbl: 'Guía para crear su invitación', of: 'de',
       wK: 'Bienvenidos', wH: 'Su invitación, <i>en cinco pasos.</i>', wP: 'Les mostramos dónde está cada cosa. Todo se guarda solo, así que pueden dejarlo y volver cuando quieran.', wTime: 'Toma unos 2 minutos', wStart: 'Empezar el recorrido', wLater: 'Lo veo después',
-      steps: [['Elijan su diseño', 'Ya tienen uno. Pueden ver los demás y cambiar cuando quieran.'], ['Llenen cada sección', 'Portada, historia, itinerario, preguntas, música y hospedaje. Cada una lleva un check cuando está lista.'], ['Vean cómo queda', 'La vista previa cambia mientras escriben. Con «Ver como invitado» la recorren completa, desde la apertura.'], ['Agreguen a sus invitados', 'Una invitación por familia, con sus personas. También pueden subir su lista de Excel.'], ['Publiquen y envíen', 'Al publicar, cada familia recibe su enlace por WhatsApp y ustedes ven quién confirma.']],
+      steps: [['Elijan su diseño', 'Ya tienen uno. Pueden ver los demás y cambiar cuando quieran.'], ['Llenen cada sección', 'Portada, historia, itinerario, preguntas, música y hospedaje. Cada una lleva un check cuando está lista.'], ['Vean cómo queda', 'La vista previa cambia mientras escriben. Con «Ver como invitado» la recorren completa, desde la apertura.'], ['Agreguen a sus invitados', 'Una invitación por familia, con sus personas. También pueden subir su lista de Excel.'], ['Publiquen y envíen', 'Al publicar, cada familia tiene su propio enlace para que ustedes se lo envíen por WhatsApp o mensaje, y ven quién confirma.']],
       stepN: function (i, n) { return 'Paso ' + i + ' de ' + n; }, skip: 'Saltar guía', prev: 'Paso anterior', next: 'Siguiente', done: 'Listo',
       gH: 'Su guía', gN: function (d, n) { return d + ' de ' + n + ' pasos'; }, gSub: ['Diseño ', 'secciones listas', 'Revisen en celular y en escritorio', 'familias', 'Cuando todo esté listo'], gNone: 'Aún no hay familias', go: 'Ir', replay: 'Repetir el recorrido', help: 'Escríbannos',
       dK: 'Cambiar diseño', dH: 'Los diseños, <i>con su boda adentro.</i>', all: 'Todos', current: 'Actual', yours: 'Suyo', open: 'Abrir', choose: 'Elegir', demo: 'Ver cómo se abre', close: 'Cerrar',
       dNote: '<b>Sus textos, fotos e invitados se quedan.</b> Cada diseño tiene su precio; al abrir uno nuevo, llevamos su contenido para que no empiecen de cero.', price: '[Precio]' },
     en: { change: 'Change design', designs: 'Designs', guide: 'Guide', guideLbl: 'Guide to create your invitation', of: 'of',
       wK: 'Welcome', wH: 'Your invitation, <i>in five steps.</i>', wP: 'We’ll show you where everything is. It all saves itself, so you can leave and come back anytime.', wTime: 'Takes about 2 minutes', wStart: 'Start the tour', wLater: 'Maybe later',
-      steps: [['Choose your design', 'You already have one. You can see the others and switch anytime.'], ['Fill in each section', 'Cover, story, schedule, FAQ, music and travel. Each one gets a check when it’s ready.'], ['See how it looks', 'The preview changes as you type. “View as guest” lets you go through it all, from the opening.'], ['Add your guests', 'One invitation per family, with its people. You can also upload your Excel list.'], ['Publish and send', 'When you publish, each family gets its link on WhatsApp and you see who RSVPs.']],
+      steps: [['Choose your design', 'You already have one. You can see the others and switch anytime.'], ['Fill in each section', 'Cover, story, schedule, FAQ, music and travel. Each one gets a check when it’s ready.'], ['See how it looks', 'The preview changes as you type. “View as guest” lets you go through it all, from the opening.'], ['Add your guests', 'One invitation per family, with its people. You can also upload your Excel list.'], ['Publish and send', 'When you publish, each family gets its own link for you to send on WhatsApp or by text, and you see who RSVPs.']],
       stepN: function (i, n) { return 'Step ' + i + ' of ' + n; }, skip: 'Skip guide', prev: 'Previous step', next: 'Next', done: 'Done',
       gH: 'Your guide', gN: function (d, n) { return d + ' of ' + n + ' steps'; }, gSub: ['Design: ', 'sections ready', 'Check on phone and desktop', 'families', 'When everything is ready'], gNone: 'No families yet', go: 'Go', replay: 'Replay the tour', help: 'Message us',
       dK: 'Change design', dH: 'The designs, <i>with your wedding inside.</i>', all: 'All', current: 'Current', yours: 'Yours', open: 'Open', choose: 'Choose', demo: 'See how it opens', close: 'Close',
@@ -559,6 +559,8 @@
     s.events.forEach(function (e) { if (e.mapUrl === undefined) e.mapUrl = ''; });
     if (s.travelNotes && !s.hotelNotes) s.hotelNotes = s.travelNotes;
     delete s.travelNotes; delete s.greeting; delete s.song;
+    // Ya no se guardan teléfonos ni correos de los invitados: se quitan de las listas anteriores al volver a guardar.
+    s.invitations.forEach(function (x) { if (x && typeof x === 'object') { delete x.phone; delete x.email; } });
     return s;
   }
   function loadCart() {
@@ -691,13 +693,14 @@
     if (cell || row.length) { row.push(cell); rows.push(row); }
     return rows.map(function (r) { return r.map(function (c) { return c.trim(); }); }).filter(function (r) { return r.some(Boolean); });
   }
-  // Convierte las filas en invitaciones. Reconoce encabezados en español o inglés; sin encabezado: invitación, persona, teléfono, correo.
+  // Convierte las filas en invitaciones. Reconoce encabezados en español o inglés; sin encabezado: invitación, persona.
+  // No se piden ni se guardan teléfonos ni correos de los invitados: si el archivo los trae, esas columnas se ignoran.
   function rowsToInvitations(rows) {
     var norm = function (x) { return String(x || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z]/g, ''); };
-    var KEYS = { name: /^(invitacion|invitation|familia|family|grupo|group|hogar|household)/, person: /^(persona|person|invitado|guest|nombre|name|asistente)/, phone: /^(telefono|phone|whatsapp|celular|movil|mobile|tel)/, email: /^(correo|email|mail|ecorreo)/ };
-    var col = { name: 0, person: 1, phone: 2, email: 3 }, start = 0, h = rows[0] || [], found = {};
+    var KEYS = { name: /^(invitacion|invitation|familia|family|grupo|group|hogar|household)/, person: /^(persona|person|invitado|guest|nombre|name|asistente)/ };
+    var col = { name: 0, person: 1 }, start = 0, h = rows[0] || [], found = {};
     h.forEach(function (c, i) { var n = norm(c); Object.keys(KEYS).forEach(function (k) { if (found[k] === undefined && KEYS[k].test(n)) found[k] = i; }); });
-    if (found.name !== undefined || found.person !== undefined) { start = 1; Object.keys(found).forEach(function (k) { col[k] = found[k]; }); if (found.phone === undefined) col.phone = -1; if (found.email === undefined) col.email = -1; }
+    if (found.name !== undefined || found.person !== undefined) { start = 1; Object.keys(found).forEach(function (k) { col[k] = found[k]; }); }
     var map = {}, list = [], skipped = 0;
     rows.slice(start).forEach(function (r) {
       var get = function (k) { return col[k] >= 0 ? (r[col[k]] || '').trim() : ''; };
@@ -706,10 +709,8 @@
       if (!name) name = person;
       if (!person) person = name; // una fila con solo el nombre de la invitación es una persona
       var key = name.toLowerCase(), inv = map[key];
-      if (!inv) { inv = map[key] = { name: name, people: [], phone: '', email: '' }; list.push(inv); }
+      if (!inv) { inv = map[key] = { name: name, people: [] }; list.push(inv); }
       if (person && inv.people.indexOf(person) < 0) inv.people.push(person);
-      if (!inv.phone) inv.phone = get('phone');
-      if (!inv.email) inv.email = get('email');
     });
     return { list: list, skipped: skipped };
   }
@@ -1131,8 +1132,8 @@
       if (up) {
         h += '<div class="ed-stack ed-howto"><b>' + esc(S.gHow) + '</b><ol>' + S.gSteps.map(function (x) { return '<li>' + esc(x) + '</li>'; }).join('') + '</ol>' +
           '<div class="ed-csv" role="table" aria-label="' + esc(S.gExample) + '"><div role="row">' + S.gCols.map(function (c) { return '<span role="columnheader">' + esc(c) + '</span>'; }).join('') + '</div>' +
-            (LANG === 'en' ? [['The Rodríguez Family', 'Carlos Rodríguez', '+1 305 555 0123', 'carlos@example.com'], ['The Rodríguez Family', 'Lucía Pérez', '', ''], ['Aunt Martha', 'Martha Gómez', '+1 305 555 0101', '']]
-              : [['Familia Rodríguez', 'Carlos Rodríguez', '+57 300 123 4567', 'carlos@ejemplo.com'], ['Familia Rodríguez', 'Lucía Pérez', '', ''], ['Tía Marta', 'Marta Gómez', '+57 310 555 0101', '']])
+            (LANG === 'en' ? [['The Rodríguez Family', 'Carlos Rodríguez'], ['The Rodríguez Family', 'Lucía Pérez'], ['Aunt Martha', 'Martha Gómez']]
+              : [['Familia Rodríguez', 'Carlos Rodríguez'], ['Familia Rodríguez', 'Lucía Pérez'], ['Tía Marta', 'Marta Gómez']])
               .map(function (r) { return '<div role="row">' + r.map(function (c) { return '<span role="cell">' + esc(c) + '</span>'; }).join('') + '</div>'; }).join('') + '</div>' +
           '<a class="ed-btn ed-btn-sm" href="' + S.gExampleFile + '" download>' + svg('<path d="M12 4v12M7 11l5 5 5-5M4 20h16"/>', 14, 2) + esc(S.gExample) + '</a></div>' +
           dropzone('csv', S.gDrop, S.gDropHint) + '<p class="ed-hint" style="margin:0">' + esc(S.gMerge) + '</p>';
@@ -1147,7 +1148,6 @@
               return '<div class="ed-inv-person"><input data-inv="' + i + '" data-p="' + j + '" value="' + esc(n) + '" placeholder="' + esc(S.gPersonPh) + '" aria-label="' + esc(S.gPerson + ' ' + (j + 1)) + '" autocomplete="off">' +
                 '<button type="button" class="ed-del" data-act="g-delp" data-i="' + i + '" data-d="' + j + '" aria-label="' + esc(S.gDelPerson + ' ' + (n || S.gPerson)) + '">' + svg(P.x, 16, 2) + '</button></div>';
             }).join('') + '<button type="button" class="ed-link" data-act="g-addp" data-i="' + i + '" data-fk="gap-' + i + '">' + esc(S.gAddPerson) + '</button></div>' +
-            '<div class="ed-grid2"><label class="ed-field">' + esc(S.gPhone) + '<input type="tel" data-inv="' + i + '" data-f="phone" value="' + esc(x.phone) + '" autocomplete="off"></label><label class="ed-field">' + esc(S.gEmail) + '<input type="email" data-inv="' + i + '" data-f="email" value="' + esc(x.email) + '" autocomplete="off"></label></div>' +
             '</div>' + delBtn('g-del', i, S.gDelInv + ' ' + (x.name || ''), 'gx-' + i) + '</div>';
         }).join('') + '</div>' : '<p class="ed-empty">' + esc(S.gNoMatch) + '</p>') : '<p class="ed-empty">' + esc(S.gEmpty) + '</p>') +
         '<div class="ed-limit"><button type="button" class="ed-btn ed-btn-dash" data-act="g-new" data-fk="g-new">' + esc(S.gNew) + '</button>' +
@@ -1437,7 +1437,7 @@
         if (!res.list.length) { toast(S.gNone); return; }
         res.list.forEach(function (n) {
           var ex = state.invitations.filter(function (x) { return x.name.toLowerCase() === n.name.toLowerCase(); })[0];
-          if (ex) { n.people.forEach(function (p) { if (ex.people.indexOf(p) < 0) ex.people.push(p); }); if (!ex.phone) ex.phone = n.phone; if (!ex.email) ex.email = n.email; }
+          if (ex) { n.people.forEach(function (p) { if (ex.people.indexOf(p) < 0) ex.people.push(p); }); }
           else { n.id = ++state.uid; state.invitations.push(n); }
           added++; ppl += n.people.length;
         });
@@ -1624,7 +1624,7 @@
         ui.maps[id] = !ui.maps[id]; keepFocus(renderMain); break;
       case 'gMode': ui.gMode = id; keepFocus(renderMain); break;
       case 'g-new':
-        state.invitations.push({ id: ++state.uid, name: '', people: [''], phone: '', email: '' }); ui.gq = ''; changed(true);
+        state.invitations.push({ id: ++state.uid, name: '', people: [''] }); ui.gq = ''; changed(true);
         var gn = $$('[data-inv][data-f="name"]'); if (gn.length) gn[gn.length - 1].focus();
         break;
       case 'g-del': state.invitations.splice(i, 1); changed(true); focusAfterDelete('[data-inv][data-f="name"]', i, '[data-fk="g-new"]'); break;
