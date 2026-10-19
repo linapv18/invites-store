@@ -82,7 +82,7 @@ async function sendWithResend(m) {
     method: 'POST',
     headers: { Authorization: 'Bearer ' + key, 'Content-Type': 'application/json' },
     body: JSON.stringify({
-      from: process.env.QUOTE_FROM || 'Invitesse <cotizaciones@invitesse.com>',
+      from: process.env.QUOTE_FROM || 'Invitesse <cotizaciones@mail.invitesse.com>',
       to: [process.env.QUOTE_TO || 'hola@invitesse.com'],
       reply_to: m.replyTo, subject: m.subject, text: m.text, html: m.html,
     }),

@@ -26,7 +26,7 @@ Los complementos se muestran como opciones en preparación. No se afirma que ya 
 ### 3. Contactos y soporte
 
 - Número de WhatsApp con código de país.
-- Consultas a medida: formulario en `/cotizar/` y `/en/quote/` que llega a hola@invitesse.com. Falta crear la cuenta de Resend, verificar el dominio invitesse.com y configurar `RESEND_API_KEY` (y `QUOTE_FROM` si se usa otro remitente) en Vercel.
+- Consultas a medida: formulario en `/cotizar/` y `/en/quote/` que llega a hola@invitesse.com. Resend configurado: dominio `mail.invitesse.com` verificado (región us-east-1, DNS en Cloudflare), clave en Vercel mediante la integración de Resend y remitente por defecto `cotizaciones@mail.invitesse.com`. Supabase Auth también envía por Resend (SMTP, remitente `cuentas@mail.invitesse.com`); revisar el límite de correos por hora en Supabase.
 - Correo oficial e Instagram: hola@invitesse.com e @invitesse, ya visibles en el pie de la landing, el catálogo y las páginas legales (ES/EN).
 - Canal, idioma, horario y alcance del soporte; tiempo de respuesta que realmente puedas ofrecer.
 
