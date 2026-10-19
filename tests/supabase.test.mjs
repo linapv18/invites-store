@@ -11,6 +11,23 @@ test('draft operations require a verified user before accessing data', async () 
   await assert.rejects(service.drafts.save('id', {}, 0), /AUTH_REQUIRED/);
   assert.equal(touched, false);
 });
+test('listing drafts right after verifying the user does not repeat the server check', async () => {
+  let checks = 0;
+  const query = { select() { return this; }, order: async () => ({ data: [], error: null }) };
+  const service = createServices({ auth: { getUser: async () => { checks++; return { data: { user: { id: 'owner' } }, error: null }; } }, from: () => query });
+  await service.auth.getUser();
+  await service.drafts.list();
+  assert.equal(checks, 1);
+});
+test('a signed-out check is never reused as verification', async () => {
+  let user = { id: 'owner' }, touched = false;
+  const service = createServices({ auth: { getUser: async () => ({ data: { user }, error: null }), signOut: async () => ({ error: null }) }, from: () => { touched = true; } });
+  await service.auth.getUser();
+  await service.auth.signOut();
+  user = null;
+  await assert.rejects(service.drafts.list(), /AUTH_REQUIRED/);
+  assert.equal(touched, false);
+});
 test('draft saves send the expected revision and surface write conflicts', async () => {
   const conflict = new Error('DRAFT_CONFLICT_OR_NOT_FOUND');
   let received;

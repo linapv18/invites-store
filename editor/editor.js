@@ -15,9 +15,12 @@
   var VIEW = root.getAttribute('data-view') || 'editor';
   // Las claves dependen de la cuenta y del diseño: las fija gate() (ver editor/auth.js).
   var KEY = '', CART_KEY = '', AUTH = window.LazoAuth;
-  root.innerHTML = '<p style="padding:40px" role="status">'+(document.documentElement.lang === 'en' ? 'Connecting securely…' : 'Conectando de forma segura…')+'</p>';
+  // La pantalla de carga (.ed-boot) ya viene en el HTML; se reemplaza al pintar la vista.
   try { await AUTH.ready; } catch (_) {
-    root.innerHTML = '<div style="padding:40px"><p role="alert">'+(document.documentElement.lang === 'en' ? 'Unable to connect. Your drafts have not been changed.' : 'No se pudo conectar. Sus borradores no se han modificado.')+'</p><button type="button" onclick="location.reload()">'+(document.documentElement.lang === 'en' ? 'Retry' : 'Reintentar')+'</button></div>'; return;
+    var boot = root.querySelector('.ed-boot'), en = document.documentElement.lang === 'en';
+    root.innerHTML = '<div class="ed-boot is-error">' + (boot && boot.querySelector('.iv-wm') ? boot.querySelector('.iv-wm').outerHTML : '') +
+      '<p class="ed-boot-msg" role="alert">' + (en ? 'Unable to connect. Your drafts have not been changed.' : 'No se pudo conectar. Sus borradores no se han modificado.') + '</p>' +
+      '<button type="button" class="ed-btn ed-btn-dark" onclick="location.reload()">' + (en ? 'Retry' : 'Reintentar') + '</button></div>'; return;
   }
 
 

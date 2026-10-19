@@ -321,6 +321,20 @@ a.ed-btn[aria-disabled="true"]{opacity:.4;pointer-events:none}
 .ed-guest-screen{flex:1 1 auto;width:100%;max-width:440px;overflow-y:auto;background:var(--bg)}
 .ed-guest-screen .iv-open{min-height:100%}
 .ed-toast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%);z-index:70;background:var(--ink);color:var(--bg);padding:12px 20px;border-radius:999px;font-size:14px;box-shadow:0 8px 24px rgba(0,0,0,.2);max-width:calc(100% - 32px);text-align:center}
+/* Carga inicial de cuenta, compra y editor: va en el HTML para verse en el primer pintado, antes que los scripts.
+   El trazo del logo se dibuja en bucle y una línea corre debajo. Con movimiento reducido queda quieto. */
+.ed-boot{min-height:100vh;min-height:100svh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:26px;padding:24px;background:var(--bg);color:var(--ink);text-align:center;animation:ed-boot-in .5s ease .12s both}
+.ed-boot .iv-wm{font-size:46px}
+.ed-boot .iv-wm path{stroke-dasharray:100;stroke-dashoffset:100;animation:ed-boot-draw 1.8s cubic-bezier(.65,0,.35,1) infinite alternate}
+.ed-boot-line{position:relative;display:block;width:112px;height:1px;overflow:hidden;background:var(--line)}
+.ed-boot-line::after{content:"";position:absolute;inset:0 auto 0 0;width:40%;background:var(--ink);animation:ed-boot-run 1.4s cubic-bezier(.65,0,.35,1) infinite}
+.ed-boot-t{margin:0;font:500 11px/1.4 var(--iv-sans);letter-spacing:.2em;text-transform:uppercase;color:var(--mute)}
+.ed-boot.is-error .iv-wm path{animation:none;stroke-dashoffset:0}
+.ed-boot-msg{max-width:320px;margin:0;font:400 15px/1.55 var(--iv-sans);color:var(--ink-2)}
+@keyframes ed-boot-in{from{opacity:0}to{opacity:1}}
+@keyframes ed-boot-draw{to{stroke-dashoffset:0}}
+@keyframes ed-boot-run{from{transform:translateX(-100%)}to{transform:translateX(250%)}}
+@media (prefers-reduced-motion:reduce){.ed-boot,.ed-boot .iv-wm path,.ed-boot-line::after{animation:none}.ed-boot .iv-wm path{stroke-dashoffset:0}.ed-boot-line::after{left:30%}}
 .ed-noscript{max-width:560px;margin:80px auto;padding:0 24px;text-align:center;line-height:1.6}
 
 /* ---------- Pantallas medianas ---------- */

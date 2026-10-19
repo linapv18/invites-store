@@ -6,10 +6,15 @@
   var root = document.getElementById('lazo-account');
   if (!root || !window.LazoAuth) return;
   var A = window.LazoAuth;
+  // Se consulta ya, en paralelo con la sesión, para que el botón de Google no aparezca tarde.
+  var googleCheck = window.InvitesseBackend ? A.googleAvailable() : Promise.resolve(false);
   var oauthError = new URLSearchParams(location.search).has('error') || new URLSearchParams(location.hash.slice(1)).has('error');
-  root.innerHTML = '<p style="padding:40px" role="status">'+(document.documentElement.lang === 'en' ? 'Connecting securely…' : 'Conectando de forma segura…')+'</p>';
+  // La pantalla de carga (.ed-boot) ya viene en el HTML; se reemplaza al pintar la vista.
   try { await A.ready; } catch (_) {
-    root.innerHTML = '<div style="padding:40px"><p role="alert">'+(document.documentElement.lang === 'en' ? 'Unable to connect. Your drafts have not been changed.' : 'No se pudo conectar. Sus borradores no se han modificado.')+'</p><button type="button" onclick="location.reload()">'+(document.documentElement.lang === 'en' ? 'Retry' : 'Reintentar')+'</button></div>'; return;
+    var boot = root.querySelector('.ed-boot'), en = document.documentElement.lang === 'en';
+    root.innerHTML = '<div class="ed-boot is-error">' + (boot && boot.querySelector('.iv-wm') ? boot.querySelector('.iv-wm').outerHTML : '') +
+      '<p class="ed-boot-msg" role="alert">' + (en ? 'Unable to connect. Your drafts have not been changed.' : 'No se pudo conectar. Sus borradores no se han modificado.') + '</p>' +
+      '<button type="button" class="ed-btn ed-btn-dark" onclick="location.reload()">' + (en ? 'Retry' : 'Reintentar') + '</button></div>'; return;
   }
 
   var LANG = (document.documentElement.lang || 'es').slice(0, 2) === 'en' ? 'en' : 'es';
@@ -194,5 +199,5 @@
   });
   window.addEventListener('invitesse:signed-out',function(){mode='login';message='';render();});
   render();
-  A.googleAvailable().then(function(enabled) { googleEnabled = enabled; renderGoogle(); });
+  googleCheck.then(function(enabled) { googleEnabled = enabled; renderGoogle(); });
 })();

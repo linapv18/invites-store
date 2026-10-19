@@ -16,6 +16,8 @@ for (const path of ['assets','comprar','cuenta','demo','disenos','editor','en','
   await cp(path, 'dist/' + path, { recursive: true });
 }
 await mkdir('dist/assets/backend', { recursive: true });
-await writeFile('dist/assets/backend/config.js', 'window.INVITESSE_SUPABASE_CONFIG=' + JSON.stringify({ url: endpoint, publishableKey }).replaceAll('<', '\\u003c') + ';\n');
+// The preconnect opens the TLS connection to Supabase while client.js is still downloading.
+const preconnect = '(function(){var l=document.createElement("link");l.rel="preconnect";l.href=' + JSON.stringify(endpoint).replaceAll('<', '\\u003c') + ';l.crossOrigin="anonymous";document.head.appendChild(l);})();\n';
+await writeFile('dist/assets/backend/config.js', 'window.INVITESSE_SUPABASE_CONFIG=' + JSON.stringify({ url: endpoint, publishableKey }).replaceAll('<', '\\u003c') + ';\n' + preconnect);
 await build({ entryPoints: ['lib/supabase/client.mjs'], outfile: 'dist/assets/backend/client.js', bundle: true, minify: true, format: 'iife', target: ['es2020'], legalComments: 'eof' });
 console.log('Static storefront and Supabase client built in dist/. Accounts and drafts use Supabase; payments and publishing remain unavailable.');
