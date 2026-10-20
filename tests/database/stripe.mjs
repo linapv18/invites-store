@@ -4,7 +4,7 @@ import {PGlite} from '@electric-sql/pglite';
 const db=new PGlite();
 await db.exec(`create role anon nologin;create role authenticated nologin;create role service_role nologin bypassrls;
 create schema auth;create schema storage;grant usage on schema public,auth,storage to anon,authenticated,service_role;
-create table auth.users(id uuid primary key,email_confirmed_at timestamptz);
+create table auth.users(id uuid primary key,email_confirmed_at timestamptz,email text,created_at timestamptz default now());
 create function auth.uid() returns uuid language sql stable as $$ select nullif(current_setting('request.jwt.claim.sub',true),'')::uuid $$;
 create table storage.buckets(id text primary key,name text,public boolean,file_size_limit bigint,allowed_mime_types text[]);
 create table storage.objects(id uuid primary key default gen_random_uuid(),bucket_id text references storage.buckets(id),name text,metadata jsonb,unique(bucket_id,name));
@@ -80,6 +80,58 @@ await db.exec('reset role');assert.equal((await rpc('select public.get_guest_inv
 await db.query('select public.revoke_stripe_order($1)',[order.order_id]);assert.equal(await rpc('select public.get_guest_invitation($1) r',[token]),null);
 await assert.rejects(()=>db.query("select public.apply_verified_payment('stripe','evt_late',$1,'pi_paid',19900000,'COP')",[order.order_id]),/ORDER_NOT_PAYABLE/);
 console.log('PASS paid publication, family token, private-field exclusion, stable republishing and refund revocation');
+// Códigos de descuento: validados en la base, la orden nace con el precio rebajado y el pago debe coincidir con él.
+await db.query("update auth.users set email='b@example.test' where id=$1",[B]);
+const code=async payload=>rpc('select public.admin_save_code($1) r',[JSON.stringify(payload)]);
+await code({code:'navidad20',kind:'percent',percent_off:20,tiers:['esencial','signature']});
+await code({code:'LUX40',kind:'amount',amount_off_cop:4000000,amount_off_usd:1000,tiers:['luxury'],max_uses:1});
+await code({code:'OLD10',kind:'percent',percent_off:10,starts_at:'2020-01-01T00:00:00Z',ends_at:'2020-02-01T00:00:00Z'});
+await code({code:'HUGE',kind:'amount',amount_off_cop:19800000,amount_off_usd:7850});
+await assert.rejects(()=>code({code:'NAVIDAD20',kind:'percent',percent_off:5}),/CODE_EXISTS/);
+await assert.rejects(()=>code({code:'BAD',kind:'percent',percent_off:95}),/check constraint/);
+const quoteFor=(owner,design,currency,c)=>rpc('select public.discount_quote($1,$2,$3,$4) r',[owner,design,currency,c]);
+const q20=await quoteFor(B,'clasico','COP',' navidad20 ');assert.equal(q20.discount_minor,2580000);assert.equal(q20.total_minor,10320000);
+assert.equal((await quoteFor(B,'clasico','USD','NAVIDAD20')).total_minor,3920);
+await assert.rejects(()=>quoteFor(B,'glicina','COP','NAVIDAD20'),/DISCOUNT_NOT_APPLICABLE/);
+await assert.rejects(()=>quoteFor(B,'clasico','COP','OLD10'),/DISCOUNT_EXPIRED/);
+await assert.rejects(()=>quoteFor(B,'clasico','COP','NOPE'),/DISCOUNT_NOT_FOUND/);
+await assert.rejects(()=>quoteFor(B,'clasico','COP','HUGE'),/DISCOUNT_TOO_LARGE/);
+await db.query('select public.configure_stripe_purchase($1,$2,$3,$4)',[B,'clasico','2028-05-10','America/Bogota']);
+const bq=await rpc("select public.quote_stripe_checkout($1,'clasico') r",[B]);
+const bo=await rpc("select public.prepare_stripe_checkout($1,'clasico','COP',$2,'NAVIDAD20') r",[B,bq.revision]);
+assert.equal(bo.amount,10320000);assert.equal(bo.discount_minor,2580000);assert.equal(bo.discount_code,'NAVIDAD20');
+// Reintentar devuelve la misma orden pendiente con su descuento, aunque cambie el código.
+assert.equal((await rpc("select public.prepare_stripe_checkout($1,'clasico','COP',$2) r",[B,bq.revision])).amount,10320000);
+await assert.rejects(()=>db.query("select public.apply_verified_payment('stripe','evt_full',$1,'pi_disc',12900000,'COP')",[bo.order_id]),/PAYMENT_AMOUNT_MISMATCH/);
+assert.equal((await rpc("select public.apply_verified_payment('stripe','evt_disc',$1,'pi_disc',10320000,'COP') r",[bo.order_id])).status,'paid');
+await db.query('select public.configure_stripe_purchase($1,$2,$3,$4)',[B,'glicina','2028-06-10','America/Bogota']);
+const gq=await rpc("select public.quote_stripe_checkout($1,'glicina') r",[B]);
+assert.equal((await rpc("select public.prepare_stripe_checkout($1,'glicina','USD',$2,'LUX40') r",[B,gq.revision])).amount,9900);
+await assert.rejects(()=>quoteFor(A,'marfil','USD','LUX40'),/DISCOUNT_EXHAUSTED/);
+console.log('PASS discount codes: validation, tiers, dates, limits, discounted order and exact discounted payment');
+// Lecturas del panel.
+const all=await rpc("select public.admin_orders('{}') r");assert.ok(all.total>=4);
+const paidRows=await rpc(`select public.admin_orders('{"status":"paid","q":"b@example"}') r`);
+assert.equal(paidRows.total,1);assert.equal(paidRows.rows[0].code,'NAVIDAD20');assert.equal(paidRows.rows[0].tier,'esencial');assert.equal(paidRows.rows[0].email,'b@example.test');
+const detail=await rpc('select public.admin_order($1) r',[bo.order_id]);
+assert.equal(detail.items[0].unit_price_minor,12900000);assert.equal(detail.payment.amount_minor,10320000);assert.equal(detail.discount_minor,2580000);
+const codes=await rpc('select public.admin_codes() r');const n20=codes.find(c=>c.code==='NAVIDAD20');assert.equal(n20.uses,1);assert.equal(n20.discounted.COP,2580000);
+assert.equal(codes.find(c=>c.code==='LUX40').pending,1);
+const summary=await rpc("select public.admin_summary(now()-interval '30 days') r");
+const paidCop=(await db.query("select coalesce(sum(o.total_minor),0)::bigint t,count(*)::int n from public.orders o join public.payments p on p.order_id=o.id where o.status='paid' and o.currency='COP'")).rows[0];
+assert.equal(String(summary.revenue.COP.total),String(paidCop.t));assert.equal(summary.revenue.COP.orders,paidCop.n);assert.equal(summary.discounted,1);assert.ok(summary.by_tier.esencial>=1);assert.equal(summary.recent.length,5);
+const analytics=await rpc("select public.admin_analytics(now()-interval '30 days') r");
+assert.equal(analytics.funnel.paid,(await db.query("select count(*)::int n from public.orders o join public.payments p on p.order_id=o.id where o.status='paid'")).rows[0].n);assert.ok(analytics.designs.find(d=>d.design==='clasico').paid>=1);assert.equal(analytics.codes[0].code,'NAVIDAD20');
+const lux=await rpc('select public.admin_codes() r');await db.query('select public.admin_set_code_active($1,false)',[lux.find(c=>c.code==='NAVIDAD20').id]);
+await assert.rejects(()=>quoteFor(A,'clasico','COP','NAVIDAD20'),/DISCOUNT_NOT_FOUND/);
+console.log('PASS admin orders, order detail, codes usage, summary, analytics and code deactivation');
+for (const role of ['anon','authenticated']) {
+ await db.exec('set role '+role);
+ for (const q of ["select public.admin_summary(now())","select public.admin_orders('{}')","select public.admin_codes()","select public.admin_save_code('{}')","select * from public.discount_codes"]) await assert.rejects(()=>db.query(q),/permission denied/);
+ await assert.rejects(()=>db.query("select public.discount_quote($1,'clasico','COP','LUX40')",[A]),/permission denied/);
+ await db.exec('reset role');
+}
+console.log('PASS admin functions and discount codes are closed to browsers');
 await db.exec('set role anon');
 await assert.rejects(()=>db.query('select public.prepare_stripe_checkout($1,$2,$3,0)',[A,'nacar','COP']),/permission denied/);
 await assert.rejects(()=>db.query('select * from public.stripe_checkouts'),/permission denied/);

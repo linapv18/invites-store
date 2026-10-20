@@ -794,6 +794,12 @@ a.ed-btn[aria-disabled="true"]{opacity:.4;pointer-events:none}
 .iv-includes li::before{content:'✓';position:absolute;left:0;color:var(--ink)}
 .iv-checkout .co-total{border-top:1px solid var(--line);padding-top:22px;gap:12px}
 .iv-checkout .co-total b{font-family:'Geist',system-ui,sans-serif;font-size:25px;white-space:nowrap;letter-spacing:-.035em}
+.iv-code{border-top:1px solid var(--line);padding-top:14px}
+.iv-code summary{cursor:pointer;font-size:13px;color:var(--ink-2);min-height:32px;display:flex;align-items:center}
+.iv-code-row{display:flex;gap:8px;margin-top:8px}
+.iv-code-row input{flex:1;min-width:0;min-height:44px;padding:0 12px;border:1px solid var(--line-2);border-radius:10px;background:#fff;font:500 15px var(--iv-sans);letter-spacing:.06em;text-transform:uppercase}
+.iv-code-msg{margin:8px 0 0;font-size:12px;line-height:1.5;color:#8C3A31}.iv-code-msg.is-ok{color:var(--ok)}
+.iv-was{color:var(--mute);font-weight:400;margin-right:4px}
 .iv-accept{display:flex;gap:10px;font-size:12px;line-height:1.6;color:var(--ink-2);cursor:pointer}
 .iv-accept input{flex:none;width:17px;height:17px;margin:3px 0 0;accent-color:var(--ink)}
 .iv-stripe-note{display:flex;align-items:center;justify-content:center;gap:7px}

@@ -32,7 +32,17 @@ function createHandler({adminClient=runtime.adminClient,stripeClient=runtime.str
    }
    if(req.headers.origin && req.headers.origin!==runtime.origin) return res.status(403).json({error:'INVALID_ORIGIN'});
    const user=await userFor(req,admin), b=req.body;
-   if(!b || typeof b!=='object' || !designPattern.test(b.design || '') || !['details','quote','create','status','cancel'].includes(b.action)) return res.status(400).json({error:'INVALID_REQUEST'});
+   if(!b || typeof b!=='object' || !designPattern.test(b.design || '') || !['details','quote','create','status','cancel','discount'].includes(b.action)) return res.status(400).json({error:'INVALID_REQUEST'});
+   // Código de descuento opcional: lo valida la base (gama, fechas, usos); el navegador nunca dice cuánto se descuenta.
+   const code=typeof b.code==='string'?b.code.trim().toUpperCase():'';
+   if(code && !/^[A-Z0-9]{3,32}$/.test(code)) return res.status(409).json({error:'DISCOUNT_NOT_FOUND'});
+   if(b.action==='discount') {
+    if(!code) return res.status(400).json({error:'INVALID_REQUEST'});
+    stage='DISCOUNT';
+    const currency=['COP','USD'].includes(b.quotedCurrency)?b.quotedCurrency:detectedCurrency(req);
+    const d=await runtime.unwrap(admin.rpc('discount_quote',{verified_owner:user.id,requested_design:b.design,requested_currency:currency,requested_code:code}));
+    return res.status(200).json({code:d.code,currency:d.currency,base_minor:d.base_minor,discount_minor:d.discount_minor,total_minor:d.total_minor,percent_off:d.percent_off});
+   }
    if(b.action==='details') {
     if(typeof b.date!=='string' || typeof b.timezone!=='string') return res.status(400).json({error:'INVALID_REQUEST'});
     stage='DATE';
@@ -77,9 +87,12 @@ function createHandler({adminClient=runtime.adminClient,stripeClient=runtime.str
    }
    // Serializes concurrent clicks across browsers and currencies in the database.
    stage='ORDER';
-   const order=await runtime.unwrap(admin.rpc('prepare_stripe_checkout',{verified_owner:user.id,requested_design:b.design,requested_currency:currency,expected_revision:b.revision}));
+   const order=await runtime.unwrap(admin.rpc('prepare_stripe_checkout',{verified_owner:user.id,requested_design:b.design,requested_currency:currency,expected_revision:b.revision,...(code?{requested_code:code}:{})}));
    if(order.status==='enabled') return res.status(200).json({status:'paid',enabled:true});
-   if(order.currency!==currency || order.amount/100!==b.quotedAmount) return res.status(409).json({error:'PRICE_CHANGED'});
+   // El precio aceptado es el de la gama; con código, la orden trae el total rebajado y su descuento validado.
+   // Un checkout que ya estaba pendiente conserva el total acordado.
+   const agreed=existing?order.amount:order.amount+(order.discount_minor || 0);
+   if(order.currency!==currency || agreed/100!==b.quotedAmount) return res.status(409).json({error:'PRICE_CHANGED'});
    const en=b.locale==='en', back=runtime.origin+(en?'/en':'')+'/editor/pago/?diseno='+encodeURIComponent(b.design);
    const expiresDate=new Intl.DateTimeFormat(en?'en-US':'es-CO',{timeZone:order.timezone,year:'numeric',month:'long',day:'numeric'}).format(new Date(new Date(order.expires_at).getTime()-1));
    if(!order.session_id && Date.now()-Date.parse(order.created_at)>23*60*60*1000) throw new Error('PAYMENT_STATE_UNAVAILABLE');
@@ -91,7 +104,7 @@ function createHandler({adminClient=runtime.adminClient,stripeClient=runtime.str
     client_reference_id:order.order_id,customer_email:user.email,
     metadata:{integration:'invitesse',order_id:order.order_id,terms_version:'2026-10-20'},
     payment_intent_data:{metadata:{integration:'invitesse',order_id:order.order_id}},
-    line_items:[{quantity:1,price_data:{currency:order.currency.toLowerCase(),unit_amount:order.amount,product_data:{name:'Invitesse — '+b.design,description:(en?'Publication through ':'Publicación hasta el ')+expiresDate}}}],
+    line_items:[{quantity:1,price_data:{currency:order.currency.toLowerCase(),unit_amount:order.amount,product_data:{name:'Invitesse — '+b.design,description:(en?'Publication through ':'Publicación hasta el ')+expiresDate+(order.discount_code?(en?' · Code ':' · Código ')+order.discount_code:'')}}}],
     adaptive_pricing:{enabled:false},allow_promotion_codes:false,
     success_url:back+'&payment=return',cancel_url:back+'&payment=cancelled',
     custom_text:{submit:{message:en?'One-time payment. Publication until '+expiresDate+'.':'Pago único. Publicación hasta el '+expiresDate+'.'}},
@@ -127,7 +140,7 @@ function createHandler({adminClient=runtime.adminClient,stripeClient=runtime.str
    return res.status(200).json({url:session.url,status:'pending'});
   } catch(e) {
    const message=e.message || '';
-   const known=['AUTH_REQUIRED','EMAIL_NOT_CONFIRMED','INVITATION_NOT_FOUND','DRAFT_CONFLICT','EVENT_DETAILS_REQUIRED','EVENT_DATE_IN_PAST','INVALID_TIME_ZONE','PURCHASE_ALREADY_EXISTS','CHECKOUT_BEING_PREPARED','PURCHASE_EVENT_DATE_LOCKED'];
+   const known=['DISCOUNT_NOT_FOUND','DISCOUNT_NOT_STARTED','DISCOUNT_EXPIRED','DISCOUNT_NOT_APPLICABLE','DISCOUNT_EXHAUSTED','DISCOUNT_ALREADY_USED','DISCOUNT_TOO_LARGE','AUTH_REQUIRED','EMAIL_NOT_CONFIRMED','INVITATION_NOT_FOUND','DRAFT_CONFLICT','EVENT_DETAILS_REQUIRED','EVENT_DATE_IN_PAST','INVALID_TIME_ZONE','PURCHASE_ALREADY_EXISTS','CHECKOUT_BEING_PREPARED','PURCHASE_EVENT_DATE_LOCKED'];
    const code=known.find(k=>message.includes(k));
    if(code) return res.status(code==='AUTH_REQUIRED'?401:409).json({error:code});
    const safeCode=/^[a-zA-Z0-9_]{1,48}$/.test(e.code || '')?e.code:'UNAVAILABLE';
