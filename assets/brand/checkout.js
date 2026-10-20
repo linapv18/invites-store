@@ -28,6 +28,7 @@
  };
  window.InvitesseCheckout={request:request,mount:async function(root,design){
   var quote=null,busy=false,market=null,amount=null,status='',notice='',polls=0,timer;
+  var verifyingReturn=new URLSearchParams(location.search).get('payment')==='return';
   var selected=(window.LazoCatalog?.designs || []).find(function(d){return d.id===design;}),info=selected?.[en?'en':'es'];
   var name=info?.name || design,photo=selected?.thumb?selected.thumb+'-280.webp':selected?.img?.[0];
   var lock='<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>';
@@ -43,14 +44,15 @@
    return new Intl.DateTimeFormat(en?'en-US':'es-CO',{timeZone:'UTC',dateStyle:'long'}).format(new Date(Date.UTC(year,month,day)));
   }
   function show(){
-   form.noValidate=!!quote?.enabled;
-   pay.disabled=busy || !market || amount===null || status==='processing';
-   price.hidden=!!quote?.enabled;
+   form.noValidate=!!quote?.enabled || verifyingReturn;
+   pay.disabled=busy || !market || amount===null || (status==='processing' && !verifyingReturn);
+   price.hidden=!!quote?.enabled || verifyingReturn;
    var full=market && amount!==null?market+' $'+new Intl.NumberFormat(market==='COP'?'es-CO':'en-US').format(amount):'…';
    if(discount && discount.currency===market){price.innerHTML='<s class="iv-was">'+esc(full)+'</s> '+esc(money(discount.total_minor,market));}else{price.textContent=full;}
-   codeBox.hidden=!!quote?.enabled;codeApply.disabled=busy || !market || status==='processing';codeInput.disabled=busy || status==='processing';codeMsg.textContent=codeNote;codeMsg.hidden=!codeNote;codeMsg.classList.toggle('is-ok',codeOk);date.disabled=!!quote?.enabled || status==='pending';
-   cancel.hidden=status!=='pending';cancel.disabled=busy;
-   pay.textContent=busy?(en?'Preparing payment…':'Preparando el pago…'):quote?.enabled?(en?'Open editor':'Abrir editor'):(en?'Continue to payment':'Continuar al pago');
+   codeBox.hidden=!!quote?.enabled || verifyingReturn;codeApply.disabled=busy || !market || status==='processing';codeInput.disabled=busy || status==='processing';codeMsg.textContent=codeNote;codeMsg.hidden=!codeNote;codeMsg.classList.toggle('is-ok',codeOk);date.disabled=!!quote?.enabled || status==='pending';
+   cancel.hidden=status!=='pending' || verifyingReturn;cancel.disabled=busy;
+   root.querySelector('.iv-accept').hidden=verifyingReturn || !!quote?.enabled;
+   pay.textContent=verifyingReturn && !quote?.enabled?(en?'Verify purchase':'Verificar compra'):busy?(en?'Preparing payment…':'Preparando el pago…'):quote?.enabled?(en?'Open editor':'Abrir editor'):(en?'Continue to payment':'Continuar al pago');
    note.textContent=notice;note.hidden=!notice;
    var end=quote?new Intl.DateTimeFormat(en?'en-US':'es-CO',{timeZone:quote.timezone,dateStyle:'long'}).format(new Date(new Date(quote.expires_at).getTime()-1)):previewEnd();
    validity.textContent=end?(en?'Available through ':'Disponible hasta el ')+end+'.':'';
@@ -59,9 +61,11 @@
   function fail(e){notice=messages[e.message] || (en?'Unable to continue. No new payment was started. Try again or contact support.':'No se pudo continuar. No se inició otro pago. Reintenten o contacten con soporte.');if(e.reference)notice+=' '+(en?'Reference: ':'Referencia: ')+e.reference;}
   async function refresh(){
    try {var q=await request({action:'status',design:design});quote=q;status=q.status;date.value=q.event_date;eventZone=q.timezone;if(q.currency){market=q.currency;amount=q.amount;}
-    if(q.enabled){notice=en?'Payment confirmed. You can edit your invitation.':'Pago confirmado. Ya pueden editar su invitación.';clearTimeout(timer);}
-    else if(new URLSearchParams(location.search).get('payment')==='return' && polls++<10){notice=en?'Verifying payment. Do not pay again.':'Verificando el pago. No vuelvan a pagar.';timer=setTimeout(refresh,2500);}
-   }catch(e){if(e.message==='EVENT_DETAILS_REQUIRED' || e.message==='INVITATION_NOT_FOUND'){notice='';}else fail(e);}show();
+    if(q.enabled){notice=en?'Payment confirmed. You can edit your invitation.':'Pago confirmado. Ya pueden editar su invitación.';clearTimeout(timer);if(verifyingReturn){location.replace(base+'/editor/?diseno='+encodeURIComponent(design));return;}}
+    else if(verifyingReturn){notice=en?'Verifying your purchase. Do not pay again.':'Verificando su compra. No vuelvan a pagar.';}
+   }catch(e){if(e.message==='EVENT_DETAILS_REQUIRED' || e.message==='INVITATION_NOT_FOUND'){notice='';}else fail(e);}
+   if(verifyingReturn && !quote?.enabled && polls++<10){clearTimeout(timer);timer=setTimeout(refresh,2500);}
+   show();
   }
   date.addEventListener('change',function(){quote=null;show();});
   cancel.addEventListener('click',async function(){busy=true;show();try{await request({action:'cancel',design:design});status='';quote=null;await loadPrice();notice=en?'Pending checkout cancelled. You can change the event date.':'Checkout pendiente cancelado. Pueden cambiar la fecha del evento.';}catch(e){fail(e);}busy=false;show();});
@@ -88,7 +92,7 @@
   codeApply.addEventListener('click',applyCode);
   codeInput.addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();applyCode();}});
   codeInput.addEventListener('input',function(){if(discount && codeInput.value.trim().toUpperCase()!==discount.code){discount=null;codeNote='';show();}});
-  form.addEventListener('submit',async function(e){e.preventDefault();if(busy)return;if(quote?.enabled){location.href=base+'/editor/?diseno='+encodeURIComponent(design);return;}
+  form.addEventListener('submit',async function(e){e.preventDefault();if(busy)return;if(verifyingReturn && !quote?.enabled){busy=true;show();await refresh();busy=false;show();return;}if(quote?.enabled){location.href=base+'/editor/?diseno='+encodeURIComponent(design);return;}
    busy=true;notice='';show();try{
     if(!quote){var shownMarket=market,shownAmount=amount;quote=await request({action:'details',design:design,date:date.value,timezone:eventZone});market=quote.currency;amount=quote.amount;if(shownMarket!==market || shownAmount!==amount){notice=en?'Your local price changed. Review the total before continuing.':'El precio local cambió. Revisen el total antes de continuar.';busy=false;show();return;}}
     var result=await request({action:'create',design:design,quotedCurrency:market,quotedAmount:amount,revision:quote.revision,locale:en?'en':'es',acceptedTerms:true,code:discount && discount.currency===market?discount.code:undefined});

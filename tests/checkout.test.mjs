@@ -156,3 +156,11 @@ test('zero-total retries strip the incompatible field from frozen orders and use
   assert.equal(calls.filter(c=>c.name==='prepare_stripe_checkout').length,1);
  }
 });
+
+test('Stripe paid zero-total return records the free order and never creates another checkout',async()=>{
+ const session={id:'cs_live_free_paid',status:'complete',livemode:true,mode:'payment',payment_status:'paid',payment_intent:null,amount_total:0,currency:'cop',client_reference_id:orderId,metadata:{integration:'invitesse',order_id:orderId}};
+ const {res,calls}=await run({pending:true,session},{action:'status',design:'nacar'});
+ assert.equal(res.code,200);assert.equal(res.body.enabled,true);assert.equal(res.body.amount,0);
+ const recorded=calls.find(c=>c.name==='apply_verified_payment');assert.equal(recorded.args.external_payment,session.id);assert.equal(recorded.args.verified_amount,0);
+ assert.equal(calls.some(c=>c.name==='stripe.create'),false);
+});

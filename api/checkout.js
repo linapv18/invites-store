@@ -79,9 +79,12 @@ function createHandler({adminClient=runtime.adminClient,stripeClient=runtime.str
      }
     }
     if(row?.session_id || recovered) {
+     stage='SESSION_READ';
      session=recovered || await stripe.checkout.sessions.retrieve(row.session_id);
+     stage='SESSION_VERIFY';
      if(session.metadata?.order_id!==existing.id || session.metadata?.integration!=='invitesse' || !session.livemode) throw new Error('PAYMENT_STATE_UNAVAILABLE');
      if(session.payment_status==='paid' || (session.payment_status==='no_payment_required' && session.status==='complete')) {
+      stage='RECONCILE';
       await recordSession(admin,session,'reconcile:'+session.id);
       return res.status(200).json({...quote,status:'paid',enabled:true,...pricing(session.currency.toUpperCase(),b.design,session.amount_total)});
      }

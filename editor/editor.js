@@ -812,6 +812,9 @@
     var u = AUTH && AUTH.current();
     if (!u) { location.replace(ACCOUNT + '?next=' + encodeURIComponent(location.pathname + location.search + location.hash)); return null; }
     var own = AUTH.owned(), p = new URLSearchParams(location.search), d = p.get('diseno') || p.get('design');
+    // The return page verifies the server order; it must not lose payment=return
+    // by redirecting to a fresh purchase when drafts have not loaded locally.
+    if(VIEW==='checkout' && DESIGNS[d])return d;
     if (!own.length) { location.replace(BASE + '/comprar/' + (DESIGNS[d] ? '?diseno=' + d : '')); return null; }
     if (!d) d = own.indexOf(u.last) > -1 ? u.last : own[0];
     if (VIEW !== 'checkout' && (!AUTH.owns(d) || !AUTH.canEdit(d))) { location.replace(BASE+'/comprar/?diseno='+encodeURIComponent(d)); return null; }
