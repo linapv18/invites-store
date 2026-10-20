@@ -7,7 +7,7 @@
     var nodes = Array.prototype.slice.call(root.querySelectorAll('.lz-price'));
     if (root.matches && root.matches('.lz-price')) nodes.unshift(root);
     nodes.forEach(function (node) {
-      var card=node.closest('.lz-card'),design=card?.dataset.id;
+      var card=node.closest('.lz-card, .ac-card'),design=card?.dataset.id;
       if(!design){var link=card?.querySelector('.lz-buy');if(link)design=new URL(link.href).searchParams.get('diseno');}
       var price=prices[design];if(!price)return;
       var label=price.currency+' $'+new Intl.NumberFormat(price.currency==='COP'?'es-CO':'en-US').format(price.amount);

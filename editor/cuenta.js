@@ -141,10 +141,10 @@
       (mode==='login'?'<button type="button" class="ed-link" data-act="mode" data-id="reset">'+(LANG==='en'?'Forgot your password?':'¿Olvidaron su contraseña?')+'</button>':'')+
       '<p class="ac-note">'+esc(S.demoNote)+'</p><p class="ac-note"><a href="'+(LANG==='en'?'/en/privacy/':'/privacidad/')+'">'+(LANG==='en'?'Privacy policy':'Política de privacidad')+'</a> · <a href="'+(LANG==='en'?'/en/terms/':'/condiciones/')+'">'+(LANG==='en'?'Terms of service':'Condiciones del servicio')+'</a></p></form>';
   }
-  function designCard(d, actions, sub) {
+  function designCard(d, actions, sub, showPrice) {
     var n = S.names[d];
-    return '<article class="ac-card"><img src="' + IMG[d] + '" alt="" loading="lazy"><div class="ac-card-body"><span class="ed-kicker">' + esc(S.design) + ' · ' + esc(n[1]) + '</span>' +
-      '<h3>' + esc(n[0]) + '</h3>' + (sub ? '<p>' + esc(sub) + '</p>' : '') + '<div class="ac-actions">' + actions + '</div></div></article>';
+    return '<article class="ac-card" data-id="' + esc(d) + '"><img src="' + IMG[d] + '" alt="" loading="lazy"><div class="ac-card-body"><span class="ed-kicker">' + esc(S.design) + ' · ' + esc(n[1]) + '</span>' +
+      '<h3>' + esc(n[0]) + '</h3>' + (showPrice ? '<span class="lz-price ac-price" hidden></span>' : '') + (sub ? '<p>' + esc(sub) + '</p>' : '') + '<div class="ac-actions">' + actions + '</div></div></article>';
   }
 
   function renderAccount() {
@@ -161,7 +161,7 @@
         }).join('') + '</div>'
           : '<div class="ed-empty ac-empty"><p>' + esc(S.none) + '</p><a class="ed-btn ed-btn-dark" href="' + BASE + '/comprar/">' + esc(S.choose) + '</a></div>') +
         (rest.length ? '<h2 class="ac-h2">' + esc(S.others) + '</h2><div class="ac-grid">' + rest.map(function (d) {
-          return designCard(d, '<a class="ed-btn ed-btn-dark" href="' + BASE + '/comprar/?diseno=' + d + '">' + esc(S.buy) + ' · COP $200.000 / USD $79</a><a class="ed-btn" href="' + demoUrl(d) + '">' + esc(S.demo) + '</a>');
+          return designCard(d, '<a class="ed-btn ed-btn-dark" href="' + BASE + '/comprar/?diseno=' + d + '">' + esc(S.buy) + '</a><a class="ed-btn" href="' + demoUrl(d) + '">' + esc(S.demo) + '</a>', null, true);
         }).join('') + '</div>' : '') + '</section>';
     }
     root.innerHTML = '<div class="ed">' + header() + '<div class="co-wrap ac-wrap">' + h + '</div></div>';

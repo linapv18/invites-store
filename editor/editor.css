@@ -805,3 +805,5 @@ a.ed-btn[aria-disabled="true"]{opacity:.4;pointer-events:none}
 .iv-stripe-note{display:flex;align-items:center;justify-content:center;gap:7px}
 .iv-checkout .co-notice{margin:0}
 @media(max-width:720px){.iv-checkout{gap:32px;padding-top:32px}.iv-checkout .co-sum{position:static;flex-basis:100%;padding:24px}.iv-checkout .co-main{gap:26px}.iv-checkout .co-total b{font-size:25px}.iv-event-field{max-width:100%}.iv-checkout .ed-head h1{font-size:40px}}
+
+.ac-card .ac-price{font-size:14px;font-weight:500;margin-top:4px}.ac-price[hidden]{display:none}.ac-actions .ed-btn{white-space:normal;max-width:100%;text-align:center}

@@ -151,7 +151,7 @@
     { id: 'tele', es: 'Tele y ventana', en: 'TV and window', opts: ['tele', 'ventana'] },
     { id: 'luna', es: 'Luna y medallón', en: 'Moon and medallion', opts: ['luna', 'medallon'] }
   ];
-  var UI = { es: { demo: 'Ver demo', demoOf: 'Ver demo del diseño', buy: 'Comprar', buyOf: 'Comprar el diseño', isNew: 'Nuevo', price: 'Colombia: COP $200.000 · Otros países: USD $79' }, en: { demo: 'View demo', demoOf: 'View demo:', buy: 'Buy', buyOf: 'Buy the design', isNew: 'New', price: 'Colombia: COP $200,000 · Other countries: USD $79' } };
+  var UI = { es: { demo: 'Ver demo', demoOf: 'Ver demo del diseño', buy: 'Comprar', buyOf: 'Comprar el diseño', isNew: 'Nuevo' }, en: { demo: 'View demo', demoOf: 'View demo:', buy: 'Buy', buyOf: 'Buy the design', isNew: 'New' } };
 
   // Etiqueta de la gama del diseño (Esencial, Signature o Luxury) sobre su nombre.
   function tierLabel(d, lang) {
