@@ -819,3 +819,5 @@ a.ed-btn[aria-disabled="true"]{opacity:.4;pointer-events:none}
 .ac-library-empty p{max-width:440px;margin:0;color:var(--ink-2);line-height:1.65}.ac-library-empty .ed-btn{margin-top:8px}
 .ac-expired{font-size:13px;color:var(--mute);width:100%}
 @media(max-width:640px){.ac-library-head{align-items:flex-start;flex-direction:column;gap:22px}.ac-browse{width:100%;justify-content:center}.ac-library-empty{padding:42px 22px}.ac-library .ac-card{max-width:none}}
+
+.iv-code[hidden]{display:none}.iv-code-heading{font:500 15px var(--iv-sans);margin:0 0 8px;color:var(--ink)}.iv-code .ed-hint{font-size:12px;margin:0 0 10px}.iv-code-row .ed-btn{flex-shrink:0}
