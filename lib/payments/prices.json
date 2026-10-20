@@ -1,0 +1,43 @@
+{
+  "tiers": {
+    "esencial": {
+      "label": "Esencial",
+      "COP": 129000,
+      "USD": 49
+    },
+    "signature": {
+      "label": "Signature",
+      "COP": 199000,
+      "USD": 79
+    },
+    "luxury": {
+      "label": "Luxury",
+      "COP": 279000,
+      "USD": 109
+    }
+  },
+  "designs": {
+    "jardin": "signature",
+    "costa": "signature",
+    "rosa": "signature",
+    "aurelia": "signature",
+    "gala": "signature",
+    "lino": "esencial",
+    "noir": "esencial",
+    "marfil": "luxury",
+    "celeste": "signature",
+    "fiesta": "esencial",
+    "cisne": "luxury",
+    "tinta": "esencial",
+    "glicina": "luxury",
+    "senal": "signature",
+    "onix": "esencial",
+    "encaje": "luxury",
+    "corazones": "signature",
+    "arco": "signature",
+    "nacar": "signature",
+    "estreno": "esencial",
+    "clasico": "esencial",
+    "moderno": "esencial"
+  }
+}

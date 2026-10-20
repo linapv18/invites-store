@@ -18,7 +18,7 @@
   PAYMENTS_TEMPORARILY_UNAVAILABLE:en?'We could not continue with payment. If you already paid, do not pay again. Contact hola@invitesse.com.':'No pudimos continuar con el pago. Si ya pagaron, no lo repitan. Contacten con hola@invitesse.com.',
  };
  window.InvitesseCheckout={request:request,mount:async function(root,design){
-  var quote=null,busy=false,market=null,status='',notice='',polls=0,timer;
+  var quote=null,busy=false,market=null,amount=null,status='',notice='',polls=0,timer;
   var selected=(window.LazoCatalog?.designs || []).find(function(d){return d.id===design;}),info=selected?.[en?'en':'es'];
   var name=info?.name || design,photo=selected?.thumb?selected.thumb+'-280.webp':selected?.img?.[0];
   var lock='<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>';
@@ -33,9 +33,9 @@
   }
   function show(){
    form.noValidate=!!quote?.enabled;
-   pay.disabled=busy || !market || status==='processing';
+   pay.disabled=busy || !market || amount===null || status==='processing';
    price.hidden=!!quote?.enabled;
-   price.textContent=market?(market==='COP'?'COP $200.000':'USD $79'):'…';date.disabled=!!quote?.enabled || status==='pending';
+   price.textContent=market && amount!==null?market+' $'+new Intl.NumberFormat(market==='COP'?'es-CO':'en-US').format(amount):'…';date.disabled=!!quote?.enabled || status==='pending';
    cancel.hidden=status!=='pending';cancel.disabled=busy;
    pay.textContent=busy?(en?'Preparing payment…':'Preparando el pago…'):quote?.enabled?(en?'Open editor':'Abrir editor'):(en?'Continue to payment':'Continuar al pago');
    note.textContent=notice;note.hidden=!notice;
@@ -45,7 +45,7 @@
   }
   function fail(e){notice=messages[e.message] || (en?'Unable to continue. No new payment was started. Try again or contact support.':'No se pudo continuar. No se inició otro pago. Reintenten o contacten con soporte.');if(e.reference)notice+=' '+(en?'Reference: ':'Referencia: ')+e.reference;}
   async function refresh(){
-   try {var q=await request({action:'status',design:design});quote=q;status=q.status;date.value=q.event_date;eventZone=q.timezone;if(q.currency){market=q.currency;}
+   try {var q=await request({action:'status',design:design});quote=q;status=q.status;date.value=q.event_date;eventZone=q.timezone;if(q.currency){market=q.currency;amount=q.amount;}
     if(q.enabled){notice=en?'Payment confirmed. You can edit your invitation.':'Pago confirmado. Ya pueden editar su invitación.';clearTimeout(timer);}
     else if(new URLSearchParams(location.search).get('payment')==='return' && polls++<10){notice=en?'Verifying payment. Do not pay again.':'Verificando el pago. No vuelvan a pagar.';timer=setTimeout(refresh,2500);}
    }catch(e){if(e.message==='EVENT_DETAILS_REQUIRED' || e.message==='INVITATION_NOT_FOUND'){notice='';}else fail(e);}show();
@@ -54,13 +54,13 @@
   cancel.addEventListener('click',async function(){busy=true;show();try{await request({action:'cancel',design:design});status='';quote=null;await loadPrice();notice=en?'Pending checkout cancelled. You can change the event date.':'Checkout pendiente cancelado. Pueden cambiar la fecha del evento.';}catch(e){fail(e);}busy=false;show();});
   form.addEventListener('submit',async function(e){e.preventDefault();if(busy)return;if(quote?.enabled){location.href=base+'/editor/?diseno='+encodeURIComponent(design);return;}
    busy=true;notice='';show();try{
-    if(!quote){var shownMarket=market;quote=await request({action:'details',design:design,date:date.value,timezone:eventZone});market=quote.currency;if(shownMarket!==market){notice=en?'Your local price changed. Review the total before continuing.':'El precio local cambió. Revisen el total antes de continuar.';busy=false;show();return;}}
-    var result=await request({action:'create',design:design,quotedCurrency:market,revision:quote.revision,locale:en?'en':'es',acceptedTerms:true});
+    if(!quote){var shownMarket=market,shownAmount=amount;quote=await request({action:'details',design:design,date:date.value,timezone:eventZone});market=quote.currency;amount=quote.amount;if(shownMarket!==market || shownAmount!==amount){notice=en?'Your local price changed. Review the total before continuing.':'El precio local cambió. Revisen el total antes de continuar.';busy=false;show();return;}}
+    var result=await request({action:'create',design:design,quotedCurrency:market,quotedAmount:amount,revision:quote.revision,locale:en?'en':'es',acceptedTerms:true});
     if(result.enabled){await refresh();}else if(result.url && new URL(result.url).origin==='https://checkout.stripe.com'){location.assign(result.url);return;}else{status=result.status;notice=en?'Payment is processing. Do not pay again.':'El pago está en proceso. No vuelvan a pagar.';}
 
    }catch(e){if(e.message==='PRICE_CHANGED'){await refresh();notice=en?'Your local price changed. Review it and continue again.':'El precio local cambió. Revísenlo antes de continuar.';}else fail(e);}busy=false;show();
   });
-  async function loadPrice(){var r=await fetch('/api/checkout/',{cache:'no-store'}),p=await r.json();if(!r.ok || !['COP','USD'].includes(p.currency))throw Error('PAYMENTS_TEMPORARILY_UNAVAILABLE');market=p.currency;}
+  async function loadPrice(){var r=await fetch('/api/checkout/',{cache:'no-store'}),p=await r.json();if(!r.ok || !['COP','USD'].includes(p.currency))throw Error('PAYMENTS_TEMPORARILY_UNAVAILABLE');if(!p.prices?.[design])throw Error('PAYMENTS_TEMPORARILY_UNAVAILABLE');market=p.currency;amount=p.prices[design].amount;}
   show();
   try{await loadPrice();await refresh();}catch(e){fail(e);show();}
  }};

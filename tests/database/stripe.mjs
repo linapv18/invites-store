@@ -10,7 +10,26 @@ create table storage.buckets(id text primary key,name text,public boolean,file_s
 create table storage.objects(id uuid primary key default gen_random_uuid(),bucket_id text references storage.buckets(id),name text,metadata jsonb,unique(bucket_id,name));
 alter table storage.objects enable row level security;grant select,insert,update,delete on storage.objects to authenticated;grant all on storage.objects to service_role;`);
 const sql=await readFile(new URL('../../supabase/ACTIVAR-STRIPE.sql',import.meta.url),'utf8');
+// Upgrade a real pending order from the previous price table, then repeat installation.
+await db.exec(sql.split('-- 202610200002_tier_prices.sql')[0]+'commit;');
+const legacyOwner='44444444-4444-4444-8444-444444444444';
+await db.query('insert into auth.users values($1,now())',[legacyOwner]);
+await db.query("select public.configure_stripe_purchase($1,'clasico','2028-08-31','America/Bogota')",[legacyOwner]);
+const legacyQuote=(await db.query("select public.quote_stripe_checkout($1,'clasico') q",[legacyOwner])).rows[0].q;
+const legacyOrder=(await db.query("select public.prepare_stripe_checkout($1,'clasico','COP',$2) q",[legacyOwner,legacyQuote.revision])).rows[0].q;
+assert.equal(legacyOrder.amount,20000000);
 await db.exec(sql);await db.exec(sql);
+const preserved=(await db.query("select public.prepare_stripe_checkout($1,'clasico','COP',$2) q",[legacyOwner,legacyQuote.revision])).rows[0].q;
+assert.equal(preserved.order_id,legacyOrder.order_id);assert.equal(preserved.amount,20000000);
+await db.query("select public.apply_verified_payment('stripe','evt_legacy',$1,'pi_legacy',20000000,'COP')",[legacyOrder.order_id]);
+// Verify the new catalogue prices for every design and both markets.
+const {default:priceConfig}=await import('../../lib/payments/prices.json',{with:{type:'json'}});
+for(const [design,tier] of Object.entries(priceConfig.designs))for(const currency of ['COP','USD']){
+ const row=(await db.query("select price_minor from public.products where sku=$1",['invitation-'+design+'-'+currency.toLowerCase()])).rows[0];
+ assert.equal(row.price_minor,priceConfig.tiers[tier][currency]*100,design+' '+currency);
+}
+await db.query("delete from public.invitation_entitlements where invitation_id=$1",[legacyOrder.invitation_id]);
+
 console.log('PASS fresh install and repeatable migration');
 const A='11111111-1111-4111-8111-111111111111',B='22222222-2222-4222-8222-222222222222';
 await db.query('insert into auth.users values($1,now()),($2,now())',[A,B]);
@@ -21,7 +40,7 @@ const quote=await rpc("select public.quote_stripe_checkout($1,'nacar') r",[A]);
 assert.equal(quote.event_date,'2028-08-31');assert.equal(quote.expires_at,'2028-12-01T05:00:00+00:00');
 assert.equal((await rpc('select public.stripe_checkout_readiness() r')).prices,true);
 let order=await rpc("select public.prepare_stripe_checkout($1,'nacar','COP',$2) r",[A,quote.revision]);
-assert.equal(order.amount,20000000);assert.equal(order.currency,'COP');
+assert.equal(order.amount,19900000);assert.equal(order.currency,'COP');
 const duplicate=await rpc("select public.prepare_stripe_checkout($1,'nacar','USD',$2) r",[A,quote.revision]);
 assert.equal(duplicate.order_id,order.order_id);assert.equal(duplicate.currency,'COP');
 await assert.rejects(()=>configure('nacar','2028-09-30'),/PURCHASE_EVENT_DATE_LOCKED/);
@@ -30,8 +49,8 @@ await assert.rejects(()=>rpc("select public.prepare_stripe_checkout($1,'nacar','
 await assert.rejects(()=>configure('gala','2028-02-31'),/out of range/);
 await assert.rejects(()=>configure('gala','2000-01-01'),/EVENT_DATE_IN_PAST/);
 await assert.rejects(()=>configure('gala','2028-01-01','Invalid/Zone'),/INVALID_TIME_ZONE/);
-await db.query("select public.apply_verified_payment('stripe','evt_paid',$1,'pi_paid',20000000,'COP')",[order.order_id]);
-await db.query("select public.apply_verified_payment('stripe','evt_retry',$1,'pi_paid',20000000,'COP')",[order.order_id]);
+await db.query("select public.apply_verified_payment('stripe','evt_paid',$1,'pi_paid',19900000,'COP')",[order.order_id]);
+await db.query("select public.apply_verified_payment('stripe','evt_retry',$1,'pi_paid',19900000,'COP')",[order.order_id]);
 assert.equal((await db.query('select * from public.invitation_entitlements')).rows.length,1);
 await assert.rejects(()=>configure('nacar','2028-09-01'),/PURCHASE_EVENT_DATE_LOCKED/);
 assert.equal((await rpc("select public.prepare_stripe_checkout($1,'nacar','USD',$2) r",[A,quote.revision])).status,'enabled');
@@ -59,7 +78,7 @@ await db.exec('set role authenticated');await db.query("select set_config('reque
 await db.query('select public.publish_editor_invitation($1,$2,false)',[quote.invitation_id,quote.revision+1]);
 await db.exec('reset role');assert.equal((await rpc('select public.get_guest_invitation($1) r',[token])).guests.length,2);
 await db.query('select public.revoke_stripe_order($1)',[order.order_id]);assert.equal(await rpc('select public.get_guest_invitation($1) r',[token]),null);
-await assert.rejects(()=>db.query("select public.apply_verified_payment('stripe','evt_late',$1,'pi_paid',20000000,'COP')",[order.order_id]),/ORDER_NOT_PAYABLE/);
+await assert.rejects(()=>db.query("select public.apply_verified_payment('stripe','evt_late',$1,'pi_paid',19900000,'COP')",[order.order_id]),/ORDER_NOT_PAYABLE/);
 console.log('PASS paid publication, family token, private-field exclusion, stable republishing and refund revocation');
 await db.exec('set role anon');
 await assert.rejects(()=>db.query('select public.prepare_stripe_checkout($1,$2,$3,0)',[A,'nacar','COP']),/permission denied/);

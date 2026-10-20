@@ -7,12 +7,12 @@ async def main():
   browser=await p.chromium.launch(executable_path='/usr/bin/chromium',args=['--no-sandbox'])
   for width in [390,1440]:
    for prefix in ['', '/en']:
-    for currency,amount in [('COP',200000),('USD',79)]:
+    for currency,amount in [('COP',199000),('USD',79)]:
      ctx=await browser.new_context(viewport={'width':width,'height':900});calls=[];errors=[]
      async def sdk(route):
       await route.fulfill(content_type='application/javascript',body="window.InvitesseBackend={client:{auth:{getSession:async()=>({data:{session:{access_token:'fixture'}}})},from:()=>({select:async()=>({data:[]})})},auth:{onChange:()=>{},getUser:async()=>({data:{user:{id:'fixture',email:'fixture@example.invalid'}}}),googleAvailable:async()=>false},drafts:{list:async()=>[]}};")
      async def api(route):
-      if route.request.method=='GET':data={'available':True,'currency':currency,'amount':amount}
+      if route.request.method=='GET':data={'available':True,'currency':currency,'prices':{'nacar':{'currency':currency,'amount':amount,'tier':'signature'}}}
       else:
        body=route.request.post_data_json;calls.append(body)
        if body['action']=='status':
@@ -31,6 +31,7 @@ async def main():
      assert await page.locator('#ivEventZone').count()==0
      await page.wait_for_function("document.querySelector('#ivValidity').textContent.includes('2028')")
      await page.locator('#ivPay').click();await page.wait_for_url('https://checkout.stripe.com/**')
+     assert calls[-1]['quotedAmount']==amount
      assert calls[-1]['quotedCurrency']==currency and 'currency' not in calls[-1]
      assert not errors,errors
      print('PASS automatic price, no selector, independent of language/timezone',width,prefix or 'es',currency,flush=True)

@@ -3,7 +3,7 @@ const {recordSession}=require('../lib/payments/stripe');
 const designPattern=/^[a-z]{3,16}$/;
 // Vercel supplies this header from the request IP. No browser locale/GPS or client price.
 function detectedCurrency(req) { return req.headers['x-vercel-ip-country']==='CO'?'COP':'USD'; }
-function pricing(currency) { return {currency,amount:currency==='COP'?200000:79}; }
+const {pricing,catalogPrices}=require('../lib/payments/pricing');
 function createHandler({adminClient=runtime.adminClient,stripeClient=runtime.stripeClient,userFor=runtime.userFor,reportError=detail=>console.error('invitesse.checkout.failure',detail)}={}) {
  let accountVerifiedAt=0;
  async function requireAccount(stripe) {
@@ -19,7 +19,7 @@ function createHandler({adminClient=runtime.adminClient,stripeClient=runtime.str
   try {
    const admin=adminClient();
    const ready=await runtime.unwrap(admin.rpc('stripe_checkout_readiness'));
-   if(ready?.version!==1 || !ready.prices) throw new Error('PAYMENTS_NOT_CONFIGURED');
+   if(ready?.version!==2 || !ready.prices) throw new Error('PAYMENTS_NOT_CONFIGURED');
    // Null identifiers match no order: these probes cannot update customer data.
    // Fail closed if the final idempotency/refund migration has not been installed.
    for(const [fn,args] of [['freeze_stripe_parameters',{target_order:null,payload:null}],['revoke_stripe_order',{target_order:null}]]) {
@@ -28,7 +28,7 @@ function createHandler({adminClient=runtime.adminClient,stripeClient=runtime.str
    }
    if(req.method==='GET') {
     await requireAccount(stripeClient());
-    return res.status(200).json({available:true,...pricing(detectedCurrency(req))});
+    return res.status(200).json({available:true,currency:detectedCurrency(req),prices:catalogPrices(detectedCurrency(req))});
    }
    if(req.headers.origin && req.headers.origin!==runtime.origin) return res.status(403).json({error:'INVALID_ORIGIN'});
    const user=await userFor(req,admin), b=req.body;
@@ -41,12 +41,11 @@ function createHandler({adminClient=runtime.adminClient,stripeClient=runtime.str
    stage='QUOTE';
    const market=detectedCurrency(req);
    const quote=await runtime.unwrap(admin.rpc('quote_stripe_checkout',{verified_owner:user.id,requested_design:b.design}));
-   if(['quote','details'].includes(b.action)) return res.status(200).json({...quote,...pricing(market)});
-   if(quote.enabled) return res.status(200).json({...quote,status:'paid',...pricing(market)});
+   if(quote.enabled) return res.status(200).json({...quote,status:'paid',...pricing(market,b.design)});
    const stripe=stripeClient();
    // Look up pending checkouts by the verified owner, never by a browser order ID.
    stage='LOOKUP';
-   const pending=await runtime.unwrap(admin.from('orders').select('id,status,currency').eq('owner_id',user.id).eq('invitation_id',quote.invitation_id).eq('status','pending').order('created_at',{ascending:false}).limit(1));
+   const pending=await runtime.unwrap(admin.from('orders').select('id,status,currency,total_minor').eq('owner_id',user.id).eq('invitation_id',quote.invitation_id).eq('status','pending').order('created_at',{ascending:false}).limit(1));
    let existing=pending?.[0], session=null;
    if(existing) {
     const row=await runtime.unwrap(admin.from('stripe_checkouts').select('session_id').eq('order_id',existing.id).maybeSingle());
@@ -55,23 +54,24 @@ function createHandler({adminClient=runtime.adminClient,stripeClient=runtime.str
      if(session.metadata?.order_id!==existing.id || session.metadata?.integration!=='invitesse' || !session.livemode) throw new Error('PAYMENT_STATE_UNAVAILABLE');
      if(session.payment_status==='paid') {
       await recordSession(admin,session,'reconcile:'+session.id);
-      return res.status(200).json({...quote,status:'paid',enabled:true,...pricing(session.currency.toUpperCase())});
+      return res.status(200).json({...quote,status:'paid',enabled:true,...pricing(session.currency.toUpperCase(),b.design,session.amount_total)});
      }
      if(b.action==='cancel' && session.status==='open') session=await stripe.checkout.sessions.expire(session.id);
      if(session.status==='expired') {await runtime.unwrap(admin.rpc('expire_stripe_order',{target_order:existing.id}));existing=null;session=null;}
-     else if(session.status!=='open') return res.status(200).json({...quote,status:'processing',...pricing(existing.currency)});
+     else if(session.status!=='open') return res.status(200).json({...quote,status:'processing',...pricing(existing.currency,b.design,existing.total_minor)});
     }
    }
+   if(['quote','details'].includes(b.action)) return res.status(200).json({...quote,...pricing(existing?.currency || market,b.design,existing?.total_minor)});
    if(b.action==='cancel') {
     // A creation may be in flight when no session ID is persisted yet; never cancel it blindly.
     if(existing) throw new Error('CHECKOUT_BEING_PREPARED');
     return res.status(200).json({status:'cancelled'});
    }
-   if(b.action==='status') return res.status(200).json({...quote,status:existing?'pending':'unpaid',...pricing(existing?.currency || market)});
+   if(b.action==='status') return res.status(200).json({...quote,status:existing?'pending':'unpaid',...pricing(existing?.currency || market,b.design,existing?.total_minor)});
    if(!Number.isInteger(b.revision) || b.acceptedTerms!==true) return res.status(400).json({error:'INVALID_REQUEST'});
    const currency=existing?.currency || market;
    // A changed location must never silently change the price the buyer just accepted.
-   if(b.quotedCurrency!==currency) return res.status(409).json({error:'PRICE_CHANGED'});
+   if(b.quotedCurrency!==currency || b.quotedAmount!==pricing(currency,b.design,existing?.total_minor).amount) return res.status(409).json({error:'PRICE_CHANGED'});
    if(session) {
     return res.status(200).json({url:session.url,status:'pending'});
    }
@@ -79,7 +79,7 @@ function createHandler({adminClient=runtime.adminClient,stripeClient=runtime.str
    stage='ORDER';
    const order=await runtime.unwrap(admin.rpc('prepare_stripe_checkout',{verified_owner:user.id,requested_design:b.design,requested_currency:currency,expected_revision:b.revision}));
    if(order.status==='enabled') return res.status(200).json({status:'paid',enabled:true});
-   if(order.currency!==currency) return res.status(409).json({error:'PRICE_CHANGED'});
+   if(order.currency!==currency || order.amount/100!==b.quotedAmount) return res.status(409).json({error:'PRICE_CHANGED'});
    const en=b.locale==='en', back=runtime.origin+(en?'/en':'')+'/editor/pago/?diseno='+encodeURIComponent(b.design);
    const expiresDate=new Intl.DateTimeFormat(en?'en-US':'es-CO',{timeZone:order.timezone,year:'numeric',month:'long',day:'numeric'}).format(new Date(new Date(order.expires_at).getTime()-1));
    if(!order.session_id && Date.now()-Date.parse(order.created_at)>23*60*60*1000) throw new Error('PAYMENT_STATE_UNAVAILABLE');
