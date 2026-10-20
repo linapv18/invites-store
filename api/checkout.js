@@ -55,18 +55,37 @@ function createHandler({adminClient=runtime.adminClient,stripeClient=runtime.str
    const stripe=stripeClient();
    // Look up pending checkouts by the verified owner, never by a browser order ID.
    stage='LOOKUP';
-   const pending=await runtime.unwrap(admin.from('orders').select('id,status,currency,total_minor').eq('owner_id',user.id).eq('invitation_id',quote.invitation_id).eq('status','pending').order('created_at',{ascending:false}).limit(1));
+   const pending=await runtime.unwrap(admin.from('orders').select('id,status,currency,total_minor,discount_minor,created_at').eq('owner_id',user.id).eq('invitation_id',quote.invitation_id).eq('status','pending').order('created_at',{ascending:false}).limit(1));
    let existing=pending?.[0], session=null;
    if(existing) {
+    const legacyTotal=existing.currency==='COP'?20000000:7900;
+    const outdated=existing.total_minor===legacyTotal && !existing.discount_minor && existing.total_minor!==pricing(existing.currency,b.design).amount*100;
     const row=await runtime.unwrap(admin.from('stripe_checkouts').select('session_id').eq('order_id',existing.id).maybeSingle());
-    if(row?.session_id) {
-     session=await stripe.checkout.sessions.retrieve(row.session_id);
+    let recovered=null;
+    if(outdated && !row?.session_id && Date.now()-Date.parse(existing.created_at)>5*60*1000) {
+     // Old attempts may have created a Stripe session before its ID was saved.
+     // Exhaust the search before cancelling; a lookup failure leaves the order untouched.
+     let cursor,complete=false;
+     for(let page=0;page<20;page++) {
+      const result=await stripe.checkout.sessions.list({limit:100,created:{gte:Math.floor(Date.parse(existing.created_at)/1000)-60},...(cursor?{starting_after:cursor}:{})});
+      recovered=result.data.find(item=>item.client_reference_id===existing.id && item.metadata?.order_id===existing.id && item.metadata?.integration==='invitesse' && item.livemode);
+      if(recovered)break;
+      if(!result.has_more){complete=true;break;}
+      cursor=result.data.at(-1)?.id;if(!cursor)throw new Error('PAYMENT_STATE_UNAVAILABLE');
+     }
+     if(!recovered) {
+      if(!complete)throw new Error('PAYMENT_STATE_UNAVAILABLE');
+      await runtime.unwrap(admin.rpc('expire_stripe_order',{target_order:existing.id}));existing=null;
+     }
+    }
+    if(row?.session_id || recovered) {
+     session=recovered || await stripe.checkout.sessions.retrieve(row.session_id);
      if(session.metadata?.order_id!==existing.id || session.metadata?.integration!=='invitesse' || !session.livemode) throw new Error('PAYMENT_STATE_UNAVAILABLE');
      if(session.payment_status==='paid' || (session.payment_status==='no_payment_required' && session.status==='complete')) {
       await recordSession(admin,session,'reconcile:'+session.id);
       return res.status(200).json({...quote,status:'paid',enabled:true,...pricing(session.currency.toUpperCase(),b.design,session.amount_total)});
      }
-     if(b.action==='cancel' && session.status==='open') session=await stripe.checkout.sessions.expire(session.id);
+     if((b.action==='cancel' || outdated) && session.status==='open' && session.payment_status==='unpaid') session=await stripe.checkout.sessions.expire(session.id);
      if(session.status==='expired') {await runtime.unwrap(admin.rpc('expire_stripe_order',{target_order:existing.id}));existing=null;session=null;}
      else if(session.status!=='open') return res.status(200).json({...quote,status:'processing',...pricing(existing.currency,b.design,existing.total_minor)});
     }
