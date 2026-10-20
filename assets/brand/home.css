@@ -181,3 +181,5 @@ details[open]>summary>span{transform:rotate(45deg)}
 @media(max-width:800px){.collection .design-grid{grid-auto-columns:calc((100% - 18px)/2);gap:18px}}
 @media(max-width:500px){.collection .design-grid{grid-auto-columns:88%;gap:16px}.collection-controls{margin-top:8px}}
 @media(prefers-reduced-motion:reduce){.collection-arrows button{transition:none}}
+
+.collection-arrows .collection-play{width:auto;padding-inline:18px;font-size:12px;letter-spacing:.02em}
