@@ -101,7 +101,26 @@ function createHandler({adminClient=runtime.adminClient,stripeClient=runtime.str
    const parameters={...frozenParameters,allowed_payment_method_types:['card']};
    delete parameters.payment_method_types;
    stage='STRIPE';
-   session=await stripe.checkout.sessions.create(parameters,{idempotencyKey:'invitesse-checkout-'+order.order_id});
+   try {
+    session=await stripe.checkout.sessions.create(parameters,{idempotencyKey:'invitesse-checkout-'+order.order_id});
+   } catch(error) {
+    if(error.type!=='StripeIdempotencyError' && error.rawType!=='idempotency_error') throw error;
+    // Before migrating the key, recover any session created by the original request.
+    // A failed lookup must never fall through to creating a second session.
+    let cursor,scanned=false;
+    for(let page=0;page<20;page++) {
+     const result=await stripe.checkout.sessions.list({limit:100,created:{gte:Math.floor(Date.parse(order.created_at)/1000)-60},...(cursor?{starting_after:cursor}:{})});
+     session=result.data.find(item=>item.client_reference_id===order.order_id && item.metadata?.order_id===order.order_id && item.metadata?.integration==='invitesse' && item.livemode);
+     if(session) break;
+     if(!result.has_more) {scanned=true;break;}
+     cursor=result.data.at(-1)?.id;
+     if(!cursor) throw new Error('PAYMENT_STATE_UNAVAILABLE');
+    }
+    if(!session) {
+     if(!scanned) throw new Error('PAYMENT_STATE_UNAVAILABLE');
+     session=await stripe.checkout.sessions.create(parameters,{idempotencyKey:'invitesse-checkout-dynamic-v1-'+order.order_id});
+    }
+   }
    stage='SAVE';
    await runtime.unwrap(admin.from('stripe_checkouts').update({session_id:session.id}).eq('order_id',order.order_id));
    if(!session.url?.startsWith('https://checkout.stripe.com/')) throw new Error('PAYMENT_STATE_UNAVAILABLE');

@@ -6,7 +6,7 @@ function fixture(options={}){
  const calls=[], quote={invitation_id:'33333333-3333-4333-8333-333333333333',revision:4,event_date:'2028-08-31',timezone:'America/Bogota',expires_at:'2028-12-01T05:00:00Z',enabled:false};
  const admin={rpc:async(name,args)=>{calls.push({name,args});if(['freeze_stripe_parameters','revoke_stripe_order'].includes(name) && args?.target_order===null)return {error:{message:'ORDER_NOT_FOUND'}};if(name==='stripe_checkout_readiness')return {data:options.notReady?null:{version:1,prices:true}};if(name==='quote_stripe_checkout')return {data:{...quote,enabled:!!options.enabled}};if(name==='prepare_stripe_checkout')return {data:{...quote,order_id:orderId,amount:args.requested_currency==='USD'?7900:20000000,currency:args.requested_currency,status:'pending',created_at:new Date().toISOString()}};if(name==='freeze_stripe_parameters'){const payload={...args.payload};if(options.legacyFrozen){delete payload.allowed_payment_method_types;payload.payment_method_types=['card'];}return {data:payload};}return {data:null};},
  from(table){let updating=false;const chain={select(){return chain;},eq(){return chain;},order(){return chain;},limit(){return chain;},update(args){updating=true;calls.push({name:'update:'+table,args});return chain;},maybeSingle:async()=>({data:table==='stripe_checkouts'?{session_id:'cs_existing'}:null}),then(resolve,reject){return Promise.resolve({data:updating?null:table==='orders'?(options.pending?[{id:orderId,currency:'COP'}]:[]):[]}).then(resolve,reject);}};return chain;}};
- const stripe={accounts:{retrieve:async()=>({id:'acct_1PCrn7P9O3dSAvF3',charges_enabled:!options.chargesDisabled})},checkout:{sessions:{create:async(args,opts)=>{calls.push({name:'stripe.create',args,opts});if(options.stripeError)throw Object.assign(new Error('private client detail'),{code:'parameter_unknown',param:'adaptive_pricing',requestId:'req_fixture'});return {id:'cs_created',url:'https://checkout.stripe.com/c/pay/cs_created'};},retrieve:async()=>options.session || {id:'cs_existing',status:'open',livemode:true,payment_status:'unpaid',currency:'cop',metadata:{integration:'invitesse',order_id:orderId},url:'https://checkout.stripe.com/c/pay/cs_existing'},expire:async()=>({status:'expired'})}}};
+ const stripe={accounts:{retrieve:async()=>({id:'acct_1PCrn7P9O3dSAvF3',charges_enabled:!options.chargesDisabled})},checkout:{sessions:{create:async(args,opts)=>{calls.push({name:'stripe.create',args,opts});if(options.idempotencyConflict && opts.idempotencyKey==='invitesse-checkout-'+orderId)throw Object.assign(new Error('parameters differ'),{type:'StripeIdempotencyError'});if(options.stripeError)throw Object.assign(new Error('private client detail'),{code:'parameter_unknown',param:'adaptive_pricing',requestId:'req_fixture'});return {id:'cs_created',url:'https://checkout.stripe.com/c/pay/cs_created'};},list:async(args)=>{calls.push({name:'stripe.list',args});if(options.lookupFails)throw Error('lookup failed');return {data:options.recoveredSession?[options.recoveredSession]:[],has_more:false};},retrieve:async()=>options.session || {id:'cs_existing',status:'open',livemode:true,payment_status:'unpaid',currency:'cop',metadata:{integration:'invitesse',order_id:orderId},url:'https://checkout.stripe.com/c/pay/cs_existing'},expire:async()=>({status:'expired'})}}};
  const handler=checkout.createHandler({reportError:detail=>calls.push({name:'safe.error',args:detail}),adminClient:()=>admin,stripeClient:()=>stripe,userFor:async()=>{if(options.unauthorized)throw Error('AUTH_REQUIRED');return{id:owner,email:'fixture@example.invalid'};}});
  return {calls,handler};
 }
@@ -57,4 +57,21 @@ test('current Stripe API uses the dynamic card filter, never payment_method_type
  for(const legacyFrozen of [false,true]){
   const {res,calls}=await run({legacyFrozen});assert.equal(res.code,200);const created=calls.find(x=>x.name==='stripe.create');assert.equal(Object.hasOwn(created.args,'payment_method_types'),false);assert.deepEqual(created.args.allowed_payment_method_types,['card']);assert.equal(created.opts.idempotencyKey,'invitesse-checkout-'+orderId);assert.equal(calls.filter(x=>x.name==='prepare_stripe_checkout').length,1);
  }
+});
+
+
+test('idempotency parameter migration checks Stripe before using a stable replacement key',async()=>{
+ const {res,calls}=await run({legacyFrozen:true,idempotencyConflict:true});
+ assert.equal(res.code,200);
+ assert.deepEqual(calls.filter(x=>x.name==='stripe.create').map(x=>x.opts.idempotencyKey),['invitesse-checkout-'+orderId,'invitesse-checkout-dynamic-v1-'+orderId]);
+ assert.ok(calls.findIndex(x=>x.name==='stripe.list')<calls.findLastIndex(x=>x.name==='stripe.create'));
+});
+test('idempotency recovery reuses an existing session instead of creating another',async()=>{
+ const recoveredSession={id:'cs_recovered',livemode:true,client_reference_id:orderId,metadata:{integration:'invitesse',order_id:orderId},url:'https://checkout.stripe.com/c/pay/cs_recovered'};
+ const {res,calls}=await run({idempotencyConflict:true,recoveredSession});
+ assert.equal(res.code,200);assert.equal(res.body.url,recoveredSession.url);assert.equal(calls.filter(x=>x.name==='stripe.create').length,1);
+});
+test('failed recovery lookup never creates a session under another key',async()=>{
+ const {res,calls}=await run({idempotencyConflict:true,lookupFails:true});
+ assert.equal(res.code,503);assert.equal(calls.filter(x=>x.name==='stripe.create').length,1);
 });
