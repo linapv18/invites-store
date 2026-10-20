@@ -13,7 +13,7 @@ async function rawBody(req) {
   return Buffer.concat(chunks);
 }
 
-function createHandler({ settings, verify, adminClient }) {
+function createHandler({ settings, verify, adminClient, retrievePayment = id => require('../lib/payments/runtime').stripeClient().paymentIntents.retrieve(id) }) {
   return async function handler(req, res) {
     res.setHeader('Cache-Control', 'private, no-store');
     res.setHeader('X-Robots-Tag', 'noindex');
@@ -29,6 +29,26 @@ function createHandler({ settings, verify, adminClient }) {
     } catch (_) { return res.status(400).json({ error: 'INVALID_SIGNATURE' }); }
     // This endpoint belongs to the live account. Preview/test events never grant rights.
     if (event.livemode !== true) return res.status(400).json({ error: 'WRONG_PAYMENT_MODE' });
+    if (['charge.refunded', 'charge.dispute.created'].includes(event.type)) {
+      const charge = event.data?.object;
+      // Full refunds and disputes suspend only the matched Invitesse purchase.
+      if (event.type === 'charge.refunded' && (!charge?.refunded || charge.amount_refunded !== charge.amount)) return res.status(200).json({ received: true });
+      if (typeof charge?.payment_intent !== 'string') return res.status(200).json({ received: true });
+      try {
+        const admin = adminClient();
+        const { data: payment, error: lookupError } = await admin.from('payments').select('order_id').eq('provider', 'stripe').eq('provider_payment_id', charge.payment_intent).maybeSingle();
+        if (lookupError) throw lookupError;
+        let orderId = payment?.order_id;
+        if (!orderId) {
+          const intent = await retrievePayment(charge.payment_intent);
+          if (!intent.livemode || intent.metadata?.integration !== 'invitesse' || !uuid.test(intent.metadata?.order_id || '')) return res.status(200).json({ received: true });
+          orderId = intent.metadata.order_id;
+        }
+        const { error } = await admin.rpc('revoke_stripe_order', { target_order: orderId });
+        if (error) throw error;
+        return res.status(200).json({ received: true });
+      } catch (_) { return res.status(503).json({ error: 'PAYMENT_RECORDING_UNAVAILABLE' }); }
+    }
     if (!['checkout.session.completed', 'checkout.session.async_payment_succeeded'].includes(event.type)) {
       return res.status(200).json({ received: true });
     }
@@ -49,7 +69,11 @@ function createHandler({ settings, verify, adminClient }) {
         external_payment: session.payment_intent, verified_amount: session.amount_total,
         verified_currency: session.currency.toUpperCase(),
       });
-      if (error) throw error;
+      if (error) {
+        const { data: existing } = await adminClient().from('orders').select('status').eq('id', order).maybeSingle();
+        if (existing?.status === 'refunded') return res.status(200).json({ received: true });
+        throw error;
+      }
       // The database verifies the original order total and grants rights atomically,
       // deduplicating events. A browser success redirect never activates a purchase.
       return res.status(200).json({ received: true });

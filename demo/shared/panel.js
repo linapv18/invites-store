@@ -315,6 +315,7 @@
 
   window.LazoPanel = {
     init: function (c) {
+      if (window.InvitessePublication) return;
       cfg = c; data = sample(c);
       root = document.createElement('div');
       root.className = 'lz-panel'; root.hidden = true;
@@ -334,8 +335,9 @@
       document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !root.hidden) close(); });
       document.querySelectorAll('[data-open-panel]').forEach(function (el) { el.addEventListener('click', function (e) { e.preventDefault(); open(); }); });
     },
-    open: open,
+    open: function(){ if (!window.InvitessePublication) open(); },
     setResponse: function (att, msg) {
+      if (window.InvitessePublication) return;
       var first = data[0]; if (!first) return;
       first.guests.forEach(function (p, i) { p.att = att && i < att.length ? att[i] : null; });
       first.msg = msg || '';

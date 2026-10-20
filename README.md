@@ -80,7 +80,7 @@ El calendario descargable de Encaje usa UTC explícito y la zona del evento (por
 
 ## Preparación de Supabase
 
-Ver [SUPABASE-SETUP.md](SUPABASE-SETUP.md) para las variables de entorno, el build y la migración de borradores privados. Las cuentas y los borradores del editor usan Supabase. La publicación y los pagos siguen pendientes; ver también los límites de archivos en esa guía.
+Ver [SUPABASE-SETUP.md](SUPABASE-SETUP.md) para las variables de entorno, el build y la migración de borradores privados. Las cuentas y los borradores del editor usan Supabase. El checkout de Stripe desbloquea el editor al confirmar el pago; la publicación posterior no tiene otro cobro. Ver [Stripe y publicación](docs/stripe-setup.md) y los límites de archivos en esa guía.
 
 La siguiente fase de base de datos está documentada en [SUPABASE-PERMISOS.md](SUPABASE-PERMISOS.md), con activación SQL y pruebas de aislamiento mediante `npm run test:database`.
 

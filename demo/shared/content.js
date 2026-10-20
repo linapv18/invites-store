@@ -21,7 +21,8 @@
    invitado (?lz=vista) se oculta, para que nunca salga texto de ejemplo en la invitación. */
 (function () {
   'use strict';
-  var q = new URLSearchParams(location.search), MODE = q.get('lz'), KEY = q.get('k');
+  var PUBLICATION = window.InvitessePublication;
+  var q = new URLSearchParams(location.search), MODE = PUBLICATION ? 'vista' : q.get('lz'), KEY = q.get('k');
   var LANG = (document.documentElement.lang || 'es').slice(0, 2) === 'en' ? 'en' : 'es';
   var html = document.documentElement, TPL = html.getAttribute('data-lz-tpl');
   var CUSTOM_COLORS = ['clasico','moderno','noir','tinta','arco','lino','gala','onix'].indexOf(TPL) !== -1;
@@ -294,6 +295,7 @@
   document.head.appendChild(css);
 
   function read() {
+    if (PUBLICATION) return PUBLICATION.content;
     try { var v = KEY && localStorage.getItem(KEY); return v ? JSON.parse(v) : null; } catch (e) { return null; }
   }
   var C = read() || {};
@@ -662,6 +664,7 @@
   var asked = false; // si el editor ya pidió una sección, no se vuelve a la de la URL inicial
   window.addEventListener('load', function () { if (MODE === 'editor' && !asked) { var s = q.get('sec'); if (s) setTimeout(function () { if (!asked) goto(s, true); }, 50); } });
   window.addEventListener('message', function (e) {
+    if (PUBLICATION) return;
     if (e.origin !== location.origin || !e.data || typeof e.data !== 'object') return;
     if (e.data.lz === 'content') apply(e.data.content);
     else if (e.data.lz === 'goto') { asked = true; goto(e.data.sec); }

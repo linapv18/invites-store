@@ -25,7 +25,7 @@ let D,E;
 await db.query('insert into auth.users values ($1,now()),($2,now())',[A,B]);
 async function as(role,id,fn){await db.exec('set role '+role);await db.query("select set_config('request.jwt.claim.sub',$1,false)",[id||'']);try{return await fn();}finally{await db.exec('reset role');await db.exec("reset request.jwt.claim.sub");}}
 async function denied(fn,pattern){await assert.rejects(fn,pattern);}
-const content={n1:'Ana',n2:'León',date:'2027-03-14',timeZone:'America/Bogota',cover:'/assets/fotos/paseo.jpg',invitations:[{name:'Secret family',email:'private@example.invalid'}],private_note:'SECRET',events:[{id:1,name:'Ceremonia',place:'Jardín',private_email:'LEAK'}],dressSuggest:['#7b8f6a'],dressAvoid:['#ffffff'],storyMode:'timeline',timeline:[{id:1,when:'2019',title:'Nos conocimos',text:'En una boda',secret:'LEAK'}]};
+const content={invitationLanguage:'es',n1:'Ana',n2:'León',date:'2027-03-14',timeZone:'America/Bogota',cover:'/assets/fotos/paseo.jpg',invitations:[{name:'Secret family',email:'private@example.invalid'}],private_note:'SECRET',events:[{id:1,name:'Ceremonia',place:'Jardín',private_email:'LEAK'}],dressSuggest:['#7b8f6a'],dressAvoid:['#ffffff'],storyMode:'timeline',timeline:[{id:1,when:'2019',title:'Nos conocimos',text:'En una boda',secret:'LEAK'}]};
 await as('authenticated',A,async()=>{
  D=(await db.query('insert into public.invitation_drafts(owner_id,design_id,content) values($1,$2,$3) returning id',[A,'rosa',JSON.stringify(content)])).rows[0].id;
  assert.equal((await db.query('select id from public.invitations')).rows.length,1);

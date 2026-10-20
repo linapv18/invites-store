@@ -72,11 +72,11 @@
       names: { clasico: ['Classic', 'Envelope and letter'], moderno: ['Modern', 'Opening doors'], rosa: ['Romantic', 'Wax-sealed envelope'], jardin: ['Garden', 'Seed packet'], costa: ['Coast', 'Boarding pass'], gala: ['Gala', 'Gold medallion'], aurelia: ['Aurelia', 'Folder with a gold band'], noir: ['Noir', 'Double door with a silver band'], lino: ['Lino', 'Card set'], marfil: ['Marfil', 'Vellum and silk bow'], fiesta: ['Fiesta', 'Lotería card'], celeste: ['Celeste', 'Moon and constellation'], cisne: ['Cisne', 'Envelope with a wax seal'], tinta: ['Tinta', 'A circle on the calendar'], glicina: ['Glicina', 'Wisteria curtain'], estreno: ['Estreno', 'Velvet sleeve'], nacar: ['Nácar', 'Box with a pearl strand'], arco: ['Arco', 'Misted window'], corazones: ['Corazones', 'Deck that fans out'], encaje: ['Encaje', 'Lace blind'], onix: ['Ónix', 'Black envelope lined with a photo'], senal: ['Señal', 'TV that flips channels'] }
     }
   }[LANG];
-  S.demoNote = LANG === 'en' ? 'Your account and drafts are saved securely online. Publishing and payments are not available yet.' : 'Su cuenta y sus borradores se guardan en línea. La publicación y los pagos todavía no están disponibles.';
+  S.demoNote = LANG === 'en' ? 'Choose your design and pay once to unlock editing. Publishing has no additional charge.' : 'Elijan su diseño y paguen una sola vez para desbloquear la edición. Publicar no tiene otro cobro.';
   S.lead = LANG === 'en' ? 'Log in to continue preparing your invitation.' : 'Ingresen para seguir preparando su invitación.';
-  S.mine = LANG === 'en' ? 'My drafts' : 'Mis borradores';
+  S.mine = LANG === 'en' ? 'My invitations' : 'Mis invitaciones';
   S.none = LANG === 'en' ? 'You do not have a draft yet.' : 'Todavía no tienen un borrador.';
-  S.buy = LANG === 'en' ? 'Prepare a draft' : 'Preparar borrador';
+  S.buy = LANG === 'en' ? 'Buy invitation' : 'Comprar invitación';
   Object.assign(S.err, {
     credentials: LANG === 'en' ? 'Check your email and password.' : 'Revisen el correo y la contraseña.',
     unconfirmed: LANG === 'en' ? 'Confirm your email before logging in.' : 'Confirmen su correo antes de ingresar.',
@@ -157,11 +157,11 @@
         (own.length ? guestPanel(own) : '') +
         (own.length ? '<div class="ac-grid">' + own.map(function (d) {
           var c = invOf(d), sub = c && (c.n1 || c.n2) ? S.weddingOf + ' ' + (c.n1 || '—') + ' & ' + (c.n2 || '—') : S.notStarted;
-          return designCard(d, '<a class="ed-btn ed-btn-dark" href="' + editUrl(d) + '">' + esc(S.edit) + '</a>' + (c ? '<a class="ed-btn" href="' + guestUrl(d) + '" target="_blank" rel="noopener">' + esc(S.guest) + '</a>' : ''), sub);
+          return designCard(d, '<a class="ed-btn ed-btn-dark" href="' + (A.canEdit(d)?editUrl(d):BASE+'/comprar/?diseno='+d) + '">' + esc(A.canEdit(d)?S.edit:(LANG==='en'?'Continue purchase':'Continuar compra')) + '</a>' + (c ? '<a class="ed-btn" href="' + guestUrl(d) + '" target="_blank" rel="noopener">' + esc(S.guest) + '</a>' : ''), sub);
         }).join('') + '</div>'
           : '<div class="ed-empty ac-empty"><p>' + esc(S.none) + '</p><a class="ed-btn ed-btn-dark" href="' + BASE + '/comprar/">' + esc(S.choose) + '</a></div>') +
         (rest.length ? '<h2 class="ac-h2">' + esc(S.others) + '</h2><div class="ac-grid">' + rest.map(function (d) {
-          return designCard(d, '<a class="ed-btn ed-btn-dark" href="' + BASE + '/comprar/?diseno=' + d + '">' + esc(S.buy) + ' · [Precio]</a><a class="ed-btn" href="' + demoUrl(d) + '">' + esc(S.demo) + '</a>');
+          return designCard(d, '<a class="ed-btn ed-btn-dark" href="' + BASE + '/comprar/?diseno=' + d + '">' + esc(S.buy) + ' · COP $200.000 / USD $79</a><a class="ed-btn" href="' + demoUrl(d) + '">' + esc(S.demo) + '</a>');
         }).join('') + '</div>' : '') + '</section>';
     }
     root.innerHTML = '<div class="ed">' + header() + '<div class="co-wrap ac-wrap">' + h + '</div></div>';
@@ -172,7 +172,8 @@
     if (A.DESIGNS.indexOf(d)<0) {
       root.innerHTML='<div class="ed">'+header()+'<div class="co-wrap ac-wrap"><section class="ac-wide"><h1>'+esc(S.choose)+'</h1><div class="ac-grid">'+A.DESIGNS.map(function(id){return designCard(id,'<a class="ed-btn ed-btn-dark" href="?diseno='+id+'">'+esc(S.buy)+'</a>');}).join('')+'</div></section></div></div>';return;
     }
-    root.innerHTML='<div class="ed">'+header()+'<div class="co-wrap ac-wrap"><section class="ac-narrow"><div class="ed-head"><h1>'+esc(S.names[d][0])+'</h1><p>'+(LANG==='en'?'Prepare a private draft. This does not purchase or publish an invitation.':'Preparen un borrador privado. Esto no compra ni publica una invitación.')+'</p></div>'+
+    if(u){window.InvitesseCheckout.mount(root,d);return;}
+    root.innerHTML='<div class="ed">'+header()+'<div class="co-wrap ac-wrap"><section class="ac-narrow"><div class="ed-head"><h1>'+esc(S.names[d][0])+'</h1><p>'+(LANG==='en'?'Sign in to purchase your invitation and unlock the editor.':'Ingresen a su cuenta para comprar la invitación y desbloquear el editor.')+'</p></div>'+
       (!u?authForm():'<p role="alert"'+(error?'':' hidden')+'>'+esc(error)+'</p><a class="ed-btn" href="'+demoUrl(d)+'">'+esc(S.demo)+'</a> '+(A.owns(d)?'<a class="ed-btn ed-btn-dark" href="'+editUrl(d)+'">'+esc(S.edit)+'</a>':'<button class="ed-btn ed-btn-dark" type="button" data-act="testbuy">'+esc(S.buy)+'</button>'))+'</section></div></div>';
   }
   function renderGoogle() {

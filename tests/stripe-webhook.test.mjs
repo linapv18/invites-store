@@ -10,7 +10,7 @@ const payment = () => ({ id: 'evt_fixture', livemode: true, type: 'checkout.sess
   mode: 'payment', livemode: true, payment_status: 'paid', payment_intent: 'pi_fixture', amount_total: 20000000,
   currency: 'cop', client_reference_id: order, metadata: { integration: 'invitesse', order_id: order },
 } } });
-async function run(event, { ready = true, invalid = false, dbError = false } = {}) {
+async function run(event, { ready = true, invalid = false, dbError = false, paymentRecord = false, unrelated = false } = {}) {
   const payload = JSON.stringify(event), calls = [];
   const req = Readable.from([Buffer.from(payload)]);
   req.method = 'POST';
@@ -19,7 +19,8 @@ async function run(event, { ready = true, invalid = false, dbError = false } = {
   const handler = webhook.createHandler({
     settings: () => ({ ready, webhookSecret: secret }),
     verify: (...args) => Stripe.webhooks.constructEvent(...args),
-    adminClient: () => ({ rpc: async (name, args) => { calls.push({ name, args }); return { error: dbError ? new Error('private detail') : null }; } }),
+    retrievePayment: async () => ({livemode:true,metadata:unrelated?{}:{integration:'invitesse',order_id:order}}),
+    adminClient: () => ({ from: table => ({select(){return this;},eq(){return this;},maybeSingle:async()=>({data:paymentRecord && table==='payments'?{order_id:order}:null})}), rpc: async (name, args) => { calls.push({ name, args }); return { error: dbError ? new Error('private detail') : null }; } }),
   });
   await handler(req, res);
   return { res, calls };
@@ -59,4 +60,18 @@ test('malformed paid sessions fail closed and database failures request retry', 
   const { res } = await run(payment(), { dbError: true });
   assert.equal(res.statusCode, 503);
   assert.equal(JSON.stringify(res.body).includes('private detail'), false);
+});
+
+test('full refunds and disputes revoke access even when delivered before the payment event',async()=>{
+ for(const type of ['charge.refunded','charge.dispute.created']){
+  const event={id:'evt_revoke',livemode:true,type,data:{object:{payment_intent:'pi_fixture',refunded:true,amount:7900,amount_refunded:7900}}};
+  for(const paymentRecord of [false,true]){
+   const {res,calls}=await run(event,{paymentRecord});assert.equal(res.statusCode,200);assert.equal(calls[0].name,'revoke_stripe_order');assert.equal(calls[0].args.target_order,order);
+  }
+  const unrelated=await run(event,{unrelated:true});assert.equal(unrelated.calls.length,0);
+  const unavailable=await run(event,{dbError:true});assert.equal(unavailable.res.statusCode,503);
+ }
+});
+test('partial refunds are acknowledged without revoking the whole invitation',async()=>{
+ const event={id:'evt_partial',livemode:true,type:'charge.refunded',data:{object:{payment_intent:'pi_fixture',refunded:false,amount:7900,amount_refunded:100}}};const {res,calls}=await run(event);assert.equal(res.statusCode,200);assert.equal(calls.length,0);
 });

@@ -1,27 +1,46 @@
-# Stripe: conexión por etapas
+# Stripe y publicación — 20 de octubre de 2026
 
-La propietaria autorizó pagos únicos reales, COP 200.000 para Colombia y USD 79 para otros países, todos los diseños. No incluye complementos cuyo precio no se ha definido.
+## Reglas confirmadas
 
-## Credenciales (Production, sensibles)
+- Vendedor: Coldevs Inc; cuenta Stripe de EE. UU. `acct_1PCrn7P9O3dSAvF3`.
+- Todos los diseños: un pago de COP 200.000 para Colombia o USD 79 para otros mercados. Selección explícita, sin deducir país del idioma ni convertir automáticamente.
+- Comprar al seleccionar diseño, antes de editar. El pago desbloquea el editor; publicar no cobra de nuevo.
+- Fecha y zona horaria obligatorias antes del pago. Vigencia hasta terminar el día tres meses calendario después del evento, en su zona. Meses sin el día correspondiente se ajustan al último día. La fecha exacta se muestra antes de pagar y queda fija con el pedido. Cambios posteriores por soporte.
+- Complementos de pago sin precio definido: no se cobran.
 
-- `STRIPE_SECRET_KEY`: guardada por la propietaria; se comprobó solo su existencia y alcance, no su valor.
-- `STRIPE_WEBHOOK_SECRET`: secreto del destino webhook de esta aplicación.
-- `SUPABASE_SECRET_KEY`: clave de servidor del mismo proyecto Supabase usado por el sitio (`sb_secret_…`). Nunca usar una variable pública.
+## Despliegue
 
-## Destino de Stripe (cuenta propia, modo real)
+Credenciales sensibles solo en Production: `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET`, `SUPABASE_SECRET_KEY`, más URL y clave pública del proyecto Supabase ya enlazado. No se leen ni publican secretos.
 
-URL exacta: `https://www.invitesse.com/api/stripe-webhook/` (con barra final, comprobada en producción; sin ella Vercel responde 308).
+Ejecutar `supabase/ACTIVAR-STRIPE.sql` completo en SQL Editor. Es idempotente: conserva cuentas/borradores; crea la plataforma si falta y actualiza funciones/precios. Regenerar con `node scripts/assemble-stripe-sql.mjs` tras editar migraciones. La propietaria confirmó haber aplicado la migración; verificar que corresponde a su versión final antes de abrir ventas.
 
-Eventos: `checkout.session.completed` y `checkout.session.async_payment_succeeded`.
+Webhook real: `https://www.invitesse.com/api/stripe-webhook/`, Snapshot (la cuenta utiliza 2024-04-10). Eventos:
 
-El endpoint usa el cuerpo original y la verificación oficial de firma. Hasta disponer de todas las credenciales responde 503; las peticiones con firma inválida responden 400. No registra datos personales ni firmas. Acepta solamente pagos reales marcados con `metadata.integration=invitesse`, `metadata.order_id` y `client_reference_id` iguales al UUID del pedido. El total y moneda se contrastan con el pedido original mediante `apply_verified_payment`, con deduplicación y activación atómica en la base de datos. No publica automáticamente contenido.
+- `checkout.session.completed`
+- `checkout.session.async_payment_succeeded`
+- `charge.refunded`
+- `charge.dispute.created`
 
-## Pendiente antes de habilitar cobros
+La propietaria confirmó los cuatro eventos. Reembolsos completos y disputas revocan acceso; no emiten reembolsos y no se restauran automáticamente al ganar una disputa. Revisión por soporte. Los eventos fuera de orden no deben reactivar un pedido revocado.
 
-1. Añadir ambas credenciales pendientes y volver a desplegar para que se apliquen.
-2. Verificar migraciones de plataforma en Supabase y configurar productos por diseño en COP/USD (20.000.000 / 7.900 unidades menores).
-3. Implementar creación autenticada de Checkout Session con importes calculados en servidor, idempotencia, prevención de compras duplicadas y recuperación de estado. Colombia usa COP por selección explícita de mercado; no inferir el país por idioma.
-4. Sustituir el checkout de complementos con campos simulados; todavía no crea sesiones ni cobra. Verificar entrega/publicación de la invitación antes de activar un CTA de pago.
-5. Comprobar webhook, reintentos, monedas, derechos y flujo de publicación. No se han hecho cargos reales. Los reembolsos y disputas requieren un flujo verificado de revocación antes de abrir ventas; este endpoint todavía no los procesa.
+## Flujo
 
-No se cambia la cuenta a modo de prueba. Las pruebas automatizadas usan firmas sintéticas locales y ninguna credencial real. Este primer despliegue conecta la recepción de eventos; no habilita ventas.
+`/comprar/?diseno=…` → cuenta → fecha, zona y moneda → precio/vencimiento/condiciones → Stripe Checkout alojado (tarjetas; sin promociones, cantidades ajustables, impuestos añadidos ni Adaptive Pricing) → retorno y conciliación verificada → editor.
+
+`GET /api/checkout/` comprueba configuración de precios y que Stripe permita cobrar en la cuenta prevista; no crea pedidos ni cargos. POST exige JWT validado en Supabase y correo confirmado. El servidor usa precios de la DB; ignora importes, propietarios y vencimientos del navegador. Preparar el pedido bloquea la invitación para reutilizar pedidos pendientes; los parámetros de Stripe se congelan y la clave de idempotencia depende del pedido. Las sesiones abiertas se reutilizan; al cambiar moneda/fecha se debe cancelar la sesión pendiente. Los pedidos pagados/revocados no se cobran otra vez.
+
+Solo el webhook firmado o la consulta autenticada del servidor a Stripe pueden registrar pagos. Supabase contrasta el total, moneda, propietario y productos y concede derechos de manera atómica e idempotente. La URL de éxito por sí misma no concede acceso.
+
+Publicar guarda una instantánea filtrada, sincroniza familias y preserva IDs/respuestas. Los enlaces de familia llevan tokens en el fragmento, no en las peticiones del navegador; se resuelven por POST al RPC. Generar un enlace nuevo revoca el anterior de esa familia. El enlace general requiere opt-in. Todas las invitaciones llevan noindex, no-store y no-referrer, sin GA4/Clarity.
+
+`/invitacion/` muestra la plantilla en un iframe sin `allow-same-origin`: no puede leer sesión/almacenamiento del propietario. El padre conserva el token y guarda el RSVP real. Los datos privados del editor/listas de otras familias no se entregan al invitado. La expiración y revocación se comprueban en cada lectura/respuesta por RPC. Una página ya abierta no puede borrar lo ya visto; el siguiente acceso o envío vuelve a comprobar vigencia.
+
+Audio local subido todavía requiere selección de biblioteca antes de publicar; la interfaz lo indica. Las fotos actuales guardadas como data URLs están limitadas por el tamaño máximo del borrador. No se promete disponibilidad de complementos pendientes.
+
+## Validación
+
+- `npm run test:payments`: firmas y rechazo, precios, suplantación, doble checkout, conciliación y SQL real en PGlite.
+- `npm test`: regresión de APIs, SEO y privacidad.
+- `python3 tests/browser/checkout_publication.py`: checkout ES/EN a 390/1440px, COP explícito, vencimiento, retorno pagado; 22 diseños × 2 idiomas, aislamiento de iframe y RSVP guardado. Stripe, cuentas y escrituras se interceptan.
+- Builds locales usan exclusivamente valores públicos ficticios. Producción se construye en Vercel con su configuración existente.
+- No se ha hecho un cargo real ni creado una compra de cliente para probar. Una prueba automatizada no demuestra un cobro bancario real.

@@ -145,7 +145,7 @@
     { id: 'tele', es: 'Tele y ventana', en: 'TV and window', opts: ['tele', 'ventana'] },
     { id: 'luna', es: 'Luna y medallón', en: 'Moon and medallion', opts: ['luna', 'medallon'] }
   ];
-  var UI = { es: { demo: 'Ver demo', demoOf: 'Ver demo del diseño', buy: 'Preparar', buyOf: 'Preparar un borrador del diseño', isNew: 'Nuevo', price: 'Precios disponibles con el lanzamiento' }, en: { demo: 'View demo', demoOf: 'View demo:', buy: 'Prepare', buyOf: 'Prepare a draft with the design', isNew: 'New', price: 'Pricing available at launch' } };
+  var UI = { es: { demo: 'Ver demo', demoOf: 'Ver demo del diseño', buy: 'Comprar', buyOf: 'Comprar el diseño', isNew: 'Nuevo', price: 'Colombia: COP $200.000 · Otros países: USD $79' }, en: { demo: 'View demo', demoOf: 'View demo:', buy: 'Buy', buyOf: 'Buy the design', isNew: 'New', price: 'Colombia: COP $200,000 · Other countries: USD $79' } };
 
   // Tarjeta de un diseño en el catálogo: la invitación cerrada y los dos caminos (demo y elegir).
   function card(d, lang, level) {

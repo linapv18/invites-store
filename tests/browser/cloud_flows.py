@@ -18,6 +18,7 @@ class Backend:
   elif '/auth/v1/user' in url:body=USER
   elif '/auth/v1/signup' in url:body={'user':USER,'session':None}
   elif '/auth/v1/recover' in url or '/auth/v1/logout' in url:body={}
+  elif '/rest/v1/invitation_entitlements' in url:body=[]
   elif '/rest/v1/invitation_drafts' in url:
    if req.method=='GET':body=self.rows
    else:
@@ -32,7 +33,7 @@ class Backend:
 async def login(pg):
  await pg.goto(BASE+'/cuenta/',wait_until='networkidle')
  await pg.locator('[name=email]').fill(EMAIL);await pg.locator('[name=pass]').fill('PasswordLocal123');await pg.locator('form [type=submit]').click()
- await pg.get_by_role('heading',name='Mis borradores',exact=True).wait_for()
+ await pg.get_by_role('heading',name='Mis invitaciones',exact=True).wait_for()
 async def main():
  async with async_playwright() as p:
   b=await p.chromium.launch(executable_path='/usr/bin/chromium',args=['--no-sandbox']);api=Backend();c=await b.new_context(viewport={'width':1440,'height':1000});await c.route('https://*.supabase.co/**',api.route);pg=await c.new_page();errors=[];pg.on('pageerror',lambda e:errors.append(str(e)))

@@ -1,3 +1,7 @@
+# Actualización de pagos — 20 de octubre de 2026
+
+El checkout y la publicación se implementaron después de esta auditoría SEO. Precios: COP 200.000 / USD 79; pago antes de editar y vigencia hasta tres meses calendario después del evento. Vendedor confirmado: Coldevs Inc. Ver [documentación de Stripe](docs/stripe-setup.md). Las referencias siguientes a precios o compras pendientes describen el estado de la implementación SEO anterior.
+
 # Implementación SEO de Invitesse
 
 Fecha: 19 de octubre de 2026. Base de código actualizada mediante fast-forward a `b9d9602` de `origin/main`, conservando los cambios recientes de idiomas, regalos y envío. Este documento complementa la auditoría histórica `SEO_AUDIT.md`.

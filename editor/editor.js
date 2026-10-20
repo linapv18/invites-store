@@ -812,6 +812,7 @@
     var own = AUTH.owned(), p = new URLSearchParams(location.search), d = p.get('diseno') || p.get('design');
     if (!own.length) { location.replace(BASE + '/comprar/' + (DESIGNS[d] ? '?diseno=' + d : '')); return null; }
     if (!d) d = own.indexOf(u.last) > -1 ? u.last : own[0];
+    if (VIEW !== 'checkout' && (!AUTH.owns(d) || !AUTH.canEdit(d))) { location.replace(BASE+'/comprar/?diseno='+encodeURIComponent(d)); return null; }
     if (!AUTH.owns(d)) {
       var name = DESIGNS[d] ? DESIGNS[d][LANG][0] : d;
       document.title = S.gateT(name) + ' — Invitesse';
@@ -975,8 +976,9 @@
   }
   function field(label, k, o) {
     o = o || {};
+    if (k === 'date') { o.hint = LANG==='es'?'Fecha de la compra. Para cambiarla, contacten con hola@invitesse.com.':'Purchased event date. Contact hola@invitesse.com to change it.'; }
     var v = state[k] == null ? '' : state[k];
-    var a = ' data-k="' + k + '" id="f-' + k + '"' + (o.ph ? ' placeholder="' + esc(o.ph) + '"' : '') + (o.max ? ' maxlength="' + o.max + '"' : '') + (o.type ? ' type="' + o.type + '"' : '') + ' autocomplete="off"';
+    var a = (k==='date'?' disabled':'') + ' data-k="' + k + '" id="f-' + k + '"' + (o.ph ? ' placeholder="' + esc(o.ph) + '"' : '') + (o.max ? ' maxlength="' + o.max + '"' : '') + (o.type ? ' type="' + o.type + '"' : '') + ' autocomplete="off"';
     var ctl = o.rows ? '<textarea rows="' + o.rows + '"' + a + '>' + esc(v) + '</textarea>' : '<input' + a + ' value="' + esc(v) + '">';
     return '<label class="ed-field' + (o.cls ? ' ' + o.cls : '') + '">' + esc(label) + ctl + (o.hint ? '<span class="ed-hint">' + esc(o.hint) + '</span>' : '') + '</label>';
   }
@@ -1030,6 +1032,7 @@
     return '<label class="ed-field">' + esc(label) + '<select data-k="' + key + '">' + options.map(function(o){return '<option value="'+esc(o[0])+'"'+(o[0]===value?' selected':'')+'>'+esc(o[1])+'</option>';}).join('') + '</select>' + (hint?'<span class="ed-hint">'+esc(hint)+'</span>':'') + '</label>';
   }
   function coZone() {
+    return '<p class="ed-hint">'+(LANG==='es'?'Zona horaria de la compra: ':'Purchased event time zone: ')+esc(state.timeZone || 'America/Bogota')+'</p>';
     var zones = typeof Intl.supportedValuesOf === 'function' ? Intl.supportedValuesOf('timeZone') : ['America/Mexico_City','America/Bogota','America/New_York','Europe/Madrid'];
     return coSelect(LANG==='es'?'Zona horaria de la boda':'Wedding time zone','timeZone',[['',LANG==='es'?'Elijan la zona horaria':'Choose a time zone'],['UTC','UTC']].concat(zones.map(function(z){return[z,z.replace(/_/g,' ')];})),state.timeZone||'',LANG==='es'?'Elige la zona del lugar de la boda para que todos los invitados vean la misma cuenta regresiva.':'Choose the venue’s time zone so every guest sees the same countdown.');
   }
@@ -1648,9 +1651,13 @@
       case 'drawer': openDrawer(b); break;
       case 'drawer-close': closeDrawer(); break;
       case 'cart':
+        toast(LANG==='es'?'Los complementos de pago todavía no están disponibles.':'Paid add-ons are not available yet.'); break;
+      case 'cart-legacy':
         var c1 = Object.assign({}, cart); if (c1[id]) delete c1[id]; else c1[id] = true;
         setCart(c1, (c1[id] ? S.addedT : S.removedT)(addonName(id))); break;
       case 'pack':
+        toast(LANG==='es'?'Los paquetes todavía no están disponibles.':'Add-on bundles are not available yet.'); break;
+      case 'pack-legacy':
         var p = PACKS.filter(function (x) { return x.id === id; })[0], c2 = Object.assign({}, cart);
         var full = p.ids.every(function (x) { return c2[x]; });
         p.ids.forEach(function (x) { if (full) delete c2[x]; else c2[x] = true; });
@@ -1671,11 +1678,7 @@
       case 'guide-go': closeGuide(); guideGo(+id); break;
       case 'save-retry': saveNow(); break;
       case 'publish':
-        var pending = SECS.filter(function (x) { return !doneOf(x); });
-        // TODO: publicar de verdad cuando haya cuentas y backend (y el pago de la plantilla esté conectado).
-        modal('<h2 id="mdTitle">' + esc(S.pubTitle) + '</h2><p>' + esc(S.pubText) + '</p>' +
-          (pending.length ? '<p style="margin-top:4px"><b style="font-weight:500;color:var(--ink)">' + esc(S.pubPending) + '</b></p><ul>' + pending.map(function (x) { return '<li>' + esc(secName(x)) + '</li>'; }).join('') + '</ul>' : '<p>' + esc(S.pubAll) + '</p>') +
-          '<div class="ed-modal-actions"><button type="button" class="ed-btn ed-btn-dark" data-act="modal-close">' + esc(S.ok) + '</button></div>', b);
+        window.InvitessePublishing.open({design:DESIGN,save:async function(){await saveNow();if(ui.saving!=='saved')throw Error('SAVE_FAILED');}});
         break;
       case 'reset-content':
         modal('<h2 id="mdTitle">' + (LANG === 'es' ? '¿Empezar de nuevo?' : 'Start again?') + '</h2><p>' + (LANG === 'es' ? 'Se borrarán los textos, fotos, eventos e invitados de este borrador. Se conservarán el diseño y la paleta. Esta acción no se puede deshacer.' : 'This draft’s text, photos, events and guests will be cleared. Your design and palette will be kept. This cannot be undone.') + '</p><div class="ed-modal-actions"><button type="button" class="ed-btn" data-act="modal-close">' + esc(S.cancel) + '</button><button type="button" class="ed-btn ed-btn-dark" data-act="reset-content-yes">' + (LANG === 'es' ? 'Vaciar borrador' : 'Clear draft') + '</button></div>', b);
@@ -1971,57 +1974,6 @@
      Pago de complementos
      ========================================================= */
   function checkout() {
-    var st = loadState(), cart = loadCart(), method = 'card', notice = false;
-    root.innerHTML = '<div class="ed">' +
-      '<header class="co-top"><a class="co-back" href="' + BASE + '/editor/">' + svg(P.left, 16, 2) + esc(S.back) + '</a><div class="ed-spacer"></div>' +
-      '<a class="ed-logo ed-logo-full" href="' + BASE + '/" aria-label="Invitesse">' + logoFull + '</a><div class="ed-spacer"></div>' +
-      '<span class="co-secure">' + svg(P.lock, 14) + esc(S.secure) + '</span></header><div class="co-wrap" id="coWrap"></div></div><div id="edModal"></div>';
-    var wrap = document.getElementById('coWrap');
-    var f = function (label, ph, cls, extra) { return '<label class="ed-field' + (cls ? ' ' + cls : '') + '">' + esc(label) + '<input placeholder="' + esc(ph) + '" autocomplete="off"' + (extra || '') + '></label>'; };
-    function render() {
-      var lines = cartLines(cart), n = cartCount(cart);
-      var lineHTML = lines.map(function (l) {
-        var name, sub, price, key;
-        if (l.pack) { name = l.pack.feat ? PACK_TXT[l.pack.id][0] : S.pack + ' ' + PACK_TXT[l.pack.id][0]; sub = PACK_TXT[l.pack.id][1]; price = '[Precio]'; key = 'pack:' + l.pack.id; }
-        else { name = ADDON_TXT[l.id][0]; sub = l.id === 'dominio' ? slug(st) : ADDON_TXT[l.id][1].replace('{d}', slug(st)); price = '[$]'; key = 'one:' + l.id; }
-        return '<div class="co-line"><div><b>' + esc(name) + '</b><span>' + esc(sub) + '</span></div><span class="pr">' + price + '</span>' +
-          '<button type="button" class="ed-del" data-act="co-del" data-id="' + key + '" aria-label="' + esc(S.removeLine + ' ' + name) + '">' + svg(P.x, 16, 2) + '</button></div>';
-      }).join('');
-      wrap.innerHTML =
-        '<section class="co-main"><div class="ed-head" style="gap:8px"><span class="ed-kicker">' + esc(S.weddingOf + ' ' + couple(st)) + '</span><h1>' + esc(S.coH1) + '</h1><p>' + esc(S.coLead) + '</p></div>' +
-        '<div class="ed-stack"><span class="ed-label" id="lblM">' + esc(S.method) + '</span><div class="co-methods" role="group" aria-labelledby="lblM">' +
-          '<button type="button" data-act="method" data-id="card" aria-pressed="' + (method === 'card') + '">' + svg(P.card, 20, 1.7) + esc(S.card) + '</button>' +
-          '<button type="button" data-act="method" data-id="paypal" aria-pressed="' + (method === 'paypal') + '">' + esc(S.paypal) + '</button></div></div>' +
-        (method === 'card'
-          // TODO: sustituir estos campos por los del proveedor de pago (p. ej. campos alojados) al conectar el cobro. No se leen ni se guardan.
-          ? '<div class="ed-grid2 co-grid">' + f(S.cardName, S.cardNamePh, 'full') + f(S.cardNum, '0000 0000 0000 0000', 'full', ' inputmode="numeric"') + f(S.exp, S.expPh, '', ' inputmode="numeric"') + f(S.cvc, '123', '', ' inputmode="numeric"') + '</div>'
-          : '<p class="co-paypal">' + esc(S.paypalText) + '</p>') +
-        '</section>' +
-        '<aside class="co-sum" aria-label="' + esc(S.order) + '"><h2>' + esc(S.order) + '</h2>' +
-          (n ? '<div>' + lineHTML + '</div>' : '<div class="co-empty"><p style="margin:0">' + esc(S.empty) + '</p><a class="ed-btn" href="' + BASE + '/editor/#complementos">' + esc(S.emptyCta) + '</a></div>') +
-          (n >= 4 && n < 7 ? '<div class="co-up"><span>' + S.upsellTxt(n) + '</span><button type="button" class="ed-btn ed-btn-line ed-btn-sm" data-act="co-all">' + esc(S.change) + '</button></div>' : '') +
-          '<div class="co-total"><span>' + esc(S.total) + '</span><b>[Total] <small>USD</small></b></div>' +
-          '<button type="button" class="ed-btn ed-btn-dark co-pay" data-act="co-pay"' + (n ? '' : ' disabled') + '>' + esc(method === 'card' ? S.payBtn : S.payPaypal) + '</button>' +
-          '<div aria-live="polite">' + (notice ? '<p class="co-notice">' + esc(S.notConnected) + '</p>' : '') + '</div>' +
-          '<span class="co-note">' + esc(S.payNote2) + '</span></aside>';
-    }
-    root.addEventListener('click', function (e) {
-      var b = e.target.closest('[data-act]'); if (!b) return;
-      var act = b.getAttribute('data-act'), id = b.getAttribute('data-id');
-      if (act === 'method') { method = id; notice = false; render(); var m = wrap.querySelector('[data-act="method"][data-id="' + id + '"]'); if (m) m.focus(); }
-      else if (act === 'co-del') {
-        var parts = id.split(':');
-        if (parts[0] === 'pack') PACKS.filter(function (p) { return p.id === parts[1]; })[0].ids.forEach(function (x) { delete cart[x]; });
-        else delete cart[parts[1]];
-        saveCart(cart); notice = false; render(); var nx = wrap.querySelector('[data-act="co-del"]') || wrap.querySelector('.co-empty a'); if (nx) nx.focus();
-      }
-      else if (act === 'co-all') { ADDON_IDS.forEach(function (x) { cart[x] = true; }); saveCart(cart); render(); wrap.querySelector('.co-pay').focus(); }
-      else if (act === 'co-pay') {
-        // TODO: conectar el pago real (tarjeta o PayPal). Igual que los enlaces de pago pendientes del README: hoy no se cobra nada.
-        notice = true; render(); wrap.querySelector('.co-pay').focus();
-      }
-    });
-    window.addEventListener('storage', function (e) { if (e.key === CART_KEY) { cart = loadCart(); render(); } });
-    render();
+    return window.InvitesseCheckout.mount(root, DESIGN);
   }
 })();

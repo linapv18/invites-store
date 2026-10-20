@@ -37,3 +37,5 @@ Los tests interceptan todas las solicitudes a `*.supabase.co`; no crean cuentas,
 `python tests/browser/seo.py` verifica la salida SEO del build en 320, 390 y 1440 px: rutas comerciales, H1, filtros, navegación catálogo → ficha sin JavaScript, overflow y axe. Intercepta la API de cotización y los proveedores de analítica: comprueba errores/éxito y eventos sin enviar correos ni visitas reales. Requiere servir `dist/` en 4174 o configurar `INVITESSE_TEST_BASE`.
 
 Las fuentes están alojadas localmente. El build agrupa los scripts de demos conservando su orden y el script temprano de idioma. Al editar scripts compartidos o el pipeline de assets, ejecutar también `gallery_limits.py` e `invitation_language.py`; ambas pruebas usan datos simulados.
+
+`checkout_publication.py` cubre la compra antes del editor, precios COP/USD, vencimiento mostrado, bloqueo sin compra y acceso después del pago, y las 22 plantillas publicadas ES/EN con RSVP real (backend interceptado). Las pruebas anteriores que simulaban `testbuy` corresponden al flujo previo de borradores gratuitos; para pagos usar este recorrido. Ninguna prueba genera cargos reales.

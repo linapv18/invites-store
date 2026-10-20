@@ -6,7 +6,8 @@
   "scripts": {
     "build": "node scripts/build.mjs",
     "test": "node --test tests/*.test.mjs",
-    "test:database": "node tests/database/platform.mjs"
+    "test:database": "node tests/database/platform.mjs",
+    "test:payments": "node tests/checkout.test.mjs && node tests/stripe-webhook.test.mjs && node tests/database/stripe.mjs"
   },
   "engines": {
     "node": ">=22"

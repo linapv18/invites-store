@@ -60,7 +60,7 @@
   window.NacarS = S;
   // Ordinary demos load inside photographs when the box starts opening. Never
   // defer editor/guest previews, where content.js owns the customer's image URLs.
-  var deferPhotos = !new URLSearchParams(location.search).has('lz');
+  var deferPhotos = !window.InvitessePublication && !new URLSearchParams(location.search).has('lz');
   var photo = function (src) { return deferPhotos ? 'data-invite-src="' + src + '" data-full-src="' + src + '"' : 'src="' + src + '"'; };
 
   var A = '/assets/nacar/';

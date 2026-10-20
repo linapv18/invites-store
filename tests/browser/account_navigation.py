@@ -27,7 +27,7 @@ async def main():
     assert not any('/rest/' in url for method,url in api.calls[before:]),api.calls[before:]
     assert await pg.evaluate('document.documentElement.scrollWidth<=innerWidth')
     rect=await link.bounding_box();assert rect['x']>=0 and rect['x']+rect['width']<=width and rect['height']>=44
-   await pg.locator('.nav-account').click();await pg.get_by_role('heading',name='My drafts',exact=True).wait_for()
+   await pg.locator('.nav-account').click();await pg.get_by_role('heading',name='My invitations',exact=True).wait_for()
    # Metadata absent: do not infer a name from the email address.
    flows.USER['user_metadata']={};await pg.goto(BASE+'/',wait_until='networkidle');await pg.wait_for_function("document.querySelector('.nav-account').dataset.authState==='signed-in'");assert await pg.locator('.nav-account').inner_text()=='Mi cuenta'
    # Long and HTML-looking metadata stays plain text and cannot break the header.

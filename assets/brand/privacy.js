@@ -6,7 +6,7 @@
   var legal = ['/privacidad', '/condiciones', '/en/privacy', '/en/terms'].indexOf(path) !== -1;
   var quotePage = path === '/cotizar' || path === '/en/quote';
   // A copied script must never enable analytics on an invitation, account or editor.
-  if (/^\/(?:en\/)?(?:demo|editor|cuenta|account|comprar)(?:\/|$)/.test(path) || (!commercial && !legal) || window.top !== window.self) return;
+  if (/^\/(?:en\/)?(?:demo|editor|cuenta|account|comprar|invitacion)(?:\/|$)/.test(path) || (!commercial && !legal) || window.top !== window.self) return;
   var id = 'G-2YPN2SZT3R', key = 'invitesse.privacy.v1', lifetime = 180 * 86400000;
   var en = document.documentElement.lang.indexOf('en') === 0, loaded = false, opener;
   var gpc = navigator.globalPrivacyControl === true;

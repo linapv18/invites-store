@@ -2,7 +2,7 @@
 (function () {
   'use strict';
   var DESIGNS = ['clasico', 'moderno', 'rosa', 'jardin', 'costa', 'gala', 'aurelia', 'noir', 'lino', 'marfil', 'fiesta', 'celeste', 'cisne', 'tinta', 'glicina', 'estreno', 'nacar', 'arco', 'corazones', 'encaje', 'onix', 'senal'];
-  var B = window.InvitesseBackend, user = null, drafts = {}, recovery = false;
+  var B = window.InvitesseBackend, user = null, drafts = {}, recovery = false, entitlements = {};
   function cache(row) {
     drafts[row.design_id] = row;
     try { localStorage.setItem(api.invKey(row.design_id), JSON.stringify(row.content)); } catch (_) {}
@@ -11,8 +11,12 @@
     var result = await B.auth.getUser();
     if (result.error && result.error.name !== 'AuthSessionMissingError') throw result.error;
     user = result.data && result.data.user;
-    drafts = {};
-    if (user) (await B.drafts.list()).forEach(cache);
+    drafts = {}; entitlements = {};
+    if (user) {
+      (await B.drafts.list()).forEach(cache);
+      var rights = await B.client.from('invitation_entitlements').select('invitation_id,expires_at,revoked_at');
+      if (!rights.error) (rights.data || []).forEach(function(r){entitlements[r.invitation_id]=!r.revoked_at && (!r.expires_at || Date.parse(r.expires_at)>Date.now());});
+    }
   }
   function errorCode(e) {
     if (!e) return '';
@@ -32,6 +36,9 @@
       return { id: user.id, email: user.email, purchases: owned, last: '', editorGuideSeen: !!(user.user_metadata && user.user_metadata.invitesse_editor_guide_seen === true) };
     },
     owned: function () { return DESIGNS.filter(function (d) { return !!drafts[d]; }); },
+    canEdit: function(d) { return !!(user && drafts[d] && entitlements[drafts[d].id]); },
+    refresh: refresh,
+    draft: function(d) { return drafts[d]; },
     owns: function (d) { return !!(user && drafts[d]); },
     invKey: function (d) { return 'invitesse.preview.v1:' + (user ? user.id : 'none') + ':' + d; },
     cartKey: function () { return 'invitesse.cart.v1:' + (user ? user.id : 'none'); },
