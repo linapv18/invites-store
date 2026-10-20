@@ -9,6 +9,9 @@
 .lz-meta h2 a,.lz-meta h3 a{display:inline-flex;align-items:center;min-height:44px;text-decoration:none}
 .lz-meta p,.lz-op{margin:0;color:#655560;font:400 13px/1.6 var(--iv-sans);letter-spacing:0;text-transform:none}
 .lz-meta>p{flex-basis:100%;margin-top:-8px}
+.lz-tier{display:block;font:600 10px/1.4 var(--iv-sans);letter-spacing:.2em;text-transform:uppercase;color:#655560}
+.lz-tier-signature{color:var(--iv-lacre,#674A60)}
+.lz-tier-luxury{color:#8A6F3E}
 .lz-price{display:block;margin-top:8px;color:#655560;font:400 12px/1.5 var(--iv-sans)}
 .lz-buy{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:10px 18px;border:1px solid #BFAFB8;border-radius:999px;color:#352432;font:500 13px/1.5 var(--iv-sans);text-decoration:none}
 .lz-buy:hover{background:#352432;color:#F8F3EC}
