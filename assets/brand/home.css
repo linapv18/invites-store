@@ -165,3 +165,19 @@ details[open]>summary>span{transform:rotate(45deg)}
 /* El resplandor del hero nunca debe ensanchar la página. */
 .hero{overflow-x:clip}
 @media(prefers-reduced-motion:reduce){.hero-pair .shot{transition:none}.hero-pair:hover .shot{transform:none}}
+
+/* Featured collection: one row, native touch scrolling and snap points. */
+.collection .design-grid{display:grid;grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:calc((100% - 56px)/3);gap:28px;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;scrollbar-width:thin;scrollbar-color:var(--h-plum) transparent;padding:2px 2px 14px;scroll-padding-inline:2px}
+.collection .design-grid>.lz-card{scroll-snap-align:start}
+.collection .design-grid:focus-visible{outline:2px solid var(--h-plum);outline-offset:6px}
+.collection-controls{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-top:14px}
+.collection-controls[hidden]{display:none}
+.collection-position{font-size:13px;color:var(--h-muted);font-variant-numeric:tabular-nums}
+.collection-arrows{display:flex;gap:10px}
+.collection-arrows button{display:grid;place-items:center;width:48px;height:48px;padding:0;border:1px solid currentColor;border-radius:50%;background:transparent;color:var(--h-plum);font:inherit;font-size:24px;cursor:pointer;transition:background .2s,color .2s}
+.collection-arrows button:hover:not(:disabled){background:var(--h-plum);color:var(--h-paper)}
+.collection-arrows button:disabled{opacity:.3;cursor:default}
+.collection-arrows button:focus-visible{outline:2px solid currentColor;outline-offset:4px}
+@media(max-width:800px){.collection .design-grid{grid-auto-columns:calc((100% - 18px)/2);gap:18px}}
+@media(max-width:500px){.collection .design-grid{grid-auto-columns:88%;gap:16px}.collection-controls{margin-top:8px}}
+@media(prefers-reduced-motion:reduce){.collection-arrows button{transition:none}}
