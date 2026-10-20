@@ -141,10 +141,10 @@
       (mode==='login'?'<button type="button" class="ed-link" data-act="mode" data-id="reset">'+(LANG==='en'?'Forgot your password?':'¿Olvidaron su contraseña?')+'</button>':'')+
       '<p class="ac-note">'+esc(S.demoNote)+'</p><p class="ac-note"><a href="'+(LANG==='en'?'/en/privacy/':'/privacidad/')+'">'+(LANG==='en'?'Privacy policy':'Política de privacidad')+'</a> · <a href="'+(LANG==='en'?'/en/terms/':'/condiciones/')+'">'+(LANG==='en'?'Terms of service':'Condiciones del servicio')+'</a></p></form>';
   }
-  function designCard(d, actions, sub, showPrice) {
+  function designCard(d, actions, sub) {
     var n = S.names[d];
     return '<article class="ac-card" data-id="' + esc(d) + '"><img src="' + IMG[d] + '" alt="" loading="lazy"><div class="ac-card-body"><span class="ed-kicker">' + esc(S.design) + ' · ' + esc(n[1]) + '</span>' +
-      '<h3>' + esc(n[0]) + '</h3>' + (showPrice ? '<span class="lz-price ac-price" hidden></span>' : '') + (sub ? '<p>' + esc(sub) + '</p>' : '') + '<div class="ac-actions">' + actions + '</div></div></article>';
+      '<h3>' + esc(n[0]) + '</h3>' + (sub ? '<p>' + esc(sub) + '</p>' : '') + '<div class="ac-actions">' + actions + '</div></div></article>';
   }
 
   function renderAccount() {
@@ -152,17 +152,16 @@
     if (!u || mode === 'update') {
       h = '<section class="ac-narrow"><div class="ed-head"><h1>' + esc(S.title) + '</h1><p>' + esc(S.lead) + '</p></div>' + authForm() + '</section>';
     } else {
-      var own = A.owned(), rest = A.DESIGNS.filter(function (d) { return own.indexOf(d) < 0; });
-      h = '<section class="ac-wide"><div class="ed-head"><span class="ed-kicker">' + esc(S.signedAs) + ' ' + esc(u.email) + '</span><h1>' + esc(S.mine) + '</h1></div>' +
-        (own.length ? guestPanel(own) : '') +
-        (own.length ? '<div class="ac-grid">' + own.map(function (d) {
-          var c = invOf(d), sub = c && (c.n1 || c.n2) ? S.weddingOf + ' ' + (c.n1 || '—') + ' & ' + (c.n2 || '—') : S.notStarted;
-          return designCard(d, '<a class="ed-btn ed-btn-dark" href="' + (A.canEdit(d)?editUrl(d):BASE+'/comprar/?diseno='+d) + '">' + esc(A.canEdit(d)?S.edit:(LANG==='en'?'Continue purchase':'Continuar compra')) + '</a>' + (c ? '<a class="ed-btn" href="' + guestUrl(d) + '" target="_blank" rel="noopener">' + esc(S.guest) + '</a>' : ''), sub);
-        }).join('') + '</div>'
-          : '<div class="ed-empty ac-empty"><p>' + esc(S.none) + '</p><a class="ed-btn ed-btn-dark" href="' + BASE + '/comprar/">' + esc(S.choose) + '</a></div>') +
-        (rest.length ? '<h2 class="ac-h2">' + esc(S.others) + '</h2><div class="ac-grid">' + rest.map(function (d) {
-          return designCard(d, '<a class="ed-btn ed-btn-dark" href="' + BASE + '/comprar/?diseno=' + d + '">' + esc(S.buy) + '</a><a class="ed-btn" href="' + demoUrl(d) + '">' + esc(S.demo) + '</a>', null, true);
-        }).join('') + '</div>' : '') + '</section>';
+      var own=A.purchased(),en=LANG==='en',shop=BASE+'/disenos/';
+      var browse=en?'Explore designs':'Explorar diseños';
+      h='<section class="ac-wide ac-library"><div class="ac-library-head"><div class="ed-head"><span class="ed-kicker">'+esc(S.signedAs)+' '+esc(u.email)+'</span><h1>'+esc(S.mine)+'</h1><p>'+(en?'Your purchased invitations, together in one place.':'Sus invitaciones compradas, reunidas en un solo lugar.')+'</p></div>'+
+        (own.length?'<a class="ed-btn ed-btn-dark ac-browse" href="'+shop+'">'+(en?'Buy another design':'Comprar otro diseño')+' <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a>':'')+'</div>'+
+        (own.length?'<p class="ac-library-count">'+own.length+' '+(en?(own.length===1?'purchased invitation':'purchased invitations'):(own.length===1?'invitación comprada':'invitaciones compradas'))+'</p><div class="ac-grid">'+own.map(function(d){
+          var c=invOf(d),active=A.canEdit(d),sub=c && (c.n1 || c.n2)?S.weddingOf+' '+(c.n1 || '—')+' & '+(c.n2 || '—'):S.notStarted;
+          var actions=active?'<a class="ed-btn ed-btn-dark" href="'+editUrl(d)+'">'+esc(S.edit)+'</a>':'<span class="ac-expired">'+(en?'Publication period ended':'Vigencia finalizada')+'</span><a class="ed-btn" href="mailto:hola@invitesse.com">'+(en?'Contact support':'Contactar soporte')+'</a>';
+          if(active && c)actions+='<a class="ed-btn" href="'+guestUrl(d)+'" target="_blank" rel="noopener">'+esc(S.guest)+'</a>';
+          return designCard(d,actions,sub);
+        }).join('')+'</div>':'<div class="ac-library-empty"><span class="ac-empty-mark" aria-hidden="true">♡</span><h2>'+(en?'Your invitation starts here.':'Su invitación empieza aquí.')+'</h2><p>'+(en?'You have not purchased an invitation yet. Explore the collection and find the design for your celebration.':'Aún no han comprado una invitación. Exploren la colección y encuentren el diseño para su celebración.')+'</p><a class="ed-btn ed-btn-dark" href="'+shop+'">'+browse+' <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>')+'</section>';
     }
     root.innerHTML = '<div class="ed">' + header() + '<div class="co-wrap ac-wrap">' + h + '</div></div>';
   }
