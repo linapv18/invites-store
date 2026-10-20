@@ -119,7 +119,7 @@ function createHandler({adminClient=runtime.adminClient,stripeClient=runtime.str
    await requireAccount(stripe);
    stage='PARAMS';
    const frozenParameters=await runtime.unwrap(admin.rpc('freeze_stripe_parameters',{target_order:order.order_id,payload:{
-    mode:'payment',locale:en?'en':'es',allowed_payment_method_types:['card'],...(order.amount===0?{payment_method_collection:'if_required'}:{}),
+    mode:'payment',locale:en?'en':'es',allowed_payment_method_types:['card'],
     client_reference_id:order.order_id,customer_email:user.email,
     metadata:{integration:'invitesse',order_id:order.order_id,terms_version:'2026-10-20'},
     payment_intent_data:{metadata:{integration:'invitesse',order_id:order.order_id}},
@@ -132,6 +132,9 @@ function createHandler({adminClient=runtime.adminClient,stripeClient=runtime.str
    // while retaining the order and idempotency key; validation failures were not executed.
    const parameters={...frozenParameters,allowed_payment_method_types:['card']};
    delete parameters.payment_method_types;
+   // This account only accepts payment_method_collection for recurring prices.
+   // Pending zero-total orders may still have it in their frozen payload.
+   delete parameters.payment_method_collection;
    stage='STRIPE';
    try {
     session=await stripe.checkout.sessions.create(parameters,{idempotencyKey:'invitesse-checkout-'+order.order_id});
@@ -150,7 +153,7 @@ function createHandler({adminClient=runtime.adminClient,stripeClient=runtime.str
     }
     if(!session) {
      if(!scanned) throw new Error('PAYMENT_STATE_UNAVAILABLE');
-     session=await stripe.checkout.sessions.create(parameters,{idempotencyKey:'invitesse-checkout-dynamic-v1-'+order.order_id});
+     session=await stripe.checkout.sessions.create(parameters,{idempotencyKey:(order.amount===0?'invitesse-checkout-zero-v2-':'invitesse-checkout-dynamic-v1-')+order.order_id});
     }
    }
    stage='SAVE';
