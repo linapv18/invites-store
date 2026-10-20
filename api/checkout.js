@@ -86,8 +86,8 @@ function createHandler({adminClient=runtime.adminClient,stripeClient=runtime.str
    stage='ACCOUNT';
    await requireAccount(stripe);
    stage='PARAMS';
-   const parameters=await runtime.unwrap(admin.rpc('freeze_stripe_parameters',{target_order:order.order_id,payload:{
-    mode:'payment',locale:en?'en':'es',payment_method_types:['card'],
+   const frozenParameters=await runtime.unwrap(admin.rpc('freeze_stripe_parameters',{target_order:order.order_id,payload:{
+    mode:'payment',locale:en?'en':'es',allowed_payment_method_types:['card'],
     client_reference_id:order.order_id,customer_email:user.email,
     metadata:{integration:'invitesse',order_id:order.order_id,terms_version:'2026-10-20'},
     payment_intent_data:{metadata:{integration:'invitesse',order_id:order.order_id}},
@@ -96,6 +96,10 @@ function createHandler({adminClient=runtime.adminClient,stripeClient=runtime.str
     success_url:back+'&payment=return',cancel_url:back+'&payment=cancelled',
     custom_text:{submit:{message:en?'One-time payment. Publication until '+expiresDate+'.':'Pago único. Publicación hasta el '+expiresDate+'.'}},
    }}));
+   // Older pending orders froze the deprecated field. Normalize them on every retry
+   // while retaining the order and idempotency key; validation failures were not executed.
+   const parameters={...frozenParameters,allowed_payment_method_types:['card']};
+   delete parameters.payment_method_types;
    stage='STRIPE';
    session=await stripe.checkout.sessions.create(parameters,{idempotencyKey:'invitesse-checkout-'+order.order_id});
    stage='SAVE';

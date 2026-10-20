@@ -46,3 +46,5 @@ Audio local subido todavía requiere selección de biblioteca antes de publicar;
 - No se ha hecho un cargo real ni creado una compra de cliente para probar. Una prueba automatizada no demuestra un cobro bancario real.
 
 Los fallos del checkout devuelven una referencia de etapa y un código seguro; los logs excluyen datos del cliente y claves. El acceso a runtime logs de Vercel está denegado a la conexión actual (403), por lo que un fallo real puede necesitar el mensaje de Stripe Workbench o la referencia mostrada al reintentar. No se afirma haber resuelto un fallo bancario real por aprobar pruebas simuladas.
+
+Compatibilidad Stripe actual: se usa `allowed_payment_method_types: ["card"]` como filtro de los métodos dinámicos habilitados en Dashboard. No se envía el campo retirado `payment_method_types`. Los parámetros de pedidos pendientes antiguos se normalizan antes de reintentar y conservan su pedido/clave de idempotencia; no hace falta ejecutar SQL otra vez.
