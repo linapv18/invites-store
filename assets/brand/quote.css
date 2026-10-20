@@ -1,4 +1,7 @@
 /* Solicitud de cotización a medida (/cotizar/ y /en/quote/). Usa la base de legal.css (cabecera, pie y tipografía). */
+/* El build de SEO inserta la ruta de navegación y los enlaces de descubrimiento dentro de <main>: ocupan todo el ancho. */
+.qt>.breadcrumbs,.qt>.seo-discovery{grid-column:1/-1}
+.qt>.breadcrumbs{max-width:none;margin:0;padding:0}
 .qt{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);gap:56px;align-items:start}
 .qt-intro{position:sticky;top:32px}
 .qt-intro p{margin:0 0 18px;color:#50454C}
