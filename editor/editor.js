@@ -321,6 +321,8 @@
 
   var DRESS_MAX = 5, TL_MAX = 6;
   var SECS = ['portada', 'apertura', 'historia', 'itinerario', 'faq', 'musica', 'viaje', 'regalos', 'rsvp', 'invitados'];
+  // Set true when the additional features are ready to launch. Stored data is preserved.
+  var ADDONS_LAUNCHED = false;
   var ADDON_IDS = ['playlist', 'libro', 'capsula', 'encuestas', 'galeria', 'bilingue', 'dominio'];
   var ADDON_TXT = {
     es: {
@@ -837,9 +839,9 @@
   var ui = { maps: {}, drawer: false, nav: false, mode: 'edit', device: 'm', dragIdx: null, saving: 'saved', audio: null, gOpen: null };
   (function initialRoute() {
     var h = decodeURIComponent(location.hash.slice(1));
-    if (SECS.indexOf(h) > -1 || ADDON_IDS.indexOf(h) > -1) state.sec = h;
-    else if (h === 'complementos' || h === 'addons') ui.drawer = true;
-    if (SECS.indexOf(state.sec) < 0 && ADDON_IDS.indexOf(state.sec) < 0) state.sec = 'portada';
+    if (SECS.indexOf(h) > -1 || (ADDONS_LAUNCHED && ADDON_IDS.indexOf(h) > -1)) state.sec = h;
+    else if (ADDONS_LAUNCHED && (h === 'complementos' || h === 'addons')) ui.drawer = true;
+    if (SECS.indexOf(state.sec) < 0 && (!ADDONS_LAUNCHED || ADDON_IDS.indexOf(state.sec) < 0)) state.sec = 'portada';
   })();
   var design = function () { return DESIGNS[state.design][LANG]; };
   var cdEvent = function () { return state.events.filter(function (e) { return e.id === state.countdownId; })[0] || state.events[0] || null; };
@@ -875,7 +877,7 @@
         '<div class="ed-spacer"></div>' +
         '<button type="button" class="ed-btn ed-guidebtn" data-act="guide" aria-haspopup="dialog" aria-label="' + esc(G.guideLbl) + '">' + svg(P.help, 16) + '<span class="ed-guide-word">' + esc(G.guide) + '</span><small data-guide-n></small></button>' +
         '<button type="button" class="ed-btn ed-dsgbtn" data-act="designs">' + svg(P.grid, 16) + esc(G.designs) + '</button>' +
-        '<button type="button" class="ed-btn ed-cartbtn" data-act="drawer">' + svg(P.gift) + esc(S.addons) + '<span class="ed-count" data-count></span></button>' +
+        (ADDONS_LAUNCHED ? '<button type="button" class="ed-btn ed-cartbtn" data-act="drawer">' + svg(P.gift) + esc(S.addons) + '<span class="ed-count" data-count></span></button>' : '') +
         '<button type="button" class="ed-btn ed-guestbtn" data-act="guest">' + svg(P.eye, 16) + esc(S.guest) + '</button>' +
         '<button type="button" class="ed-btn ed-btn-dark" data-act="publish">' + esc(S.publish) + '</button>' +
       '</header>' +
@@ -895,7 +897,7 @@
       '</div>' +
       '<nav class="ed-bottom" aria-label="' + esc(S.stepsLbl) + '">' +
         '<button type="button" class="ed-icon-btn" data-act="step" data-d="-1" aria-label="' + esc(S.prev) + '">' + svg(P.left, 16, 2) + '</button>' +
-        '<button type="button" class="ed-btn" data-act="drawer">' + svg(P.gift) + esc(S.addons) + '<span class="ed-count" data-count></span></button>' +
+        (ADDONS_LAUNCHED ? '<button type="button" class="ed-btn" data-act="drawer">' + svg(P.gift) + esc(S.addons) + '<span class="ed-count" data-count></span></button>' : '') +
         '<button type="button" class="ed-btn ed-btn-dark" data-act="step" data-d="1">' + esc(S.next) + svg(P.right, 16, 2) + '</button>' +
       '</nav>' +
     '</div><div id="edLayer"></div><div id="edModal"></div><div id="edGuide"></div>';
@@ -948,12 +950,12 @@
         return row(id, '<span class="ed-row-n">' + pad(i + 1) + '</span><span class="ed-row-name">' + esc(secName(id)) + '</span>' +
           (hidden ? '<span class="ed-pill">' + esc(S.hidden) + '</span>' : doneOf(id) ? svg('<circle cx="12" cy="12" r="9"/><path d="m8 12 3 3 5-6"/>', 16, 2.2, '#4E7A5C').replace('aria-hidden="true"', 'role="img" aria-label="' + esc(S.done) + '"') : ''));
       }).join('') + '</div>' +
-      '<div class="ed-list"><div class="ed-list-head"><span class="ed-kicker">' + esc(S.addons) + '</span><button type="button" class="ed-link" data-act="drawer">' + esc(S.seeAll) + '</button></div>' +
+      (ADDONS_LAUNCHED ? '<div class="ed-list"><div class="ed-list-head"><span class="ed-kicker">' + esc(S.addons) + '</span><button type="button" class="ed-link" data-act="drawer">' + esc(S.seeAll) + '</button></div>' +
       ADDON_IDS.map(function (id) {
         return row(id, svg(P.lock, 15, 1.8, '#5D655F') + '<span class="ed-row-name">' + esc(addonName(id)) + '</span>' + (cart[id] ? '<span class="ed-pill ed-pill-dark">' + esc(S.inCart) + '</span>' : '<span class="ed-row-price">[$]</span>'));
       }).join('') + '</div>' +
       '<div class="ed-promo"><span class="ed-kicker">' + esc(S.packsFrom) + '</span><span class="ed-promo-title">' + esc(S.packsTitle) + '</span><div class="ed-chips">' +
-      PACKS.map(function (p) { return '<span class="ed-chip">' + esc(PACK_TXT[p.id][0]) + '</span>'; }).join('') + '</div><button type="button" class="ed-btn" data-act="drawer">' + esc(S.seePacks) + '</button></div>' +
+      PACKS.map(function (p) { return '<span class="ed-chip">' + esc(PACK_TXT[p.id][0]) + '</span>'; }).join('') + '</div><button type="button" class="ed-btn" data-act="drawer">' + esc(S.seePacks) + '</button></div>' : '') +
       '<div class="ed-only-m" style="flex-direction:column;gap:10px;padding:0 4px"><button type="button" class="ed-btn" data-act="designs">' + svg(P.grid, 16) + esc(G.designs) + '</button><button type="button" class="ed-btn" data-act="guest">' + esc(S.guest) + '</button><a class="ed-btn" href="' + ACCOUNT + '">' + esc(S.myInv) + '</a></div>';
   }
 
@@ -999,6 +1001,7 @@
       '<input type="file" accept="' + accept + '" data-file="' + kind + '"' + (multiple ? ' multiple' : '') + '></label>';
   }
   function upsell(o) {
+    if(!ADDONS_LAUNCHED)return '';
     return '<div class="ed-upsell' + (o.light ? ' light' : '') + '">' + (o.pics || '') + '<div class="ed-upsell-text"><span class="ed-kicker-gold">' + esc(o.k) + '</span><b>' + o.t + '</b>' + (o.s ? '<span>' + esc(o.s) + '</span>' : '') + '</div>' +
       '<button type="button" class="ed-btn ' + (o.dark ? 'ed-btn-dark' : 'ed-btn-line') + '" data-act="' + o.act + '" data-id="' + (o.id || '') + '" data-fk="up-' + o.act + '-' + (o.id || '') + '">' + esc(o.label) + '</button></div>';
   }
@@ -1416,6 +1419,7 @@
   }
   function renderDrawer() { if (ui.drawer) layer.innerHTML = drawerHTML(); }
   function openDrawer(opener) {
+    if(!ADDONS_LAUNCHED)return;
     ui.drawer = true; ui.opener = opener || document.activeElement; closeNav();
     layer.innerHTML = drawerHTML(); document.body.classList.add('ed-locked');
     var c = layer.querySelector('.ed-drawer-head .ed-icon-btn'); if (c) c.focus();
@@ -1500,6 +1504,7 @@
     if (form) renderPreview(false); else queuePreview();
   }
   function go(id, focusHeading) {
+    if(!ADDONS_LAUNCHED && ADDON_IDS.indexOf(id)>-1)return;
     if (!S.sec[id] && ADDON_IDS.indexOf(id) < 0) return;
     state.sec = id; saveSoon(); stopSample();
     try { history.replaceState(null, '', '#' + id); } catch (e) {}
