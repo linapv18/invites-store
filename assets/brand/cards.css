@@ -15,3 +15,5 @@
 @media(hover:hover){.lz-art:hover>img{transform:scale(1.025)}}
 @media(max-width:600px){.lz-meta h2,.lz-meta h3{font-size:26px}.card-demo{right:12px;bottom:12px;padding-inline:16px}}
 @media(prefers-reduced-motion:reduce){.lz-art>img{transition:none}.lz-art:hover>img{transform:none}}
+
+.lz-price[hidden]{display:none!important}

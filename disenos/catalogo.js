@@ -159,7 +159,7 @@
       '<a class="lz-art" href="' + base + '/demo/' + d.id + '/" aria-label="' + esc(u.demoOf + ' ' + t.name) + '" style="--card-bg:' + d.bg + '">' +
         '<img src="' + (preview ? preview + '-554.webp' : d.img[0]) + '"' + (preview ? ' srcset="' + preview + '-280.webp 280w, ' + preview + '-554.webp 554w"' : '') + ' sizes="(max-width:600px) 90vw, (max-width:960px) 45vw, 25vw" width="554" height="1200" alt="' + esc(t.alt[0]) + '" loading="lazy">' +
         '<span class="card-demo">' + u.demo + arrow + '</span></a>' +
-      '<div class="lz-meta"><div><' + heading + '><a href="' + base + '/disenos/' + d.id + '/">' + esc(t.name) + '</a></' + heading + '><p>' + esc(op) + '</p><span class="lz-price">' + u.price + '</span></div>' +
+      '<div class="lz-meta"><div><' + heading + '><a href="' + base + '/disenos/' + d.id + '/">' + esc(t.name) + '</a></' + heading + '><p>' + esc(op) + '</p><span class="lz-price" hidden></span></div>' +
         '<a class="lz-buy" href="' + base + '/comprar/?diseno=' + d.id + '" aria-label="' + esc(u.buyOf + ' ' + t.name) + '">' + u.buy + '</a></div></article>';
   }
 
