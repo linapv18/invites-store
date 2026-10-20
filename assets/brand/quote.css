@@ -3,7 +3,7 @@
 .qt>.breadcrumbs,.qt>.seo-discovery{grid-column:1/-1}
 .qt>.breadcrumbs{max-width:none;margin:0;padding:0}
 .qt{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);gap:56px;align-items:start}
-.qt-intro{position:sticky;top:32px}
+.qt-intro{position:static}
 .qt-intro p{margin:0 0 18px;color:#50454C}
 .qt-steps{list-style:none;margin:28px 0 0;padding:0;display:flex;flex-direction:column;gap:14px;font-size:14px;line-height:1.55;color:#50454C}
 .qt-steps li{display:flex;gap:12px}
@@ -37,5 +37,5 @@
 .qt-done svg{width:44px;height:44px;color:#3F7A55}
 .qt-done h2{margin:14px 0 10px}
 .qt-done p{margin:0 auto;max-width:420px;color:#50454C}
-@media(max-width:860px){.qt{grid-template-columns:1fr;gap:32px}.qt-intro{position:static}}
+@media(max-width:860px){.qt{grid-template-columns:1fr;gap:32px}}
 @media(max-width:600px){.qt-form{padding:22px 18px}.qt-row{grid-template-columns:1fr}.qt-submit{width:100%;justify-content:center}}
