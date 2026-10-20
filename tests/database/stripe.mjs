@@ -88,7 +88,7 @@ await code({code:'LUX40',kind:'amount',amount_off_cop:4000000,amount_off_usd:100
 await code({code:'OLD10',kind:'percent',percent_off:10,starts_at:'2020-01-01T00:00:00Z',ends_at:'2020-02-01T00:00:00Z'});
 await code({code:'HUGE',kind:'amount',amount_off_cop:19800000,amount_off_usd:7850});
 await assert.rejects(()=>code({code:'NAVIDAD20',kind:'percent',percent_off:5}),/CODE_EXISTS/);
-await assert.rejects(()=>code({code:'BAD',kind:'percent',percent_off:95}),/check constraint/);
+await assert.rejects(()=>code({code:'BAD',kind:'percent',percent_off:101}),/check constraint/);
 const quoteFor=(owner,design,currency,c)=>rpc('select public.discount_quote($1,$2,$3,$4) r',[owner,design,currency,c]);
 const q20=await quoteFor(B,'clasico','COP',' navidad20 ');assert.equal(q20.discount_minor,2580000);assert.equal(q20.total_minor,10320000);
 assert.equal((await quoteFor(B,'clasico','USD','NAVIDAD20')).total_minor,3920);
@@ -132,6 +132,24 @@ for (const role of ['anon','authenticated']) {
  await db.exec('reset role');
 }
 console.log('PASS admin functions and discount codes are closed to browsers');
+// Full discounts across all ranges and currencies remain exact, idempotent and limited.
+const freeOwner='55555555-5555-4555-8555-555555555555';
+await db.query('insert into auth.users(id,email_confirmed_at) values($1,now())',[freeOwner]);
+for(const [design,currency] of [['clasico','COP'],['nacar','COP'],['encaje','COP'],['moderno','USD'],['jardin','USD'],['marfil','USD']]){
+ const name='FREE'+design.toUpperCase();
+ await code({code:name,kind:'percent',percent_off:100,tiers:['esencial','signature','luxury'],max_uses:1,once_per_customer:true});
+ const fq=await quoteFor(freeOwner,design,currency,name);assert.equal(fq.total_minor,0);assert.equal(fq.discount_minor,fq.base_minor);
+ await db.query('select public.configure_stripe_purchase($1,$2,$3,$4)',[freeOwner,design,'2028-08-31','America/Bogota']);
+ const q=await rpc('select public.quote_stripe_checkout($1,$2) r',[freeOwner,design]);
+ const o=await rpc('select public.prepare_stripe_checkout($1,$2,$3,$4,$5) r',[freeOwner,design,currency,q.revision,name]);assert.equal(o.amount,0);
+ const retry=await rpc('select public.prepare_stripe_checkout($1,$2,$3,$4,$5) r',[freeOwner,design,currency,q.revision,name]);assert.equal(retry.order_id,o.order_id);
+ await assert.rejects(()=>quoteFor(B,design,currency,name),/DISCOUNT_EXHAUSTED/);
+ await db.query("select public.apply_verified_payment('stripe',$1,$2,$3,0,$4)",['evt_free_'+design,o.order_id,'cs_live_'+design,currency]);
+ await db.query("select public.apply_verified_payment('stripe',$1,$2,$3,0,$4)",['evt_free_'+design,o.order_id,'cs_live_'+design,currency]);
+ assert.equal(await rpc('select public.invitation_is_enabled($1) r',[o.invitation_id]),true);
+ const counts=(await db.query('select count(*)::integer n from public.payments where order_id=$1',[o.order_id])).rows[0];assert.equal(counts.n,1);
+}
+console.log('PASS full discounts: six prices, zero totals, granted access, duplicate events and redemption limits');
 await db.exec('set role anon');
 await assert.rejects(()=>db.query('select public.prepare_stripe_checkout($1,$2,$3,0)',[A,'nacar','COP']),/permission denied/);
 await assert.rejects(()=>db.query('select * from public.stripe_checkouts'),/permission denied/);

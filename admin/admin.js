@@ -249,7 +249,7 @@
       '<form class="ad-new" novalidate aria-labelledby="newT"><h2 id="newT">Nuevo código</h2>' +
         '<label class="ad-field">Código<input name="code" maxlength="32" required placeholder="NAVIDAD20" style="text-transform:uppercase;letter-spacing:.08em;font-weight:500"></label>' +
         '<fieldset><legend>Tipo de descuento</legend><div class="ad-seg" role="group"><button type="button" data-kind="percent" aria-pressed="' + (state.kind === 'percent') + '">Porcentaje</button><button type="button" data-kind="amount" aria-pressed="' + (state.kind === 'amount') + '">Monto fijo</button></div></fieldset>' +
-        '<div data-when="percent"' + (state.kind === 'percent' ? '' : ' hidden') + '><label class="ad-field">Descuento (%)<input name="percent" type="number" min="1" max="90" value="15"></label></div>' +
+        '<div data-when="percent"' + (state.kind === 'percent' ? '' : ' hidden') + '><label class="ad-field">Descuento (%)<input name="percent" type="number" min="1" max="100" value="15"></label></div>' +
         '<div class="ad-grid2" data-when="amount"' + (state.kind === 'amount' ? '' : ' hidden') + '><label class="ad-field">En pesos (COP)<input name="cop" type="number" min="1" step="1" placeholder="40000"></label><label class="ad-field">En dólares (USD)<input name="usd" type="number" min="0.5" step="0.5" placeholder="10"></label></div>' +
         '<fieldset><legend>Aplica a</legend><div class="ad-tiers">' + Object.keys(TIER).map(function (t) { return '<label><input type="checkbox" name="tier" value="' + t + '" checked>' + TIER[t] + '</label>'; }).join('') + '</div></fieldset>' +
         '<div class="ad-grid2"><label class="ad-field">Desde<input name="start" type="date"></label><label class="ad-field">Hasta<input name="end" type="date"></label></div>' +
@@ -273,18 +273,18 @@
       if (state.kind === 'percent') p.percent_off = Number(f.percent.value); else { p.amount_cop = Number(f.cop.value); p.amount_usd = Number(f.usd.value); }
       return p;
     }
-    // Mismo cálculo que discount_quote en la base: COP en pesos enteros, mínimo $5.000 / USD 1.
+    // COP en pesos enteros; el 100 % permite total cero. Otros descuentos conservan el mínimo de cobro.
     function off(base, cur, p) {
       var unit = cur === 'COP' ? 100 : 1, v = p.kind === 'percent' ? Math.floor(base * p.percent_off / 100 / unit) * unit : (cur === 'COP' ? (p.amount_cop || 0) * 100 : Math.round((p.amount_usd || 0) * 100));
       return Math.floor(v / unit) * unit;
     }
     function preview() {
-      var p = payload(), ok = p.code && (p.kind === 'percent' ? p.percent_off >= 1 && p.percent_off <= 90 : p.amount_cop > 0 && p.amount_usd > 0) && p.tiers.length;
+      var p = payload(), ok = p.code && (p.kind === 'percent' ? p.percent_off >= 1 && p.percent_off <= 100 : p.amount_cop > 0 && p.amount_usd > 0) && p.tiers.length;
       var lines = p.tiers.map(function (t) {
         var pr = (state.prices || {})[t]; if (!pr) return '';
         return '<span>' + esc(TIER[t]) + ': ' + ['COP', 'USD'].map(function (cur) {
           var base = pr[cur] * 100, d = off(base, cur, p), min = cur === 'COP' ? 500000 : 100;
-          return esc(money(base, cur)) + ' → <b>' + (base - d < min ? 'no aplica' : esc(money(base - d, cur))) + '</b>';
+          return esc(money(base, cur)) + ' → <b>' + (base - d < min && !(p.kind === 'percent' && p.percent_off === 100) ? 'no aplica' : esc(money(base - d, cur))) + '</b>';
         }).join(' · ') + '</span>';
       }).join('');
       prev.innerHTML = '<span>Así lo verá la pareja al pagar</span>' + (ok ? '<b>' + esc(p.code) + ' · ' + esc(p.kind === 'percent' ? p.percent_off + ' %' : money(p.amount_cop * 100, 'COP') + ' / ' + money(Math.round(p.amount_usd * 100), 'USD')) + ' en ' + esc(p.tiers.length === 3 ? 'todos los diseños' : p.tiers.map(function (t) { return TIER[t]; }).join(' y ')) + '</b>' + lines : '<b>Completa el código y el descuento</b>');
@@ -298,7 +298,7 @@
       if (!p.tiers.length) { err.textContent = 'Elige al menos una gama.'; err.hidden = false; return; }
       btn.disabled = true;
       try { await api('create-code', null, p); toast('Código ' + p.code + ' creado'); render(); }
-      catch (e2) { err.textContent = e2.message === 'CODE_EXISTS' ? 'Ya existe un código con ese nombre.' : e2.message === 'INVALID_REQUEST' ? 'Revisa los valores: el porcentaje va de 1 a 90 y las fechas deben tener sentido.' : 'No se pudo crear el código. Inténtalo de nuevo.'; err.hidden = false; btn.disabled = false; }
+      catch (e2) { err.textContent = e2.message === 'CODE_EXISTS' ? 'Ya existe un código con ese nombre.' : e2.message === 'INVALID_REQUEST' ? 'Revisa los valores: el porcentaje va de 1 a 100 y las fechas deben tener sentido.' : 'No se pudo crear el código. Inténtalo de nuevo.'; err.hidden = false; btn.disabled = false; }
     });
   }
 

@@ -1,4 +1,5 @@
 const Stripe = require('stripe');
+const {verifiedSessionPayment}=require('../lib/payments/stripe');
 const { createClient } = require('@supabase/supabase-js');
 
 const uuid = /^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/i;
@@ -55,19 +56,14 @@ function createHandler({ settings, verify, adminClient, retrievePayment = id => 
     const session = event.data?.object;
     // A shared Stripe account can contain unrelated checkouts.
     if (session?.metadata?.integration !== 'invitesse') return res.status(200).json({ received: true });
-    if (session.payment_status !== 'paid') return res.status(200).json({ received: true });
+    if (!['paid','no_payment_required'].includes(session.payment_status)) return res.status(200).json({ received: true });
     const order = session.metadata.order_id;
-    if (session.mode !== 'payment' || session.livemode !== true || !uuid.test(order || '') ||
-        session.client_reference_id !== order || !Number.isSafeInteger(session.amount_total) || session.amount_total <= 0 ||
-        !['usd', 'cop'].includes(session.currency) || typeof session.payment_intent !== 'string' ||
-        !/^pi_[a-zA-Z0-9]+$/.test(session.payment_intent)) {
-      return res.status(400).json({ error: 'INVALID_PAYMENT' });
-    }
+    let payment;
+    try { payment=verifiedSessionPayment(session); }
+    catch (_) { return res.status(400).json({error:'INVALID_PAYMENT'}); }
     try {
       const { error } = await adminClient().rpc('apply_verified_payment', {
-        payment_provider: 'stripe', provider_event: event.id, target_order: order,
-        external_payment: session.payment_intent, verified_amount: session.amount_total,
-        verified_currency: session.currency.toUpperCase(),
+        payment_provider: 'stripe', provider_event: event.id, ...payment,
       });
       if (error) {
         const { data: existing } = await adminClient().from('orders').select('status').eq('id', order).maybeSingle();

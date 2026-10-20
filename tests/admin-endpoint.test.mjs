@@ -47,7 +47,7 @@ test('creating a code converts pesos and dollars to minor units and rejects inva
   let f = fixture(); let res = await run(f, { method: 'POST', body: { action: 'create-code', code: ' lux40 ', kind: 'amount', amount_cop: 40000, amount_usd: 10, tiers: ['luxury', 'luxury', 'gold'], max_uses: 20 } });
   assert.equal(res.code, 201);
   assert.deepEqual(f.calls[0].args.payload, { code: 'LUX40', kind: 'amount', tiers: ['luxury'], once_per_customer: false, starts_at: null, ends_at: null, note: '', amount_off_cop: 4000000, amount_off_usd: 1000, max_uses: 20 });
-  for (const body of [{ code: 'X', kind: 'percent', percent_off: 10, tiers: ['esencial'] }, { code: 'BIG', kind: 'percent', percent_off: 95, tiers: ['esencial'] }, { code: 'NOTIER', kind: 'percent', percent_off: 10, tiers: [] }, { code: 'DATES', kind: 'percent', percent_off: 10, tiers: ['esencial'], starts_at: '2027-02-01', ends_at: '2027-01-01' }]) {
+  for (const body of [{ code: 'X', kind: 'percent', percent_off: 10, tiers: ['esencial'] }, { code: 'BIG', kind: 'percent', percent_off: 101, tiers: ['esencial'] }, { code: 'NOTIER', kind: 'percent', percent_off: 10, tiers: [] }, { code: 'DATES', kind: 'percent', percent_off: 10, tiers: ['esencial'], starts_at: '2027-02-01', ends_at: '2027-01-01' }]) {
     f = fixture(); res = await run(f, { method: 'POST', body: { action: 'create-code', ...body } });
     assert.equal(res.code, 400); assert.equal(f.calls.length, 0);
   }
@@ -60,4 +60,9 @@ test('writes from another site are refused and database errors map to safe codes
   assert.equal(res.code, 409); assert.equal(res.body.error, 'CODE_EXISTS');
   f = fixture({ fail: 'relation does not exist' }); res = await run(f, { query: { action: 'codes' } });
   assert.equal(res.code, 503); assert.equal(res.body.error, 'ADMIN_UNAVAILABLE');
+});
+
+test('admin can create a 100 percent code, never more than 100',async()=>{
+ const f=fixture();const res=await run(f,{method:'POST',body:{action:'create-code',code:'REGALO100',kind:'percent',percent_off:100,tiers:['esencial','signature','luxury'],max_uses:1,once_per_customer:true}});
+ assert.equal(res.code,201);assert.equal(f.calls[0].args.payload.percent_off,100);assert.equal(f.calls[0].args.payload.max_uses,1);
 });

@@ -62,7 +62,7 @@ function createHandler({adminClient=runtime.adminClient,stripeClient=runtime.str
     if(row?.session_id) {
      session=await stripe.checkout.sessions.retrieve(row.session_id);
      if(session.metadata?.order_id!==existing.id || session.metadata?.integration!=='invitesse' || !session.livemode) throw new Error('PAYMENT_STATE_UNAVAILABLE');
-     if(session.payment_status==='paid') {
+     if(session.payment_status==='paid' || (session.payment_status==='no_payment_required' && session.status==='complete')) {
       await recordSession(admin,session,'reconcile:'+session.id);
       return res.status(200).json({...quote,status:'paid',enabled:true,...pricing(session.currency.toUpperCase(),b.design,session.amount_total)});
      }
@@ -100,7 +100,7 @@ function createHandler({adminClient=runtime.adminClient,stripeClient=runtime.str
    await requireAccount(stripe);
    stage='PARAMS';
    const frozenParameters=await runtime.unwrap(admin.rpc('freeze_stripe_parameters',{target_order:order.order_id,payload:{
-    mode:'payment',locale:en?'en':'es',allowed_payment_method_types:['card'],
+    mode:'payment',locale:en?'en':'es',allowed_payment_method_types:['card'],...(order.amount===0?{payment_method_collection:'if_required'}:{}),
     client_reference_id:order.order_id,customer_email:user.email,
     metadata:{integration:'invitesse',order_id:order.order_id,terms_version:'2026-10-20'},
     payment_intent_data:{metadata:{integration:'invitesse',order_id:order.order_id}},

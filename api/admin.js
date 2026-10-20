@@ -20,7 +20,7 @@ function codePayload(b) {
  if(!tiers.length) throw new Error('INVALID_REQUEST');
  const out={code,kind:b.kind,tiers,once_per_customer:b.once_per_customer===true,starts_at:isoOrNull(b.starts_at),ends_at:isoOrNull(b.ends_at),note:String(b.note || '').slice(0,300)};
  if(b.kind==='percent') {
-  const pct=Number(b.percent_off); if(!Number.isInteger(pct) || pct<1 || pct>90) throw new Error('INVALID_REQUEST'); out.percent_off=pct;
+  const pct=Number(b.percent_off); if(!Number.isInteger(pct) || pct<1 || pct>100) throw new Error('INVALID_REQUEST'); out.percent_off=pct;
  } else {
   const cop=Number(b.amount_cop), usd=Number(b.amount_usd);
   if(!Number.isInteger(cop) || cop<1 || cop>10000000 || !Number.isFinite(usd) || usd<=0 || usd>10000) throw new Error('INVALID_REQUEST');

@@ -75,3 +75,12 @@ test('full refunds and disputes revoke access even when delivered before the pay
 test('partial refunds are acknowledged without revoking the whole invitation',async()=>{
  const event={id:'evt_partial',livemode:true,type:'charge.refunded',data:{object:{payment_intent:'pi_fixture',refunded:false,amount:7900,amount_refunded:100}}};const {res,calls}=await run(event);assert.equal(res.statusCode,200);assert.equal(calls.length,0);
 });
+
+test('signed completed zero-total session grants access without a PaymentIntent',async()=>{
+ const event=payment();Object.assign(event.data.object,{id:'cs_live_free',status:'complete',payment_status:'no_payment_required',payment_intent:null,amount_total:0});
+ const {res,calls}=await run(event);assert.equal(res.statusCode,200);assert.equal(calls[0].args.external_payment,'cs_live_free');assert.equal(calls[0].args.verified_amount,0);
+ for(const bad of [{amount_total:1},{status:'open'},{payment_intent:'pi_fixture'},{id:null},{payment_status:'paid'}]){
+  const invalid=structuredClone(event);Object.assign(invalid.data.object,bad);const r=await run(invalid);assert.equal(r.res.statusCode,400);assert.equal(r.calls.length,0);
+ }
+ const unsigned=await run(event,{invalid:true});assert.equal(unsigned.calls.length,0);
+});
