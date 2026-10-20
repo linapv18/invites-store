@@ -31,8 +31,8 @@ async def main():
    for base in ['', '/en']:
     await page.goto(BASE+base+'/comprar/?diseno=nacar',wait_until='networkidle');await page.locator('#ivEventDate').wait_for()
     assert 'no' not in (await page.locator('#ivPay').get_attribute('disabled') or '')
-    assert await page.locator('#ivCurrency').count()==0;await page.locator('#ivEventDate').fill('2028-08-31');await page.locator('#ivEventZone').select_option('America/Bogota');await page.locator('#ivAccept').check()
-    await page.locator('#ivPay').click();await page.wait_for_function("document.querySelector('#ivValidity').textContent.includes('2028')")
+    assert await page.locator('#ivCurrency').count()==0;await page.locator('#ivEventDate').fill('2028-08-31');await page.locator('#ivAccept').check()
+    await page.wait_for_function("document.querySelector('#ivValidity').textContent.includes('2028')")
     assert '30' in await page.locator('#ivValidity').inner_text()
     await page.locator('#ivPay').click();await page.wait_for_url('https://checkout.stripe.com/**')
     assert calls[-1]['quotedCurrency']=='COP' and calls[-1]['acceptedTerms'] is True

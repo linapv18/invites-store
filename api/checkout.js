@@ -4,7 +4,7 @@ const designPattern=/^[a-z]{3,16}$/;
 // Vercel supplies this header from the request IP. No browser locale/GPS or client price.
 function detectedCurrency(req) { return req.headers['x-vercel-ip-country']==='CO'?'COP':'USD'; }
 function pricing(currency) { return {currency,amount:currency==='COP'?200000:79}; }
-function createHandler({adminClient=runtime.adminClient,stripeClient=runtime.stripeClient,userFor=runtime.userFor}={}) {
+function createHandler({adminClient=runtime.adminClient,stripeClient=runtime.stripeClient,userFor=runtime.userFor,reportError=detail=>console.error('invitesse.checkout.failure',detail)}={}) {
  let accountVerifiedAt=0;
  async function requireAccount(stripe) {
   if(Date.now()-accountVerifiedAt<60000)return;
@@ -15,6 +15,7 @@ function createHandler({adminClient=runtime.adminClient,stripeClient=runtime.str
  return async function(req,res) {
   runtime.headers(res);
   if(req.method!=='POST' && req.method!=='GET') {res.setHeader('Allow','GET, POST');return res.status(405).json({error:'METHOD_NOT_ALLOWED'});}
+  let stage='SETUP';
   try {
    const admin=adminClient();
    const ready=await runtime.unwrap(admin.rpc('stripe_checkout_readiness'));
@@ -34,14 +35,17 @@ function createHandler({adminClient=runtime.adminClient,stripeClient=runtime.str
    if(!b || typeof b!=='object' || !designPattern.test(b.design || '') || !['details','quote','create','status','cancel'].includes(b.action)) return res.status(400).json({error:'INVALID_REQUEST'});
    if(b.action==='details') {
     if(typeof b.date!=='string' || typeof b.timezone!=='string') return res.status(400).json({error:'INVALID_REQUEST'});
+    stage='DATE';
     await runtime.unwrap(admin.rpc('configure_stripe_purchase',{verified_owner:user.id,requested_design:b.design,event_day:b.date,event_zone:b.timezone}));
    }
+   stage='QUOTE';
    const market=detectedCurrency(req);
    const quote=await runtime.unwrap(admin.rpc('quote_stripe_checkout',{verified_owner:user.id,requested_design:b.design}));
    if(['quote','details'].includes(b.action)) return res.status(200).json({...quote,...pricing(market)});
    if(quote.enabled) return res.status(200).json({...quote,status:'paid',...pricing(market)});
    const stripe=stripeClient();
    // Look up pending checkouts by the verified owner, never by a browser order ID.
+   stage='LOOKUP';
    const pending=await runtime.unwrap(admin.from('orders').select('id,status,currency').eq('owner_id',user.id).eq('invitation_id',quote.invitation_id).eq('status','pending').order('created_at',{ascending:false}).limit(1));
    let existing=pending?.[0], session=null;
    if(existing) {
@@ -72,13 +76,16 @@ function createHandler({adminClient=runtime.adminClient,stripeClient=runtime.str
     return res.status(200).json({url:session.url,status:'pending'});
    }
    // Serializes concurrent clicks across browsers and currencies in the database.
+   stage='ORDER';
    const order=await runtime.unwrap(admin.rpc('prepare_stripe_checkout',{verified_owner:user.id,requested_design:b.design,requested_currency:currency,expected_revision:b.revision}));
    if(order.status==='enabled') return res.status(200).json({status:'paid',enabled:true});
    if(order.currency!==currency) return res.status(409).json({error:'PRICE_CHANGED'});
    const en=b.locale==='en', back=runtime.origin+(en?'/en':'')+'/editor/pago/?diseno='+encodeURIComponent(b.design);
    const expiresDate=new Intl.DateTimeFormat(en?'en-US':'es-CO',{timeZone:order.timezone,year:'numeric',month:'long',day:'numeric'}).format(new Date(new Date(order.expires_at).getTime()-1));
    if(!order.session_id && Date.now()-Date.parse(order.created_at)>23*60*60*1000) throw new Error('PAYMENT_STATE_UNAVAILABLE');
+   stage='ACCOUNT';
    await requireAccount(stripe);
+   stage='PARAMS';
    const parameters=await runtime.unwrap(admin.rpc('freeze_stripe_parameters',{target_order:order.order_id,payload:{
     mode:'payment',locale:en?'en':'es',payment_method_types:['card'],
     client_reference_id:order.order_id,customer_email:user.email,
@@ -89,7 +96,9 @@ function createHandler({adminClient=runtime.adminClient,stripeClient=runtime.str
     success_url:back+'&payment=return',cancel_url:back+'&payment=cancelled',
     custom_text:{submit:{message:en?'One-time payment. Publication until '+expiresDate+'.':'Pago único. Publicación hasta el '+expiresDate+'.'}},
    }}));
+   stage='STRIPE';
    session=await stripe.checkout.sessions.create(parameters,{idempotencyKey:'invitesse-checkout-'+order.order_id});
+   stage='SAVE';
    await runtime.unwrap(admin.from('stripe_checkouts').update({session_id:session.id}).eq('order_id',order.order_id));
    if(!session.url?.startsWith('https://checkout.stripe.com/')) throw new Error('PAYMENT_STATE_UNAVAILABLE');
    return res.status(200).json({url:session.url,status:'pending'});
@@ -97,7 +106,12 @@ function createHandler({adminClient=runtime.adminClient,stripeClient=runtime.str
    const message=e.message || '';
    const known=['AUTH_REQUIRED','EMAIL_NOT_CONFIRMED','INVITATION_NOT_FOUND','DRAFT_CONFLICT','EVENT_DETAILS_REQUIRED','EVENT_DATE_IN_PAST','INVALID_TIME_ZONE','PURCHASE_ALREADY_EXISTS','CHECKOUT_BEING_PREPARED','PURCHASE_EVENT_DATE_LOCKED'];
    const code=known.find(k=>message.includes(k));
-   return res.status(code==='AUTH_REQUIRED'?401:code?409:503).json({error:code || 'PAYMENTS_TEMPORARILY_UNAVAILABLE'});
+   if(code) return res.status(code==='AUTH_REQUIRED'?401:409).json({error:code});
+   const safeCode=/^[a-zA-Z0-9_]{1,48}$/.test(e.code || '')?e.code:'UNAVAILABLE';
+   const reference='IV-PAY-'+stage+'-'+safeCode;
+   const requestId=/^req_[a-zA-Z0-9]+$/.test(e.requestId || '')?e.requestId:undefined;
+   reportError({reference,stage,code:safeCode,requestId,param:/^[a-zA-Z0-9_\[\].]{1,80}$/.test(e.param || '')?e.param:undefined});
+   return res.status(503).json({error:'PAYMENTS_TEMPORARILY_UNAVAILABLE',reference,requestId});
   }
  };
 }

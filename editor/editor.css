@@ -768,3 +768,34 @@ a.ed-btn[aria-disabled="true"]{opacity:.4;pointer-events:none}
 .ed-pending-share{padding:0 20px 16px}.ed-pending-share summary{min-height:44px;padding:12px 0;cursor:pointer;font-size:14px}.ed-pending-share .ed-actions{display:flex;flex-wrap:wrap;gap:8px}.ed-pending-share .ed-btn:disabled{opacity:.5;cursor:not-allowed}.ed-pending-share summary:focus-visible{outline:2px solid currentColor;outline-offset:3px}
 
 .ed-share-icons{display:flex;gap:8px;flex-wrap:wrap}.ed-share-icons button{box-sizing:border-box;display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;padding:0;border:1px solid var(--ed-line,#d8cfd5);border-radius:50%;background:transparent;color:inherit}.ed-share-icons button:disabled{opacity:.5;cursor:not-allowed}.ed-share-icons svg{width:20px;height:20px;flex:none}
+
+/* Purchase checkout: the original two-column form and paper order summary. */
+.iv-checkout{padding-top:56px;gap:64px}
+.iv-checkout .co-main{gap:32px;flex-basis:440px}
+.iv-checkout .co-sum{flex-basis:340px;position:sticky;top:28px}
+.iv-checkout .ed-head{gap:14px}
+.iv-checkout .ed-head h1{max-width:540px;font-size:clamp(38px,4.4vw,54px);line-height:1.08;letter-spacing:-.025em}
+.iv-checkout .ed-head p{font-size:16px;line-height:1.65;margin:0}
+.iv-date-card,.iv-payment-card{display:flex;flex-direction:column;gap:14px;border-top:1px solid var(--line);padding-top:26px}
+.iv-event-field{margin-top:8px;max-width:340px;gap:10px}
+.iv-checkout .ed-hint{margin:0;line-height:1.6}
+.iv-validity{margin:0;font-size:14px;color:var(--ink);font-weight:500;min-height:1.6em}
+.iv-card-method{display:flex;align-items:center;gap:14px;padding:20px;background:var(--paper);border:1px solid var(--line-2);border-radius:12px}
+.iv-card-method>div{display:flex;flex:1;flex-direction:column;gap:5px;min-width:0}
+.iv-card-method b{font-weight:500;font-size:15px}
+.iv-card-method span{font-size:13px;line-height:1.5;color:var(--mute)}
+.iv-card-method>svg{flex:none}
+.iv-order-design{display:flex;align-items:center;gap:18px;padding:8px 0 20px;border-bottom:1px solid var(--line)}
+.iv-order-design img{width:84px;height:110px;object-fit:cover;border-radius:8px;flex:none}
+.iv-order-design h3{font-family:var(--iv-serif);font-size:32px;font-weight:400;margin:6px 0}
+.iv-order-design p{font-size:13px;line-height:1.5;color:var(--mute);margin:0}
+.iv-includes{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:12px;font-size:13px;color:var(--ink-2)}
+.iv-includes li{position:relative;padding-left:21px;line-height:1.5}
+.iv-includes li::before{content:'✓';position:absolute;left:0;color:var(--ink)}
+.iv-checkout .co-total{border-top:1px solid var(--line);padding-top:22px;gap:12px}
+.iv-checkout .co-total b{font-family:'Geist',system-ui,sans-serif;font-size:25px;white-space:nowrap;letter-spacing:-.035em}
+.iv-accept{display:flex;gap:10px;font-size:12px;line-height:1.6;color:var(--ink-2);cursor:pointer}
+.iv-accept input{flex:none;width:17px;height:17px;margin:3px 0 0;accent-color:var(--ink)}
+.iv-stripe-note{display:flex;align-items:center;justify-content:center;gap:7px}
+.iv-checkout .co-notice{margin:0}
+@media(max-width:720px){.iv-checkout{gap:32px;padding-top:32px}.iv-checkout .co-sum{position:static;flex-basis:100%;padding:24px}.iv-checkout .co-main{gap:26px}.iv-checkout .co-total b{font-size:25px}.iv-event-field{max-width:100%}.iv-checkout .ed-head h1{font-size:40px}}

@@ -5,7 +5,7 @@
 - Vendedor: Coldevs Inc; cuenta Stripe de EE. UU. `acct_1PCrn7P9O3dSAvF3`.
 - Todos los diseños: un pago de COP 200.000 para Colombia o USD 79 para otros mercados. Detección automática del país mediante la cabecera de Vercel `x-vercel-ip-country`: CO usa COP y otros países o detección desconocida usan USD. No se deduce del idioma ni de la zona horaria; no se solicita GPS. El servidor decide la moneda, no el navegador.
 - Comprar al seleccionar diseño, antes de editar. El pago desbloquea el editor; publicar no cobra de nuevo.
-- Fecha y zona horaria obligatorias antes del pago. Vigencia hasta terminar el día tres meses calendario después del evento, en su zona. Meses sin el día correspondiente se ajustan al último día. La fecha exacta se muestra antes de pagar y queda fija con el pedido. Cambios posteriores por soporte.
+- Fecha obligatoria antes del pago; zona horaria tomada automáticamente del dispositivo, sin selector técnico. Vigencia hasta terminar el día tres meses calendario después del evento, en su zona. Meses sin el día correspondiente se ajustan al último día. La fecha exacta se muestra automáticamente al elegir el evento y queda fija con el pedido. El checkout recupera el formulario y la tarjeta de resumen, con un solo botón para continuar. Cambios posteriores por soporte.
 - Complementos de pago sin precio definido: no se cobran.
 
 ## Despliegue
@@ -25,7 +25,7 @@ La propietaria confirmó los cuatro eventos. Reembolsos completos y disputas rev
 
 ## Flujo
 
-`/comprar/?diseno=…` → cuenta → fecha y zona → precio local automático → precio/vencimiento/condiciones → Stripe Checkout alojado (tarjetas; sin promociones, cantidades ajustables, impuestos añadidos ni Adaptive Pricing) → retorno y conciliación verificada → editor.
+`/comprar/?diseno=…` → cuenta → fecha → vigencia automática y precio local → precio/vencimiento/condiciones → Stripe Checkout alojado (tarjetas; sin promociones, cantidades ajustables, impuestos añadidos ni Adaptive Pricing) → retorno y conciliación verificada → editor.
 
 `GET /api/checkout/` comprueba configuración de precios y que Stripe permita cobrar en la cuenta prevista; no crea pedidos ni cargos. POST exige JWT validado en Supabase y correo confirmado. El servidor usa precios de la DB; ignora importes, propietarios y vencimientos del navegador. Preparar el pedido bloquea la invitación para reutilizar pedidos pendientes; los parámetros de Stripe se congelan y la clave de idempotencia depende del pedido. Las sesiones abiertas se reutilizan; para cambiar la fecha se debe cancelar la sesión pendiente. Los checkouts existentes conservan su moneda si cambia la ubicación. Los pedidos pagados/revocados no se cobran otra vez.
 
@@ -44,3 +44,5 @@ Audio local subido todavía requiere selección de biblioteca antes de publicar;
 - `python3 tests/browser/checkout_publication.py`: checkout ES/EN a 390/1440px, COP/USD automáticos, vencimiento, retorno pagado; 22 diseños × 2 idiomas, aislamiento de iframe y RSVP guardado. Stripe, cuentas y escrituras se interceptan.
 - Builds locales usan exclusivamente valores públicos ficticios. Producción se construye en Vercel con su configuración existente.
 - No se ha hecho un cargo real ni creado una compra de cliente para probar. Una prueba automatizada no demuestra un cobro bancario real.
+
+Los fallos del checkout devuelven una referencia de etapa y un código seguro; los logs excluyen datos del cliente y claves. El acceso a runtime logs de Vercel está denegado a la conexión actual (403), por lo que un fallo real puede necesitar el mensaje de Stripe Workbench o la referencia mostrada al reintentar. No se afirma haber resuelto un fallo bancario real por aprobar pruebas simuladas.

@@ -27,8 +27,9 @@ async def main():
      assert await page.locator('#ivCurrency').count()==0
      assert currency in await page.locator('#ivPrice').inner_text()
      assert await page.evaluate('document.documentElement.scrollWidth<=innerWidth')
-     await page.locator('#ivEventDate').fill('2028-08-31');await page.locator('#ivEventZone').select_option('America/Bogota');await page.locator('#ivAccept').check()
-     await page.locator('#ivPay').click();await page.wait_for_function("document.querySelector('#ivValidity').textContent.includes('2028')")
+     await page.locator('#ivEventDate').fill('2028-08-31');await page.locator('#ivAccept').check()
+     assert await page.locator('#ivEventZone').count()==0
+     await page.wait_for_function("document.querySelector('#ivValidity').textContent.includes('2028')")
      await page.locator('#ivPay').click();await page.wait_for_url('https://checkout.stripe.com/**')
      assert calls[-1]['quotedCurrency']==currency and 'currency' not in calls[-1]
      assert not errors,errors
