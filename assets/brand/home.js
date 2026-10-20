@@ -41,7 +41,7 @@
  }
  function schedule(){
   clearTimeout(timer);playState();
-  if(paused || hovered || focused || !visible || document.hidden || controls.hidden)return;
+  if(paused || hovered || (focused && document.activeElement!==toggle) || !visible || document.hidden || controls.hidden)return;
   timer=setTimeout(function(){
    var m=metrics(),end=track.scrollLeft>=track.scrollWidth-track.clientWidth-2;
    track.scrollTo({left:end?0:(m.first+1)*m.step,behavior:reduced.matches?'instant':'smooth'});
