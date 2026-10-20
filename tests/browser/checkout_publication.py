@@ -17,10 +17,12 @@ async def main():
 
    async def checkout(route):
     nonlocal paid
+    if route.request.method=='GET':
+     await route.fulfill(content_type='application/json',body=json.dumps({'available':True,'currency':'COP','amount':200000}));return
     data=route.request.post_data_json;calls.append(data)
     if data['action']=='status' and not paid:
      await route.fulfill(status=409,content_type='application/json',body=json.dumps({'error':'INVITATION_NOT_FOUND'}));return
-    q={'revision':1,'event_date':'2028-08-31','timezone':'America/Bogota','expires_at':'2028-12-01T05:00:00Z','enabled':paid,'status':'paid' if paid else 'unpaid'}
+    q={'revision':1,'event_date':'2028-08-31','timezone':'America/Bogota','expires_at':'2028-12-01T05:00:00Z','enabled':paid,'status':'paid' if paid else 'unpaid','currency':'COP'}
     if data['action']=='create':q={'url':'https://checkout.stripe.com/c/pay/fixture','status':'pending'}
     await route.fulfill(content_type='application/json',body=json.dumps(q))
    await ctx.route('**/assets/backend/client.js',backend);await ctx.route('**/api/checkout/',checkout)
@@ -29,17 +31,17 @@ async def main():
    for base in ['', '/en']:
     await page.goto(BASE+base+'/comprar/?diseno=nacar',wait_until='networkidle');await page.locator('#ivEventDate').wait_for()
     assert 'no' not in (await page.locator('#ivPay').get_attribute('disabled') or '')
-    await page.locator('#ivCurrency').select_option('COP');await page.locator('#ivEventDate').fill('2028-08-31');await page.locator('#ivEventZone').select_option('America/Bogota');await page.locator('#ivAccept').check()
+    assert await page.locator('#ivCurrency').count()==0;await page.locator('#ivEventDate').fill('2028-08-31');await page.locator('#ivEventZone').select_option('America/Bogota');await page.locator('#ivAccept').check()
     await page.locator('#ivPay').click();await page.wait_for_function("document.querySelector('#ivValidity').textContent.includes('2028')")
     assert '30' in await page.locator('#ivValidity').inner_text()
     await page.locator('#ivPay').click();await page.wait_for_url('https://checkout.stripe.com/**')
-    assert calls[-1]['currency']=='COP' and calls[-1]['acceptedTerms'] is True
+    assert calls[-1]['quotedCurrency']=='COP' and calls[-1]['acceptedTerms'] is True
    await page.goto(BASE+'/editor/?diseno=nacar',wait_until='networkidle');await page.wait_for_url('**/comprar/?diseno=nacar');
    paid=True
    await page.goto(BASE+'/comprar/?diseno=nacar',wait_until='networkidle');await page.wait_for_function("document.querySelector('#ivPay').textContent.includes('Abrir editor')")
    await page.locator('#ivPay').click();await page.wait_for_url('**/editor/?diseno=nacar');await page.locator('[data-act=publish]').wait_for();assert await page.locator('#f-date').is_disabled()
    assert not errors,errors
-   print('PASS checkout before editor, explicit COP selection, calendar expiry, Stripe redirect and paid return',width)
+   print('PASS checkout before editor, automatic COP pricing, calendar expiry, Stripe redirect and paid return',width)
    await ctx.close()
   # The invitation template is rendered in an opaque iframe, without owner session/storage.
   for lang in ['es','en']:

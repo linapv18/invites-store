@@ -3,7 +3,7 @@
 ## Reglas confirmadas
 
 - Vendedor: Coldevs Inc; cuenta Stripe de EE. UU. `acct_1PCrn7P9O3dSAvF3`.
-- Todos los diseños: un pago de COP 200.000 para Colombia o USD 79 para otros mercados. Selección explícita, sin deducir país del idioma ni convertir automáticamente.
+- Todos los diseños: un pago de COP 200.000 para Colombia o USD 79 para otros mercados. Detección automática del país mediante la cabecera de Vercel `x-vercel-ip-country`: CO usa COP y otros países o detección desconocida usan USD. No se deduce del idioma ni de la zona horaria; no se solicita GPS. El servidor decide la moneda, no el navegador.
 - Comprar al seleccionar diseño, antes de editar. El pago desbloquea el editor; publicar no cobra de nuevo.
 - Fecha y zona horaria obligatorias antes del pago. Vigencia hasta terminar el día tres meses calendario después del evento, en su zona. Meses sin el día correspondiente se ajustan al último día. La fecha exacta se muestra antes de pagar y queda fija con el pedido. Cambios posteriores por soporte.
 - Complementos de pago sin precio definido: no se cobran.
@@ -25,9 +25,9 @@ La propietaria confirmó los cuatro eventos. Reembolsos completos y disputas rev
 
 ## Flujo
 
-`/comprar/?diseno=…` → cuenta → fecha, zona y moneda → precio/vencimiento/condiciones → Stripe Checkout alojado (tarjetas; sin promociones, cantidades ajustables, impuestos añadidos ni Adaptive Pricing) → retorno y conciliación verificada → editor.
+`/comprar/?diseno=…` → cuenta → fecha y zona → precio local automático → precio/vencimiento/condiciones → Stripe Checkout alojado (tarjetas; sin promociones, cantidades ajustables, impuestos añadidos ni Adaptive Pricing) → retorno y conciliación verificada → editor.
 
-`GET /api/checkout/` comprueba configuración de precios y que Stripe permita cobrar en la cuenta prevista; no crea pedidos ni cargos. POST exige JWT validado en Supabase y correo confirmado. El servidor usa precios de la DB; ignora importes, propietarios y vencimientos del navegador. Preparar el pedido bloquea la invitación para reutilizar pedidos pendientes; los parámetros de Stripe se congelan y la clave de idempotencia depende del pedido. Las sesiones abiertas se reutilizan; al cambiar moneda/fecha se debe cancelar la sesión pendiente. Los pedidos pagados/revocados no se cobran otra vez.
+`GET /api/checkout/` comprueba configuración de precios y que Stripe permita cobrar en la cuenta prevista; no crea pedidos ni cargos. POST exige JWT validado en Supabase y correo confirmado. El servidor usa precios de la DB; ignora importes, propietarios y vencimientos del navegador. Preparar el pedido bloquea la invitación para reutilizar pedidos pendientes; los parámetros de Stripe se congelan y la clave de idempotencia depende del pedido. Las sesiones abiertas se reutilizan; para cambiar la fecha se debe cancelar la sesión pendiente. Los checkouts existentes conservan su moneda si cambia la ubicación. Los pedidos pagados/revocados no se cobran otra vez.
 
 Solo el webhook firmado o la consulta autenticada del servidor a Stripe pueden registrar pagos. Supabase contrasta el total, moneda, propietario y productos y concede derechos de manera atómica e idempotente. La URL de éxito por sí misma no concede acceso.
 
@@ -41,6 +41,6 @@ Audio local subido todavía requiere selección de biblioteca antes de publicar;
 
 - `npm run test:payments`: firmas y rechazo, precios, suplantación, doble checkout, conciliación y SQL real en PGlite.
 - `npm test`: regresión de APIs, SEO y privacidad.
-- `python3 tests/browser/checkout_publication.py`: checkout ES/EN a 390/1440px, COP explícito, vencimiento, retorno pagado; 22 diseños × 2 idiomas, aislamiento de iframe y RSVP guardado. Stripe, cuentas y escrituras se interceptan.
+- `python3 tests/browser/checkout_publication.py`: checkout ES/EN a 390/1440px, COP/USD automáticos, vencimiento, retorno pagado; 22 diseños × 2 idiomas, aislamiento de iframe y RSVP guardado. Stripe, cuentas y escrituras se interceptan.
 - Builds locales usan exclusivamente valores públicos ficticios. Producción se construye en Vercel con su configuración existente.
 - No se ha hecho un cargo real ni creado una compra de cliente para probar. Una prueba automatizada no demuestra un cobro bancario real.

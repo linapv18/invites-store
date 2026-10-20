@@ -1,6 +1,9 @@
 const runtime=require('../lib/payments/runtime');
 const {recordSession}=require('../lib/payments/stripe');
 const designPattern=/^[a-z]{3,16}$/;
+// Vercel supplies this header from the request IP. No browser locale/GPS or client price.
+function detectedCurrency(req) { return req.headers['x-vercel-ip-country']==='CO'?'COP':'USD'; }
+function pricing(currency) { return {currency,amount:currency==='COP'?200000:79}; }
 function createHandler({adminClient=runtime.adminClient,stripeClient=runtime.stripeClient,userFor=runtime.userFor}={}) {
  let accountVerifiedAt=0;
  async function requireAccount(stripe) {
@@ -24,7 +27,7 @@ function createHandler({adminClient=runtime.adminClient,stripeClient=runtime.str
    }
    if(req.method==='GET') {
     await requireAccount(stripeClient());
-    return res.status(200).json({available:true,prices:{COP:200000,USD:79}});
+    return res.status(200).json({available:true,...pricing(detectedCurrency(req))});
    }
    if(req.headers.origin && req.headers.origin!==runtime.origin) return res.status(403).json({error:'INVALID_ORIGIN'});
    const user=await userFor(req,admin), b=req.body;
@@ -33,9 +36,10 @@ function createHandler({adminClient=runtime.adminClient,stripeClient=runtime.str
     if(typeof b.date!=='string' || typeof b.timezone!=='string') return res.status(400).json({error:'INVALID_REQUEST'});
     await runtime.unwrap(admin.rpc('configure_stripe_purchase',{verified_owner:user.id,requested_design:b.design,event_day:b.date,event_zone:b.timezone}));
    }
+   const market=detectedCurrency(req);
    const quote=await runtime.unwrap(admin.rpc('quote_stripe_checkout',{verified_owner:user.id,requested_design:b.design}));
-   if(['quote','details'].includes(b.action)) return res.status(200).json({...quote,prices:{COP:200000,USD:79}});
-   if(quote.enabled) return res.status(200).json({...quote,status:'paid'});
+   if(['quote','details'].includes(b.action)) return res.status(200).json({...quote,...pricing(market)});
+   if(quote.enabled) return res.status(200).json({...quote,status:'paid',...pricing(market)});
    const stripe=stripeClient();
    // Look up pending checkouts by the verified owner, never by a browser order ID.
    const pending=await runtime.unwrap(admin.from('orders').select('id,status,currency').eq('owner_id',user.id).eq('invitation_id',quote.invitation_id).eq('status','pending').order('created_at',{ascending:false}).limit(1));
@@ -47,11 +51,11 @@ function createHandler({adminClient=runtime.adminClient,stripeClient=runtime.str
      if(session.metadata?.order_id!==existing.id || session.metadata?.integration!=='invitesse' || !session.livemode) throw new Error('PAYMENT_STATE_UNAVAILABLE');
      if(session.payment_status==='paid') {
       await recordSession(admin,session,'reconcile:'+session.id);
-      return res.status(200).json({...quote,status:'paid',enabled:true});
+      return res.status(200).json({...quote,status:'paid',enabled:true,...pricing(session.currency.toUpperCase())});
      }
      if(b.action==='cancel' && session.status==='open') session=await stripe.checkout.sessions.expire(session.id);
      if(session.status==='expired') {await runtime.unwrap(admin.rpc('expire_stripe_order',{target_order:existing.id}));existing=null;session=null;}
-     else if(session.status!=='open') return res.status(200).json({...quote,status:'processing'});
+     else if(session.status!=='open') return res.status(200).json({...quote,status:'processing',...pricing(existing.currency)});
     }
    }
    if(b.action==='cancel') {
@@ -59,16 +63,18 @@ function createHandler({adminClient=runtime.adminClient,stripeClient=runtime.str
     if(existing) throw new Error('CHECKOUT_BEING_PREPARED');
     return res.status(200).json({status:'cancelled'});
    }
-   if(b.action==='status') return res.status(200).json({...quote,status:existing?'pending':'unpaid',checkoutCurrency:existing?.currency});
-   if(!['COP','USD'].includes(b.currency) || !Number.isInteger(b.revision) || b.acceptedTerms!==true) return res.status(400).json({error:'INVALID_REQUEST'});
+   if(b.action==='status') return res.status(200).json({...quote,status:existing?'pending':'unpaid',...pricing(existing?.currency || market)});
+   if(!Number.isInteger(b.revision) || b.acceptedTerms!==true) return res.status(400).json({error:'INVALID_REQUEST'});
+   const currency=existing?.currency || market;
+   // A changed location must never silently change the price the buyer just accepted.
+   if(b.quotedCurrency!==currency) return res.status(409).json({error:'PRICE_CHANGED'});
    if(session) {
-    if(existing.currency!==b.currency) return res.status(409).json({error:'CHECKOUT_CURRENCY_LOCKED'});
     return res.status(200).json({url:session.url,status:'pending'});
    }
    // Serializes concurrent clicks across browsers and currencies in the database.
-   const order=await runtime.unwrap(admin.rpc('prepare_stripe_checkout',{verified_owner:user.id,requested_design:b.design,requested_currency:b.currency,expected_revision:b.revision}));
+   const order=await runtime.unwrap(admin.rpc('prepare_stripe_checkout',{verified_owner:user.id,requested_design:b.design,requested_currency:currency,expected_revision:b.revision}));
    if(order.status==='enabled') return res.status(200).json({status:'paid',enabled:true});
-   if(order.currency!==b.currency) return res.status(409).json({error:'CHECKOUT_CURRENCY_LOCKED'});
+   if(order.currency!==currency) return res.status(409).json({error:'PRICE_CHANGED'});
    const en=b.locale==='en', back=runtime.origin+(en?'/en':'')+'/editor/pago/?diseno='+encodeURIComponent(b.design);
    const expiresDate=new Intl.DateTimeFormat(en?'en-US':'es-CO',{timeZone:order.timezone,year:'numeric',month:'long',day:'numeric'}).format(new Date(new Date(order.expires_at).getTime()-1));
    if(!order.session_id && Date.now()-Date.parse(order.created_at)>23*60*60*1000) throw new Error('PAYMENT_STATE_UNAVAILABLE');
