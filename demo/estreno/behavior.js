@@ -159,8 +159,8 @@
   var CHECK = '<svg class="ic" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3.5 8.5l3 3 6-7"/></svg>';
   var WARN = '<svg class="ic" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M8 2.5 14 13H2zM8 6.5v3M8 11.2v.1"/></svg>';
   PEOPLE.forEach(function (name, i) {
-    var row = document.createElement('fieldset'); row.className = 'person';
-    var lg = document.createElement('legend'); lg.textContent = name; row.appendChild(lg);
+    var row = document.createElement('div'); row.className = 'person'; row.setAttribute('role','group'); row.setAttribute('aria-label',name);
+    var lg = document.createElement('div'); lg.className='person-name'; lg.textContent = name; row.appendChild(lg);
     var opts = document.createElement('div'); opts.className = 'opts';
     var error = document.createElement('p'); error.className = 'person-err'; error.id = 'person-error-' + i; error.hidden = true; error.innerHTML = WARN; error.appendChild(document.createTextNode(S.missing + ' ' + name.split(' ')[0]));
     row.setAttribute('aria-describedby', error.id);

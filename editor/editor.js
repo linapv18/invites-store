@@ -1072,21 +1072,6 @@
     return '<label class="ed-field full">'+(LANG==='es'?'Icono del evento':'Event icon')+'<select data-list="events" data-i="'+i+'" data-f="icon">'+opts.map(function(o){return '<option value="'+o[0]+'"'+((e.icon||'auto')===o[0]?' selected':'')+'>'+esc(o[1])+'</option>';}).join('')+'</select></label>';
   }
 
-  function shareIcon(kind) {
-    var paths = {
-      whatsapp: '<path d="M20.5 11.6a8.4 8.4 0 0 1-12.4 7.5L3 20.5l1.4-5a8.4 8.4 0 1 1 16.1-3.9Z"/><path d="M8.1 7.4c-.8.4-1 1.4-.6 2.5 1 2.7 3.3 4.9 6 5.6 1.1.3 2.2-.1 2.5-1l-2.5-1.4-1 1c-1.5-.6-2.7-1.8-3.3-3.2l.9-1-1.4-2.5Z"/>',
-      sms: '<path d="M21 11.5a8.3 8.3 0 0 1-8.5 8.1c-1.4 0-2.7-.3-3.8-.8L3 21l1.8-5.2A7.8 7.8 0 0 1 4 12a8.4 8.4 0 0 1 8.5-8.5A8.3 8.3 0 0 1 21 11.5Z"/><path d="M8 11.5h.01M12.5 11.5h.01M17 11.5h.01" stroke-width="2.8"/>',
-      copy: '<rect x="8" y="8" width="12" height="13" rx="2"/><path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h3"/>'
-    };
-    return '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">'+paths[kind]+'</svg>';
-  }
-  function pendingShare() {
-    var en=LANG==='en';
-    return '<div class="ed-pending-share"><div class="ed-share-icons" role="group" aria-label="'+(en?'Share invitation':'Compartir invitación')+'">'+
-      '<button type="button" disabled aria-label="WhatsApp" title="WhatsApp">'+shareIcon('whatsapp')+'</button>'+
-      '<button type="button" disabled aria-label="SMS" title="SMS">'+shareIcon('sms')+'</button>'+
-      '<button type="button" disabled aria-label="'+(en?'Copy message':'Copiar mensaje')+'" title="'+(en?'Copy message':'Copiar mensaje')+'">'+shareIcon('copy')+'</button></div><p class="ed-hint">'+(en?'Available when your invitation is published.':'Disponible cuando publiquen su invitación.')+'</p></div>';
-  }
   function giftUrl(value) { try { var u = new URL(String(value).trim()); return /^(https?:)$/.test(u.protocol) && !u.username && !u.password; } catch (_) { return false; } }
   var SECTION_HTML = {
     portada: function () {
@@ -1272,7 +1257,7 @@
               return '<div class="ed-inv-person"><input data-inv="' + i + '" data-p="' + j + '" value="' + esc(n) + '" placeholder="' + esc(S.gPersonPh) + '" aria-label="' + esc(S.gPerson + ' ' + (j + 1)) + '" autocomplete="off">' +
                 '<button type="button" class="ed-del" data-act="g-delp" data-i="' + i + '" data-d="' + j + '" aria-label="' + esc(S.gDelPerson + ' ' + (n || S.gPerson)) + '">' + svg(P.x, 16, 2) + '</button></div>';
             }).join('') + '<button type="button" class="ed-link" data-act="g-addp" data-i="' + i + '" data-fk="gap-' + i + '">' + esc(S.gAddPerson) + '</button></div>' +
-            '</div>' + pendingShare() + delBtn('g-del', i, S.gDelInv + ' ' + (x.name || ''), 'gx-' + i) + '</div>';
+            '</div>' + delBtn('g-del', i, S.gDelInv + ' ' + (x.name || ''), 'gx-' + i) + '</div>';
         }).join('') + '</div>' : '<p class="ed-empty">' + esc(S.gNoMatch) + '</p>') : '<p class="ed-empty">' + esc(S.gEmpty) + '</p>') +
         '<div class="ed-limit"><button type="button" class="ed-btn ed-btn-dash" data-act="g-new" data-fk="g-new">' + esc(S.gNew) + '</button>' +
         (inv.length ? '<button type="button" class="ed-link" data-act="g-clear">' + esc(S.gClear) + '</button>' : '') + '</div></div>';

@@ -234,7 +234,7 @@ body.locked .hero-txt>*,body.locked .hero-ph{transform:translateY(12px);opacity:
 .chipd{align-self:flex-start;padding:7px 14px;border-radius:999px;background:#E3C88722;color:var(--gold2);font:600 13px var(--sans)}
 #people{display:flex;flex-direction:column}
 .person{margin:0;padding:12px 0 14px;border:0;border-top:1px solid #EFE7D622;display:flex;flex-direction:column;gap:10px;min-width:0}
-.person legend{float:left;width:100%;padding:0;font:400 19px/1.3 var(--cap);overflow-wrap:anywhere}
+.person .person-name{float:none;width:100%;padding:0;font:400 19px/1.3 var(--cap);overflow-wrap:anywhere}
 .opts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
 .opt{position:relative;display:flex;align-items:center;justify-content:center;gap:7px;min-height:42px;padding:0 12px;border-radius:999px;box-shadow:inset 0 0 0 1px #EFE7D666;cursor:pointer;font:500 14px var(--sans);text-align:center}
 .opt input{position:absolute;opacity:0;width:1px;height:1px}
@@ -377,7 +377,7 @@ body.locked .hero-txt>*,body.locked .hero-ph{transform:translateY(12px);opacity:
   .rs-for{margin-top:0}
   .rs-for b{font-size:28px}
   .person{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:8px 12px;align-items:center;padding:14px 0}
-  .person legend{font-size:24px}
+  .person .person-name{font-size:24px}
   .person .opts{grid-column:2}
   .person-err{grid-column:1 / -1}
   #people{border-bottom:1px solid #EFE7D622}
@@ -498,7 +498,7 @@ body.locked .hero-txt>*,body.locked .hero-ph{transform:none;opacity:1}
 .rs-line{height:1px;width:55px;background:currentColor;opacity:.4}
 .rs-form,#rsForm,.fields,.fld{min-width:0}
 .opt{min-height:48px;padding:10px 12px;white-space:normal;line-height:1.35}
-.person legend{font-size:21px}
+.person .person-name{font-size:21px}
 .rs-send{flex-wrap:wrap}
 .rs-send .pill{max-width:100%;white-space:normal;line-height:1.45;padding-block:12px;min-height:50px}
 .fields{grid-template-columns:repeat(auto-fit,minmax(min(220px,100%),1fr))}
@@ -551,7 +551,7 @@ body.locked .hero-txt>*,body.locked .hero-ph{transform:none;opacity:1}
  .rsvp{grid-template-columns:minmax(0,.75fr) minmax(0,1.25fr);gap:60px}
  .rs-side{min-width:0}
  .person{display:flex;flex-direction:column;align-items:stretch;gap:12px}
- .person legend{width:100%;font-size:23px}
+ .person .person-name{width:100%;font-size:23px}
  .rs-send{flex-direction:column;align-items:stretch;gap:14px}
  .rs-send .pill{width:100%}
  .demo-note{text-align:center}

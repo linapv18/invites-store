@@ -46,6 +46,13 @@
    // One successful submission gets one identity; retries after an uncertain response reuse it.
    intercept.signature=null;intercept.requestId=null;
   });
+  // Restore the template's own receipt without submitting another response.
+  // Newly added or unanswered guests still need the form, even on an older response.
+  if(p.canReply && Number(p.response?.revision)>0 && p.guests.length && p.guests.every(function(g){return g.attendance==='attending'||g.attendance==='declined';})){
+   replaying=true;
+   try{if(form)form.dispatchEvent(new Event('submit',{bubbles:true,cancelable:true}));else if(save)save.click();}finally{replaying=false;personalize();}
+  }
+
  }
  document.addEventListener('DOMContentLoaded',ready);if(document.readyState!=='loading')ready();
 })();

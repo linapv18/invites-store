@@ -237,7 +237,7 @@ body.locked .hero .names,body.locked .hero-foot{transform:translateY(12px);opaci
 .chipd{align-self:flex-start;padding:7px 14px;border-radius:999px;background:#14141412;font:500 13px var(--sans)}
 #people{display:flex;flex-direction:column}
 .person{margin:0;padding:12px 0 14px;border:0;border-top:1px solid var(--line);display:flex;flex-direction:column;gap:10px;min-width:0}
-.person legend{float:left;width:100%;padding:0;font:400 20px/1.3 var(--cap);overflow-wrap:anywhere}
+.person .person-name{float:none;width:100%;padding:0;font:400 20px/1.3 var(--cap);overflow-wrap:anywhere}
 .opts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
 .opt{position:relative;display:flex;align-items:center;justify-content:center;gap:7px;min-height:42px;padding:0 12px;border-radius:999px;background:#fff;box-shadow:inset 0 0 0 1px #14141466;cursor:pointer;font:500 14px var(--sans);text-align:center}
 .opt input{position:absolute;opacity:0;width:1px;height:1px}
@@ -388,7 +388,7 @@ body.locked .hero .names,body.locked .hero-foot{transform:translateY(12px);opaci
   .rs-form{padding:100px 110px;max-width:none;margin:0;gap:14px;width:100%}
   .rs-for b{font-size:26px}
   .person{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:8px 12px;align-items:center;padding:14px 0}
-  .person legend{font-size:24px}
+  .person .person-name{font-size:24px}
   .person .opts{grid-column:2}
   .person-err{grid-column:1 / -1}
   #people{border-bottom:1px solid var(--line)}
@@ -444,7 +444,7 @@ body.locked .hero .names,body.locked .hero-foot{opacity:1;transform:none}
 .digits{gap:clamp(3px,1vw,14px);max-width:100%}
 .opt{min-height:48px;padding:10px 12px}
 .person{min-width:0}
-.person legend{float:none}
+.person .person-name{float:none}
 .opts{min-width:0;width:100%}
 .pill{white-space:normal;text-align:center;min-height:48px;letter-spacing:.13em;line-height:1.5;padding-block:10px}
 .lnk,.ev .lnk{min-height:44px}
