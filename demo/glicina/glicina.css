@@ -678,3 +678,5 @@ body.gl:not(.locked){background:#F7F3EA}
 }
 @media(min-width:900px) and (max-height:760px){.gx-names{font-size:52px;margin-top:18px}.gx-oval{width:min(280px,42vh)}}
 @media(prefers-reduced-motion:reduce){#mbar{transition:none}}
+/* Óvalo de apertura en teléfonos bajos: el óvalo achatado dejaba «Invitación de boda» sobre el encaje; más alto y con el texto más compacto. */
+@media(max-height:740px){.opening .loval{min-height:340px;gap:6px}.opening .loval .mc{font-size:9px;letter-spacing:.05em}}
