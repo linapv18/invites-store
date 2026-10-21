@@ -1379,7 +1379,6 @@
   function renderMain() {
     var id = state.sec;
     main.innerHTML = '<div class="ed-sec">' + (SECTION_HTML[id] ? SECTION_HTML[id]() : addonPage(id)) + '</div>';
-    if(id==='invitados' && window.InvitessePublishing){var panel=document.createElement('section');panel.className='ed-card iv-guest-panel';main.querySelector('.ed-sec').prepend(panel);window.InvitessePublishing.panel(panel,DESIGN);}
     var sf = $('#edShareFrame');
     if (sf) { layoutShare(); sf.addEventListener('load', function () { if (sf.contentWindow) sf.contentWindow.postMessage({ lz: 'content', content: state }, location.origin); }); }
   }
@@ -1713,7 +1712,8 @@
       case 'guide-go': closeGuide(); guideGo(+id); break;
       case 'save-retry': saveNow(); break;
       case 'publish':
-        window.InvitessePublishing.open({design:DESIGN,hasChanges:function(){return ui.saving!=='saved';},onPublished:function(){go('invitados',true);},save:async function(){await saveNow();if(ui.saving!=='saved')throw Error('SAVE_FAILED');}});
+        if(ui.publication && ui.publication.invitation.state==='published' && ui.saving==='saved' && ui.publication.publishedRevision===AUTH.draft(DESIGN).revision){location.assign(BASE+'/panel/?diseno='+encodeURIComponent(DESIGN)+'#resumen');break;}
+        window.InvitessePublishing.open({design:DESIGN,hasChanges:function(){return ui.saving!=='saved';},onPublished:function(){location.assign(BASE+'/panel/?diseno='+encodeURIComponent(DESIGN)+'#resumen');},save:async function(){await saveNow();if(ui.saving!=='saved')throw Error('SAVE_FAILED');}});
         break;
       case 'reset-content':
         modal('<h2 id="mdTitle">' + (LANG === 'es' ? '¿Empezar de nuevo?' : 'Start again?') + '</h2><p>' + (LANG === 'es' ? 'Se borrarán los textos, fotos, eventos e invitados de este borrador. Se conservarán el diseño y la paleta. Esta acción no se puede deshacer.' : 'This draft’s text, photos, events and guests will be cleared. Your design and palette will be kept. This cannot be undone.') + '</p><div class="ed-modal-actions"><button type="button" class="ed-btn" data-act="modal-close">' + esc(S.cancel) + '</button><button type="button" class="ed-btn ed-btn-dark" data-act="reset-content-yes">' + (LANG === 'es' ? 'Vaciar borrador' : 'Clear draft') + '</button></div>', b);

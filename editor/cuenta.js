@@ -86,7 +86,7 @@
   var IMG = { clasico: '/assets/clasico-demo-portada.jpg', moderno: '/assets/moderno-demo-portada.jpg', rosa: '/assets/romantico-portada.jpg', jardin: '/assets/jardin-portada.jpg', costa: '/assets/costa-portada.jpg', gala: '/assets/gala-portada.jpg', aurelia: '/assets/aurelia-portada.jpg', noir: '/assets/noir-portada.jpg', lino: '/assets/lino-portada.jpg', marfil: '/assets/marfil-portada.jpg', fiesta: '/assets/fiesta-portada.jpg', celeste: '/assets/celeste-portada.jpg', cisne: '/assets/cisne-portada.jpg', tinta: '/assets/tinta-portada.jpg', glicina: '/assets/glicina-portada.jpg', estreno: '/assets/estreno-portada.jpg', nacar: '/assets/nacar-portada.jpg', arco: '/assets/arco-portada.jpg', corazones: '/assets/corazones-portada.jpg', encaje: '/assets/encaje-portada.jpg', onix: '/assets/onix-portada.jpg', senal: '/assets/senal-portada.jpg' };
   var demoUrl = function (d) { return BASE + '/demo/' + d + '/'; };
   var editUrl = function (d) { return BASE + '/editor/?diseno=' + d; };
-  // Acceso al panel de invitados (sección «Invitados» del editor). Solo se pinta en la vista con sesión iniciada;
+  // Acceso al panel privado con Resumen, Invitados y Envío. Solo se pinta con sesión iniciada;
   // el editor vuelve a exigir la sesión antes de mostrar la lista.
   function guestPanel(own) {
     var icon = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 19c.6-3.2 2.8-5 5.5-5s4.9 1.8 5.5 5"/><circle cx="17" cy="9" r="2.4"/><path d="M16 14.2c2.3.1 4 1.6 4.5 4.3"/></svg>';
@@ -96,7 +96,7 @@
         var list = ((invOf(d) || {}).invitations || []).filter(function (x) { return x && typeof x === 'object'; });
         var people = list.reduce(function (n, x) { return n + (Array.isArray(x.people) ? x.people.length : 0); }, 0);
         return '<li><span class="ac-guests-d"><b>' + esc(S.names[((invOf(d) || {}).design || d)][0]) + '</b><span>' + esc(list.length ? S.guestsSum(list.length, people) : S.guestsNone) + '</span></span>' +
-          '<a class="ed-btn ed-btn-dark" href="' + editUrl(d) + '#invitados">' + icon + esc(S.guestsOpen) + '</a></li>';
+          '<a class="ed-btn ed-btn-dark" href="' + BASE + '/panel/?diseno=' + encodeURIComponent(d) + '#resumen">' + icon + esc(S.guestsOpen) + '</a></li>';
       }).join('') + '</ul></section>';
   }
   var guestUrl = function (d) { return ((invOf(d) || {}).invitationLanguage === 'en' ? '/en' : '') + '/demo/' + d + '/?lz=vista&k=' + encodeURIComponent(A.invKey(d)); };

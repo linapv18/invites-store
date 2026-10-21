@@ -12,7 +12,7 @@ import routing from '@vercel/routing-utils';
 test('public SEO build contains real content, reciprocal locales and no private URLs', async () => {
   const output = await mkdtemp(join(tmpdir(), 'invitesse-seo-'));
   try {
-    for (const path of ['assets', 'comprar', 'cotizar', 'cuenta', 'demo', 'disenos', 'editor', 'en', 'privacidad', 'condiciones', 'quiz', 'index.html', '404.html']) await cp(path, join(output, path), { recursive: true });
+    for (const path of ['panel', 'assets', 'comprar', 'cotizar', 'cuenta', 'demo', 'disenos', 'editor', 'en', 'privacidad', 'condiciones', 'quiz', 'index.html', '404.html']) await cp(path, join(output, path), { recursive: true });
     const routes = await generateSeo(output);
     assert.equal(new Set(routes).size, 68); // 12 existing + 44 designs + 6 styles + 6 editorial.
     const catalog = await loadCatalog();
@@ -50,7 +50,7 @@ test('public SEO build contains real content, reciprocal locales and no private 
       for (const design of catalog.designs) assert.ok(html.includes(`href="/${prefix}disenos/${design.id}/"`));
       assert.doesNotMatch(html, /US\$ XX/);
     }
-    for (const route of ['/cuenta/', '/editor/', '/editor/pago/', '/comprar/', '/en/account/', '/en/editor/', '/en/editor/pago/', '/en/comprar/']) {
+    for (const route of ['/cuenta/', '/editor/', '/editor/pago/', '/comprar/', '/en/account/', '/en/editor/', '/en/editor/pago/', '/en/comprar/', '/panel/', '/en/panel/']) {
       const html = await readFile(join(output, route.slice(1), 'index.html'), 'utf8');
       assert.match(html, /name="robots" content="noindex/);
       assert.doesNotMatch(html, /data-marketing-page/);
@@ -105,7 +105,7 @@ test('preview response rules exclude both locales without deindexing ordinary de
     }
     assert.equal(headers(prefix + '/nacar/')['X-Robots-Tag'], undefined);
   }
-  for (const route of ['/editor/', '/editor/pago/', '/cuenta/', '/en/account/', '/en/editor/']) assert.match(headers(route)['X-Robots-Tag'], /noindex/, route);
+  for (const route of ['/editor/', '/editor/pago/', '/cuenta/', '/en/account/', '/en/editor/', '/panel/', '/en/panel/']) assert.match(headers(route)['X-Robots-Tag'], /noindex/, route);
   assert.match(headers('/assets/immutable/test.1234.css')['Cache-Control'], /immutable/);
   assert.equal(headers('/assets/backend/config.js')['Cache-Control'], 'no-cache');
   for (const [path, expected] of [['/index.html', '/'], ['/disenos/index.html', '/disenos/'], ['/en/disenos/index.html', '/en/disenos/'], ['/disenos', '/disenos/'], ['/en/cuenta/', '/en/account/']]) {

@@ -40,4 +40,4 @@ Las fuentes están alojadas localmente. El build agrupa los scripts de demos con
 
 `checkout_publication.py` cubre la compra antes del editor, precios COP/USD, vencimiento mostrado, bloqueo sin compra y acceso después del pago, y las 22 plantillas publicadas ES/EN con RSVP real (backend interceptado). Las pruebas anteriores que simulaban `testbuy` corresponden al flujo previo de borradores gratuitos; para pagos usar este recorrido. Ninguna prueba genera cargos reales.
 
-`python tests/browser/publication_dashboard.py` verifica que la publicación confirmada abre el panel, que los errores no redirigen, el estado «Publicado» y los enlaces de familia únicamente en el panel (ES/EN, escritorio y móvil). Todas las solicitudes de publicación se interceptan.
+`python tests/browser/publication_dashboard.py` verifica la redirección a `/panel/` o `/en/panel/`, el acceso desde «Publicado» y el perfil, las pestañas Resumen/Invitados/Envío con datos reales simulados, filtros, exportación CSV y enlaces privados. Incluye el bloqueo de diseños no comprados y errores de publicación (ES/EN, escritorio y móvil). Todas las solicitudes de autenticación y publicación se interceptan.
