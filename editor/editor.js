@@ -48,7 +48,7 @@
       viewingAs: 'Vista previa de la invitación', prev: 'Sección anterior', next: 'Siguiente', stepsLbl: 'Navegación entre secciones',
       sec: {
         portada: ['Portada', 'Lo primero que ven sus invitados cuando termina la apertura. Lo que escriban aparece al instante en la vista previa.'],
-        apertura: ['Apertura y sello', 'Lo que sus invitados tocan para abrir la invitación.'],
+        apertura: ['Apertura', 'Lo que sus invitados tocan para abrir la invitación.'],
         historia: ['Nuestra historia', 'Cuenten cómo se conocieron y suban las fotos que quieran mostrar.'],
         itinerario: ['Itinerario', 'Agreguen los momentos de su boda en el orden en que suceden. Cada uno lleva su hora, lugar y mapa.'],
         faq: ['Preguntas frecuentes', 'Código de vestimenta, niños y otras dudas… Lo que más les van a preguntar.'],
@@ -97,7 +97,7 @@
       badMp3: 'El archivo debe ser un MP3.', mp3Big: 'La canción pesa más de 15 MB. Prueba con una versión más ligera.', mp3Fail: 'No se pudo guardar la canción en este navegador.',
       shareK: 'Vista previa al compartir', shareHint: 'Lo que aparece al mandar el enlace por WhatsApp, Instagram o mensaje.',
       shareSobre: 'Invitación cerrada', shareFoto: 'Una foto de ustedes', sharePick: '¿Cuál foto?', shareCover: 'Portada',
-      envK: 'Textos del sobre', envIntro: 'Frase del sobre', envClosing: 'Despedida', envClosingPh: 'p. ej. Con todo nuestro cariño',
+      envK: 'Textos de apertura', envIntro: 'Frase de apertura', envClosing: 'Despedida', envClosingPh: 'p. ej. Con todo nuestro cariño',
       envKeepHint: 'Si lo dejan vacío, se usa el texto del diseño.', envOptHint: 'Opcional: aparece bajo el nombre de cada familia.',
       photoBW: 'Fotos en blanco y negro', photoBWOn: 'Como en el diseño original.', photoBWOff: 'Las fotos se ven con sus colores originales.',
       photosOn: 'Usar fotos', photosOnOn: 'La portada y la historia llevan sus fotos.', photosOnOff: { glicina: 'Sin fotos: sus nombres van en el óvalo de encaje y la historia lleva una ventana del jardín.', encaje: 'Sin fotos: sus nombres van dentro del óvalo de encaje y se ocultan la foto de la historia y la galería.', jardin: 'Sin fotos: sus nombres van dentro del óvalo de flores y se ocultan las fotos de la historia.', celeste: 'Sin fotos: la luna llena ocupa el centro de la portada y se ocultan las fotos de la historia.', corazones: 'Sin fotos: las cartas llevan las iniciales de sus nombres y se ocultan las fotos de la historia y la galería.' },
@@ -182,7 +182,7 @@
       viewingAs: 'Invitation preview', prev: 'Previous section', next: 'Next', stepsLbl: 'Section navigation',
       sec: {
         portada: ['Cover', 'The first thing your guests see when they open the envelope. Changes show up instantly in the preview.'],
-        apertura: ['Opening and seal', 'What your guests tap to open the invitation.'],
+        apertura: ['Opening', 'What your guests tap to open the invitation.'],
         historia: ['Our story', 'Tell how you met and upload the photos you want to show.'],
         itinerario: ['Schedule', 'Add your wedding events in the order they happen. Each one has its time, place and map.'],
         faq: ['FAQ', 'Dress code, kids, gifts… What everyone will ask you.'],
@@ -231,7 +231,7 @@
       badMp3: 'The file must be an MP3.', mp3Big: 'The song is larger than 15 MB. Try a lighter version.', mp3Fail: 'Could not save the song in this browser.',
       shareK: 'Link preview', shareHint: 'What people see when you send the link on WhatsApp, Instagram or by text.',
       shareSobre: 'Closed invitation', shareFoto: 'A photo of you', sharePick: 'Which photo?', shareCover: 'Cover',
-      envK: 'Envelope text', envIntro: 'Envelope line', envClosing: 'Sign-off', envClosingPh: 'e.g. With all our love',
+      envK: 'Opening text', envIntro: 'Opening line', envClosing: 'Sign-off', envClosingPh: 'e.g. With all our love',
       envKeepHint: 'Leave it empty to use the design’s text.', envOptHint: 'Optional: shown under each family’s name.',
       photoBW: 'Black-and-white photos', photoBWOn: 'As in the original design.', photoBWOff: 'Photos show their original colors.',
       photosOn: 'Use photos', photosOnOn: 'The cover and the story show your photos.', photosOnOff: { glicina: 'No photos: your names go in the lace oval and the story shows a window onto the garden.', encaje: 'No photos: your names go inside the lace oval, and the story photo and the gallery are hidden.', jardin: 'No photos: your names go inside the floral oval, and the story photos are hidden.', celeste: 'No photos: the full moon takes the center of the cover, and the story photos are hidden.', corazones: 'No photos: the cards show your initials, and the story photos and the gallery are hidden.' },
@@ -851,11 +851,33 @@
   var secName = function (id) { return S.sec[id] ? S.sec[id][0] : addonName(id); };
   var isMobile = function () { return window.matchMedia('(max-width: 960px)').matches; };
 
+  // Read supported fields from the actual preview template, never from its style/name.
+  var openingFields = {};
+  function openingFieldKey(){return state.design+'|'+(state.invitationLanguage==='en'?'en':'es');}
+  function openingSupport(){return openingFields[openingFieldKey()] || null;}
+  function inspectOpening(){
+    var doc=frame.contentDocument;if(!doc)return;
+    if(doc.documentElement.getAttribute('data-lz-tpl')!==state.design)return;
+    var lang=(doc.documentElement.lang || 'es').slice(0,2);
+    if(lang!==(state.invitationLanguage==='en'?'en':'es'))return;
+    var opening=doc.querySelector('#open, #cover[role="dialog"], #env[role="dialog"]');
+    if(!opening)return;
+    function supported(selector){return Array.from(opening.querySelectorAll(selector)).some(function(el){
+      for(var node=el;node && node!==opening;node=node.parentElement){
+        // Conditional text is an existing optional field; permanently hidden placeholders are not.
+        var conditional=node.hasAttribute('data-lz-if');
+        if((node.hidden || frame.contentWindow.getComputedStyle(node).display==='none') && !conditional)return false;
+      }
+      return true;
+    });}
+    openingFields[openingFieldKey()]={seal:supported('[data-lz-seal]'),envIntro:supported('[data-lz="envIntro"], [data-lz-opening-field="envIntro"]'),envClosing:supported('[data-lz="envClosing"], [data-lz-opening-field="envClosing"]')};
+  }
+
   function doneOf(id) {
     var s = state, t = function (v) { return !!String(v || '').trim(); };
     switch (id) {
       case 'portada': return ['es','en'].indexOf(s.invitationLanguage)>=0 && t(s.n1) && t(s.n2) && t(s.date) && t(s.city);
-      case 'apertura': return s.sealMode === 'text' ? t(s.sealText) : (s.mono === 'custom' ? t(s.monoImg) : t(s.n1) && t(s.n2));
+      case 'apertura': if(!openingSupport())return false;if(!openingSupport().seal)return true;return s.sealMode === 'text' ? t(s.sealText) : (s.mono === 'custom' ? t(s.monoImg) : t(s.n1) && t(s.n2));
       case 'historia': return s.storyMode === 'timeline' ? s.timeline.some(function (x) { return t(x.when) && t(x.title); }) : t(s.story);
       case 'itinerario': return s.events.length > 0 && s.events.every(function (e) { return t(e.name) && t(e.time) && (t(e.place) || t(e.address)); });
       case 'faq': return s.faqs.length > 0 && s.faqs.every(function (f) { return t(f.q) && t(f.a); });
@@ -1087,14 +1109,14 @@
         cartUpsell('dominio', { light: true, k: S.domainK, t: esc(S.domainT(slug(state))) });
     },
     apertura: function () {
-      var d = design(), mono = state.sealMode === 'mono';
+      var d = design(), mono = state.sealMode === 'mono', caps=openingSupport();
       var opt = function (id, label) {
         var st = clone(state); st.sealMode = 'mono'; st.mono = id;
         return '<button type="button" class="ed-mono" role="radio" aria-checked="' + (mono && state.mono === id) + '" data-act="mono" data-id="' + id + '" data-fk="mono-' + id + '"><span class="iv-seal" style="' + sealLook() + '">' + sealInner(st) + '</span>' + esc(label) + '</button>';
       };
       return head('apertura') + (state.design === 'corazones' ? coPair() : '') +
         '<div class="ed-info">' + svg(DESIGNS[state.design].kind === 'doors' ? P.doors : P.mail, 22, 1.6) + '<div><b>' + esc(d[1]) + '</b><span>' + esc(S.effectNote(d[0])) + '</span></div></div>' +
-        '<div class="ed-stack"><span class="ed-label" id="lblSeal">' + esc(S.sealQ) + '</span><div class="ed-seg" role="radiogroup" aria-labelledby="lblSeal">' +
+        (caps && caps.seal ? '<div class="ed-stack"><span class="ed-label" id="lblSeal">' + esc(S.sealQ) + '</span><div class="ed-seg" role="radiogroup" aria-labelledby="lblSeal">' +
           '<button type="button" role="radio" aria-checked="' + !mono + '" data-act="sealMode" data-id="text" data-fk="sm-text">' + esc(S.text) + '</button>' +
           '<button type="button" role="radio" aria-checked="' + mono + '" data-act="sealMode" data-id="mono" data-fk="sm-mono">' + esc(S.mono) + '</button></div></div>' +
         (mono
@@ -1104,10 +1126,11 @@
                 (state.mono === 'custom' ? '<span class="ed-pill ed-pill-dark" style="flex:0 0 auto">' + esc(S.inUse) + '</span>' : '<button type="button" class="ed-btn ed-btn-sm" data-act="mono" data-id="custom" data-fk="mono-custom">' + esc(S.useIt) + '</button>') +
                 '<button type="button" class="ed-del" data-act="mono-del" aria-label="' + esc(S.delMono) + '">' + svg(P.trash, 18, 1.7) + '</button></div>' : '') +
               dropzone('mono', S.upMono, S.upMonoHint, false, '') + '</div>'
-          : field(S.sealText, 'sealText', { max: 8, hint: S.upTo8 })) +
-        '<div class="ed-stack ed-group"><h2 class="ed-sub">' + esc(S.envK) + '</h2>' +
-          field(S.envIntro, 'envIntro', { ph: ENV_TEXT[state.design][LANG][0], hint: S.envKeepHint }) +
-          field(S.envClosing, 'envClosing', { ph: ENV_TEXT[state.design][LANG][1] || S.envClosingPh, hint: ENV_TEXT[state.design][LANG][1] ? S.envKeepHint : S.envOptHint }) + '</div>' +
+          : field(S.sealText, 'sealText', { max: 8, hint: S.upTo8 })) : '') +
+        (caps && (caps.envIntro || caps.envClosing) ? '<div class="ed-stack ed-group"><h2 class="ed-sub">' + esc(S.envK) + '</h2>' +
+          (caps.envIntro ? field(S.envIntro, 'envIntro', { ph: ENV_TEXT[state.design][LANG][0], hint: S.envKeepHint }) : '') +
+          (caps.envClosing ? field(S.envClosing, 'envClosing', { ph: ENV_TEXT[state.design][LANG][1] || S.envClosingPh, hint: ENV_TEXT[state.design][LANG][1] ? S.envKeepHint : S.envOptHint }) : '') + '</div>' : '') +
+        (!caps ? '<p class="ed-hint" role="status">'+(LANG==='en'?'Checking this design’s opening…':'Comprobando la apertura de este diseño…')+'</p>' : !caps.seal && !caps.envIntro && !caps.envClosing ? '<p class="ed-hint">'+(LANG==='en'?'This opening has no seal or editable text. Its animation is ready to use.':'Esta apertura no tiene sello ni textos editables. Su animación ya está lista para usar.')+'</p>' : '') +
         shareHTML();
     },
     historia: function () {
@@ -1825,7 +1848,10 @@
 
   // La plantilla carga con el contenido guardado; después recibe cada cambio al momento.
   store(KEY, state);
-  frame.addEventListener('load', function () { frameReady = true; renderPreview(true); });
+  frame.addEventListener('load', function () {
+    frameReady = true;inspectOpening();renderPreview(true);renderNav();
+    if(state.sec==='apertura')renderMain();
+  });
   frame.src = frameUrl('editor');
   window.addEventListener('resize', layoutFrame);
   window.addEventListener('resize', layoutShare);
