@@ -17,6 +17,7 @@ await mkdir('dist', { recursive: true });
 for (const path of ['panel','admin','assets','comprar','cotizar','cuenta','demo','disenos','editor','en','privacidad','condiciones','quiz','index.html','404.html','invitacion']) {
   await cp(path, 'dist/' + path, { recursive: true });
 }
+await cp('lib/marketing/dates.js','dist/admin/marketing-dates.js');
 await mkdir('dist/assets/backend', { recursive: true });
 // The preconnect opens the TLS connection to Supabase while client.js is still downloading.
 const preconnect = '(function(){var l=document.createElement("link");l.rel="preconnect";l.href=' + JSON.stringify(endpoint).replaceAll('<', '\\u003c') + ';l.crossOrigin="anonymous";document.head.appendChild(l);})();\n';

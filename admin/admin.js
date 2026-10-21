@@ -17,7 +17,8 @@
   };
   var svg = function (k, s) { return '<svg width="' + (s || 18) + '" height="' + (s || 18) + '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + ICON[k] + '</svg>'; };
   ICON.borradores=ICON.ordenes; ICON.archivados=ICON.ordenes; ICON.papelera='<path d="M3 6h18M9 6V3h6v3M5 6l1 15h12l1-15M10 10v7M14 10v7"/>';
-  var VIEWS = [['resumen', 'Inicio'], ['ordenes', 'Pedidos'], ['borradores', 'Borradores de pedido'], ['archivados', 'Archivados'], ['papelera', 'Papelera'], ['codigos', 'Códigos de descuento'], ['analiticas', 'Analíticas']];
+  ICON.marketing=ICON.analiticas;
+  var VIEWS = [['marketing', 'Marketing'],['resumen', 'Inicio'], ['ordenes', 'Pedidos'], ['borradores', 'Borradores de pedido'], ['archivados', 'Archivados'], ['papelera', 'Papelera'], ['codigos', 'Códigos de descuento'], ['analiticas', 'Analíticas']];
   var STATUS = { paid: 'Pagado', pending: 'Pendiente', refunded: 'Reembolsado', cancelled: 'Cancelado' };
   var TIER = { esencial: 'Esencial', signature: 'Signature', luxury: 'Luxury' };
   var renderEpoch=0;
@@ -92,7 +93,7 @@
   }
 
   /* ---------- Estructura ---------- */
-  function view() { var h = location.hash.slice(1); return VIEWS.some(function (v) { return v[0] === h; }) ? h : 'resumen'; }
+  function view() { var h = location.hash.slice(1).split('?')[0]; return VIEWS.some(function (v) { return v[0] === h; }) ? h : 'resumen'; }
   function shell(content) {
     var v = view();
     return '<div class="ad"><aside class="ad-nav"><a class="iv-wm-link" href="#resumen" aria-label="Invitesse, resumen" style="text-decoration:none">' + WM + '</a>' +
@@ -114,7 +115,8 @@
   async function render() {
     var v = view(); renderEpoch++; loading();
     try {
-      if (v === 'resumen') await renderSummary();
+      if(v==='marketing'){root.innerHTML=shell('<div id="marketing-panel"></div>');bindShell();await window.InvitesseMarketing.mount(root.querySelector('#marketing-panel'),{api:api,email:state.email,catalog:CAT,prices:state.prices});}
+      else if (v === 'resumen') await renderSummary();
       else if (['ordenes','borradores','archivados','papelera'].includes(v)) await renderOrders();
       else if (v === 'codigos') await renderCodes();
       else await renderAnalytics();

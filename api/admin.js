@@ -46,6 +46,11 @@ function createHandler({adminClient=runtime.adminClient,userFor=runtime.userFor,
    if(!list.includes(String(user.email || '').toLowerCase())) return res.status(403).json({error:'FORBIDDEN'});
    const q=req.query || {}, b=req.body && typeof req.body==='object'?req.body:{};
    const action=req.method==='GET'?q.action:b.action;
+   if(typeof action==='string' && action.startsWith('marketing-')) {
+    const {handle}=require('../lib/marketing/service');
+    const catalog=Object.entries(require('../lib/payments/prices.json').designs).map(([id])=>({id}));
+    return res.status(200).json(await handle({admin,user,method:req.method,body:b,query:q,catalog}));
+   }
    if(req.method==='GET') {
     if(action==='me') return res.status(200).json({email:user.email,prices:PRICES});
     if(action==='summary') return res.status(200).json(await runtime.unwrap(admin.rpc('admin_summary',{since:since(q.days)})));
@@ -83,7 +88,7 @@ function createHandler({adminClient=runtime.adminClient,userFor=runtime.userFor,
   } catch(e) {
    const m=e.message || '';
    if(m.includes('AUTH_REQUIRED') || m.includes('EMAIL_NOT_CONFIRMED')) return res.status(401).json({error:'AUTH_REQUIRED'});
-   for(const [k,code] of [['INVALID_REQUEST',400],['ORDER_STATE_CHANGED',409],['CHECKOUT_STILL_OPEN',409],['CHECKOUT_BEING_PREPARED',409],['PAYMENT_PROCESSING',409],['ORDER_JUST_PAID',409],['PAYMENT_STATE_UNAVAILABLE',409],['ORDER_IN_TRASH',409],['CODE_EXISTS',409],['ORDER_NOT_FOUND',404],['CODE_NOT_FOUND',404]]) if(m.includes(k)) return res.status(code).json({error:k});
+   for(const [k,code] of [['INVALID_MARKETING_INPUT',400],['MARKETING_CONFLICT',409],['MARKETING_NOT_FOUND',404],['INVALID_REQUEST',400],['ORDER_STATE_CHANGED',409],['CHECKOUT_STILL_OPEN',409],['CHECKOUT_BEING_PREPARED',409],['PAYMENT_PROCESSING',409],['ORDER_JUST_PAID',409],['PAYMENT_STATE_UNAVAILABLE',409],['ORDER_IN_TRASH',409],['CODE_EXISTS',409],['ORDER_NOT_FOUND',404],['CODE_NOT_FOUND',404]]) if(m.includes(k)) return res.status(code).json({error:k});
    if(m.includes('PAYMENTS_NOT_CONFIGURED')) return res.status(503).json({error:'ADMIN_NOT_CONFIGURED'});
    console.error('invitesse.admin.failure',{code:/^[a-zA-Z0-9_]{1,48}$/.test(e.code || '')?e.code:'UNAVAILABLE'});
    return res.status(503).json({error:'ADMIN_UNAVAILABLE'});

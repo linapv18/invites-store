@@ -1,0 +1,60 @@
+import assert from 'node:assert/strict';
+import {readFile} from 'node:fs/promises';
+import {PGlite} from '@electric-sql/pglite';
+import core from '../../lib/marketing/core.js';
+const db=new PGlite();
+await db.exec(`create role anon nologin;create role authenticated nologin;create role service_role nologin bypassrls;create schema auth;create schema storage;grant usage on schema public,auth,storage to anon,authenticated,service_role;
+create table auth.users(id uuid primary key,email_confirmed_at timestamptz,email text,created_at timestamptz default now());
+create function auth.uid() returns uuid language sql stable as $$ select nullif(current_setting('request.jwt.claim.sub',true),'')::uuid $$;
+create table storage.buckets(id text primary key,name text,public boolean,file_size_limit bigint,allowed_mime_types text[]);
+create table storage.objects(id uuid primary key default gen_random_uuid(),bucket_id text references storage.buckets(id),name text,metadata jsonb,unique(bucket_id,name));alter table storage.objects enable row level security;grant select,insert,update,delete on storage.objects to authenticated;grant all on storage.objects to service_role;`);
+await db.exec(await readFile('supabase/ACTIVAR-STRIPE.sql','utf8'));
+const migration=await readFile('supabase/migrations/202610210004_marketing.sql','utf8');await db.exec(migration);await db.exec(migration);
+const owner='11111111-1111-4111-8111-111111111111',other='22222222-2222-4222-8222-222222222222';await db.query('insert into auth.users(id,email,email_confirmed_at) values($1,$2,now()),($3,$4,now())',[owner,'admin@example.invalid',other,'other@example.invalid']);
+const rpc=async(q,args=[])=>(await db.query(q,args)).rows[0]?.r;
+const mutate=(entity,operation,payload,target=null,revision=null)=>rpc('select public.marketing_mutate($1,$2,$3,$4,$5,$6) r',[owner,entity,operation,target,JSON.stringify(payload),revision]);
+const settings=core.settingsPayload({email_enabled:true,lead_minutes:60,day_before:true,report_currency:'USD'},'admin@example.invalid');await mutate('settings','update',settings);
+const post=core.postPayload({title:'Primer contenido',platform:'instagram',format:'reel',goal:'discovery',status:'scheduled',scheduled_at:new Date(Date.now()+30*60000).toISOString(),copy:'Un copy persistente',hook:'Una apertura',resources:[]});
+const p=await mutate('post','create',post);assert.equal(p.data.content.copy,'Un copy persistente');
+await db.query('select public.marketing_tick()');await db.query('select public.marketing_tick()');
+assert.equal((await db.query('select count(*)::int n from public.marketing_notifications where admin_id=$1',[owner])).rows[0].n,1);
+const claimed=await rpc("select public.marketing_claim_jobs('Invitesse <fixture@example.invalid>') r");assert.equal(claimed.length,1);assert.match(claimed[0].payload.text,/America\/Bogota/);
+assert.equal((await rpc("select public.marketing_claim_jobs('Invitesse <fixture@example.invalid>') r")).length,0);
+await db.query('select public.marketing_finish_job($1,$2,true)',[claimed[0].id,claimed[0].lease]);
+assert.equal((await rpc("select public.marketing_claim_jobs('Invitesse <fixture@example.invalid>') r")).length,0);
+// Copy-only edits do not resend or restart the schedule.
+const copy=await mutate('post','update',{...post,content:{...post.content,copy:'Cambio de copy'}},p.id,p.revision);assert.equal(copy.schedule_version,p.schedule_version);
+assert.equal((await rpc("select public.marketing_claim_jobs('Invitesse <fixture@example.invalid>') r")).length,0);
+await assert.rejects(()=>mutate('post','update',post,p.id,1),/MARKETING_CONFLICT/);
+const rescheduled=await mutate('post','update',{...post,scheduled_at:new Date(Date.now()+48*3600000).toISOString()},p.id,copy.revision);assert.equal(rescheduled.schedule_version,p.schedule_version+1);
+assert.ok((await db.query("select count(*)::int n from public.marketing_jobs where post_id=$1 and status='pending'",[p.id])).rows[0].n>=2);
+const skipped=await mutate('post','update',{...post,status:'skipped'},p.id,rescheduled.revision);
+assert.equal((await db.query("select count(*)::int n from public.marketing_jobs where post_id=$1 and status in ('pending','processing')",[p.id])).rows[0].n,0);
+await mutate('post','delete',{},p.id,skipped.revision);
+// Retries retain the provider identity; stale workers cannot acknowledge after cancellation.
+const retryPost=await mutate('post','create',post);
+const retryJob=(await rpc("select public.marketing_claim_jobs('fixture@example.invalid') r"))[0];
+await db.query('select public.marketing_finish_job($1,$2,false,$3)',[retryJob.id,retryJob.lease,'RESEND_429']);
+assert.equal((await rpc("select public.marketing_claim_jobs('fixture@example.invalid') r")).length,0);
+await db.query("update public.marketing_jobs set next_attempt_at=now()-interval '1 second' where id=$1",[retryJob.id]);
+const again=(await rpc("select public.marketing_claim_jobs('fixture@example.invalid') r"))[0];assert.equal(again.id,retryJob.id);assert.deepEqual(again.payload,retryJob.payload);assert.notEqual(again.lease,retryJob.lease);
+await mutate('post','update',{...post,status:'idea'},retryPost.id,retryPost.revision);
+assert.equal(await rpc('select public.marketing_job_valid($1,$2) r',[again.id,again.lease]),false);
+await db.query('select public.marketing_finish_job($1,$2,true)',[again.id,again.lease]);
+assert.equal((await db.query('select status from public.marketing_jobs where id=$1',[again.id])).rows[0].status,'cancelled');
+const plan=core.initialPlan('2028-02-01',[{id:'nacar',es:{name:'Nácar'}}]);await mutate('plan','create',plan);await mutate('plan','create',plan);
+assert.equal((await db.query("select count(*)::int n from public.marketing_posts where seed_key is not null")).rows[0].n,30);
+assert.equal((await rpc('select public.marketing_data($1) r',[other])).notifications.length,0);
+// Acquisition reads only confirmed positive Stripe payments, excluding free/test accounts.
+const invitation='33333333-3333-4333-8333-333333333333';
+await db.query("insert into public.invitation_drafts(id,owner_id,design_id) values($1,$2,'nacar')",[invitation,owner]);
+await db.query("insert into public.invitations(id,owner_id,design_id) values($1,$2,'nacar') on conflict do nothing",[invitation,owner]);
+for(const [payment,amount,status] of [['pi_real_fixture',7900,'paid'],['cs_free_fixture',0,'paid'],['pi_pending_fixture',7900,'pending']]){
+ const order=(await db.query("insert into public.orders(owner_id,invitation_id,total_minor,currency,status) values($1,$2,$3,'USD',$4) returning id",[owner,invitation,amount,status])).rows[0].id;
+ await db.query("insert into public.payments(order_id,provider,provider_payment_id,amount_minor,currency) values($1,'stripe',$2,$3,'USD')",[order,payment,amount]);
+}
+assert.equal((await rpc('select public.marketing_data($1) r',[owner])).sales.length,1);
+await mutate('contact','create',core.contactPayload({alias:'Fixture',role:'tester',status:'testing',owner_id:owner}));
+assert.equal((await rpc('select public.marketing_data($1) r',[owner])).sales.length,0);
+await db.exec('set role authenticated');await assert.rejects(()=>db.query('select * from public.marketing_posts'),/permission denied/);await assert.rejects(()=>db.query('select public.marketing_data($1)',[owner]),/permission denied/);await db.exec('reset role');
+await db.close();console.log('PASS marketing SQL: persistence, repeatable plan, Bogotá payload, one-hour immediate reminder, duplicate processing, copy edit, schedule changes, skip/delete, optimistic conflicts and browser isolation');

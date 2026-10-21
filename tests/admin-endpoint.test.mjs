@@ -74,3 +74,11 @@ test('admin order views whitelist bucket/visibility and actions use verified act
  assert.equal(res.code,200);assert.equal(f.calls[1].args.actor,ADMIN.id);assert.equal(f.calls[1].name,'admin_manage_order');
  const invalid=fixture();assert.equal((await run(invalid,{method:'POST',body:{action:'manage-order',id:'11111111-1111-4111-8111-111111111111',operation:'purge'}})).code,400);assert.equal(invalid.calls.length,0);
 });
+
+test('Marketing remains behind existing admin authorization and rejects GET mutations',async()=>{
+ for(const opts of [{admins:[]},{user:null},{user:{id:'x',email:'customer@example.invalid'}}]){
+  const f=fixture(opts),res=await run(f,{query:{action:'marketing-data'}});assert.notEqual(res.code,200);assert.equal(f.calls.length,0);
+ }
+ const f=fixture(),res=await run(f,{query:{action:'marketing-save'}});assert.equal(res.code,400);assert.equal(f.calls.length,0);
+ const own=fixture();const saved=await run(own,{method:'POST',body:{action:'marketing-save',actor:'forged',entity:'settings',operation:'update',payload:{lead_minutes:60,report_currency:'USD'}}});assert.equal(saved.code,200);assert.equal(own.calls[0].args.actor,ADMIN.id);assert.equal(own.calls[0].args.payload.destination,'hola@invitesse.com');assert.equal(own.calls[0].args.payload.email_enabled,false);
+});
