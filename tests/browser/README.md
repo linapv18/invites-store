@@ -45,3 +45,5 @@ Las fuentes están alojadas localmente. El build agrupa los scripts de demos con
 `python tests/browser/guest_rsvp.py` verifica las invitaciones publicadas con la interfaz de cada demo, datos de familia ficticios, guardado/reintento, conservación de dieta, portada sin CTA de RSVP y navegación interna del sandbox. Intercepta todas las peticiones; no abre enlaces de invitados reales ni escribe en producción. Requiere un build local previo.
 
 `python tests/browser/invitation_loading.py` comprueba el loader accesible, movimiento reducido, solicitudes paralelas de plantilla/archivos, deduplicación, ausencia del SDK de cuentas y recuperación ante errores. Usa únicamente archivos y solicitudes simuladas.
+
+`python tests/browser/guest_calendar.py` descarga realmente el archivo .ics desde una invitación aislada en español e inglés. Comprueba hora de Bogotá, lugar y ausencia del token privado en el archivo; no consulta ni modifica invitaciones reales.

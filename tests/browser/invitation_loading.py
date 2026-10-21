@@ -36,7 +36,7 @@ async def main():
   assert await page.locator('body').get_attribute('aria-busy')=='false'
   assert '/assets/backend/client.js' not in requests
   assert not any('/auth/v1/' in path for path in requests)
-  assert await page.locator('#invitationFrame').get_attribute('sandbox')=='allow-scripts allow-popups allow-popups-to-escape-sandbox'
+  assert await page.locator('#invitationFrame').get_attribute('sandbox')=='allow-scripts allow-popups allow-popups-to-escape-sandbox allow-downloads'
   print('PASS styled loader, reduced motion, parallel template/assets, asset deduplication, no account SDK/auth calls, sandbox and ready handshake',flush=True)
   await page.close();failure=await browser.new_page()
   async def failed_route(r):
