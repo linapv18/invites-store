@@ -1,0 +1,8 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import vm from 'node:vm';
+import {readFileSync} from 'node:fs';
+const source=readFileSync('assets/brand/guest-client.js','utf8');
+function fixture(ok=true){const calls=[];const window={INVITESSE_SUPABASE_CONFIG:{url:'https://fixture.supabase.co',publishableKey:'sb_publishable_fixture'}};vm.runInNewContext(source,{window,AbortSignal,fetch:async(url,options)=>{calls.push({url,options});return {ok,json:async()=>({revision:2})};}});return {calls,backend:window.InvitesseGuestBackend};}
+test('guest RPC transport uses capability body and no account session or browser credentials',async()=>{const {calls,backend}=fixture();await backend.guests.open('private-token');await backend.guests.submit('private-token',[{id:'guest',attendance:'attending'}],'Message',1,'request-id');await backend.invitations.public('ana-leo');assert.equal(calls.length,3);for(const {url,options} of calls){assert.equal(options.credentials,'omit');assert.equal(options.cache,'no-store');assert.ok(!url.includes('private-token'));assert.equal(options.headers.apikey,'sb_publishable_fixture');}assert.equal(calls[0].url,'https://fixture.supabase.co/rest/v1/rpc/get_guest_invitation');assert.deepEqual(JSON.parse(calls[1].options.body),{raw_token:'private-token',answers:[{id:'guest',attendance:'attending'}],response_message:'Message',expected_revision:1,request_id:'request-id'});assert.equal(calls[2].url,'https://fixture.supabase.co/rest/v1/rpc/get_published_invitation');});
+test('failed guest requests remain failures instead of fabricated invitations or receipts',async()=>{await assert.rejects(()=>fixture(false).backend.guests.open('token'),/INVITATION_REQUEST_FAILED/);});

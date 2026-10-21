@@ -1,7 +1,7 @@
 // Runs inside an opaque sandbox; only the parent possesses the private guest token.
 (function(){
  function ready(){
-  var p=window.InvitessePublication;if(!p||document.documentElement.dataset.replyBound)return;document.documentElement.dataset.replyBound='true';
+  var p=window.InvitessePublication;if(!p||document.documentElement.dataset.replyBound)return;document.documentElement.dataset.replyBound='true';parent.postMessage({invitesse:'invitation-ready'},'*');
   var en=p.language==='en',pending=null,replaying=false;
   document.querySelectorAll('.demo-bar,[data-open-panel],.lz-theme-bar,.lz-palette,.demo-note,.r-demo').forEach(function(e){e.hidden=true;e.style.display='none';});
   // A <base> is required for assets, so fragment links must scroll locally explicitly.

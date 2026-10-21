@@ -14,10 +14,10 @@ async def main():
     fixture={'design':design,'content':{'n1':'Ana','n2':'Leo','date':'2028-05-15','invitationLanguage':lang,'rsvpDiet':True,'rsvpNote':True},'household':{'name':'Familia fixture'},'guests':[{'id':'guest-fixture','name':'Persona fixture','attendance':None,'dietary_notes':'Sin gluten'}],'response':{'revision':0,'message':''}}
     if design=='encaje':fixture['guests'][0]['name']+=' ApellidoExtensoSinEspaciosParaVerificarAjusteEnPantallasPequeñas'
     initial_fixture=json.loads(json.dumps(fixture))
-    sdk='window.InvitesseBackend={guests:{open:async()=>('+json.dumps(fixture)+'),submit:async function(...args){window.lastReply=args;window.calls=(window.calls||0)+1;if(window.failReply)throw Error("fixture");return {revision:1};}}};'
+    sdk='window.InvitesseGuestBackend={guests:{open:async()=>('+json.dumps(fixture)+'),submit:async function(...args){window.lastReply=args;window.calls=(window.calls||0)+1;if(window.failReply)throw Error("fixture");return {revision:1};}}};'
     async def route(r):
      path=urlsplit(r.request.url).path
-     if path=='/assets/backend/client.js':
+     if 'guest-client.' in path or path=='/assets/brand/guest-client.js':
       fresh=sdk.replace(json.dumps(initial_fixture),json.dumps(fixture))
       return await r.fulfill(content_type='application/javascript',body=fresh)
      file=DIST/path.lstrip('/')
