@@ -134,3 +134,10 @@ button,input,select,textarea{font:inherit;color:inherit}
 .ad-note{margin:0;padding:12px 14px;border-radius:12px;background:#F6F1EE;font-size:13px;color:#5B4F55}
 .ad-toast{position:fixed;left:50%;bottom:24px;translate:-50% 0;padding:12px 18px;border-radius:99px;background:var(--plum);color:var(--paper);font-size:13px;box-shadow:0 10px 30px -10px #0007;z-index:10}
 @media(max-width:820px){.ad-nav{flex-basis:100%;padding:16px;gap:14px}.ad-nav nav{display:flex;flex-wrap:wrap;gap:4px}.ad-nav small{display:none}.ad-me{margin-top:0}.ad-head h1{font-size:36px}}
+/* Store operations: compact navigation, readable lists and explicit confirmation. */
+@media(min-width:821px){.ad{display:grid;grid-template-columns:232px minmax(0,1fr)}.ad-nav{position:sticky;top:0;height:100dvh}.ad-main{padding-top:28px}.ad-head h1{font:600 30px/1.2 var(--sans);letter-spacing:-.035em}.ad-detail{position:sticky;top:24px;max-height:calc(100dvh - 48px);overflow:auto}}
+.ad-confirm{width:min(480px,calc(100% - 32px));padding:28px;border:1px solid var(--line2);border-radius:18px;color:var(--plum);background:var(--card);box-shadow:0 24px 80px #0003}
+.ad-confirm::backdrop{background:#21151dcc;backdrop-filter:blur(3px)}
+.ad-confirm form{display:flex;flex-direction:column;gap:18px}.ad-confirm h2,.ad-confirm p{margin:0}.ad-confirm h2{font-size:22px}.ad-confirm .ad-tools{justify-content:flex-end}
+.ad-table tbody tr:focus-visible{outline:2px solid var(--lacre);outline-offset:-2px}
+@media(max-width:820px){.ad-nav nav{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));width:100%}.ad-nav .ad-link{font-size:12px}.ad-detail{width:100%}}

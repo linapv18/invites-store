@@ -3,6 +3,7 @@
 // Lee y escribe con funciones admin_* de la base (solo service_role); nunca expone la clave secreta ni consultas libres.
 const runtime=require('../lib/payments/runtime');
 const {tiers:PRICES}=require('../lib/payments/prices.json');
+const {closeUnpaidCheckout}=require('../lib/payments/admin-orders');
 const uuid=/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/i;
 const TIERS=['esencial','signature','luxury'];
 
@@ -31,7 +32,7 @@ function codePayload(b) {
  return out;
 }
 
-function createHandler({adminClient=runtime.adminClient,userFor=runtime.userFor,admins=allowedEmails}={}) {
+function createHandler({adminClient=runtime.adminClient,userFor=runtime.userFor,admins=allowedEmails,stripeClient=runtime.stripeClient}={}) {
  return async function handler(req,res) {
   runtime.headers(res);
   if(req.method!=='GET' && req.method!=='POST') { res.setHeader('Allow','GET, POST'); return res.status(405).json({error:'METHOD_NOT_ALLOWED'}); }
@@ -52,7 +53,7 @@ function createHandler({adminClient=runtime.adminClient,userFor=runtime.userFor,
     if(action==='codes') return res.status(200).json(await runtime.unwrap(admin.rpc('admin_codes')));
     if(action==='order') { if(!uuid.test(q.id || '')) return res.status(400).json({error:'INVALID_REQUEST'}); return res.status(200).json(await runtime.unwrap(admin.rpc('admin_order',{target:q.id}))); }
     if(action==='orders') {
-     const filter={};
+     const filter={bucket:['orders','drafts','all'].includes(q.bucket)?q.bucket:'orders',visibility:['active','archived','trash'].includes(q.visibility)?q.visibility:'active'};
      if(['paid','pending','refunded','cancelled'].includes(q.status)) filter.status=q.status;
      if(['COP','USD'].includes(q.currency)) filter.currency=q.currency;
      if(TIERS.includes(q.tier)) filter.tier=q.tier;
@@ -61,6 +62,16 @@ function createHandler({adminClient=runtime.adminClient,userFor=runtime.userFor,
      return res.status(200).json(await runtime.unwrap(admin.rpc('admin_orders',{filter})));
     }
     return res.status(400).json({error:'INVALID_REQUEST'});
+   }
+   if(action==='manage-order') {
+    if(!uuid.test(b.id || '') || !['archive','delete','restore'].includes(b.operation))return res.status(400).json({error:'INVALID_REQUEST'});
+    let expected_status;
+    if(b.operation==='delete') {
+     const order=await runtime.unwrap(admin.from('orders').select('id,status,created_at').eq('id',b.id).single());
+     if(order.status==='pending')await closeUnpaidCheckout(admin,stripeClient(),order);
+     expected_status=order.status==='pending'?'cancelled':order.status;
+    }
+    return res.status(200).json(await runtime.unwrap(admin.rpc('admin_manage_order',{target:b.id,operation:b.operation,actor:user.id,...(expected_status?{expected_status}:{})})));
    }
    if(action==='create-code') return res.status(201).json(await runtime.unwrap(admin.rpc('admin_save_code',{payload:codePayload(b)})));
    if(action==='toggle-code') {
@@ -72,7 +83,7 @@ function createHandler({adminClient=runtime.adminClient,userFor=runtime.userFor,
   } catch(e) {
    const m=e.message || '';
    if(m.includes('AUTH_REQUIRED') || m.includes('EMAIL_NOT_CONFIRMED')) return res.status(401).json({error:'AUTH_REQUIRED'});
-   for(const [k,code] of [['INVALID_REQUEST',400],['CODE_EXISTS',409],['ORDER_NOT_FOUND',404],['CODE_NOT_FOUND',404]]) if(m.includes(k)) return res.status(code).json({error:k});
+   for(const [k,code] of [['INVALID_REQUEST',400],['ORDER_STATE_CHANGED',409],['CHECKOUT_STILL_OPEN',409],['CHECKOUT_BEING_PREPARED',409],['PAYMENT_PROCESSING',409],['ORDER_JUST_PAID',409],['PAYMENT_STATE_UNAVAILABLE',409],['ORDER_IN_TRASH',409],['CODE_EXISTS',409],['ORDER_NOT_FOUND',404],['CODE_NOT_FOUND',404]]) if(m.includes(k)) return res.status(code).json({error:k});
    if(m.includes('PAYMENTS_NOT_CONFIGURED')) return res.status(503).json({error:'ADMIN_NOT_CONFIGURED'});
    console.error('invitesse.admin.failure',{code:/^[a-zA-Z0-9_]{1,48}$/.test(e.code || '')?e.code:'UNAVAILABLE'});
    return res.status(503).json({error:'ADMIN_UNAVAILABLE'});

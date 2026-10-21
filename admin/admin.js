@@ -1,6 +1,6 @@
 /* Panel de administración de Invitesse (/admin/).
    Acceso: correo y contraseña de Supabase; el servidor (api/admin.js) solo responde si el correo está en ADMIN_EMAILS.
-   Vistas por hash: #resumen, #ordenes, #codigos, #analiticas. Todo lo que viene de la base se escapa antes de pintarse. */
+   Vistas por hash: inicio, pedidos, borradores, archivados, papelera, descuentos y analíticas. Todo lo que viene de la base se escapa antes de pintarse. */
 (function () {
   'use strict';
   var root = document.getElementById('admin');
@@ -16,9 +16,11 @@
     left: '<path d="M15 6l-6 6 6 6"/>', right: '<path d="M9 6l6 6-6 6"/>', ext: '<path d="M14 4h6v6M20 4l-9 9M18 14v6H4V6h6"/>'
   };
   var svg = function (k, s) { return '<svg width="' + (s || 18) + '" height="' + (s || 18) + '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + ICON[k] + '</svg>'; };
-  var VIEWS = [['resumen', 'Resumen'], ['ordenes', 'Órdenes'], ['codigos', 'Códigos de descuento'], ['analiticas', 'Analíticas']];
-  var STATUS = { paid: 'Pagada', pending: 'Pendiente', refunded: 'Reembolsada', cancelled: 'Cancelada' };
+  ICON.borradores=ICON.ordenes; ICON.archivados=ICON.ordenes; ICON.papelera='<path d="M3 6h18M9 6V3h6v3M5 6l1 15h12l1-15M10 10v7M14 10v7"/>';
+  var VIEWS = [['resumen', 'Inicio'], ['ordenes', 'Pedidos'], ['borradores', 'Borradores de pedido'], ['archivados', 'Archivados'], ['papelera', 'Papelera'], ['codigos', 'Códigos de descuento'], ['analiticas', 'Analíticas']];
+  var STATUS = { paid: 'Pagado', pending: 'Pendiente', refunded: 'Reembolsado', cancelled: 'Cancelado' };
   var TIER = { esencial: 'Esencial', signature: 'Signature', luxury: 'Luxury' };
+  var renderEpoch=0;
   var state = { email: '', days: 30, cur: 'COP', orders: { status: '', currency: '', tier: '', q: '', offset: 0 }, selected: null, kind: 'percent', badge: 0 };
 
   var designOf = function (id) { var d = CAT && CAT.designs.filter(function (x) { return x.id === id; })[0]; return d ? d.es.name : id || '—'; };
@@ -43,11 +45,12 @@
 
   async function token() { var s = await B.client.auth.getSession(); return s.data.session && s.data.session.access_token; }
   async function api(action, params, body) {
-    var t = await token(); if (!t) throw Object.assign(new Error('AUTH_REQUIRED'), { status: 401 });
+    var requestedView = view(), requestedEpoch=renderEpoch; var t = await token(); if (!t) throw Object.assign(new Error('AUTH_REQUIRED'), { status: 401 });
     var url = '/api/admin/?action=' + encodeURIComponent(action) + (params ? '&' + new URLSearchParams(params).toString() : '');
     var r = await fetch(body ? '/api/admin/' : url, { method: body ? 'POST' : 'GET', cache: 'no-store', headers: Object.assign({ Authorization: 'Bearer ' + t }, body ? { 'Content-Type': 'application/json' } : {}), body: body ? JSON.stringify(Object.assign({ action: action }, body)) : undefined });
     var j = await r.json().catch(function () { return {}; });
     if (!r.ok) throw Object.assign(new Error(j.error || 'ADMIN_UNAVAILABLE'), { status: r.status });
+    if(!body && action !== 'me' && (requestedView !== view() || requestedEpoch !== renderEpoch)) throw Error('STALE_VIEW');
     return j;
   }
 
@@ -94,7 +97,7 @@
     var v = view();
     return '<div class="ad"><aside class="ad-nav"><a class="iv-wm-link" href="#resumen" aria-label="Invitesse, resumen" style="text-decoration:none">' + WM + '</a>' +
       '<nav aria-label="Administración"><small>Panel</small>' + VIEWS.map(function (x) {
-        return '<a class="ad-link" href="#' + x[0] + '"' + (x[0] === v ? ' aria-current="page"' : '') + '>' + svg(x[0]) + esc(x[1]) + (x[0] === 'ordenes' && state.badge ? '<span class="ad-badge">' + state.badge + '</span>' : '') + '</a>';
+        return '<a class="ad-link" href="#' + x[0] + '"' + (x[0] === v ? ' aria-current="page"' : '') + '>' + svg(x[0]) + esc(x[1]) + (x[0] === 'borradores' && state.badge ? '<span class="ad-badge">' + state.badge + '</span>' : '') + '</a>';
       }).join('') + '</nav>' +
       '<div class="ad-me"><span><b>Admin</b><em>' + esc(state.email) + '</em></span><button type="button" data-out>Salir</button></div></aside>' +
       '<main class="ad-main" id="main" tabindex="-1"><div class="ad-wrap">' + content + '</div></main></div>';
@@ -109,18 +112,19 @@
     var d = root.querySelector('[data-days]'); if (d) d.addEventListener('change', function () { state.days = +d.value; render(); });
   }
   async function render() {
-    var v = view(); loading();
+    var v = view(); renderEpoch++; loading();
     try {
       if (v === 'resumen') await renderSummary();
-      else if (v === 'ordenes') await renderOrders();
+      else if (['ordenes','borradores','archivados','papelera'].includes(v)) await renderOrders();
       else if (v === 'codigos') await renderCodes();
       else await renderAnalytics();
     } catch (e) {
+      if(e.message==='STALE_VIEW')return;
       if (e.status === 401) return login('Tu sesión terminó. Vuelve a entrar.');
       root.innerHTML = shell(head('Algo falló', 'Panel', '') + '<p class="ad-error" role="alert">No se pudieron cargar los datos. Inténtalo de nuevo en un momento.</p>'); bindShell();
     }
   }
-  window.addEventListener('hashchange', function () { if (state.email) render(); });
+  window.addEventListener('hashchange', function () { if (state.email) {state.orders.status='';state.orders.offset=0;state.selected=null;render();} });
 
   /* ---------- Resumen ---------- */
   async function renderSummary() {
@@ -136,14 +140,14 @@
           '<text x="' + (x + 24) + '" y="216" text-anchor="middle" font-size="11" fill="#71616B" font-family="Geist, sans-serif">' + esc(new Date(w.week).toLocaleDateString('es-CO', { day: 'numeric', month: 'short' })) + '</text>'; }).join('') + '</svg>'
       : '<p class="ad-empty">Todavía no hay pagos en ' + cur + ' en este periodo.</p>';
     var todo = [];
-    if (s.pending_stale) todo.push(['#ordenes', '#C08A3E', s.pending_stale + (s.pending_stale === 1 ? ' pago pendiente' : ' pagos pendientes'), 'Checkout abierto hace más de 1 hora']);
+    if (s.pending_stale) todo.push(['#borradores', '#C08A3E', s.pending_stale + (s.pending_stale === 1 ? ' checkout pendiente' : ' checkouts pendientes'), 'Sin pago confirmado; revisar en Borradores de pedido']);
     if (s.paid_unpublished) todo.push(['#ordenes', '#71616B', s.paid_unpublished + (s.paid_unpublished === 1 ? ' invitación pagada sin publicar' : ' invitaciones pagadas sin publicar'), 'Podría necesitar ayuda']);
     (s.codes_ending || []).forEach(function (c) { todo.push(['#codigos', '#B7A38A', c.code + ' vence ' + date(c.ends_at), 'Usado ' + c.uses + (c.max_uses ? ' de ' + c.max_uses : '') + ' veces']); });
     todo.push(['mailto:hola@invitesse.com', '#674A60', 'Cotizaciones a medida', 'Llegan a hola@invitesse.com']);
-    var html = head('Resumen', 'Últimos ' + state.days + ' días', '<div class="ad-seg" role="group" aria-label="Moneda">' + ['COP', 'USD'].map(function (c) { return '<button type="button" data-cur="' + c + '" aria-pressed="' + (c === cur) + '">' + c + '</button>'; }).join('') + '</div>' + periodSelect()) +
+    var html = head('Inicio', 'Ventas de los últimos ' + state.days + ' días', '<div class="ad-seg" role="group" aria-label="Moneda">' + ['COP', 'USD'].map(function (c) { return '<button type="button" data-cur="' + c + '" aria-pressed="' + (c === cur) + '">' + c + '</button>'; }).join('') + '</div>' + periodSelect()) +
       '<section class="ad-kpis" aria-label="Indicadores">' +
-        '<article class="ad-kpi dark"><span class="ad-k">Ingresos</span><b>' + money(rev.total, cur) + '</b><span>' + cur + ' · ' + rev.orders + (rev.orders === 1 ? ' orden pagada' : ' órdenes pagadas') + '</span>' + (revOther ? '<span>Además ' + money(revOther.total, other) + '</span>' : '') + '</article>' +
-        '<article class="ad-kpi"><span class="ad-k">Órdenes pagadas</span><b>' + (s.paid || 0) + '</b><span>' + (s.discounted || 0) + ' con código de descuento</span></article>' +
+        '<article class="ad-kpi dark"><span class="ad-k">Ingresos</span><b>' + money(rev.total, cur) + '</b><span>' + cur + ' · ' + rev.orders + (rev.orders === 1 ? ' pedido pagado' : ' pedidos pagados') + '</span>' + (revOther ? '<span>Además ' + money(revOther.total, other) + '</span>' : '') + '</article>' +
+        '<article class="ad-kpi"><span class="ad-k">Pedidos pagados</span><b>' + (s.paid || 0) + '</b><span>' + (s.discounted || 0) + ' con código de descuento</span></article>' +
         '<article class="ad-kpi"><span class="ad-k">Invitaciones publicadas</span><b>' + (s.published || 0) + '</b><span>' + (s.paid_unpublished || 0) + ' pagadas sin publicar</span></article>' +
         '<article class="ad-kpi"><span class="ad-k">Confirmaciones</span><b>' + (s.responses || 0) + '</b><span>' + (s.attending || 0) + ' asistirán · ' + (s.households || 0) + ' familias invitadas</span></article>' +
       '</section>' +
@@ -152,7 +156,7 @@
           var n = tiers[t] || 0, pct = tierTotal ? Math.round(100 * n / tierTotal) : 0;
           return '<div class="ad-bar"><div>' + tierTag(t) + '<b>' + n + ' · ' + pct + ' %</b></div><i><span style="width:' + pct + '%;background:' + (t === 'luxury' ? '#B7A38A' : t === 'signature' ? '#674A60' : '#9C8D96') + '"></span></i></div>';
         }).join('') + '</div></section></div>' +
-      '<div class="ad-row"><section class="ad-card wide"><div class="ad-head" style="align-items:baseline"><h2>Últimas órdenes</h2><a href="#ordenes">Ver todas</a></div>' + ordersTable(s.recent || [], false) + '</section>' +
+      '<div class="ad-row"><section class="ad-card wide"><div class="ad-head" style="align-items:baseline"><h2>Últimos pedidos</h2><a href="#ordenes">Ver todos</a></div>' + ordersTable(s.recent || [], false) + '</section>' +
         '<section class="ad-card ad-todo"><h2>Para revisar</h2>' + todo.map(function (t) { return '<a href="' + esc(t[0]) + '"><span class="dot" style="background:' + t[1] + '" aria-hidden="true"></span><span><b>' + esc(t[2]) + '</b><small>' + esc(t[3]) + '</small></span></a>'; }).join('') + '</section></div>';
     root.innerHTML = shell(html); bindShell();
     root.querySelectorAll('[data-cur]').forEach(function (b) { b.addEventListener('click', function () { state.cur = b.dataset.cur; render(); }); });
@@ -167,13 +171,13 @@
         '<td><b>' + esc(shortId(r.id)) + '</b><small>' + esc(date(r.created_at, true)) + '</small></td>' +
         '<td><b>' + esc(couple(r)) + '</b><small>' + esc(r.email || '') + '</small></td>' +
         '<td>' + esc(designOf(r.design)) + '<small>' + tierTag(r.tier) + '</small></td>' +
-        '<td class="num">' + esc(money(r.total_minor, r.currency)) + (r.code ? '<small>' + esc(r.code) + '</small>' : '') + '</td>' +
+        '<td class="num">' + esc(money(r.total_minor, r.currency)) + ' ' + esc(r.currency) + (r.code ? '<small>' + esc(r.code) + '</small>' : '') + '</td>' +
         '<td>' + pill(r.status) + '</td><td>' + esc(inv) + (r.event_date ? '<small>Boda ' + esc(new Date(r.event_date + 'T12:00:00').toLocaleDateString('es-CO', { day: 'numeric', month: 'short', year: 'numeric' })) + '</small>' : '') + '</td></tr>';
     }).join('') + '</tbody></table></div>';
   }
   function bindOrderRows() {
     root.querySelectorAll('[data-order]').forEach(function (tr) {
-      var open = function () { state.selected = tr.dataset.order; if (view() !== 'ordenes') location.hash = 'ordenes'; else renderDetail(); };
+      var open = function () { var id=tr.dataset.order; if (!['ordenes','borradores','archivados','papelera'].includes(view())) {location.hash='ordenes';setTimeout(function(){state.selected=id;renderDetail();},0);} else {state.selected=id;renderDetail();} };
       tr.addEventListener('click', open);
       tr.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(); } });
     });
@@ -181,13 +185,15 @@
 
   /* ---------- Órdenes ---------- */
   async function renderOrders() {
-    var o = state.orders, params = { offset: o.offset };
+    var v=view(), drafts=v==='borradores', o = state.orders, params = { offset: o.offset, bucket:drafts?'drafts':v==='ordenes'?'orders':'all', visibility:v==='papelera'?'trash':v==='archivados'?'archived':'active' };
+    var title=drafts?'Borradores de pedido':v==='papelera'?'Papelera':v==='archivados'?'Archivados':'Pedidos';
+    var help=drafts?'Checkouts sin compra confirmada. Los pagos completados pasan automáticamente a Pedidos.':v==='papelera'?'Registros eliminados del panel. Puedes restaurarlos; los pagos y las analíticas conservan su historial.':v==='archivados'?'Pedidos y borradores que apartaste de las listas activas.':'Compras confirmadas y reembolsos. Los checkouts sin pagar están en Borradores de pedido.';
     ['status', 'currency', 'tier', 'q'].forEach(function (k) { if (o[k]) params[k] = o[k]; });
     var data = await api('orders', params), c = data.counts || {};
-    state.badge = c.pending || 0;
-    var chips = [['', 'Todas', c.all], ['paid', 'Pagadas', c.paid], ['pending', 'Pendientes', c.pending], ['refunded', 'Reembolsadas', c.refunded], ['cancelled', 'Canceladas', c.cancelled]];
+    if(drafts) state.badge = c.pending || 0;
+    var chips = [['','Todos',c.all]].concat(drafts?[['pending','Pendientes',c.pending],['cancelled','Cancelados',c.cancelled]]:v==='ordenes'?[['paid','Pagados',c.paid],['refunded','Reembolsados',c.refunded]]:[['paid','Pagados',c.paid],['pending','Pendientes',c.pending],['refunded','Reembolsados',c.refunded],['cancelled','Cancelados',c.cancelled]]);
     var from = data.total ? data.offset + 1 : 0, to = data.offset + data.rows.length;
-    var html = head('Órdenes', data.total + (data.total === 1 ? ' orden' : ' órdenes'), '') +
+    var html = head(title, data.total + (data.total === 1 ? ' registro' : ' registros'), '<button type="button" class="ad-btn" data-refresh>Actualizar</button>') + '<p class="ad-note">'+esc(help)+'</p>' +
       '<div class="ad-tools"><label class="ad-search">' + svg('search', 16) + '<span class="vh">Buscar</span><input data-q value="' + esc(o.q) + '" placeholder="Buscar por pareja, correo, código o número de orden"></label>' +
         '<div class="ad-chips" role="group" aria-label="Estado">' + chips.map(function (x) { return '<button type="button" class="ad-chip" data-status="' + x[0] + '" aria-pressed="' + (o.status === x[0]) + '">' + x[1] + ' ' + (x[2] || 0) + '</button>'; }).join('') + '</div>' +
         '<label class="ad-select">Gama<select data-tier><option value="">Todas</option>' + Object.keys(TIER).map(function (t) { return '<option value="' + t + '"' + (o.tier === t ? ' selected' : '') + '>' + TIER[t] + '</option>'; }).join('') + '</select></label>' +
@@ -196,6 +202,8 @@
         '<div class="ad-pager"><span>Mostrando ' + from + '–' + to + ' de ' + data.total + '</span><span class="ad-tools"><button type="button" class="ad-btn" data-page="-1" aria-label="Página anterior"' + (o.offset ? '' : ' disabled') + '>' + svg('left', 14) + '</button><button type="button" class="ad-btn" data-page="1" aria-label="Página siguiente"' + (to < data.total ? '' : ' disabled') + '>' + svg('right', 14) + '</button></span></div></section>' +
         '<aside class="ad-card ad-detail" id="detail" aria-live="polite"><section><p class="ad-empty">Elige una orden para ver su detalle.</p></section></aside></div>';
     root.innerHTML = shell(html); bindShell(); bindOrderRows();
+    root.querySelector('[data-refresh]').addEventListener('click',render);
+    if(data.total && !data.rows.length && o.offset){o.offset=Math.max(0,o.offset-25);return renderOrders();}
     var q = root.querySelector('[data-q]'), timer;
     q.addEventListener('input', function () { clearTimeout(timer); timer = setTimeout(function () { o.q = q.value.trim(); o.offset = 0; render().then(function () { var n = root.querySelector('[data-q]'); n.focus(); n.setSelectionRange(n.value.length, n.value.length); }); }, 350); });
     root.querySelectorAll('[data-status]').forEach(function (b) { b.addEventListener('click', function () { o.status = b.dataset.status; o.offset = 0; render(); }); });
@@ -208,24 +216,41 @@
     var box = root.querySelector('#detail'); if (!box) return;
     root.querySelectorAll('[data-order]').forEach(function (tr) { tr.setAttribute('aria-selected', String(tr.dataset.order === state.selected)); });
     box.innerHTML = '<section><p class="ad-empty" role="status">Cargando la orden…</p></section>';
-    var r;
-    try { r = await api('order', { id: state.selected }); } catch (_) { box.innerHTML = '<section><p class="ad-error">No se pudo cargar esta orden.</p></section>'; return; }
+    var r, requestedId=state.selected;
+    try { r = await api('order', { id: requestedId }); if(state.selected!==requestedId || !box.isConnected)return; } catch (_) { box.innerHTML = '<section><p class="ad-error">No se pudo cargar esta orden.</p></section>'; return; }
     var items = (r.items || []).map(function (it) { return '<div class="line"><span>' + (it.design ? 'Diseño ' + esc(designOf(it.design)) + ' ' + tierTag(r.tier) : 'Complemento ' + esc(it.addon)) + '</span><span class="num">' + esc(money(it.unit_price_minor, r.currency)) + '</span></div>'; }).join('');
     var p = r.payment, ent = r.entitlement;
+    var stripeUrl=p?(p.id.indexOf('cs_')===0?'https://dashboard.stripe.com/checkout/sessions/':'https://dashboard.stripe.com/payments/')+encodeURIComponent(p.id):null;
     box.innerHTML =
       '<section><div class="line"><span class="ad-k">Orden ' + esc(shortId(r.id)) + '</span>' + pill(r.status) + '</div><h2>' + esc(couple(r)) + '</h2><span style="color:var(--mute);font-size:13px">' + esc(r.email || '') + (r.event_date ? ' · Boda el ' + esc(new Date(r.event_date + 'T12:00:00').toLocaleDateString('es-CO', { dateStyle: 'long' })) : '') + '</span></section>' +
       '<section><span class="ad-k">Detalle</span>' + items +
         (r.discount_minor ? '<div class="line" style="color:var(--ok)"><span style="color:var(--ok)">Código ' + esc(r.code || '') + '</span><span class="num">− ' + esc(money(r.discount_minor, r.currency)) + '</span></div>' : '') +
         '<div class="line" style="padding-top:10px;border-top:1px dashed var(--line2)"><b>Total</b><b style="font:500 20px var(--serif)">' + esc(money(r.total_minor, r.currency)) + ' ' + esc(r.currency) + '</b></div></section>' +
-      '<section><span class="ad-k">Pago</span>' + (p ? '<div class="line"><span>Confirmado</span><span>' + esc(date(p.verified_at, true)) + '</span></div><div class="line"><span>' + esc(p.provider === 'stripe' ? 'Stripe' : p.provider) + '</span><a href="https://dashboard.stripe.com/payments/' + encodeURIComponent(p.id) + '" target="_blank" rel="noopener">' + esc(p.id.slice(0, 10)) + '…</a></div>' : '<p class="ad-empty">Todavía no hay pago confirmado.</p>') + '</section>' +
+      '<section><span class="ad-k">Pago</span>' + (p ? '<div class="line"><span>Confirmado</span><span>' + esc(date(p.verified_at, true)) + '</span></div><div class="line"><span>' + esc(p.provider === 'stripe' ? 'Stripe' : p.provider) + '</span><a href="' + stripeUrl + '" target="_blank" rel="noopener">' + esc(p.id.slice(0, 10)) + '…</a></div>' : '<p class="ad-empty">Todavía no hay pago confirmado.</p>') + '</section>' +
       '<section><span class="ad-k">Invitación</span>' +
-        '<div class="line"><span>Estado</span><span>' + esc(r.invitation_state === 'published' ? 'Publicada' : r.invitation_state === 'paused' ? 'Pausada' : 'Sin publicar') + '</span></div>' +
+        '<div class="line"><span>Diseño actual</span><span>'+esc(designOf(r.selected_design || r.design))+'</span></div><div class="line"><span>Estado</span><span>' + esc(r.invitation_state === 'published' ? 'Publicada' : r.invitation_state === 'paused' ? 'Pausada' : 'Sin publicar') + '</span></div>' +
         '<div class="line"><span>Familias · invitados</span><span>' + (r.households || 0) + ' · ' + (r.guests || 0) + '</span></div>' +
         '<div class="line"><span>Confirmaciones</span><span>' + (r.responses || 0) + ' (' + (r.attending || 0) + ' asistirán)</span></div>' +
         (ent ? '<div class="line"><span>Acceso hasta</span><span>' + esc(ent.revoked_at ? 'Retirado ' + date(ent.revoked_at) : date(ent.expires_at)) + '</span></div>' : '') + '</section>' +
       '<section class="actions">' + (r.email ? '<a class="ad-btn dark" href="mailto:' + encodeURIComponent(r.email) + '">Escribir a la pareja</a>' : '') +
-        (p ? '<a class="ad-btn" href="https://dashboard.stripe.com/payments/' + encodeURIComponent(p.id) + '" target="_blank" rel="noopener">Ver en Stripe ' + svg('ext', 14) + '</a>' : '') +
-        (p && r.status === 'paid' ? '<a class="ad-btn danger" href="https://dashboard.stripe.com/payments/' + encodeURIComponent(p.id) + '" target="_blank" rel="noopener" title="El reembolso se hace en Stripe; el acceso se retira solo al confirmarse">Reembolsar en Stripe</a>' : '') + '</section>';
+        (!p && r.checkout_session_id?'<a class="ad-btn" href="https://dashboard.stripe.com/checkout/sessions/'+encodeURIComponent(r.checkout_session_id)+'" target="_blank" rel="noopener">Ver checkout en Stripe</a>':'') +
+        (p ? '<a class="ad-btn" href="' + stripeUrl + '" target="_blank" rel="noopener">Ver en Stripe ' + svg('ext', 14) + '</a>' : '') +
+        (p && p.id.indexOf('pi_')===0 && r.status === 'paid' ? '<a class="ad-btn danger" href="' + stripeUrl + '" target="_blank" rel="noopener" title="El reembolso se hace en Stripe; el acceso se retira solo al confirmarse">Reembolsar en Stripe</a>' : '') + '</section>' +
+      '<section class="actions" aria-label="Gestionar registro">'+(r.deleted_at || r.archived_at?'<button type="button" class="ad-btn" data-manage="restore">Restaurar</button>':'<button type="button" class="ad-btn" data-manage="archive">Archivar</button>')+(!r.deleted_at?'<button type="button" class="ad-btn danger" data-manage="delete">Eliminar</button>':'')+'</section><section><p class="ad-note">Eliminar mueve el registro a la papelera. No reembolsa pagos ni retira el acceso a una invitación comprada.</p><p class="ad-error" role="alert" data-manage-error hidden></p></section>';
+    box.querySelectorAll('[data-manage]').forEach(function(button){button.addEventListener('click',function(){confirmOrderAction(r,button.dataset.manage);});});
+  }
+
+  function confirmOrderAction(order,operation) {
+    var dialog=document.createElement('dialog');dialog.className='ad-confirm';
+    var label=operation==='delete'?'Eliminar':operation==='archive'?'Archivar':'Restaurar';
+    var description=operation==='delete'?(order.status==='pending'?'Se comprobará Stripe y se cerrará el checkout si sigue sin pagar. El registro se moverá a la papelera. Si el pago ya se completó, se actualizará primero y no se eliminará.':'Se moverá a la papelera. Podrás restaurarlo. El pago, la invitación y las analíticas se conservan.'):operation==='archive'?'Se apartará de la lista activa. Podrás restaurarlo desde Archivados.':'Volverá a Pedidos o Borradores de pedido según su estado de pago.';
+    dialog.innerHTML='<form method="dialog"><h2>'+label+' '+esc(shortId(order.id))+'?</h2><p>'+esc(description)+'</p><p class="ad-error" role="alert" hidden></p><div class="ad-tools"><button class="ad-btn" value="cancel">Volver</button><button class="ad-btn '+(operation==='delete'?'danger':'dark')+'" type="button" data-confirm>'+label+'</button></div></form>';
+    document.body.appendChild(dialog);dialog.addEventListener('close',function(){dialog.remove();});dialog.showModal();
+    dialog.querySelector('[data-confirm]').addEventListener('click',async function(){
+      var button=this;button.disabled=true;var err=dialog.querySelector('.ad-error');err.hidden=true;
+      try{await api('manage-order',null,{id:order.id,operation:operation});dialog.close();state.selected=null;toast(operation==='delete'?'Registro movido a la papelera':operation==='archive'?'Registro archivado':'Registro restaurado');await render();}
+      catch(e){var messages={ORDER_STATE_CHANGED:'El estado de pago cambió. Actualiza el pedido antes de continuar.',CHECKOUT_BEING_PREPARED:'El checkout se está preparando. Espera unos minutos y actualiza el pedido.',PAYMENT_PROCESSING:'Stripe está procesando el pago. Espera su confirmación antes de eliminar.',ORDER_JUST_PAID:'Stripe confirmó la compra. Cierra esta ventana y actualiza: el registro ahora está en Pedidos.',CHECKOUT_STILL_OPEN:'No se pudo cerrar el checkout. Actualiza e inténtalo de nuevo.'};err.textContent=messages[e.message]||'No se pudo completar la acción. No se eliminó el registro. Inténtalo de nuevo.';err.hidden=false;button.disabled=false;}
+    });
   }
 
   /* ---------- Códigos ---------- */

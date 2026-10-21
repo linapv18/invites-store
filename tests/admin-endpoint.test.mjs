@@ -38,7 +38,7 @@ test('the allowed account (case-insensitive) reads the summary for the requested
 
 test('order filters are whitelisted and search wildcards are stripped', async () => {
   const f = fixture(); await run(f, { query: { action: 'orders', status: 'deleted', currency: 'EUR', tier: 'luxury', q: ' %ana_ ', offset: '-5' } });
-  assert.deepEqual(f.calls[0].args.filter, { tier: 'luxury', q: 'ana', offset: 0, limit: 25 });
+  assert.deepEqual(f.calls[0].args.filter, { bucket:'orders', visibility:'active', tier: 'luxury', q: 'ana', offset: 0, limit: 25 });
   const bad = fixture(); const res = await run(bad, { query: { action: 'order', id: "1' or 1=1" } });
   assert.equal(res.code, 400); assert.equal(bad.calls.length, 0);
 });
@@ -65,4 +65,12 @@ test('writes from another site are refused and database errors map to safe codes
 test('admin can create a 100 percent code, never more than 100',async()=>{
  const f=fixture();const res=await run(f,{method:'POST',body:{action:'create-code',code:'REGALO100',kind:'percent',percent_off:100,tiers:['esencial','signature','luxury'],max_uses:1,once_per_customer:true}});
  assert.equal(res.code,201);assert.equal(f.calls[0].args.payload.percent_off,100);assert.equal(f.calls[0].args.payload.max_uses,1);
+});
+
+test('admin order views whitelist bucket/visibility and actions use verified actor',async()=>{
+ const f=fixture();await run(f,{query:{action:'orders',bucket:'drafts',visibility:'trash'}});
+ assert.equal(f.calls[0].args.filter.bucket,'drafts');assert.equal(f.calls[0].args.filter.visibility,'trash');
+ const res=await run(f,{method:'POST',body:{action:'manage-order',id:'11111111-1111-4111-8111-111111111111',operation:'archive',actor:'untrusted'}});
+ assert.equal(res.code,200);assert.equal(f.calls[1].args.actor,ADMIN.id);assert.equal(f.calls[1].name,'admin_manage_order');
+ const invalid=fixture();assert.equal((await run(invalid,{method:'POST',body:{action:'manage-order',id:'11111111-1111-4111-8111-111111111111',operation:'purge'}})).code,400);assert.equal(invalid.calls.length,0);
 });
