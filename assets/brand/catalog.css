@@ -164,3 +164,18 @@ legend{padding:0;margin-bottom:8px;font:600 12px/1.5 var(--iv-sans);letter-spaci
 /* Acceso al quiz de estilo (/quiz/) bajo el título del catálogo. */
 .quiz-link{display:inline-flex;align-items:center;gap:8px;min-height:44px;margin-top:6px;font-size:14px;color:var(--iv-ink);text-underline-offset:4px}
 .quiz-link svg{color:var(--iv-lacre)}
+/* Invitación al quiz de estilo dentro de la cuadrícula (después de la sexta tarjeta). */
+.quizcard{grid-column:1/-1;display:grid;grid-template-columns:minmax(0,300px) minmax(0,1fr);align-items:center;gap:40px;padding:34px 44px;border-radius:12px;background:#E9E0E3;color:var(--iv-ink)}
+.quizcard[hidden]{display:none}
+.quizcard-art{position:relative;height:220px}
+.quizcard-art img{position:absolute;top:22px;width:44%;height:176px;object-fit:cover;object-position:center;border-radius:10px;box-shadow:0 14px 30px #35243229}
+.quizcard-art img:nth-child(1){left:0;transform:rotate(-7deg)}
+.quizcard-art img:nth-child(3){right:0;transform:rotate(7deg)}
+.quizcard-art img:nth-child(2){z-index:1;top:0;left:50%;width:50%;height:220px;transform:translateX(-50%);border:3px solid #FCFAF7}
+.quizcard .k{margin:0;color:#674A60}
+.quizcard h3{margin:10px 0;font:500 36px/1.05 var(--iv-serif);letter-spacing:-.02em}
+.quizcard h3 i{color:#674A60}
+.quizcard-text>p:not(.k){margin:0 0 22px;max-width:460px;font-size:16px;line-height:1.6;color:#50454C}
+.quizcard .btn{display:inline-flex;align-items:center;gap:10px}
+@media(max-width:960px){.quizcard{grid-template-columns:minmax(0,220px) minmax(0,1fr);gap:28px;padding:28px}.quizcard-art{height:180px}.quizcard-art img{height:140px}.quizcard-art img:nth-child(2){height:180px}.quizcard h3{font-size:30px}}
+@media(max-width:600px){.quizcard{grid-template-columns:1fr;gap:18px;padding:26px 22px}.quizcard-art{max-width:260px;width:100%;margin:0 auto}.quizcard .btn{width:100%;justify-content:center}}

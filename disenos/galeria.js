@@ -12,6 +12,7 @@
       count: function (n, t) { return n === t ? t + ' diseños<span class="xs-hide"> · prueben sus demos</span>' : n + ' de ' + t + ' diseños'; }, empty: 'Ningún diseño coincide con esos filtros todavía.',
       customH: '¿Ninguno es el suyo?', customP: 'Diseñamos uno a la medida de su boda.', customA: 'Solicitar cotización',
       tailK: 'A la medida', tailH: 'Su invitación, <i>hecha desde cero.</i>', tailP: 'Una dirección visual y una apertura propias para su boda. Cuéntennos qué buscan y les enviamos una cotización.', tailA: 'Solicitar cotización', tailB: 'Ver cómo funciona',
+      quizK: 'Quiz de estilo · 1 minuto', quizH: '¿No saben cuál elegir? <i>Les ayudamos.</i>', quizP: 'Respondan seis preguntas sobre sus gustos y les mostramos el diseño que mejor encaja con su boda.', quizA: 'Hacer el quiz',
       foot: [['/', 'Inicio'], ['/#complementos', 'Complementos'], ['/#precios', 'Opciones'], ['/privacidad/', 'Privacidad'], ['/condiciones/', 'Condiciones'], ['/en/disenos/', 'English']], tagline: 'Invitaciones web de boda' },
     en: { kicker: 'The designs', title: 'Find the design <i>for your wedding.</i>', store: 'Home', designs: 'Designs', addons: 'Add-ons', pricing: 'Options', login: 'Log in', cta: 'Explore designs',
       search: 'Search designs', searchPh: 'Search by style, color or opening', opening: 'How it opens', all: 'All', tabsLbl: 'How the invitation opens',
@@ -20,6 +21,7 @@
       count: function (n, t) { return n === t ? t + ' designs<span class="xs-hide"> · try the demos</span>' : n + ' of ' + t + ' designs'; }, empty: 'No design matches those filters yet.',
       customH: 'None feels like yours?', customP: 'We design one just for your wedding.', customA: 'Request a quote',
       tailK: 'Custom', tailH: 'Your invitation, <i>made from scratch.</i>', tailP: 'A visual direction and opening created for your wedding. Tell us what you have in mind and we will send you a quote.', tailA: 'Request a quote', tailB: 'See how it works',
+      quizK: 'Style quiz · 1 minute', quizH: 'Not sure which one? <i>We can help.</i>', quizP: 'Answer six questions about what you love and we’ll show you the design that suits your wedding best.', quizA: 'Take the quiz',
       foot: [['/en/', 'Home'], ['/en/#add-ons', 'Add-ons'], ['/en/#precios', 'Options'], ['/en/privacy/', 'Privacy'], ['/en/terms/', 'Terms'], ['/disenos/', 'Español']], tagline: 'Wedding website invitations' }
   }[LANG];
   var C = window.LazoCatalog, $ = function (id) { return document.getElementById(id); };
@@ -56,6 +58,10 @@
   if (!$('grid').querySelector('.lz-card')) $('grid').innerHTML = ordered.map(function (d) { return C.card(d, LANG, 2); }).join('');
   $('grid').insertAdjacentHTML('beforeend',
     '<div class="tailcard" id="tail"><div><p class="k">' + S.tailK + '</p><h3>' + S.tailH + '</h3><p>' + esc(S.tailP) + '</p></div><div style="display: flex; flex-wrap: wrap; gap: 10px"><a class="btn" style="background: var(--iv-paper); color: var(--iv-ink)" href="' + (LANG === 'en' ? '/en/quote/' : '/cotizar/') + '">' + S.tailA + '</a><a class="btn" style="color: var(--iv-paper); box-shadow: inset 0 0 0 1.5px #F3EEE955" href="' + base + ('/#como') + '">' + S.tailB + '</a></div></div>');
+  // Invitación al quiz de estilo después de la sexta tarjeta (llena dos o tres filas completas); se oculta al filtrar o buscar.
+  var sixth = $('grid').querySelectorAll('.lz-card')[5];
+  if (sixth) sixth.insertAdjacentHTML('afterend', '<div class="quizcard" id="quizcard"><div class="quizcard-art" aria-hidden="true">' + ['rosa', 'glicina', 'jardin'].map(function (id) { return '<img src="/assets/brand/thumbs/' + id + '-280.webp" width="280" height="607" alt="" loading="lazy">'; }).join('') + '</div>' +
+    '<div class="quizcard-text"><p class="k">' + S.quizK + '</p><h3>' + S.quizH + '</h3><p>' + esc(S.quizP) + '</p><a class="btn btn-dark" href="' + base + '/quiz/">' + S.quizA + ARROW + '</a></div></div>');
   var cards = {}; $('grid').querySelectorAll('.lz-card').forEach(function (el) { cards[el.dataset.id] = el; });
   var words = {}; C.designs.forEach(function (d) {
     var t = d[LANG], w = [t.name, t.title, t.desc, t.opening, t.colors];
@@ -107,7 +113,7 @@
       b.setAttribute('aria-pressed', String(id ? sel.estilo.indexOf(id) >= 0 : !sel.estilo.length));
     });
     $('count').innerHTML = S.count(shown, total);
-    $('clear').hidden = !active; $('empty').hidden = shown > 0; $('tail').hidden = shown === 0;
+    $('clear').hidden = !active; $('empty').hidden = shown > 0; $('tail').hidden = shown === 0; if ($('quizcard')) $('quizcard').hidden = active > 0;
     $('ftoggle').innerHTML = FILTER + S.filters + (active ? ' <b style="display: inline-grid; place-items: center; min-width: 22px; height: 22px; padding: 0 6px; border-radius: 999px; background: var(--iv-ink); color: var(--iv-paper); font-size: 12px">' + active + '</b>' : '');
     $('filters').querySelector('[data-close]').textContent = S.show(shown);
     var p = new URLSearchParams(); if (text.trim()) p.set('q', text.trim());
