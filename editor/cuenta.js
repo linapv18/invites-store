@@ -33,7 +33,7 @@
       demoNote: 'Versión de prueba: las cuentas se guardan solo en este navegador. No usen una contraseña que usen en otros sitios.',
       err: { email: 'Escriban un correo válido.', short: 'La contraseña debe tener al menos 8 caracteres.', exists: 'Ya existe una cuenta con ese correo. Ingresen con su contraseña.',
         nouser: 'No encontramos una cuenta con ese correo.', wrong: 'La contraseña no es correcta.', match: 'Las contraseñas no coinciden.', storage: 'Este navegador no permite guardar la cuenta.' },
-      guestsK: 'Panel de invitados', guestsT: 'Sus invitados', guestsLead: 'Su lista de invitaciones y las personas que incluye cada una.',
+      guestsK: 'Su organización', guestsT: 'Panel de novios', guestsLead: 'Su lista de invitaciones y las personas que incluye cada una.',
       guestsOpen: 'Abrir panel', guestsNone: 'Aún sin invitados',
       guestsSum: function (n, p) { return n + (n === 1 ? ' invitación' : ' invitaciones') + ' · ' + p + (p === 1 ? ' persona' : ' personas'); },
       mine: 'Mis invitaciones', signedAs: 'Sesión iniciada como', edit: 'Editar', guest: 'Ver como invitado', notStarted: 'Aún sin editar',
@@ -56,7 +56,7 @@
       demoNote: 'Test version: accounts are stored only in this browser. Don’t use a password you use on other sites.',
       err: { email: 'Enter a valid email.', short: 'The password must be at least 8 characters.', exists: 'There is already an account with that email. Log in with your password.',
         nouser: 'We couldn’t find an account with that email.', wrong: 'That password isn’t right.', match: 'The passwords don’t match.', storage: 'This browser doesn’t allow saving the account.' },
-      guestsK: 'Guest panel', guestsT: 'Your guests', guestsLead: 'Your invitation list and the people each one includes.',
+      guestsK: 'Your planning', guestsT: 'Couple dashboard', guestsLead: 'Your invitation list and the people each one includes.',
       guestsOpen: 'Open panel', guestsNone: 'No guests yet',
       guestsSum: function (n, p) { return n + (n === 1 ? ' invitation' : ' invitations') + ' · ' + p + (p === 1 ? ' guest' : ' guests'); },
       mine: 'My invitations', signedAs: 'Signed in as', edit: 'Edit', guest: 'View as guest', notStarted: 'Not edited yet',
@@ -95,7 +95,7 @@
       own.map(function (d) {
         var list = ((invOf(d) || {}).invitations || []).filter(function (x) { return x && typeof x === 'object'; });
         var people = list.reduce(function (n, x) { return n + (Array.isArray(x.people) ? x.people.length : 0); }, 0);
-        return '<li><span class="ac-guests-d"><b>' + esc(S.names[d][0]) + '</b><span>' + esc(list.length ? S.guestsSum(list.length, people) : S.guestsNone) + '</span></span>' +
+        return '<li><span class="ac-guests-d"><b>' + esc(S.names[((invOf(d) || {}).design || d)][0]) + '</b><span>' + esc(list.length ? S.guestsSum(list.length, people) : S.guestsNone) + '</span></span>' +
           '<a class="ed-btn ed-btn-dark" href="' + editUrl(d) + '#invitados">' + icon + esc(S.guestsOpen) + '</a></li>';
       }).join('') + '</ul></section>';
   }
@@ -162,7 +162,7 @@
           var actions=active?'<a class="ed-btn ed-btn-dark" href="'+editUrl(d)+'">'+esc(S.edit)+'</a>':'<span class="ac-expired">'+(en?'Publication period ended':'Vigencia finalizada')+'</span><a class="ed-btn" href="mailto:hola@invitesse.com">'+(en?'Contact support':'Contactar soporte')+'</a>';
           if(active && c)actions+='<a class="ed-btn" href="'+guestUrl(d)+'" target="_blank" rel="noopener">'+esc(S.guest)+'</a>';
           return designCard(d,actions,sub);
-        }).join('')+'</div>':'<div class="ac-library-empty"><span class="ac-empty-mark" aria-hidden="true">♡</span><h2>'+(en?'Your invitation starts here.':'Su invitación empieza aquí.')+'</h2><p>'+(en?'You have not purchased an invitation yet. Explore the collection and find the design for your celebration.':'Aún no han comprado una invitación. Exploren la colección y encuentren el diseño para su celebración.')+'</p><a class="ed-btn ed-btn-dark" href="'+shop+'">'+browse+' <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>')+'</section>';
+        }).join('')+'</div>':'<div class="ac-library-empty"><span class="ac-empty-mark" aria-hidden="true">♡</span><h2>'+(en?'Your invitation starts here.':'Su invitación empieza aquí.')+'</h2><p>'+(en?'You have not purchased an invitation yet. Explore the collection and find the design for your celebration.':'Aún no han comprado una invitación. Exploren la colección y encuentren el diseño para su celebración.')+'</p><a class="ed-btn ed-btn-dark" href="'+shop+'">'+browse+' <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>')+'</section>'+ (own.filter(function(d){return A.canEdit(d);}).length?guestPanel(own.filter(function(d){return A.canEdit(d);})): '');
     }
     root.innerHTML = '<div class="ed">' + header() + '<div class="co-wrap ac-wrap">' + h + '</div></div>';
   }
