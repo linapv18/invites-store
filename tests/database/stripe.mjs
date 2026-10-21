@@ -149,8 +149,34 @@ for(const [design,currency] of [['clasico','COP'],['nacar','COP'],['encaje','COP
  assert.equal(await rpc('select public.invitation_is_enabled($1) r',[o.invitation_id]),true);
  const counts=(await db.query('select count(*)::integer n from public.payments where order_id=$1',[o.order_id])).rows[0];assert.equal(counts.n,1);
 }
+// A free Signature purchase keeps its original tier ceiling after downgrading.
+const choices=await rpc('select public.design_change_options($1,$2) r',[freeOwner,'nacar']);
+assert.equal(choices.ceiling_minor,19900000);assert.equal(choices.currency,'COP');
+assert.equal(choices.designs.find(x=>x.id==='clasico').allowed,true);
+assert.equal(choices.designs.find(x=>x.id==='jardin').allowed,true);
+assert.equal(choices.designs.find(x=>x.id==='encaje').allowed,false);
+await assert.rejects(()=>rpc('select public.design_change_options($1,$2) r',[B,'nacar']),/INVITATION_NOT_FOUND/);
+await assert.rejects(()=>rpc('select to_jsonb(public.switch_purchased_design($1,$2,$3,$4)) r',[freeOwner,'nacar','encaje',choices.revision]),/DESIGN_PRICE_TOO_HIGH/);
+const before=(await db.query("select * from public.invitation_drafts where owner_id=$1 and design_id='nacar'",[freeOwner])).rows[0];
+const down=await rpc('select to_jsonb(public.switch_purchased_design($1,$2,$3,$4)) r',[freeOwner,'nacar','clasico',choices.revision]);
+assert.equal(down.content.design,'clasico');assert.equal(down.design_id,'nacar');assert.equal(down.id,before.id);
+assert.deepEqual({...down.content,design:before.content.design},before.content);
+await assert.rejects(()=>rpc('select to_jsonb(public.switch_purchased_design($1,$2,$3,$4)) r',[freeOwner,'nacar','jardin',choices.revision]),/DRAFT_CONFLICT/);
+const back=await rpc('select to_jsonb(public.switch_purchased_design($1,$2,$3,$4)) r',[freeOwner,'nacar','jardin',down.revision]);
+assert.equal(back.content.design,'jardin');
+await assert.rejects(()=>db.query("update public.invitation_drafts set content=content||'{\"design\":\"encaje\"}' where id=$1",[back.id]),/DESIGN_CHANGE_REQUIRES_TRANSFER/);
+await db.query("select set_config('request.jwt.claim.sub',$1,false)",[freeOwner]);
+await db.query("select public.save_invitation_draft($1,$2,$3)",[back.id,JSON.stringify({...back.content,n1:'Ana',n2:'Leon',date:'2028-08-31',invitationLanguage:'es'}),back.revision]);
+const latest=(await db.query('select revision from public.invitation_drafts where id=$1',[back.id])).rows[0];
+await db.query("select public.publish_invitation($1,$2,'switch-fixture','public')",[back.id,latest.revision]);
+assert.equal((await rpc('select public.publication_payload($1) r',[back.id])).design,'jardin');
+await assert.rejects(()=>rpc('select to_jsonb(public.switch_purchased_design($1,$2,$3,$4)) r',[freeOwner,'nacar','clasico',latest.revision]),/DESIGN_ALREADY_PUBLISHED/);
+await db.query("update public.invitations set state='paused' where id=$1",[back.id]);
+await assert.rejects(()=>rpc('select to_jsonb(public.switch_purchased_design($1,$2,$3,$4)) r',[freeOwner,'nacar','clasico',latest.revision]),/DESIGN_ALREADY_PUBLISHED/);
+console.log('PASS design changes: original free-purchase ceiling, downgrade and return, owner/revision isolation, save bypass protection, published snapshot and permanent lock');
 console.log('PASS full discounts: six prices, zero totals, granted access, duplicate events and redemption limits');
 await db.exec('set role anon');
+await assert.rejects(()=>db.query('select public.design_change_options($1,$2)',[freeOwner,'nacar']),/permission denied/);
 await assert.rejects(()=>db.query('select public.prepare_stripe_checkout($1,$2,$3,0)',[A,'nacar','COP']),/permission denied/);
 await assert.rejects(()=>db.query('select * from public.stripe_checkouts'),/permission denied/);
 await db.close();

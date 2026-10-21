@@ -142,8 +142,9 @@
       '<p class="ac-note">'+esc(S.demoNote)+'</p><p class="ac-note"><a href="'+(LANG==='en'?'/en/privacy/':'/privacidad/')+'">'+(LANG==='en'?'Privacy policy':'Política de privacidad')+'</a> · <a href="'+(LANG==='en'?'/en/terms/':'/condiciones/')+'">'+(LANG==='en'?'Terms of service':'Condiciones del servicio')+'</a></p></form>';
   }
   function designCard(d, actions, sub) {
-    var n = S.names[d];
-    return '<article class="ac-card" data-id="' + esc(d) + '"><img src="' + IMG[d] + '" alt="" loading="lazy"><div class="ac-card-body"><span class="ed-kicker">' + esc(S.design) + ' · ' + esc(n[1]) + '</span>' +
+    var selected = ((A.draft(d) || {}).content || {}).design, visual = S.names[selected] && IMG[selected] ? selected : d;
+    var n = S.names[visual];
+    return '<article class="ac-card" data-id="' + esc(d) + '"><img src="' + IMG[visual] + '" alt="" loading="lazy"><div class="ac-card-body"><span class="ed-kicker">' + esc(S.design) + ' · ' + esc(n[1]) + '</span>' +
       '<h3>' + esc(n[0]) + '</h3>' + (sub ? '<p>' + esc(sub) + '</p>' : '') + '<div class="ac-actions">' + actions + '</div></div></article>';
   }
 

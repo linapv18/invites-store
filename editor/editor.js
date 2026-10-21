@@ -309,14 +309,14 @@
       stepN: function (i, n) { return 'Paso ' + i + ' de ' + n; }, skip: 'Saltar guía', prev: 'Paso anterior', next: 'Siguiente', done: 'Listo',
       gH: 'Su guía', gN: function (d, n) { return d + ' de ' + n + ' pasos'; }, gSub: ['Diseño ', 'secciones listas', 'Revisen en celular y en escritorio', 'familias', 'Cuando todo esté listo'], gNone: 'Aún no hay familias', go: 'Ir', replay: 'Repetir el recorrido', help: 'Escríbannos',
       dK: 'Cambiar diseño', dH: 'Los diseños, <i>con su boda adentro.</i>', all: 'Todos', current: 'Actual', yours: 'Suyo', open: 'Abrir', choose: 'Elegir', demo: 'Ver cómo se abre', close: 'Cerrar',
-      dNote: '<b>Sus textos, fotos e invitados se quedan.</b> Cada diseño tiene su precio; al abrir uno nuevo, llevamos su contenido para que no empiecen de cero.', price: '[Precio]' },
+      dNote: '<b>Sus textos, fotos e invitados se quedan.</b> Antes de publicar, pueden cambiar a diseños de su gama original o de una inferior, sin otro pago.', price: '[Precio]' },
     en: { change: 'Change design', designs: 'Designs', guide: 'Guide', guideLbl: 'Guide to create your invitation', of: 'of',
       wK: 'Welcome', wH: 'Your invitation, <i>in five steps.</i>', wP: 'We’ll show you where everything is. It all saves itself, so you can leave and come back anytime.', wTime: 'Takes about 2 minutes', wStart: 'Start the tour', wLater: 'Maybe later',
       steps: [['Choose your design', 'You already have one. You can see the others and switch anytime.'], ['Fill in each section', 'Cover, story, schedule, FAQ, music and travel. Each one gets a check when it’s ready.'], ['See how it looks', 'The preview changes as you type. “View as guest” lets you go through it all, from the opening.'], ['Add your guests', 'One invitation per family, with its people. You can also upload your Excel list.'], ['Publish and send', 'When you publish, each family gets its own link for you to send on WhatsApp or by text, and you see who RSVPs.']],
       stepN: function (i, n) { return 'Step ' + i + ' of ' + n; }, skip: 'Skip guide', prev: 'Previous step', next: 'Next', done: 'Done',
       gH: 'Your guide', gN: function (d, n) { return d + ' of ' + n + ' steps'; }, gSub: ['Design: ', 'sections ready', 'Check on phone and desktop', 'families', 'When everything is ready'], gNone: 'No families yet', go: 'Go', replay: 'Replay the tour', help: 'Message us',
       dK: 'Change design', dH: 'The designs, <i>with your wedding inside.</i>', all: 'All', current: 'Current', yours: 'Yours', open: 'Open', choose: 'Choose', demo: 'See how it opens', close: 'Close',
-      dNote: '<b>Your text, photos and guests stay.</b> Each design has its own price; when you open a new one, we bring your content so you don’t start from scratch.', price: '[Precio]' }
+      dNote: '<b>Your text, photos and guests stay.</b> Before publishing, switch to your original tier or a lower tier at no extra charge.', price: '[Precio]' }
   }[LANG];
 
   var DRESS_MAX = 5, TL_MAX = 6;
@@ -838,7 +838,7 @@
      Editor
      ========================================================= */
   var state = loadState(), cart = loadCart();
-  state.design = DESIGN;
+  state.design = (AUTH.draft(DESIGN) || {}).content && DESIGNS[AUTH.draft(DESIGN).content.design] ? AUTH.draft(DESIGN).content.design : DESIGN;
   var ui = { maps: {}, drawer: false, nav: false, mode: 'edit', device: 'm', dragIdx: null, saving: 'saved', audio: null, gOpen: null };
   (function initialRoute() {
     var h = decodeURIComponent(location.hash.slice(1));
@@ -1697,6 +1697,7 @@
       case 'guest-close': closeGuest(); break;
       case 'designs': openDesigns(b); break;
       case 'designs-close': closeDesigns(); break;
+      case 'design-select': selectDesign(id); break;
       case 'designs-tab': ui.dTab = id; renderDesigns(); var dt = $('[data-act="designs-tab"][data-id="' + id + '"]'); if (dt) dt.focus(); break;
       case 'guide': guideSave({ seen: true }); guideOpen ? closeGuide() : openGuidePanel(b); break;
       case 'guide-close': closeGuide(true); break;
@@ -1963,7 +1964,20 @@
 
   /* ---------- Cambiar diseño: los diseños sin salir del editor ----------
      El que están editando va marcado; cada borrador conserva su propio contenido. */
-  var CAT = window.LazoCatalog;
+  var CAT = window.LazoCatalog, designOptions = null, designError = '', designBusy = false;
+  async function designRequest(data) {
+    var session = await window.InvitesseBackend.client.auth.getSession();
+    if (!session.data.session) throw Error('AUTH_REQUIRED');
+    var response = await fetch('/api/design-change/', {method:'POST', headers:{'Content-Type':'application/json',Authorization:'Bearer '+session.data.session.access_token},body:JSON.stringify(data)});
+    var result = await response.json(); if (!response.ok) throw Error(result.error); return result;
+  }
+  async function selectDesign(id) {
+    if (designBusy) return; designBusy = true; designError = ''; renderDesigns();
+    try { await saveNow(); if (ui.saving !== 'saved') throw Error('SAVE_FAILED');
+      await designRequest({action:'switch',design:DESIGN,target:id,revision:AUTH.draft(DESIGN).revision});
+      await AUTH.refresh(); location.reload();
+    } catch (_) { designError = LANG === 'en' ? 'Could not change the design. Refresh and try again.' : 'No pudimos cambiar el diseño. Recarguen e intenten de nuevo.'; designBusy = false; renderDesigns(); }
+  }
   function designsHTML() {
     var list = CAT ? CAT.designs : Object.keys(DESIGNS).map(function (id) { return { id: id, img: [], bg: '#EFE9E1', tags: { apertura: [] } }; });
     var tab = ui.dTab || '', grp = CAT && CAT.openings ? CAT.openings : [];
@@ -1974,22 +1988,27 @@
         return '<button type="button" class="ed-dz-tab" role="tab" data-act="designs-tab" data-id="' + x.id + '" aria-selected="' + (tab === x.id) + '">' + esc(x[LANG]) + ' <small>' + c + '</small></button>'; }).join('');
     var cards = shown.map(function (d) {
       var name = DESIGNS[d.id] ? DESIGNS[d.id][LANG][0] : d.id, op = DESIGNS[d.id] ? DESIGNS[d.id][LANG][1] : '', cur = d.id === state.design, own = AUTH.owns(d.id);
-      var act = cur ? '<span class="ed-pill ed-pill-dark">' + svg(P.check, 12, 2.6) + esc(G.current) + '</span>' : own ? '<a class="ed-btn ed-btn-sm ed-btn-dark" href="' + BASE + '/editor/?diseno=' + d.id + '">' + esc(G.open) + '</a>' : '<a class="ed-btn ed-btn-sm" href="' + BASE + '/comprar/?diseno=' + d.id + '">' + esc(G.choose) + '</a>';
+      var option = designOptions && designOptions.designs.find(function(x){return x.id === d.id;});
+      var allowed = option && option.allowed && !designBusy;
+      var price = option ? new Intl.NumberFormat(LANG === 'en' ? 'en-US' : 'es-CO',{style:'currency',currency:designOptions.currency,maximumFractionDigits:0}).format(option.price_minor/100) + ' ' + designOptions.currency : '';
+      var act = cur ? '<span class="ed-pill ed-pill-dark">' + svg(P.check, 12, 2.6) + esc(G.current) + '</span>' : '<button type="button" class="ed-btn ed-btn-sm" data-act="design-select" data-id="' + d.id + '"' + (allowed ? '' : ' disabled') + '>' + esc(G.choose) + '</button>';
       return '<article class="ed-dz-card' + (cur ? ' cur' : '') + '"><div class="ed-dz-art" style="background:' + (d.bg || '#EFE9E1') + '">' + (d.img && d.img[0] ? '<span class="ed-dz-ph"><img src="' + d.img[0] + '" alt="" loading="lazy"></span>' : '') +
         (own && !cur ? '<span class="ed-dz-own">' + esc(G.yours) + '</span>' : '') +
         '<a class="ed-dz-play" href="' + BASE + '/demo/' + d.id + '/" target="_blank" rel="noopener" aria-label="' + esc(G.demo + ': ' + name) + '">' + svg(P.play, 13) + '</a></div>' +
-        '<div class="ed-dz-meta"><div><b>' + esc(name) + '</b><span>' + esc(op) + '</span><em>' + (own ? '' : esc(G.price)) + '</em></div>' + act + '</div></article>';
+        '<div class="ed-dz-meta"><div><b>' + esc(name) + '</b><span>' + esc(op) + '</span><em>' + esc(price) + '</em></div>' + act + '</div></article>';
     }).join('');
     return '<div class="ed-overlay ed-dz-wrap"><button type="button" class="scrim" data-act="designs-close" aria-label="' + esc(G.close) + '" tabindex="-1"></button>' +
       '<section class="ed-dz" role="dialog" aria-modal="true" aria-labelledby="dzT"><div class="ed-dz-head"><div><span class="ed-kicker">' + esc(G.dK) + '</span><h2 id="dzT">' + G.dH + '</h2></div>' +
       '<button type="button" class="ed-icon-btn" data-act="designs-close" aria-label="' + esc(G.close) + '">' + svg(P.x, 16, 2) + '</button></div>' +
       '<div class="ed-dz-tabs" role="tablist" aria-label="' + esc(G.dK) + '">' + tabs + '</div>' +
-      '<div class="ed-dz-grid">' + cards + '</div><div class="ed-dz-foot"><p>' + G.dNote + '</p></div></section></div>';
+      '<p role="status">' + esc(designError || (!designOptions ? (LANG === 'en' ? 'Loading available designs…' : 'Consultando diseños disponibles…') : designOptions.locked ? (LANG === 'en' ? 'This invitation has already been published. Its design is locked.' : 'Esta invitación ya fue publicada. Su diseño no se puede cambiar.') : '')) + '</p><div class="ed-dz-grid">' + cards + '</div><div class="ed-dz-foot"><p>' + G.dNote + '</p></div></section></div>';
   }
   function renderDesigns() { var h = root.querySelector('.ed-dz-wrap'); if (h) h.outerHTML = designsHTML(); }
   function openDesigns(opener) {
     closeNav(); closeGuide(); ui.dOpener = opener || document.activeElement; guideMark('designs');
     layer.innerHTML = designsHTML(); ui.designs = true; document.body.classList.add('ed-locked');
+    designOptions = null; designError = ''; renderDesigns();
+    designRequest({action:'status',design:DESIGN}).then(function(data){designOptions=data;renderDesigns();}).catch(function(){designError=LANG==='en'?'Could not load available designs.':'No pudimos consultar los diseños disponibles.';renderDesigns();});
     var c = layer.querySelector('.ed-dz-head .ed-icon-btn'); if (c) c.focus();
   }
   function closeDesigns() {
