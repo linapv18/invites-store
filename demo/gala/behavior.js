@@ -2,7 +2,7 @@
 (function () {
   var S = window.GalaS, $ = function (id) { return document.getElementById(id); };
   var reduce = matchMedia('(prefers-reduced-motion: reduce)'), invite = $('invite');
-  var PEOPLE = ['Carlos Rodríguez', 'Lucía Pérez', 'Sofía Rodríguez', 'Mateo Rodríguez'];
+  var PEOPLE = window.InvitessePublication ? window.InvitessePublication.guests.map(function(g){return g.name;}) : ['Carlos Rodríguez', 'Lucía Pérez', 'Sofía Rodríguez', 'Mateo Rodríguez'];
   LazoPanel.init({ mono: 'A&L', couple: S.n1 + ' ' + S.y + ' ' + S.n2, link: location.pathname, guest: S.guest, people: PEOPLE });
   LazoMusic.init({ src: '/assets/musica/demo.mp3' });
 

@@ -86,7 +86,7 @@
   tick(); setInterval(tick, 1000);
 
   // Answers stay in memory: no localStorage/sessionStorage and no network submission.
-  var people = ['Carlos Rodríguez', 'Lucía Pérez', 'Sofía Rodríguez', 'Mateo Rodríguez'];
+  var people = window.InvitessePublication ? window.InvitessePublication.guests.map(function(g){return g.name;}) : ['Carlos Rodríguez', 'Lucía Pérez', 'Sofía Rodríguez', 'Mateo Rodríguez'];
   var answers = people.map(function () { return null; }), wrap = $('people'), form = $('rsForm'), done = $('rsDone');
   var intro = $('rsText').textContent, title = $('rsTitle').textContent;
   function svg(path) { return '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="' + path + '"/></svg>'; }

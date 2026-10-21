@@ -1,3 +1,15 @@
+/* Portada: invite guests to continue reading before they reach RSVP. */
+(function(){
+ function cue(){
+  var en=(document.documentElement.lang||'es').slice(0,2)==='en';
+  document.querySelectorAll('[data-lz-anchor~="portada"] a[href="#rsvp"],.hero a[href="#rsvp"],.mo-cover a[href="#rsvp"]').forEach(function(a){
+   var hint=document.createElement('p');hint.className='iv-scroll-cue';hint.style.cssText='font:inherit;font-size:12px;letter-spacing:.1em;line-height:1.8;margin:24px 0;display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center';
+   hint.textContent=en?'Scroll to discover the invitation':'Deslicen para ver la invitación';var arrow=document.createElement('span');arrow.setAttribute('aria-hidden','true');arrow.style.fontSize='24px';arrow.textContent='↓';hint.appendChild(arrow);a.replaceWith(hint);
+  });
+ }
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',cue);else cue();
+ document.addEventListener('lz-render',cue);
+})();
 /* Lleva el contenido del editor a las plantillas reales (clásico, moderno, romántico, jardín y costa).
    Solo actúa si la URL trae ?lz=editor (vista previa dentro del editor) o ?lz=vista (ver como invitado),
    junto con &k=<clave de localStorage> donde el editor guardó la invitación. Sin esos parámetros

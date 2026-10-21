@@ -11,7 +11,7 @@
     hint:'Toca el sello para abrir tu invitación', opened:'Una carta para ustedes.', summary:'Tu respuesta de demostración', ready:'¡Gracias, Familia Rodríguez!',
     count:function(n){return n+' '+(n===1?'persona asistirá':'personas asistirán');}, saved:'Esta es una vista previa. Tu respuesta no se ha guardado.'
   };
-  var PEOPLE = ['Carlos Rodríguez','Lucía Pérez','Sofía Rodríguez','Mateo Rodríguez'];
+  var PEOPLE = window.InvitessePublication ? window.InvitessePublication.guests.map(function(g){return g.name;}) : ['Carlos Rodríguez','Lucía Pérez','Sofía Rodríguez','Mateo Rodríguez'];
   LazoPanel.init({mono:'V&M',couple:EN?'Valentina and Martín':'Valentina y Martín',link:location.pathname,guest:'Familia Rodríguez',people:PEOPLE});
   LazoMusic.init({src:'/assets/musica/demo.mp3'});
   var still = matchMedia('(prefers-reduced-motion: reduce)').matches;
