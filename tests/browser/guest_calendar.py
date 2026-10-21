@@ -32,7 +32,7 @@ async def main():
    assert 'Lugar de prueba' in ics and 'Dirección de prueba' in ics
    assert 'Invitado ficticio' not in ics and 'f'*64 not in ics
    assert page.url.endswith('f'*64)
-   sandbox=await page.locator('#invitationFrame').get_attribute('sandbox');assert 'allow-downloads' in sandbox and 'allow-same-origin' not in sandbox
+   sandbox=await page.locator('#invitationFrame').get_attribute('sandbox');assert 'allow-downloads' not in sandbox and 'allow-same-origin' not in sandbox
    print('PASS published ICS download, Bogotá timezone, real event location, private token omitted:',lang,flush=True)
    await page.close()
   await browser.close()

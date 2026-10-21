@@ -90,6 +90,7 @@
       parts.push(current); return parts.join('\r\n');
     };
     var ics = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//Invitesse//Invitation//EN', 'BEGIN:VEVENT', 'UID:' + Date.now() + '@invitesse', 'DTSTAMP:' + f(new Date()), 'DTSTART:' + f(d), 'DTEND:' + f(end), 'SUMMARY:' + esc(S.wedding + ' ' + names), 'LOCATION:' + esc(place), 'END:VEVENT', 'END:VCALENDAR'].map(fold).join('\r\n') + '\r\n';
+    if(window.InvitessePublication && parent!==window){parent.postMessage({invitesse:'download-calendar',ics:ics},'*');return;}
     var a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([ics], { type: 'text/calendar' })); a.download = 'boda.ics';
     document.body.appendChild(a); a.click(); a.remove(); setTimeout(function () { URL.revokeObjectURL(a.href); }, 1000);
   });

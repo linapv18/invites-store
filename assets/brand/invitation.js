@@ -5,6 +5,12 @@
  function unavailable(){clearTimeout(readyTimer);document.body.setAttribute('aria-busy','false');status.hidden=false;status.replaceChildren();var message=document.createElement('p');message.textContent=en?'We could not open this invitation. Check the link or try again.':'No pudimos abrir esta invitación. Verifiquen el enlace o intenten de nuevo.';var retry=document.createElement('button');retry.type='button';retry.textContent=en?'Try again':'Reintentar';retry.onclick=function(){location.reload();};status.append(message,retry);frame.hidden=true;}
  function reveal(){if(frame.hidden||!frame.srcdoc)return;clearTimeout(readyTimer);status.hidden=true;document.body.setAttribute('aria-busy','false');}
  window.addEventListener('message',function(e){if(e.source===frame.contentWindow&&e.origin==='null'&&e.data?.invitesse==='invitation-ready')reveal();});
+ // Download in the top-level page: mobile browsers can block Blob downloads in opaque frames.
+ window.addEventListener('message',function(e){
+  if(e.source!==frame.contentWindow||e.origin!=='null'||e.data?.invitesse!=='download-calendar'||!data)return;
+  var ics=e.data.ics;if(typeof ics!=='string'||ics.length>65536||!ics.startsWith('BEGIN:VCALENDAR\r\n')||!ics.endsWith('END:VCALENDAR\r\n'))return;
+  var a=document.createElement('a'),url=URL.createObjectURL(new Blob([ics],{type:'text/calendar;charset=utf-8'}));a.href=url;a.download='boda.ics';document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(url);},30000);
+ });
  function safeImage(v){return typeof v==='string' && (/^\/assets\/[a-zA-Z0-9_./%~-]+$/.test(v) || /^https:\/\//.test(v) || /^data:image\/(jpeg|png|webp);base64,[a-zA-Z0-9+/=]+$/.test(v));}
  async function load(){
   var b=backend=window.InvitesseGuestBackend||window.InvitesseBackend;if(!b)throw Error('UNAVAILABLE');
