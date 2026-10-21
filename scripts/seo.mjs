@@ -54,7 +54,7 @@ export async function generateSeo(output, source = '.') {
   const catalog = await loadCatalog(source);
   const registry = new Map();
   const addPair = paths => paths.forEach((path, i) => registry.set(path, { lang: i ? 'en' : 'es', paths }));
-  [['/', '/en/'], ['/disenos/', '/en/disenos/'], ['/cotizar/', '/en/quote/'], ['/privacidad/', '/en/privacy/'], ['/condiciones/', '/en/terms/']].forEach(addPair);
+  [['/', '/en/'], ['/disenos/', '/en/disenos/'], ['/cotizar/', '/en/quote/'], ['/quiz/', '/en/quiz/'], ['/privacidad/', '/en/privacy/'], ['/condiciones/', '/en/terms/']].forEach(addPair);
   const save = async (path, contents) => {
     const dest = join(output, path.slice(1), 'index.html');
     await mkdir(dirname(dest), { recursive: true }); await writeFile(dest, contents);

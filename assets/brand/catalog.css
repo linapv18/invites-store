@@ -161,3 +161,6 @@ legend{padding:0;margin-bottom:8px;font:600 12px/1.5 var(--iv-sans);letter-spaci
 @media(prefers-reduced-motion:reduce){.iv-catalog *{transition:none!important;scroll-behavior:auto!important}}
 .iv-catalog .chk small{color:#655560}
 .iv-catalog .chk[aria-pressed=true] small{color:inherit}
+/* Acceso al quiz de estilo (/quiz/) bajo el título del catálogo. */
+.quiz-link{display:inline-flex;align-items:center;gap:8px;min-height:44px;margin-top:6px;font-size:14px;color:var(--iv-ink);text-underline-offset:4px}
+.quiz-link svg{color:var(--iv-lacre)}

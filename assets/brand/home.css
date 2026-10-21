@@ -183,3 +183,5 @@ details[open]>summary>span{transform:rotate(45deg)}
 @media(prefers-reduced-motion:reduce){.collection-arrows button{transition:none}}
 
 .collection-arrows .collection-play{width:auto;padding-inline:18px;font-size:12px;letter-spacing:.02em}
+/* Acceso al quiz de estilo bajo el botón final. */
+.closing-quiz{margin:18px 0 0;font-size:15px}.closing-quiz a{display:inline-flex;align-items:center;min-height:44px;color:inherit;text-underline-offset:4px}

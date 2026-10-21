@@ -12,9 +12,9 @@ import routing from '@vercel/routing-utils';
 test('public SEO build contains real content, reciprocal locales and no private URLs', async () => {
   const output = await mkdtemp(join(tmpdir(), 'invitesse-seo-'));
   try {
-    for (const path of ['assets', 'comprar', 'cotizar', 'cuenta', 'demo', 'disenos', 'editor', 'en', 'privacidad', 'condiciones', 'index.html', '404.html']) await cp(path, join(output, path), { recursive: true });
+    for (const path of ['assets', 'comprar', 'cotizar', 'cuenta', 'demo', 'disenos', 'editor', 'en', 'privacidad', 'condiciones', 'quiz', 'index.html', '404.html']) await cp(path, join(output, path), { recursive: true });
     const routes = await generateSeo(output);
-    assert.equal(new Set(routes).size, 66); // 10 existing + 44 designs + 6 styles + 6 editorial.
+    assert.equal(new Set(routes).size, 68); // 12 existing + 44 designs + 6 styles + 6 editorial.
     const catalog = await loadCatalog();
     const sitemap = await readFile(join(output, 'sitemap.xml'), 'utf8');
     assert.equal((sitemap.match(/<loc>/g) || []).length, routes.length);
