@@ -857,3 +857,8 @@ a.ed-btn[aria-disabled="true"]{opacity:.4;pointer-events:none}
 .iv-publish-dashboard h3{margin:0 0 6px;font-size:16px;font-weight:600}
 .iv-publish-dashboard .ed-btn{font-size:13px;min-height:44px;white-space:normal}
 @media(max-width:520px){.iv-publish-dashboard .ed-btn{width:100%}}
+.iv-guest-panel{display:flex;flex-direction:column;gap:14px;padding:22px;min-width:0}
+.iv-panel-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:12px}
+.iv-panel-head h2{margin:0;font-size:20px;font-weight:500}
+.iv-guest-panel .iv-publish-family{min-width:0;margin:0}
+.iv-guest-panel .ed-field input{width:100%;min-width:0}

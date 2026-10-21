@@ -39,3 +39,5 @@ Los tests interceptan todas las solicitudes a `*.supabase.co`; no crean cuentas,
 Las fuentes están alojadas localmente. El build agrupa los scripts de demos conservando su orden y el script temprano de idioma. Al editar scripts compartidos o el pipeline de assets, ejecutar también `gallery_limits.py` e `invitation_language.py`; ambas pruebas usan datos simulados.
 
 `checkout_publication.py` cubre la compra antes del editor, precios COP/USD, vencimiento mostrado, bloqueo sin compra y acceso después del pago, y las 22 plantillas publicadas ES/EN con RSVP real (backend interceptado). Las pruebas anteriores que simulaban `testbuy` corresponden al flujo previo de borradores gratuitos; para pagos usar este recorrido. Ninguna prueba genera cargos reales.
+
+`python tests/browser/publication_dashboard.py` verifica que la publicación confirmada abre el panel, que los errores no redirigen, el estado «Publicado» y los enlaces de familia únicamente en el panel (ES/EN, escritorio y móvil). Todas las solicitudes de publicación se interceptan.

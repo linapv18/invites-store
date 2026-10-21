@@ -21,9 +21,10 @@ function createHandler({adminClient=rt.adminClient,userFor=rt.userFor,userClient
     const token=await rt.unwrap(client.rpc('rotate_guest_link',{target_household:h.id}));
     return res.status(200).json({url:rt.origin+'/invitacion/#token='+token});
    }
-   const invitation=await rt.unwrap(admin.from('invitations').select('slug,state,access_mode').eq('id',draft.id).single());
+   const invitation=await rt.unwrap(admin.from('invitations').select('slug,state,access_mode,published_version_id').eq('id',draft.id).single());
    const households=await rt.unwrap(admin.from('households').select('id,label,guests(id,display_name,guest_responses(attendance,dietary_notes)),household_responses(message,revision)').eq('invitation_id',draft.id).order('created_at'));
-   return res.status(200).json({invitation,households,publicUrl:invitation.access_mode==='public' && invitation.state==='published'?rt.origin+'/invitacion/#slug='+invitation.slug:null});
+   const version=invitation.published_version_id?await rt.unwrap(admin.from('invitation_versions').select('draft_revision').eq('id',invitation.published_version_id).single()):null;
+   return res.status(200).json({invitation,households,revision:draft.revision,publishedRevision:version?.draft_revision ?? null,publicUrl:invitation.access_mode==='public' && invitation.state==='published'?rt.origin+'/invitacion/#slug='+invitation.slug:null});
   }catch(e){
    const codes=['AUTH_REQUIRED','EMAIL_NOT_CONFIRMED','DRAFT_CONFLICT','INVITATION_NOT_FOUND','PUBLICATION_NOT_ENABLED','PUBLICATION_INCOMPLETE','INVITATION_LANGUAGE_REQUIRED','AUDIO_NOT_UPLOADED','INVALID_GUEST_NAME','INVALID_GUEST_COUNT'];
    const code=codes.find(k=>e.message?.includes(k));return res.status(code==='AUTH_REQUIRED'?401:409).json({error:code || 'PUBLICATION_UNAVAILABLE'});

@@ -940,6 +940,8 @@
   function renderChrome() {
     if (!AUTH.current()) return;
     var n = cartCount(cart), idx = SECS.indexOf(state.sec);
+    var pub=ui.publication, current=pub && pub.invitation.state==='published' && ui.saving==='saved' && (pub.publishedRevision==null || pub.publishedRevision===AUTH.draft(DESIGN).revision);
+    $$('[data-act="publish"]').forEach(function(button){button.textContent=current?(LANG==='en'?'Published':'Publicado'):S.publish;});
     $$('[data-couple]').forEach(function (el) { el.textContent = S.weddingOf + ' ' + couple(state); });
     $$('[data-couple-short]').forEach(function (el) { el.textContent = couple(state); });
     $$('[data-design]').forEach(function (el) { el.textContent = design()[0]; });
@@ -1377,6 +1379,7 @@
   function renderMain() {
     var id = state.sec;
     main.innerHTML = '<div class="ed-sec">' + (SECTION_HTML[id] ? SECTION_HTML[id]() : addonPage(id)) + '</div>';
+    if(id==='invitados' && window.InvitessePublishing){var panel=document.createElement('section');panel.className='ed-card iv-guest-panel';main.querySelector('.ed-sec').prepend(panel);window.InvitessePublishing.panel(panel,DESIGN);}
     var sf = $('#edShareFrame');
     if (sf) { layoutShare(); sf.addEventListener('load', function () { if (sf.contentWindow) sf.contentWindow.postMessage({ lz: 'content', content: state }, location.origin); }); }
   }
@@ -1532,7 +1535,7 @@
   function go(id, focusHeading) {
     if(!ADDONS_LAUNCHED && ADDON_IDS.indexOf(id)>-1)return;
     if (!S.sec[id] && ADDON_IDS.indexOf(id) < 0) return;
-    state.sec = id; saveSoon(); stopSample();
+    state.sec = id; store(KEY,state); stopSample();
     try { history.replaceState(null, '', '#' + id); } catch (e) {}
     closeDrawerSilently();
     var wasNav = closeNav();
@@ -1710,7 +1713,7 @@
       case 'guide-go': closeGuide(); guideGo(+id); break;
       case 'save-retry': saveNow(); break;
       case 'publish':
-        window.InvitessePublishing.open({design:DESIGN,save:async function(){await saveNow();if(ui.saving!=='saved')throw Error('SAVE_FAILED');}});
+        window.InvitessePublishing.open({design:DESIGN,hasChanges:function(){return ui.saving!=='saved';},onPublished:function(){go('invitados',true);},save:async function(){await saveNow();if(ui.saving!=='saved')throw Error('SAVE_FAILED');}});
         break;
       case 'reset-content':
         modal('<h2 id="mdTitle">' + (LANG === 'es' ? '¿Empezar de nuevo?' : 'Start again?') + '</h2><p>' + (LANG === 'es' ? 'Se borrarán los textos, fotos, eventos e invitados de este borrador. Se conservarán el diseño y la paleta. Esta acción no se puede deshacer.' : 'This draft’s text, photos, events and guests will be cleared. Your design and palette will be kept. This cannot be undone.') + '</p><div class="ed-modal-actions"><button type="button" class="ed-btn" data-act="modal-close">' + esc(S.cancel) + '</button><button type="button" class="ed-btn ed-btn-dark" data-act="reset-content-yes">' + (LANG === 'es' ? 'Vaciar borrador' : 'Clear draft') + '</button></div>', b);
@@ -2018,6 +2021,8 @@
     return true;
   }
   window.addEventListener('resize', function () { if (tourAt > -1) paintTour(); });
+  window.addEventListener('invitesse:publication',function(event){if(event.detail.design===DESIGN){ui.publication=event.detail;renderChrome();}});
+  if(window.InvitessePublishing)window.InvitessePublishing.status(DESIGN).catch(function(){});
   renderChrome(); renderNav(); renderMain();
   if (new URLSearchParams(location.search).get('guia') === '0') guideSave({ seen: true });
   if (ui.drawer) openDrawer($('.ed-cartbtn'));
