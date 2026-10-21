@@ -112,7 +112,7 @@
       '<div class="hero-ph">' + oval('o-hero', 'muro', 0, S.photoAlt, false, N('n1') + '<span class="amp">' + S.amp + '</span>' + N('n2')) + '</div>' +
       '<div class="hero-txt"><p class="ey">' + S.weddingOf + '</p><h1 class="names" tabindex="-1">' + N('n1') + ' <span class="amp">' + S.amp + '</span> ' + N('n2') + '</h1>' +
         '<div class="hero-when"><p class="hero-d m" data-lz-date="' + S.numPat + '">' + S.numTxt + '</p><p class="hero-d d" data-lz-date="' + S.dayPat + '">' + S.dayTxt + '</p><p class="hero-c" data-lz="city">' + S.city + '</p></div>' +
-        '<div class="hero-ctas"><a class="cta light" href="#rsvp">' + S.confirm + '</a><a class="lnk hero-prog" href="#itinerario">' + S.seeProgram + DOWN + '</a></div></div>' +
+        '<div class="hero-ctas"><a class="cta light" href="#rsvp">' + S.confirm + '</a></div></div>' +
     '</div>' + edge('hero-trim') + '</section>' +
 
     '<section class="sec lacebg-solid welcome"><div class="wel-txt"><p class="lead" data-lz="msg">' + S.msg + '</p>' + divider + '</div>' +
