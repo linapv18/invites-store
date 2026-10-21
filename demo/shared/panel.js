@@ -110,8 +110,8 @@
     document.body.appendChild(el); setTimeout(function () { el.remove(); }, 1800);
   }
   // Share only the public demo route: never preview keys, guest names or query strings.
-  var linkFor = function () { var route = location.pathname.match(/^(\/en)?\/demo\/[a-z]+\//); return 'https://www.invitesse.com' + (route ? route[0] : (LANG === 'en' ? '/en/' : '/')); };
-  var messageFor = function (i) { return template.split(S.tk.name).join(i.name).split(S.tk.link).join(linkFor()).split(S.tk.couple).join(cfg.couple); };
+  var linkFor = function (invitation) { if(cfg && cfg.live)return invitation && invitation.url || '';  var route = location.pathname.match(/^(\/en)?\/demo\/[a-z]+\//); return 'https://www.invitesse.com' + (route ? route[0] : (LANG === 'en' ? '/en/' : '/')); };
+  var messageFor = function (i) { return template.split(S.tk.name).join(i.name).split(S.tk.link).join(linkFor(i)).split(S.tk.couple).join(cfg.couple); };
   function shareIcon(kind) {
     var paths = {
       whatsapp: '<path d="M20.5 11.6a8.4 8.4 0 0 1-12.4 7.5L3 20.5l1.4-5a8.4 8.4 0 1 1 16.1-3.9Z"/><path d="M8.1 7.4c-.8.4-1 1.4-.6 2.5 1 2.7 3.3 4.9 6 5.6 1.1.3 2.2-.1 2.5-1l-2.5-1.4-1 1c-1.5-.6-2.7-1.8-3.3-3.2l.9-1-1.4-2.5Z"/>',
@@ -121,8 +121,9 @@
     return '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">'+paths[kind]+'</svg>';
   }
   function shareControls(n) {
+    if(cfg.live && !data[n].url)return '<p class="lz-sub">'+(LANG==='en'?'Reopen the panel to load this invitation link.':'Vuelvan a abrir el panel para cargar el enlace de esta invitación.')+'</p>';
     var en=LANG==='en', msg=messageFor(data[n]), ios=/iPhone|iPad|iPod/.test(navigator.userAgent) || navigator.platform==='MacIntel' && navigator.maxTouchPoints>1;
-    return '<div class="lz-share" data-share="'+n+'" role="group" aria-label="'+(en?'Share demo':'Compartir demo')+'"><div class="lz-share-actions">'+
+    return '<div class="lz-share" data-share="'+n+'" role="group" aria-label="'+(cfg.live?(en?'Share invitation':'Compartir invitación'):(en?'Share demo':'Compartir demo'))+'"><div class="lz-share-actions">'+
       '<a href="https://wa.me/?text='+encodeURIComponent(msg)+'" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp" title="WhatsApp">'+shareIcon('whatsapp')+'</a>'+
       '<a href="sms:'+(ios?'&':'?')+'body='+encodeURIComponent(msg)+'" aria-label="SMS" title="SMS">'+shareIcon('sms')+'</a>'+
       '<button type="button" data-copy-link="'+n+'" aria-label="'+(en?'Copy message':'Copiar mensaje')+'" title="'+(en?'Copy message':'Copiar mensaje')+'">'+shareIcon('copy')+'</button></div></div>';
@@ -229,7 +230,8 @@
     root.querySelector('.lz-tabs').innerHTML = Object.keys(S.tabs).map(function (k) {
       return '<button type="button" role="tab" data-tab="' + k + '" aria-selected="' + (tab === k) + '">' + S.tabs[k] + '</button>';
     }).join('');
-    root.querySelector('.lz-inner').innerHTML = '<p class="lz-note">' + S.note + '</p>' +
+    if(cfg.live)history.replaceState(null,'','#'+tab);
+    root.querySelector('.lz-inner').innerHTML = (cfg.live?'':'<p class="lz-note">' + S.note + '</p>') +
       (tab === 'resumen' ? resumen() : tab === 'invitados' ? invitados() : envio());
     if (focusSel) { var el = root.querySelector(focusSel); if (el) { el.focus(); if (el.setSelectionRange && el.value != null) el.setSelectionRange(el.value.length, el.value.length); } }
   }
@@ -237,13 +239,21 @@
   function csv() {
     var rows = [S.csvHead];
     data.forEach(function (i) { i.guests.forEach(function (p) { rows.push([i.name, p.name, p.att === true ? S.csvYes : p.att === false ? S.csvNo : S.none, i.msg, i.sent ? S.yesWord : S.noWord]); }); });
-    var text = '﻿' + rows.map(function (r) { return r.map(function (c) { return '"' + String(c).replace(/"/g, '""') + '"'; }).join(','); }).join('\n');
+    var text = '﻿' + rows.map(function (r) { return r.map(function (c) { return '"' + String((/^[\s]*[=+@-]/.test(String(c))?"'":'')+String(c)).replace(/"/g, '""') + '"'; }).join(','); }).join('\n');
     var a = document.createElement('a');
     a.href = URL.createObjectURL(new Blob([text], { type: 'text/csv;charset=utf-8' }));
     a.download = S.csvFile; document.body.appendChild(a); a.click(); a.remove();
     toast(S.csvDone);
   }
 
+  var liveSaving=false,liveCommitted;
+  async function persistLive(operation,row){
+    if(liveSaving)return;liveSaving=true;root.setAttribute('aria-busy','true');
+    root.querySelectorAll('button,input,textarea').forEach(function(el){el.disabled=true;});
+    try{data=await cfg.live.save(operation,row);liveCommitted=JSON.parse(JSON.stringify(data));editing=-1;confirmDelete=false;if(operation==='create'){draftTitle='';draftNames=['',''];}render();toast(operation==='create'?S.created:operation==='delete'?S.deleted:S.saved);}
+    catch(e){data=JSON.parse(JSON.stringify(liveCommitted));toast(e.message || (LANG==='en'?'Unable to save. Refresh and try again.':'No se pudo guardar. Actualicen e intenten de nuevo.'));render();}
+    finally{liveSaving=false;root.removeAttribute('aria-busy');root.querySelector('[data-close]').disabled=false;}
+  }
   function onClick(e) {
     var b = e.target.closest('button'); if (!b || b.disabled) return;
     if (b.dataset.close !== undefined) return close();
@@ -263,20 +273,21 @@
       (navigator.clipboard ? navigator.clipboard.writeText(msg) : Promise.reject()).then(function () { toast(S.copied); }, function () { toast(S.copyFail); });
       return;
     }
-    if (b.dataset.sent) { var s = data[Number(b.dataset.sent)]; s.sent = !s.sent; return render(); }
+    if (b.dataset.sent) { var s = data[Number(b.dataset.sent)]; if(cfg.live)return persistLive('sent',Object.assign({},s,{sent:!s.sent})); s.sent = !s.sent; return render(); }
     switch (b.dataset.act) {
       case 'csv': return csv();
       case 'add-guest': inv.guests.push({ name: '', att: null }); return render('[data-f="guest"][data-k="' + (inv.guests.length - 1) + '"]');
-      case 'done': editing = -1; confirmDelete = false; render(); return toast(S.saved);
+      case 'done': if(cfg.live)return persistLive('edit',inv); editing = -1; confirmDelete = false; render(); return toast(S.saved);
       case 'delete': confirmDelete = true; return render('[data-act="delete-no"]');
       case 'delete-no': confirmDelete = false; return render();
-      case 'delete-yes': data.splice(editing, 1); editing = -1; confirmDelete = false; render(); return toast(S.deleted);
+      case 'delete-yes': if(cfg.live)return persistLive('delete',inv); data.splice(editing, 1); editing = -1; confirmDelete = false; render(); return toast(S.deleted);
       case 'new-add': draftNames.push(''); return render('[data-new="' + (draftNames.length - 1) + '"]');
       case 'create': {
         var names = draftNames.map(function (x) { return x.trim(); }).filter(Boolean);
         var title = draftTitle.trim() || (names.length === 1 ? names[0] : '');
         if (!title) { toast(S.needTitle); return render('#lzNewTitle'); }
         if (!names.length) { toast(S.needPerson); return render('[data-new="0"]'); }
+        if(cfg.live)return persistLive('create',{name:title,guests:g(names)});
         data.push({ name: title, guests: g(names), msg: '', sent: false });
         draftTitle = ''; draftNames = ['', '']; render(); return toast(S.created);
       }
@@ -308,6 +319,7 @@
     render(); root.querySelector('[data-close]').focus();
   }
   function close() {
+    if(cfg.live){cfg.live.close();return;}
     root.hidden = true; document.body.classList.remove('panel-open'); document.documentElement.style.overflow = '';
     if (musicWas) LazoMusic.resume();
     if (lastFocus && lastFocus.focus) lastFocus.focus({ preventScroll: true });
@@ -316,7 +328,8 @@
   window.LazoPanel = {
     init: function (c) {
       if (window.InvitessePublication) return;
-      cfg = c; data = sample(c);
+      cfg = c; data = c.live ? c.live.rows : sample(c);
+      if(c.live){liveCommitted=JSON.parse(JSON.stringify(data));tab=c.live.tab || 'resumen';S.saved=LANG==='en'?'Changes saved':'Cambios guardados';S.csvFile=LANG==='en'?'wedding-guests.csv':'invitados-boda.csv';S.sendTitle=LANG==='en'?'Send on WhatsApp':'Enviar por WhatsApp';S.msgTitle=LANG==='en'?'Message for your guests':'Mensaje para sus invitados';template=LANG==='en'?'Hi {name}! We would love for you to celebrate our wedding with us.\n\nView the details and RSVP here:\n{link}\n\n{couple}':'¡Hola, {nombre}! Con mucha ilusión queremos invitarlos a celebrar nuestra boda.\n\nAquí pueden ver los detalles y confirmar su asistencia:\n{enlace}\n\n{novios}';}
       root = document.createElement('div');
       root.className = 'lz-panel'; root.hidden = true;
       root.setAttribute('role', 'dialog'); root.setAttribute('aria-modal', 'true'); root.setAttribute('aria-label', S.panel);

@@ -199,10 +199,36 @@ const pendingOrder=viewDrafts.rows.find(x=>x.status==='pending');assert.ok(pendi
 await assert.rejects(()=>db.query("select public.admin_manage_order($1,'delete',$2)",[pendingOrder.id,B]),/CHECKOUT_STILL_OPEN/);
 assert.equal((await db.query('select count(*)::int n from public.admin_order_events where order_id=$1',[bo.order_id])).rows[0].n,3);
 console.log('PASS admin management: separated drafts, archive/trash/restore, financial history, unchanged analytics and pending-payment guard');
+// Real panel mutations keep the private editor list and permanent links in sync.
+await db.query("select set_config('request.jwt.claim.sub',$1,false)",[freeOwner]);
+const pd=(await db.query("select id,revision from public.invitation_drafts where owner_id=$1 and design_id='nacar'",[freeOwner])).rows[0];
+const created=await rpc("select public.manage_panel_household('nacar','create',null,$1,$2,null) r",[JSON.stringify({name:'Familia Nueva',people:[{name:'Ana'},{name:'Luis'}]}),pd.revision]);
+const link1=await rpc('select public.ensure_household_links($1,$2) r',[freeOwner,pd.id]);
+const link2=await rpc('select public.ensure_household_links($1,$2) r',[freeOwner,pd.id]);
+assert.equal(link1[created.household_id],link2[created.household_id]);assert.match(link1[created.household_id],/^[a-f0-9]{64}$/);
+const currentGuests=(await db.query('select id,display_name from public.guests where household_id=$1 order by sort_order',[created.household_id])).rows;
+const updated=await rpc("select public.manage_panel_household('nacar','edit',$1,$2,$3,0) r",[created.household_id,JSON.stringify({name:'Familia Editada',people:currentGuests.map((g,i)=>({id:g.id,name:g.display_name,att:i===0}))}),created.revision]);
+assert.equal((await db.query('select attendance from public.guest_responses where guest_id=$1',[currentGuests[0].id])).rows[0].attendance,'attending');
+assert.equal((await db.query('select content from public.invitation_drafts where id=$1',[pd.id])).rows[0].content.invitations.find(x=>x.name==='Familia Editada').people.length,2);
+assert.equal((await rpc('select public.ensure_household_links($1,$2) r',[freeOwner,pd.id]))[created.household_id],link1[created.household_id]);
+await assert.rejects(()=>rpc("select public.manage_panel_household('nacar','delete',$1,'{}',$2,0) r",[created.household_id,updated.revision]),/RESPONSE_CONFLICT/);
+await db.query("select public.manage_panel_household('nacar','sent',$1,'{\"sent\":true}',$2,1)",[created.household_id,updated.revision]);
+assert.ok((await db.query('select sent_at from public.households where id=$1',[created.household_id])).rows[0].sent_at);
+await assert.rejects(()=>rpc('select public.ensure_household_links($1,$2) r',[B,pd.id]),/INVITATION_NOT_FOUND/);
+// A pre-upgrade shared link remains valid when a recoverable link is provisioned.
+await db.query('delete from public.household_private_links where household_id=$1',[created.household_id]);
+const repaired=await rpc('select public.ensure_household_links($1,$2) r',[freeOwner,pd.id]);
+assert.notEqual(repaired[created.household_id],link1[created.household_id]);
+assert.ok((await db.query("select 1 from public.guest_access_links where household_id=$1 and token_hash=encode(sha256(convert_to($2,'UTF8')),'hex') and revoked_at is null",[created.household_id,link1[created.household_id]])).rows.length);
+await db.query("select public.manage_panel_household('nacar','delete',$1,'{}',$2,2)",[created.household_id,updated.revision]);
+assert.equal((await db.query('select 1 from public.household_private_links where household_id=$1',[created.household_id])).rows.length,0);
+console.log('PASS permanent links: automatic creation, stable reads, upgrade preserves shared links, live editing/attendance/sent/delete, draft sync and conflict/owner checks');
 await db.exec('set role anon');
 await assert.rejects(()=>db.query('select public.design_change_options($1,$2)',[freeOwner,'nacar']),/permission denied/);
 await assert.rejects(()=>db.query('select public.prepare_stripe_checkout($1,$2,$3,0)',[A,'nacar','COP']),/permission denied/);
 await assert.rejects(()=>db.query('select * from public.stripe_checkouts'),/permission denied/);
 await assert.rejects(()=>db.query("select public.admin_manage_order($1,'delete',$2)",[bo.order_id,B]),/permission denied/);
 await assert.rejects(()=>db.query('select * from public.admin_order_events'),/permission denied/);
+await assert.rejects(()=>db.query('select * from public.household_private_links'),/permission denied/);
+await assert.rejects(()=>db.query('select public.ensure_household_links($1,$2)',[freeOwner,pd.id]),/permission denied/);
 await db.close();

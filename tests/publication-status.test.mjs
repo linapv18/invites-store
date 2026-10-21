@@ -4,7 +4,7 @@ import module from '../api/publication.js';
 const {createHandler}=module;
 function fixture({user=true,failPublish=false}={}) {
  const calls=[];const rows={invitation_drafts:{id:'draft',revision:7},invitations:{state:'published',access_mode:'family',published_version_id:'version'},invitation_versions:{draft_revision:7},households:[]};
- const admin={from(table){const chain={select(fields){calls.push({table,fields});return chain;},eq(key,value){calls.push({table,key,value});return chain;},single:async()=>({data:rows[table]}),order:async()=>({data:rows[table]})};return chain;}};
+ const admin={rpc:async()=>({data:{}}),from(table){const chain={select(fields){calls.push({table,fields});return chain;},eq(key,value){calls.push({table,key,value});return chain;},single:async()=>({data:rows[table]}),order:async()=>({data:rows[table]})};return chain;}};
  const handle=createHandler({adminClient:()=>admin,userFor:async()=>{if(!user)throw Error('AUTH_REQUIRED');return {id:'verified-owner'};},userClient:()=>({rpc:async(name,args)=>{calls.push({name,args});return failPublish?{error:{message:'PUBLICATION_INCOMPLETE'}}:{data:{}};}})});
  const res={setHeader(){},status(n){this.code=n;return this;},json(b){this.body=b;return this;}};
  return {calls,res,run:body=>handle({method:'POST',headers:{origin:'https://www.invitesse.com'},body},res)};
