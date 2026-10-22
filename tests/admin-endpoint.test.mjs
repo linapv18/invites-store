@@ -82,3 +82,10 @@ test('Marketing remains behind existing admin authorization and rejects GET muta
  const f=fixture(),res=await run(f,{query:{action:'marketing-save'}});assert.equal(res.code,400);assert.equal(f.calls.length,0);
  const own=fixture();const saved=await run(own,{method:'POST',body:{action:'marketing-save',actor:'forged',entity:'settings',operation:'update',payload:{lead_minutes:60,report_currency:'USD'}}});assert.equal(saved.code,200);assert.equal(own.calls[0].args.actor,ADMIN.id);assert.equal(own.calls[0].args.payload.destination,'hola@invitesse.com');assert.equal(own.calls[0].args.payload.email_enabled,false);
 });
+
+test('traffic reports require the same admin authorization as orders',async()=>{
+ for(const [options,status]of [[{user:null},401],[{user:{email:'other@example.com'}},403]]) {
+  const res=await run(fixture(options),{query:{action:'traffic',days:'7'}});
+  assert.equal(res.code,status);assert.equal(res.headers['Cache-Control'],'private, no-store');
+ }
+});

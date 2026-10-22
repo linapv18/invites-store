@@ -330,18 +330,55 @@
   }
 
   /* ---------- Analíticas ---------- */
+  function trafficSection(t) {
+    var intro = '<section class="ad-card"><h2>Visitas a la web</h2>';
+    if (t.status !== 'ready') {
+      var messages = {
+        not_configured: 'La conexión con las estadísticas de Vercel está pendiente de configurar. El conteo de visitas de la web sigue activo.',
+        access_denied: 'Vercel no permitió consultar las estadísticas. Revisa el acceso de la credencial del servidor al proyecto.',
+        plan_required: 'Vercel solicita habilitar el acceso a la API de estadísticas en el plan del proyecto.',
+        unavailable: 'No se pudieron consultar las visitas en este momento. Las demás analíticas siguen disponibles.'
+      };
+      return intro + '<p class="ad-note" role="status">' + esc(messages[t.status] || messages.unavailable) + '</p></section>';
+    }
+    var number = function (n) { return Number(n).toLocaleString('es-CO'); };
+    var series = t.series || [], max = Math.max.apply(null, series.map(function (r) { return r.pageviews; }).concat([1]));
+    var unit = t.granularity === 'week' ? 'semana' : 'día';
+    var chart = series.length ? '<svg viewBox="0 0 640 230" role="img" aria-label="Páginas vistas por ' + unit + '" style="width:100%;height:auto">' +
+      '<line x1="12" y1="190" x2="628" y2="190" stroke="#D0BBC7"/>' +
+      series.map(function (r, i) {
+        var step = 612 / series.length, h = r.pageviews ? Math.max(2, 160 * r.pageviews / max) : 0, x = 14 + i * step;
+        var label = new Date(r.timestamp).toLocaleDateString('es-CO', { day: 'numeric', month: 'short', timeZone: 'UTC' });
+        return '<rect x="' + x + '" y="' + (190 - h) + '" width="' + Math.max(1, step - 3) + '" height="' + h + '" rx="3" fill="#71616B"><title>' + esc(label + ': ' + number(r.pageviews) + ' páginas vistas · ' + number(r.visitors) + ' visitantes') + '</title></rect>' +
+          (i % Math.max(1, Math.ceil(series.length / 6)) === 0 ? '<text x="' + x + '" y="214" font-size="12" fill="#71616B">' + esc(label) + '</text>' : '');
+      }).join('') + '</svg>' : '<p class="ad-empty">Todavía no hay visitas registradas en este periodo.</p>';
+    var country = function (label) { try { return new Intl.DisplayNames(['es'], { type: 'region' }).of(label); } catch (_) { return label; } };
+    var table = function (title, rows, label) {
+      return '<section class="ad-card"><h2>' + title + '</h2>' + (rows.length ? '<div class="ad-table"><table><thead><tr><th>' + title + '</th><th>Páginas vistas</th><th>Visitantes</th></tr></thead><tbody>' + rows.map(function (r) {
+        return '<tr><td style="overflow-wrap:anywhere">' + esc(label(r.label)) + '</td><td class="num">' + number(r.pageviews) + '</td><td class="num">' + number(r.visitors) + '</td></tr>';
+      }).join('') + '</tbody></table></div>' : '<p class="ad-empty">Sin datos en este periodo.</p>') + '</section>';
+    };
+    return intro + '<p class="ad-note">Web pública · últimos ' + t.days + ' días · sin cookies · actualizado ' + esc(new Date(t.updated_at).toLocaleString('es-CO', { timeZone: 'America/Bogota' })) + ' (Colombia)</p>' +
+      '<div class="ad-kpis"><article class="ad-kpi dark"><span class="ad-k">Visitantes estimados</span><b>' + number(t.visitors) + '</b><span>Según Vercel Web Analytics</span></article>' +
+      '<article class="ad-kpi"><span class="ad-k">Páginas vistas</span><b>' + number(t.pageviews) + '</b><span>Incluye nuevas visitas y recargas</span></article></div>' +
+      '<h3 style="margin-top:24px">Actividad por ' + unit + '</h3>' + chart + '<p class="ad-note">Agrupación de Vercel en UTC. Los visitantes son estimaciones; no se suman los visitantes de cada página para calcular el total. No incluye cuentas, editor ni invitaciones privadas.</p></section>' +
+      '<div class="ad-row">' + table('Páginas más vistas', t.pages, function (s) { return s || 'Otras'; }) + table('Procedencia', t.sources, function (s) { return s || 'Directo o sin referencia'; }) + '</div>' +
+      '<div class="ad-row">' + table('Países', t.countries, function (s) { return s ? country(s) : 'Sin identificar'; }) + table('Dispositivos', t.devices, function (s) { return ({desktop:'Computador',mobile:'Móvil',tablet:'Tableta'})[s] || s || 'Sin identificar'; }) + '</div>';
+  }
+
   async function renderAnalytics() {
-    var a = await api('analytics', { days: state.days }), f = a.funnel || {}, g = a.guests || {};
+    var results = await Promise.all([api('analytics', { days: state.days }), api('traffic', { days: state.days }).catch(function () { return { status: 'unavailable' }; })]);
+    var a = results[0], traffic = results[1], f = a.funnel || {}, g = a.guests || {};
     var step = function (n, of) { return of ? Math.round(100 * n / of) + ' %' : '—'; };
     var designs = (a.designs || []).filter(function (d) { return d.started || d.paid; });
     var html = head('Analíticas', 'Datos de Invitesse · últimos ' + state.days + ' días', periodSelect() +
       '<a class="ad-btn" href="https://vercel.com/lmpere21asuedus-projects/invites-store/analytics" target="_blank" rel="noopener">Visitantes y páginas vistas ' + svg('ext', 14) + '</a><a class="ad-btn" href="https://analytics.google.com/analytics/web/" target="_blank" rel="noopener">Google Analytics ' + svg('ext', 14) + '</a><a class="ad-btn dark" href="https://clarity.microsoft.com/projects/view/yzwi7fw4jr/dashboard" target="_blank" rel="noopener">Mapas de calor en Clarity ' + svg('ext', 14) + '</a>') +
-      '<section class="ad-card"><h2>De elegir un diseño a la invitación publicada</h2><div class="ad-funnel">' +
+      trafficSection(traffic) + '<section class="ad-card"><h2>De elegir un diseño a la invitación publicada</h2><div class="ad-funnel">' +
         '<div style="background:var(--plum);color:var(--paper)"><span>Eligieron un diseño</span><b>' + (f.started || 0) + '</b><span>Empezaron la compra</span></div>' +
         '<div style="background:var(--lacre);color:var(--paper)"><span>Fueron a pagar</span><b>' + (f.checkout || 0) + '</b><span>' + step(f.checkout, f.started) + ' de quienes eligieron</span></div>' +
         '<div style="background:var(--rose)"><span>Pagaron</span><b>' + (f.paid || 0) + '</b><span>' + step(f.paid, f.checkout) + ' de quienes fueron a pagar</span></div>' +
         '<div style="background:var(--blush)"><span>Publicaron</span><b>' + (f.published || 0) + '</b><span>' + step(f.published, f.paid) + ' de las compras</span></div></div>' +
-        '<p class="ad-note">Vercel Web Analytics muestra visitantes estimados y páginas vistas de la web pública sin cookies, desde su activación. Google Analytics y Clarity conservan la medición opcional de quienes la aceptan. Los bloqueadores y las señales de no rastrear pueden reducir el conteo; las visitas no equivalen a personas identificadas.</p></section>' +
+        '<p class="ad-note">Las visitas de la web aparecen arriba; el conteo comienza desde la activación de Vercel Web Analytics. Google Analytics y Clarity conservan la medición opcional de quienes la aceptan. Los bloqueadores y las señales de no rastrear pueden reducir el conteo; las visitas no equivalen a personas identificadas.</p></section>' +
       '<div class="ad-row"><section class="ad-card wide"><h2>Diseños</h2>' + (designs.length ? '<div class="ad-table"><table><thead><tr><th>Diseño</th><th>Gama</th><th>Eligieron</th><th>Pagaron</th><th>Conversión</th></tr></thead><tbody>' + designs.map(function (d) {
           return '<tr><td><b>' + esc(designOf(d.design)) + '</b></td><td>' + tierTag(d.tier) + '</td><td class="num">' + d.started + '</td><td class="num">' + d.paid + '</td><td class="num">' + step(d.paid, d.started) + '</td></tr>'; }).join('') + '</tbody></table></div>' : '<p class="ad-empty">Todavía no hay compras iniciadas en este periodo.</p>') + '</section>' +
         '<section class="ad-card"><h2>Monedas y códigos</h2><div class="ad-bars">' + ['COP', 'USD'].map(function (c) { var n = (a.currencies || {})[c] || 0, t = (f.paid || 0); return '<div class="ad-bar"><div><span>' + c + (c === 'COP' ? ' · Colombia' : ' · fuera de Colombia') + '</span><b>' + n + '</b></div><i><span style="width:' + (t ? Math.round(100 * n / t) : 0) + '%"></span></i></div>'; }).join('') + '</div>' +

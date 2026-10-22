@@ -52,6 +52,7 @@ function createHandler({adminClient=runtime.adminClient,userFor=runtime.userFor,
     return res.status(200).json(await handle({admin,user,method:req.method,body:b,query:q,catalog}));
    }
    if(req.method==='GET') {
+    if(action==='traffic') return res.status(200).json(await require('../lib/analytics/traffic').traffic(q.days));
     if(action==='me') return res.status(200).json({email:user.email,prices:PRICES});
     if(action==='summary') return res.status(200).json(await runtime.unwrap(admin.rpc('admin_summary',{since:since(q.days)})));
     if(action==='analytics') return res.status(200).json(await runtime.unwrap(admin.rpc('admin_analytics',{since:since(q.days)})));
