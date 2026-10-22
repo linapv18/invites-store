@@ -55,3 +55,7 @@ Para activarlo:
 4. Sin esa configuración el formulario responde «La suscripción todavía no está disponible» y no guarda nada.
 
 Validación: `node --test tests/newsletter.test.mjs` (proveedor simulado) y `node tests/database/newsletter.mjs` (PGlite).
+
+## Suscriptores de la página de inicio
+
+En **Marketing → Suscriptores** se consulta `newsletter_subscribers`, con búsqueda por correo, filtro de estado y páginas de 50 registros. Los indicadores muestran los totales generales. La tabla distingue suscritos, pendientes de envío de bienvenida confirmado y bajas. Solo el endpoint autenticado del admin puede consultar la lista; no devuelve tokens de baja ni envía correos. Reutiliza la migración de newsletter ya existente (`202610220001_newsletter.sql`); no requiere otra migración.
