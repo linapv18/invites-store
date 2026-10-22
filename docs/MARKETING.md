@@ -42,3 +42,16 @@ La consulta limita piezas/gastos/contactos a 2000 y registros de actividad a 100
 - `python tests/browser/marketing.py`: formularios, duplicación, reprogramación, carga, exportación y ausencia de desbordamiento a 1440/390/320 px con API simulada. No reemplaza la comprobación de la instalación remota una vez autorizada.
 
 Verificado localmente el 21 de octubre de 2026: compilación y suite existentes correctas; PGlite comprueba también reintentos con carga estable, cancelación de un trabajador activo, exclusión de compras gratuitas/pendientes y cuentas de prueba. Tests de API comprueban el allowlist, rechazo de escrituras GET y actor derivado de sesión, no del cuerpo de la petición. Los tests de email inyectan un proveedor simulado.
+
+## Suscripción del landing (10% de bienvenida)
+
+La sección «Su celebración empieza aquí» (`index.html#suscripcion`, `assets/brand/subscribe.js`) envía a `api/suscripcion.js`. El endpoint guarda el consentimiento en `newsletter_subscribers` y envía con Resend el correo de bienvenida (`welcome()` en el mismo archivo; diseño en el lienzo de Invitesse) con el código común `INVITESSE10` (10%, una vez por cliente, solo primera compra). El landing solo muestra el éxito cuando Resend acepta el correo; si falla, el suscriptor queda `pending` y un nuevo intento reenvía el correo. La lista de marketing son las filas `status='subscribed'`. Cada correo incluye enlace de baja y cabeceras `List-Unsubscribe` (un clic).
+
+Para activarlo:
+
+1. Aplicar `supabase/migrations/202610220001_newsletter.sql` (también incluida en `ACTIVAR-STRIPE.sql`). Crea `INVITESSE10` **inactivo** con sus reglas y reemplaza `discount_quote` con la regla de primera compra; los demás códigos no cambian.
+2. En el admin → Códigos, activar `INVITESSE10` (no crearlo de nuevo). Mientras esté inactivo o vencido, el landing no acepta suscripciones.
+3. En Vercel: `SUPABASE_URL` y `SUPABASE_SECRET_KEY` (ya usadas por el checkout), `RESEND_API_KEY` y un remitente de dominio verificado en `NEWSLETTER_FROM` (si falta, se usa `MARKETING_FROM` o `QUOTE_FROM`).
+4. Sin esa configuración el formulario responde «La suscripción todavía no está disponible» y no guarda nada.
+
+Validación: `node --test tests/newsletter.test.mjs` (proveedor simulado) y `node tests/database/newsletter.mjs` (PGlite).

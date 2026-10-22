@@ -23,6 +23,7 @@
   DISCOUNT_NOT_APPLICABLE:en?'That code does not apply to this design.':'Ese código no aplica para este diseño.',
   DISCOUNT_EXHAUSTED:en?'That code has reached its limit.':'Ese código ya alcanzó su límite de usos.',
   DISCOUNT_ALREADY_USED:en?'You already used that code.':'Ya usaron ese código.',
+  DISCOUNT_FIRST_PURCHASE_ONLY:en?'That code is only valid on your first purchase.':'Ese código solo aplica en su primera compra.',
   DISCOUNT_TOO_LARGE:en?'That code cannot be applied to this price.':'Ese código no se puede aplicar a este precio.',
   PAYMENTS_TEMPORARILY_UNAVAILABLE:en?'We could not continue with payment. If you already paid, do not pay again. Contact hola@invitesse.com.':'No pudimos continuar con el pago. Si ya pagaron, no lo repitan. Contacten con hola@invitesse.com.',
  };
