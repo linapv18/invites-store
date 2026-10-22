@@ -1,7 +1,7 @@
 // Suscripción a correos de marketing desde el landing (sección «Su celebración empieza aquí»).
-// Guarda el consentimiento en Supabase (newsletter_subscribers, 202610220001_newsletter.sql), crea un código único del 10%
-// y lo envía con Resend. Solo responde ok cuando el proveedor aceptó el correo; si el envío falla, la suscripción queda
-// pendiente y un nuevo intento vuelve a enviar el mismo código.
+// Guarda el consentimiento en Supabase (newsletter_subscribers, 202610220001_newsletter.sql) y envía con Resend el
+// correo de bienvenida con el código INVITESSE10 (debe estar activo en el admin). Solo responde ok cuando el proveedor
+// aceptó el correo; si el envío falla, la suscripción queda pendiente y un nuevo intento vuelve a enviarlo.
 // Baja: el enlace de cada correo abre GET /api/suscripcion?baja=<token> (pide confirmar) y el formulario hace POST;
 // el POST también atiende la baja en un clic de List-Unsubscribe.
 // Variables en Vercel: SUPABASE_URL y SUPABASE_SECRET_KEY (las del checkout), RESEND_API_KEY y un remitente verificado
@@ -31,35 +31,72 @@ function parse(body) {
 
 function unsubscribeUrl(token, lang) { return SITE + '/api/suscripcion?baja=' + encodeURIComponent(token) + (lang === 'en' ? '&lang=en' : ''); }
 
-function welcome({ email, code, token, lang }) {
-  const en = lang === 'en', link = unsubscribeUrl(token, lang), shop = SITE + (en ? '/en/designs/' : '/disenos/');
-  const t = en ? {
-    subject: 'Your 10% welcome code · Invitesse',
-    hello: 'Thank you for joining Invitesse.',
-    intro: 'Here is your code for 10% off your first invitation from the collection. Enter it at checkout.',
-    terms: '10% off the first purchase of an invitation. One use per customer. Cannot be combined with other promotions.',
-    cta: 'Explore the designs',
-    why: 'You receive this email because you subscribed to Invitesse marketing emails.',
-    leave: 'Unsubscribe',
-  } : {
+// Correo de bienvenida (diseño «Correo de bienvenida» del lienzo): tablas y estilos en línea para Gmail, Outlook y Apple Mail.
+// Bodoni Moda solo se ve donde el cliente la tiene; el resto usa Georgia.
+const SERIF = "'Bodoni Moda',Georgia,'Times New Roman',serif";
+const SANS = 'Helvetica,Arial,sans-serif';
+const COPY = {
+  es: {
     subject: 'Su 10% de bienvenida · Invitesse',
-    hello: 'Gracias por suscribirse a Invitesse.',
-    intro: 'Este es su código del 10% para su primera invitación de la colección. Escríbanlo al pagar.',
-    terms: '10% de descuento en la primera compra de una invitación. Un uso por cliente. No acumulable con otras promociones.',
-    cta: 'Explorar diseños',
-    why: 'Reciben este correo porque se suscribieron a los correos de marketing de Invitesse.',
-    leave: 'Darse de baja',
-  };
-  const text = [t.hello, '', t.intro, '', code, '', t.terms, '', t.cta + ': ' + shop, '', '—', t.why, t.leave + ': ' + link].join('\n') + '\n';
-  const html = '<div style="background:#F3EEE9;padding:32px 16px;font:15px/1.6 Helvetica,Arial,sans-serif;color:#352432">' +
-    '<div style="max-width:520px;margin:0 auto;background:#ffffff;border:1px solid #35243226;border-radius:12px;padding:40px 32px;text-align:center">' +
-    '<p style="margin:0 0 24px;font:28px/1 Georgia,serif;letter-spacing:-.04em">invitesse</p>' +
-    '<p style="margin:0 0 8px;font:22px/1.3 Georgia,serif">' + escapeHtml(t.hello) + '</p>' +
-    '<p style="margin:0 0 28px;color:#655560">' + escapeHtml(t.intro) + '</p>' +
-    '<p style="margin:0 auto 28px;display:inline-block;padding:16px 28px;border:1px solid #B7A38A;border-radius:6px;font:600 22px/1 \'Courier New\',monospace;letter-spacing:.12em;color:#241320">' + escapeHtml(code) + '</p>' +
-    '<p style="margin:0 0 28px"><a href="' + shop + '" style="display:inline-block;background:#241320;color:#F8F3EC;text-decoration:none;padding:14px 26px;border-radius:999px;font-size:14px">' + escapeHtml(t.cta) + '</a></p>' +
-    '<p style="margin:0;font-size:12px;color:#655560">' + escapeHtml(t.terms) + '</p></div>' +
-    '<p style="max-width:520px;margin:20px auto 0;font-size:12px;color:#655560;text-align:center">' + escapeHtml(t.why) + ' <a href="' + escapeHtml(link) + '" style="color:#352432">' + escapeHtml(t.leave) + '</a></p></div>';
+    preheader: 'Su código INVITESSE10 para su primera invitación.',
+    kicker: 'Bienvenidos a Invitesse', title: 'Su celebración', titleItalic: 'empieza aquí.',
+    intro: 'Gracias por suscribirse. Como prometimos, este es su regalo de bienvenida para la primera invitación de su boda.',
+    card: 'Tarjeta de bienvenida', forFirst: 'en su primera invitación', yourCode: 'Su código', cta: 'Explorar diseños', how: 'Cómo usarlo',
+    steps: [['Elijan su diseño.', 'Abran las demos y recorran cada apertura antes de decidir.'], ['Escriban {code} al pagar.', 'El descuento se aplica antes de confirmar la compra.'], ['Personalicen y compartan.', 'Sus textos, fotos e invitados, con un enlace para cada familia.']],
+    termsLabel: 'Condiciones.', terms: '10% de descuento en la primera compra de una invitación de la colección. Un uso por cliente. No acumulable con otras promociones.',
+    questions: '¿Preguntas? Respondan a este correo o escríbannos a', why: 'Reciben este correo porque se suscribieron a los correos de marketing de Invitesse en invitesse.com.',
+    leave: 'Darse de baja', privacy: 'Política de privacidad', shop: '/disenos/', privacyPath: '/privacidad/#marketing',
+  },
+  en: {
+    subject: 'Your 10% welcome gift · Invitesse',
+    preheader: 'Your code INVITESSE10 for your first invitation.',
+    kicker: 'Welcome to Invitesse', title: 'Your celebration', titleItalic: 'starts here.',
+    intro: 'Thank you for subscribing. As promised, here is your welcome gift for your first wedding invitation.',
+    card: 'Welcome card', forFirst: 'off your first invitation', yourCode: 'Your code', cta: 'Explore the designs', how: 'How to use it',
+    steps: [['Choose your design.', 'Open the demos and explore each opening before deciding.'], ['Enter {code} at checkout.', 'The discount is applied before you confirm the purchase.'], ['Personalize and share.', 'Your texts, photos and guests, with a link for each family.']],
+    termsLabel: 'Terms.', terms: '10% off the first purchase of an invitation from the collection. One use per customer. Cannot be combined with other promotions.',
+    questions: 'Questions? Reply to this email or write to', why: 'You receive this email because you subscribed to Invitesse marketing emails at invitesse.com.',
+    leave: 'Unsubscribe', privacy: 'Privacy policy', shop: '/en/disenos/', privacyPath: '/en/privacy/#marketing',
+  },
+};
+
+function welcome({ email, code, token, lang }) {
+  const t = COPY[lang === 'en' ? 'en' : 'es'], link = unsubscribeUrl(token, lang), shop = SITE + t.shop, privacy = SITE + t.privacyPath;
+  const e = escapeHtml, c = e(code);
+  const steps = t.steps.map(([head, body], i) =>
+    '<tr><td width="44" valign="top" style="padding:0 0 18px;font:italic 22px/1.2 ' + SERIF + ';color:#775932">0' + (i + 1) + '</td>' +
+    '<td valign="top" style="padding:2px 0 18px;font:14px/1.6 ' + SANS + ';color:#655560"><b style="color:#352432;font-weight:600">' + e(head).replace('{code}', c) + '</b> ' + e(body) + '</td></tr>').join('');
+  const html = '<!doctype html><html lang="' + (lang === 'en' ? 'en' : 'es') + '"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light"><meta name="supported-color-schemes" content="light"><title>' + e(t.subject) + '</title>' +
+    '<style>@media (max-width:520px){.px{padding-left:20px!important;padding-right:20px!important}.code{padding:12px 16px!important;font-size:18px!important}.pct{font-size:72px!important}}</style></head>' +
+    '<body style="margin:0;padding:0;background:#F3EEE9">' +
+    '<div style="display:none;max-height:0;overflow:hidden;opacity:0">' + e(t.preheader) + '</div>' +
+    '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#F3EEE9"><tr><td align="center" style="padding:32px 12px">' +
+    '<table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0" style="width:100%;max-width:600px;background:#ffffff;border:1px solid #E4DCD8;border-radius:12px;border-collapse:separate;overflow:hidden">' +
+    '<tr><td align="center" bgcolor="#241320" style="background:#241320;padding:30px 0;font:34px/1 ' + SERIF + ';letter-spacing:-1.5px;color:#F8F3EC">invitesse</td></tr>' +
+    '<tr><td class="px" align="center" style="padding:48px 40px 8px">' +
+    '<p style="margin:0 0 16px;font:bold 11px/1.6 ' + SANS + ';letter-spacing:2px;text-transform:uppercase;color:#775932">' + e(t.kicker) + '</p>' +
+    '<h1 style="margin:0;font:normal 38px/1.15 ' + SERIF + ';color:#241320">' + e(t.title) + ' <i style="color:#77596D">' + e(t.titleItalic) + '</i></h1>' +
+    '<p style="margin:18px auto 0;max-width:420px;font:15px/1.65 ' + SANS + ';color:#655560">' + e(t.intro) + '</p></td></tr>' +
+    '<tr><td class="px" style="padding:32px 48px 8px"><table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#F3EEE9;border-radius:6px"><tr><td style="padding:10px">' +
+    '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border:1px solid #B7A38A"><tr><td style="padding:4px">' +
+    '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border:1px solid #B7A38A"><tr><td align="center" style="padding:32px 20px 30px">' +
+    '<p style="margin:0;font:bold 10px/1.6 ' + SANS + ';letter-spacing:2.2px;text-transform:uppercase;color:#775932">' + e(t.card) + '</p>' +
+    '<p class="pct" style="margin:10px 0 0;font:italic 88px/1 ' + SERIF + ';letter-spacing:-3px;color:#674A60">10%</p>' +
+    '<p style="margin:8px 0 0;font:19px/1.3 ' + SERIF + ';color:#352432">' + e(t.forFirst) + '</p>' +
+    '<p style="margin:26px 0 8px;font:bold 10px/1.6 ' + SANS + ';letter-spacing:2px;text-transform:uppercase;color:#655560">' + e(t.yourCode) + '</p>' +
+    '<table role="presentation" cellpadding="0" cellspacing="0" border="0" align="center"><tr><td class="code" style="padding:14px 26px;background:#ffffff;border:1px dashed #B7A38A;border-radius:6px;font:bold 22px/1 \'Courier New\',Courier,monospace;letter-spacing:3px;color:#241320">' + c + '</td></tr></table>' +
+    '</td></tr></table></td></tr></table></td></tr></table></td></tr>' +
+    '<tr><td align="center" style="padding:32px 40px 0"><table role="presentation" cellpadding="0" cellspacing="0" border="0"><tr><td bgcolor="#241320" style="border-radius:999px"><a href="' + shop + '" style="display:inline-block;padding:16px 32px;font:14px/1 ' + SANS + ';color:#F8F3EC;text-decoration:none;border-radius:999px">' + e(t.cta) + '</a></td></tr></table></td></tr>' +
+    '<tr><td class="px" style="padding:44px 48px 0"><table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-top:1px solid #E4DCD8"><tr><td align="center" style="padding:32px 0 22px;font:24px/1.2 ' + SERIF + ';color:#241320">' + e(t.how) + '</td></tr></table>' +
+    '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">' + steps + '</table></td></tr>' +
+    '<tr><td class="px" style="padding:18px 48px 44px"><table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding:16px 20px;background:#F8F3EC;border-radius:8px;font:12px/1.6 ' + SANS + ';color:#655560"><b style="color:#352432;font-weight:600">' + e(t.termsLabel) + '</b> ' + e(t.terms) + '</td></tr></table></td></tr>' +
+    '</table>' +
+    '<table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0" style="width:100%;max-width:600px"><tr><td align="center" style="padding:28px 20px 0;font:12px/1.7 ' + SANS + ';color:#655560">' +
+    e(t.questions) + ' <a href="mailto:hola@invitesse.com" style="color:#352432">hola@invitesse.com</a> · <a href="https://www.instagram.com/invitesse/" style="color:#352432">@invitesse</a><br><br>' +
+    e(t.why) + '<br><a href="' + e(link) + '" style="color:#352432">' + e(t.leave) + '</a> · <a href="' + privacy + '" style="color:#352432">' + e(t.privacy) + '</a><br><br>Invitesse · Barranquilla, Colombia' +
+    '</td></tr></table></td></tr></table></body></html>';
+  const text = [t.kicker, '', t.title + ' ' + t.titleItalic, '', t.intro, '', t.yourCode + ': ' + code + ' — 10% ' + t.forFirst, '',
+    t.how + ':', ...t.steps.map(([h, b], i) => (i + 1) + '. ' + h.replace('{code}', code) + ' ' + b), '', t.termsLabel + ' ' + t.terms, '', t.cta + ': ' + shop, '', '—', t.questions + ' hola@invitesse.com', t.why, t.leave + ': ' + link, 'Invitesse · Barranquilla, Colombia'].join('\n') + '\n';
   return { to: email, subject: t.subject, text, html, unsubscribe: link };
 }
 
@@ -110,6 +147,8 @@ function createHandler({ subscribe, confirmSent, unsubscribe, send, configured }
       subscriber = await subscribe({ email: q.email, lang: q.lang, consent: CONSENT[q.lang] });
     } catch (error) {
       if (/INVALID_EMAIL/.test(error && error.message)) return res.status(400).json({ error: 'INVALID_FIELD', field: 'email' });
+      // INVITESSE10 inactivo o vencido: no se guarda nada ni se promete un código que no funciona.
+      if (/OFFER_INACTIVE/.test(error && error.message)) return res.status(503).json({ error: 'NOT_CONFIGURED' });
       console.error('invitesse.newsletter.subscribe_failed');
       return res.status(503).json({ error: 'SEND_FAILED' });
     }

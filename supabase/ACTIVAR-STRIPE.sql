@@ -1646,12 +1646,17 @@ do $$ declare i record;begin for i in select distinct v.id,v.owner_id from publi
 -- 202610220001_newsletter.sql
 -- Suscripción a correos de marketing desde el landing, con un 10% de bienvenida.
 -- Se puede ejecutar de nuevo sin efectos. Requiere 202610200004_full_discount.sql (discount_codes y discount_quote).
--- Cada suscriptor recibe un código propio de discount_codes: 10%, un solo uso, una vez por cliente y solo en su primera compra.
--- El checkout ya admite un único código por pedido, así que no se acumula con otras promociones.
--- Un suscriptor queda 'pending' hasta que api/suscripcion.js confirma el envío del correo con su código; solo los 'subscribed'
+-- Todos los suscriptores reciben el código INVITESSE10: 10%, una vez por cliente y solo en su primera compra.
+-- La migración lo crea inactivo si no existe; se activa desde el admin (Códigos). Mientras esté inactivo, el landing
+-- no acepta suscripciones, para no prometer un código que no funciona.
+-- El checkout admite un único código por pedido, así que no se acumula con otras promociones.
+-- Un suscriptor queda 'pending' hasta que api/suscripcion.js confirma el envío del correo; solo los 'subscribed'
 -- cuentan como lista de marketing. Las tablas y funciones solo son accesibles desde el servidor (service_role).
 
 alter table public.discount_codes add column if not exists first_purchase_only boolean not null default false;
+insert into public.discount_codes(code,kind,percent_off,once_per_customer,first_purchase_only,active,note)
+ values('INVITESSE10','percent',10,true,true,false,'Bienvenida por suscripción a correos de marketing (landing)')
+ on conflict(code) do update set once_per_customer=true,first_purchase_only=true;
 
 create table if not exists public.newsletter_subscribers (
  id uuid primary key default gen_random_uuid(),
@@ -1662,7 +1667,6 @@ create table if not exists public.newsletter_subscribers (
  consent_text text not null check (length(consent_text) between 20 and 600),
  consented_at timestamptz not null default now(),
  unsubscribe_token uuid not null unique default gen_random_uuid(),
- discount_code_id uuid references public.discount_codes(id),
  welcome_sent_at timestamptz,
  unsubscribed_at timestamptz,
  created_at timestamptz not null default now(),
@@ -1673,38 +1677,23 @@ revoke all on public.newsletter_subscribers from public,anon,authenticated;
 grant all on public.newsletter_subscribers to service_role;
 
 -- Registra (o reactiva) la suscripción y devuelve lo necesario para enviar el código.
--- state 'already': ya está suscrito y recibió su código; no se reenvía.
+-- state 'already': ya está suscrito y recibió su código; no se reenvía. OFFER_INACTIVE: no se guarda nada.
 create or replace function public.newsletter_subscribe(requested_email text, requested_lang text, requested_source text, requested_consent text)
 returns jsonb language plpgsql security definer set search_path='' as $$
-declare normalized text; s public.newsletter_subscribers; new_code text; code_id uuid; attempts integer:=0;
+declare normalized text; s public.newsletter_subscribers;
 begin
  normalized:=lower(btrim(coalesce(requested_email,'')));
  if length(normalized)>254 or normalized !~ '^[^\s@]+@[^\s@]+\.[^\s@]{2,}$' then raise exception 'INVALID_EMAIL'; end if;
+ if not exists(select 1 from public.discount_codes where code='INVITESSE10' and active and (ends_at is null or ends_at>now()) and (starts_at is null or starts_at<=now())) then raise exception 'OFFER_INACTIVE'; end if;
  insert into public.newsletter_subscribers(email,lang,source,consent_text)
   values(normalized,case when requested_lang='en' then 'en' else 'es' end,left(coalesce(nullif(requested_source,''),'landing'),40),requested_consent)
   on conflict(email) do nothing;
  select * into s from public.newsletter_subscribers where email=normalized for update;
  if s.status='subscribed' and s.welcome_sent_at is not null then return jsonb_build_object('state','already'); end if;
- if s.discount_code_id is null then
-  loop
-   attempts:=attempts+1;
-   new_code:='BIENVENIDA'||upper(substr(replace(gen_random_uuid()::text,'-',''),1,6));
-   begin
-    insert into public.discount_codes(code,kind,percent_off,max_uses,once_per_customer,first_purchase_only,note)
-     values(new_code,'percent',10,1,true,true,'Bienvenida por suscripción a correos de marketing') returning id into code_id;
-    exit;
-   exception when unique_violation then
-    if attempts>=5 then raise; end if;
-   end;
-  end loop;
- else
-  code_id:=s.discount_code_id;
- end if;
- update public.newsletter_subscribers set status='pending',discount_code_id=code_id,consent_text=requested_consent,consented_at=now(),
+ update public.newsletter_subscribers set status='pending',consent_text=requested_consent,consented_at=now(),
   lang=case when requested_lang='en' then 'en' else 'es' end,unsubscribed_at=null,updated_at=now()
   where id=s.id returning * into s;
- return jsonb_build_object('state','send','email',s.email,'lang',s.lang,'token',s.unsubscribe_token,
-  'code',(select dc.code from public.discount_codes dc where dc.id=code_id));
+ return jsonb_build_object('state','send','email',s.email,'lang',s.lang,'token',s.unsubscribe_token,'code','INVITESSE10');
 end; $$;
 revoke all on function public.newsletter_subscribe(text,text,text,text) from public,anon,authenticated;
 grant execute on function public.newsletter_subscribe(text,text,text,text) to service_role;
