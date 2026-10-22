@@ -141,22 +141,24 @@ function createHandler({ subscribe, confirmSent, unsubscribe, send, configured }
     if (q.website) return res.status(200).json({ ok: true });
     if (q.email.length > 254 || !EMAIL.test(q.email)) return res.status(400).json({ error: 'INVALID_FIELD', field: 'email' });
     if (!q.consent) return res.status(400).json({ error: 'INVALID_FIELD', field: 'consent' });
-    if (!configured()) return res.status(503).json({ error: 'NOT_CONFIGURED' });
+    // configured() devuelve los nombres de lo que falta (nunca valores), visibles en los logs de Vercel.
+    const missing = configured();
+    if (missing.length) { console.error('invitesse.newsletter.not_configured missing=' + missing.join(',')); return res.status(503).json({ error: 'NOT_CONFIGURED' }); }
     let subscriber;
     try {
       subscriber = await subscribe({ email: q.email, lang: q.lang, consent: CONSENT[q.lang] });
     } catch (error) {
       if (/INVALID_EMAIL/.test(error && error.message)) return res.status(400).json({ error: 'INVALID_FIELD', field: 'email' });
       // INVITESSE10 inactivo o vencido: no se guarda nada ni se promete un código que no funciona.
-      if (/OFFER_INACTIVE/.test(error && error.message)) return res.status(503).json({ error: 'NOT_CONFIGURED' });
-      console.error('invitesse.newsletter.subscribe_failed');
+      if (/OFFER_INACTIVE/.test(error && error.message)) { console.error('invitesse.newsletter.offer_inactive INVITESSE10'); return res.status(503).json({ error: 'NOT_CONFIGURED' }); }
+      console.error('invitesse.newsletter.subscribe_failed ' + String(error && (error.code || error.message) || '').slice(0, 120));
       return res.status(503).json({ error: 'SEND_FAILED' });
     }
     if (subscriber.state === 'already') return res.status(409).json({ error: 'ALREADY_SUBSCRIBED' });
     try {
       await send(welcome(subscriber));
-    } catch (_) {
-      console.error('invitesse.newsletter.send_failed');
+    } catch (error) {
+      console.error('invitesse.newsletter.send_failed ' + String(error && error.message || '').slice(0, 60));
       return res.status(503).json({ error: 'SEND_FAILED' });
     }
     // El correo ya salió: un fallo al marcarlo solo provoca un reenvío del mismo código si vuelven a intentarlo.
@@ -183,7 +185,12 @@ async function sendWithResend(m) {
 const rpc = (name, args) => rt.unwrap(rt.adminClient().rpc(name, args));
 
 module.exports = createHandler({
-  configured: () => Boolean(process.env.RESEND_API_KEY && sender() && (process.env.SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL) && process.env.SUPABASE_SECRET_KEY?.startsWith('sb_secret_')),
+  configured: () => [
+    !process.env.RESEND_API_KEY && 'RESEND_API_KEY',
+    !sender() && 'NEWSLETTER_FROM',
+    !(process.env.SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL) && 'SUPABASE_URL',
+    !process.env.SUPABASE_SECRET_KEY?.startsWith('sb_secret_') && 'SUPABASE_SECRET_KEY',
+  ].filter(Boolean),
   subscribe: ({ email, lang, consent }) => rpc('newsletter_subscribe', { requested_email: email, requested_lang: lang, requested_source: 'landing', requested_consent: consent }),
   confirmSent: (email) => rpc('newsletter_confirm_sent', { requested_email: email }),
   unsubscribe: (token) => rpc('newsletter_unsubscribe', { token }),

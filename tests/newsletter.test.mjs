@@ -8,7 +8,7 @@ function request(body, { method = 'POST', url = '/api/suscripcion', headers = {}
 function fakes(overrides = {}) {
   const calls = { subscribe: [], sent: [], confirmed: [], unsubscribed: [] };
   const deps = {
-    configured: () => true,
+    configured: () => [],
     subscribe: async (a) => { calls.subscribe.push(a); return { state: 'send', email: a.email, lang: a.lang, token: TOKEN, code: 'INVITESSE10' }; },
     send: async (m) => { calls.sent.push(m); },
     confirmSent: async (e) => { calls.confirmed.push(e); return true; },
@@ -61,7 +61,7 @@ test('a failed send never reports success nor confirms the subscription', async 
 });
 
 test('without server configuration nothing is stored and the page is told', async () => {
-  const { handler, calls } = fakes({ configured: () => false });
+  const { handler, calls } = fakes({ configured: () => ['NEWSLETTER_FROM'] });
   const res = response();
   await handler(request({ email: 'ana@example.test', consent: true }), res);
   assert.equal(res.code, 503); assert.equal(res.body.error, 'NOT_CONFIGURED');

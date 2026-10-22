@@ -206,6 +206,7 @@ details[open]>summary>span{transform:rotate(45deg)}
 .sub-field label{font-size:13px;font-weight:500}
 .sub-field input{height:52px;padding:0 22px;border:1px solid #ffffff73;border-radius:999px;background:#ffffff0d;color:var(--h-paper);font:400 16px var(--iv-sans);transition:border-color .2s,background .2s}
 .sub-field input::placeholder{color:#B9A9B3}
+.sub-field input:-webkit-autofill{-webkit-text-fill-color:#F8F3EC;caret-color:#F8F3EC;-webkit-box-shadow:0 0 0 40px #33202F inset;box-shadow:0 0 0 40px #33202F inset;transition:background-color 9999s}
 .sub-field input:hover{border-color:#ffffffa6}
 .sub-field input:focus-visible{outline:2px solid #E9D7B8;outline-offset:3px;border-color:#E9D7B8;background:#ffffff14}
 .sub-field input[aria-invalid="true"]{border:1.5px solid #F2A7A0}
